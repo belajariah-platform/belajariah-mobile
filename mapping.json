@@ -1,0 +1,8 @@
+{
+  "strict": {
+    "text-font-family": "OpenSans-Regular",
+    "text-heading-1-font-size": 20,
+    "text-heading-1-font-weight": "800",
+    "text-heading-1-font-family": "OpenSans-Bold"
+  }
+}
