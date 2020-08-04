@@ -1,21 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-  YellowBox,
-  RefreshControl,
-  ScrollView,
-} from 'react-native';
-import {Avatar, Icon, Text} from '@ui-kitten/components';
-import {
-  textContent,
-  textHintBold,
-  bgColor,
-  textBold,
-} from '../../../Components/Color';
+import {View, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
+import {Text} from '@ui-kitten/components';
+import {textHintBold, bgColor} from '../../../Components/Color';
 import {Contents4} from './Data';
 
 function EventTag(props) {

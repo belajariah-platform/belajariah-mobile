@@ -144,8 +144,8 @@ export default Register;
 
 const style = StyleSheet.create({
   image: {
-    width: '65%',
-    height: 140,
+    width: '53%',
+    height: 142,
     alignSelf: 'center',
     marginTop: 30,
   },

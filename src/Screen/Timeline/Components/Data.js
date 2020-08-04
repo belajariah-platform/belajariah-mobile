@@ -139,6 +139,88 @@ export const Contents3 = [
     location: 'Palembang',
     link: 'https://www.instagram.com/ummaindonesia/',
   },
+  {
+    banner: e1,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title:
+      'Bootcamp Arkademy Batch 15 Fullstack Javascript berbasis Web dan Mobile',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e2,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e3,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e4,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e5,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e1,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title:
+      'Bootcamp Arkademy Batch 15 Fullstack Javascript berbasis Web dan Mobile',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e2,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e3,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e4,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game Android',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
+  {
+    banner: e5,
+    date: 'Sab, Agt 1',
+    time: '10.00 WIB',
+    title: 'Sehari Pacak Membuat Game',
+    location: 'Palembang',
+    link: 'https://www.instagram.com/ummaindonesia/',
+  },
 ];
 
 export const Contents4 = [
@@ -165,5 +247,24 @@ export const Contents4 = [
   {
     id: 6,
     tag: 'Past',
+  },
+];
+
+export const Contents5 = [
+  {
+    id: 1,
+    tag: 'Content',
+  },
+  {
+    id: 2,
+    tag: 'News',
+  },
+  {
+    id: 3,
+    tag: 'Event',
+  },
+  {
+    id: 4,
+    tag: 'Our daily',
   },
 ];

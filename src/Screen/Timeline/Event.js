@@ -68,7 +68,7 @@ function Event(props) {
               paddingTop: 30,
               backgroundColor: 'white',
             }}>
-            <Text style={style.totalEvent}>{Contents4.length} Event</Text>
+            <Text style={style.totalEvent}>{Contents3.length} Event</Text>
 
             <FlatList
               keyExtractor={(i, idx) => idx}

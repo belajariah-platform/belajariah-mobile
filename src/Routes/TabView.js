@@ -7,29 +7,35 @@ import Content from '../Screen/Timeline/Content';
 import News from '../Screen/Timeline/News';
 import Event from '../Screen/Timeline/Event';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {useNavigation} from '@react-navigation/native';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
-const TopTabBar = ({navigation, state, props}) => (
-  <TabBar
-    selectedIndex={state.index}
-    onSelect={index => navigation.navigate(state.routeNames[index])}
-    style={{
-      paddingTop: 20,
-      paddingBottom: 10,
-      marginBottom: -4,
-      paddingHorizontal: 5,
-    }}
-    indicatorStyle={style.indicator}>
-    <Tab title={evaProps => <Text {...evaProps}>Content</Text>} />
-    <Tab title="News" />
-    <Tab title="Event" />
-    <Tab title="Our Daily" />
-    <TouchableOpacity style={{marginRight: -40, marginLeft: 5}}>
-      <Icon fill="#8F9BB3" name="search" style={style.icon} />
-    </TouchableOpacity>
-  </TabBar>
-);
+const TopTabBar = ({navigation, state, props}) => {
+  const navigator = useNavigation();
+  return (
+    <TabBar
+      selectedIndex={state.index}
+      onSelect={index => navigator.navigate(state.routeNames[index])}
+      style={{
+        paddingTop: 20,
+        paddingBottom: 10,
+        marginBottom: -4,
+        paddingHorizontal: 5,
+      }}
+      indicatorStyle={style.indicator}>
+      <Tab title={evaProps => <Text {...evaProps}>Content</Text>} />
+      <Tab title="News" />
+      <Tab title="Event" />
+      <Tab title="Our Daily" />
+      <TouchableOpacity
+        style={{marginRight: -40, marginLeft: 15}}
+        onPress={() => navigation.navigate('SearchTimeline')}>
+        <Icon fill="#8F9BB3" name="search" style={style.icon} />
+      </TouchableOpacity>
+    </TabBar>
+  );
+};
 
 const TabNavigation = () => {
   return (
