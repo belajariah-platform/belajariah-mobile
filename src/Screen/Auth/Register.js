@@ -7,15 +7,17 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import {Icon, Text, Button, CheckBox} from '@ui-kitten/components';
+import {Icon, Text, CheckBox} from '@ui-kitten/components';
 import BGRegister from '../../Helpers/Image/register.png';
-import {bgColor, textBold, textBasic} from '../../Components/Color';
-import InputText from '../../Components/InputText';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import {Color} from '../../Themes/Colors';
+import {FontType} from '../../Themes/Fonts';
 import Loader from '../../Components/Loader';
 import TopNavigator from '../../Components/TopNavigator';
 import Alert from '../../Components/Alert';
+import InputText from '../../Components/InputText';
+import Buttons from '../../Components/Button';
 
 function Register(props) {
   const [success] = React.useState(true);
@@ -65,7 +67,7 @@ function Register(props) {
   return (
     <>
       {loading && <Loader loading={loading} setLoading={setLoading} />}
-      <TopNavigator title="Register" />
+      <TopNavigator title="Register" backIcon={true} />
       <View
         style={{
           backgroundColor: 'white',
@@ -122,17 +124,13 @@ function Register(props) {
                 </Text>
               }
             </CheckBox>
-            <Button style={style.button} onPress={FormRegister.handleSubmit}>
-              Sign Up
-            </Button>
+            <Buttons onPress={FormRegister.handleSubmit} title="Register" />
             <View
               style={{
                 flexDirection: 'row',
                 alignSelf: 'center',
               }}>
-              <Text style={{color: textBasic, fontSize: 14}}>
-                Sudah punya akun ?
-              </Text>
+              <Text style={style.textBackToLogin}>Sudah punya akun ?</Text>
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('Login')}>
                 <Text style={style.backToLogin}> Login</Text>
@@ -154,11 +152,10 @@ const style = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
   },
-
   button: {
     marginTop: 20,
     marginBottom: 10,
-    backgroundColor: bgColor,
+    backgroundColor: Color.bgColor,
     borderWidth: 0,
     borderRadius: 20,
     width: '100%',
@@ -168,8 +165,8 @@ const style = StyleSheet.create({
     marginTop: 5,
     marginBottom: 3,
     fontSize: 14,
-    color: textBasic,
-    fontWeight: '700',
+    color: Color.textBasic,
+    fontFamily: FontType.semiBold,
   },
   checkbox: {
     marginTop: 18,
@@ -177,13 +174,14 @@ const style = StyleSheet.create({
   },
   textCheckbox: {
     fontSize: 14,
-    color: textBasic,
+    color: Color.textBasic,
   },
-  textCheckBox2: {color: textBold, fontSize: 14},
+  textCheckBox2: {color: Color.textBold, fontSize: 14},
   backToLogin: {
-    color: textBold,
+    color: Color.textBold,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: FontType.semiBold,
     marginBottom: 30,
   },
+  textBackToLogin: {color: Color.textBasic, fontSize: 14},
 });

@@ -5,33 +5,31 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  YellowBox,
   RefreshControl,
   ScrollView,
 } from 'react-native';
-import {Avatar, Icon, Text} from '@ui-kitten/components';
-import {
-  textContent,
-  textHintBold,
-  bgColor,
-  textBold,
-} from '../../Components/Color';
-import {Contents3, Contents4} from './Components/Data';
+import {Icon, Text} from '@ui-kitten/components';
+import {textContent, textHintBold, bgColor} from '../../Components/Color';
+import {Contents3} from './Components/Data';
 import EventTag from './Components/EventTag';
 import Shimmer from '../../Components/Shimmer';
+import ImageView from '../../Components/ImageView';
 
 function Event(props) {
   const [like, setLike] = React.useState(false);
   const [addLike, setAddLike] = React.useState(false);
-  const [shimmer, setShimmer] = React.useState(false);
+  const [shimmer, setShimmer] = React.useState(true);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [viewImage, setViewImage] = React.useState(false);
+  const [images, setImages] = React.useState('');
+  console.log(Contents3);
 
-  React.useEffect(() => {
-    setShimmer(false);
-    setTimeout(function load() {
-      setShimmer(true);
-    }, 3000);
-  }, []);
+  // React.useEffect(() => {
+  //   setShimmer(false);
+  //   setTimeout(function load() {
+  //     setShimmer(true);
+  //   }, 3000);
+  // }, []);
   const handleLike = () => {
     setLike(!like);
     if (like === true) {
@@ -39,6 +37,12 @@ function Event(props) {
     } else {
       setAddLike(false);
     }
+  };
+
+  const handleImageView = (bool, banner) => {
+    console.log('ok', banner);
+    setViewImage(bool);
+    setImages(banner);
   };
 
   const wait = timeout => {
@@ -54,9 +58,11 @@ function Event(props) {
       setShimmer(true);
     });
   }, [refreshing]);
+
   return (
     <>
       <EventTag />
+      <ImageView view={viewImage} setViewImage={setViewImage} image={images} />
       <View style={{flex: 9}}>
         <ScrollView
           refreshControl={
@@ -69,7 +75,6 @@ function Event(props) {
               backgroundColor: 'white',
             }}>
             <Text style={style.totalEvent}>{Contents3.length} Event</Text>
-
             <FlatList
               keyExtractor={(i, idx) => idx}
               data={Contents3}
@@ -81,7 +86,11 @@ function Event(props) {
                         style={style.banner}
                         visible={shimmer}
                         component={
-                          <Image style={style.banner} source={item.banner} />
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            onPress={() => handleImageView(true, item.banner)}>
+                            <Image style={style.banner} source={item.banner} />
+                          </TouchableOpacity>
                         }
                       />
 

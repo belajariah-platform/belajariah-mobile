@@ -99,6 +99,7 @@ export const Contents2 = [
 
 export const Contents3 = [
   {
+    id: 1,
     banner: e1,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -108,6 +109,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 2,
     banner: e2,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -116,6 +118,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 3,
     banner: e3,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -124,6 +127,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 4,
     banner: e4,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -132,6 +136,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 5,
     banner: e5,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -140,6 +145,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 6,
     banner: e1,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -149,6 +155,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 7,
     banner: e2,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -157,6 +164,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 8,
     banner: e3,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -165,6 +173,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 9,
     banner: e4,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -173,6 +182,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 10,
     banner: e5,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -181,6 +191,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 11,
     banner: e1,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -190,6 +201,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 12,
     banner: e2,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -198,6 +210,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 13,
     banner: e3,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -206,6 +219,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 14,
     banner: e4,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',
@@ -214,6 +228,7 @@ export const Contents3 = [
     link: 'https://www.instagram.com/ummaindonesia/',
   },
   {
+    id: 15,
     banner: e5,
     date: 'Sab, Agt 1',
     time: '10.00 WIB',

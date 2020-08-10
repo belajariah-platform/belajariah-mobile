@@ -7,17 +7,19 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Icon, Text, Button} from '@ui-kitten/components';
+import {Icon, Text} from '@ui-kitten/components';
 import BGLogin from '../../Helpers/Image/login.png';
-import {bgColor, textBold, textBasic} from '../../Components/Color';
-import InputText from '../../Components/InputText';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import Loader from '../../Components/Loader';
-import TopNavigator from '../../Components/TopNavigator';
 import {useDispatch} from 'react-redux';
 import {userLogin} from '../../Redux/Action/userAction';
 import Alert from '../../Components/Alert';
+import Buttons from '../../Components/Button';
+import Loader from '../../Components/Loader';
+import TopNavigator from '../../Components/TopNavigator';
+import InputText from '../../Components/InputText';
+import {FontType} from '../../Themes/Fonts';
+import {Color} from '../../Themes/Colors';
 
 function Register(props) {
   const [success] = React.useState(true);
@@ -67,7 +69,7 @@ function Register(props) {
   return (
     <>
       {loading && <Loader loading={loading} setLoading={setLoading} />}
-      <TopNavigator title="Login" />
+      <TopNavigator title="Login" backIcon={false} />
       <View
         style={{
           backgroundColor: 'white',
@@ -81,7 +83,7 @@ function Register(props) {
             <InputText
               form={FormLogin}
               name="email"
-              placeholder="Lamat Email"
+              placeholder="Alamat Email"
             />
 
             <Text style={style.text}>Kata Sandi</Text>
@@ -97,15 +99,13 @@ function Register(props) {
               <Text style={style.LupaSandi}>Lupa kata sandi ?</Text>
             </TouchableOpacity>
 
-            <Button style={style.button} onPress={FormLogin.handleSubmit}>
-              Login
-            </Button>
+            <Buttons onPress={FormLogin.handleSubmit} title="Login" />
             <View
               style={{
                 flexDirection: 'row',
                 alignSelf: 'center',
               }}>
-              <Text style={{color: textBasic, fontSize: 14}}>
+              <Text style={{color: Color.textBasic, fontSize: 14}}>
                 Belum punya akun ?
               </Text>
               <TouchableOpacity
@@ -149,26 +149,18 @@ const style = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
   },
-  button: {
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: bgColor,
-    borderWidth: 0,
-    borderRadius: 20,
-    width: '100%',
-    alignSelf: 'center',
-  },
+
   text: {
+    fontFamily: FontType.semiBold,
     marginTop: 5,
     marginBottom: 3,
     fontSize: 14,
-    color: textBasic,
-    fontWeight: '700',
+    color: Color.textBasic,
   },
   backToRegister: {
-    color: textBold,
+    color: Color.textBold,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: FontType.semiBold,
     marginBottom: 30,
   },
   anotherText: {
@@ -198,9 +190,9 @@ const style = StyleSheet.create({
     resizeMode: 'stretch',
   },
   LupaSandi: {
-    color: textBold,
-    fontSize: 14,
-    fontWeight: 'bold',
+    color: Color.textBold,
+    fontSize: 13,
+    fontFamily: FontType.semiBold,
     marginBottom: 20,
     marginTop: -10,
     textAlign: 'right',

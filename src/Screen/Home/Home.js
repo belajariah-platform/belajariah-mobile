@@ -13,7 +13,6 @@ import ActionSheets from '../../Components/ActionSheet';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 const actionSheetRef = createRef();
-
 function Home(props) {
   return (
     <View style={{flex: 1}}>

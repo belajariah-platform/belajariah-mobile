@@ -1,12 +1,14 @@
 import React from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {Text, Button} from '@ui-kitten/components';
-import {bgColor, textBold, textBasic} from '../../Components/Color';
-import InputText from '../../Components/InputText';
+import {Text} from '@ui-kitten/components';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import InputText from '../../Components/InputText';
 import Loader from '../../Components/Loader';
 import TopNavigator from '../../Components/TopNavigator';
+import Buttons from '../../Components/Button';
+import {FontType} from '../../Themes/Fonts';
+import {Color} from '../../Themes/Colors';
 
 function ChangePassword(props) {
   const [loading, setLoading] = React.useState(false);
@@ -33,7 +35,7 @@ function ChangePassword(props) {
   return (
     <>
       {loading && <Loader loading={loading} setLoading={setLoading} />}
-      <TopNavigator title="Lupa Kata Sandi" />
+      <TopNavigator title="Lupa Kata Sandi" backIcon={true} />
       <View
         style={{
           backgroundColor: 'white',
@@ -42,13 +44,7 @@ function ChangePassword(props) {
         }}>
         <ScrollView style={{paddingHorizontal: 20}}>
           <View style={{marginTop: 30}}>
-            <Text
-              style={{
-                color: textBasic,
-                fontSize: 14,
-                lineHeight: 18,
-                marginBottom: 30,
-              }}>
+            <Text style={style.content}>
               Silahkan masukan alamat email yang terdaftar di Belajariah dan
               kami akan mengirimkan instruksi untuk mengganti kata sandi kamu.
             </Text>
@@ -58,10 +54,7 @@ function ChangePassword(props) {
               name="email"
               placeholder="Alamat Email"
             />
-
-            <Button style={style.button} onPress={FormLogin.handleSubmit}>
-              Kirim
-            </Button>
+            <Buttons title="Kirim" onPress={FormLogin.handleSubmit} />
           </View>
         </ScrollView>
       </View>
@@ -78,10 +71,16 @@ const style = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
   },
+  content: {
+    color: Color.textBasic,
+    fontSize: 14,
+    lineHeight: 18,
+    marginBottom: 30,
+  },
   button: {
     marginTop: 5,
     marginBottom: 10,
-    backgroundColor: bgColor,
+    backgroundColor: Color.bgColor,
     borderWidth: 0,
     borderRadius: 20,
     width: '100%',
@@ -91,7 +90,7 @@ const style = StyleSheet.create({
     marginTop: 5,
     marginBottom: 3,
     fontSize: 14,
-    color: textBasic,
-    fontWeight: '700',
+    color: Color.textBasic,
+    fontFamily: FontType.semiBold,
   },
 });

@@ -4,18 +4,17 @@ import {
   ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
-  TouchableOpacity,
-  Image,
 } from 'react-native';
 import {Icon, Text, Button} from '@ui-kitten/components';
-import BGLogin from '../../Helpers/Image/login.png';
-import {bgColor, textBold, textBasic} from '../../Components/Color';
-import InputText from '../../Components/InputText';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import Loader from '../../Components/Loader';
 import TopNavigator from '../../Components/TopNavigator';
 import Alert from '../../Components/Alert';
+import InputText from '../../Components/InputText';
+import Buttons from '../../Components/Button';
+import {FontType} from '../../Themes/Fonts';
+import {Color} from '../../Themes/Colors';
 
 function ConfirmPassword(props) {
   const [success] = React.useState(true);
@@ -63,7 +62,7 @@ function ConfirmPassword(props) {
   return (
     <>
       {loading && <Loader loading={loading} setLoading={setLoading} />}
-      <TopNavigator title="Ubah Kata Sandi" />
+      <TopNavigator title="Ubah Kata Sandi" backIcon={true} />
       <View
         style={{
           backgroundColor: 'white',
@@ -72,13 +71,7 @@ function ConfirmPassword(props) {
         }}>
         <ScrollView style={{paddingHorizontal: 20}}>
           <View style={{marginTop: 30}}>
-            <Text
-              style={{
-                color: textBasic,
-                fontSize: 14,
-                lineHeight: 18,
-                marginBottom: 30,
-              }}>
+            <Text style={style.content}>
               Silahkan masukkan kata sandi baru untuk dikonfirmasi oleh
               belajariah.
             </Text>
@@ -105,9 +98,7 @@ function ConfirmPassword(props) {
               secureTextEntry={secureTextEntry}
             />
 
-            <Button style={style.button} onPress={FormLogin.handleSubmit}>
-              Kirim
-            </Button>
+            <Buttons onPress={FormLogin.handleSubmit} title="Reset" />
           </View>
         </ScrollView>
       </View>
@@ -118,26 +109,23 @@ function ConfirmPassword(props) {
 export default ConfirmPassword;
 
 const style = StyleSheet.create({
+  content: {
+    color: Color.textBasic,
+    fontSize: 14,
+    lineHeight: 18,
+    marginBottom: 30,
+  },
   image: {
     width: '65%',
     height: 140,
     alignSelf: 'center',
     marginTop: 30,
   },
-  button: {
-    marginTop: 5,
-    marginBottom: 10,
-    backgroundColor: bgColor,
-    borderWidth: 0,
-    borderRadius: 20,
-    width: '100%',
-    alignSelf: 'center',
-  },
   text: {
     marginTop: 5,
     marginBottom: 3,
     fontSize: 14,
-    color: textBasic,
-    fontWeight: '700',
+    color: Color.textBasic,
+    fontFamily: FontType.semiBold,
   },
 });

@@ -20,15 +20,15 @@ YellowBox.ignoreWarnings(['Warning: Failed child context type']);
 function News(props) {
   const [like, setLike] = React.useState(false);
   const [addLike, setAddLike] = React.useState(false);
-  const [shimmer, setShimmer] = React.useState(false);
+  const [shimmer, setShimmer] = React.useState(true);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  React.useEffect(() => {
-    setShimmer(false);
-    setTimeout(function load() {
-      setShimmer(true);
-    }, 3000);
-  }, []);
+  // React.useEffect(() => {
+  //   setShimmer(false);
+  //   setTimeout(function load() {
+  //     setShimmer(true);
+  //   }, 3000);
+  // }, []);
 
   const handleLike = () => {
     setLike(!like);

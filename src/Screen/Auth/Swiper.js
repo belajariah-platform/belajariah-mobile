@@ -5,12 +5,8 @@ import Swipers from 'react-native-swiper';
 import Swiper1 from '../../Helpers/Image/Swiper1.png';
 import Swiper2 from '../../Helpers/Image/Swiper2.png';
 import Swiper3 from '../../Helpers/Image/Swiper3.png';
-import {
-  bgColor,
-  textBold,
-  textBasic,
-  textHintBold,
-} from '../../Components/Color';
+import {Color} from '../../Themes/Colors';
+import {FontType} from '../../Themes/Fonts';
 import * as Animatable from 'react-native-animatable';
 
 function Swiper(props) {
@@ -18,7 +14,7 @@ function Swiper(props) {
   const [show, setShow] = React.useState(false);
 
   function onIndexChanged(index) {
-    if (index == 2) {
+    if (index == 4) {
       setAnimation('flipInX');
       setShow(true);
     } else {
@@ -46,9 +42,22 @@ function Swiper(props) {
           <Image source={Swiper1} style={style.image} />
         </View>
         <View style={style.footer}>
-          <Text style={style.title1}>Materi Terstrukturs</Text>
+          <Text style={style.title1}>Pertama di Indonesia</Text>
           <Text style={style.title2}>
-            Sukses ujian, belajar online dengan konten berkualitas di Belajariah
+            Layanan bimbingan belajar Agama Islam berbasis digital pertama di
+            Indonesia
+          </Text>
+        </View>
+      </View>
+      <View style={style.slide}>
+        <View style={style.header}>
+          <Image source={Swiper2} style={style.image} />
+        </View>
+        <View style={style.footer}>
+          <Text style={style.title1}>Materi Terlengkap</Text>
+          <Text style={style.title2}>
+            Materi disusun secara terstruktur dan tersistematis sesuai dengan
+            panduan di Al-Quran
           </Text>
         </View>
       </View>
@@ -59,7 +68,18 @@ function Swiper(props) {
         <View style={style.footer}>
           <Text style={style.title1}>Mentor Berkompeten</Text>
           <Text style={style.title2}>
-            Sukses ujian, belajar online dengan konten berkualitas di Belajariah
+            Memiliki Ustadz/Ustadzah yang berkompeten di bidangnya masing-masing
+          </Text>
+        </View>
+      </View>
+      <View style={style.slide}>
+        <View style={style.header}>
+          <Image source={Swiper2} style={style.image} />
+        </View>
+        <View style={style.footer}>
+          <Text style={style.title1}>Kelas yang bersertifikat</Text>
+          <Text style={style.title2}>
+            Memiliki Ustadz/Ustadzah yang berkompeten di bidangnya masing-masing
           </Text>
         </View>
       </View>
@@ -68,9 +88,9 @@ function Swiper(props) {
           <Image source={Swiper3} style={style.image} />
         </View>
         <View style={style.footer}>
-          <Text style={style.title1}>Kapanpun, Dimana Saja</Text>
+          <Text style={style.title1}>Belajar Kapanpun dan Dimanapun</Text>
           <Text style={style.title2}>
-            Sukses ujian, belajar online dengan konten berkualitas di Belajariah
+            Gunakan di rumah, sekolah maupun kantor
           </Text>
           {show ? (
             <Animatable.View
@@ -80,7 +100,7 @@ function Swiper(props) {
               <Button
                 style={style.btnSwiper}
                 onPress={() => props.navigation.navigate('Register')}>
-                Sign Up
+                <Text style={style.btnText}>Register</Text>
               </Button>
             </Animatable.View>
           ) : null}
@@ -112,9 +132,10 @@ const style = StyleSheet.create({
   },
   title1: {
     marginTop: -70,
-    color: textBasic,
-    fontSize: 20,
-    fontWeight: '600',
+    color: Color.textBasic,
+    fontSize: 19,
+    textAlign: 'center',
+    fontFamily: FontType.semiBold,
   },
   title2: {
     color: '#4d5d6c',
@@ -131,7 +152,7 @@ const style = StyleSheet.create({
     marginHorizontal: 5,
   },
   activeDot: {
-    backgroundColor: bgColor,
+    backgroundColor: Color.bgColor,
     width: 20,
     height: 8,
     borderRadius: 4,
@@ -143,14 +164,19 @@ const style = StyleSheet.create({
     paddingHorizontal: 30,
   },
   buttonWrapper: {
-    color: textBold,
+    color: Color.textBold,
     fontSize: 14,
   },
   btnSwiper: {
     marginTop: 20,
-    backgroundColor: bgColor,
+    backgroundColor: Color.bgColor,
     borderWidth: 0,
     borderRadius: 20,
     width: 100,
+  },
+  btnText: {
+    color: 'white',
+    fontSize: 13,
+    fontFamily: FontType.bold,
   },
 });
