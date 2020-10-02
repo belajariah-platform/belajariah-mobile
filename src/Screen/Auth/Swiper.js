@@ -138,7 +138,7 @@ const style = StyleSheet.create({
     fontFamily: FontType.semiBold,
   },
   title2: {
-    color: '#4d5d6c',
+    color: Color.textHintContent,
     fontSize: 13,
     marginTop: 8,
     textAlign: 'center',
@@ -166,6 +166,7 @@ const style = StyleSheet.create({
   buttonWrapper: {
     color: Color.textBold,
     fontSize: 14,
+    marginTop: 22,
   },
   btnSwiper: {
     marginTop: 20,

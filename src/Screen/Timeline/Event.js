@@ -9,11 +9,12 @@ import {
   ScrollView,
 } from 'react-native';
 import {Icon, Text} from '@ui-kitten/components';
-import {textContent, textHintBold, bgColor} from '../../Components/Color';
 import {Contents3} from './Components/Data';
 import EventTag from './Components/EventTag';
 import Shimmer from '../../Components/Shimmer';
 import ImageView from '../../Components/ImageView';
+import {Color} from '../../Themes/Colors';
+import {FontType} from '../../Themes/Fonts';
 
 function Event(props) {
   const [like, setLike] = React.useState(false);
@@ -133,7 +134,7 @@ function Event(props) {
                           style={style.iconLIke}
                           onPress={() => handleLike()}>
                           <Icon
-                            fill={like ? 'red' : '#8F9BB3'}
+                            fill={like ? 'red' : Color.textHintContent}
                             name={like ? 'heart' : 'heart-outline'}
                             style={{width: 20, height: 20}}
                           />
@@ -164,13 +165,13 @@ const style = StyleSheet.create({
   dateTime: {
     fontSize: 13.5,
     fontWeight: 'bold',
-    color: bgColor,
+    color: Color.bgColor,
     marginBottom: 4,
     borderRadius: 5,
   },
-  title: {color: textContent, fontSize: 15, width: 220, borderRadius: 5},
+  title: {color: Color.textContent, fontSize: 15, width: 220, borderRadius: 5},
   location: {
-    color: textHintBold,
+    color: Color.textHintContent,
     fontSize: 13,
     marginTop: 5,
     borderRadius: 5,

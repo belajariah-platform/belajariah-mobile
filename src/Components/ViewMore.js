@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Text} from '@ui-kitten/components';
 import ViewMoreText from 'react-native-view-more-text';
-import {textHint} from './Color';
+import {FontType} from '../Themes/Fonts';
+import {Color} from '../Themes/Colors';
 
 const renderViewMore = onPress => {
   return (
@@ -31,5 +32,11 @@ export default function ViewMore(props) {
 }
 
 const style = StyleSheet.create({
-  viewMore: {marginTop: 6, marginBottom: 12, fontSize: 11, color: textHint},
+  viewMore: {
+    marginTop: 6,
+    marginBottom: 12,
+    fontSize: 11,
+    color: Color.textHint,
+    fontFamily: FontType.regular,
+  },
 });

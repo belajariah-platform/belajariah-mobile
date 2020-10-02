@@ -130,7 +130,11 @@ function Profile(props) {
             </TouchableOpacity>
             <View>
               <Text style={style.hastag}>#Belajariah</Text>
-              <Button style={style.logout}>Logout</Button>
+              <Button
+                style={style.logout}
+                onPress={async () => await dispatch(userLogout())}>
+                Logout
+              </Button>
             </View>
           </View>
         </ScrollView>

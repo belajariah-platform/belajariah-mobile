@@ -149,7 +149,6 @@ const style = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
   },
-
   text: {
     fontFamily: FontType.semiBold,
     marginTop: 5,
@@ -167,7 +166,7 @@ const style = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     fontSize: 14,
-    color: '#bbbbbb',
+    color: Color.textHint,
     textAlign: 'center',
   },
   anotherLogin: {

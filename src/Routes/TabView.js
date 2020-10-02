@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Icon, TabBar, Tab, Text} from '@ui-kitten/components';
-import OurDaily from '../Screen/Timeline/OurDaily';
+import {StyleSheet} from 'react-native';
 import Content from '../Screen/Timeline/Content';
 import News from '../Screen/Timeline/News';
 import Event from '../Screen/Timeline/Event';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {useNavigation} from '@react-navigation/native';
 import {Color} from '../Themes/Colors';
 import {FontType} from '../Themes/Fonts';
+import HeaderTimeline from '../Screen/Timeline/Components/HeaderTimeline';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
@@ -72,17 +70,19 @@ const TabNavigation = () => {
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
         labelStyle: {
-          fontSize: 13,
+          fontSize: 12,
           fontFamily: FontType.semiBold,
           textTransform: 'capitalize',
         },
         style: {
           elevation: 0,
-          paddingTop: 5,
-          paddingBottom: 0,
-          marginBottom: 2,
+          paddingTop: 25,
           paddingHorizontal: 5,
           fontWeight: 'bold',
+          backgroundColor: 'white',
+          marginTop: 0,
+          marginBottom: 2,
+          height: 70,
         },
         indicatorStyle: {
           backgroundColor: 'transparent',
@@ -91,7 +91,6 @@ const TabNavigation = () => {
       }}>
       <Screen name="Content" component={Content} />
       <Screen name="News" component={News} />
-      <Screen name="Our Daily" component={OurDaily} />
       <Screen name="Event" component={Event} />
     </Navigator>
   );

@@ -5,16 +5,15 @@ import {FontType} from '../Themes/Fonts';
 
 export default function ButtonCustom(props) {
   return (
-    <Button style={props.styles} {...props}>
-      <Text style={style.text}>{props.title}</Text>
+    <Button style={props.style} {...props}>
+      <Text style={{...style.text, color: props.color}}>{props.title}</Text>
     </Button>
   );
 }
 
 const style = StyleSheet.create({
   text: {
-    color: 'white',
-    fontSize: 14,
     fontFamily: FontType.bold,
+    fontSize: 12,
   },
 });

@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Button, Text} from '@ui-kitten/components';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Text} from '@ui-kitten/components';
 import {FontType} from '../Themes/Fonts';
 import {Color} from '../Themes/Colors';
 
 export default function Buttons(props) {
   return (
-    <Button style={style.button} {...props}>
+    <TouchableOpacity style={style.button} {...props} activeOpacity={0.9}>
       <Text style={style.text}>{props.title}</Text>
-    </Button>
+    </TouchableOpacity>
   );
 }
 
@@ -20,11 +20,13 @@ const style = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 20,
     width: '100%',
-    alignSelf: 'center',
+    height: 40,
+    justifyContent: 'center',
   },
   text: {
     color: 'white',
     fontSize: 14,
+    textAlign: 'center',
     fontFamily: FontType.bold,
   },
 });

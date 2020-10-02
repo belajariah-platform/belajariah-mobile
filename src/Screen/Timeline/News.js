@@ -9,11 +9,12 @@ import {
   RefreshControl,
 } from 'react-native';
 import {Avatar, Icon, Text} from '@ui-kitten/components';
-import {textContent, textHintBold} from '../../Components/Color';
 import {Contents2} from './Components/Data';
 import Shimmer from '../../Components/Shimmer';
 import ViewMore from '../../Components/ViewMore';
 import LoaderPage from '../../Components/LoaderPage';
+import {Color} from '../../Themes/Colors';
+import {FontType} from '../../Themes/Fonts';
 
 YellowBox.ignoreWarnings(['Warning: Failed child context type']);
 
@@ -96,7 +97,7 @@ function News(props) {
                       <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity onPress={() => handleLike()}>
                           <Icon
-                            fill={like ? 'red' : '#8F9BB3'}
+                            fill={like ? 'red' : Color.textHintContent}
                             name={like ? 'heart' : 'heart-outline'}
                             style={{width: 24, height: 24}}
                           />
@@ -113,7 +114,7 @@ function News(props) {
                           style={{position: 'absolute', right: 0}}
                           activeOpacity={0.4}>
                           <Icon
-                            fill={'#8F9BB3'}
+                            fill={Color.textHintContent}
                             name={'link'}
                             style={style.iconLink}
                           />
@@ -136,7 +137,8 @@ function News(props) {
                             </Text>
                           }
                         />
-                        <Text style={{fontSize: 12, color: textHintBold}}>
+                        <Text
+                          style={{fontSize: 11, color: Color.textHintContent}}>
                           {item.time}
                         </Text>
                       </>
@@ -183,14 +185,14 @@ const style = StyleSheet.create({
   textName: {
     marginTop: 6,
     marginLeft: 10,
-    fontSize: 14,
-    color: textContent,
-    fontWeight: '700',
+    fontSize: 13,
+    color: Color.textContent,
+    fontFamily: FontType.bold,
     width: 100,
     borderRadius: 5,
   },
   textLike: {
-    color: textContent,
+    color: Color.textContent,
     fontSize: 11,
     marginLeft: 5,
     marginTop: 4,
@@ -199,13 +201,14 @@ const style = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: textContent,
+    color: Color.textContent,
     borderRadius: 5,
     width: '100%',
+    fontFamily: FontType.semiBold,
   },
   textContent: {
     fontSize: 13,
-    color: textContent,
+    color: Color.textContent,
     marginTop: 10,
     marginBottom: 20,
     lineHeight: 16,
