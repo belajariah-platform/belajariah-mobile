@@ -1,0 +1,36 @@
+import React from 'react';
+import {styles} from './textbox.style'
+import {Input, Text} from '@ui-kitten/components';
+
+const Textbox = (props) => {
+  return (
+    <Input
+      value={props.form && props.name && `${props.form.values[props.name]}`}
+      caption={
+        <Text style={styles.caption}>
+          {props.form &&
+            props.name &&
+            props.form.touched[props.name] &&
+            props.form.errors[props.name]}
+        </Text>
+      }
+      onChangeText={
+        props.form && props.name && props.form.handleChange(props.name)
+      }
+      onBlur={props.form && props.name && props.form.handleBlur(props.name)}
+      {...props}
+      style={styles.input}
+      size="medium"
+      status={
+        props.form &&
+        props.name &&
+        props.form.touched[props.name] &&
+        props.form.errors[props.name]
+          ? 'danger'
+          : null
+      }
+    />
+  );
+}
+
+export default Textbox
