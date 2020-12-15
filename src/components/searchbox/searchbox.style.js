@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const styles = StyleSheet.creatfunctione({
+const styles = StyleSheet.create({
     input: {
       marginVertical: 1,
     },

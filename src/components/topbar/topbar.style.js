@@ -1,7 +1,5 @@
-import {StyleSheet} from 'react-native';
-
-import {Color} from '../Themes/Colors';
-import {FontType} from '../Themes/Fonts';
+import {StyleSheet} from 'react-native'
+import {Color, FontType} from '../../assets'
 
 const styles = StyleSheet.create({
     iconNavigation: {
@@ -9,6 +7,6 @@ const styles = StyleSheet.create({
       color: Color.textBasic,
       fontFamily: FontType.bold,
     },
-  });
+  })
 
 export {styles}

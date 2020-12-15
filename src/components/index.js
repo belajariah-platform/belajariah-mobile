@@ -8,7 +8,7 @@ import Checkbox from './checkbox'
 import PageView from './page-view'
 import TextView from './text-view'
 import Searchbox from './searchbox'
-import ImageView from './image-view'
+import ImageViews from './image-view'
 
 export {
     Alerts,
@@ -21,5 +21,5 @@ export {
     PageView,
     TextView,
     Searchbox,
-    ImageView,
+    ImageViews,
 }

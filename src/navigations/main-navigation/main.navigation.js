@@ -1,13 +1,16 @@
 import React from 'react';
-import {Color, FontType} from '../../assets';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import {
+    Color, 
+    FontType,
+} from '../../assets';
 
 import {
     Home,
     Profile,
     Timeline,
-    Notification
 } from '../../containers';
 
 const Main = () => {
@@ -21,17 +24,11 @@ const Main = () => {
             case 'Home':
               iconName = 'book';
               break;
-            case 'Pembelian':
-              iconName = 'shopping-bag';
-              break;
             case 'Timeline':
               iconName = 'clock';
               break;
-            case 'Lainnya':
+            case 'Other':
               iconName = 'ellipsis-h';
-              break;
-            default:
-              iconName = 'opencart';
               break;
           }
           return <Icon name={iconName} size={21} color={color} />;
@@ -59,9 +56,8 @@ const Main = () => {
         },
       }}>
       <Screen name="Home" component={Home} options={{headerShown: false}} />
-      <Screen name="Pembelian" component={Notification} />
       <Screen name="Timeline" component={Timeline} />
-      <Screen name="Lainnya" component={Profile} />
+      <Screen name="Other" component={Profile} />
     </Navigator>
   );
 };
