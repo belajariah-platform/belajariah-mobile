@@ -1,7 +1,7 @@
 import Alerts from './alert'
 import Topbar from './topbar'
 import Buttons from './button'
-import Loading from './loading'
+import Loader from './loader'
 import Shimmer from './shimmer'
 import TextBox from './textbox'
 import Checkbox from './checkbox'
@@ -14,7 +14,7 @@ export {
     Alerts,
     Topbar,
     Buttons,
-    Loading,
+    Loader,
     Shimmer,
     TextBox,
     Checkbox,

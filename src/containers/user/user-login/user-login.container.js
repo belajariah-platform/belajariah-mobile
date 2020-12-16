@@ -70,14 +70,9 @@ const Login = (props) => {
   return (
     <>
       <Topbar title="Login" backIcon={false} />
-      <View
-        style={{
-          backgroundColor: 'white',
-          flex: 9,
-          marginTop: 3,
-        }}>
-        <ScrollView style={{paddingHorizontal: 20}}>
-          <Image source={Images.Intro1} style={styles.image} />
+       <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator ={false}>
+          <Images.Login.default style={styles.image} />
           <View style={{marginTop: 30}}>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox

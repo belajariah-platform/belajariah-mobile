@@ -20,6 +20,7 @@ export const GetData = async (dataUrl) => {
     throw err;
   }
 };
+
 export const PostData = async (dataUrl, formData) => {
   try {
     // checkConnection();

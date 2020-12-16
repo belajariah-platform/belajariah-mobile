@@ -5,6 +5,12 @@ import {
 } from '../../../assets'
 
 const styles = StyleSheet.create({
+    container : {
+      backgroundColor: 'white',
+      flex: 9,
+      marginTop: 3,
+      paddingHorizontal: 30
+    },
     image: {
       width: '53%',
       height: 142,

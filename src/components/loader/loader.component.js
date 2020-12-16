@@ -3,7 +3,7 @@ import {Color} from '../../assets';
 import {Overlay} from 'react-native-elements';
 import {Fold, Chase, Circle, Wander} from 'react-native-animated-spinkit';
 
-const  Loading = (props) => {
+const  Loader = (props) => {
   return (
     <>
       <Overlay
@@ -22,4 +22,4 @@ const  Loading = (props) => {
   );
 }
 
-export default Loading;
+export default Loader
