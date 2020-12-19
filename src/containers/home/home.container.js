@@ -6,12 +6,11 @@ import {
   TouchableOpacity, 
 } from 'react-native'
 
-import { Color } from '../../assets'
 import { 
   Swipeup,
-  Carousel, 
   Searchbox 
 } from '../../components'
+import { Color } from '../../assets'
 
 import { styles } from './home.style'
 
@@ -51,7 +50,6 @@ const Home = () => {
       <View style={{flex: 8}}>
         <ScrollView>
           <View style={styles.containerMiddle}>
-            <Carousel />
           </View>
           <View style={[styles.containerBottom]}>
             {/* <MainFiture />

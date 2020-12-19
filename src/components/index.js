@@ -5,7 +5,6 @@ import Loader from './loader'
 import Swipeup from './swipeup'
 import Shimmer from './shimmer'
 import TextBox from './textbox'
-import Carousel from './carousel'
 import Checkbox from './checkbox'
 import PageView from './page-view'
 import TextView from './text-view'
@@ -20,7 +19,6 @@ export {
     Swipeup,
     Shimmer,
     TextBox,
-    Carousel,
     Checkbox,
     PageView,
     TextView,

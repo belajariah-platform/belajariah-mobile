@@ -1,7 +1,8 @@
 import React from 'react';
-import {styles} from './button.style'
 import {Text} from '@ui-kitten/components'
 import {TouchableOpacity} from 'react-native'
+
+import {styles} from './button.style'
 
 const Buttons = (props) =>  {
   return (

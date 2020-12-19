@@ -3,18 +3,18 @@ import { FontType, Color } from '../../assets'
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 15,
-    marginBottom: 10,
-    backgroundColor: Color.bgColor,
-    borderWidth: 0,
-    borderRadius: 20,
-    width: '100%',
     height: 40,
+    width: '100%',
+    marginTop: 15,
+    borderWidth: 0,
+    marginBottom: 10,
+    borderRadius: 20,
     justifyContent: 'center',
+    backgroundColor: Color.bgColor,
   },
   text: {
-    color: 'white',
     fontSize: 14,
+    color: 'white',
     textAlign: 'center',
     fontFamily: FontType.bold,
   },

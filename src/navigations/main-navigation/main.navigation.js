@@ -1,6 +1,6 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from 'react'
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import {
     Color, 

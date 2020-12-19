@@ -1,22 +1,26 @@
 import React from 'react'
+import {useDispatch} from 'react-redux'
+import {userLogout} from '../../Redux/Action/userAction'
+
 import {
   View,
-} from 'react-native';
-import {styles} from './profile.style'
+  Text,
+} from 'react-native'
+import {
+  Buttons
+} from '../../components'
 
-import {useDispatch} from 'react-redux'
-import {Button} from '../../components'
-import {userLogout} from '../../Redux/Action/userAction'
+import {styles} from './profile.style'
 
 const Profile = () => {
   const dispatch = useDispatch();
   return (
-    <View >
-      <Button
-        style={styles.logout}
-          onPress={async () => await dispatch(userLogout())}>
-           Logout
-      </Button>
+    <View style={{flex:1}}>
+      <Buttons
+        title="Logout"
+        onPress={async () => await dispatch(userLogout())}
+          >
+      </Buttons>
   </View>
   )
 }

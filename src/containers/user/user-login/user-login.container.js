@@ -38,10 +38,10 @@ const Login = (props) => {
       password: Yup.string()
         .required('Passoword harus diisi'),
     }),
-    onSubmit: async (values, form) => {
+    onSubmit:  (values, form) => {
       setLoading(true);
       try {
-        const response = await dispatch(userLogin(values));
+        const response =  dispatch(userLogin(values));
         if (success === true) {
         }
       } catch (err) {
