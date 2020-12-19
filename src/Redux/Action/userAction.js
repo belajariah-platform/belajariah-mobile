@@ -1,8 +1,6 @@
 import {USER_LOGIN, USER_LOGOUT} from './actionTypes';
-import {submitData} from '../../Helpers/CRUD';
 
 export const userLogin = data => async dispatch => {
-  console.log(data);
   try {
     // const response = await submitData('login', data);
     if (data) {

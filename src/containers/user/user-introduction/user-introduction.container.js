@@ -53,23 +53,29 @@ const Introduction = (props) => {
       titles="Mendapatkan Pembinaan Berkelanjutan"
       description="Memiliki media konsultasi secara langsung dengan ustadz/ustadzah pengajar (personal konsultasi, webinar dan grup chat)"
     />
-    <IntroPage 
-      imageType={Images.Intro4} 
-      titles="Sertifikat Penilaian Hasil Belajarmu"
-      description="Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member"
-      animations={show ? (
-         <Animatable.View
-            delay={100}
-            useNativeDriver
-            animation={animationSignup}>
-            <Button
-              style={styles.btnSwiper}
-              onPress={() => props.navigation.navigate('Register')}>
-              <Text style={styles.btnText}>Register</Text>
-            </Button>
-         </Animatable.View>
-    ) : null}
-    />
+     <View style={styles.slide}>
+        <View style={styles.header}>
+          <Image source={Images.Intro4} style={styles.image} />
+        </View>
+        <View style={styles.footer}>
+          <Text style={styles.title1}>Sertifikat Penilaian Hasil Belajarmu</Text>
+          <Text style={styles.title2}>
+          Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member
+          </Text>
+          {show ? (
+            <Animatable.View
+              delay={100}
+              useNativeDriver
+              animation={animationSignup}>
+              <Button
+                style={styles.btnSwiper}
+                onPress={() => props.navigation.navigate('Register')}>
+                <Text style={styles.btnText}>Register</Text>
+              </Button>
+            </Animatable.View>
+          ) : null}
+        </View>
+      </View>
   </Swipers>
   )
 }

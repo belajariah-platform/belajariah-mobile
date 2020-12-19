@@ -4,6 +4,8 @@ import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {Icon, Text} from '@ui-kitten/components';
 
+import {userLogin} from '../../../Redux/Action/userAction';
+
 import {  
   View,
   Image, 
@@ -39,7 +41,7 @@ const Login = (props) => {
     onSubmit: async (values, form) => {
       setLoading(true);
       try {
-        // const response = await dispatch(userLogin(values));
+        const response = await dispatch(userLogin(values));
         if (success === true) {
         }
       } catch (err) {

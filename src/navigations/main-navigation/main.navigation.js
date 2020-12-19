@@ -35,20 +35,19 @@ const Main = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: Color.bgColor,
-        inactiveTintColor: Color.textLightHint,
+        adaptive: true,
         showLabel: false,
         allowFontScaling: true,
-        adaptive: true,
+        activeTintColor: Color.bgColor,
+        inactiveTintColor: Color.textLightHint,
         style: {
+          elevation: 40,
           borderWidth: 0,
-          borderColor: 'transparent',
-          elevation: 0,
+          marginTop: -30,
+          borderTopWidth: 0,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          marginTop: -30,
-          elevation: 40,
-          borderTopWidth: 0,
+          borderColor: 'transparent',
         },
         labelStyle: {
           fontSize: 12, 
