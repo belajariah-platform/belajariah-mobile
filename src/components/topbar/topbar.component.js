@@ -1,8 +1,9 @@
 import React from 'react'
-import {Icons} from '../../assets'
-import {styles} from './topbar.style'
-import {useNavigation} from '@react-navigation/native'
-import {TopNavigation, TopNavigationAction, Text} from '@ui-kitten/components'
+import PropTypes from 'prop-types'
+import { Icons } from '../../assets'
+import { styles } from './topbar.style'
+import { useNavigation } from '@react-navigation/native'
+import { TopNavigation, TopNavigationAction, Text } from '@ui-kitten/components'
 
 const Topbar = (props) => {
   const navigation = useNavigation()
@@ -18,7 +19,12 @@ const Topbar = (props) => {
         paddingHorizontal: props.backIcon ? 0 : 20,
       }}
     />
-  );
+  )
+}
+
+Topbar.propTypes = {
+  title : PropTypes.string,
+  backIcon : PropTypes.bools,
 }
 
 export default Topbar

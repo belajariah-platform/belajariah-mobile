@@ -1,26 +1,27 @@
-import React, {useState} from 'react'
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Swipers from 'react-native-swiper'
 import { Button, Text } from '@ui-kitten/components'
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from 'react-native-animatable'
 
 import {
-  View, 
+  View,
   Image
 } from 'react-native'
-import {Images} from '../../../assets'
-import {styles} from './user-introduction.style'
+import { Images } from '../../../assets'
+import { styles } from './user-introduction.style'
 
 const Introduction = (props) => {
-  const [animationSignup, setAnimation] = useState(null);
-  const [show, setShow] = useState(false);
+  const [animationSignup, setAnimation] = useState(null)
+  const [show, setShow] = useState(false)
 
   const onIndexChanged = (index) => {
     if (index == 3) {
-      setAnimation('flipInX');
-      setShow(true);
+      setAnimation('flipInX')
+      setShow(true)
     } else {
-      setAnimation(null);
-      setShow(false);
+      setAnimation(null)
+      setShow(false)
     }
   }
 
@@ -34,26 +35,26 @@ const Introduction = (props) => {
       onIndexChanged={index => onIndexChanged(index)}
       nextButton={<Text style={styles.buttonWrapper}>Selanjutnya</Text>}
       prevButton={
-        <Text style={{...styles.buttonWrapper, color: '#C7BBD9'}}>
+        <Text style={{ ...styles.buttonWrapper, color: '#C7BBD9' }}>
           Sebelumnya
         </Text>
       }>
-    <IntroPage 
-      imageType={Images.Intro1} 
-      titles="Pengajar yang Berkompeten"
-      description="Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya"
-    />
-    <IntroPage 
-      imageType={Images.Intro2} 
-      titles="Belajar Alqur'an Jadi Lebih Mudah"
-      description="Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya"
-    />
-    <IntroPage 
-      imageType={Images.Intro3} 
-      titles="Mendapatkan Pembinaan Berkelanjutan"
-      description="Memiliki media konsultasi secara langsung dengan ustadz/ustadzah pengajar (personal konsultasi, webinar dan grup chat)"
-    />
-     <View style={styles.slide}>
+      <IntroPage
+        imageType={Images.Intro1}
+        titles='Pengajar yang Berkompeten'
+        description='Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya'
+      />
+      <IntroPage
+        imageType={Images.Intro2}
+        titles="Belajar Alqur'an Jadi Lebih Mudah"
+        description='Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya'
+      />
+      <IntroPage
+        imageType={Images.Intro3}
+        titles='Mendapatkan Pembinaan Berkelanjutan'
+        description='Memiliki media konsultasi secara langsung dengan ustadz/ustadzah pengajar (personal konsultasi, webinar dan grup chat)'
+      />
+      <View style={styles.slide}>
         <View style={styles.header}>
           <Image source={Images.Intro4} style={styles.image} />
         </View>
@@ -76,23 +77,32 @@ const Introduction = (props) => {
           ) : null}
         </View>
       </View>
-  </Swipers>
+    </Swipers>
   )
 }
 
 const IntroPage = (props) => {
   return (
-      <View style={styles.slide}>
-        <View style={styles.header}>
-          <Image source={props.imageType} style={styles.image} />
-        </View>
-        <View style={styles.footer}>
-          <Text style={styles.title1}>{props.titles}</Text>
-          <Text style={styles.title2}>{props.description}</Text>
-          {props.animations}
-        </View>
+    <View style={styles.slide}>
+      <View style={styles.header}>
+        <Image source={props.imageType} style={styles.image} />
       </View>
+      <View style={styles.footer}>
+        <Text style={styles.title1}>{props.titles}</Text>
+        <Text style={styles.title2}>{props.description}</Text>
+      </View>
+    </View>
   )
+}
+
+Introduction.propTypes = {
+  navigation : PropTypes.object
+}
+
+IntroPage.propTypes = {
+  titles : PropTypes.string,
+  imageType : PropTypes.object,
+  description : PropTypes.string,
 }
 
 export default Introduction

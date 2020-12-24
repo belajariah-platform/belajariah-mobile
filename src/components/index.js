@@ -12,16 +12,16 @@ import Searchbox from './searchbox'
 import ImageViews from './image-view'
 
 export {
-    Alerts,
-    Topbar,
-    Buttons,
-    Loader,
-    Swipeup,
-    Shimmer,
-    TextBox,
-    Checkbox,
-    PageView,
-    TextView,
-    Searchbox,
-    ImageViews,
+  Alerts,
+  Topbar,
+  Buttons,
+  Loader,
+  Swipeup,
+  Shimmer,
+  TextBox,
+  Checkbox,
+  PageView,
+  TextView,
+  Searchbox,
+  ImageViews,
 }

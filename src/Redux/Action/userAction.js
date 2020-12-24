@@ -1,4 +1,4 @@
-import {USER_LOGIN, USER_LOGOUT} from './actionTypes';
+import { USER_LOGIN, USER_LOGOUT } from './actionTypes'
 
 export const userLogin = data => async dispatch => {
   try {
@@ -7,7 +7,7 @@ export const userLogin = data => async dispatch => {
       await dispatch({
         type: USER_LOGIN,
         payload: data,
-      });
+      })
     }
     // return response;
   } catch (err) {
@@ -15,12 +15,12 @@ export const userLogin = data => async dispatch => {
     //   throw err;
     // }
   }
-};
+}
 export const userLogout = () => async dispatch => {
   await dispatch({
     type: USER_LOGOUT,
-  });
+  })
   // await dispatch({
   //   type: CLEAR_HISTORY,
   // });
-};
+}

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-import TimelineContent from './timeline-content.container';
-import TimelineEvent from './timeline-event.container';
-import TimelineNews from './timeline-news.container';
+import TimelineNews from './timeline-news.container'
+import TimelineEvent from './timeline-event.container'
+import TimelineContent from './timeline-content.container'
 
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Color, FontType} from '../../assets';
+import { Color, FontType } from '../../assets'
 
-const {Navigator, Screen} = createMaterialTopTabNavigator();
+const { Navigator, Screen } = createMaterialTopTabNavigator()
 
 const Timeline = () => {
   return (
@@ -37,11 +37,11 @@ const Timeline = () => {
           fontWeight: 'bold',
         },
       }}>
-      <Screen name="Content" component={TimelineContent} />
-      <Screen name="News" component={TimelineNews} />
-      <Screen name="Event" component={TimelineEvent} />
+      <Screen name='Content' component={TimelineContent} />
+      <Screen name='News' component={TimelineNews} />
+      <Screen name='Event' component={TimelineEvent} />
     </Navigator>
-  );
-};
+  )
+}
 
 export default Timeline

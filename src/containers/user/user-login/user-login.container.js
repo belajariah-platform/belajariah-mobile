@@ -1,23 +1,24 @@
 import * as Yup from 'yup'
-import {useFormik} from 'formik'
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {Icon, Text} from '@ui-kitten/components';
+import { useFormik } from 'formik'
+import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Icon, Text } from '@ui-kitten/components'
 
-import {userLogin} from '../../../Redux/Action/userAction';
+import { userLogin } from '../../../Redux/Action/userAction'
 
-import {  
+import {
   View,
-  Image, 
+  Image,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native'
 
 import {
-    Topbar,
-    Buttons,
-    TextBox
+  Topbar,
+  Buttons,
+  TextBox
 } from '../../../components'
 
 import { Images, Color } from '../../../assets'
@@ -26,11 +27,11 @@ import { styles } from './user-login.style'
 const Login = (props) => {
   const dispatch = useDispatch()
   const [success] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const [setLoading] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const FormSubmit = useFormik({
-    initialValues: {email: '', password: ''},
+    initialValues: { email: '', password: '' },
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Masukan email yang valid')
@@ -38,31 +39,31 @@ const Login = (props) => {
       password: Yup.string()
         .required('Passoword harus diisi'),
     }),
-    onSubmit:  (values, form) => {
-      setLoading(true);
+    onSubmit:  (values) => {
+      setLoading(true)
       try {
-        const response =  dispatch(userLogin(values));
+        const response =  dispatch(userLogin(values))
         if (success === true) {
+          return response
         }
       } catch (err) {
-        if (err.response) {
-        }
+        return err
       }
-      setLoading(false);
+      setLoading(false)
     },
-  });
+  })
 
   const load = () => {
     setInterval(function() {
-      setLoading(false);
-    }, 2000);
-    setLoading(true);
-  };
-  
+      setLoading(false)
+    }, 2000)
+    setLoading(true)
+  }
+
   const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
-  
+    setSecureTextEntry(!secureTextEntry)
+  }
+
   const renderIcon = props => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
       <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'} />
@@ -71,22 +72,22 @@ const Login = (props) => {
 
   return (
     <>
-      <Topbar title="Login" backIcon={false} />
-       <View style={styles.container}>
+      <Topbar title='Login' backIcon={false} />
+      <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
           <Images.Login.default style={styles.image} />
-          <View style={{marginTop: 30}}>
+          <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
               form={FormSubmit}
-              name="email"
-              placeholder="Alamat Email"
+              name='email'
+              placeholder='Alamat Email'
             />
             <Text style={styles.text}>Kata Sandi</Text>
             <TextBox
               form={FormSubmit}
-              name="password"
-              placeholder="Kata Sandi"
+              name='password'
+              placeholder='Kata Sandi'
               accessoryRight={renderIcon}
               secureTextEntry={secureTextEntry}
             />
@@ -95,13 +96,13 @@ const Login = (props) => {
               <Text style={styles.LupaSandi}>Lupa kata sandi ?</Text>
             </TouchableOpacity>
 
-            <Buttons onPress={FormSubmit.handleSubmit} title="Login" />
+            <Buttons onPress={FormSubmit.handleSubmit} title='Login' />
             <View
               style={{
                 flexDirection: 'row',
                 alignSelf: 'center',
               }}>
-              <Text style={{color: Color.textBasic, fontSize: 14}}>
+              <Text style={{ color: Color.textBasic, fontSize: 14 }}>
                 Belum punya akun ?
               </Text>
               <TouchableOpacity
@@ -112,7 +113,7 @@ const Login = (props) => {
             <View>
               <Text style={styles.anotherText}>Atau</Text>
             </View>
-            <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 style={styles.anotherLogin}
                 activeOpacity={0.6}
@@ -126,7 +127,7 @@ const Login = (props) => {
               <TouchableOpacity style={styles.anotherLogin} activeOpacity={0.6}>
                 <Image
                   source={Images.Fb}
-                  style={{...styles.ImageIconStyle, width: 24, height: 24}}
+                  style={{ ...styles.ImageIconStyle, width: 24, height: 24 }}
                 />
               </TouchableOpacity>
             </View>
@@ -135,6 +136,11 @@ const Login = (props) => {
       </View>
     </>
   )
+}
+
+
+Login.propTypes = {
+  navigation : PropTypes.object
 }
 
 export default Login
