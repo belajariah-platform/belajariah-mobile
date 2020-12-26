@@ -1,15 +1,11 @@
 const FontType = {
-    light: 'OpenSans-Light',
-    regular: 'OpenSans-Regular',
-    semiBold: 'OpenSans-SemiBold',
-    bold: 'OpenSans-Bold',
-  };
-  
+  regular: 'Avenir-LT-Std-65-Medium',
+  bold: 'Avenir-Next-LT-Pro-Bold',
+};
+
 const FontWeight = {
-    bold: 'bold',
-    semiBold: '500',
-    regular: '400',
-  };
-  
+  bold: 'bold',
+  regular: '400',
+};
+
 export {FontType, FontWeight};
-  

@@ -1,25 +1,13 @@
 import React from 'react';
-import {
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  Text,
-  Icon, 
-  Avatar, 
-} from '@ui-kitten/components';
+import {View, Image, FlatList, TouchableOpacity} from 'react-native';
+import {Text, Icon, Avatar} from '@ui-kitten/components';
 
-import { 
-  Shimmer,
-  TextView,
- } from '../../components'
+import {Shimmer, TextView} from '../../components';
 
- import { Color } from '../../assets'
- import DataContent from './column-content.json'
+import {Color} from '../../assets';
+import DataContent from './column-content.json';
 
- import { styles } from './timeline.style'
+import {styles} from './timeline.style';
 
 const TimelineContent = () => {
   const [like, setLike] = React.useState(false);
@@ -35,13 +23,13 @@ const TimelineContent = () => {
     } else {
       setAddLike(false);
     }
-  }
+  };
 
-  const wait = timeout => {
-    return new Promise(resolve => {
+  const wait = (timeout) => {
+    return new Promise((resolve) => {
       setTimeout(resolve, timeout);
     });
-  }
+  };
 
   const onRefreshing = React.useCallback(() => {
     setRefreshing(true);
@@ -158,5 +146,5 @@ const TimelineContent = () => {
   };
 
   return isLoading ? <Loading /> : renderData();
-}
+};
 export default TimelineContent;
