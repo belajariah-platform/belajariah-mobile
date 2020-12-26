@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-import { Images } from '../../../assets'
+// import { Images } from '../../../assets'
 import { styles } from './user-register.style'
 import {
   Loader,
@@ -12,6 +12,7 @@ import {
   TextBox,
   Buttons
 } from '../../../components'
+// import { Images } from '../../../assets'
 
 import {
   View,
@@ -79,7 +80,7 @@ const Register = (props) => {
       <Topbar title='Register' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Images.Register.default style={styles.image} />
+          {/* <Images.Login.default style={styles.image}/> */}
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Nama Lengkap</Text>
             <TextBox

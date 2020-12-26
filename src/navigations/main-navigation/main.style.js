@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { FontType } from '../../../assets'
+import { FontType } from '../../assets'
 
 const styles = StyleSheet.create({
   tabBarStyle : {

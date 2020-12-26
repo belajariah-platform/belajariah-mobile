@@ -1,27 +1,28 @@
+import React from 'react'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import Swipers from 'react-native-swiper'
 import { Button, Text } from '@ui-kitten/components'
-import * as Animatable from 'react-native-animatable'
+// import * as Animatable from 'react-native-animatable'
 
 import {
   View,
   Image
 } from 'react-native'
 import { Images } from '../../../assets'
+
 import { styles } from './user-introduction.style'
 
 const Introduction = (props) => {
-  const [animationSignup, setAnimation] = useState(null)
-  const [show, setShow] = useState(false)
+  // const [show, setShow] = useState(true)
+  // const [animationSignup, setAnimation] = useState(null)
 
   const onIndexChanged = (index) => {
     if (index == 3) {
-      setAnimation('flipInX')
-      setShow(true)
+      // setAnimation('flipInX')
+      // setShow(true)
     } else {
-      setAnimation(null)
-      setShow(false)
+      // setAnimation(null)
+      // setShow(false)
     }
   }
 
@@ -63,18 +64,18 @@ const Introduction = (props) => {
           <Text style={styles.title2}>
           Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member
           </Text>
-          {show ? (
+          {/* {show ? (
             <Animatable.View
               delay={100}
               useNativeDriver
-              animation={animationSignup}>
-              <Button
-                style={styles.btnSwiper}
-                onPress={() => props.navigation.navigate('Register')}>
-                <Text style={styles.btnText}>Register</Text>
-              </Button>
-            </Animatable.View>
-          ) : null}
+              animation={animationSignup}> */}
+          <Button
+            style={styles.btnSwiper}
+            onPress={() => props.navigation.navigate('Register')}>
+            <Text style={styles.btnText}>Register</Text>
+          </Button>
+          {/* </Animatable.View>
+          ) : null} */}
         </View>
       </View>
     </Swipers>
@@ -90,6 +91,7 @@ const IntroPage = (props) => {
       <View style={styles.footer}>
         <Text style={styles.title1}>{props.titles}</Text>
         <Text style={styles.title2}>{props.description}</Text>
+
       </View>
     </View>
   )
@@ -101,7 +103,7 @@ Introduction.propTypes = {
 
 IntroPage.propTypes = {
   titles : PropTypes.string,
-  imageType : PropTypes.object,
+  imageType : PropTypes.number,
   description : PropTypes.string,
 }
 

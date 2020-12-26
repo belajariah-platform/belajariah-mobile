@@ -7,7 +7,8 @@ import { Color } from '../../assets'
 import {
   Home,
   Profile,
-  Timeline,
+  ClassUser,
+  Transaction,
 } from '../../containers'
 
 import { styles } from './main.style'
@@ -21,10 +22,13 @@ const Main = () => {
           let iconName
           switch (route.name) {
           case 'Home':
+            iconName = 'home'
+            break
+          case 'Class':
             iconName = 'book'
             break
-          case 'Timeline':
-            iconName = 'clock'
+          case 'Transaction':
+            iconName = 'handshake'
             break
           case 'Other':
             iconName = 'ellipsis-h'
@@ -38,12 +42,13 @@ const Main = () => {
         showLabel: false,
         allowFontScaling: true,
         labelStyle: styles.labelStyle,
-        style: styles.tabBarContainer,
+        style: styles.tabBarStyle,
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
       }}>
       <Screen name='Home' component={Home} options={{ headerShown: false }} />
-      <Screen name='Timeline' component={Timeline} />
+      <Screen name='Class' component={ClassUser} />
+      <Screen name='Transaction' component={Transaction} />
       <Screen name='Other' component={Profile} />
     </Navigator>
   )

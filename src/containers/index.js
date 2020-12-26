@@ -5,6 +5,7 @@ import Timeline from './timeline'
 import Transaction from './transaction'
 import Notification from './notification'
 
+import { ClassUser } from './classs'
 import { Login, Register, Introduction, ChangePassword } from './user'
 
 export {
@@ -14,6 +15,7 @@ export {
   Profile,
   Register,
   Timeline,
+  ClassUser,
   Transaction,
   Introduction,
   Notification,

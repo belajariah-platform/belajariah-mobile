@@ -1,6 +1,7 @@
 import Icons from './icon'
-import { Color } from './color'
 import Images from './images'
+import { Color } from './color'
+import FontSize from './font-size'
 
 import {
   FontType,
@@ -11,6 +12,7 @@ export {
   Icons,
   Color,
   Images,
+  FontSize,
   FontType,
   FontWeight
 }

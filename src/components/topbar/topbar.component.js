@@ -24,7 +24,7 @@ const Topbar = (props) => {
 
 Topbar.propTypes = {
   title : PropTypes.string,
-  backIcon : PropTypes.bools,
+  backIcon : PropTypes.bool,
 }
 
 export default Topbar

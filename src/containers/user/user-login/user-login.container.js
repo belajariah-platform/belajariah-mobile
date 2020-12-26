@@ -27,7 +27,7 @@ import { styles } from './user-login.style'
 const Login = (props) => {
   const dispatch = useDispatch()
   const [success] = useState(true)
-  const [setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const FormSubmit = useFormik({
@@ -40,7 +40,7 @@ const Login = (props) => {
         .required('Passoword harus diisi'),
     }),
     onSubmit:  (values) => {
-      setLoading(true)
+      // setLoading(true)
       try {
         const response =  dispatch(userLogin(values))
         if (success === true) {
@@ -49,16 +49,9 @@ const Login = (props) => {
       } catch (err) {
         return err
       }
-      setLoading(false)
+      // setLoading(false)
     },
   })
-
-  const load = () => {
-    setInterval(function() {
-      setLoading(false)
-    }, 2000)
-    setLoading(true)
-  }
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry)
@@ -117,7 +110,6 @@ const Login = (props) => {
               <TouchableOpacity
                 style={styles.anotherLogin}
                 activeOpacity={0.6}
-                onPress={() => load()}
               >
                 <Image
                   source={Images.Google}

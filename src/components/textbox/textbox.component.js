@@ -35,7 +35,7 @@ const Textbox = (props) => {
 }
 
 Textbox.propTypes = {
-  form : PropTypes.func,
+  form : PropTypes.object,
   name : PropTypes.string
 }
 
