@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FontType, Color } from '../../assets'
 
 const styles = StyleSheet.create({
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontType.bold,
   },
-  });
+})
 
-export {styles}
+export { styles }

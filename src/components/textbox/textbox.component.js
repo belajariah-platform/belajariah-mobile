@@ -1,6 +1,7 @@
-import React from 'react';
-import {styles} from './textbox.style'
-import {Input, Text} from '@ui-kitten/components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { styles } from './textbox.style'
+import { Input, Text } from '@ui-kitten/components'
 
 const Textbox = (props) => {
   return (
@@ -20,7 +21,7 @@ const Textbox = (props) => {
       onBlur={props.form && props.name && props.form.handleBlur(props.name)}
       {...props}
       style={styles.input}
-      size="medium"
+      size='medium'
       status={
         props.form &&
         props.name &&
@@ -30,7 +31,12 @@ const Textbox = (props) => {
           : null
       }
     />
-  );
+  )
+}
+
+Textbox.propTypes = {
+  form : PropTypes.object,
+  name : PropTypes.string
 }
 
 export default Textbox

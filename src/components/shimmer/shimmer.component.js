@@ -1,5 +1,6 @@
-import React from 'react';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import React from 'react'
+import PropTypes from 'prop-types'
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 
 const Shimmer = (props) => {
   return (
@@ -11,7 +12,12 @@ const Shimmer = (props) => {
       {...props}>
       {props.component}
     </ShimmerPlaceHolder>
-  );
+  )
+}
+
+Shimmer.propTypes = {
+  visible : PropTypes.bool,
+  component : PropTypes.object,
 }
 
 export default Shimmer
