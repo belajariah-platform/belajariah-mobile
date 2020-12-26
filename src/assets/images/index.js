@@ -7,6 +7,7 @@ export default {
   Intro4: require('./Intro4.png'),
   Google: require('./Google.png'),
   Register: require('./Register.svg'),
+<<<<<<< HEAD
   Search: require('./IconSearch.svg'),
   JudulTahsin: require('./CardJudulTahsin.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
@@ -19,3 +20,6 @@ export default {
   BtnReadMore: require('./BtnReadMore.svg'),
   BtnArrowUp: require('./BtnArrowUp.svg'),
 };
+=======
+}
+>>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c

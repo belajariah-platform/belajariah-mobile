@@ -1,6 +1,7 @@
 import React from 'react'
-import {styles} from './text-view.style'
-import {Text} from '@ui-kitten/components'
+import PropTypes from 'prop-types'
+import { styles } from './text-view.style'
+import { Text } from '@ui-kitten/components'
 import ViewMoreText from 'react-native-view-more-text'
 
 const renderViewMore = onPress => {
@@ -8,15 +9,15 @@ const renderViewMore = onPress => {
     <Text style={styles.viewMore} onPress={onPress}>
       View more...
     </Text>
-  );
-};
+  )
+}
 const renderViewLess = onPress => {
   return (
     <Text style={styles.viewMore} onPress={onPress}>
       View less
     </Text>
-  );
-};
+  )
+}
 
 const TextView = (props) => {
   return (
@@ -26,7 +27,11 @@ const TextView = (props) => {
       renderViewLess={renderViewLess}>
       {props.component}
     </ViewMoreText>
-  );
+  )
+}
+
+TextView.propTypes = {
+  component : PropTypes.object,
 }
 
 export default TextView

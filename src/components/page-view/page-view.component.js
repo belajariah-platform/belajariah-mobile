@@ -1,14 +1,20 @@
-import React from 'react';
-import {View} from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { View } from 'react-native'
+import ActionSheet from 'react-native-actions-sheet'
 
 const PageView = (props) => {
   return (
     <View>
       <ActionSheet ref={props.visible}>
-        <View style={{height: 300}} />
+        <View style={{ height: 300 }} />
       </ActionSheet>
     </View>
-  );
+  )
 }
-export default PageView;
+
+PageView.propTypes = {
+  visible : PropTypes.bool,
+}
+
+export default PageView

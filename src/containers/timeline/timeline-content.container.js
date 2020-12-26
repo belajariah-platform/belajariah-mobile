@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import {View, Image, FlatList, TouchableOpacity} from 'react-native';
 import {Text, Icon, Avatar} from '@ui-kitten/components';
@@ -8,23 +9,34 @@ import {Color} from '../../assets';
 import DataContent from './column-content.json';
 
 import {styles} from './timeline.style';
+=======
+import React, { useState } from 'react'
+import { View, Image, FlatList, TouchableOpacity } from 'react-native'
+import { Text, Icon, Avatar } from '@ui-kitten/components'
+
+import { Shimmer, TextView } from '../../components'
+
+import { Color } from '../../assets'
+import DataContent from './column-content.json'
+
+import { styles } from './timeline.style'
+>>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
 
 const TimelineContent = () => {
-  const [like, setLike] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [addLike, setAddLike] = React.useState(false);
-  const [shimmer, setShimmer] = React.useState(true);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [like, setLike] = useState(false)
+  const [addLike, setAddLike] = useState(false)
+  const [shimmer] = useState(true)
 
   const handleLike = () => {
-    setLike(!like);
+    setLike(!like)
     if (like === true) {
-      setAddLike(true);
+      setAddLike(true)
     } else {
-      setAddLike(false);
+      setAddLike(false)
     }
   };
 
+<<<<<<< HEAD
   const wait = (timeout) => {
     return new Promise((resolve) => {
       setTimeout(resolve, timeout);
@@ -40,6 +52,8 @@ const TimelineContent = () => {
     });
   }, [refreshing]);
 
+=======
+>>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
   const renderData = () => {
     return (
       <View
@@ -52,15 +66,9 @@ const TimelineContent = () => {
             backgroundColor: 'white',
           }}>
           <FlatList
-            // refreshControl={
-            //   <RefreshControl
-            //     refreshing={refreshing}
-            //     onRefresh={onRefreshing}
-            //   />
-            // }
-            keyExtractor={(i, idx) => idx}
+            keyExtractor={( idx) => idx}
             data={DataContent}
-            renderItem={({item, index}) => (
+            renderItem={({ item }) => (
               <>
                 <View style={styles.layoutContent}>
                   <View
@@ -90,17 +98,17 @@ const TimelineContent = () => {
                       <Image style={styles.banner} source={item.banner} />
                     }
                   />
-                  <View style={{marginTop: 10, marginHorizontal: 15}}>
+                  <View style={{ marginTop: 10, marginHorizontal: 15 }}>
                     <Shimmer
                       style={styles.likeShimmer}
                       visible={shimmer}
                       component={
-                        <View style={{flexDirection: 'row'}}>
+                        <View style={{ flexDirection: 'row' }}>
                           <TouchableOpacity onPress={() => handleLike()}>
                             <Icon
                               fill={like ? 'red' : Color.textHintContent}
                               name={like ? 'heart' : 'heart-outline'}
-                              style={{width: 24, height: 24}}
+                              style={{ width: 24, height: 24 }}
                             />
                           </TouchableOpacity>
                           <Text style={styles.textLike}>
@@ -109,7 +117,7 @@ const TimelineContent = () => {
                         </View>
                       }
                     />
-                    <View style={{marginTop: 20}}>
+                    <View style={{ marginTop: 20 }}>
                       <Shimmer
                         style={styles.textTitle}
                         visible={shimmer}
@@ -123,7 +131,7 @@ const TimelineContent = () => {
                         component={
                           <>
                             <TextView
-                              textStyle={{textAlign: 'left', marginTop: 15}}
+                              textStyle={{ textAlign: 'left', marginTop: 15 }}
                               component={
                                 <Text style={styles.textContent}>
                                   {item.content}
@@ -142,9 +150,15 @@ const TimelineContent = () => {
           />
         </View>
       </View>
-    );
-  };
+    )
+  }
 
+<<<<<<< HEAD
   return isLoading ? <Loading /> : renderData();
 };
 export default TimelineContent;
+=======
+  return renderData()
+}
+export default TimelineContent
+>>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
