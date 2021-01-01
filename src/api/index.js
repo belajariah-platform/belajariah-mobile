@@ -1,3 +1,5 @@
-import Config from './config'
+import UserAPI from './user'
 
-export { Config }
+export {
+  UserAPI
+}

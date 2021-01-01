@@ -5,8 +5,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon, Text } from '@ui-kitten/components'
 
-import { userLogin } from '../../../Redux/Action/userAction'
-
 import {
   View,
   Image,
@@ -21,13 +19,13 @@ import {
   TextBox
 } from '../../../components'
 
-import { Images, Color } from '../../../assets'
+import { UserAPI } from '../../../api'
+import { Images } from '../../../assets'
 import { styles } from './user-login.style'
 
 const Login = (props) => {
   const dispatch = useDispatch()
   const [success] = useState(true)
-  // const [loading, setLoading] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const FormSubmit = useFormik({
@@ -40,16 +38,14 @@ const Login = (props) => {
         .required('Passoword harus diisi'),
     }),
     onSubmit:  (values) => {
-      // setLoading(true)
       try {
-        const response =  dispatch(userLogin(values))
+        const response =  dispatch(UserAPI.SignIn(values))
         if (success === true) {
           return response
         }
       } catch (err) {
         return err
       }
-      // setLoading(false)
     },
   })
 
@@ -65,37 +61,33 @@ const Login = (props) => {
 
   return (
     <>
-      <Topbar title='Login' backIcon={false} />
+      <Topbar title='Masuk' backIcon={false} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Images.Login.default style={styles.image} />
+          <Image source={Images.Login} style={styles.image} />
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
-              form={FormSubmit}
               name='email'
+              form={FormSubmit}
               placeholder='Alamat Email'
             />
             <Text style={styles.text}>Kata Sandi</Text>
             <TextBox
-              form={FormSubmit}
               name='password'
+              form={FormSubmit}
               placeholder='Kata Sandi'
               accessoryRight={renderIcon}
               secureTextEntry={secureTextEntry}
             />
             <TouchableOpacity
               onPress={() => props.navigation.navigate('ChangePassword')}>
-              <Text style={styles.LupaSandi}>Lupa kata sandi ?</Text>
+              <Text style={styles.forgotPassword}>Lupa kata sandi ?</Text>
             </TouchableOpacity>
 
-            <Buttons onPress={FormSubmit.handleSubmit} title='Login' />
-            <View
-              style={{
-                flexDirection: 'row',
-                alignSelf: 'center',
-              }}>
-              <Text style={{ color: Color.textBasic, fontSize: 14 }}>
+            <Buttons onPress={FormSubmit.handleSubmit} title='Masuk' />
+            <View style={styles.nothaveAccount}>
+              <Text style={styles.nothaveAccountText}>
                 Belum punya akun ?
               </Text>
               <TouchableOpacity

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
     justifyContent: 'center',
-    backgroundColor: Color.bgColor,
+    backgroundColor: Color.purpleButton,
   },
   text: {
     fontSize: 14,

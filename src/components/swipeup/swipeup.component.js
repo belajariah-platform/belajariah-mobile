@@ -4,18 +4,20 @@ import ActionSheet from 'react-native-actions-sheet'
 
 import { View } from 'react-native'
 
-const ActionSheets = (props) => {
+const Swipeup = (props) => {
   return (
     <View>
-      <ActionSheet ref={props.visible}>
+      <ActionSheet
+        ref={props.visible} {...props}
+      >
         <View style={{ height: 300 }} />
       </ActionSheet>
     </View>
   )
 }
 
-ActionSheets.propTypes = {
-  visible : PropTypes.bool,
+Swipeup.propTypes = {
+  visible : PropTypes.object,
 }
 
-export default ActionSheets
+export default Swipeup

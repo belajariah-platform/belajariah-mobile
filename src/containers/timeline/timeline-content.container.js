@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import {View, Image, FlatList, TouchableOpacity} from 'react-native';
-import {Text, Icon, Avatar} from '@ui-kitten/components';
-
-import {Shimmer, TextView} from '../../components';
-
-import {Color} from '../../assets';
-import DataContent from './column-content.json';
-
-import {styles} from './timeline.style';
-=======
 import React, { useState } from 'react'
 import { View, Image, FlatList, TouchableOpacity } from 'react-native'
 import { Text, Icon, Avatar } from '@ui-kitten/components'
@@ -20,7 +8,6 @@ import { Color } from '../../assets'
 import DataContent from './column-content.json'
 
 import { styles } from './timeline.style'
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
 
 const TimelineContent = () => {
   const [like, setLike] = useState(false)
@@ -34,26 +21,8 @@ const TimelineContent = () => {
     } else {
       setAddLike(false)
     }
-  };
+  }
 
-<<<<<<< HEAD
-  const wait = (timeout) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, timeout);
-    });
-  };
-
-  const onRefreshing = React.useCallback(() => {
-    setRefreshing(true);
-    setShimmer(false);
-    wait(200).then(async () => {
-      setRefreshing(false);
-      setShimmer(true);
-    });
-  }, [refreshing]);
-
-=======
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
   const renderData = () => {
     return (
       <View
@@ -153,12 +122,6 @@ const TimelineContent = () => {
     )
   }
 
-<<<<<<< HEAD
-  return isLoading ? <Loading /> : renderData();
-};
-export default TimelineContent;
-=======
   return renderData()
 }
 export default TimelineContent
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c

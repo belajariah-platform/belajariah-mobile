@@ -11,14 +11,15 @@ const Searchbox = (props) => {
       }
       onBlur={props.form && props.name && props.form.handleBlur(props.name)}
       {...props}
-      size='medium'
-    />
+      size ='small'
+    >{props.renderItem}</Input>
   )
 }
 
 Searchbox.propTypes = {
   form : PropTypes.func,
   name : PropTypes.string,
+  renderItem : PropTypes.object
 }
 
 export default Searchbox

@@ -1,355 +1,340 @@
-<<<<<<< HEAD
-import React, {createRef, useRef, useState} from 'react';
-import {Text} from '@ui-kitten/components';
+import PropTypes from 'prop-types'
+import React, { useRef, useState } from 'react'
 import {
+  Text,
   View,
-  ScrollView,
-  TouchableOpacity,
   Alert,
-  ToastAndroid,
-} from 'react-native';
-import {Card} from 'react-native-elements';
+  Image,
+  Animated,
+  ScrollView,
+  Dimensions,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
+import {  Avatar, Card } from 'react-native-elements'
 
-import {Swipeup, Searchbox, Buttons} from '../../components';
-import {Color, Images} from '../../assets';
+import {
+  State,
+  Directions,
+  FlingGestureHandler,
+} from 'react-native-gesture-handler'
 
-import {styles} from './home.style';
-
-const actionSheetRef = createRef();
-
-const Home = () => {
-  const mainScrollViewRef = useRef();
-
-  const [categorySelected, setCategorySelected] = useState(0);
-  const [option1Selected, setOption1Selected] = useState(0);
-  const [option2Selected, setOption2Selected] = useState(0);
-
-  const categories = [
-    {id: 0, name: "Al-Qur'an"},
-    {id: 1, name: 'Fiqih'},
-    {id: 2, name: 'Ekonomi Syariah'},
-    {id: 3, name: 'Ibadah Kemasyarakatan'},
-    {id: 4, name: 'Bahasa Arab'},
-  ];
-
-  const options = [
-    {id: 0, name: 'A', price: 'Rp499.000', discountedPrice: 'Rp199.000'},
-    {id: 1, name: 'B', price: 'Rp600.000', discountedPrice: 'Rp249.000'},
-    {
-      id: 2,
-      name: 'C',
-      price: 'Rp1.500.000',
-      discountedPrice: 'Rp999.000',
-    },
-  ];
-
-  return (
-    <ScrollView
-      ref={mainScrollViewRef}
-      style={styles.scrollview}
-      showsVerticalScrollIndicator={false}>
-      {<Swipeup visible={actionSheetRef} />}
-
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => ToastAndroid.show('Tombol Search', ToastAndroid.SHORT)}>
-        <Searchbox
-          name="search"
-          style={styles.containerSearch}
-          placeholder="Cari Kelas di Belajariah"
-          accessoryRight={() => <Images.Search.default />}
-        />
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => ToastAndroid.show('Banner Promo', ToastAndroid.SHORT)}>
-        <Card containerStyle={styles.cardPromo}>
-          <Card.Title>Banner Promo</Card.Title>
-        </Card>
-      </TouchableOpacity>
-
-      <View>
-        <Text style={styles.textTitle}>Kategori Kelas</Text>
-        <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {categories.map((category) => {
-            return (
-              <TouchableOpacity
-                key={category.name}
-                onPress={() => {
-                  setCategorySelected(category.id);
-                }}>
-                <Text
-                  style={[
-                    styles.textCategories,
-                    category.id === categorySelected
-                      ? {
-                          backgroundColor: Color.bgHighlight,
-                          color: Color.textWhite,
-                        }
-                      : {
-                          backgroundColor: Color.bgColorWhite,
-                          color: Color.textBlack,
-                        },
-                  ]}>
-                  {category.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      </View>
-
-      <View>
-        <Text style={styles.textTitle}>Kelas Populer</Text>
-        <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
-
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => ToastAndroid.show('Kelas Tahsin', ToastAndroid.SHORT)}>
-          <Card containerStyle={styles.cardPopularClass}>
-            <Images.JudulTahsin.default style={styles.svgClassTitle} />
-            <Images.BannerTahsin.default style={styles.svgClassBackground} />
-            <Text style={styles.textClassDescription}>
-              Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit
-              amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum
-              berusit
-            </Text>
-
-            <Images.Star5.default style={styles.svgClassRating} />
-
-            <Card.Divider style={styles.dividerPopularClass} />
-
-            <View style={styles.containerPriceOptions}>
-              {options.map((option) => {
-                return (
-                  <TouchableOpacity
-                    key={option.id}
-                    onPress={() => {
-                      setOption1Selected(option.id);
-                    }}>
-                    <Text
-                      style={[
-                        styles.textPriceOptions,
-                        option.id === option1Selected
-                          ? {
-                              backgroundColor: Color.bgHighlight,
-                              color: Color.textWhite,
-                            }
-                          : {
-                              backgroundColor: Color.bgGray,
-                              color: Color.textBlack,
-                            },
-                      ]}>
-                      {option.name}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-              <Text style={styles.textPrice}>
-                {options[option1Selected].price}
-              </Text>
-              <Text style={styles.textDiscountedPrice}>
-                {options[option1Selected].discountedPrice}
-              </Text>
-            </View>
-          </Card>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() =>
-            ToastAndroid.show('Kelas Tilawah', ToastAndroid.SHORT)
-          }>
-          <Card containerStyle={styles.cardPopularClass}>
-            <Images.JudulTilawah.default style={styles.svgClassTitle} />
-            <Images.BannerTilawah.default style={styles.svgClassBackground} />
-            <Text style={styles.textClassDescription}>
-              Belajar Ngaji Tilawah dengan ustadz dan ustadzah lorem ipsum dolor
-              sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum
-              berusit
-            </Text>
-            <Images.Star45.default style={styles.svgClassRating} />
-            <Card.Divider style={styles.dividerPopularClass} />
-            <View style={styles.containerPriceOptions}>
-              {options.map((option) => {
-                return (
-                  <TouchableOpacity
-                    key={option.id}
-                    onPress={() => {
-                      setOption2Selected(option.id);
-                    }}>
-                    <Text
-                      style={[
-                        styles.textPriceOptions,
-                        option.id === option2Selected
-                          ? {
-                              backgroundColor: Color.bgHighlight,
-                              color: Color.textWhite,
-                            }
-                          : {
-                              backgroundColor: Color.bgGray,
-                              color: Color.textBlack,
-                            },
-                      ]}>
-                      {option.name}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-              <Text style={styles.textPrice}>
-                {options[option2Selected].price}
-              </Text>
-              <Text style={styles.textDiscountedPrice}>
-                {options[option2Selected].discountedPrice}
-              </Text>
-            </View>
-          </Card>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => Alert.alert("Page Baca Al-Qur'an")}>
-        <Card containerStyle={styles.cardReadQuran}>
-          <Images.BannerAlquran.default style={styles.svgReadQuran} />
-        </Card>
-      </TouchableOpacity>
-
-      <View>
-        <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
-        <Text style={styles.textSubtitle}>
-          Baca artikel terkini setiap hari!
-        </Text>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{height: 238}}>
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() =>
-              ToastAndroid.show('Bacaan Inspiratif', ToastAndroid.SHORT)
-            }>
-            <Card containerStyle={styles.cardArticle}>
-              <Images.BlogExample.default style={styles.svgArticleBackground} />
-              <Text style={styles.textArticleDescription}>
-                Tokoh Inspiratif '
-                <Text style={styles.textBold}>Sandiaga Uno</Text>
-                ', Pengusaha dan politikus Indonesia yang jadi Menteri
-                Pariwisata dan Ekonomi Kreatif
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => Alert.alert('Page Artikel')}>
-                <Images.BtnReadMore.default style={styles.btnReadMore} />
-              </TouchableOpacity>
-            </Card>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() =>
-              ToastAndroid.show('Bacaan Inspiratif', ToastAndroid.SHORT)
-            }>
-            <Card containerStyle={styles.cardArticle}>
-              <Images.BlogExample.default style={styles.svgArticleBackground} />
-              <Text style={styles.textArticleDescription}>
-                Tokoh Inspiratif '
-                <Text style={styles.textBold}>Sandiaga Uno</Text>
-                ', Pengusaha dan politikus Indonesia yang jadi Menteri
-                Pariwisata dan Ekonomi Kreatif
-              </Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => Alert.alert('Page Artikel')}>
-                <Images.BtnReadMore.default style={styles.btnReadMore} />
-              </TouchableOpacity>
-            </Card>
-          </TouchableOpacity>
-=======
-import React, { createRef } from 'react'
-import { Icon } from '@ui-kitten/components'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
-
-import { Color } from '../../assets'
-import { Swipeup, Searchbox } from '../../components'
+import { FormatRupiah } from '../../utils'
+import { Color, Images } from '../../assets'
+import { Cards, Searchbox, Carousel } from '../../components'
 
 import { styles } from './home.style'
 
-const search = (props) => <Icon name='search' {...props} />
-const actionSheetRef = createRef()
 
-const Home = () => {
-  return (
-    <View style={{ backgroundColor: Color.bgColorWhite, flex: 1 }}>
-      {<Swipeup visible={actionSheetRef} />}
-      <View style={styles.containerTop}>
-        <TouchableOpacity style={styles.bgIcon}>
-          <Icon
-            fill={Color.iconColor}
-            name='more-vertical-outline'
-            style={{ width: 22, height: 22 }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.6}>
-          <Searchbox
-            disabled
-            name='search'
-            style={styles.search}
-            placeholder='Cari materi kamu ...'
-            accessoryLeft={search}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.bgIcon}>
-          <Icon
-            fill={Color.iconColor}
-            name='bell-outline'
-            style={{ width: 22, height: 22 }}
-          />
-        </TouchableOpacity>
+const Home = (props) => {
+  const [beganY, setBeganY] = useState(null)
+  const [categorySelected, setCategorySelected] = useState(0)
+  const [option1Selected, setOption1Selected] = useState(0)
+
+  const mainScrollViewRef = useRef()
+
+  const { height }  = Dimensions.get('window')
+  const swipeLength = height / 2
+  const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
+
+
+  const handleSwipe = ({ nativeEvent }) => {
+    if (nativeEvent.state === State.BEGAN) {
+      setBeganY(nativeEvent.absoluteY)
+    }
+    if (nativeEvent.state === State.END) {
+      if (beganY > nativeEvent.absoluteY) {
+        Animated.spring(swipeAnimation, {
+          speed: 1,
+          toValue: 0,
+          bounciness: 1,
+          useNativeDriver: true,
+        }).start()
+      } else {
+        Animated.spring(swipeAnimation, {
+          speed: 1,
+          bounciness: 0,
+          toValue: swipeLength,
+          useNativeDriver: true,
+        }).start()
+      }
+    }
+  }
+
+  const classPopular = [
+    { rating : 5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ' },
+    { rating : 4.5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not' },
+  ]
+
+  const Inspiratif = [
+    { id: 0, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
+    { id: 1, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
+    { id: 2, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
+  ]
+
+  const promotion = [
+    { title: 'In turpis', imgUrl: 'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg' },
+    { title: 'Lorem Ipsum', imgUrl: 'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg' },
+    { title: 'Aenean leo', imgUrl: 'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg' },
+  ]
+
+  const categories = [
+    { id: 0, name: 'Al-Qur\'an' },
+    { id: 1, name: 'Fiqih' },
+    { id: 2, name: 'Ekonomi Syariah' },
+    { id: 3, name: 'Ibadah Kemasyarakatan' },
+    { id: 4, name: 'Bahasa Arab' },
+  ]
+
+  const options = [
+    { id: 0, name: 'A', price: '499000', discountedPrice: '199000' },
+    { id: 1, name: 'B', price: '600000', discountedPrice: '249000' },
+    { id: 2, name: 'C', price: '1500000', discountedPrice: '999000' },
+  ]
+
+  const SearchHome = () => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.navigateSearch}
+        onPress={() => props.navigation.navigate('HomeSearch')}
+      >
+        <Searchbox
+          disabled
+          style={styles.containerSearch}
+          accessoryRight={() => <Images.Search.default style={{ marginRight:-12 }}/>}
+          renderItem={<Text style={styles.textSearch}>Cari kelas di belajariah</Text>}
+        />
+      </TouchableOpacity>
+    )
+  }
+
+  const PromotionHome = () => {
+    const promotionItem = ({ index, item }) => {
+      return (
+        <View style={styles.container} key={index}>
+          <TouchableOpacity activeOpacity={0.8}>
+            <Image
+              style={styles.cardCustom}
+              source={{ uri: item.imgUrl }}/>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+    return (
+      <View style={{ marginLeft:-16, marginBottom:30 }}>
+        <Carousel
+          data={promotion}
+          pagination={false}
+          renderItem={promotionItem}
+        />
       </View>
-      <View style={{ flex: 8 }}>
-        <ScrollView>
-          <View style={styles.containerMiddle} />
-          <View style={[styles.containerBottom]}>
-            {/* <MainFiture />
-            <CategoryClass />
-            <AllClass /> */}
-            <View />
-          </View>
+    )
+  }
 
-          <View style={[styles.containerBottoms]}>
-            <View
-              style={{
-                backgroundColor: 'white',
-                marginTop: -70,
-                paddingTop: 50,
-                height: 50,
-                borderRadius: 50,
-              }}
-            />
-            {/* <Promotion />
-            <OtherFeature /> */}
-          </View>
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
+  const CategoryClassHome = () => {
+    return (
+      <>
+        <View style={{ marginBottom : 30 }}>
+          <Text style={styles.textTitle}>Kategori Kelas</Text>
+          <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {categories.map((category, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    setCategorySelected(category.id)
+                  }}>
+                  <Text
+                    style={[styles.textCategories,
+                      category.id === categorySelected ?
+                        {
+                          color: Color.white,
+                          borderColor : Color.transparent,
+                          backgroundColor: Color.purpleButton,
+                        }: {
+                          color: Color.greyHeadInput,
+                          backgroundColor: Color.bgColorWhite,
+                        }]}>
+                    {category.name}
+                  </Text>
+                </TouchableOpacity>
+              )})}
+          </ScrollView>
+        </View>
+      </>
+    )
+  }
+
+  const PopularClassHome = () => {
+    const handleRating = (num) => {
+      let rating = []
+      const numRound =  Math.round(num)
+      for (let index = 1; index <= numRound; index++) {
+        num - index == 0 ?
+          rating.push(<Images.Star.default/>) :
+          num - index < 0 ?
+            rating.push(<Images.StarHalf.default/>) :
+            rating.push(<Images.Star.default/>)
+      }
+      return (
+        <View style={{ flexDirection:'row' }}>
+          {rating.map((val, index) => {
+            return (<View key={index}>{val}</View>)
+          })}
+        </View>
+      )
+    }
+
+    return (
+      <View>
+        <Text style={styles.textTitle}>Kelas Populer</Text>
+        <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
+        {classPopular.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={0.6}
+            >
+              <Cards
+                images={Images.BannerTahsin}
+                rating={handleRating(item.rating)}
+                imageTitle={<Images.JudulTahsin.default style={styles.svgClassTitle} />}
+                description ={item.description}
+                price={
+                  <View style={styles.containerPriceOptions}>
+                    <View style={{ flex:1, flexDirection :'row' }}>
+                      {options.map((option, index) => {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {setOption1Selected(option.id)}}>
+                            <Text style={[styles.textPriceOptions,
+                              option.id === option1Selected ? {
+                                backgroundColor: Color.purpleButton,
+                                color: Color.white,
+                              } : {
+                                backgroundColor: Color.greyHintExt,
+                                color: Color.black,
+                              }]}>
+                              {option.name}
+                            </Text>
+                          </TouchableOpacity>
+                        )})}
+                    </View>
+                    <Text style={styles.textPrice}>
+                      IDR {FormatRupiah(options[option1Selected].price)}</Text>
+                    <Text style={styles.textDiscountedPrice}>
+                      IDR {FormatRupiah(options[option1Selected].discountedPrice)}</Text>
+                  </View>
+                }
+              />
+            </TouchableOpacity>
+          )})}
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.bannerAlquranContainer}
+            onPress={() => props.navigation.navigate('Alquran')}>
+            <Image source={Images.BannerAlquran} style={styles.cardCustom}/>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
+  const InspiratifStoryHome = () => {
+    return (
+      <View>
+        <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
+        <Text style={styles.textSubtitle}>Baca artikel terkini setiap hari!</Text>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ height: 238 }}>
+          {Inspiratif.map((item, index) => {
+            return (
+              <Card containerStyle={styles.cardArticle} key={index}>
+                <Images.BlogExample.default style={styles.svgArticleBackground} />
+                <Text style={styles.textArticleDescription}>{item.description.substring(0, 120)} ...</Text>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.btnReadMore}
+                  onPress={() => Alert.alert('Page Artikel')}>
+                  <Images.BtnReadMore.default/>
+                </TouchableOpacity>
+              </Card>
+            )
+          })}
         </ScrollView>
       </View>
+    )
+  }
 
-      <View>
-        <TouchableOpacity
-          onPress={() =>
-            mainScrollViewRef.current.scrollTo({
-              x: 0,
-              y: 0,
-              animated: true,
-            })
-          }>
-          <Images.BtnArrowUp.default style={styles.iconArrowUp} />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
-};
+  return (
+    <View style={styles.headerFlex}>
+      <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
+        <View style={styles.headerFlex}>
+          <View style={styles.headerContainer}>
+            <View style={styles.headerFlex}>
+              <Avatar
+                rounded
+                activeOpacity={0.8}
+                containerStyle={{ ...styles.headerAvatar, marginLeft : 15 }}/>
+            </View>
+            <View>
+              <Avatar
+                rounded
+                activeOpacity={0.8}
+                containerStyle={{ ...styles.headerAvatar, marginRight : 15 }}/>
+            </View>
+          </View>
+          <View style={styles.textBackContainer}>
+            <Text style={styles.textBack}>Assalamualaikum Sobat
+              <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap Belajar
+              <Text style={styles.textBackBold}> AlQuran ?</Text>
+            </Text>
+          </View>
+        </View>
+        <Animated.View style={[styles.frontContainer,
+          { transform: [{ translateY: swipeAnimation }] }]}>
+          <FlingGestureHandler
+            onHandlerStateChange={handleSwipe}
+            direction={Directions.UP | Directions.DOWN}>
+            <View style={styles.fingerGesture}>
+              <View style={styles.topLine}/>
+            </View>
+          </FlingGestureHandler>
+          <ScrollView
+            ref={mainScrollViewRef}
+            style={styles.scrollview}
+            showsVerticalScrollIndicator={false}>
+            <View style={styles.contentContainer}>
+              <SearchHome />
+              <PromotionHome />
+              <CategoryClassHome />
+              <PopularClassHome />
+              <InspiratifStoryHome />
+            </View>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  mainScrollViewRef.current.scrollTo({
+                    x: 0, y: 0, animated: true })}>
+                <Images.BtnArrowUp.default style={styles.iconArrowUp} />
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Animated.View>
+      </ImageBackground>
+    </View>
 
-export default Home;
+  )
+}
+
+Home.propTypes = {
+  navigation : PropTypes.object,
+}
+
+export default Home

@@ -1,20 +1,7 @@
 const FontType = {
-<<<<<<< HEAD
   regular: 'Avenir-LT-Std-65-Medium',
+  semiBold: 'Avenir-LT-Std-65-Medium',
   bold: 'Avenir-Next-LT-Pro-Bold',
-};
-
-const FontWeight = {
-  bold: 'bold',
-  regular: '400',
-};
-
-export {FontType, FontWeight};
-=======
-  light: 'OpenSans-Light',
-  regular: 'OpenSans-Regular',
-  semiBold: 'OpenSans-SemiBold',
-  bold: 'OpenSans-Bold',
 }
 
 const FontWeight = {
@@ -23,5 +10,14 @@ const FontWeight = {
   regular: '400',
 }
 
-export { FontType, FontWeight }
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c
+const FontSize = {
+  extraSmall : 13,
+  small : 14,
+  smallMedium : 15,
+  medium : 16,
+  mediumLarge : 17,
+  large : 20,
+  extraLarge :25
+}
+
+export { FontType, FontWeight, FontSize }
