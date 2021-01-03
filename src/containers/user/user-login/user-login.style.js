@@ -1,69 +1,85 @@
 import { StyleSheet } from 'react-native'
+
+
 import {
   Color,
+  FontSize,
   FontType
 } from '../../../assets'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp
+} from 'react-native-responsive-screen'
 
 const styles = StyleSheet.create({
   container : {
-    backgroundColor: 'white',
     flex: 9,
     marginTop: 3,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    backgroundColor: Color.white,
   },
   image: {
-    width: '53%',
-    height: 142,
-    alignSelf: 'center',
     marginTop: 30,
+    width : wp('47%'),
+    height : hp('23%'),
+    alignSelf: 'center',
   },
   text: {
-    fontFamily: FontType.semiBold,
     marginTop: 5,
     marginBottom: 3,
-    fontSize: 14,
-    color: Color.textBasic,
+    color: Color.greyHeadInput,
+    fontFamily: FontType.semiBold,
+    fontSize: FontSize.smallMedium,
   },
   backToRegister: {
-    color: Color.textBold,
-    fontSize: 14,
-    fontFamily: FontType.semiBold,
     marginBottom: 30,
+    color: Color.purpleText,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
   },
   anotherText: {
     marginTop: 5,
     marginBottom: 10,
-    fontSize: 14,
-    color: Color.textHint,
     textAlign: 'center',
+    fontSize: FontSize.small,
+    color: Color.greyHintText,
   },
   anotherLogin: {
+    width: 50,
+    height: 50,
+    padding: 9,
+    marginTop: 15,
+    borderWidth: 0,
+    marginBottom: 30,
+    borderRadius: 100,
+    borderColor: '#fff',
     alignItems: 'center',
     marginHorizontal: 27,
-    marginTop: 15,
-    marginBottom: 30,
-    padding: 9,
-    backgroundColor: '#eff3f6',
-    borderWidth: 0,
-    borderColor: '#fff',
-    height: 50,
-    width: 50,
-    borderRadius: 100,
+    backgroundColor: Color.greyHintBG,
   },
   ImageIconStyle: {
     margin: 5,
-    height: 22,
     width: 22,
+    height: 22,
     resizeMode: 'stretch',
   },
-  LupaSandi: {
-    color: Color.textBold,
-    fontSize: 13,
-    fontFamily: FontType.semiBold,
-    marginBottom: 20,
+  forgotPassword: {
     marginTop: -10,
+    marginBottom: 20,
     textAlign: 'right',
+    color: Color.purpleText,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
   },
+  nothaveAccount : {
+    alignSelf: 'center',
+    flexDirection: 'row',
+  },
+  nothaveAccountText : {
+    color: Color.black,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  }
 })
 
 export { styles }

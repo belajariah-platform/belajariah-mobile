@@ -1,28 +1,30 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Swipers from 'react-native-swiper'
-import { Button, Text } from '@ui-kitten/components'
-// import * as Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable'
 
 import {
+  Text,
   View,
   Image
 } from 'react-native'
-import { Images } from '../../../assets'
+
+import { Buttons } from '../../../components'
+import { Images, Color } from '../../../assets'
 
 import { styles } from './user-introduction.style'
 
 const Introduction = (props) => {
-  // const [show, setShow] = useState(true)
-  // const [animationSignup, setAnimation] = useState(null)
+  const [show, setShow] = useState(true)
+  const [animationSignup, setAnimation] = useState(null)
 
   const onIndexChanged = (index) => {
     if (index == 3) {
-      // setAnimation('flipInX')
-      // setShow(true)
+      setAnimation('flipInX')
+      setShow(true)
     } else {
-      // setAnimation(null)
-      // setShow(false)
+      setAnimation(null)
+      setShow(false)
     }
   }
 
@@ -36,7 +38,7 @@ const Introduction = (props) => {
       onIndexChanged={index => onIndexChanged(index)}
       nextButton={<Text style={styles.buttonWrapper}>Selanjutnya</Text>}
       prevButton={
-        <Text style={{ ...styles.buttonWrapper, color: '#C7BBD9' }}>
+        <Text style={{ ...styles.buttonWrapper, color: Color.purpleHint }}>
           Sebelumnya
         </Text>
       }>
@@ -64,18 +66,19 @@ const Introduction = (props) => {
           <Text style={styles.title2}>
           Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member
           </Text>
-          {/* {show ? (
-            <Animatable.View
-              delay={100}
-              useNativeDriver
-              animation={animationSignup}> */}
-          <Button
-            style={styles.btnSwiper}
-            onPress={() => props.navigation.navigate('Register')}>
-            <Text style={styles.btnText}>Register</Text>
-          </Button>
-          {/* </Animatable.View>
-          ) : null} */}
+          <View>
+            {show ? (
+              <Animatable.View
+                delay={100}
+                useNativeDriver
+                animation={animationSignup}>
+                <Buttons
+                  title='Daftar'
+                  style={styles.btnSwiper}
+                  onPress={() => props.navigation.navigate('Register')} />
+              </Animatable.View>
+            ) : null}
+          </View>
         </View>
       </View>
     </Swipers>

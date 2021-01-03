@@ -1,94 +1,116 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontType, FontWeight } from '../../assets'
+
+import { Resp } from '../../utils'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
-  scrollView: {
+  containerButtonBack : {
+    top: 20,
+    left: 0,
+  },
+  containerView : {
     flex: 1,
-    backgroundColor: Color.bgColorGray,
+    backgroundColor : Color.softPink,
   },
-  background: {
-    marginTop: -192,
-    marginLeft: 0,
-  },
-  containerTopButton: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-  },
-  containerProfileHeader: {
-    position: 'absolute',
-    alignSelf: 'center',
-    marginTop: 164,
-    alignItems: 'center',
-  },
-  containerEmailPhone: {
-    flexDirection: 'row',
-    marginTop: 2,
-  },
-  containerCard: {
-    borderRadius: 24,
-    borderWidth: 0,
-    marginTop: -172,
-    marginBottom: 48,
-  },
-  btnSetting: {
-    width: 20,
-    height: 30,
-    marginTop: 8,
-    marginRight: 12,
-  },
-  avatar: {
-    alignSelf: 'center',
+  containerViewBg : {
+    flex: 1,
     zIndex: 1,
-    position: 'absolute',
-    backgroundColor: 'gray',
+    top: '-8%',
+  },
+  containerAvatar : {
+    zIndex: 2,
+    top: '13%',
+    width : '95%',
+    alignItems:'center',
+    flexDirection: 'row',
+    paddingHorizontal:20,
+  },
+  containerTitleAvatar : {
+    marginTop: 10,
+    marginLeft: 20,
+    marginBottom: 5,
+    color: Color.white,
+    position: 'relative',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraLarge,
+  },
+  containerTouch : {
+    borderRadius:100,
+  },
+  Avatar : {
+    width: 90,
+    zIndex: 2,
+    height: 90,
+    borderColor: '#fff',
+    position: 'relative',
+  },
+  image : {
+    width: Resp.HeaderProfileWP,
+    height: Resp.HeaderProfileHP,
+  },
+  containerViewTop : {
+    top: '-8.5%',
+    borderRadius: 35,
+    paddingVertical: 20,
+    position: 'relative',
+    marginHorizontal: 30,
+    paddingHorizontal:30,
+    backgroundColor: '#fff',
+  },
+  containerViewBottom : {
+    top: '-5.5%',
+    borderRadius: 35,
+    paddingVertical: 20,
+    position: 'relative',
+    marginHorizontal: 30,
+    paddingHorizontal:30,
+    backgroundColor: '#fff',
+  },
+  containerTextJudul : {
+    marginBottom:28,
+    color : Color.black,
+    fontSize: FontSize.large,
+    fontFamily : FontType.bold,
+  },
+
+  containerText : {
+    marginTop:-8,
+    marginBottom: 5,
+    fontSize: FontSize.small,
+    color: Color.greyHeadInput,
+    fontFamily: FontType.regular,
+  },
+  datePickerInput : {
+    height: 40,
+    marginTop:3,
+    width: '100%',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom:21,
+    paddingHorizontal: 8,
+    borderColor: '#b3b3b3',
+    backgroundColor: Color.white,
+  },
+  containerRadio : {
+    marginBottom:16,
+    flexDirection: 'row',
+  },
+  containerInputRadio : {
+    marginLeft: 1,
+    marginRight: 15,
+  },
+  datePickerControl : {
+    borderWidth:0,
+    backgroundColor:Color.transparent,
+  },
+  fixToText: {
+    marginTop: 0,
+    alignItems:'flex-end',
+  },
+  containerButton : {
     width: 100,
-    height: 100,
-    borderRadius: 100 / 2,
-    marginTop: 56,
-    borderWidth: 4,
-    borderColor: Color.bgColorWhite,
   },
-  email: {
-    marginRight: 6,
-    marginTop: -2,
-  },
-  phone: {
-    marginTop: -4,
-    marginRight: 4,
-  },
-  profileIcon: {
-    alignSelf: 'center',
-    marginTop: -48,
-  },
-  headerName: {
-    color: Color.textWhite,
-    fontFamily: FontType.bold,
-    fontSize: 20,
-    marginTop: 2,
-  },
-  headerEmail: {
-    color: Color.textWhite,
-    fontFamily: FontType.regular,
-  },
-  headerPhone: {
-    color: Color.textWhite,
-    fontFamily: FontType.regular,
-  },
-  subHeader: {
-    marginTop: -4,
-    fontFamily: FontType.bold,
-    color: Color.textPurpleBold,
-  },
-  dataProfile: {
-    marginTop: 4,
-    fontFamily: FontType.regular,
-    color: Color.textPurpleLight,
-  },
-  divider: {
-    marginVertical: 8,
-  },
+
 })
 
 export { styles }

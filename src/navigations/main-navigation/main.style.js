@@ -1,18 +1,23 @@
 import { StyleSheet } from 'react-native'
-import { FontType } from '../../assets'
+import { FontType, Color } from '../../assets'
 
 const styles = StyleSheet.create({
   tabBarStyle : {
+    height:55,
+    paddingTop:5,
     elevation: 40,
+    marginTop:-50,
     borderWidth: 0,
-    marginTop: -30,
     borderTopWidth: 0,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    borderColor: 'transparent',
+    shadowColor: Color.black,
+    borderColor: Color.transparent,
+    shadowOffset: { width: 0, height: 1, },
   },
   labelStyle : {
-    fontSize: 12,
+    fontSize: 11,
+    marginBottom:5,
     fontFamily: FontType.regular
   },
 })

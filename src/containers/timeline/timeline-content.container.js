@@ -35,7 +35,7 @@ const TimelineContent = () => {
             backgroundColor: 'white',
           }}>
           <FlatList
-            keyExtractor={(idx) => idx}
+            keyExtractor={( idx) => idx}
             data={DataContent}
             renderItem={({ item }) => (
               <>
@@ -45,10 +45,28 @@ const TimelineContent = () => {
                       flexDirection: 'row',
                       paddingHorizontal: 15,
                     }}>
-                    <Shimmer visible={shimmer} style={styles.Avatar} component={<Avatar source={item.picture} style={styles.Avatar} />} />
-                    <Shimmer style={styles.textName} visible={shimmer} component={<Text style={styles.textName}>{item.name}</Text>} />
+                    <Shimmer
+                      visible={shimmer}
+                      style={styles.Avatar}
+                      component={
+                        <Avatar source={item.picture} style={styles.Avatar} />
+                      }
+                    />
+                    <Shimmer
+                      style={styles.textName}
+                      visible={shimmer}
+                      component={
+                        <Text style={styles.textName}>{item.name}</Text>
+                      }
+                    />
                   </View>
-                  <Shimmer style={styles.banner} visible={shimmer} component={<Image style={styles.banner} source={item.banner} />} />
+                  <Shimmer
+                    style={styles.banner}
+                    visible={shimmer}
+                    component={
+                      <Image style={styles.banner} source={item.banner} />
+                    }
+                  />
                   <View style={{ marginTop: 10, marginHorizontal: 15 }}>
                     <Shimmer
                       style={styles.likeShimmer}
@@ -62,12 +80,20 @@ const TimelineContent = () => {
                               style={{ width: 24, height: 24 }}
                             />
                           </TouchableOpacity>
-                          <Text style={styles.textLike}>{addLike ? item.like : item.like + 1} suka</Text>
+                          <Text style={styles.textLike}>
+                            {addLike ? item.like : item.like + 1} suka
+                          </Text>
                         </View>
                       }
                     />
                     <View style={{ marginTop: 20 }}>
-                      <Shimmer style={styles.textTitle} visible={shimmer} component={<Text style={styles.textTitle}>{item.title}</Text>} />
+                      <Shimmer
+                        style={styles.textTitle}
+                        visible={shimmer}
+                        component={
+                          <Text style={styles.textTitle}>{item.title}</Text>
+                        }
+                      />
                       <Shimmer
                         style={styles.textContentShimmer}
                         visible={shimmer}
@@ -75,7 +101,11 @@ const TimelineContent = () => {
                           <>
                             <TextView
                               textStyle={{ textAlign: 'left', marginTop: 15 }}
-                              component={<Text style={styles.textContent}>{item.content}</Text>}
+                              component={
+                                <Text style={styles.textContent}>
+                                  {item.content}
+                                </Text>
+                              }
                             />
                             <Text style={styles.time}>{item.time}</Text>
                           </>

@@ -2,6 +2,15 @@ import React from 'react'
 import Main from '../main-navigation'
 import { createStackNavigator } from '@react-navigation/stack'
 
+import {
+  Alquran,
+  HomeSearch,
+  ProfileEdit,
+  AlquranDetail,
+  PromotionDetail,
+} from '../../containers'
+
+
 
 const PrivateNavigation = () => {
   const Stack = createStackNavigator()
@@ -12,6 +21,11 @@ const PrivateNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name='Main' component={Main} />
+      <Stack.Screen name='Alquran' component={Alquran} />
+      <Stack.Screen name='HomeSearch' component={HomeSearch} />
+      <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
+      <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
+      <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
     </Stack.Navigator>
   )
 }

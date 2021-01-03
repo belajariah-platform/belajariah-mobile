@@ -1,11 +1,12 @@
-import Home from './home'
-import Alquran from './alquran'
-import Profile from './profile'
 import Timeline from './timeline'
 import Transaction from './transaction'
 import Notification from './notification'
 
-import { ClassUser } from './classs'
+import { ClassUser } from './class'
+import { Home, HomeSearch } from './home'
+import { Profile, ProfileEdit } from './profile'
+import { Alquran, AlquranDetail } from './alquran'
+import { Promotion, PromotionDetail } from './promotion'
 import { Login, Register, Introduction, ChangePassword } from './user'
 
 export {
@@ -15,9 +16,14 @@ export {
   Profile,
   Register,
   Timeline,
+  Promotion,
   ClassUser,
+  HomeSearch,
+  ProfileEdit,
   Transaction,
   Introduction,
   Notification,
+  AlquranDetail,
   ChangePassword,
+  PromotionDetail,
 }

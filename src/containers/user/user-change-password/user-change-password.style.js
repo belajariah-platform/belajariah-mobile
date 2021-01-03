@@ -1,25 +1,26 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontType } from '../../../assets'
+import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
   container : {
     flex: 9,
     marginTop: 3,
     paddingHorizontal : 30,
-    backgroundColor: 'white',
+    backgroundColor: Color.white,
   },
   content: {
-    color: Color.textBasic,
-    fontSize: 14,
-    lineHeight: 18,
+    lineHeight: 19,
     marginBottom: 30,
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
   },
   text: {
     marginTop: 5,
     marginBottom: 3,
-    fontSize: 14,
-    color: Color.textBasic,
+    color: Color.greyHeadInput,
     fontFamily: FontType.semiBold,
+    fontSize: FontSize.smallMedium,
   },
 })
 

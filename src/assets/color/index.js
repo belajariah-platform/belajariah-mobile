@@ -12,17 +12,24 @@ const Color = {
   textHintBold: '#7d889d',
   bgSearch: '#eeedf2',
 
-  //update
-  bgColorWhite: 'white',
-  bgColorGray: '#fef5ff',
-  textWhite: 'white',
-  textBlack: 'black',
-  textGray: '#c7c5c7',
-  textPurpleBold: '#6e248d',
-  textPurpleLight: '#a47cbb',
-  bgGray: '#e6e6e6',
-  bgHighlight: '#6e248d',
-  borderSearch: '#e6e6e6',
+  //new
+  grey : 'grey',
+  white : 'white',
+  black : 'black',
+  softPink : '#FEF5FF',
+  greySwipe : '#CBC9CA',
+  greyInput : '#b2b2b2',
+  purpleText : '#7a0090',
+  purpleHint : '#C7BBD9',
+  greyMedium : '#E6E6E6',
+  greyHintBG : '#eff3f6',
+  greyHintExt : '#EBEBEB',
+  greyHintText : '#bcbcbc',
+  purpleButton : '#77008e',
+  greySearchBG : '#fafafa',
+  greyHeadInput : '#7f7f7f',
+  transparent : 'transparent',
+  greySearchBorder : '#e9e7e8',
 }
 
 export { Color }
