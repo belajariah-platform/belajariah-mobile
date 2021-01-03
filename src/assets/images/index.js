@@ -1,3 +1,7 @@
+import DummyBannerTahsin from './CardTahsin.svg'
+
+export { DummyBannerTahsin }
+
 export default {
   Fb: require('./FB.png'),
   Login: require('./Login.svg'),
@@ -7,7 +11,9 @@ export default {
   Intro4: require('./Intro4.png'),
   Google: require('./Google.png'),
   Register: require('./Register.svg'),
-<<<<<<< HEAD
+  LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
+  HomeBackground: require('./HomeBackground.png'),
+  IconProfile: require('./profile.png'),
   Search: require('./IconSearch.svg'),
   JudulTahsin: require('./CardJudulTahsin.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
@@ -19,7 +25,13 @@ export default {
   BlogExample: require('./BlogExample.svg'),
   BtnReadMore: require('./BtnReadMore.svg'),
   BtnArrowUp: require('./BtnArrowUp.svg'),
-};
-=======
+  LogoBelajariahProfile: require('./LogoBelajariahProfile.svg'),
+  ProfileBackground: require('./profileBackground.svg'),
+  ProfileDrawerBackground: require('./profileDrawerBackground.svg'),
+  BtnClose: require('./profileCloseButton.svg'),
+  Email: require('./profileEmailIcon.svg'),
+  Logout: require('./profileLogoutIcon.svg'),
+  Phone: require('./profilePhoneIcon.svg'),
+  ProfilePurple: require('./profileProfileIcon.svg'),
+  Setting: require('./profileSettingIcon.svg'),
 }
->>>>>>> e1fe67e3ee073d77306753e0545e124b19481e2c

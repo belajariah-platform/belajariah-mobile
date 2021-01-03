@@ -4,12 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Color } from '../../assets'
 
-import {
-  Home,
-  Profile,
-  ClassUser,
-  Transaction,
-} from '../../containers'
+import { Home, ClassUser, Transaction } from '../../containers'
+import ProfileNavigation from '../profile-navigation'
 
 import { styles } from './main.style'
 
@@ -21,18 +17,18 @@ const Main = () => {
         tabBarIcon: ({ color }) => {
           let iconName
           switch (route.name) {
-          case 'Home':
-            iconName = 'home'
-            break
-          case 'Class':
-            iconName = 'book'
-            break
-          case 'Transaction':
-            iconName = 'handshake'
-            break
-          case 'Other':
-            iconName = 'ellipsis-h'
-            break
+            case 'Home':
+              iconName = 'home'
+              break
+            case 'Class':
+              iconName = 'book'
+              break
+            case 'Transaction':
+              iconName = 'handshake'
+              break
+            case 'Other':
+              iconName = 'ellipsis-h'
+              break
           }
           return <Icon name={iconName} size={21} color={color} />
         },
@@ -49,7 +45,7 @@ const Main = () => {
       <Screen name='Home' component={Home} options={{ headerShown: false }} />
       <Screen name='Class' component={ClassUser} />
       <Screen name='Transaction' component={Transaction} />
-      <Screen name='Other' component={Profile} />
+      <Screen name='Other' component={ProfileNavigation} />
     </Navigator>
   )
 }
