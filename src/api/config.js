@@ -1,9 +1,11 @@
-import axios from 'axios'
-import { store } from '../redux/store'
+import { store } from '../store'
+import { QURAN_SERVICE_ENDPOINT } from '@env'
 
-const API_URL = 'localhost'
+const Config = {
+  QURAN_SERVICE_ENDPOINT,
+}
 
-const getConfig = () => {
+const Header = () => {
   const config = {}
   const token = store.getState().userData.token
   if (token) {
@@ -12,45 +14,5 @@ const getConfig = () => {
   return config
 }
 
-export const getData = async (dataUrl) => {
-  try {
-    const url = API_URL + dataUrl
-    const response = await axios.get(url, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
-export const postData = async (dataUrl, formData) => {
-  try {
-    // checkConnection();
-    console.log(dataUrl, formData)
-    const url = API_URL + dataUrl
-    const response = await axios.post(url, formData, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
 
-export const putData = async (dataUrl, formData) => {
-  try {
-    // checkConnection();
-    const url = API_URL + dataUrl
-    const response = await axios.patch(url, formData, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
-
-export const deleteData = async (dataUrl) => {
-  try {
-    // checkConnection();
-    const url = API_URL + dataUrl
-    const response = await axios.delete(url, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
+export { Config, Header }

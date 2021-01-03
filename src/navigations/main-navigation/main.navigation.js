@@ -1,8 +1,6 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome5'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import { Color } from '../../assets'
 
 import {
   Home,
@@ -10,6 +8,7 @@ import {
   ClassUser,
   Transaction,
 } from '../../containers'
+import { Color, Images } from '../../assets'
 
 import { styles } from './main.style'
 
@@ -18,38 +17,42 @@ const Main = () => {
   return (
     <Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color }) => {
+        tabBarIcon: ({ focused }) => {
           let iconName
           switch (route.name) {
           case 'Home':
-            iconName = 'home'
+            iconName = focused ? Images.BotHome :
+              Images.BotHomeHint
             break
           case 'Class':
-            iconName = 'book'
+            iconName = focused ? Images.BotClass :
+              Images.BotClassHint
             break
           case 'Transaction':
-            iconName = 'handshake'
+            iconName = focused ? Images.BotTransact :
+              Images.BotTransactHint
             break
-          case 'Other':
-            iconName = 'ellipsis-h'
+          case 'Profile':
+            iconName = focused ? Images.BotProfile :
+              Images.BotProfileHint
             break
           }
-          return <Icon name={iconName} size={21} color={color} />
+          return <iconName.default/>
         },
       })}
       tabBarOptions={{
         adaptive: true,
-        showLabel: false,
+        showLabel: true,
         allowFontScaling: true,
-        labelStyle: styles.labelStyle,
         style: styles.tabBarStyle,
+        labelStyle: styles.labelStyle,
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
       }}>
       <Screen name='Home' component={Home} options={{ headerShown: false }} />
       <Screen name='Class' component={ClassUser} />
       <Screen name='Transaction' component={Transaction} />
-      <Screen name='Other' component={Profile} />
+      <Screen name='Profile' component={Profile} />
     </Navigator>
   )
 }

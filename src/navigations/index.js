@@ -8,7 +8,7 @@ import PublicNavigation from './public.navigation'
 import PrivateNavigation from './private-navigation'
 
 const Render = () => {
-  const { isLogin } = useSelector(state => state.userData)
+  const { isLogin } = useSelector(state => state.UserReducer)
   if (isLogin) {
     return <PrivateNavigation/>
   } else {

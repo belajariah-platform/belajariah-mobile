@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     marginVertical: 1,
   },
   caption: {
-    fontSize: 12,
+    fontSize: 10,
     color: '#ff6721',
   },
 })

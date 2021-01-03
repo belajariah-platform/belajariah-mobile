@@ -1,3 +1,4 @@
-import Config from './config'
+import UserAPI from './user'
+import QuranAPI from './alquran'
 
-export { Config }
+export { UserAPI, QuranAPI }

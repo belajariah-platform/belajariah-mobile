@@ -4,7 +4,7 @@ import { Color, FontType } from '../../assets'
 const styles = StyleSheet.create({
   iconNavigation: {
     fontSize: 16,
-    color: Color.textBasic,
+    color: Color.black,
     fontFamily: FontType.bold,
   },
 })
