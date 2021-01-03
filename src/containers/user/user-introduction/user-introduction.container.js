@@ -66,17 +66,19 @@ const Introduction = (props) => {
           <Text style={styles.title2}>
           Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member
           </Text>
-          {show ? (
-            <Animatable.View
-              delay={100}
-              useNativeDriver
-              animation={animationSignup}>
-              <Buttons
-                title='Daftar'
-                style={styles.btnSwiper}
-                onPress={() => props.navigation.navigate('Register')} />
-            </Animatable.View>
-          ) : null}
+          <View>
+            {show ? (
+              <Animatable.View
+                delay={100}
+                useNativeDriver
+                animation={animationSignup}>
+                <Buttons
+                  title='Daftar'
+                  style={styles.btnSwiper}
+                  onPress={() => props.navigation.navigate('Register')} />
+              </Animatable.View>
+            ) : null}
+          </View>
         </View>
       </View>
     </Swipers>

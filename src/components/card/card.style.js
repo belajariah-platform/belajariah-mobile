@@ -1,18 +1,19 @@
-import { Resp } from '../../utils'
 import { StyleSheet } from 'react-native'
 import { FontType, Color, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
+    height: 245,
     elevation: 2,
+    width: '100%',
     borderWidth: 0,
     borderRadius: 20,
     alignSelf:'center',
     marginVertical :10,
     shadowColor: '#000',
     borderColor: '#dddddd',
-    width: Resp.CardClassWP,
-    height:Resp.CardClassHP,
+    backgroundColor: Color.white
   },
   images: {
     width: '100%',
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     marginTop : 10,
   },
   divider : {
-    marginTop : 10
+    marginTop : 10,
   },
 })
 

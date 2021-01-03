@@ -57,9 +57,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.purpleButton,
   },
   wrapper: {
-    marginTop: 296,
+    marginTop: '82%',
     paddingHorizontal: 30,
-    backgroundColor: 'transparent',
+    backgroundColor: Color.transparent,
   },
   buttonWrapper: {
     marginTop: 22,

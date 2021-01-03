@@ -1,5 +1,4 @@
 import UserAPI from './user'
+import QuranAPI from './alquran'
 
-export {
-  UserAPI
-}
+export { UserAPI, QuranAPI }

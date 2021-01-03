@@ -17,6 +17,7 @@ const Color = {
   white : 'white',
   black : 'black',
   softPink : '#FEF5FF',
+  greySwipe : '#CBC9CA',
   greyInput : '#b2b2b2',
   purpleText : '#7a0090',
   purpleHint : '#C7BBD9',

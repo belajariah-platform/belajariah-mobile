@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useRef, useState } from 'react'
+
 import {
   Text,
   View,
@@ -11,32 +12,41 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
-import {  Avatar, Card } from 'react-native-elements'
-
+import {
+  Card,
+  Avatar,
+} from 'react-native-elements'
 import {
   State,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
+import {
+  Cards,
+  Carousel,
+  ModalInfo,
+  Searchbox,
+} from '../../components'
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
-import { Cards, Searchbox, Carousel } from '../../components'
 
 import { styles } from './home.style'
 
 
 const Home = (props) => {
+  const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
-  const [option1Selected, setOption1Selected] = useState(0)
-
-  const mainScrollViewRef = useRef()
 
   const { height }  = Dimensions.get('window')
   const swipeLength = height / 2
   const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
+  const mainScrollViewRef = useRef()
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const handleSwipe = ({ nativeEvent }) => {
     if (nativeEvent.state === State.BEGAN) {
@@ -61,6 +71,11 @@ const Home = (props) => {
     }
   }
 
+  const handleModal = (event) => {
+    setModalVisible(true)
+    setState(event)
+  }
+
   const classPopular = [
     { rating : 5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ' },
     { rating : 4.5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not' },
@@ -73,9 +88,9 @@ const Home = (props) => {
   ]
 
   const promotion = [
-    { title: 'In turpis', imgUrl: 'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg' },
-    { title: 'Lorem Ipsum', imgUrl: 'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg' },
-    { title: 'Aenean leo', imgUrl: 'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg' },
+    { title: 'Promo 1', imgUrl: 'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg' },
+    { title: 'Promo 2', imgUrl: 'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg' },
+    { title: 'Promo 3', imgUrl: 'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg' },
   ]
 
   const categories = [
@@ -109,32 +124,38 @@ const Home = (props) => {
     )
   }
 
-  const PromotionHome = () => {
-    const promotionItem = ({ index, item }) => {
-      return (
-        <View style={styles.container} key={index}>
-          <TouchableOpacity activeOpacity={0.8}>
-            <Image
-              style={styles.cardCustom}
-              source={{ uri: item.imgUrl }}/>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+  const PromotionHome = ({ index, item }) => {
     return (
-      <View style={{ marginLeft:-16, marginBottom:30 }}>
-        <Carousel
-          data={promotion}
-          pagination={false}
-          renderItem={promotionItem}
-        />
+      <View style={styles.container} key={index}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => props.navigation
+            .navigate('PromotionDetail', item)}
+        >
+          <Image
+            style={styles.cardCustom}
+            source={{ uri: item.imgUrl }}/>
+        </TouchableOpacity>
       </View>
     )
   }
 
   const CategoryClassHome = () => {
+    const RenderItem = () => {
+      return(
+        <View>
+          <Text>{state}</Text>
+        </View>
+      )
+    }
+
     return (
       <>
+        <ModalInfo
+          isVisible={modalVisible}
+          renderItem={<RenderItem/>}
+          backdropPress={() => toggleModal()}
+        />
         <View style={{ marginBottom : 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
@@ -144,6 +165,7 @@ const Home = (props) => {
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
+                    handleModal(category.name)
                     setCategorySelected(category.id)
                   }}>
                   <Text
@@ -204,14 +226,14 @@ const Home = (props) => {
                 description ={item.description}
                 price={
                   <View style={styles.containerPriceOptions}>
-                    <View style={{ flex:1, flexDirection :'row' }}>
+                    <View style={styles.containerPriceFlex}>
                       {options.map((option, index) => {
                         return (
                           <TouchableOpacity
                             key={index}
-                            onPress={() => {setOption1Selected(option.id)}}>
+                            onPress={() => {setOptionSelected(option.id)}}>
                             <Text style={[styles.textPriceOptions,
-                              option.id === option1Selected ? {
+                              option.id === optionSelected ? {
                                 backgroundColor: Color.purpleButton,
                                 color: Color.white,
                               } : {
@@ -224,9 +246,9 @@ const Home = (props) => {
                         )})}
                     </View>
                     <Text style={styles.textPrice}>
-                      IDR {FormatRupiah(options[option1Selected].price)}</Text>
+                      IDR {FormatRupiah(options[optionSelected].price)}</Text>
                     <Text style={styles.textDiscountedPrice}>
-                      IDR {FormatRupiah(options[option1Selected].discountedPrice)}</Text>
+                      IDR {FormatRupiah(options[optionSelected].discountedPrice)}</Text>
                   </View>
                 }
               />
@@ -272,6 +294,11 @@ const Home = (props) => {
     )
   }
 
+  PromotionHome.propTypes = {
+    item : PropTypes.object,
+    index : PropTypes.number,
+  }
+
   return (
     <View style={styles.headerFlex}>
       <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
@@ -312,7 +339,13 @@ const Home = (props) => {
             showsVerticalScrollIndicator={false}>
             <View style={styles.contentContainer}>
               <SearchHome />
-              <PromotionHome />
+              <View style={styles.carousel}>
+                <Carousel
+                  data={promotion}
+                  pagination={false}
+                  renderItem={PromotionHome}
+                />
+              </View>
               <CategoryClassHome />
               <PopularClassHome />
               <InspiratifStoryHome />

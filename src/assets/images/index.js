@@ -9,6 +9,7 @@ export default {
   Intro4: require('./Intro4.png'),
   Google: require('./Google.png'),
   BotClass : require('./Class.svg'),
+  ButtonClose: require('./BtnClose'),
   Register: require('./Register.png'),
   Search: require('./IconSearch.svg'),
   StarHalf : require('./StarHalf.svg'),

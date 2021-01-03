@@ -1,4 +1,4 @@
-import Promo from './promo'
-import PromoDetail from './promo-detail'
+import Promotion from './promotion.container'
+import PromotionDetail from './promotion-detail.container'
 
-export { Promo, PromoDetail }
+export { Promotion, PromotionDetail }

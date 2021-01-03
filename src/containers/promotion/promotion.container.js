@@ -2,12 +2,12 @@ import React from 'react'
 
 import { View, Text } from 'react-native'
 
-const Promo = () => {
+const Promotion = () => {
   return (
     <View style={{ flex:1 }}>
-      <Text>Promo</Text>
+      <Text>Promotion</Text>
     </View>
   )
 }
 
-export default Promo
+export default Promotion

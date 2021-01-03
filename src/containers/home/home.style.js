@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 10,
     alignSelf: 'center',
-    backgroundColor:'#CBC9CA',
+    backgroundColor: Color.greySwipe,
   },
   contentContainer : {
     paddingHorizontal:16,
@@ -37,11 +37,19 @@ const styles = StyleSheet.create({
     top : -5,
     flexDirection: 'row',
   },
+  containerPriceFlex : {
+    flex:1,
+    flexDirection :'row'
+  },
   navigateSearch : {
     width : '100%',
     marginBottom : 30,
     alignSelf:'center',
     alignItems : 'center',
+  },
+  carousel : {
+    marginLeft:-16,
+    marginBottom:30
   },
   cardPromotion : {
     width: 250,
