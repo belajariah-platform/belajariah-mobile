@@ -4,10 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import {
   Home,
-  Profile,
   ClassUser,
   Transaction,
 } from '../../containers'
+import ProfileNavigation from '../profile-navigation'
 import { Color, Images } from '../../assets'
 
 import { styles } from './main.style'
@@ -52,7 +52,7 @@ const Main = () => {
       <Screen name='Home' component={Home} options={{ headerShown: false }} />
       <Screen name='Class' component={ClassUser} />
       <Screen name='Transaction' component={Transaction} />
-      <Screen name='Profile' component={Profile} />
+      <Screen name='Profile' component={ProfileNavigation} />
     </Navigator>
   )
 }
