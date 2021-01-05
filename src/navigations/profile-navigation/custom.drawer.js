@@ -10,6 +10,7 @@ import { ToastAndroid } from 'react-native'
 import { styles } from './profile.style'
 import { TouchableOpacity } from 'react-native'
 import { Text } from '@ui-kitten/components'
+import { color } from 'react-native-reanimated'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const CustomDrawer = ({ navigation }, props) => {
           onPress={() => {
             navigation.navigate('Edit Profile')
           }}
-          labelStyle={styles.labelHeader}
+          labelStyle={styles.label}
         />
 
         <DrawerItem
@@ -37,7 +38,7 @@ const CustomDrawer = ({ navigation }, props) => {
           onPress={() => {
             ToastAndroid.show('Lihat Pesan Suara', ToastAndroid.SHORT)
           }}
-          labelStyle={styles.labelHeader}
+          labelStyle={styles.label}
         />
 
         <DrawerItem
