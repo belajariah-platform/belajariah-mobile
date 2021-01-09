@@ -1,5 +1,4 @@
 import React from 'react'
-import Main from '../main-navigation'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
@@ -9,8 +8,7 @@ import {
   AlquranDetail,
   PromotionDetail,
 } from '../../containers'
-
-
+import Main from '../main-navigation'
 
 const PrivateNavigation = () => {
   const Stack = createStackNavigator()

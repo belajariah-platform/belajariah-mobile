@@ -23,6 +23,7 @@ export default {
   BtnReadMore: require('./BtnReadMore.svg'),
   BlogExample: require('./BlogExample.svg'),
   BannerTahsin: require('./CardTahsin.png'),
+  LoginDirect : require('./LoginDirect.svg'),
   BannerTilawah: require('./CardTilawah.svg'),
   BannerAlquran: require('./CardAlquran.png'),
   BgProfileEdit: require('./BgProfileEdit.png'),

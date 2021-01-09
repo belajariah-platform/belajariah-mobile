@@ -1,8 +1,9 @@
 import React from 'react'
-import { Profile, ProfileEdit } from '../../containers'
-import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
-import CustomDrawer from './custom.drawer'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
+import CustomDrawer from './profile-drawer.navigation'
+import { Profile, ProfileEdit } from '../../containers'
 
 const ProfileNavigation = () => {
   const Drawer = createDrawerNavigator()

@@ -1,16 +1,23 @@
 import React from 'react'
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-import { View } from 'react-native'
-import Images from '../../assets/images'
-import { ImageBackground } from 'react-native'
+import PropTypes from 'prop-types'
+
+import {
+  DrawerItem,
+  DrawerContentScrollView,
+} from '@react-navigation/drawer'
 import { useDispatch } from 'react-redux'
 
+import {
+  Text,
+  View,
+  ToastAndroid,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
+
 import { UserAPI } from '../../api'
-import { ToastAndroid } from 'react-native'
+import { Images } from '../../assets'
 import { styles } from './profile.style'
-import { TouchableOpacity } from 'react-native'
-import { Text } from '@ui-kitten/components'
-import { color } from 'react-native-reanimated'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
@@ -95,6 +102,10 @@ const CustomDrawer = ({ navigation }, props) => {
       </ImageBackground>
     </DrawerContentScrollView>
   )
+}
+
+CustomDrawer.propTypes = {
+  navigation : PropTypes.object,
 }
 
 export default CustomDrawer

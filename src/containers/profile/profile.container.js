@@ -1,13 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import { ScrollView, View } from 'react-native'
-import { Text } from '@ui-kitten/components'
-import Images from '../../assets/images'
+import {
+  View,
+  Text,
+  Easing,
+  Animated,
+  ScrollView,
+  ToastAndroid,
+  TouchableOpacity,
+} from 'react-native'
+import { Card, Avatar } from 'react-native-elements'
+
+import { Images } from '../../assets'
 import { styles } from './profile-main.style'
-import { TouchableOpacity } from 'react-native'
-import { Avatar } from 'react-native-elements'
-import { Card } from 'react-native-elements'
-import { Animated, Easing, ToastAndroid } from 'react-native'
 
 const Profile = ({ navigation }) => {
   const userData = {
@@ -34,7 +40,10 @@ const Profile = ({ navigation }) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-      <Images.ProfileBackground.default width={'100%'} style={styles.background} />
+      <Images.ProfileBackground.default
+        width={'100%'}
+        style={styles.background}
+      />
 
       <View style={styles.containerDrawerButton}>
         <TouchableOpacity
@@ -113,6 +122,10 @@ const Profile = ({ navigation }) => {
       </Card>
     </ScrollView>
   )
+}
+
+Profile.propTypes = {
+  navigation: PropTypes.object,
 }
 
 export default Profile
