@@ -31,4 +31,17 @@ export default {
   BotProfileHint : require('./ProfileHint.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
   BotTransactHint : require('./TransactHint.svg'),
+
+  //update profile
+  LogoBelajariahProfile: require('./LogoBelajariahProfile.svg'),
+  ProfileBackground: require('./profileBackground.svg'),
+  ProfileDrawerBackgroundSVG: require('./profileDrawerBackground.svg'),
+  ProfileDrawerBackgroundPNG: require('./profileDrawerBackground.png'),
+  BtnClose: require('./profileCloseButton.svg'),
+  Email: require('./profileEmailIcon.svg'),
+  Logout: require('./profileLogoutIcon.svg'),
+  LogoutPNG: require('./profileLogoutIcon.png'),
+  Phone: require('./profilePhoneIcon.svg'),
+  ProfilePurple: require('./profileProfileIcon.svg'),
+  Setting: require('./profileSettingIcon.svg'),
 }
