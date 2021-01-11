@@ -1,11 +1,11 @@
 import Timeline from './timeline'
-import Transaction from './transaction'
 import Notification from './notification'
 
-import { ClassUser } from './class'
 import { Home, HomeSearch } from './home'
+import { ClassDetail, ClassUser } from './class'
 import { Profile, ProfileEdit } from './profile'
 import { Alquran, AlquranDetail } from './alquran'
+import { Transaction, TransactionMethod } from './transaction'
 import { Promotion, PromotionDetail } from './promotion'
 import { Login, Register, Introduction, ChangePassword } from './user'
 
@@ -19,6 +19,7 @@ export {
   Promotion,
   ClassUser,
   HomeSearch,
+  ClassDetail,
   ProfileEdit,
   Transaction,
   Introduction,
@@ -26,4 +27,5 @@ export {
   AlquranDetail,
   ChangePassword,
   PromotionDetail,
+  TransactionMethod,
 }

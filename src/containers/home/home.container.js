@@ -34,7 +34,7 @@ import { Color, Images } from '../../assets'
 import { styles } from './home.style'
 
 
-const Home = (props) => {
+const Home = ({ navigation }, props) => {
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
@@ -218,6 +218,12 @@ const Home = (props) => {
             <TouchableOpacity
               key={index}
               activeOpacity={0.6}
+              onPress={() => {
+                navigation.navigate('ClassDetail', {
+                  price : options[optionSelected].price,
+                  discountedPrice: options[optionSelected].discountedPrice,
+                })
+              }}
             >
               <Cards
                 images={Images.BannerTahsin}

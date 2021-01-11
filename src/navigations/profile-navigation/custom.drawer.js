@@ -10,7 +10,6 @@ import { ToastAndroid } from 'react-native'
 import { styles } from './profile.style'
 import { TouchableOpacity } from 'react-native'
 import { Text } from '@ui-kitten/components'
-import { color } from 'react-native-reanimated'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()

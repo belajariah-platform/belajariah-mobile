@@ -1,12 +1,8 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-
-import {
-  Home,
-  ClassUser,
-  Transaction,
-} from '../../containers'
+import { Home, ClassUser } from '../../containers'
+import { Transaction } from '../../containers/transaction'
 import ProfileNavigation from '../profile-navigation'
 import { Color, Images } from '../../assets'
 
@@ -20,24 +16,20 @@ const Main = () => {
         tabBarIcon: ({ focused }) => {
           let iconName
           switch (route.name) {
-          case 'Home':
-            iconName = focused ? Images.BotHome :
-              Images.BotHomeHint
-            break
-          case 'Class':
-            iconName = focused ? Images.BotClass :
-              Images.BotClassHint
-            break
-          case 'Transaction':
-            iconName = focused ? Images.BotTransact :
-              Images.BotTransactHint
-            break
-          case 'Profile':
-            iconName = focused ? Images.BotProfile :
-              Images.BotProfileHint
-            break
+            case 'Home':
+              iconName = focused ? Images.BotHome : Images.BotHomeHint
+              break
+            case 'Class':
+              iconName = focused ? Images.BotClass : Images.BotClassHint
+              break
+            case 'Transaction':
+              iconName = focused ? Images.BotTransact : Images.BotTransactHint
+              break
+            case 'Profile':
+              iconName = focused ? Images.BotProfile : Images.BotProfileHint
+              break
           }
-          return <iconName.default/>
+          return <iconName.default />
         },
       })}
       tabBarOptions={{

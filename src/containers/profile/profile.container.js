@@ -8,8 +8,11 @@ import { TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { Card } from 'react-native-elements'
 import { Animated, Easing, ToastAndroid } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-const Profile = ({ navigation }) => {
+const Profile = () => {
+  const navigation = useNavigation()
+
   const userData = {
     name: 'Nama Orang',
     email: 'email@gmail.com',
