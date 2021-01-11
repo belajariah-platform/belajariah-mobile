@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Home, ClassUser } from '../../containers'
@@ -9,7 +10,9 @@ import { Color, Images } from '../../assets'
 import { styles } from './main.style'
 
 const Main = () => {
+  const { isLogin } = useSelector(state => state.UserReducer)
   const { Navigator, Screen } = createBottomTabNavigator()
+
   return (
     <Navigator
       screenOptions={({ route }) => ({
@@ -42,9 +45,13 @@ const Main = () => {
         inactiveTintColor: Color.textLightHint,
       }}>
       <Screen name='Home' component={Home} options={{ headerShown: false }} />
-      <Screen name='Class' component={ClassUser} />
-      <Screen name='Transaction' component={Transaction} />
-      <Screen name='Profile' component={ProfileNavigation} />
+      {isLogin && (
+        <>
+          <Screen name='Class' component={ClassUser} />
+          <Screen name='Transaction' component={Transaction} />
+          <Screen name='Profile' component={ProfileNavigation} />
+        </>
+      )}
     </Navigator>
   )
 }

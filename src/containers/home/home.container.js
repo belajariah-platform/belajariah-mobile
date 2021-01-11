@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import React, { useRef, useState } from 'react'
 
 import {
@@ -12,36 +13,29 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
-import {
-  Card,
-  Avatar,
-} from 'react-native-elements'
+import { Card, Avatar } from 'react-native-elements'
 import {
   State,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-import {
-  Cards,
-  Carousel,
-  ModalInfo,
-  Searchbox,
-} from '../../components'
+import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
 
 import { styles } from './home.style'
 
+const Home = (props) => {
+  const { isLogin } = useSelector((state) => state.UserReducer)
 
-const Home = ({ navigation }, props) => {
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
 
-  const { height }  = Dimensions.get('window')
+  const { height } = Dimensions.get('window')
   const swipeLength = height / 2
   const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
@@ -77,24 +71,56 @@ const Home = ({ navigation }, props) => {
   }
 
   const classPopular = [
-    { rating : 5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ' },
-    { rating : 4.5, description: 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not' },
+    {
+      rating: 5,
+      description:
+        'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
+    },
+    {
+      rating: 4.5,
+      description:
+        'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not',
+    },
   ]
 
   const Inspiratif = [
-    { id: 0, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
-    { id: 1, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
-    { id: 2, description : 'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif' },
+    {
+      id: 0,
+      description:
+        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
+    },
+    {
+      id: 1,
+      description:
+        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
+    },
+    {
+      id: 2,
+      description:
+        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
+    },
   ]
 
   const promotion = [
-    { title: 'Promo 1', imgUrl: 'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg' },
-    { title: 'Promo 2', imgUrl: 'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg' },
-    { title: 'Promo 3', imgUrl: 'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg' },
+    {
+      title: 'Promo 1',
+      imgUrl:
+        'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg',
+    },
+    {
+      title: 'Promo 2',
+      imgUrl:
+        'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg',
+    },
+    {
+      title: 'Promo 3',
+      imgUrl:
+        'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg',
+    },
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur\'an' },
+    { id: 0, name: 'Al-Qur/an' },
     { id: 1, name: 'Fiqih' },
     { id: 2, name: 'Ekonomi Syariah' },
     { id: 3, name: 'Ibadah Kemasyarakatan' },
@@ -112,13 +138,16 @@ const Home = ({ navigation }, props) => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.navigateSearch}
-        onPress={() => props.navigation.navigate('HomeSearch')}
-      >
+        onPress={() => props.navigation.navigate('HomeSearch')}>
         <Searchbox
           disabled
           style={styles.containerSearch}
-          accessoryRight={() => <Images.Search.default style={{ marginRight:-12 }}/>}
-          renderItem={<Text style={styles.textSearch}>Cari kelas di belajariah</Text>}
+          accessoryRight={() => (
+            <Images.Search.default style={{ marginRight: -12 }} />
+          )}
+          renderItem={
+            <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
+          }
         />
       </TouchableOpacity>
     )
@@ -129,12 +158,8 @@ const Home = ({ navigation }, props) => {
       <View style={styles.container} key={index}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => props.navigation
-            .navigate('PromotionDetail', item)}
-        >
-          <Image
-            style={styles.cardCustom}
-            source={{ uri: item.imgUrl }}/>
+          onPress={() => props.navigation.navigate('PromotionDetail', item)}>
+          <Image style={styles.cardCustom} source={{ uri: item.imgUrl }} />
         </TouchableOpacity>
       </View>
     )
@@ -142,7 +167,7 @@ const Home = ({ navigation }, props) => {
 
   const CategoryClassHome = () => {
     const RenderItem = () => {
-      return(
+      return (
         <View>
           <Text>{state}</Text>
         </View>
@@ -153,10 +178,10 @@ const Home = ({ navigation }, props) => {
       <>
         <ModalInfo
           isVisible={modalVisible}
-          renderItem={<RenderItem/>}
+          renderItem={<RenderItem />}
           backdropPress={() => toggleModal()}
         />
-        <View style={{ marginBottom : 30 }}>
+        <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -169,20 +194,24 @@ const Home = ({ navigation }, props) => {
                     setCategorySelected(category.id)
                   }}>
                   <Text
-                    style={[styles.textCategories,
-                      category.id === categorySelected ?
-                        {
-                          color: Color.white,
-                          borderColor : Color.transparent,
-                          backgroundColor: Color.purpleButton,
-                        }: {
-                          color: Color.greyHeadInput,
-                          backgroundColor: Color.bgColorWhite,
-                        }]}>
+                    style={[
+                      styles.textCategories,
+                      category.id === categorySelected
+                        ? {
+                            color: Color.white,
+                            borderColor: Color.transparent,
+                            backgroundColor: Color.purpleButton,
+                          }
+                        : {
+                            color: Color.greyHeadInput,
+                            backgroundColor: Color.bgColorWhite,
+                          },
+                    ]}>
                     {category.name}
                   </Text>
                 </TouchableOpacity>
-              )})}
+              )
+            })}
           </ScrollView>
         </View>
       </>
@@ -192,18 +221,18 @@ const Home = ({ navigation }, props) => {
   const PopularClassHome = () => {
     const handleRating = (num) => {
       let rating = []
-      const numRound =  Math.round(num)
+      const numRound = Math.round(num)
       for (let index = 1; index <= numRound; index++) {
-        num - index == 0 ?
-          rating.push(<Images.Star.default/>) :
-          num - index < 0 ?
-            rating.push(<Images.StarHalf.default/>) :
-            rating.push(<Images.Star.default/>)
+        num - index == 0
+          ? rating.push(<Images.Star.default />)
+          : num - index < 0
+          ? rating.push(<Images.StarHalf.default />)
+          : rating.push(<Images.Star.default />)
       }
       return (
-        <View style={{ flexDirection:'row' }}>
+        <View style={{ flexDirection: 'row' }}>
           {rating.map((val, index) => {
-            return (<View key={index}>{val}</View>)
+            return <View key={index}>{val}</View>
           })}
         </View>
       )
@@ -219,7 +248,7 @@ const Home = ({ navigation }, props) => {
               key={index}
               activeOpacity={0.6}
               onPress={() => {
-                navigation.navigate('ClassDetail', {
+                props.navigation.navigate('ClassDetail', {
                   price : options[optionSelected].price,
                   discountedPrice: options[optionSelected].discountedPrice,
                 })
@@ -228,8 +257,10 @@ const Home = ({ navigation }, props) => {
               <Cards
                 images={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
-                imageTitle={<Images.JudulTahsin.default style={styles.svgClassTitle} />}
-                description ={item.description}
+                imageTitle={
+                  <Images.JudulTahsin.default style={styles.svgClassTitle} />
+                }
+                description={item.description}
                 price={
                   <View style={styles.containerPriceOptions}>
                     <View style={styles.containerPriceFlex}>
@@ -237,35 +268,47 @@ const Home = ({ navigation }, props) => {
                         return (
                           <TouchableOpacity
                             key={index}
-                            onPress={() => {setOptionSelected(option.id)}}>
-                            <Text style={[styles.textPriceOptions,
-                              option.id === optionSelected ? {
-                                backgroundColor: Color.purpleButton,
-                                color: Color.white,
-                              } : {
-                                backgroundColor: Color.greyHintExt,
-                                color: Color.black,
-                              }]}>
+                            onPress={() => {
+                              setOptionSelected(option.id)
+                            }}>
+                            <Text
+                              style={[
+                                styles.textPriceOptions,
+                                option.id === optionSelected
+                                  ? {
+                                      backgroundColor: Color.purpleButton,
+                                      color: Color.white,
+                                    }
+                                  : {
+                                      backgroundColor: Color.greyHintExt,
+                                      color: Color.black,
+                                    },
+                              ]}>
                               {option.name}
                             </Text>
                           </TouchableOpacity>
-                        )})}
+                        )
+                      })}
                     </View>
                     <Text style={styles.textPrice}>
-                      IDR {FormatRupiah(options[optionSelected].price)}</Text>
+                      IDR {FormatRupiah(options[optionSelected].price)}
+                    </Text>
                     <Text style={styles.textDiscountedPrice}>
-                      IDR {FormatRupiah(options[optionSelected].discountedPrice)}</Text>
+                      IDR{' '}
+                      {FormatRupiah(options[optionSelected].discountedPrice)}
+                    </Text>
                   </View>
                 }
               />
             </TouchableOpacity>
-          )})}
+          )
+        })}
         <View>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.bannerAlquranContainer}
             onPress={() => props.navigation.navigate('Alquran')}>
-            <Image source={Images.BannerAlquran} style={styles.cardCustom}/>
+            <Image source={Images.BannerAlquran} style={styles.cardCustom} />
           </TouchableOpacity>
         </View>
       </View>
@@ -276,7 +319,9 @@ const Home = ({ navigation }, props) => {
     return (
       <View>
         <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
-        <Text style={styles.textSubtitle}>Baca artikel terkini setiap hari!</Text>
+        <Text style={styles.textSubtitle}>
+          Baca artikel terkini setiap hari!
+        </Text>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -284,13 +329,17 @@ const Home = ({ navigation }, props) => {
           {Inspiratif.map((item, index) => {
             return (
               <Card containerStyle={styles.cardArticle} key={index}>
-                <Images.BlogExample.default style={styles.svgArticleBackground} />
-                <Text style={styles.textArticleDescription}>{item.description.substring(0, 120)} ...</Text>
+                <Images.BlogExample.default
+                  style={styles.svgArticleBackground}
+                />
+                <Text style={styles.textArticleDescription}>
+                  {item.description.substring(0, 120)} ...
+                </Text>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.btnReadMore}
                   onPress={() => Alert.alert('Page Artikel')}>
-                  <Images.BtnReadMore.default/>
+                  <Images.BtnReadMore.default />
                 </TouchableOpacity>
               </Card>
             )
@@ -301,8 +350,8 @@ const Home = ({ navigation }, props) => {
   }
 
   PromotionHome.propTypes = {
-    item : PropTypes.object,
-    index : PropTypes.number,
+    item: PropTypes.object,
+    index: PropTypes.number,
   }
 
   return (
@@ -314,29 +363,41 @@ const Home = ({ navigation }, props) => {
               <Avatar
                 rounded
                 activeOpacity={0.8}
-                containerStyle={{ ...styles.headerAvatar, marginLeft : 15 }}/>
+                containerStyle={{ ...styles.headerAvatar, marginLeft: 15 }}
+              />
             </View>
             <View>
-              <Avatar
-                rounded
-                activeOpacity={0.8}
-                containerStyle={{ ...styles.headerAvatar, marginRight : 15 }}/>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                style={{ ...styles.headerAvatar, marginRight: 15 }}
+                onPress={() =>
+                  props.navigation.navigate(isLogin ? 'Profile' : 'Login')
+                }>
+                  {!isLogin &&(
+                  <Images.LoginDirect.default/>
+                  )}
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.textBackContainer}>
-            <Text style={styles.textBack}>Assalamualaikum Sobat
-              <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap Belajar
+            <Text style={styles.textBack}>
+              Assalamualaikum Sobat
+              <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
+              Belajar
               <Text style={styles.textBackBold}> AlQuran ?</Text>
             </Text>
           </View>
         </View>
-        <Animated.View style={[styles.frontContainer,
-          { transform: [{ translateY: swipeAnimation }] }]}>
+        <Animated.View
+          style={[
+            styles.frontContainer,
+            { transform: [{ translateY: swipeAnimation }] },
+          ]}>
           <FlingGestureHandler
             onHandlerStateChange={handleSwipe}
             direction={Directions.UP | Directions.DOWN}>
             <View style={styles.fingerGesture}>
-              <View style={styles.topLine}/>
+              <View style={styles.topLine} />
             </View>
           </FlingGestureHandler>
           <ScrollView
@@ -360,7 +421,11 @@ const Home = ({ navigation }, props) => {
               <TouchableOpacity
                 onPress={() =>
                   mainScrollViewRef.current.scrollTo({
-                    x: 0, y: 0, animated: true })}>
+                    x: 0,
+                    y: 0,
+                    animated: true,
+                  })
+                }>
                 <Images.BtnArrowUp.default style={styles.iconArrowUp} />
               </TouchableOpacity>
             </View>
@@ -368,12 +433,11 @@ const Home = ({ navigation }, props) => {
         </Animated.View>
       </ImageBackground>
     </View>
-
   )
 }
 
 Home.propTypes = {
-  navigation : PropTypes.object,
+  navigation: PropTypes.object,
 }
 
 export default Home

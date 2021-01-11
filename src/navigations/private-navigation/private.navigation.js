@@ -1,5 +1,4 @@
 import React from 'react'
-import Main from '../main-navigation'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
@@ -11,6 +10,7 @@ import {
   PromotionDetail,
   TransactionMethod,
 } from '../../containers'
+import Main from '../main-navigation'
 
 const PrivateNavigation = () => {
   const Stack = createStackNavigator()

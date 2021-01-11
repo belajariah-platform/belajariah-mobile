@@ -29,7 +29,7 @@
     "object-curly-spacing": ["error", "always"],
     "react/prop-types": ["error"],
     "no-console": "off",
-    "indent": ["error", 2],
+    "indent": "off",
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "comma-spacing": [
@@ -49,6 +49,6 @@
         "switches": "never"
       }
     ],
-    "max-len": ["error", { "code": 150 }]
+    "max-len": ["error", { "code": 200 }]
   }
 }
