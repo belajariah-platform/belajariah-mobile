@@ -1,3 +1,5 @@
+import ClassDetail from './class-detail'
+import ClassLearning from './class-learning'
 import ClassUser from './class-user'
 
-export { ClassUser }
+export { ClassDetail, ClassLearning, ClassUser }

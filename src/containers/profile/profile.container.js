@@ -14,8 +14,11 @@ import { Card, Avatar } from 'react-native-elements'
 
 import { Images } from '../../assets'
 import { styles } from './profile-main.style'
+import { useNavigation } from '@react-navigation/native'
 
-const Profile = ({ navigation }) => {
+const Profile = () => {
+  const navigation = useNavigation()
+
   const userData = {
     name: 'Nama Orang',
     email: 'email@gmail.com',

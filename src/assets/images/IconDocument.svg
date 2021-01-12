@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="34.910618mm"
+   height="44.190781mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 3491.0001 4419"
+   id="svg10"
+   sodipodi:docname="dokumen-icon.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata14"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview12"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="117.86665"
+   inkscape:cy="116.12803"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg10" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:#6E248D;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="translate(-5348,-5394)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 6841,5394 h 1558 c 121,0 231,49 311,129 80,79 129,190 129,311 v 3540 c 0,121 -49,231 -129,310 -80,80 -190,129 -311,129 H 5788 c -121,0 -231,-49 -311,-129 -79,-79 -129,-189 -129,-310 v -2490 -33 l 24,-24 1412,-1410 24,-23 z m -444,2653 1395,18 -2,160 -1395,-18 z m 0,-533 1395,18 -2,161 -1395,-18 z m -775,-710 h 950 v 0 0 c 52,0 99,-22 133,-56 34,-33 55,-80 55,-132 v 0 -948 z M 6921,5555 v 1061 0 c 0,96 -39,183 -102,246 -64,63 -151,103 -247,103 v 0 -1 H 5509 v 2410 c 0,76 31,146 82,197 51,50 120,82 197,82 h 2611 c 77,0 147,-32 197,-82 51,-51 82,-121 82,-197 V 5834 c 0,-77 -31,-147 -82,-197 -50,-51 -120,-82 -197,-82 z"
+   id="path7" />
+ </g>
+</svg>

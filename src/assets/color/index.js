@@ -13,23 +13,35 @@ const Color = {
   bgSearch: '#eeedf2',
 
   //new
-  grey : 'grey',
-  white : 'white',
-  black : 'black',
-  softPink : '#FEF5FF',
-  greySwipe : '#CBC9CA',
-  greyInput : '#b2b2b2',
-  purpleText : '#7a0090',
-  purpleHint : '#C7BBD9',
-  greyMedium : '#E6E6E6',
-  greyHintBG : '#eff3f6',
-  greyHintExt : '#EBEBEB',
-  greyHintText : '#bcbcbc',
-  purpleButton : '#77008e',
-  greySearchBG : '#fafafa',
-  greyHeadInput : '#7f7f7f',
-  transparent : 'transparent',
-  greySearchBorder : '#e9e7e8',
+  grey: 'grey',
+  white: 'white',
+  black: '#1A1A1A',
+  softPink: '#FEF5FF',
+  greySwipe: '#CBC9CA',
+  greyInput: '#b2b2b2',
+  purpleText: '#7a0090',
+  purpleHint: '#C7BBD9',
+  greyMedium: '#E6E6E6',
+  greyHintBG: '#eff3f6',
+  greyHintExt: '#EBEBEB',
+  greyHintText: '#bcbcbc',
+  purpleButton: '#77008e',
+  greySearchBG: '#fafafa',
+  greyHeadInput: '#7f7f7f',
+  transparent: 'transparent',
+  greySearchBorder: '#e9e7e8',
+
+  //detail class
+  bgColorBlue: '#3498db',
+  bgColorPurple: '#6e248d',
+  lightGrey: '#efeeef',
+  textRed: '#d73c2c',
+
+  //transaction
+  transactionBgColor: '#9956b3',
+  transparentBg: 'rgba(113, 37, 144, 0.3)',
+  textSuccess: '#1abc9c',
+  textFailed: '#f75c4c',
 }
 
 export { Color }

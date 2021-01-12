@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native'
 
-import { Resp } from '../../utils'
 import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
@@ -11,38 +10,38 @@ const styles = StyleSheet.create({
     marginRight: -4,
   },
   btnClose: {
-    marginLeft: 16,
     marginTop: 4,
+    marginLeft: 16,
   },
   labelHeader: {
     marginLeft: 28,
+    color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
-    color: Color.white,
   },
   label: {
     marginLeft: 42,
+    color: Color.white,
     fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
-    color: Color.white,
   },
   iconLogout: {
     left: 108,
     marginRight: -56,
   },
   versionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     flex: 1,
-    alignItems: 'flex-end',
     marginBottom: 56,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   version: {
     marginTop: 4,
     marginLeft: 16,
+    color: Color.white,
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,
-    color: Color.white,
   },
 })
 

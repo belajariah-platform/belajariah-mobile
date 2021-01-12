@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="19.123394mm"
+   height="19.09202mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 1912.3057 1909.1684"
+   id="svg25"
+   sodipodi:docname="RibbonComplete.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata29"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview27"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="-76.026554"
+   inkscape:cy="85.135347"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg25"
+   inkscape:document-rotation="0" />
+ <defs
+   id="defs9">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:#185457}
+    .fil2 {fill:white;fill-rule:nonzero}
+    .fil1 {fill:url(#id0)}
+   ]]>
+  </style>
+  <linearGradient
+   id="id0"
+   gradientUnits="userSpaceOnUse"
+   x1="10723.9"
+   y1="6384.8198"
+   x2="11524.7"
+   y2="7185.6001">
+   <stop
+   offset="0"
+   style="stop-opacity:1; stop-color:#1ABC9C"
+   id="stop4" />
+   <stop
+   offset="1"
+   style="stop-opacity:1; stop-color:#138794"
+   id="stop6" />
+  </linearGradient>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="matrix(1.5687496,0,0,1.5687496,-16437.358,-9748.21)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <polygon
+   class="fil0"
+   points="11621,6787 11697,6764 11697,7357 11621,7431 "
+   id="polygon12" />
+  <polygon
+   class="fil0"
+   points="11122,6289 11133,6251 10552,6214 10478,6289 "
+   id="polygon14" />
+  <polygon
+   class="fil1"
+   points="11697,7357 11697,6764 11296,6364 11296,6364 11220,6289 11145,6214 10552,6214 11546,7207 11621,7282 "
+   id="polygon16"
+   style="fill:url(#id0)" />
+  <polygon
+   class="fil2"
+   points="11092,6501 11173,6419 11148,6394 11045,6498 11110,6563 11132,6541 "
+   id="polygon18" />
+  <path
+   id="1"
+   class="fil2"
+   d="m 11191,6641 72,-73 -24,-24 -39,40 c -9,8 -20,11 -29,3 -8,-9 -3,-18 5,-27 l 39,-39 -24,-24 -45,45 c -14,15 -22,37 -3,56 10,10 24,13 34,10 v 0 l -10,10 z" />
+  <path
+   id="2"
+   class="fil2"
+   d="m 11282,6730 44,-45 c 15,-15 23,-37 3,-56 -10,-10 -24,-13 -33,-9 l -1,-1 10,-10 -23,-23 -72,73 24,24 39,-40 c 8,-8 20,-11 28,-3 9,9 4,18 -4,26 l -39,40 z" />
+  <path
+   id="3"
+   class="fil2"
+   d="m 11373,6761 c -9,9 -21,9 -30,0 -5,-5 -9,-12 -3,-18 8,-9 21,2 32,12 l 3,3 z m -12,-52 c 9,0 19,3 25,10 8,7 10,16 3,24 l -1,1 c -21,-21 -50,-43 -71,-22 -17,17 -8,38 4,49 8,8 20,13 30,11 v 0 l -7,8 22,22 36,-37 c 26,-26 29,-47 4,-72 -11,-11 -28,-19 -44,-19 z" />
+  <path
+   id="4"
+   class="fil2"
+   d="m 11504,6819 c 0,-13 -8,-28 -19,-39 -14,-14 -37,-23 -54,-5 -14,13 -8,30 0,42 8,12 11,18 6,23 -5,4 -11,1 -15,-3 -7,-7 -10,-17 -9,-26 l -28,1 c 0,15 9,31 21,43 15,15 37,24 55,6 14,-14 8,-32 -1,-45 -7,-12 -10,-17 -6,-21 4,-4 10,-1 15,3 6,6 8,15 9,22 z" />
+ </g>
+</svg>

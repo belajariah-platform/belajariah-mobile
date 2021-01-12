@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="74.701324mm"
+   height="17.360308mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 7470.0004 1736.0001"
+   id="svg17"
+   sodipodi:docname="button_checknow.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata21"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview19"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="136.08429"
+   inkscape:cy="96.436348"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg17" />
+ <defs
+   id="defs11">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:url(#id0)}
+   ]]>
+  </style>
+  <linearGradient
+   id="id0"
+   gradientUnits="userSpaceOnUse"
+   x1="8601"
+   y1="7650.7202"
+   x2="8601"
+   y2="5915.48">
+   <stop
+   offset="0"
+   style="stop-opacity:1; stop-color:#8435A6"
+   id="stop4" />
+   <stop
+   offset="0.501961"
+   style="stop-opacity:1; stop-color:#662980"
+   id="stop6" />
+   <stop
+   offset="1"
+   style="stop-opacity:1; stop-color:#8435A6"
+   id="stop8" />
+  </linearGradient>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="translate(-4866,-5915)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 5278,5915 h 6646 c 227,0 412,162 412,359 v 1018 c 0,197 -185,359 -412,359 H 5278 c -227,0 -412,-162 -412,-359 V 6274 c 0,-197 185,-359 412,-359 z"
+   id="path14"
+   style="fill:url(#id0)" />
+ </g>
+</svg>

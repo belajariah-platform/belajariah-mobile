@@ -244,7 +244,16 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {classPopular.map((item, index) => {
           return (
-            <TouchableOpacity key={index} activeOpacity={0.6}>
+            <TouchableOpacity
+              key={index}
+              activeOpacity={0.6}
+              onPress={() => {
+                props.navigation.navigate('ClassDetail', {
+                  price : options[optionSelected].price,
+                  discountedPrice: options[optionSelected].discountedPrice,
+                })
+              }}
+            >
               <Cards
                 images={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
