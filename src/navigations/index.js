@@ -13,7 +13,7 @@ const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   console.log(userInfo)
   if (isLogin) {
-    return  <InstructorNavigation/>
+    return  <UserNavigation/>
   } else {
     return <PublicNavigation/>
   }
