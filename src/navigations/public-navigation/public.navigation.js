@@ -2,34 +2,33 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import {
+  Login,
   Alquran,
-  HomeSearch,
-  ClassDetail,
-  ProfileEdit,
+  Register,
+  Introduction,
   AlquranDetail,
+  ChangePassword,
   PromotionDetail,
-  TransactionMethod,
 } from '../../containers'
-import Main from '../main-navigation'
+import Main from '..//user-navigation/user-main'
 
-const PrivateNavigation = () => {
+const PublicNavigation = () => {
   const Stack = createStackNavigator()
-
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen name='Main' component={Main} />
+      <Stack.Screen name='Login' component={Login} />
       <Stack.Screen name='Alquran' component={Alquran} />
-      <Stack.Screen name='HomeSearch' component={HomeSearch} />
-      <Stack.Screen name='ClassDetail' component={ClassDetail} />
-      <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
+      <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen name='Introduction' component={Introduction} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
+      <Stack.Screen name='ChangePassword' component={ChangePassword} />
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
-      <Stack.Screen name='TransactionMethod' component={TransactionMethod} />
     </Stack.Navigator>
   )
 }
 
-export default PrivateNavigation
+export default PublicNavigation

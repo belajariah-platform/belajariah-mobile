@@ -249,11 +249,10 @@ const Home = (props) => {
               activeOpacity={0.6}
               onPress={() => {
                 props.navigation.navigate('ClassDetail', {
-                  price : options[optionSelected].price,
+                  price: options[optionSelected].price,
                   discountedPrice: options[optionSelected].discountedPrice,
                 })
-              }}
-            >
+              }}>
               <Cards
                 images={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
@@ -373,9 +372,7 @@ const Home = (props) => {
                 onPress={() =>
                   props.navigation.navigate(isLogin ? 'Profile' : 'Login')
                 }>
-                  {!isLogin &&(
-                  <Images.LoginDirect.default/>
-                  )}
+                {!isLogin && <Images.LoginDirect.default />}
               </TouchableOpacity>
             </View>
           </View>
