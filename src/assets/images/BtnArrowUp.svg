@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="10.320377mm"
+   height="10.320377mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 2132.0001 2132.0001"
+   id="svg14"
+   sodipodi:docname="button_arrow up page.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata18"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="725"
+   inkscape:window-height="480"
+   id="namedview16"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="48.586683"
+   inkscape:cy="68.546584"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg14" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil1 {fill:white}
+    .fil2 {fill:#6E248D;fill-rule:nonzero}
+    .fil0 {fill:#999999;fill-opacity:0.200000}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="translate(-7181,-8285)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 8247,8285 c 589,0 1066,477 1066,1066 0,589 -477,1066 -1066,1066 -589,0 -1066,-477 -1066,-1066 0,-589 477,-1066 1066,-1066 z"
+   id="path7" />
+  <circle
+   class="fil1"
+   cx="8247"
+   cy="9351"
+   r="1038"
+   id="circle9" />
+  <path
+   class="fil2"
+   d="m 8052,9226 c -16,17 -43,17 -59,0 -16,-16 -17,-43 0,-59 l 222,-222 c 8,-9 19,-15 32,-15 13,0 24,6 32,15 l 222,222 c 16,16 17,43 0,59 -16,17 -43,17 -59,0 l -153,-152 v 656 c 0,23 -19,42 -42,42 -23,0 -42,-19 -42,-42 v -656 z"
+   id="path11" />
+ </g>
+</svg>

@@ -1,69 +1,59 @@
 import React from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { useSelector } from 'react-redux'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import {
-    Color, 
-    FontType,
-} from '../../assets';
+import { Home, ClassUser } from '../../containers'
+import { Transaction } from '../../containers/transaction'
+import ProfileNavigation from '../profile-navigation'
+import { Color, Images } from '../../assets'
 
-import {
-    Home,
-    Profile,
-    Timeline,
-    ClassUser,
-} from '../../containers';
+import { styles } from './main.style'
 
 const Main = () => {
-  const {Navigator, Screen} = createBottomTabNavigator();
+  const { isLogin } = useSelector(state => state.UserReducer)
+  const { Navigator, Screen } = createBottomTabNavigator()
+
   return (
     <Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color}) => {
-          let iconName;
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused }) => {
+          let iconName
           switch (route.name) {
             case 'Home':
-              iconName = 'book';
-              break;
-            case 'Timeline':
-              iconName = 'clock';
-              break;
-            case 'Other':
-              iconName = 'ellipsis-h';
-              break;
-            case 'Kelas':
-                iconName = 'ellipsis-h';
-                break;
+              iconName = focused ? Images.BotHome : Images.BotHomeHint
+              break
+            case 'Class':
+              iconName = focused ? Images.BotClass : Images.BotClassHint
+              break
+            case 'Transaction':
+              iconName = focused ? Images.BotTransact : Images.BotTransactHint
+              break
+            case 'Profile':
+              iconName = focused ? Images.BotProfile : Images.BotProfileHint
+              break
           }
-          return <Icon name={iconName} size={21} color={color} />;
+          return <iconName.default />
         },
       })}
       tabBarOptions={{
         adaptive: true,
-        showLabel: false,
+        showLabel: true,
         allowFontScaling: true,
+        style: styles.tabBarStyle,
+        labelStyle: styles.labelStyle,
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
-        style: {
-          elevation: 40,
-          borderWidth: 0,
-          marginTop: -30,
-          borderTopWidth: 0,
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          borderColor: 'transparent',
-        },
-        labelStyle: {
-          fontSize: 12, 
-          fontFamily: FontType.regular
-        },
       }}>
-      <Screen name="Home" component={Home} options={{headerShown: false}} />
-      <Screen name="Timeline" component={Timeline} />
-      <Screen name="Other" component={Profile} />
-      <Screen name="Kelas" component={ClassUser} />
+      <Screen name='Home' component={Home} options={{ headerShown: false }} />
+      {isLogin && (
+        <>
+          <Screen name='Class' component={ClassUser} />
+          <Screen name='Transaction' component={Transaction} />
+          <Screen name='Profile' component={ProfileNavigation} />
+        </>
+      )}
     </Navigator>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="81.041702mm"
+   height="96.066689mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 8104.027 9606.4991"
+   id="svg24"
+   sodipodi:docname="logo belajariah.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata28"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview26"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="138.61764"
+   inkscape:cy="260.23394"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg24" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil1 {fill:white}
+    .fil0 {fill:white;fill-opacity:0.211765}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="translate(-4798.9731,-3213.3618)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 9007,8195 v 0 c 1171,-279 1739,460 1688,1146 -47,637 -908,1666 -2610,1728 -146,5 -288,-1 -422,-18 297,167 666,247 1073,231 1739,-71 2495,-1400 2456,-1990 -57,-871 -993,-1489 -2185,-1097 z"
+   id="path7" />
+  <path
+   class="fil0"
+   d="M 7253,3266 C 8798,4564 7228,6318 5393,8622 4200,10121 4921,11625 6516,12205 5378,11399 5001,9951 6038,8507 7914,5895 8954,4148 7253,3266 Z"
+   id="path9" />
+  <path
+   class="fil1"
+   d="m 7431,3236 c 1701,883 661,2629 -1215,5241 -1876,2613 876,5241 4388,4046 2356,-801 2292,-3389 1202,-4397 -681,-629 -1817,-802 -2752,-47 1282,-422 2289,243 2351,1180 41,634 -771,2064 -2643,2140 -1984,80 -3147,-1975 28,-5245 C 10176,4726 9928,2995 7431,3236 Z"
+   id="path11" />
+  <polygon
+   class="fil1"
+   points="12751,12742 12070,12623 12304,11975 12903,12133 "
+   id="polygon13" />
+  <path
+   class="fil0"
+   d="m 9007,8195 v 0 c 1171,-279 1739,460 1688,1146 -47,637 -908,1666 -2610,1728 -146,5 -288,-1 -422,-18 297,167 666,247 1073,231 1739,-71 2495,-1400 2456,-1990 -57,-871 -993,-1489 -2185,-1097 z"
+   id="path15" />
+  <path
+   class="fil0"
+   d="M 7253,3266 C 8798,4564 7228,6318 5393,8622 4200,10121 4921,11625 6516,12205 5378,11399 5001,9951 6038,8507 7914,5895 8954,4148 7253,3266 Z"
+   id="path17" />
+  <path
+   class="fil1"
+   d="m 7431,3236 c 1701,883 661,2629 -1215,5241 -1876,2613 876,5241 4388,4046 2356,-801 2292,-3389 1202,-4397 -681,-629 -1817,-802 -2752,-47 1282,-422 2289,243 2351,1180 41,634 -771,2064 -2643,2140 -1984,80 -3147,-1975 28,-5245 C 10176,4726 9928,2995 7431,3236 Z"
+   id="path19" />
+  <polygon
+   class="fil1"
+   points="12751,12742 12070,12623 12304,11975 12903,12133 "
+   id="polygon21" />
+ </g>
+</svg>

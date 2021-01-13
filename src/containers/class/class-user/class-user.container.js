@@ -5,7 +5,7 @@ import { array, object } from 'yup/lib/locale'
 import {Images} from '../../../assets'
 import { Buttons } from '../../../components'
 import {Button} from 'react-native-elements'
-import { styles } from '../../class/class-user/class-user.style'
+import { styles } from '../class-user/class-user.style'
 import { ScrollView } from 'react-native'
 import Textarea from 'react-native-textarea'
 import { Icon } from '@ui-kitten/components'
@@ -23,17 +23,6 @@ const ClassUser = (props) => {
 
   const Comment = [{'value' : 'Terima kasih'}, {'value' : 'Pengajar berkompeten'}, {'value' : 'Belajariah keren'}, {'value' : 'Banyak hadiah'}, {'value' : 'Materinya mudah dipahami'}];
   const [defaulComment, setDefaultComment] = useState('');
-
-  const Progress = ({step, steps, height}) => {
-      return (
-        <> 
-            <Text>{step}/{steps}</Text>
-            <View style={{height, backgroundColor: 'rgba(0,0,0,0.1)',borderRadius: height, overflow: 'hidden',}}/>
-            <View style={{height, width='100%', borderRadius: height, backgroundColor: 'rgba(0,0,0,0.5)', position: 'absolute', left: 0, top: 0,}}/>
-        </>
-      )
-      
-  } 
 
   const CustomRatingBar = () => {
     return (
@@ -65,7 +54,7 @@ const ClassUser = (props) => {
             <View style={styles.containerHeader}>
                 <Text style={styles.containerTextHeader}>Kelas Saya</Text>
                 <TouchableOpacity>
-                    <Images.ButtonFilter.default style={styles.containerButtonFilter}/>
+                    <Images.Filter.default width={70} height={50} style={styles.containerButtonFilter}/>
                 </TouchableOpacity>
             </View>
             <ImageBackground source={Images.BgClassUser}  style={{height: '100%', width: '100%', marginTop: '5%',}} imageStyle={{ borderRadius: 30}}>
@@ -98,7 +87,6 @@ const ClassUser = (props) => {
                                             <Text style={styles.ButtonTextClass}>Nilai Exam : 0</Text>
                                             <View style={styles.containerIconProgress}>
                                             <StatusBar hidden />
-                                            <Progress step={1} steps={10} height={20} />
                                                 <TouchableOpacity>
                                                     <Buttons title='Lanjut' style={styles.ButtonClass} onPress = {() => props.navigation.navigate('ClassLearning')}></Buttons>
                                                 </TouchableOpacity>

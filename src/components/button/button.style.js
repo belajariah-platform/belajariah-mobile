@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FontType, Color } from '../../assets'
 
 const styles = StyleSheet.create({
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 20,
     justifyContent: 'center',
-    backgroundColor: Color.bgColor,
+    backgroundColor: Color.purpleButton,
   },
   text: {
     fontSize: 14,
@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontType.bold,
   },
-  });
+})
 
-export {styles}
+export { styles }

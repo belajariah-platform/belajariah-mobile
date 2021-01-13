@@ -1,6 +1,6 @@
-import React from 'react';
-import {styles} from './searchbox.style'
-import {Input} from '@ui-kitten/components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Input } from '@ui-kitten/components'
 
 const Searchbox = (props) => {
   return (
@@ -11,9 +11,15 @@ const Searchbox = (props) => {
       }
       onBlur={props.form && props.name && props.form.handleBlur(props.name)}
       {...props}
-      size="medium"
-    />
-  );
+      size ='small'
+    >{props.renderItem}</Input>
+  )
 }
 
-export default Searchbox 
+Searchbox.propTypes = {
+  form : PropTypes.func,
+  name : PropTypes.string,
+  renderItem : PropTypes.object
+}
+
+export default Searchbox

@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     },
     containerButtonFilter : {
         marginRight: '2%',
+        top: '25%',
     },
     containerTouchFilter : {
         width: 100,

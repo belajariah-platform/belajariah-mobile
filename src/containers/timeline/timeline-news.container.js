@@ -1,66 +1,33 @@
-import React from 'react';
-import {
-  View,
-  Image,
-  FlatList,
-  RefreshControl,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  Text,
-  Icon, 
-  Avatar, 
-} from '@ui-kitten/components';
+import React, { useState } from 'react'
+import { Text, Icon, Avatar } from '@ui-kitten/components'
+import { View, Image, FlatList, TouchableOpacity } from 'react-native'
 
-import { 
-  Shimmer,
-  TextView,
- } from '../../components'
+import { Color } from '../../assets'
+import DataContent from './column-content.json'
+import { Shimmer, TextView } from '../../components'
 
- import { Color } from '../../assets'
- import DataContent from './column-content.json'
-
- import { styles } from './timeline.style'
+import { styles } from './timeline.style'
 
 const TimelineNews = () => {
-  const [like, setLike] = React.useState(false);
-  const [addLike, setAddLike] = React.useState(false);
-  const [shimmer, setShimmer] = React.useState(true);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [shimmer] = useState(true)
+  const [like, setLike] = useState(false)
+  const [addLike, setAddLike] = useState(false)
 
   const handleLike = () => {
-    setLike(!like);
+    setLike(!like)
     if (like === true) {
       setAddLike(true)
     } else {
       setAddLike(false)
     }
-  };
-
-  const wait = timeout => {
-    return new Promise(resolve => {
-      setTimeout(resolve, timeout)
-    })
   }
 
-  const onRefreshing = React.useCallback(() => {
-    setRefreshing(true);
-    setShimmer(false);
-    wait(200).then(async () => {
-      setRefreshing(false)
-      setShimmer(true)
-    });
-  }, [refreshing])
-
   return (
-    <View style={{flex: 1, marginTop: 2}}>
+    <View style={{ flex: 1, marginTop: 2 }}>
       <FlatList
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefreshing} />
-        // }
         keyExtractor={(i, idx) => idx}
         data={DataContent}
-        renderItem={({item, index}) => (
+        renderItem={({ item }) => (
           <>
             <View style={styles.layoutContent}>
               <View
@@ -86,18 +53,18 @@ const TimelineNews = () => {
                 visible={shimmer}
                 component={<Image style={styles.banner} source={item.banner} />}
               />
-              <View style={{marginTop: 10, marginHorizontal: 15}}>
+              <View style={{ marginTop: 10, marginHorizontal: 15 }}>
                 <Shimmer
                   style={styles.likeShimmer}
                   visible={shimmer}
                   component={
-                    <View style={{flexDirection: 'row'}}>
-                      <View style={{flexDirection: 'row'}}>
+                    <View style={{ flexDirection: 'row' }}>
+                      <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => handleLike()}>
                           <Icon
                             fill={like ? 'red' : Color.textHintContent}
                             name={like ? 'heart' : 'heart-outline'}
-                            style={{width: 24, height: 24}}
+                            style={{ width: 24, height: 24 }}
                           />
                         </TouchableOpacity>
                         <Text style={styles.textLike}>
@@ -109,7 +76,7 @@ const TimelineNews = () => {
                           width: '75%',
                         }}>
                         <TouchableOpacity
-                          style={{position: 'absolute', right: 0}}
+                          style={{ position: 'absolute', right: 0 }}
                           activeOpacity={0.4}>
                           <Icon
                             fill={Color.textHintContent}
@@ -121,14 +88,14 @@ const TimelineNews = () => {
                     </View>
                   }
                 />
-                <View style={{marginTop: 20}}>
+                <View style={{ marginTop: 20 }}>
                   <Shimmer
                     style={styles.textContentShimmer}
                     visible={shimmer}
                     component={
                       <>
                         <TextView
-                          textStyle={{textAlign: 'left', marginTop: 15}}
+                          textStyle={{ textAlign: 'left', marginTop: 15 }}
                           component={
                             <Text style={styles.textContent}>
                               {item.content}
@@ -136,7 +103,7 @@ const TimelineNews = () => {
                           }
                         />
                         <Text
-                          style={{fontSize: 11, color: Color.textHintContent}}>
+                          style={{ fontSize: 11, color: Color.textHintContent }}>
                           {item.time}
                         </Text>
                       </>
@@ -149,7 +116,7 @@ const TimelineNews = () => {
         )}
       />
     </View>
-  );
+  )
 }
 
 export default TimelineNews

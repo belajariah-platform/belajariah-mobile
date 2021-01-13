@@ -1,161 +1,117 @@
-import {StyleSheet} from 'react-native'
-import {FontType} from '../../assets'
+import { StyleSheet } from 'react-native'
+
+import { Resp } from '../../utils'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
-
+  //Profile Edit
   containerButtonBack : {
-    position: 'absolute',
-    top: 0,
+    top: 20,
     left: 0,
   },
-
   containerView : {
-    backgroundColor : '#FEF5FF',
     flex: 1,
+    backgroundColor : Color.softPink,
   },
-
   containerViewBg : {
     flex: 1,
-    zIndex: 2,
+    zIndex: 1,
     top: '-8%',
   },
-
   containerAvatar : {
+    zIndex: 2,
+    top: '13%',
+    width : '95%',
+    alignItems:'center',
     flexDirection: 'row',
-    left: '4%',
-    top: '15%',
-    zIndex: 4,
+    paddingHorizontal:20,
   },
-
-  containerJudulAvatar : {
-    fontFamily: FontType.regular,
-    fontSize: 32,
-    color: '#fff',
-    marginLeft: 20,
+  containerTitleAvatar : {
     marginTop: 10,
+    marginLeft: 20,
     marginBottom: 5,
+    color: Color.white,
     position: 'relative',
-    top: '5%',
-    zIndex: 10,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraLarge,
   },
-
-  containerTouchButton : {
-
-    width: 100,
-    height: 100,
-    
-  },
-
   containerTouch : {
-    width: 100,
-    height: 100,
+    borderRadius:100,
   },
-
   Avatar : {
-    position: 'relative',
-    width: 100,
-    height: 100,
+    width: 90,
+    zIndex: 2,
+    height: 90,
     borderColor: '#fff',
-    zIndex: 12,
-  },
-
-  image : {
-    width: '100%',
-    height: 210,
-  },
-
-  containerViewAtas : {
     position: 'relative',
-    top: '-9%',
-    backgroundColor: '#fff',
+  },
+  image : {
+    width: Resp.HeaderProfileWP,
+    height: Resp.HeaderProfileHP,
+  },
+  containerViewTop : {
+    top: '-8.5%',
     borderRadius: 35,
-    marginLeft: 30,
-    marginRight: 30,
     paddingVertical: 20,
-  },
-
-  containerViewBawah : {
+    position: 'relative',
+    marginHorizontal: 30,
+    paddingHorizontal:30,
     backgroundColor: '#fff',
-    borderRadius: 40,
-    marginTop: -90,
-    marginBottom: 50,
-    marginLeft: 30,
-    marginRight: 30,
-    paddingVertical: 20,
   },
-
+  containerViewBottom : {
+    top: '-5.5%',
+    borderRadius: 35,
+    paddingVertical: 20,
+    position: 'relative',
+    marginHorizontal: 30,
+    paddingHorizontal:30,
+    backgroundColor: '#fff',
+  },
   containerTextJudul : {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 40,
-    marginBottom: 5,
+    marginBottom:28,
+    color : Color.black,
+    fontSize: FontSize.large,
+    fontFamily : FontType.bold,
   },
 
   containerText : {
+    marginTop:-8,
+    marginBottom: 5,
+    fontSize: FontSize.small,
+    color: Color.greyHeadInput,
     fontFamily: FontType.regular,
-    fontSize: 14,
-    marginLeft: 40,
-    marginTop: 15,
-    marginBottom: 5,
   },
-
-  containerViewInput : {
-    flexDirection: 'row',
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 30,
-    marginRight: 40,
-  },
-
-  containerInputKecil : {
-    borderColor: '#b3b3b3',
-    borderRadius: 20,
-    borderWidth: 1,
-    width: 100,
+  datePickerInput : {
     height: 40,
-    marginLeft: 1,
-    paddingHorizontal: 20,
-  },
-
-  containerInput : {
-    borderColor: '#b3b3b3',
-    borderRadius: 20,
+    marginTop:3,
+    width: '100%',
     borderWidth: 1,
-    width: '80%',
-    height: 40,
-    marginLeft: 30,
-    marginRight: 40,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-  }, 
-
+    borderRadius: 20,
+    marginBottom:21,
+    paddingHorizontal: 8,
+    borderColor: '#b3b3b3',
+    backgroundColor: Color.white,
+  },
   containerRadio : {
+    marginBottom:16,
     flexDirection: 'row',
-    paddingHorizontal: 35,
-    marginTop: 10,
   },
-
   containerInputRadio : {
     marginLeft: 1,
     marginRight: 15,
   },
-
+  datePickerControl : {
+    borderWidth:0,
+    backgroundColor:Color.transparent,
+  },
   fixToText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 30,
-    marginTop: 20,
-    
+    marginTop: 0,
+    alignItems:'flex-end',
   },
-
   containerButton : {
-    backgroundColor: '#6e248d',
-    borderRadius: 20,
     width: 100,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
   },
 
-  });
-  
-  export {styles}
+})
+
+export { styles }

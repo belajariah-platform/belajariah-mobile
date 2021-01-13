@@ -1,3 +1,4 @@
 import Alquran from './alquran.container'
+import AlquranDetail from './alquran-detail.container'
 
-export default Alquran
+export  { Alquran, AlquranDetail }
