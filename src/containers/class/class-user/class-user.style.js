@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     ButtonClass : {
         width: 100,
         height: 50,
-        paddingTop: 15,   
         borderRadius: 20,
         marginRight: '5%',
         backgroundColor: '#6e248d',
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     ButtonClassNew : {
         width: 130,
         height: 50,
-        paddingTop: 15,
         borderRadius: 20,
         marginRight: '5%',
         backgroundColor: '#6e248d',

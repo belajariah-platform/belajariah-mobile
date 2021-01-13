@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native'
 import Textarea from 'react-native-textarea'
 import { Icon } from '@ui-kitten/components'
 import { StatusBar } from 'expo-status-bar'
+import images from '../../../assets/images'
 
 
 const ClassUser = (props) => {

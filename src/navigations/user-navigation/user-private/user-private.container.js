@@ -7,6 +7,7 @@ import {
   ClassDetail,
   ProfileEdit,
   AlquranDetail,
+  ClassLearning,
   PromotionDetail,
   TransactionMethod,
 } from '../../../containers'
@@ -27,6 +28,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
+      <Stack.Screen name='ClassLearning' component={ClassLearning} />
       <Stack.Screen name='TransactionMethod' component={TransactionMethod} />
     </Stack.Navigator>
   )
