@@ -1,18 +1,19 @@
 import React from 'react'
-import { ToastAndroid, View } from 'react-native'
-
 import Video from 'react-native-video'
-import { Color } from '../../../assets'
-import styles from './class-detail.style'
-import { FormatRupiah } from '../../../utils'
-import Images from '../../../assets/images'
-import { Text } from '@ui-kitten/components'
-import ClassAbout from './class-about.container'
-import ClassReview from './class-review.container'
-import ClassInstructor from './class-instructor.container'
+import { ToastAndroid, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
+
+import ClassAbout from './class-about.container'
+import ClassReview from './class-review.container'
+import ClassInstructor from './class-instructor.container'
+
+import { FormatRupiah } from '../../../utils'
+import { Color, Images } from '../../../assets'
+
+import styles from './class-detail.style'
 
 const Tab = createMaterialTopTabNavigator()
 

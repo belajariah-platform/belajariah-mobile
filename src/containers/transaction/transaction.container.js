@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
-import { View, Alert, Image, ScrollView, TouchableOpacity } from 'react-native'
+import {
+  Text,
+  View,
+  Alert,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 
-import Images from '../../assets/images'
+import { Images } from '../../assets'
 import { Card } from 'react-native-elements'
-import { Text } from '@ui-kitten/components'
 import { styles } from './transaction.style'
 import { useRoute } from '@react-navigation/native'
 
@@ -31,7 +37,7 @@ const Transaction = () => {
   const NoTransaction = () => {
     return (
       <View style={styles.containerNoTransaction}>
-        <Image source={Images.TransactionBGPNG} style={styles.bgNoTransaction} />
+        {/* <Image source={Images.TransactionBGPNG} style={styles.bgNoTransaction} /> */}
         <View style={styles.bgNoTransactionTransparent} />
         <Images.NoTransaction.default style={styles.iconNoTransaction} />
         <Text style={styles.textFirstLine}>
@@ -56,7 +62,7 @@ const Transaction = () => {
     switch (props.status) {
     case 'Complete':
       return (
-        <View>
+        <View >
           <Card containerStyle={styles.bgTransactionTransparent}>
             <View style={styles.flexRow}>
               <Images.IconComplete.default style={styles.iconComplete} />
@@ -123,6 +129,7 @@ const Transaction = () => {
           <Images.Filter.default width={40} height={40} style={styles.iconFilter} />
         </TouchableOpacity>
       </View>
+      <Image source={Images.TransactionBGPNG} style={styles.bgNoTransaction} />
       {count === 0 ? <NoTransaction /> : <TransactionList />}
     </View>
   )

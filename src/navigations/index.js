@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
@@ -13,7 +13,16 @@ const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   console.log(userInfo)
   if (isLogin) {
-    return  <InstructorNavigation/>
+    switch (userInfo.password) {
+      case 'admin':
+        return  <AdminNavigation/>
+      case 'user':
+        return  <UserNavigation/>
+      case 'instructor':
+        return  <InstructorNavigation/>
+      default :
+        return <PublicNavigation/>
+    }
   } else {
     return <PublicNavigation/>
   }

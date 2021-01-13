@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontSize, FontType, FontWeight } from '../../../assets'
+import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
   flexRow: {

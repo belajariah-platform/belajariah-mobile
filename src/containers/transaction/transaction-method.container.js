@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
-import { Icon, Text } from '@ui-kitten/components'
-import Images from '../../assets/images'
-import styles from './transaction-method.style'
 import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
-import { FormatRupiah } from '../../utils'
+import { Icon, Text } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
+
+import { Images } from '../../assets'
+import { FormatRupiah } from '../../utils'
+
+import styles from './transaction-method.style'
 
 const TransactionMethod = () => {
   const navigation = useNavigation()

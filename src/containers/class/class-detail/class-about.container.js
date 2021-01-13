@@ -1,11 +1,10 @@
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { List } from 'react-native-paper'
+import { Card } from 'react-native-elements'
+import { ScrollView, View, Text } from 'react-native'
 
 import styles from './class-about.style'
 import { Images } from '../../../assets'
-import { List } from 'react-native-paper'
-import { Text } from '@ui-kitten/components'
-import { Card } from 'react-native-elements'
 
 const ClassAbout = () => {
   const dataClass = {

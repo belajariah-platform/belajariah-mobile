@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'flex-end',
     paddingHorizontal: 16,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     backgroundColor: Color.white,
     justifyContent: 'space-between',
   },
@@ -66,9 +66,11 @@ const styles = StyleSheet.create({
   },
   cardDetail: {
     borderRadius: 8,
+    borderWidth : 0,
   },
   cardMethods: {
     borderRadius: 8,
+    borderWidth : 0,
   },
   textTitleWhite: {
     color: Color.white,
@@ -85,25 +87,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: Color.black,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.extraSmall,
   },
   textBold: {
     marginBottom: 4,
     textAlign: 'left',
     color: Color.black,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.small,
     fontFamily: FontType.bold,
   },
   textRegularPurple: {
     color: Color.purpleText,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.extraSmall,
   },
   textBoldPurple: {
     textAlign: 'left',
     color: Color.purpleText,
-    fontSize: FontSize.medium,
     fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
   },
   textRating: {
     bottom: 2,
@@ -143,7 +145,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     fontFamily: FontType.bold,
     fontSize: FontSize.medium,
-    backgroundColor: Color.softPink,
   },
   btnBuyClass: {
     padding: 12,

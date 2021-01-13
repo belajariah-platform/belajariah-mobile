@@ -1,10 +1,9 @@
 import React from 'react'
-import { ScrollView, View } from 'react-native'
-
-import styles from './class-review.style'
-import Images from '../../../assets/images'
-import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import { ScrollView, View, Text } from 'react-native'
+
+import { Images } from '../../../assets'
+import styles from './class-review.style'
 
 const ClassReview = () => {
   const classData = {
