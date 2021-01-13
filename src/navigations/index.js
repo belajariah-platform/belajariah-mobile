@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import SplashScreen from 'react-native-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import PublicNavigation from './public.navigation'
-import PrivateNavigation from './private-navigation'
+import UserNavigation from './user-navigation'
+import AdminNavigation from './admin-navigation'
+import PublicNavigation from './public-navigation'
+import InstructorNavigation from './instructor-navigation'
 
 const Render = () => {
-  const { isLogin } = useSelector(state => state.UserReducer)
+  const { isLogin, userInfo } = useSelector(state => state.UserReducer)
+  console.log(userInfo)
   if (isLogin) {
-    return <PrivateNavigation/>
+    return  <InstructorNavigation/>
   } else {
     return <PublicNavigation/>
   }

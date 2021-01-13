@@ -15,9 +15,9 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import { UserAPI } from '../../api'
-import { Images } from '../../assets'
-import { styles } from './profile.style'
+import { UserAPI } from '../../../api'
+import { Images } from '../../../assets'
+import { styles } from './user-profile.style'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()

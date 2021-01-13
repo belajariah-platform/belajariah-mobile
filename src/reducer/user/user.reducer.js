@@ -1,6 +1,7 @@
 import { SIGN_IN, SIGN_OUT } from '../../action'
 const initialState = {
   token: '',
+  userInfo : {},
   isLogin: false,
 }
 
@@ -10,7 +11,7 @@ const UserReducer = (state = initialState, action) => {
     return {
       ...state,
       isLogin: true,
-      ...action.payload,
+      userInfo : action.payload,
     }
   case SIGN_OUT:
     return initialState

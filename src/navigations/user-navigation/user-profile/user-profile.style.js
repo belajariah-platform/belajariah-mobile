@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-import { Color, FontType, FontSize } from '../../assets'
+import { Color, FontType, FontSize } from '../../../assets'
 
 const styles = StyleSheet.create({
   drawerBackground: {
