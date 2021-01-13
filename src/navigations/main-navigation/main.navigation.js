@@ -11,6 +11,7 @@ import {
     Home,
     Profile,
     Timeline,
+    ClassUser,
 } from '../../containers';
 
 const Main = () => {
@@ -30,6 +31,9 @@ const Main = () => {
             case 'Other':
               iconName = 'ellipsis-h';
               break;
+            case 'Kelas':
+                iconName = 'ellipsis-h';
+                break;
           }
           return <Icon name={iconName} size={21} color={color} />;
         },
@@ -57,6 +61,7 @@ const Main = () => {
       <Screen name="Home" component={Home} options={{headerShown: false}} />
       <Screen name="Timeline" component={Timeline} />
       <Screen name="Other" component={Profile} />
+      <Screen name="Kelas" component={ClassUser} />
     </Navigator>
   );
 };

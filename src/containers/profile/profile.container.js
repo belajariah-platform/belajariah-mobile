@@ -12,7 +12,7 @@ import {
 
 import {styles} from './profile.style'
 
-const Profile = () => {
+const Profile = (props) => {
   const dispatch = useDispatch();
   return (
     <View style={{flex:1}}>
@@ -21,6 +21,7 @@ const Profile = () => {
         onPress={async () => await dispatch(userLogout())}
           >
       </Buttons>
+      <Text onPress = {() => props.navigation.navigate('ProfileEdit')}>Edit</Text>
   </View>
   )
 }
