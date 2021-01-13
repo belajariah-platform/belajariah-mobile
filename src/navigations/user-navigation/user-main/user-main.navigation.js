@@ -2,15 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import { Home, ClassUser } from '../../containers'
-import { Transaction } from '../../containers/transaction'
-import ProfileNavigation from '../profile-navigation'
-import { Color, Images } from '../../assets'
+import { Color, Images } from '../../../assets'
+import ProfileNavigation from '../user-profile'
+import { Home, ClassUser, Transaction } from '../../../containers'
 
-import { styles } from './main.style'
+import { styles } from './user-main.style'
 
-const Main = () => {
-  const { isLogin } = useSelector(state => state.UserReducer)
+const UserMainNavigation = () => {
+  const { isLogin } = useSelector((state) => state.UserReducer)
   const { Navigator, Screen } = createBottomTabNavigator()
 
   return (
@@ -56,4 +55,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default UserMainNavigation

@@ -2,14 +2,14 @@ import { SIGN_IN, SIGN_OUT } from '../../action'
 
 const SignIn = data => async dispatch => {
   try {
-    // const response = await submitData('login', data);
+    // const response = await submitData('login', data)
     if (data) {
       await dispatch({
         type: SIGN_IN,
         payload: data,
       })
     }
-    // return response;
+    // return response
   } catch (err) {
     // if (!(err.message === 'Network Error')) {
     //   throw err;
