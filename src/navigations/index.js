@@ -11,7 +11,6 @@ import InstructorNavigation from './instructor-navigation'
 
 const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
-  console.log(userInfo)
   if (isLogin) {
     switch (userInfo.password) {
       case 'admin':

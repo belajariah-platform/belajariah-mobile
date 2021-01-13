@@ -1,0 +1,196 @@
+import {StyleSheet, Dimensions} from 'react-native'
+import {FontType} from '../../../assets'
+
+const styles = StyleSheet.create({
+    containerView : {
+      flex: 1,
+      backgroundColor: '#9956B3',
+      fontFamily: FontType.regular,
+    },
+    containerHeader : {  
+      height: '10%',
+      backgroundColor: '#9956B3',
+    },
+    containerButtonFilter : {
+      top: 0,
+      left: 0,
+      marginTop: '-1%',
+    },
+    containerTouchFilter : {
+      width: 100,
+    },
+    containerClassProgress : {
+      marginTop: 20,
+      paddingTop: '3%',
+      paddingBottom: '8%',
+      flexDirection: 'row',
+      marginHorizontal: '5%',
+      paddingHorizontal: '7%',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      backgroundColor: '#9956B3',
+      justifyContent: 'space-between',
+    },
+    containerIconProgress : {
+      flexDirection: 'row',
+      paddingVertical: '3%',
+      paddingHorizontal: '7%',
+      justifyContent: 'space-between',
+    },
+    ImageClass : {
+      width: 100,
+      height: 100,
+      marginTop: 5,
+    },
+    TextClass : {
+      width: '60%',
+      fontSize: 16,
+      color: '#fff',
+      marginLeft: '3%',
+      marginTop: '-5%',
+      alignSelf: 'center',
+      fontFamily: FontType.regular,
+    },
+    ButtonTextClass : {
+      fontSize: 18, 
+      color:'#fff', 
+      marginTop: '-8%',
+      marginLeft: '12%',
+      fontWeight: 'bold',
+      alignSelf: 'center', 
+    },
+    ButtonClass : {
+      width: 100,
+      height: 50,
+      paddingTop: 15,
+      borderRadius: 20,
+      marginRight: '5%',
+      backgroundColor: '#6e248d',
+    },
+    ButtonClassNew : {
+      width: 130,
+      height: 50,
+      paddingTop: 15,
+      borderRadius: 20,
+      marginRight: '5%',
+      backgroundColor: '#6e248d',
+    },
+    containerParentKelas : {
+      backgroundColor:'#fef5ff',
+    },
+    containerMenuDeskripsiKelas : {
+      zIndex: 10,
+      width: '100%',
+      paddingTop: '5%',
+      paddingBottom: '5%',
+      paddingHorizontal: '5%',
+      backgroundColor:'#fef5ff',
+    },
+    containerTextJudulUlasanKelas : {
+      fontSize: 24,
+      fontWeight: 'bold',
+      paddingVertical: '2%',
+    },
+    containerTextUlasanKelas : {
+      fontSize: 16,
+      paddingVertical: '2%',
+      marginHorizontal: '1%',
+    },
+    containerParentReviw : {
+      flexDirection: 'row',
+      marginVertical: '3%', 
+    },
+    containerReviewUser : {
+      flexDirection: 'row',
+      alignContent: 'space-between',  
+    },
+    textRating : {
+      fontSize: 14,
+      marginTop: 12,
+      marginLeft: 10,
+    },
+    containerMenuDetail : {
+      zIndex: 15,
+      height: 'auto',
+      paddingBottom: '5%',
+      backgroundColor: '#fff',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+    },
+    containerTitleKelas : {
+      fontSize: 20,  
+      color: 'black',
+      fontWeight: '600', 
+      marginLeft: '4%',
+      marginVertical: '3%', 
+    },
+    containerTextHeaderDetail : {
+      borderTopWidth: 1,
+      borderBottomWidth:1,
+      backgroundColor:'#FFF',
+      borderColor: '#e6e6e6',
+    },
+    containerTextDetail : {
+      borderTopWidth: 1,
+      borderColor: '#e6e6e6',
+      backgroundColor:'#fef5ff',
+    },
+    video: {
+      backgroundColor: 'black',
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').width * (9 / 16),
+    },
+    container: {
+      flex: 1,
+    },
+    toolbar: {
+      padding: 10,
+      marginTop: 30,
+      borderRadius: 5,
+      backgroundColor: 'white',
+    },
+    mediaPlayer: {
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      position: 'absolute',
+      backgroundColor: 'black',
+      justifyContent: 'center',
+    },
+    textStyle: {
+      fontSize: 15,
+      color: '#000',
+      marginTop: 12,
+      marginLeft: 10,
+      textAlign: 'center',
+    },
+    customRatingBarStyle: {
+      marginTop: 10,
+      marginLeft: '10%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    starImageStyle: {
+      width: 20,
+      height: 20,
+    },
+    containerConsul : {
+      width: '100%',
+      borderRadius: 20,
+      marginVertical: '3%',
+      flexDirection: 'row',
+      paddingVertical: '3%',
+      paddingHorizontal: 25,
+      backgroundColor: '#9741ba', 
+    },
+    textConsul : {
+      fontSize: 16,
+      color: '#fff',
+      marginLeft: '5%',
+      fontWeight: '700',
+      marginVertical: 5,
+    },
+})
+
+export {styles}
