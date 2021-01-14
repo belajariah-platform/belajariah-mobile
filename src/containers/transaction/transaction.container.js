@@ -2,44 +2,31 @@ import React, { useState } from 'react'
 import {
   Text,
   View,
-  Alert,
-  Image,
-  ScrollView,
+  FlatList,
+  ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+import moment from 'moment'
+import LinearGradient from 'react-native-linear-gradient'
 
-import { Images } from '../../assets'
+import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
-import { useRoute } from '@react-navigation/native'
 
 const Transaction = () => {
-  const route = useRoute()
-  let { status } = route.params ?? {}
+  const [available, setAvailable] = useState(false)
 
-  const [transactionData, setTransactionData] = useState([])
-  const [count, setCount] = useState(0)
-
-  const newTransaction = () => {
-    status == undefined
-      ? Alert.alert('No Props Passed', 'Can\'t add new transaction data')
-      : (Alert.alert(`Props passed, status : ${status}`),
-      transactionData.push({
-        status: status,
-        invoice: 'BLJ-RIAH001',
-        desc: 'Belajar Al\'Quran dari dasar dengan metode yang mudah dan menyenangkan',
-        date: getDate(),
-        time: getTime(),
-      }),
-      setCount(count + 1))
-  }
+  const state = [
+    { 'invoice_number': 'BLJ-RIAH001', 'status' : 'failed', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
+    { 'invoice_number': 'BLJ-RIAH002', 'status' : 'success', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date()  },
+    { 'invoice_number': 'BLJ-RIAH003', 'status' : 'waiting for payment', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
+    { 'invoice_number': 'BLJ-RIAH004', 'status' : 'success', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
+  ]
 
   const NoTransaction = () => {
     return (
       <View style={styles.containerNoTransaction}>
-        {/* <Image source={Images.TransactionBGPNG} style={styles.bgNoTransaction} /> */}
-        <View style={styles.bgNoTransactionTransparent} />
-        <Images.NoTransaction.default style={styles.iconNoTransaction} />
+        <Images.NoTransaction.default />
         <Text style={styles.textFirstLine}>
           Belum ada <Text style={styles.textBold}>Transaksi</Text> yang
         </Text>
@@ -50,72 +37,65 @@ const Transaction = () => {
 
   const TransactionList = () => {
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.containerScrollView}>
-        {transactionData.map((data, index) => {
-          return <TransactionCard key={index} {...data} />
-        })}
-      </ScrollView>
+      <FlatList
+        data={state}
+        style={styles.containerScrollView}
+        showsVerticalScrollIndicator ={false}
+        keyExtractor={(item, index) =>  index.toString()}
+        renderItem={({ item, index }) => TransactionCard(item, index)}/>
     )
   }
 
-  const TransactionCard = (props) => {
-    switch (props.status) {
-    case 'Complete':
-      return (
-        <View >
-          <Card containerStyle={styles.bgTransactionTransparent}>
-            <View style={styles.flexRow}>
-              <Images.IconComplete.default style={styles.iconComplete} />
-              <Card.Title style={styles.textCardSuccess}>{props.status}</Card.Title>
-              <Images.RibbonComplete.default style={styles.ribbonComplete} />
-            </View>
-            <Text style={styles.textInvoice}>
-                No. Invoice: <Text style={styles.textBold}>{props.invoice}</Text>
-            </Text>
-            <Text style={styles.textDesc}>{props.desc}</Text>
-            <Text style={styles.textDate}>
-                Tanggal Transaksi: {props.date} {props.time}
-            </Text>
-          </Card>
-        </View>
-      )
-    case 'Pending':
-      return (
-        <View>
-          <Card containerStyle={styles.bgTransactionTransparent}>
-            <Card.Title style={styles.textCardPending}>{props.status}</Card.Title>
-            <Text style={styles.textInvoice}>
-                No. Invoice: <Text style={styles.textBold}>{props.invoice}</Text>
-            </Text>
-            <Text style={styles.textDesc}>{props.desc}</Text>
-            <Text style={styles.textDate}>
-                Tanggal Transaksi: {props.date} {props.time}
-            </Text>
-          </Card>
-        </View>
-      )
-    case 'Failed':
-      return (
-        <View>
-          <Card containerStyle={styles.bgTransactionTransparent}>
-            <View style={styles.flexRow}>
-              <Images.IconFailed.default style={styles.iconFailed} />
-              <Card.Title style={styles.textCardFailed}>{props.status}</Card.Title>
-              <Images.RibbonFailed.default style={styles.ribbonFailed} />
-            </View>
-            <Text style={styles.textInvoice}>
-                No. Invoice: <Text style={styles.textBold}>{props.invoice}</Text>
-            </Text>
-            <Text style={styles.textDesc}>{props.desc}</Text>
-            <Text style={styles.textDate}>
-                Tanggal Transaksi: {props.date} {props.time}
-            </Text>
-          </Card>
-        </View>
-      )
-    default:
-      return Alert.alert('Check Again')
+  const TransactionCard = (item, index) => {
+    let ribbon, icon, status, color
+    switch (item.status) {
+    case 'success':
+      status = 'Completed'
+      color = Color.textSuccess
+      icon = Images.IconComplete
+      ribbon = Images.RibbonComplete
+      break
+    case 'failed' :
+      status = 'Failed'
+      color = Color.textFailed
+      icon = Images.IconFailed
+      ribbon = Images.RibbonFailed
+      break
+    case 'waiting for payment' :
+      status = 'Waiting for Payment'
+      color = Color.textPending
+      icon = Images.IconPending
+      ribbon = Images.RibbonPending
+      break
+    default :
+      status = 'Waiting for Payment'
+      color = Color.textPending
+      icon = Images.IconPending
+      ribbon = Images.RibbonPending
+      break
     }
+    return (
+      <View key={index}>
+        <LinearGradient
+          end={{ x: 1, y: 1 }}
+          start={{ x: 0, y: 1 }}
+          colors={['#7a3296', '#843ca0', '#9650b2']}
+          style={styles.bgTransactionTransparent}>
+          <View style={styles.flexRow}>
+            <icon.default style={styles.iconStatus} />
+            <Card.Title style={{ ...styles.textCardStatus, color:color }}>{status}</Card.Title>
+            <ribbon.default style={styles.ribbonComplete} />
+          </View>
+          <Text style={styles.textInvoice}>
+                No. Invoice: <Text style={styles.textBold}>{item.invoice_number}</Text>
+          </Text>
+          <Text style={styles.textDesc}>{item.class_title}</Text>
+          <Text style={styles.textDate}>
+                Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY')}
+          </Text>
+        </LinearGradient>
+      </View>
+    )
   }
 
   return (
@@ -124,30 +104,24 @@ const Transaction = () => {
         <Text style={styles.titleHeader}>Transaksi</Text>
         <TouchableOpacity
           onPress={() => {
-            newTransaction()
+            setAvailable(!available)
           }}>
-          <Images.Filter.default width={40} height={40} style={styles.iconFilter} />
+          <Images.Filter.default
+            width={40}
+            height={40}
+            style={styles.iconFilter}
+          />
         </TouchableOpacity>
       </View>
-      <Image source={Images.TransactionBGPNG} style={styles.bgNoTransaction} />
-      {count === 0 ? <NoTransaction /> : <TransactionList />}
+      <ImageBackground
+        source={Images.TransactionBGPNG}
+        style={styles.imageBackground}
+        imageStyle={{ borderRadius: 30 }}
+      >
+        {available ? <NoTransaction /> : <TransactionList />}
+      </ImageBackground>
     </View>
   )
-}
-
-const getDate = () => {
-  const date = new Date().getDate()
-  const month = new Date().getMonth() + 1
-  const year = new Date().getFullYear()
-
-  return date + '/' + month + '/' + year
-}
-
-const getTime = () => {
-  var hours = new Date().getHours()
-  var min = new Date().getMinutes()
-
-  return hours + ':' + min
 }
 
 export default Transaction

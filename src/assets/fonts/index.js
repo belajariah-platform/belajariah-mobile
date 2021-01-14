@@ -18,7 +18,8 @@ const FontSize = {
   medium : 16,
   mediumLarge : 17,
   large : 20,
-  extraLarge :25
+  extraLarge :25,
+  largest : 26,
 }
 
 export { FontType, FontWeight, FontSize }

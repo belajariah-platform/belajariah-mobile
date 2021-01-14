@@ -1,5 +1,6 @@
 import React from 'react'
 import Video from 'react-native-video'
+import { useSelector } from 'react-redux'
 import { ToastAndroid, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -18,8 +19,9 @@ import styles from './class-detail.style'
 const Tab = createMaterialTopTabNavigator()
 
 const ClassDetail = () => {
-  const navigation = useNavigation()
   const route = useRoute()
+  const navigation = useNavigation()
+  const { isLogin } = useSelector((state) => state.UserReducer)
 
   let { price, discountedPrice } = route.params ?? {}
 
@@ -116,9 +118,9 @@ const ClassDetail = () => {
           <Text style={styles.price}>IDR {FormatRupiah(classData.price)}</Text>
         </View>
         <TouchableOpacity style={styles.btnBuyClass} onPress={() => {
-          navigation.navigate('TransactionMethod', {
+          navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', {
             discountedPrice: classData.discountedPrice
-          })
+          } )
         }}>
           <Text style={styles.textBuyClass}>BELI KELAS</Text>
         </TouchableOpacity>

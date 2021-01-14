@@ -32,16 +32,17 @@ const Color = {
   greySearchBorder: '#e9e7e8',
 
   //detail class
+  textRed: '#d73c2c',
+  lightGrey: '#efeeef',
   bgColorBlue: '#3498db',
   bgColorPurple: '#6e248d',
-  lightGrey: '#efeeef',
-  textRed: '#d73c2c',
 
   //transaction
+  textFailed: '#f75c4c',
+  textSuccess: '#1abc9c',
+  textPending: '#f2c009',
   transactionBgColor: '#9956b3',
   transparentBg: 'rgba(113, 37, 144, 0.3)',
-  textSuccess: '#1abc9c',
-  textFailed: '#f75c4c',
 }
 
 export { Color }
