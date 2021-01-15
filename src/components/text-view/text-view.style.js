@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontType } from '../../assets'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
   viewMore: {
-    marginTop: 6,
-    marginBottom: 12,
-    fontSize: 11,
-    color: Color.textHint,
-    fontFamily: FontType.regular,
+    marginTop:5,
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize : FontSize.extraSmall,
   },
 })
 

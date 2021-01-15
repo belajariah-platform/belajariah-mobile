@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 0,
     borderRadius: 16,
-    marginBottom: 16,
     paddingBottom: 16,
+    marginBottom: '10%',
     paddingHorizontal: 0,
   },
   header: {
@@ -44,15 +44,23 @@ const styles = StyleSheet.create({
     backgroundColor: Color.bgColorPurple,
   },
   textBold: {
+    marginBottom: 10,
     textAlign: 'left',
     color: Color.black,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallPoint,
+  },
+  textBoldCustom: {
+    marginBottom: 4,
+    textAlign: 'left',
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
   },
   textRegular: {
-    marginTop: -12,
     marginBottom: 8,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.extraSmall,
   },
 })
 

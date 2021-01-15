@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   containerScrollView: {
     width:'100%',
-    marginBottom: 72,
+    marginBottom: 105,
   },
   containerNoTransaction: {
     width: '90%',

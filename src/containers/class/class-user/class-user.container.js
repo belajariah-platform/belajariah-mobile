@@ -129,7 +129,7 @@ const ClassUser = (props) => {
             (
               <FlatList
                 data={Progress}
-                style={{ width:'90%' }}
+                style={{ width:'90%', marginBottom : 105 }}
                 showsVerticalScrollIndicator ={false}
                 keyExtractor={(item, index) =>  index.toString()}
                 renderItem={({ item, index }) => (

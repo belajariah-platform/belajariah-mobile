@@ -138,12 +138,35 @@ const ClassLearning = () => {
           </View>
         </View>
         <Text style={styles.containerTextDesc}>{state.description.substr(0, 300)}.....</Text>
-        <TouchableOpacity>
+      </View>
+    )
+  }
+
+  const ConsultationClass = () => {
+    return (
+      <View style={styles.containerMenuDesc}>
+        <List.Section >
+          <List.Accordion
+            title={'Konsultasi Bacaan'}
+            style={styles.containerConsul}
+            descriptionStyle={{ backgroundColor:'white' }}
+            titleStyle={styles.textConsul}
+            left={() =>  <Images.IconConsultations.default/>}
+          >
+            <List.Item
+              style={styles.containerItemConsul}
+              titleStyle={styles.textRegular}
+              left={() => <Images.IconPlay.default style={styles.iconPlay}/>}
+              right={() => <Text style={styles.textDuration}> Menit</Text>}
+            />
+          </List.Accordion>
+        </List.Section>
+        {/* <TouchableOpacity>
           <View style={styles.containerConsul}>
             <Images.IconConsultations.default/>
             <Text style={styles.textConsul}> Konsultasi bacaan</Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     )
   }
@@ -155,7 +178,12 @@ const ClassLearning = () => {
         <List.Section>
           {state.topics.map((topic, index) => {
             return (
-              <List.Accordion key={index} title={topic.title} titleStyle={styles.textRegular} style={styles.containerAccordion} >
+              <List.Accordion
+                key={index}
+                title={topic.title}
+                titleStyle={styles.textRegular}
+                style={styles.containerAccordion}
+              >
                 {topic.materials.map((subtopic, index) => {
                   return  (
                     <>
@@ -179,7 +207,7 @@ const ClassLearning = () => {
                       title={topic.document}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
-                      left={() => <Images.IconPlay.default style={styles.iconPlay}/>}
+                      left={() => <Images.IconDocumentVideo.default style={styles.iconPlay}/>}
                       right={() => <Text style={styles.textDuration}>Document</Text>}
                     />
                   </TouchableOpacity>
@@ -233,6 +261,7 @@ const ClassLearning = () => {
         <ScrollView>
           <View style={styles.containerParentKelas}>
             <DescriptionClass/>
+            <ConsultationClass/>
             <ContentClass/>
           </View>
         </ScrollView>

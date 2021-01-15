@@ -1,9 +1,9 @@
 import React from 'react'
 import Video from 'react-native-video'
 import { useSelector } from 'react-redux'
-import { ToastAndroid, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { ImageBackground, ToastAndroid, View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 
@@ -13,6 +13,7 @@ import ClassInstructor from './class-instructor.container'
 
 import { FormatRupiah } from '../../../utils'
 import { Color, Images } from '../../../assets'
+import { ButtonGradient } from '../../../components'
 
 import styles from './class-detail.style'
 
@@ -57,15 +58,16 @@ const ClassDetail = () => {
   }
 
   return (
-    <View style={styles.flexFull}>
-      <Images.DetailClassHeaderBG.default width={'100%'} style={styles.backgroundHeader} />
-
+    <ImageBackground
+      source={Images.DetailClassHeaderBG}
+      style={styles.flexFull}
+    >
       <View style={styles.flexButtonHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBack.default style={styles.iconBack} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => ToastAndroid.show('Share', ToastAndroid.SHORT)}>
-          <Images.Share.default width={28} height={28} style={styles.iconShare} />
+          <Images.Share.default style={styles.iconShare} />
         </TouchableOpacity>
       </View>
 
@@ -80,7 +82,6 @@ const ClassDetail = () => {
       />
 
       <Text style={styles.textDesc}>{classData.quote}</Text>
-
       <View style={styles.flexRating}>
         <View>{handleRating(classData.rating)}</View>
         <Text style={styles.textRating}>{classData.rating}</Text>
@@ -96,20 +97,32 @@ const ClassDetail = () => {
         })}
       </View>
 
-      <View style={styles.semiBox}></View>
+      <View style={styles.semiBox}/>
 
       <Tab.Navigator
         style={styles.tabContainerStyle}
         tabBarOptions={{
-          activeTintColor: Color.purpleText,
+          style: styles.tabBarStyle,
           inactiveTintColor: Color.grey,
           labelStyle: styles.labelStyle,
+          activeTintColor: Color.purpleText,
           indicatorStyle: styles.indicatorStyle,
-          style: styles.tabBarStyle,
         }}>
-        <Tab.Screen name='ClassAbout' options={{ title: 'Tentang Kelas' }} component={ClassAbout} />
-        <Tab.Screen name='ClassInstructor' options={{ title: 'Instruktur' }} component={ClassInstructor} />
-        <Tab.Screen name='ClassReview' options={{ title: 'Ulasan User' }} component={ClassReview} />
+        <Tab.Screen
+          name='ClassAbout'
+          component={ClassAbout}
+          options={{ title: 'Tentang Kelas' }}
+        />
+        <Tab.Screen
+          name='ClassInstructor'
+          component={ClassInstructor}
+          options={{ title: 'Instruktur' }}
+        />
+        <Tab.Screen
+          name='ClassReview'
+          component={ClassReview}
+          options={{ title: 'Ulasan User' }}
+        />
       </Tab.Navigator>
 
       <View style={styles.containerPrice}>
@@ -117,15 +130,18 @@ const ClassDetail = () => {
           <Text style={styles.discountedPrice}>IDR {FormatRupiah(classData.discountedPrice)}</Text>
           <Text style={styles.price}>IDR {FormatRupiah(classData.price)}</Text>
         </View>
-        <TouchableOpacity style={styles.btnBuyClass} onPress={() => {
-          navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', {
-            discountedPrice: classData.discountedPrice
-          } )
-        }}>
-          <Text style={styles.textBuyClass}>BELI KELAS</Text>
-        </TouchableOpacity>
+        <ButtonGradient
+          title='BELI KELAS'
+          styles={styles.btnBuyClass}
+          textStyle={styles.textBuyClass}
+          onPress={() => {
+            navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', {
+              discountedPrice: classData.discountedPrice
+            } )
+          }}
+        />
       </View>
-    </View>
+    </ImageBackground>
   )
 }
 

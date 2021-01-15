@@ -64,7 +64,7 @@ const ClassReview = () => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Card containerStyle={styles.card}>
         <View style={styles.header}>
-          <Card.Title style={styles.textBold}>Ulasan User</Card.Title>
+          <Text style={styles.textBold}>Ulasan User</Text>
           <View style={styles.flexRow}>
             <Text style={styles.rating}>4.5</Text>
             <Text style={styles.textBold}>{`Dari ${1258} Ulasan User`}</Text>
@@ -74,9 +74,9 @@ const ClassReview = () => {
           {classData.reviews.map((review, index) => {
             return (
               <Card key={index} containerStyle={styles.cardReview}>
-                <Card.Title style={styles.textBold}>
+                <Text style={styles.textBoldCustom}>
                   {review.name} | {review.time}
-                </Card.Title>
+                </Text>
                 <Text style={styles.textRegular}>{review.review}</Text>
                 <View>{handleRating(review.rating)}</View>
               </Card>

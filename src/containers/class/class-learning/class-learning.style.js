@@ -185,11 +185,18 @@ const styles = StyleSheet.create({
   containerConsul : {
     width: '100%',
     borderRadius: 20,
-    marginVertical: '3%',
-    flexDirection: 'row',
-    paddingVertical: '3%',
+    paddingVertical : 0,
     paddingHorizontal: 25,
     backgroundColor: '#9741ba',
+  },
+  containerItemConsul : {
+    height : 100,
+    width: '100%',
+    paddingVertical : 0,
+    paddingHorizontal: 25,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius : 20,
+    backgroundColor: Color.white,
   },
   textConsul : {
     color: '#fff',

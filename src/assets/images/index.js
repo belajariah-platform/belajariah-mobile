@@ -45,6 +45,7 @@ export default {
   BotTransactHint: require('./TransactHint.svg'),
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
+  IconDocumentVideo : require('./IconDocumentVideo.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
@@ -96,5 +97,5 @@ export default {
   AvatarInstructor1: require('./AvatarInstructor.svg'),
   IconConsultations: require('./IconConsultations.svg'),
   ImageUstadzMaulana: require('./ImageUstadzMaulana.png'),
-  DetailClassHeaderBG: require('./BgDetailClassHeader.svg'),
+  DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
 }
