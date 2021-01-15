@@ -1,16 +1,16 @@
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { List } from 'react-native-paper'
+import { Card } from 'react-native-elements'
+import { ScrollView, View, Text } from 'react-native'
 
 import styles from './class-about.style'
 import { Images } from '../../../assets'
-import { List } from 'react-native-paper'
-import { Text } from '@ui-kitten/components'
-import { Card } from 'react-native-elements'
+import { TextView } from '../../../components'
 
 const ClassAbout = () => {
   const dataClass = {
     description:
-      'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit.',
+      'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     topicCount: 5,
     materialCount: 12,
     duration: '02:12:00',
@@ -43,11 +43,36 @@ const ClassAbout = () => {
     },
   }
 
+  const BenefitCategory = [
+    { value : 'Akses video|video' },
+    { value : 'Ringkasan materi|document' },
+    { value : 'Akses konsultasi|consultation' },
+    { value : 'Webinar|webinar' },
+    { value : 'Akses grub chat khusus|group' },
+    { value : 'Sertifikat dan hasil evaluasi belajar|sertificate' },
+  ]
+
   const Desc = () => {
+    const handleSplitString = (value) => {
+      const stringSplit = value.split('|')
+      return (
+        <>
+          {stringSplit.map((val, index) => {
+            return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
+          })}
+        </>
+      )
+    }
     return (
       <Card containerStyle={styles.containerDesc}>
-        <Card.Title style={styles.textBold}>Deskripsi</Card.Title>
-        <Text style={styles.textRegular}>{dataClass.description} </Text>
+        <Text style={styles.textBold}>Deskripsi</Text>
+        <TextView
+          component={
+            <Text style={styles.textRegularParaf}>
+              {handleSplitString(dataClass.description)}
+            </Text>
+          }
+        />
       </Card>
     )
   }
@@ -56,7 +81,7 @@ const ClassAbout = () => {
     return (
       <Card containerStyle={styles.containerTopics}>
         <View style={styles.containerTopicsTitle}>
-          <Card.Title style={styles.textBold}>Topik yang dibahas</Card.Title>
+          <Text style={styles.textBold}>Topik yang dibahas</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
               <Text style={styles.textRegular}>{dataClass.topicCount}</Text> Topik,
@@ -90,50 +115,42 @@ const ClassAbout = () => {
       <Card containerStyle={styles.containerBenefits}>
         <Text style={styles.textBold}>Benefit yang diperoleh</Text>
         <Text style={styles.textRegular}>Benefit apa saja yang akan diperoleh?</Text>
-
-        <View style={styles.flexBenefits}>
-          <Images.AccessVideo.default width={36} height={36} style={styles.iconVideo} />
-          <Text style={styles.textBold}>
-            Akses Video <Text style={styles.textBoldRed}>(Unlimited)</Text>
-          </Text>
-        </View>
-
-        <View style={styles.flexBenefits}>
-          <Images.Document.default width={28} height={28} style={styles.iconDocs} />
-          <Text style={styles.textBold}>Ringkasan Materi</Text>
-        </View>
-
-        <View style={styles.flexBenefits}>
-          <Images.Consultation.default width={26} height={26} style={styles.iconConsultation} />
-          <Text style={styles.textBold}>
-            {`Akses Konsultasi ${dataClass.options.consult}x `}
-            <Text style={styles.textBoldRed}>(Limited)</Text>
-          </Text>
-        </View>
-
-        <View style={styles.flexBenefits}>
-          <Images.Webinar.default width={28} height={28} style={styles.iconWebinar} />
-          <Text style={styles.textBold}>
-            {`Webinar ${dataClass.options.webinar}x `}
-            <Text style={styles.textBoldRed}>(Limited)</Text>
-          </Text>
-        </View>
-
-        <View style={styles.flexBenefits}>
-          <Images.AccessGroupChat.default width={24} height={24} style={styles.iconChatGroup} />
-          <Text style={styles.textBold}>Akses grup chat khusus</Text>
-        </View>
-
-        <View style={styles.flexBenefits}>
-          <Images.Certificate.default width={28} height={28} style={styles.iconCertificate} />
-          <Text style={styles.textBold}>Sertifikat dan hasil evaluasi belajar</Text>
-        </View>
+        {BenefitCategory.map((val, index) => {
+          let icon, size
+          const stringSplit = val.value.split('|')[1]
+          stringSplit == 'video' ? (icon = Images.AccessVideo, size = 30) :
+            stringSplit == 'document' ? (icon = Images.Document, size = 23) :
+              stringSplit == 'webinar' ? (icon = Images.Webinar, size = 23) :
+                stringSplit == 'group' ? (icon = Images.AccessGroupChat, size = 21) :
+                  stringSplit == 'consultation' ? (icon = Images.Consultation, size = 21) :
+                    (icon = Images.Certificate, size = 23)
+          return (
+            <View key={index} >
+              <View style={styles.flexBenefits}>
+                <icon.default width={size} height={size}
+                  style={{ ...styles.iconDocs,
+                    marginLeft: stringSplit != 'video' ? 5 : 0 }}
+                />
+                <Text style={{ ...styles.textBoldCustom, top :4 }}>
+                  {val.value.split('|')[0]}
+                  <Text style={styles.textBoldRed}>
+                    {stringSplit == 'video' ? ' (Unimited)' :
+                      stringSplit == 'consultation' || stringSplit == 'webinar' ? ' (Limited)' :''}
+                  </Text>
+                </Text>
+              </View>
+            </View>
+          )
+        } )}
       </Card>
     )
   }
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
       <Desc />
       <Topics />
       <Benefits />

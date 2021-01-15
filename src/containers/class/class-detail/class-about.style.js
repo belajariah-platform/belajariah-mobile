@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.softPink,
   },
   containerDesc: {
+    height:'auto',
     borderWidth: 0,
     borderRadius: 12,
     marginVertical: 16,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderWidth: 0,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: '10%',
   },
   containerTopicsTitle: {
     paddingVertical: 20,
@@ -56,27 +57,46 @@ const styles = StyleSheet.create({
   },
   containerItem: {
     paddingVertical: 2,
-    marginHorizontal: 0,
+    marginLeft: 5,
     borderBottomWidth: 1,
     paddingHorizontal: 4,
     borderColor: Color.lightGrey,
   },
   textRegular: {
+    lineHeight : 15,
     color: Color.black,
     textAlign: 'justify',
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.smallPoint,
+  },
+  textRegularParaf: {
+    lineHeight : 15,
+    color: Color.black,
+    textAlign: 'justify',
+    marginBottom : 10,
+    flexDirection:'row',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
   },
   textBold: {
+    marginBottom: 7,
     textAlign: 'left',
     color: Color.black,
-    fontSize: FontSize.medium,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallPoint,
+  },
+  textBoldCustom: {
+    marginBottom: 7,
+    textAlign: 'left',
+    alignSelf : 'center',
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
   },
   textBoldRed: {
     color: Color.textRed,
     fontFamily: FontType.bold,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.extraSmall,
   },
   iconVideo: {
     marginLeft: -6,
@@ -84,6 +104,7 @@ const styles = StyleSheet.create({
   },
   iconDocs: {
     marginRight: 10,
+    alignSelf:'center',
   },
   iconConsultation: {
     marginRight: 10,

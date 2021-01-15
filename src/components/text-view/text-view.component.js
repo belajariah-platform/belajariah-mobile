@@ -7,14 +7,14 @@ import ViewMoreText from 'react-native-view-more-text'
 const renderViewMore = onPress => {
   return (
     <Text style={styles.viewMore} onPress={onPress}>
-      View more...
+      selengkapnya
     </Text>
   )
 }
 const renderViewLess = onPress => {
   return (
     <Text style={styles.viewMore} onPress={onPress}>
-      View less
+      lebih sedikit
     </Text>
   )
 }
@@ -29,7 +29,6 @@ const TextView = (props) => {
     </ViewMoreText>
   )
 }
-
 TextView.propTypes = {
   component : PropTypes.object,
 }
