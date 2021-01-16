@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="12.856576mm"
+   height="11.615379mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 1285.6349 1161.5174"
+   id="svg26"
+   sodipodi:docname="LogoBelajariahInstructor.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata30"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview28"
+   showgrid="false"
+   inkscape:zoom="1.2968776"
+   inkscape:cx="103.35303"
+   inkscape:cy="68.164988"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg26"
+   inkscape:document-rotation="0" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:#6E248D}
+    .fil2 {fill:white}
+    .fil1 {fill:white;fill-opacity:0.211765}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="matrix(1.8524999,0,0,1.8524999,-10618.529,-12343.207)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 6113,6663 h -381 v 627 h 381 c 172,0 313,-141 313,-313 v 0 c 0,-173 -141,-314 -313,-314 z"
+   id="path7" />
+  <path
+   class="fil1"
+   d="m 6067,6984 v 0 c 49,-12 73,20 71,49 -2,27 -38,70 -110,73 -7,0 -13,0 -18,-1 12,7 28,10 45,10 74,-3 106,-60 104,-85 -2,-36 -42,-63 -92,-46 z"
+   id="path9" />
+  <path
+   class="fil1"
+   d="m 5992,6776 c 66,54 -1,129 -78,226 -51,64 -20,127 47,152 -48,-34 -64,-96 -20,-157 79,-110 123,-184 51,-221 z"
+   id="path11" />
+  <path
+   class="fil2"
+   d="m 6000,6774 c 72,38 28,112 -51,222 -80,111 37,222 185,171 100,-34 97,-143 51,-186 -29,-26 -77,-34 -116,-2 54,-18 96,10 99,50 2,27 -33,87 -112,91 -84,3 -133,-84 1,-222 59,-61 49,-134 -57,-124 z"
+   id="path13" />
+  <polygon
+   class="fil2"
+   points="6231,7151 6225,7176 6196,7171 6206,7144 "
+   id="polygon15" />
+  <path
+   class="fil1"
+   d="m 6067,6984 v 0 c 49,-12 73,20 71,49 -2,27 -38,70 -110,73 -7,0 -13,0 -18,-1 12,7 28,10 45,10 74,-3 106,-60 104,-85 -2,-36 -42,-63 -92,-46 z"
+   id="path17" />
+  <path
+   class="fil1"
+   d="m 5992,6776 c 66,54 -1,129 -78,226 -51,64 -20,127 47,152 -48,-34 -64,-96 -20,-157 79,-110 123,-184 51,-221 z"
+   id="path19" />
+  <path
+   class="fil2"
+   d="m 6000,6774 c 72,38 28,112 -51,222 -80,111 37,222 185,171 100,-34 97,-143 51,-186 -29,-26 -77,-34 -116,-2 54,-18 96,10 99,50 2,27 -33,87 -112,91 -84,3 -133,-84 1,-222 59,-61 49,-134 -57,-124 z"
+   id="path21" />
+  <polygon
+   class="fil2"
+   points="6231,7151 6225,7176 6196,7171 6206,7144 "
+   id="polygon23" />
+ </g>
+</svg>

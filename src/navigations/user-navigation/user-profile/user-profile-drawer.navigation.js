@@ -1,10 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  DrawerItem,
-  DrawerContentScrollView,
-} from '@react-navigation/drawer'
+import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 import { useDispatch } from 'react-redux'
 
 import {
@@ -24,7 +21,9 @@ const CustomDrawer = ({ navigation }, props) => {
 
   return (
     <DrawerContentScrollView {...props}>
-      <ImageBackground source={Images.ProfileDrawerBackgroundPNG} style={styles.drawerBackground}>
+      <ImageBackground
+        source={Images.ProfileDrawerBackgroundPNG}
+        style={styles.drawerBackground}>
         <TouchableOpacity
           onPress={() => {
             navigation.goBack()
@@ -92,7 +91,13 @@ const CustomDrawer = ({ navigation }, props) => {
           label='Logout'
           onPress={async () => await dispatch(UserAPI.SignOut())}
           labelStyle={styles.label}
-          icon={() => <Images.Logout.default width={24} height={24} style={styles.iconLogout} />}
+          icon={() => (
+            <Images.Logout.default
+              width={24}
+              height={24}
+              style={styles.iconLogout}
+            />
+          )}
         />
 
         <View style={styles.versionContainer}>
@@ -105,7 +110,7 @@ const CustomDrawer = ({ navigation }, props) => {
 }
 
 CustomDrawer.propTypes = {
-  navigation : PropTypes.object,
+  navigation: PropTypes.object,
 }
 
 export default CustomDrawer

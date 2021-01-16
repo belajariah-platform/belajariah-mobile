@@ -2,11 +2,8 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Color, Images } from '../../../assets'
-import {
-  InstructorTask,
-  InstructorProfile,
-  InstructorDashboard,
-   } from '../../../containers'
+import { InstructorTask, InstructorDashboard } from '../../../containers'
+import InstructorProfileNavigation from '../instructor-profile-drawer'
 
 import { styles } from './instructor-main.style'
 
@@ -41,9 +38,13 @@ const InstructorMainNavigation = () => {
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
       }}>
-      <Screen name='Dashboard' component={InstructorDashboard} options={{ headerShown: false }} />
+      <Screen
+        name='Dashboard'
+        component={InstructorDashboard}
+        options={{ headerShown: false }}
+      />
       <Screen name='Task' component={InstructorTask} />
-      <Screen name='Profile' component={InstructorProfile} />
+      <Screen name='Profile' component={InstructorProfileNavigation} />
     </Navigator>
   )
 }
