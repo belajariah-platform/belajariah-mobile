@@ -47,7 +47,7 @@ const TransactionConfirm = () => {
   const ButtonFinish = () => {
     return (
       <View style={styles.viewButtonFinish}>
-        <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('')}}>
+        <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('Transaction')}}>
           <Text style={styles.textBuyClass}>Selesai</Text>
         </TouchableOpacity>
       </View>

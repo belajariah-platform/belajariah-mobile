@@ -97,7 +97,7 @@ const TransactionInfo = () => {
           <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('TransactionConfirm')}}>
             <Text style={styles.textBuyClass}>Upload bukti transfer sekarang</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btnBuyClassTwo} >
+          <TouchableOpacity style={styles.btnBuyClassTwo} onPress={()=> {navigation.navigate('Transaction')}}>
             <Text style={styles.textBuyClassTwo}>Upload bukti transfer nanti</Text>
           </TouchableOpacity>
         </View>
