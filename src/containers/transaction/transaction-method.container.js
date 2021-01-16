@@ -7,6 +7,7 @@ import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
 import { FormatRupiah } from '../../utils'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import TransactionInfo from './transaction-info.container'
 
 const TransactionMethod = () => {
   const navigation = useNavigation()
@@ -171,7 +172,7 @@ const TransactionMethod = () => {
           <Text style={styles.textTotalPrice}>Total Harga</Text>
           {handleVoucher(classData.voucher)}
         </View>
-        <TouchableOpacity style={styles.btnBuyClass} onPress={ThreeButtonAlert}>
+        <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('TransactionInfo')}} >
           <Text style={styles.textBuyClass}>Checkout Now</Text>
         </TouchableOpacity>
       </View>
