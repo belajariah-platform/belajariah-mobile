@@ -13,12 +13,15 @@ const Color = {
   bgSearch: '#eeedf2',
 
   //new
+  red : 'red',
   grey: 'grey',
   white: 'white',
   black: '#1A1A1A',
+  tosca : '#74ddc4',
   softPink: '#FEF5FF',
   greySwipe: '#CBC9CA',
   greyInput: '#b2b2b2',
+  mediumPink : '#f9e9ff',
   purpleText: '#7a0090',
   purpleHint: '#C7BBD9',
   greyMedium: '#E6E6E6',

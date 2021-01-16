@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   containerTitleContent : {
     marginTop:10,
     color: Color.black,
-    marginHorizontal:18,
+    marginHorizontal:16,
     fontSize: FontSize.medium,
     fontFamily: FontType.regular,
   },
@@ -206,17 +206,29 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   textRegular: {
-    color: Color.black,
     fontSize: 13.5,
+    color: Color.black,
+    fontFamily: FontType.regular,
+  },
+  textExam: {
+    right : 7,
+    fontSize: 11,
+    color: '#9741ba',
+    alignSelf : 'center',
     fontFamily: FontType.regular,
   },
   containerAccordion: {
-    borderTopWidth: 1,
     paddingVertical: 0,
     paddingHorizontal: 9,
     borderBottomWidth: 1,
     borderColor: Color.lightGrey,
     backgroundColor: Color.white,
+  },
+  containerExam : {
+    paddingVertical: 5,
+    borderTopWidth : 1,
+    borderBottomWidth : 1,
+    borderColor: Color.lightGrey,
   },
   containerItem: {
     paddingVertical: 4,

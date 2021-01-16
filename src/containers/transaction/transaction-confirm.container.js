@@ -1,22 +1,17 @@
-import React, { useState } from 'react'
-import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
-import { Icon, Text } from '@ui-kitten/components'
-import Images from '../../assets/images'
+import React from 'react'
+import {  Text } from '@ui-kitten/components'
+import { useNavigation } from '@react-navigation/native'
+import { View, ScrollView } from 'react-native'
+
+import { Images } from '../../assets'
+import { ButtonGradient } from '../../components'
 import styles from './transaction-confirm.style'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import TransactionInfo from './transaction-info.container'
-import { FontSize } from '../../assets'
 
 const TransactionConfirm = () => {
   const navigation = useNavigation()
-  const route = useRoute()
-
-  const [code, setCode] = useState('')
 
   const classData = {
-    note: 'Terima Kasih, Bukti pembayaran anda sedang kami proses untuk melakukan verifikasi.',
-    noteBold: 'Kami akan mengirim email jika bukti pembayaran anda telah diverifikasi untuk mengakses kelas anda',
-  
+    note: 'Terima Kasih, Bukti pembayaran anda sedang kami proses untuk melakukan verifikasi|Kami akan mengirim email jika bukti pembayaran anda telah diverifikasi untuk mengakses kelas anda',
   }
 
   const Header = () => {
@@ -35,10 +30,12 @@ const TransactionConfirm = () => {
       <View style={styles.containerTitle}>
         <Text style={styles.textTitleBlack}>Bukti pembayaran anda Terkirim</Text>
         <View style={styles.viewImage}>
-            <Images.IconCompleteTransaction.default />
+          <Images.IconCompleteTransaction.default />
         </View>
         <View style={styles.viewDesc}>
-            <Text style={styles.viewTxtDesc}>{classData.note} <Text style={styles.viewTxtDescBold}>{classData.noteBold}</Text></Text>
+          <Text style={styles.viewTxtDesc}>{classData.note.split('|')[0]}.
+            <Text style={styles.viewTxtDescBold}> {classData.note.split('|')[1]}
+            </Text></Text>
         </View>
       </View>
     )
@@ -47,9 +44,12 @@ const TransactionConfirm = () => {
   const ButtonFinish = () => {
     return (
       <View style={styles.viewButtonFinish}>
-        <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('Transaction')}}>
-          <Text style={styles.textBuyClass}>Selesai</Text>
-        </TouchableOpacity>
+        <ButtonGradient
+          title='Selesai'
+          styles={styles.btnBuyClass}
+          textStyle={styles.textBuyClass}
+          onPress={()=> {navigation.navigate('Transaction')}}
+        />
       </View>
     )
   }
@@ -60,7 +60,7 @@ const TransactionConfirm = () => {
       <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
         <PaymentDetail />
         <ButtonFinish />
-      </ScrollView>      
+      </ScrollView>
     </View>
   )
 }

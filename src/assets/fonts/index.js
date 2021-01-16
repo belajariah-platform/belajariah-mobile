@@ -19,6 +19,7 @@ const FontSize = {
   medium : 16,
   mediumLarge : 17,
   large : 20,
+  largeMiddle : 22,
   extraLarge :25,
   largest : 26,
 }
