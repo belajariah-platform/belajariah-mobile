@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-native-elements'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
 
 import { Images } from '../../../assets'
 import styles from './class-review.style'
@@ -73,15 +73,20 @@ const ClassReview = () => {
         <View style={styles.footer}>
           {classData.reviews.map((review, index) => {
             return (
-              <Card key={index} containerStyle={styles.cardReview}>
+              <View key={index} style={styles.cardReview}>
                 <Text style={styles.textBoldCustom}>
                   {review.name} | {review.time}
                 </Text>
                 <Text style={styles.textRegular}>{review.review}</Text>
                 <View>{handleRating(review.rating)}</View>
-              </Card>
+              </View>
             )
           })}
+          <View>
+            <TouchableOpacity activeOpacity={0.6}>
+              <Text style={styles.textView}>Lihat lainnya</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </Card>
     </ScrollView>

@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     marginVertical: 0,
     marginHorizontal: 0,
+    borderBottomWidth : 0,
+    paddingHorizontal : 15,
+    paddingVertical : 11,
     borderColor: Color.lightGrey,
   },
   rating: {
@@ -56,6 +59,15 @@ const styles = StyleSheet.create({
     color: Color.black,
     fontFamily: FontType.bold,
     fontSize: FontSize.extraSmall,
+  },
+  textView: {
+    top : 2,
+    marginBottom: 10,
+    textAlign: 'left',
+    color: Color.black,
+    paddingHorizontal: 15,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallest,
   },
   textRegular: {
     marginBottom: 8,
