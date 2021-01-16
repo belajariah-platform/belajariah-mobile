@@ -183,33 +183,6 @@ const TransactionMethod = () => {
     )
   }
 
-  const ThreeButtonAlert = () =>
-    Alert.alert(
-      'Konfirmasi Pembayaran',
-      `Bayar dengan ${gateway}?`,
-      [
-        {
-          text: 'Nanti saja',
-          onPress: () => {
-            navigation.navigate('Transaction', { status: 'Pending' })
-          },
-        },
-        {
-          text: 'Nggak jadi',
-          onPress: () => {
-            navigation.navigate('Transaction', { status: 'Failed' })
-          },
-        },
-        {
-          text: 'Bayar',
-          onPress: () => {
-            navigation.navigate('Transaction', { status: 'Complete' })
-          },
-        },
-      ],
-      { cancelable: false },
-    )
-
   return (
     <View style={styles.containerMain}>
       <Header />

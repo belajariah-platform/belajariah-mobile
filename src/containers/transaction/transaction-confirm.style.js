@@ -1,4 +1,3 @@
-import { Picker } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../assets'
 
@@ -16,7 +15,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
   },
   flexHeader: {
-
     flexDirection: 'row',
     paddingVertical: '5%',
     justifyContent: 'center',
@@ -43,16 +41,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   textTitleWhite: {
+    bottom : 4,
     color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
   textTitleBlack: {
+    top : 5,
+    lineHeight : 25,
     color: Color.black,
     textAlign: 'center',
     marginHorizontal: '10%',
     fontFamily: FontType.bold,
-    fontSize: FontSize.extraLarge,
+    fontSize: FontSize.largeMiddle,
   },
   textBold: {
     marginBottom: 4,
@@ -83,8 +84,7 @@ const styles = StyleSheet.create({
   },
   btnBuyClass: {
     width: '90%',
-    borderWidth: 1,
-    marginTop: '2%',
+    height : 45,
     borderRadius: 8,
     paddingVertical: 12,
     textAlign: 'center',
@@ -98,38 +98,38 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
   },
   viewIconBank: {
-    paddingVertical: '3%', 
-    paddingHorizontal: '3%', 
-    borderTopLeftRadius: 10, 
+    paddingVertical: '3%',
+    paddingHorizontal: '3%',
+    borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: '#f9e9ff', 
+    backgroundColor: '#f9e9ff',
   },
   viewDetailBank: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     paddingHorizontal: 10,
-    paddingVertical: '4%', 
-    backgroundColor: '#fff', 
+    paddingVertical: '4%',
+    backgroundColor: '#fff',
     justifyContent: 'space-between',
   },
   TxtButtonSalin: {
-    color: '#74ddc4', 
+    color: '#74ddc4',
     fontWeight: 'bold',
   },
   viewNoteTwo: {
-    width: '90%', 
+    width: '90%',
     opacity: 0.5,
-    marginTop: '2%', 
-    marginBottom: '2%', 
-    flexDirection: 'row', 
+    marginTop: '2%',
+    marginBottom: '2%',
+    flexDirection: 'row',
   },
   txtViewNote: {
-    width: 18, 
-    height: 18, 
+    width: 18,
+    height: 18,
     color: '#fff',
     marginRight: 5,
-    borderRadius: 100, 
-    textAlign: 'center', 
-    backgroundColor: 'red', 
+    borderRadius: 100,
+    textAlign: 'center',
+    backgroundColor: 'red',
   },
   containerTitle: {
     alignItems: 'center',
@@ -138,22 +138,22 @@ const styles = StyleSheet.create({
     marginVertical: '8%',
   },
   viewDesc: {
-    marginHorizontal: '10%',
+    marginHorizontal: '9.8%',
   },
   viewTxtDesc: {
+    lineHeight: 25,
     textAlign: 'center',
-    fontSize: FontSize.large, 
+    fontSize: FontSize.large,
   },
   viewTxtDescBold: {
-    lineHeight: 30,
-    fontWeight: 'bold',
+    lineHeight: 25,
     textAlign: 'center',
-    fontSize: FontSize.large, 
+    fontSize: FontSize.large,
+    fontFamily : FontType.bold
   },
   viewButtonFinish: {
-    marginTop: '10%', 
-    marginBottom: '5%',
-    marginHorizontal: '3%', 
+    marginTop: '10%',
+    marginHorizontal: '3%',
   },
 
 })
