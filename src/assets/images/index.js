@@ -66,8 +66,10 @@ export default {
   Filter: require('./IconFilter.svg'),
   IconFailed: require('./IconFailed.svg'),
   IconPending: require('./IconPending.svg'),
+  StarBlack: require('./StarFullBlack.svg'),
   RibbonFailed: require('./RibbonFailed.svg'),
   IconComplete: require('./IconComplete.svg'),
+  StarHalfBlack: require('./StarHalfBlack.svg'),
   RibbonPending: require('./RibbonPending.svg'),
   RibbonComplete: require('./RibbonComplete.svg'),
   BgClassLearning: require('./BgClassLearning.png'),
@@ -75,9 +77,9 @@ export default {
   NoTransactionBG: require('./NoClassBakcground.svg'),
   TransactionBG: require('./TransactionBackground.svg'),
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
+  IconBankBNISyariah: require('./IconBankBNISyariah.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
-  StarHalfBlack: require('./StarHalfBlack.svg'),
-  StarBlack: require('./StarFullBlack.svg'),
+  IconCompleteTransaction: require('./IconCompleteTransaction.svg'),
 
   //Update Detail Class
   Share: require('./IconShare.svg'),
