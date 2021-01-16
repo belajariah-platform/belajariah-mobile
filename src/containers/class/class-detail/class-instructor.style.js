@@ -15,8 +15,9 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 0,
+    borderWidth : 0,
     borderRadius: 16,
-    marginBottom: 16,
+    marginBottom: '10%',
   },
   higherCard: {
     borderRadius: 16,
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
   },
   lowerCard: {
     padding: 20,
+    borderRadius: 16,
     backgroundColor: Color.white,
   },
   avatar: {
@@ -34,28 +36,29 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   textTitle: {
+    marginBottom: 10,
     textAlign: 'left',
     color: Color.black,
     fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.smallPoint,
   },
   textName: {
     marginBottom: 4,
     color: Color.black,
     fontFamily: FontType.bold,
-    fontSize: FontSize.extraSmall,
+    fontSize: FontSize.smallest,
   },
   textProfile: {
-    color: Color.black,
+    color: Color.grey,
     textAlign: 'justify',
     fontFamily: FontType.regular,
-    fontSize: FontSize.extraSmall,
+    fontSize: FontSize.smallest,
   },
   textDesc: {
     color: Color.black,
     textAlign: 'justify',
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.smallPoint,
   },
 })
 

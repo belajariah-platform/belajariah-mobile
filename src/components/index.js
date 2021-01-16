@@ -9,6 +9,8 @@ import Carousel from './carousel'
 import Checkbox from './checkbox'
 import TextView from './text-view'
 import Searchbox from './searchbox'
+import Progressbar from './progressbar'
+import ButtonGradient from './button-gradient'
 
 import { ModalInfo, ModalConfirm } from './modal'
 
@@ -25,5 +27,7 @@ export {
   TextView,
   Searchbox,
   ModalInfo,
+  Progressbar,
   ModalConfirm,
+  ButtonGradient
 }

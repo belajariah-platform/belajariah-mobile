@@ -5,6 +5,7 @@ import {
   Login,
   Alquran,
   Register,
+  ClassDetail,
   Introduction,
   AlquranDetail,
   ChangePassword,
@@ -23,6 +24,7 @@ const PublicNavigation = () => {
       <Stack.Screen name='Login' component={Login} />
       <Stack.Screen name='Alquran' component={Alquran} />
       <Stack.Screen name='Register' component={Register} />
+      <Stack.Screen name='ClassDetail' component={ClassDetail} />
       <Stack.Screen name='Introduction' component={Introduction} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
       <Stack.Screen name='ChangePassword' component={ChangePassword} />

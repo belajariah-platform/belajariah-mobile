@@ -4,6 +4,7 @@ import { Text } from '@ui-kitten/components'
 import { TouchableOpacity } from 'react-native'
 
 import { styles } from './button.style'
+import { View } from 'react-native'
 
 const Buttons = (props) =>  {
   return (
@@ -11,14 +12,19 @@ const Buttons = (props) =>  {
       {...props}
       activeOpacity={0.9}
       style={[styles.button, props.style]}>
-      <Text style={styles.text}>{props.title}</Text>
+      <View style={styles.viewButton}>
+        {props.icon}
+        <Text style={[styles.text, props.textStyle]}>{props.title}</Text>
+      </View>
     </TouchableOpacity>
   )
 }
 
 Buttons.propTypes = {
+  icon : PropTypes.object,
   style : PropTypes.object,
   title : PropTypes.string,
+  textStyle : PropTypes.object,
 }
 
 export default Buttons

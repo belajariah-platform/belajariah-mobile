@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
-import { Icon, Text } from '@ui-kitten/components'
-import Images from '../../assets/images'
-import styles from './transaction-method.style'
 import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
-import { FormatRupiah } from '../../utils'
+import { Icon, Text } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import TransactionInfo from './transaction-info.container'
+import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
+
+import { Images } from '../../assets'
+import { FormatRupiah } from '../../utils'
+import { ButtonGradient } from '../../components'
+
+import styles from './transaction-method.style'
 
 const TransactionMethod = () => {
   const navigation = useNavigation()
@@ -60,7 +62,6 @@ const TransactionMethod = () => {
           <Text style={styles.textPrice}>IDR {FormatRupiah(discountedPrice)}</Text>
         </View>
       )
-
     default:
       return <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
     }
@@ -148,7 +149,7 @@ const TransactionMethod = () => {
             </View>
           </Card>
 
-          <Card containerStyle={styles.cardMethods}>
+          <Card containerStyle={[styles.cardMethods, styles.cardMethodCustom]}>
             <Text style={styles.textBold}>Minimarket</Text>
             <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
             <View style={styles.flexRow}>
@@ -172,9 +173,12 @@ const TransactionMethod = () => {
           <Text style={styles.textTotalPrice}>Total Harga</Text>
           {handleVoucher(classData.voucher)}
         </View>
-        <TouchableOpacity style={styles.btnBuyClass} onPress={()=> {navigation.navigate('TransactionInfo')}} >
-          <Text style={styles.textBuyClass}>Checkout Now</Text>
-        </TouchableOpacity>
+        <ButtonGradient
+          title='Checkout Now'
+          styles={styles.btnBuyClass}
+          textStyle={styles.textBuyClass}
+          onPress={ThreeButtonAlert}
+        />
       </View>
     )
   }

@@ -73,7 +73,7 @@ const ProfileEdit = () => {
             <TouchableOpacity style={styles.containerTouch}>
               <Avatar
                 source={Images.AvatarProfile}
-                style={styles.Avatar}></Avatar>
+                style={styles.Avatar}/>
             </TouchableOpacity>
             <Text style={styles.containerTitleAvatar}>
               {filterText(strName)}
