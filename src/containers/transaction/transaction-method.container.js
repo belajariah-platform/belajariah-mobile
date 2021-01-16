@@ -177,7 +177,7 @@ const TransactionMethod = () => {
           title='Checkout Now'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={ThreeButtonAlert}
+          onPress={()=> {navigation.navigate('TransactionInfo')}}
         />
       </View>
     )
