@@ -4,12 +4,14 @@ import { useState, useRef } from 'react'
 import { List } from 'react-native-paper'
 import { Text, View, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls'
 
 import { Images } from '../../../assets'
 import { styles } from '../class-learning/class-learning.style'
 
 const ClassLearning = () => {
+  const navigation = useNavigation()
   // const [expanded, setExpanded] = React.useState(true)
   // const handlePress = () => setExpanded(!expanded)
   const videoPlayer = useRef(null)
@@ -176,7 +178,10 @@ const ClassLearning = () => {
       <View style={styles.containerMenuDetail}>
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={()=> {navigation.navigate('ClassExam')}}
+          >
             <List.Item
               title={'Pre Exam'}
               style={styles.containerExam}

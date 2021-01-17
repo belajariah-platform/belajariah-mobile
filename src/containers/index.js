@@ -10,7 +10,7 @@ import { AdminUser, AdminDashboard, AdminInstructor } from './admin'
 import { Login, Register, Introduction, ChangePassword } from './user'
 import { InstructorJob, InstructorTask, InstructorProfile, InstructorDashboard } from './instructor'
 
-import {ClassUser, ClassLearning, ClassDetail} from './class'
+import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 
 export {
   Home,
@@ -19,6 +19,7 @@ export {
   Profile,
   Register,
   Timeline,
+  ClassExam,
   Promotion,
   AdminUser,
   ClassUser,
