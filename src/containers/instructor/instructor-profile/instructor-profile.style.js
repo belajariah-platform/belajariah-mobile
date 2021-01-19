@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginTop: -192,
   },
+  btnClose: {
+    marginTop: 16,
+    marginLeft: 8,
+  },
   btnDrawer: {
     width: 20,
     height: 30,
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
   containerProfileHeader: {
     marginTop: 164,
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderWidth: 0,
     borderRadius: 24,
-    marginBottom: 68,
+    marginBottom: 20,
   },
   cardStatus: {
     borderWidth: 0,

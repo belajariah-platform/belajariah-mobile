@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     marginTop: -192,
     marginLeft: 0,
   },
+  btnClose: {
+    marginTop: 16,
+    marginLeft: 8,
+  },
   btnDrawer: {
     width: 20,
     height: 30,
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
   containerDrawerButton: {
     position: 'absolute',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     width: '100%',
   },
   containerProfileHeader: {
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 0,
     marginTop: -172,
-    marginBottom: 48,
+    marginBottom: 20,
   },
   avatar: {
     alignSelf: 'center',

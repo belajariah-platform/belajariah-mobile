@@ -11,9 +11,10 @@ const styles = StyleSheet.create({
   },
   containerFooter: {
     flex: 1,
-    marginTop: 200,
+    bottom: 0,
     paddingTop: 12,
     paddingBottom: 72,
+    position: 'absolute',
     paddingHorizontal: 12,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,

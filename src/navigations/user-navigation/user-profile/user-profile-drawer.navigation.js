@@ -20,7 +20,7 @@ const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
       <ImageBackground
         source={Images.ProfileDrawerBackgroundPNG}
         style={styles.drawerBackground}>
