@@ -3,14 +3,16 @@ import { StyleSheet } from 'react-native'
 import { Color, FontType, FontSize } from '../../../assets'
 
 const styles = StyleSheet.create({
+  flexFull: {
+    flex: 1,
+  },
   drawerBackground: {
     flex: 1,
-    height: 720,
     marginTop: -6,
     marginRight: -4,
   },
   btnClose: {
-    marginTop: 4,
+    marginTop: 6,
     marginLeft: 16,
   },
   labelHeader: {
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
   },
   versionContainer: {
     flex: 1,
-    marginBottom: 56,
+    marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',

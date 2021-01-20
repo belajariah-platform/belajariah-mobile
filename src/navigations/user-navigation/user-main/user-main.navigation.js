@@ -48,7 +48,11 @@ const UserMainNavigation = () => {
         <>
           <Screen name='Class' component={ClassUser} />
           <Screen name='Transaction' component={Transaction} />
-          <Screen name='Profile' component={ProfileNavigation} />
+          <Screen
+            name='Profile'
+            component={ProfileNavigation}
+            options={{ tabBarVisible: false }}
+          />
         </>
       )}
     </Navigator>
