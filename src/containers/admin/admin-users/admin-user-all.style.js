@@ -4,6 +4,7 @@ import { Color, FontSize, FontType } from '../../../assets'
 const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
+        backgroundColor: '#ab69c6',
     },
     containerBackground: {
         width: '100%',
@@ -48,11 +49,11 @@ const styles = StyleSheet.create({
     cardInstructor: {
         width: 'auto',
         height: 'auto',
-        padding: '5%',
-        borderRadius: 20,
         borderWidth : 0,
+        borderRadius: 20,
     },
     ViewInstructorInfo: {
+        paddingBottom: '3%',
         flexDirection: 'row',
     },
     ImgUstadz: {
@@ -65,11 +66,69 @@ const styles = StyleSheet.create({
         fontFamily: FontType.bold,
         fontSize: FontSize.smallMedium,    
     },
+    TxtTimeTitle: {
+        color: Color.black,
+        fontSize: FontSize.smallest,
+        fontFamily: FontType.regular,
+    },
+    TxtTitleDesc: {
+        margin: 0,
+        padding: 0,
+        color: Color.black,
+        fontSize: FontSize.smallest,
+        fontFamily: FontType.regular,
+    },
     TxtButtonDetail: {
         textAlign: 'right',
         color: Color.purpleText,
         fontFamily: FontType.regular,
         fontSize: FontSize.smallMedium,    
+    },
+    containerButtonAction: {
+        flexDirection: 'row',
+    },
+    ViewButtonAction: {
+        flexDirection: 'row',
+    },
+    containerDescUser: {
+        margin: 0,
+        padding: 0,
+    },
+    ViewButtonActionVoice: {
+        flexDirection: 'row',
+    },
+    ButtonAction: {
+        width: '30%',
+        marginRight: 10,
+    },
+    tabBarStyle: {
+        borderRadius: 8,
+        paddingVertical: 2,
+        marginHorizontal: 16,
+        backgroundColor: Color.white,
+    },
+    textRegular: {
+        color: Color.black,
+        fontFamily: FontType.regular,
+        fontSize: FontSize.smallMedium,
+    },
+    containerAccordion: {
+        width: 280,
+        marginLeft: '-6%',
+        paddingVertical: 0,
+        paddingHorizontal: 9,
+    },
+    indicatorStyle: {
+        left: '10%',
+        width: 40,
+        height: 4,
+        borderRadius: 2,
+        backgroundColor: Color.bgColor,
+    },
+    labelStyle: {
+        textTransform: 'none',
+        fontFamily: FontType.regular,
+        fontSize: FontSize.smallMedium,
     },
 })
 

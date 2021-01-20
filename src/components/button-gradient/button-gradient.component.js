@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import { styles } from './button-gradient.style'
+import { colors } from 'react-native-elements'
 
 const ButtonGradient = (props) =>  {
   return (
@@ -14,7 +15,7 @@ const ButtonGradient = (props) =>  {
       activeOpacity={0.8}>
       <LinearGradient
         style={[styles.button, props.styles]}
-        colors={['#8234A4', '#662980', '#8234A4']}
+        colors={props.colors || ['#8234A4', '#662980', '#8234A4']}
       >
         <View style={styles.viewButton}>
           {props.icon}
@@ -26,6 +27,7 @@ const ButtonGradient = (props) =>  {
 }
 
 ButtonGradient.propTypes = {
+  colors: PropTypes.array,
   icon : PropTypes.object,
   title : PropTypes.string,
   styles : PropTypes.object,

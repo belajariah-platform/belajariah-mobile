@@ -4,6 +4,7 @@ import { Color, FontSize, FontType } from '../../../assets'
 const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
+        backgroundColor: '#ab69c6',
     },
     containerBackground: {
         width: '100%',
@@ -48,12 +49,15 @@ const styles = StyleSheet.create({
     cardInstructor: {
         width: 'auto',
         height: 'auto',
-        padding: '5%',
-        borderRadius: 20,
         borderWidth : 0,
+        borderRadius: 20,
     },
     ViewInstructorInfo: {
+        paddingBottom: '5%',
         flexDirection: 'row',
+    },
+    ViewIconStatus: {
+        marginHorizontal: '15%',
     },
     ImgUstadz: {
         width: 50,
@@ -65,11 +69,39 @@ const styles = StyleSheet.create({
         fontFamily: FontType.bold,
         fontSize: FontSize.smallMedium,    
     },
+    textRegular: {
+        color: Color.black,
+        fontFamily: FontType.regular,
+        fontSize: FontSize.smallMedium,
+    },
+    TxtTimeTitle: {
+        color: Color.black,
+        fontSize: FontSize.smallest,
+        fontFamily: FontType.regular,
+    },
     TxtButtonDetail: {
         textAlign: 'right',
         color: Color.purpleText,
         fontFamily: FontType.regular,
         fontSize: FontSize.smallMedium,    
+    },
+    containerButtonAction: {
+        flexDirection: 'row',
+    },
+    ViewButtonAction: {
+        flexDirection: 'row',
+    },
+    containerDescUser: {
+        margin: 0,
+        padding: 0,
+    },
+    ViewButtonActionVoice: {
+        left: '50%',
+        flexDirection: 'row',
+    },
+    ButtonAction: {
+        width: '30%',
+        marginRight: 10,
     },
 })
 
