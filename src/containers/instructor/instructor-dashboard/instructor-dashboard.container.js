@@ -31,7 +31,7 @@ const InstructorDashboard = () => {
     return (
       <View style={styles.containerFooter}>
         <Text style={styles.textTitle}>
-          Bantu Koreksi bacaan user dan peroleh beneiftnya!
+          Bantu Koreksi bacaan user dan peroleh benefitnya!
         </Text>
         <Text style={styles.textSubTitle}>
           ayo bantu mereka koreksi bacaannya

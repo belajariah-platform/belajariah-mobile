@@ -1,10 +1,16 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { Text, View, TouchableOpacity } from 'react-native'
+
+import { UserAPI } from '../../../api'
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch()
   return (
     <View>
-      <Text>AdminDashboard</Text>
+      <TouchableOpacity onPress={async () => await dispatch(UserAPI.SignOut())}>
+        <Text>AdminDashboard</Text>
+      </TouchableOpacity>
     </View>
   )
 }

@@ -83,10 +83,9 @@ const Profile = () => {
 
       <Avatar
         size='large'
-        title='B'
-        onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
         activeOpacity={0.7}
         containerStyle={styles.avatar}
+        onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
       />
 
       <View style={styles.containerProfileHeader}>

@@ -70,9 +70,9 @@ const ClassUser = (props) => {
     return (
       <View style={styles.containerReview}>
         <FlatList
+          data={Comment}
           numColumns={2}
           keyExtractor={(item, index) => index}
-          data={Comment}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               key={index}

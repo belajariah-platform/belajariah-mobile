@@ -1,0 +1,127 @@
+import React from 'react'
+import { Text } from '@ui-kitten/components'
+import { Card } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
+
+import { Images } from '../../assets'
+import { FormatRupiah } from '../../utils'
+import styles from './transaction-info.style'
+import { ButtonGradient } from '../../components'
+
+const TransactionInfo = () => {
+  const navigation = useNavigation()
+
+  const classData = {
+    quote: 'Dicek dalam 24 jam setelah bukti pembayaran talh diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
+    noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
+    noteTwo: 'Silahkan upload bukti transfer sebelum 1x-0x-2xxx',
+    noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
+    price: 199000,
+  }
+
+  const Header = () => {
+    return (
+      <View style={styles.containerHeader}>
+        <View style={styles.flexHeader}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Images.ButtonBack.default style={styles.iconBack} />
+          </TouchableOpacity>
+          <Text style={styles.textTitleWhite}>Info Pembayaran</Text>
+        </View>
+        <View style={styles.semiBox} />
+      </View>
+    )
+  }
+
+  const PaymentMethod = () => {
+    return (
+      <View style={styles.containerMethod}>
+        <View style={styles.cardMethods}>
+          <View style={styles.viewIconBank}>
+            <Images.IconBankBNISyariah.default/>
+          </View>
+          <View style={styles.viewDetailBank}>
+            <View>
+              <Text style={styles.textSmall}>No. Rekening : 000-1234567</Text>
+              <Text style={styles.textSmall}>Cabang : Palembang</Text>
+              <Text style={styles.textSmall}>Nama Rekening : Belajariah</Text>
+              <Text style={styles.textSmall}>Indonesia</Text>
+            </View>
+            <View>
+              <TouchableOpacity
+              // onPress={() => copyToClipboard()}
+              >
+                <Text style={styles.TxtButtonSalin}>SALIN</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.viewMethod}>
+            <View style={styles.viewNoteTwo}>
+              <Text style={styles.txtViewNoteOne}>2</Text>
+              <Text style={styles.textSmall}>{classData.noteTwo}</Text>
+            </View>
+            <View style={styles.viewNoteTwo}>
+              <Text style={styles.txtViewNoteOne}>3</Text>
+              <Text style={styles.textSmall}>{classData.noteThree}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  const PaymentButton = () => {
+    return (
+      <View>
+        <ButtonGradient
+          title='Upload bukti transfer sekarang'
+          styles={styles.btnBuyClass}
+          textStyle={styles.textBuyClass}
+          onPress={()=> {navigation.navigate('TransactionConfirm')}}
+        />
+        <TouchableOpacity style={styles.btnBuyClassTwo}
+          onPress={()=> {navigation.navigate('Transaction')}}>
+          <Text style={styles.textBuyClassTwo}>Upload bukti transfer nanti</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  const PaymentCheckout = () => {
+    return (
+      <View style={styles.containerPrice}>
+        <View style={styles.flexColumn}>
+          <View style={styles.margins}>
+            <Text style={styles.textTotalPrice}>Total Pembayaran</Text>
+            <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
+          </View>
+          <View style={styles.viewTextTotalPayment}>
+            <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas ya</Text>
+          </View>
+          <Text style={[styles.txtNotes, styles.margins]}>{classData.quote}</Text>
+          <View style={styles.margins}>
+            <Card.Divider style={styles.divider} />
+          </View>
+          <View style={styles.viewNoteOne}>
+            <Text style={styles.txtViewNoteOne}>1</Text>
+            <Text style={styles.textSmall}>{classData.noteOne}</Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.containerMain}>
+      <Header />
+      <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
+        <PaymentCheckout />
+        <PaymentMethod />
+        <PaymentButton />
+      </ScrollView>
+    </View>
+  )
+}
+
+export default TransactionInfo

@@ -176,6 +176,14 @@ const ClassLearning = () => {
       <View style={styles.containerMenuDetail}>
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
+          <TouchableOpacity activeOpacity={0.6}>
+            <List.Item
+              title={'Pre Exam'}
+              style={styles.containerExam}
+              titleStyle={styles.textRegular}
+              right={() => <Text style={styles.textExam}>Mulai</Text>}
+            />
+          </TouchableOpacity>
           {state.topics.map((topic, index) => {
             return (
               <List.Accordion
@@ -187,7 +195,7 @@ const ClassLearning = () => {
                 {topic.materials.map((subtopic, index) => {
                   return  (
                     <>
-                      <TouchableOpacity activeOpacity={0.5}>
+                      <TouchableOpacity activeOpacity={0.6}>
                         <List.Item
                           key={index}
                           title={subtopic.subtitle}
@@ -215,6 +223,14 @@ const ClassLearning = () => {
               </List.Accordion>
             )
           })}
+          <TouchableOpacity activeOpacity={0.6}>
+            <List.Item
+              title={'Post Exam'}
+              titleStyle={styles.textRegular}
+              style={{ ...styles.containerExam, borderTopWidth : 0 }}
+              right={() => <Text style={styles.textExam}>Mulai</Text>}
+            />
+          </TouchableOpacity>
         </List.Section>
       </View>
     )
@@ -258,7 +274,7 @@ const ClassLearning = () => {
         />
       </View>
       <View style={styles.containerView}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerParentKelas}>
             <DescriptionClass/>
             <ConsultationClass/>
