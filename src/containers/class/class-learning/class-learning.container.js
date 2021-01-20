@@ -3,11 +3,12 @@ import Video from 'react-native-video'
 import { useState, useRef } from 'react'
 import { List } from 'react-native-paper'
 import { Text, View, ScrollView } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls'
 
 import { Images } from '../../../assets'
+import ClassLearningPDF from './class_learning-pdf.container'
 import { styles } from '../class-learning/class-learning.style'
 
 const ClassLearning = () => {
@@ -17,6 +18,8 @@ const ClassLearning = () => {
   const videoPlayer = useRef(null)
   const [duration, setDuration] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [viewPdf, setViewPdf] = useState(false)
+  const [sourcePdf, setSourcePdf] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [currentTime, setCurrentTime] = useState(0)
   const [screenType, setScreenType] = useState('content')
@@ -35,7 +38,9 @@ const ClassLearning = () => {
           { subtitle : 'Dasar Hijaiyah', video_duration : 10 },
           { subtitle: 'Dasar Makhraj', video_duration : 8 },
           { subtitle : 'Shifathul Huruf', video_duration : 12 }],
-        document : 'Dasar Hijaiyah'
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
       },
       {
         title: 'Harokat',
@@ -43,7 +48,9 @@ const ClassLearning = () => {
           { subtitle : 'Dasar Hijaiyah', video_duration : 4 },
           { subtitle: 'Dasar Makhraj', video_duration : 5 },
           { subtitle : 'Shifathul Huruf', video_duration : 2 }],
-        document : 'Dasar Hijaiyah'
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
       },
       {
         title: 'Tajwid',
@@ -51,7 +58,9 @@ const ClassLearning = () => {
           { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
           { subtitle: 'Dasar Makhraj', video_duration : 10 },
           { subtitle : 'Shifathul Huruf', video_duration : 3 }],
-        document : 'Dasar Hijaiyah'
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
       },
       {
         title: 'Mad',
@@ -163,12 +172,6 @@ const ClassLearning = () => {
             />
           </List.Accordion>
         </List.Section>
-        {/* <TouchableOpacity>
-          <View style={styles.containerConsul}>
-            <Images.IconConsultations.default/>
-            <Text style={styles.textConsul}> Konsultasi bacaan</Text>
-          </View>
-        </TouchableOpacity> */}
       </View>
     )
   }
@@ -220,6 +223,14 @@ const ClassLearning = () => {
                       title={topic.document}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
+                      onPress={() => {
+                        const obj = {
+                          path : topic.path,
+                          filename : topic.filename,
+                        }
+                        setViewPdf(!viewPdf)
+                        setSourcePdf(obj)
+                      }}
                       left={() => <Images.IconDocumentVideo.default style={styles.iconPlay}/>}
                       right={() => <Text style={styles.textDuration}>Document</Text>}
                     />
@@ -232,6 +243,7 @@ const ClassLearning = () => {
             <List.Item
               title={'Post Exam'}
               titleStyle={styles.textRegular}
+              onPress={()=> {navigation.navigate('ClassExam')}}
               style={{ ...styles.containerExam, borderTopWidth : 0 }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
@@ -243,50 +255,63 @@ const ClassLearning = () => {
 
   return (
     <>
-      <View style={styles.container}>
-        <TouchableOpacity  style={styles.buttonBack}>
-          <Images.ButtonBack.default/>
-        </TouchableOpacity>
-        <Video
-          onEnd={onEnd}
-          onLoad={onLoad}
-          onLoadStart={onLoadStart}
-          onProgress={onProgress}
-          paused={paused}
-          ref={videoPlayer}
-          resizeMode={'screenType'}
-          onFullScreen={isFullScreen}
-          source={{
-            uri:
-                  'http://belajariah.com/assets/BELAJARIAH%20-%20Solusi%20Tepat%20Belajar%20Membaca%20Al-Quran%20dengan%20Mudah,%20Kapan%20dan%20Dimana%20Saja%20!!.mp4',
+      {viewPdf ? (
+        <ClassLearningPDF
+          viewPdf={viewPdf}
+          source={sourcePdf}
+          setViewPdf={() => {
+            setSourcePdf({})
+            setViewPdf(!viewPdf)
           }}
-          repeat
-          style={styles.mediaPlayer}
-          volume={10}
         />
-        <MediaControls
-          duration={duration}
-          isLoading={isLoading}
-          mainColor='#333'
-          onFullScreen={onFullScreen}
-          onPaused={onPaused}
-          onReplay={onReplay}
-          onSeek={onSeek}
-          onSeeking={onSeeking}
-          playerState={playerState}
-          progress={currentTime}
-          toolbar={renderToolbar()}
-        />
-      </View>
-      <View style={styles.containerView}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.containerParentKelas}>
-            <DescriptionClass/>
-            <ConsultationClass/>
-            <ContentClass/>
+      ) : (
+        <>
+          <View style={styles.container}>
+            <TouchableOpacity  style={styles.buttonBack}>
+              <Images.ButtonBack.default/>
+            </TouchableOpacity>
+            <Video
+              onEnd={onEnd}
+              onLoad={onLoad}
+              onLoadStart={onLoadStart}
+              onProgress={onProgress}
+              paused={paused}
+              ref={videoPlayer}
+              resizeMode={'screenType'}
+              onFullScreen={isFullScreen}
+              source={{
+                uri:
+                  'http://belajariah.com/assets/BELAJARIAH%20-%20Solusi%20Tepat%20Belajar%20Membaca%20Al-Quran%20dengan%20Mudah,%20Kapan%20dan%20Dimana%20Saja%20!!.mp4',
+              }}
+              repeat
+              style={styles.mediaPlayer}
+              volume={10}
+            />
+            <MediaControls
+              duration={duration}
+              isLoading={isLoading}
+              mainColor='#333'
+              onFullScreen={onFullScreen}
+              onPaused={onPaused}
+              onReplay={onReplay}
+              onSeek={onSeek}
+              onSeeking={onSeeking}
+              playerState={playerState}
+              progress={currentTime}
+              toolbar={renderToolbar()}
+            />
           </View>
-        </ScrollView>
-      </View>
+          <View style={styles.containerView}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.containerParentKelas}>
+                <DescriptionClass/>
+                <ConsultationClass/>
+                <ContentClass/>
+              </View>
+            </ScrollView>
+          </View>
+        </>
+      )}
     </>
   )
 }

@@ -246,6 +246,24 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: FontType.regular,
   },
+  containerPDF : {
+    flex : 1,
+    backgroundColor : Color.transactionBgColor,
+  },
+  containerHeaderPDF : {
+    height : 40,
+    flexDirection : 'row',
+    justifyContent: 'space-between',
+  },
+  buttonBackPDF : {
+    width : 40,
+    height : 'auto',
+  },
+  buttonDownloadPDF : {
+    width : 40,
+    height : 'auto',
+    marginTop : 8,
+  },
   star : { marginRight:1 }
 })
 

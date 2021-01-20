@@ -17,6 +17,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textTitleWhite: {
+    flex : 1,
+    color: Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  textTimer: {
+    marginRight : 20,
     color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,

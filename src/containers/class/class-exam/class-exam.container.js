@@ -10,6 +10,8 @@ import { styles } from './class-exam.style'
 const ClassExam = () => {
   const mainScrollViewRef = useRef()
   const navigation = useNavigation()
+  const [ minutes, setMinutes ] = useState(4)
+  const [seconds, setSeconds ] =  useState(59)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
   const [questionSelected, setQuestionSelected] = useState({})
@@ -29,13 +31,9 @@ const ClassExam = () => {
   ]
 
   const handleSubmit = async (state) => {
-    state.forEach((item) => {
-      if (item.answer == 0) {
-        ToastAndroid.show('Jawaban masih ada yang kosong', ToastAndroid.SHORT)
-      } else {
-        ToastAndroid.show('Success', ToastAndroid.SHORT)
-      }
-    })
+    console.log(state)
+    ToastAndroid.show('Exam selesai', ToastAndroid.SHORT)
+    navigation.navigate('ClassLearning')
   }
 
   const onScrollPosition = () => {
@@ -50,6 +48,24 @@ const ClassExam = () => {
     setOptionSelected(index)
     setQuestionSelected(item)
   }
+
+  useEffect(()=>{
+    const intervalId = setInterval(() => {
+      if (seconds > 0) {
+        setSeconds(seconds - 1)
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          handleSubmit(answerSelected)
+          clearInterval(intervalId)
+        } else {
+          setMinutes(minutes - 1)
+          setSeconds(59)
+        }
+      }
+    }, 1000)
+    return () => clearInterval(intervalId)
+  }, [seconds, minutes])
 
   useEffect(() => {
     setAnswerSelected(state)
@@ -66,6 +82,7 @@ const ClassExam = () => {
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>Pre-Test</Text>
+          <Text style={styles.textTimer}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
         </View>
       </View>
     )

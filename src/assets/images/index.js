@@ -49,6 +49,13 @@ export default {
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
+  IconCancelCamera: require('./IconCancelCamera.svg'),
+  IconOpenGallery: require('./IconOpenGallery.svg'),
+  IconFlipCamera: require('./IconFlipCamera.svg'),
+  IconTakeCamera: require('./IconTakeCamera.svg'),
+  IconProfileDefault: require('./IconProfileDefault.svg'),
+
+
   //update profile
   Email: require('./profileEmailIcon.svg'),
   Phone: require('./profilePhoneIcon.svg'),
