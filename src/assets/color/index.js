@@ -13,15 +13,15 @@ const Color = {
   bgSearch: '#eeedf2',
 
   //new
-  red : 'red',
+  red: 'red',
   grey: 'grey',
   white: 'white',
   black: '#1A1A1A',
-  tosca : '#74ddc4',
+  tosca: '#74ddc4',
   softPink: '#FEF5FF',
   greySwipe: '#CBC9CA',
   greyInput: '#b2b2b2',
-  mediumPink : '#f9e9ff',
+  mediumPink: '#f9e9ff',
   purpleText: '#7a0090',
   purpleHint: '#C7BBD9',
   greyMedium: '#E6E6E6',
@@ -46,6 +46,11 @@ const Color = {
   textPending: '#f2c009',
   transactionBgColor: '#9956b3',
   transparentBg: 'rgba(113, 37, 144, 0.3)',
+
+  //alquran
+  dividerGrey: 'rgba(213, 213, 213, 0.8)',
+  searchGrey: '#e6e6e6',
+  textSurahName: '#9956b3',
 }
 
 export { Color }

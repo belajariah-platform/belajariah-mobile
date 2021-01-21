@@ -125,4 +125,8 @@ export default {
   IconInstructorProfileOngoing: require('./IconInstructorProfileOngoing.svg'),
   IconInstructorProfileOverdue: require('./IconInstructorProfileOverdue.svg'),
   IconInstructorProfileComplete: require('./IconInstructorProfileComplete.svg'),
+
+  //Update Al-Qur'an
+  AlQuranBG: require('./BgAlQuran.png'),
+  IconSurah: require('./IconSurah.svg'),
 }

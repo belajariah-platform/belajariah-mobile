@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   btnClose: {
     marginTop: 16,
-    marginLeft: 8,
+    marginLeft: 12,
   },
   btnDrawer: {
     width: 20,

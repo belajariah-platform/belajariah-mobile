@@ -3,6 +3,8 @@ const FontType = {
   semiBold: 'Avenir-LT-Std-65-Medium',
   bold: 'Avenir-Next-LT-Pro-Bold',
   berkshire: 'Berkshire-Swash-Regular',
+  arabRegular: 'Amiri-Regular',
+  arabBold: 'Amiri-Bold',
 }
 
 const FontWeight = {

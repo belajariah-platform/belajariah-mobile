@@ -134,7 +134,7 @@ const ClassAbout = () => {
                 <Text style={{ ...styles.textBoldCustom, top :4 }}>
                   {val.value.split('|')[0]}
                   <Text style={styles.textBoldRed}>
-                    {stringSplit == 'video' ? ' (Unimited)' :
+                    {stringSplit == 'video' ? ' (Unlimited)' :
                       stringSplit == 'consultation' || stringSplit == 'webinar' ? ' (Limited)' :''}
                   </Text>
                 </Text>

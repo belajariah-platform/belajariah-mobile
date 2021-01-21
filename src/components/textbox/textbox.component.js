@@ -35,8 +35,8 @@ const Textbox = (props) => {
 }
 
 Textbox.propTypes = {
-  form : PropTypes.object,
-  name : PropTypes.string
+  form: PropTypes.object,
+  name: PropTypes.string,
 }
 
 export default Textbox
