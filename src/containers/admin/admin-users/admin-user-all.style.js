@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
         fontSize: FontSize.smallMedium,
     },
     containerAccordion: {
-        width: 280,
-        marginLeft: '-6%',
+        width: '75%',
         paddingVertical: 0,
         paddingHorizontal: 9,
     },

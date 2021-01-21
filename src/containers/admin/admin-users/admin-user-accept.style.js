@@ -74,6 +74,11 @@ const styles = StyleSheet.create({
         fontFamily: FontType.regular,
         fontSize: FontSize.smallMedium,
     },
+    containerAccordion: {
+        width: '75%',
+        paddingVertical: 0,
+        paddingHorizontal: 9,
+    },
     TxtTimeTitle: {
         color: Color.black,
         fontSize: FontSize.smallest,

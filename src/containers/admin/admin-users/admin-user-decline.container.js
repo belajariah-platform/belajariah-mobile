@@ -85,7 +85,7 @@ const AdminUserDecline = () => {
           </View>
           <View style={styles.containerDescUser}>
             <List.Section>
-              <List.Accordion title="Deskripsi Voice" titleStyle={styles.textRegular}>
+              <List.Accordion title="Deskripsi Voice" titleStyle={styles.textRegular} style={styles.containerAccordion}>
                 <View> 
                   <Text>{classData.DescUser}</Text>
                 </View>
