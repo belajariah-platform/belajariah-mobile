@@ -17,10 +17,34 @@ const Transaction = () => {
   const [available, setAvailable] = useState(false)
 
   const state = [
-    { 'invoice_number': 'BLJ-RIAH001', 'status' : 'failed', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
-    { 'invoice_number': 'BLJ-RIAH002', 'status' : 'success', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date()  },
-    { 'invoice_number': 'BLJ-RIAH003', 'status' : 'waiting for payment', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
-    { 'invoice_number': 'BLJ-RIAH004', 'status' : 'success', 'class_title' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'created_date': new Date() },
+    {
+      invoice_number: 'BLJ-RIAH001',
+      status: 'failed',
+      class_title:
+        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+      created_date: new Date(),
+    },
+    {
+      invoice_number: 'BLJ-RIAH002',
+      status: 'success',
+      class_title:
+        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+      created_date: new Date(),
+    },
+    {
+      invoice_number: 'BLJ-RIAH003',
+      status: 'waiting for payment',
+      class_title:
+        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+      created_date: new Date(),
+    },
+    {
+      invoice_number: 'BLJ-RIAH004',
+      status: 'success',
+      class_title:
+        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+      created_date: new Date(),
+    },
   ]
 
   const NoTransaction = () => {
@@ -40,39 +64,40 @@ const Transaction = () => {
       <FlatList
         data={state}
         style={styles.containerScrollView}
-        showsVerticalScrollIndicator ={false}
-        keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => TransactionCard(item, index)}/>
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => TransactionCard(item, index)}
+      />
     )
   }
 
   const TransactionCard = (item, index) => {
     let ribbon, icon, status, color
     switch (item.status) {
-    case 'success':
-      status = 'Completed'
-      color = Color.textSuccess
-      icon = Images.IconComplete
-      ribbon = Images.RibbonComplete
-      break
-    case 'failed' :
-      status = 'Failed'
-      color = Color.textFailed
-      icon = Images.IconFailed
-      ribbon = Images.RibbonFailed
-      break
-    case 'waiting for payment' :
-      status = 'Waiting for Payment'
-      color = Color.textPending
-      icon = Images.IconPending
-      ribbon = Images.RibbonPending
-      break
-    default :
-      status = 'Waiting for Payment'
-      color = Color.textPending
-      icon = Images.IconPending
-      ribbon = Images.RibbonPending
-      break
+      case 'success':
+        status = 'Completed'
+        color = Color.textSuccess
+        icon = Images.IconComplete
+        ribbon = Images.RibbonComplete
+        break
+      case 'failed':
+        status = 'Failed'
+        color = Color.textFailed
+        icon = Images.IconFailed
+        ribbon = Images.RibbonFailed
+        break
+      case 'waiting for payment':
+        status = 'Waiting for Payment'
+        color = Color.textPending
+        icon = Images.IconPending
+        ribbon = Images.RibbonPending
+        break
+      default:
+        status = 'Waiting for Payment'
+        color = Color.textPending
+        icon = Images.IconPending
+        ribbon = Images.RibbonPending
+        break
     }
     return (
       <View key={index}>
@@ -83,15 +108,18 @@ const Transaction = () => {
           style={styles.bgTransactionTransparent}>
           <View style={styles.flexRow}>
             <icon.default style={styles.iconStatus} />
-            <Card.Title style={{ ...styles.textCardStatus, color:color }}>{status}</Card.Title>
+            <Card.Title style={{ ...styles.textCardStatus, color: color }}>
+              {status}
+            </Card.Title>
             <ribbon.default style={styles.ribbonComplete} />
           </View>
           <Text style={styles.textInvoice}>
-                No. Invoice: <Text style={styles.textBold}>{item.invoice_number}</Text>
+            No. Invoice:{' '}
+            <Text style={styles.textBold}>{item.invoice_number}</Text>
           </Text>
           <Text style={styles.textDesc}>{item.class_title}</Text>
           <Text style={styles.textDate}>
-                Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY')}
+            Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY')}
           </Text>
         </LinearGradient>
       </View>
@@ -116,8 +144,7 @@ const Transaction = () => {
       <ImageBackground
         source={Images.TransactionBGPNG}
         style={styles.imageBackground}
-        imageStyle={{ borderRadius: 30 }}
-      >
+        imageStyle={{ borderRadius: 30 }}>
         {available ? <NoTransaction /> : <TransactionList />}
       </ImageBackground>
     </View>

@@ -67,6 +67,8 @@
 		F5C4C019DF0C4F158D76B582 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B77DE391FE474D028FC83EA5 /* OpenSans-Regular.ttf */; };
 		F55BA5A8DD514345841DABE0 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A92B2FEFF4F4798AC3AFA77 /* OpenSans-SemiBold.ttf */; };
 		B37A3B89A60842E6BC2FBA6F /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96A73B51453943EE849B1002 /* OpenSans-SemiBoldItalic.ttf */; };
+		63D096EA49AA4723A90F8939 /* Avenir-Next-LT-Pro-Demi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F77D2BC1F0FC45849CB1DD4A /* Avenir-Next-LT-Pro-Demi.ttf */; };
+		FDD20345F96F45F1972A07EE /* Berkshire-Swash-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA772E7D280B44779F7B4997 /* Berkshire-Swash-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +155,8 @@
 		B77DE391FE474D028FC83EA5 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../src/assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		5A92B2FEFF4F4798AC3AFA77 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; name = "OpenSans-SemiBold.ttf"; path = "../src/assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		96A73B51453943EE849B1002 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; name = "OpenSans-SemiBoldItalic.ttf"; path = "../src/assets/fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F77D2BC1F0FC45849CB1DD4A /* Avenir-Next-LT-Pro-Demi.ttf */ = {isa = PBXFileReference; name = "Avenir-Next-LT-Pro-Demi.ttf"; path = "../src/assets/fonts/Avenir-Next-LT-Pro-Demi.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA772E7D280B44779F7B4997 /* Berkshire-Swash-Regular.ttf */ = {isa = PBXFileReference; name = "Berkshire-Swash-Regular.ttf"; path = "../src/assets/fonts/Berkshire-Swash-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +318,8 @@
 				B77DE391FE474D028FC83EA5 /* OpenSans-Regular.ttf */,
 				5A92B2FEFF4F4798AC3AFA77 /* OpenSans-SemiBold.ttf */,
 				96A73B51453943EE849B1002 /* OpenSans-SemiBoldItalic.ttf */,
+				F77D2BC1F0FC45849CB1DD4A /* Avenir-Next-LT-Pro-Demi.ttf */,
+				FA772E7D280B44779F7B4997 /* Berkshire-Swash-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -506,6 +512,8 @@
 				F5C4C019DF0C4F158D76B582 /* OpenSans-Regular.ttf in Resources */,
 				F55BA5A8DD514345841DABE0 /* OpenSans-SemiBold.ttf in Resources */,
 				B37A3B89A60842E6BC2FBA6F /* OpenSans-SemiBoldItalic.ttf in Resources */,
+				63D096EA49AA4723A90F8939 /* Avenir-Next-LT-Pro-Demi.ttf in Resources */,
+				FDD20345F96F45F1972A07EE /* Berkshire-Swash-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
