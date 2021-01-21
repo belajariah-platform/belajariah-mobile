@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="5.3292375mm"
+   height="5.3154311mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 532.91433 531.53372"
+   id="svg10"
+   sodipodi:docname="IconInstructorHomePurple.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata14"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview12"
+   showgrid="false"
+   inkscape:zoom="3.6681238"
+   inkscape:cx="5.2633917"
+   inkscape:cy="46.852299"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg10"
+   inkscape:document-rotation="0" />
+ <defs
+   id="defs4"><linearGradient
+   inkscape:collect="always"
+   id="linearGradient843"><stop
+     style="stop-color:#000000;stop-opacity:1;"
+     offset="0"
+     id="stop839" /><stop
+     style="stop-color:#000000;stop-opacity:0;"
+     offset="1"
+     id="stop841" /></linearGradient>
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:#B3B3B3;fill-rule:nonzero}
+   ]]>
+  </style>
+ <linearGradient
+   inkscape:collect="always"
+   xlink:href="#linearGradient843"
+   id="linearGradient845"
+   x1="4820"
+   y1="7951.5"
+   x2="5206"
+   y2="7951.5"
+   gradientUnits="userSpaceOnUse" /></defs>
+ <g
+   id="Layer_x0020_1"
+   style="fill:#6e248b;fill-opacity:1"
+   transform="matrix(1.3806071,0,0,1.3806071,-6654.5262,-10712.13)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="m 4841,7983 h 118 c 3,0 6,0 9,1 v 0 c 2,2 5,3 6,5 2,2 4,4 5,7 1,2 2,5 2,8 v 119 c 0,2 -1,5 -2,8 v 0 c -1,2 -3,5 -5,7 v 0 c -1,1 -4,3 -6,4 v 0 c -3,1 -6,2 -9,2 h -118 c -3,0 -6,-1 -8,-2 v 0 c -3,-1 -5,-2 -7,-4 v 0 c -2,-2 -4,-5 -5,-7 v 0 c -1,-3 -1,-6 -1,-8 v -119 c 0,-3 0,-5 1,-8 1,-3 3,-5 5,-7 2,-2 4,-3 7,-5 2,-1 5,-1 8,-1 z m 161,-134 84,-84 c 2,-2 4,-4 7,-5 1,0 2,-1 3,-1 v 0 h 5 c 5,0 11,2 15,6 l 84,84 3,3 h -1 c 1,1 2,2 2,3 v 0 c 1,3 2,6 2,9 0,2 -1,5 -2,8 -1,2 -2,5 -4,7 v 0 l -84,83 v 0 c -2,2 -5,4 -7,5 -3,1 -6,2 -8,2 h -5 v -1 c -1,0 -2,-1 -3,-1 v 0 c -3,-1 -5,-3 -7,-5 l -84,-83 -1,-2 v 0 c -2,-2 -3,-3 -4,-5 v 0 c -1,-3 -1,-6 -1,-8 0,-6 2,-11 6,-15 z m 97,-71 -83,84 c -1,0 -1,1 -1,1 v 0 c 0,0 0,0 0,1 0,0 0,0 0,0 v 0 1 h 1 l 83,84 c 0,0 1,0 1,0 v 0 h 1 v 0 c 0,0 0,0 1,0 v 0 c 0,0 0,0 0,0 l 84,-84 c 0,0 0,0 0,-1 v 0 c 1,0 1,0 1,0 0,-1 0,-1 -1,-1 0,0 0,-1 0,-1 v 0 l -84,-84 v 0 c 0,0 0,0 0,0 v 0 c -1,0 -1,0 -1,0 v 0 h -1 c 0,0 -1,0 -1,0 z m -57,205 h 118 c 3,0 6,0 8,2 v 0 c 1,0 2,1 3,1 h 1 l 3,3 c 2,2 4,4 5,7 v 0 c 1,3 1,5 1,8 v 119 c 0,2 0,5 -1,8 v 0 c -1,2 -3,5 -5,7 l -1,1 h -1 c -1,1 -3,2 -5,3 v 0 c -2,1 -5,2 -8,2 h -118 c -3,0 -6,-1 -9,-2 v 0 c -2,-1 -5,-3 -6,-4 v 0 c -2,-2 -4,-5 -5,-7 v 0 c -1,-3 -2,-6 -2,-8 v -119 c 0,-3 1,-6 2,-8 v 0 c 1,-3 3,-5 5,-7 1,-2 4,-3 6,-5 3,-1 6,-1 9,-1 z m 118,19 h -118 c -1,0 -1,0 -1,0 v 0 c -1,0 -1,0 -1,1 0,0 0,0 0,0 -1,1 -1,1 -1,1 v 119 c 0,0 0,0 1,0 v 0 1 0 c 0,0 0,0 1,1 v 0 c 0,0 0,0 1,0 h 118 c 0,0 1,0 1,0 v 0 -1 0 c 1,0 1,0 1,-1 v 0 c 0,0 0,0 0,0 v -119 c 0,0 0,0 0,-1 v 0 c 0,0 0,0 -1,0 v -1 0 c 0,0 -1,0 -1,0 z m -319,-219 h 118 c 3,0 6,1 9,2 v 0 c 2,1 5,2 6,4 2,2 4,5 5,7 1,3 2,5 2,8 v 119 c 0,3 -1,5 -2,8 v 0 c -1,2 -3,5 -5,7 v 0 c -1,2 -4,3 -6,4 v 0 c -3,1 -6,2 -9,2 h -118 c -3,0 -6,-1 -8,-2 v 0 c -3,-1 -5,-2 -7,-4 -2,-2 -4,-5 -5,-7 v 0 c -1,-3 -1,-5 -1,-8 v -119 c 0,-3 0,-5 1,-8 1,-2 3,-5 5,-7 2,-2 4,-3 7,-4 v 0 c 2,-1 5,-2 8,-2 z m 118,19 h -118 c 0,0 -1,0 -1,0 v 0 c 0,0 0,1 0,1 -1,0 -1,0 -1,1 0,0 0,0 0,0 v 119 c 0,0 0,0 0,1 v 0 c 0,0 0,0 1,0 0,0 0,1 0,1 v 0 c 0,0 1,0 1,0 h 118 c 1,0 1,0 1,0 0,0 1,-1 1,-1 0,0 0,0 0,0 0,-1 1,-1 1,-1 v -119 c 0,0 -1,0 -1,0 v 0 c 0,-1 0,-1 0,-1 0,0 0,-1 -1,-1 v 0 c 0,0 0,0 -1,0 z m 0,200 h -118 c 0,0 -1,0 -1,0 v 0 c 0,0 0,0 0,1 -1,0 -1,0 -1,0 0,1 0,1 0,1 v 119 c 0,0 0,0 0,0 v 0 1 h 1 c 0,0 0,0 0,1 v 0 c 0,0 1,0 1,0 h 118 c 1,0 1,0 1,0 0,-1 1,-1 1,-1 v 0 -1 0 c 0,0 1,0 1,0 v -119 c 0,0 -1,0 -1,-1 v 0 c 0,0 0,0 0,0 0,-1 0,-1 -1,-1 v 0 c 0,0 0,0 -1,0 z"
+   id="path7"
+   style="fill:#6e248b;fill-opacity:1" />
+ </g>
+</svg>

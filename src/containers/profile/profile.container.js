@@ -49,6 +49,13 @@ const Profile = () => {
       />
 
       <View style={styles.containerDrawerButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Images.BtnClose.default
+            width={16}
+            height={16}
+            style={styles.btnClose}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnDrawer}
           onPressIn={() => {

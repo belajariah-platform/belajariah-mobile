@@ -91,7 +91,10 @@ const ProfileEdit = () => {
           flashMode={RNCamera.Constants.FlashMode.off}
         />
         <View style={styles.containerToolCamera}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            setOpenCamera(!openCamera)
+            setPictureTaken(!pictureTaken)
+          }}>
             <Text style={styles.textCancel}>Batal</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -141,7 +144,10 @@ const ProfileEdit = () => {
           />
         </View>
         <View style={styles.containerToolCamera}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            setOpenCamera(!openCamera)
+            setPictureTaken(!pictureTaken)
+          }}>
             <Text style={styles.textCancel}>Batal</Text>
           </TouchableOpacity>
           <TouchableOpacity

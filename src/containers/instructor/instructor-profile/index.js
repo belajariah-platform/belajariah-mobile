@@ -1,3 +1,4 @@
 import InstructorProfile from './instructor-profile.container'
+import InstructorProfileEdit from './instructor-edit-profile.container'
 
-export default InstructorProfile
+export { InstructorProfile, InstructorProfileEdit }

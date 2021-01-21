@@ -5,10 +5,21 @@ import { Home, HomeSearch } from './home'
 import { Profile, ProfileEdit } from './profile'
 import { Alquran, AlquranDetail } from './alquran'
 import { Promotion, PromotionDetail } from './promotion'
-import { Transaction, TransactionMethod, TransactionInfo, TransactionConfirm } from './transaction'
+import {
+  Transaction,
+  TransactionMethod,
+  TransactionInfo,
+  TransactionConfirm,
+} from './transaction'
 import { AdminUser, AdminDashboard, AdminInstructor } from './admin'
 import { Login, Register, Introduction, ChangePassword } from './user'
-import { InstructorJob, InstructorTask, InstructorProfile, InstructorDashboard } from './instructor'
+import {
+  InstructorJob,
+  InstructorTask,
+  InstructorProfile,
+  InstructorDashboard,
+  InstructorProfileEdit,
+} from './instructor'
 
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 
@@ -42,4 +53,5 @@ export {
   TransactionMethod,
   TransactionConfirm,
   InstructorDashboard,
+  InstructorProfileEdit,
 }
