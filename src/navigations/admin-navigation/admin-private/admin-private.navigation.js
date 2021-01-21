@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import {
   AdminUser,
   AdminDashboard,
+  AdminInstructor,
 } from '../../../containers'
 
 const InstructorPrivateNavigation = () => {
@@ -15,6 +16,7 @@ const InstructorPrivateNavigation = () => {
       }}>
       <Stack.Screen name='InstructorDashboard' component={AdminDashboard} />
       <Stack.Screen name='InstructorMain' component={AdminUser} />
+      <Stack.Screen name='AdminInstructor' component={AdminInstructor} />
     </Stack.Navigator>
   )
 }

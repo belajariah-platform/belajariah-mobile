@@ -20,7 +20,7 @@ const Textbox = (props) => {
       }
       onBlur={props.form && props.name && props.form.handleBlur(props.name)}
       {...props}
-      style={styles.input}
+      style={[styles.input, props.customStyle]}
       size='medium'
       status={
         props.form &&
@@ -36,7 +36,8 @@ const Textbox = (props) => {
 
 Textbox.propTypes = {
   form : PropTypes.object,
-  name : PropTypes.string
+  name : PropTypes.string,
+  customStyle : PropTypes.object,
 }
 
 export default Textbox

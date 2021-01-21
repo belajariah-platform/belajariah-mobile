@@ -14,7 +14,7 @@ const ButtonGradient = (props) =>  {
       activeOpacity={0.8}>
       <LinearGradient
         style={[styles.button, props.styles]}
-        colors={['#8234A4', '#662980', '#8234A4']}
+        colors={props.colors || ['#8234A4', '#662980', '#8234A4']}
       >
         <View style={styles.viewButton}>
           {props.icon}
@@ -26,6 +26,7 @@ const ButtonGradient = (props) =>  {
 }
 
 ButtonGradient.propTypes = {
+  colors: PropTypes.array,
   icon : PropTypes.object,
   title : PropTypes.string,
   styles : PropTypes.object,
