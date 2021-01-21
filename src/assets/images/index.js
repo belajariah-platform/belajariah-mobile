@@ -100,6 +100,17 @@ export default {
   ImageUstadzMaulana: require('./ImageUstadzMaulana.png'),
   DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
 
+  //Update Admin
+  AvatarUser: require('./AvatarUser.png'),
+  GrafisVoice: require('./GrafisVoice.svg'),
+  AvatarUser2: require('./AvatarUser2.png'),
+  AvatarUstadz: require('./AvatarUstadz.png'),
+  AdminBackground: require('./AdminBackground.png'),
+  IconRejectStatus: require('./IconRejectStatus.svg'),
+  IconAcceptStatus: require('./IconAcceptStatus.svg'),
+  IconDownloadVoice: require('./IconDownloadVoice.svg'),
+  WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
+
   //Update instructor-navigation
   IconSend: require('./IconSend.svg'),
   AvatarUser1: require('./Avatar1.png'),
