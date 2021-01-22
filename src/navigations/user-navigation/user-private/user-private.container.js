@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import {
   Alquran,
+  ClassExam,
   HomeSearch,
   ClassDetail,
   ProfileEdit,
@@ -26,6 +27,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='UserMain' component={UserMain} />
       <Stack.Screen name='Alquran' component={Alquran} />
       <Stack.Screen name='HomeSearch' component={HomeSearch} />
+      <Stack.Screen name='ClassExam' component={ClassExam} />
       <Stack.Screen name='ClassDetail' component={ClassDetail} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />

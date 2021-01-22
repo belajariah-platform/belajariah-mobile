@@ -12,6 +12,7 @@ const ClassInstructor = () => {
     profile: 'Hafidz Al-Qur\'an dan Guru Tahsin & Tahfidz Ponpes Al-Qur\'an Al-Amien Perenduan, Rumah Tahfidz Palembang, SIT Al-Azhar Cairo Palembang.',
     desc:
       'Seorang Hafidz Al-Qur\'an 30 Juz sejak Usia 17 Tahun yang berpengalaman menjadi guru Tahfidz dan Tahsin selama 9 tahun di Pondok pesantren Tahfidz Al-Qur\'an Al-Amien Prenduan, Rumah Tahfidz Palembang Sekolah IT AL-Azhar Cairo Palembang|Sangat mengerti bagaimana cara mengajarkan membaca Al-Quean dari dasar maupun lanjutan kepada anak-anak, remaja, dewasa, bahkan tua lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet',
+    image: Images.ImageProfileDefault,
   }
 
   const handleSplitString = (value) => {
@@ -31,7 +32,7 @@ const ClassInstructor = () => {
         <View style={styles.higherCard}>
           <Text style={styles.textTitle}>Tentang Instruktur</Text>
           <View style={styles.flexRow}>
-            <Avatar.Image source={Images.ImageUstadzMaulana} style={styles.avatar} />
+            <Avatar.Image source={Ustadz.image} style={styles.avatar} />
             <View style={styles.flexColumn}>
               <Text style={styles.textName}>{Ustadz.name}</Text>
               <Text style={styles.textProfile}>{Ustadz.profile}</Text>

@@ -1,114 +1,107 @@
 import { StyleSheet } from 'react-native'
-
-import { Resp } from '../../utils'
 import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
-  //Profile Edit
-  containerButtonBack: {
-    top: 20,
-    left: 0,
-  },
-  containerView: {
+  scrollView: {
     flex: 1,
-    backgroundColor: Color.softPink,
   },
-  containerViewBg: {
-    flex: 1,
-    zIndex: 1,
-    top: '-8%',
+  background: {
+    marginTop: -192,
+    marginLeft: 0,
   },
-  containerAvatar: {
-    zIndex: 2,
-    top: '13%',
-    width: '95%',
-    alignItems: 'center',
+  btnClose: {
+    marginTop: 16,
+    marginLeft: 8,
+  },
+  btnDrawer: {
+    width: 20,
+    height: 30,
+    marginTop: 8,
+    marginRight: 12,
+  },
+  containerDrawerButton: {
+    position: 'absolute',
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    justifyContent: 'space-between',
+    width: '100%',
   },
-  containerTitleAvatar: {
-    marginTop: 10,
-    marginLeft: 20,
-    marginBottom: 5,
-    color: Color.white,
-    position: 'relative',
-    fontFamily: FontType.regular,
-    fontSize: FontSize.extraLarge,
+  containerProfileHeader: {
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: 172,
+    alignItems: 'center',
   },
-  containerTouch: {
-    borderRadius: 100,
+  containerEmailPhone: {
+    flexDirection: 'row',
+    marginTop: 2,
   },
-  Avatar: {
+  containerCard: {
+    borderRadius: 24,
+    borderWidth: 0,
+    marginTop: -172,
+    marginBottom: 20,
+  },
+  avatarBorder: {
+    zIndex: 1,
+    width: 110,
+    height: 110,
+    marginTop: 56,
+    alignSelf: 'center',
+    position: 'absolute',
+    borderRadius: 100 / 2,
+  },
+  avatar: {
+    top: 10,
+    zIndex: 1,
     width: 90,
-    zIndex: 2,
     height: 90,
-    borderColor: '#fff',
-    position: 'relative',
+    alignSelf: 'center',
+    position: 'absolute',
+    borderRadius: 100 / 2,
   },
-  image: {
-    width: Resp.HeaderProfileWP,
-    height: Resp.HeaderProfileHP,
+  iconEmail: {
+    marginRight: 6,
+    marginTop: -2,
   },
-  containerViewTop: {
-    top: '-8.5%',
-    borderRadius: 35,
-    paddingVertical: 20,
-    position: 'relative',
-    marginHorizontal: 30,
-    paddingHorizontal: 30,
-    backgroundColor: '#fff',
+  iconPhone: {
+    marginTop: -4,
+    marginRight: 4,
   },
-  containerViewBottom: {
-    top: '-5.5%',
-    borderRadius: 35,
-    paddingVertical: 20,
-    position: 'relative',
-    marginHorizontal: 30,
-    paddingHorizontal: 30,
-    backgroundColor: '#fff',
+  iconProfile: {
+    alignSelf: 'center',
+    marginTop: -48,
   },
-  containerTextJudul: {
-    marginBottom: 28,
-    color: Color.black,
+  headerName: {
+    marginTop: 2,
+    marginBottom : 3,
+    color: Color.white,
     fontSize: FontSize.large,
     fontFamily: FontType.bold,
   },
-  containerText: {
-    marginTop: -8,
-    marginBottom: 5,
-    fontSize: FontSize.small,
-    color: Color.greyHeadInput,
+  headerEmail: {
+    color: Color.white,
+    fontSize: FontSize.medium,
     fontFamily: FontType.regular,
   },
-  datePickerInput: {
-    height: 40,
-    marginTop: 3,
-    width: '100%',
-    borderWidth: 1,
-    borderRadius: 20,
-    marginBottom: 21,
-    paddingHorizontal: 8,
-    borderColor: '#b3b3b3',
-    backgroundColor: Color.white,
+  headerPhone: {
+    color: Color.white,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
   },
-  containerRadio: {
-    marginBottom: 16,
-    flexDirection: 'row',
+  subHeader: {
+    marginTop: -4,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.small,
+    color: Color.purpleText,
   },
-  containerInputRadio: {
-    marginLeft: 1,
-    marginRight: 15,
+  dataProfile: {
+    marginTop: 4,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.small,
+    color: Color.purpleHint,
   },
-  datePickerControl: {
-    borderWidth: 0,
-    backgroundColor: Color.transparent,
-  },
-  fixToText: {
-    marginTop: 0,
-    alignItems: 'flex-end',
-  },
-  containerButton: {
-    width: 100,
+  divider: {
+    marginVertical: 8,
   },
 })
 

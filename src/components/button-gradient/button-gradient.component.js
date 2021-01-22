@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import { styles } from './button-gradient.style'
-import { colors } from 'react-native-elements'
 
 const ButtonGradient = (props) =>  {
   return (

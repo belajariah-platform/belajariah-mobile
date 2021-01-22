@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.transparentBg,
   },
   iconFilter: {
-    top: '25%',
-    marginRight: '2%',
+    top: '45%',
+    marginRight: '3%',
   },
   iconStatus: {
     marginRight: 8,
