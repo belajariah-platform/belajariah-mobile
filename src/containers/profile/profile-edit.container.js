@@ -71,7 +71,14 @@ const ProfileEdit = () => {
         <ScrollView>
           <View style={styles.containerAvatar}>
             <TouchableOpacity style={styles.containerTouch}>
-              <Avatar source={Images.AvatarProfile} style={styles.Avatar} />
+              <ImageBackground
+                source={Images.AvatarBorder}
+                style={styles.Avatar}>
+                <Avatar
+                  source={Images.ImageProfileDefault}
+                  style={styles.Avatar}
+                />
+              </ImageBackground>
             </TouchableOpacity>
             <Text style={styles.containerTitleAvatar}>
               {filterText(strName)}
