@@ -11,7 +11,6 @@ const GetAllQuran = async () =>  {
 }
 
 const GetDetailQuran = async ({ id, count })  => {
-  console.log('hello', id, count)
   try {
     const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/v1/ayatweb/${id}/0/0/${count}`)
     return response

@@ -148,5 +148,9 @@ export default {
   //Update Al-Qur'an
   AlQuranBG: require('./BgAlQuran.png'),
   IconSurah: require('./IconSurah.svg'),
+
+  //Document PDF
+  BGOpenPDF : require('./BgDocumentLoad.png'),
+  IconDownloadPDF : require('./IconDownloadPdf.svg'),
   AlquranDetailBG: require('./BgAlQuranDetail.png'),
 }

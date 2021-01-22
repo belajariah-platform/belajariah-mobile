@@ -131,13 +131,13 @@ const Transaction = () => {
       <View style={styles.containerHeader}>
         <Text style={styles.titleHeader}>Transaksi</Text>
         <TouchableOpacity
+          style={styles.containerFilter}
           onPress={() => {
             setAvailable(!available)
           }}>
           <Images.Filter.default
             width={20}
             height={20}
-            style={styles.iconFilter}
           />
         </TouchableOpacity>
       </View>

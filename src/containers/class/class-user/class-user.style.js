@@ -7,19 +7,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.transactionBgColor,
   },
   containerHeader : {
+    paddingTop : 15,
+    height : 'auto',
     flexDirection: 'row',
+    alignItems : 'center',
+    paddingHorizontal : 20,
     justifyContent: 'space-between',
   },
   containerTextHeader : {
-    marginTop: '5%',
-    marginLeft: '5%',
     color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
-  },
-  containerButtonFilter : {
-    top: '25%',
-    marginRight: '2%',
   },
   containerTouchFilter : {
     width: 100,
@@ -205,6 +203,10 @@ const styles = StyleSheet.create({
     width: 23,
     height: 23,
     marginRight:3,
+  },
+  containerFilter : {
+    height : 'auto',
+    alignItems : 'flex-end',
   },
   containerTextArea : { marginTop: 20 },
   iconTop : { top:-4 }

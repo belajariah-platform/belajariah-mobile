@@ -139,7 +139,7 @@ const Home = (props) => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.navigateSearch}
-        onPress={() => props.navigation.navigate('HomeSearch')}>
+        onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
         <Searchbox
           disabled
           style={styles.containerSearch}
@@ -199,14 +199,14 @@ const Home = (props) => {
                       styles.textCategories,
                       category.id === categorySelected
                         ? {
-                            color: Color.white,
-                            borderColor: Color.transparent,
-                            backgroundColor: Color.purpleButton,
-                          }
+                          color: Color.white,
+                          borderColor: Color.transparent,
+                          backgroundColor: Color.purpleButton,
+                        }
                         : {
-                            color: Color.greyHeadInput,
-                            backgroundColor: Color.bgColorWhite,
-                          },
+                          color: Color.greyHeadInput,
+                          backgroundColor: Color.bgColorWhite,
+                        },
                     ]}>
                     {category.name}
                   </Text>
@@ -227,8 +227,8 @@ const Home = (props) => {
         num - index == 0
           ? rating.push(<Images.Star.default />)
           : num - index < 0
-          ? rating.push(<Images.StarHalf.default />)
-          : rating.push(<Images.Star.default />)
+            ? rating.push(<Images.StarHalf.default />)
+            : rating.push(<Images.Star.default />)
       }
       return (
         <View style={{ flexDirection: 'row' }}>
@@ -276,13 +276,13 @@ const Home = (props) => {
                                 styles.textPriceOptions,
                                 option.id === optionSelected
                                   ? {
-                                      backgroundColor: Color.purpleButton,
-                                      color: Color.white,
-                                    }
+                                    backgroundColor: Color.purpleButton,
+                                    color: Color.white,
+                                  }
                                   : {
-                                      backgroundColor: Color.greyHintExt,
-                                      color: Color.black,
-                                    },
+                                    backgroundColor: Color.greyHintExt,
+                                    color: Color.black,
+                                  },
                               ]}>
                               {option.name}
                             </Text>

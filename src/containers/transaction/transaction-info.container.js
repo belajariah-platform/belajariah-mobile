@@ -2,7 +2,8 @@ import React from 'react'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
-import { View, ScrollView, TouchableOpacity } from 'react-native'
+import Clipboard from '@react-native-community/clipboard'
+import { View, ScrollView, TouchableOpacity, ToastAndroid } from 'react-native'
 
 import { Images } from '../../assets'
 import { FormatRupiah } from '../../utils'
@@ -13,11 +14,18 @@ const TransactionInfo = () => {
   const navigation = useNavigation()
 
   const classData = {
+    account : '000-1234567',
     quote: 'Dicek dalam 24 jam setelah bukti pembayaran talh diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
     noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
     noteTwo: 'Silahkan upload bukti transfer sebelum 1x-0x-2xxx',
     noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
     price: 199000,
+  }
+
+
+  const copyToClipboard = async (account) => {
+    await Clipboard.setString(account)
+    await ToastAndroid.show('Nomor rekening disalin', ToastAndroid.SHORT)
   }
 
   const Header = () => {
@@ -43,15 +51,13 @@ const TransactionInfo = () => {
           </View>
           <View style={styles.viewDetailBank}>
             <View>
-              <Text style={styles.textSmall}>No. Rekening : 000-1234567</Text>
+              <Text style={styles.textSmall}>No. Rekening : {classData.account}</Text>
               <Text style={styles.textSmall}>Cabang : Palembang</Text>
               <Text style={styles.textSmall}>Nama Rekening : Belajariah</Text>
               <Text style={styles.textSmall}>Indonesia</Text>
             </View>
             <View>
-              <TouchableOpacity
-              // onPress={() => copyToClipboard()}
-              >
+              <TouchableOpacity onPress={() => copyToClipboard(classData.account)}>
                 <Text style={styles.TxtButtonSalin}>SALIN</Text>
               </TouchableOpacity>
             </View>

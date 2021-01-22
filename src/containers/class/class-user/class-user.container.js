@@ -104,12 +104,12 @@ const ClassUser = (props) => {
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
-          <TouchableOpacity onPress={() => setAvailable(!available)}>
+          <TouchableOpacity
+            style={styles.containerFilter}
+            onPress={() => setAvailable(!available)}>
             <Images.Filter.default
-              width={40}
-              height={40}
-              style={styles.containerButtonFilter}
-            />
+              width={20}
+              height={20} />
           </TouchableOpacity>
         </View>
         <ImageBackground
