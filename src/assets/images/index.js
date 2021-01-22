@@ -113,9 +113,7 @@ export default {
 
   //Update instructor-navigation
   IconSend: require('./IconSend.svg'),
-  AvatarUser1: require('./Avatar1.png'),
-  AvatarUser2: require('./Avatar2.png'),
-  AvatarUser3: require('./Avatar3.png'),
+  AvatarUser3: require('./AvatarUser3.png'),
   IconCancel: require('./IconCancel.svg'),
   IconConfirm: require('./IconConfirm.svg'),
   ButtonBackBlack: require('./ButtonBackBlack.svg'),
@@ -136,4 +134,8 @@ export default {
   IconInstructorProfileOngoing: require('./IconInstructorProfileOngoing.svg'),
   IconInstructorProfileOverdue: require('./IconInstructorProfileOverdue.svg'),
   IconInstructorProfileComplete: require('./IconInstructorProfileComplete.svg'),
+
+  //Update Al-Qur'an
+  AlQuranBG: require('./BgAlQuran.png'),
+  IconSurah: require('./IconSurah.svg'),
 }

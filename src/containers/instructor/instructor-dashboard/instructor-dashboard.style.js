@@ -10,28 +10,29 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   containerFooter: {
-    flex: 1,
     bottom: 0,
+    height: 400,
     paddingTop: 12,
-    paddingBottom: 72,
+    paddingBottom: 36,
     position: 'absolute',
     paddingHorizontal: 12,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: Color.softPink,
   },
-  containerScrollView: {
-    flex: 1,
+  containerRowView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   containerCard: {
     width: 164,
     padding: 0,
     height: 220,
     borderRadius: 20,
+    marginHorizontal: 12,
   },
-  contentScrollView: {
-    flexGrow: 1,
-    justifyContent: 'center',
+  contentSwiper: {
+    marginHorizontal: -12,
   },
   cardBackground: {
     width: 164,
@@ -77,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
     textAlignVertical: 'center',
     fontFamily: FontType.regular,
+  },
+  activeDot: {
+    backgroundColor: Color.purpleButton,
+    width: 20,
   },
 })
 

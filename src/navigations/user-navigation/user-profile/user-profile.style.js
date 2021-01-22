@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   drawerBackground: {
     flex: 1,
     marginTop: -6,
-    marginRight: -4,
+    marginRight: -8,
   },
   btnClose: {
     marginTop: 6,
