@@ -25,6 +25,7 @@ import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
 
 import { styles } from './home.style'
+import images from '../../assets/images'
 
 const Home = (props) => {
   const { isLogin } = useSelector((state) => state.UserReducer)
@@ -198,14 +199,14 @@ const Home = (props) => {
                       styles.textCategories,
                       category.id === categorySelected
                         ? {
-                          color: Color.white,
-                          borderColor: Color.transparent,
-                          backgroundColor: Color.purpleButton,
-                        }
+                            color: Color.white,
+                            borderColor: Color.transparent,
+                            backgroundColor: Color.purpleButton,
+                          }
                         : {
-                          color: Color.greyHeadInput,
-                          backgroundColor: Color.bgColorWhite,
-                        },
+                            color: Color.greyHeadInput,
+                            backgroundColor: Color.bgColorWhite,
+                          },
                     ]}>
                     {category.name}
                   </Text>
@@ -226,8 +227,8 @@ const Home = (props) => {
         num - index == 0
           ? rating.push(<Images.Star.default />)
           : num - index < 0
-            ? rating.push(<Images.StarHalf.default />)
-            : rating.push(<Images.Star.default />)
+          ? rating.push(<Images.StarHalf.default />)
+          : rating.push(<Images.Star.default />)
       }
       return (
         <View style={{ flexDirection: 'row' }}>
@@ -275,13 +276,13 @@ const Home = (props) => {
                                 styles.textPriceOptions,
                                 option.id === optionSelected
                                   ? {
-                                    backgroundColor: Color.purpleButton,
-                                    color: Color.white,
-                                  }
+                                      backgroundColor: Color.purpleButton,
+                                      color: Color.white,
+                                    }
                                   : {
-                                    backgroundColor: Color.greyHintExt,
-                                    color: Color.black,
-                                  },
+                                      backgroundColor: Color.greyHintExt,
+                                      color: Color.black,
+                                    },
                               ]}>
                               {option.name}
                             </Text>
@@ -359,11 +360,7 @@ const Home = (props) => {
         <View style={styles.headerFlex}>
           <View style={styles.headerContainer}>
             <View style={styles.headerFlex}>
-              <Avatar
-                rounded
-                activeOpacity={0.8}
-                containerStyle={{ ...styles.headerAvatar, marginLeft: 15 }}
-              />
+              <Images.LogoBelajariahHome.default height={40} width={40} />
             </View>
             <View>
               <TouchableOpacity
@@ -372,7 +369,14 @@ const Home = (props) => {
                 onPress={() =>
                   props.navigation.navigate(isLogin ? 'Profile' : 'Login')
                 }>
-                {!isLogin && <Images.LoginDirect.default />}
+                {isLogin ? (
+                  <Avatar
+                    source={images.ImageProfileDefault}
+                    style={styles.imageProfile}
+                  />
+                ) : (
+                  <Images.LoginDirect.default />
+                )}
               </TouchableOpacity>
             </View>
           </View>

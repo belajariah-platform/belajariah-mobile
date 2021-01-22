@@ -15,6 +15,7 @@ import { Card, Avatar } from 'react-native-elements'
 import { Images } from '../../../assets'
 import { styles } from './instructor-profile.style'
 import { useNavigation } from '@react-navigation/native'
+import { ImageBackground } from 'react-native'
 
 const InstructorProfile = () => {
   const navigation = useNavigation()
@@ -48,8 +49,8 @@ const InstructorProfile = () => {
       num - index == 0
         ? rating.push(<Images.Star.default />)
         : num - index < 0
-        ? rating.push(<Images.StarHalf.default />)
-        : rating.push(<Images.Star.default />)
+          ? rating.push(<Images.StarHalf.default />)
+          : rating.push(<Images.Star.default />)
     }
     return (
       <View style={styles.flexRating}>
@@ -101,13 +102,14 @@ const InstructorProfile = () => {
         </TouchableOpacity>
       </View>
 
-      <Avatar
-        size='large'
-        title='B'
-        onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
-        activeOpacity={0.7}
-        containerStyle={styles.avatar}
-      />
+      <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
+        <Avatar
+          source={Images.ImageProfileDefault}
+          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
+          activeOpacity={0.7}
+          containerStyle={styles.avatar}
+        />
+      </ImageBackground>
 
       <View style={styles.containerProfileHeader}>
         <Text style={styles.headerName}>{userData.name}</Text>

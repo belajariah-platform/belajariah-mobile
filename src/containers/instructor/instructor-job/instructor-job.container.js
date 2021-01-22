@@ -21,7 +21,7 @@ const InstructorJob = () => {
       userQuestions: [
         {
           userName: 'Rico',
-          avatar: Images.AvatarUser,
+          avatar: Images.ImageProfileDefault,
           date: '16/01/2021',
           time: '16:23',
           sound: 'sound.wav',
@@ -30,7 +30,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Rika',
-          avatar: Images.AvatarUser2,
+          avatar: Images.ImageProfileDefault,
           date: '16/01/2021',
           time: '14:59',
           sound: 'sound.wav',
@@ -39,7 +39,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Yudha',
-          avatar: Images.AvatarUser3,
+          avatar: Images.ImageProfileDefault,
           date: '13/01/2021',
           time: '17:59',
           sound: 'sound.wav',
@@ -48,7 +48,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Yudhi',
-          avatar: Images.AvatarUser3,
+          avatar: Images.ImageProfileDefault,
           date: '10/01/2021',
           time: '17:59',
           sound: 'sound.wav',
@@ -57,7 +57,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Yudhi',
-          avatar: Images.AvatarUser3,
+          avatar: Images.ImageProfileDefault,
           date: '10/01/2020',
           time: '17:59',
           sound: 'sound.wav',
@@ -71,7 +71,7 @@ const InstructorJob = () => {
       userQuestions: [
         {
           userName: 'Ada',
-          avatar: Images.AvatarUser3,
+          avatar: Images.ImageProfileDefault,
           date: '16/01/2021',
           time: '04:59',
           sound: 'sound.wav',
@@ -80,7 +80,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Adi',
-          avatar: Images.AvatarUser3,
+          avatar: Images.ImageProfileDefault,
           date: '06/01/2021',
           time: '17:59',
           sound: 'sound.wav',
@@ -89,7 +89,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Aduduh',
-          avatar: Images.AvatarUser,
+          avatar: Images.ImageProfileDefault,
           date: '01/01/2020',
           time: '17:59',
           sound: 'sound.wav',
@@ -98,7 +98,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Mantab',
-          avatar: Images.AvatarUser2,
+          avatar: Images.ImageProfileDefault,
           date: '06/01/2010',
           time: '17:59',
           sound: 'sound.wav',

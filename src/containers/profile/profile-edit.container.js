@@ -7,7 +7,6 @@ import DocumentPicker from 'react-native-document-picker'
 import {
   Icon,
   Radio,
-  Avatar,
   Datepicker,
   RadioGroup,
 } from '@ui-kitten/components'
@@ -24,7 +23,8 @@ import {
 import { Images } from '../../assets'
 import { Buttons, TextBox, ModalInfo } from '../../components'
 
-import { styles } from './profile.style'
+import { styles } from './profile-edit.style'
+import { Avatar } from 'react-native-elements'
 
 const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
@@ -275,15 +275,13 @@ const ProfileEdit = () => {
             : (
               <ScrollView>
                 <View style={styles.containerAvatar}>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>  setModalVisible(true)}
-                    style={styles.containerTouch}
-                  >
+                  <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
                     <Avatar
-                      source={Images.AvatarProfile}
-                      style={styles.Avatar}/>
-                  </TouchableOpacity>
+                      activeOpacity={0.7}
+                      source={Images.ImageProfileDefault}
+                      onPress={() =>  setModalVisible(true)}
+                      style={styles.avatar}/>
+                  </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>
                     {filterText(strName)}
                   </Text>

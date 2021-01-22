@@ -29,6 +29,7 @@ export default {
   BannerTahsin: require('./CardTahsin.png'),
   LoginDirect: require('./LoginDirect.svg'),
   IconClassEmpty: require('./IconClass.svg'),
+  AvatarBorder: require('./AvatarBorder.png'),
   BannerTilawah: require('./CardTilawah.svg'),
   BannerAlquran: require('./CardAlquran.png'),
   IconLineHide: require('./IconLineHide.svg'),
@@ -46,7 +47,9 @@ export default {
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
+  LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
+  ImageProfileDefault: require('./IconProfileDefault.png'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
   //Camera
@@ -145,4 +148,5 @@ export default {
   //Update Al-Qur'an
   AlQuranBG: require('./BgAlQuran.png'),
   IconSurah: require('./IconSurah.svg'),
+  AlquranDetailBG: require('./BgAlQuranDetail.png'),
 }
