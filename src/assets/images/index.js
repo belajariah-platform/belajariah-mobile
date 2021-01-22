@@ -16,6 +16,7 @@ export default {
   BotProfile: require('./Profile.svg'),
   IconLine: require('./IconLine.svg'),
   IconVideo: require('./IconVideo.svg'),
+  AvatarBorder: require('./pemanis.png'),
   BotHomeHint: require('./HomeHint.svg'),
   BotTransact: require('./Transact.svg'),
   ButtonBack: require('./ButtonBack.svg'),
@@ -46,7 +47,9 @@ export default {
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
+  LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
+  ImageProfileDefault: require('./IconProfileDefault.png'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
   //update profile
@@ -138,4 +141,5 @@ export default {
   //Update Al-Qur'an
   AlQuranBG: require('./BgAlQuran.png'),
   IconSurah: require('./IconSurah.svg'),
+  AlquranDetailBG: require('./BgAlQuranDetail.png'),
 }

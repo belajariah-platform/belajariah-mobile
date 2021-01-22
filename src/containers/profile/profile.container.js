@@ -82,6 +82,7 @@ const Profile = () => {
       </View>
 
       <Avatar
+        source={Images.ImageProfileDefault}
         size='large'
         activeOpacity={0.7}
         containerStyle={styles.avatar}

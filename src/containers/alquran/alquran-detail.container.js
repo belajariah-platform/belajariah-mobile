@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
-import { Text, View } from 'react-native'
+import {
+  View,
+  ScrollView,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { FontType } from '../../assets'
 
 import {
   QURAN_DETAIL_REQ,
@@ -12,7 +16,14 @@ import {
 import { QuranAPI } from '../../api'
 import { Response } from '../../utils'
 
+import { Text } from '@ui-kitten/components'
+import { styles } from './alquran-detail.style'
+import { FontType, Images } from '../../assets'
+import { useNavigation } from '@react-navigation/native'
+import { ArabicNumbers } from 'react-native-arabic-numbers'
+
 const AlquranDetail = (props) => {
+  const navigation = useNavigation()
   const { params } = props.route
   const dispatch = useDispatch()
   const { dataDetail, loadingDetail } = useSelector(
@@ -45,26 +56,60 @@ const AlquranDetail = (props) => {
     fetchDataQuran(params)
   }, [])
 
+  const Header = () => {
+    return (
+      <View style={styles.containerHeader}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Images.ButtonBack.default />
+        </TouchableOpacity>
+        <View style={styles.containerTitle}>
+          <Text style={styles.textTitle}>{params.surat_name}</Text>
+          <View style={styles.containerTitleMetadata}>
+            <Text style={styles.textRegularWhite}>
+              {params.surat_terjemahan}
+            </Text>
+            <Text style={styles.textRegularWhite}> - </Text>
+            <Text style={styles.textRegularWhite}>
+              {params.count_ayat} Ayat
+            </Text>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   return (
-    !loadingDetail && (
-      <View>
+    //!loadingDetail && (
+    <ImageBackground
+      source={Images.AlquranDetailBG}
+      style={styles.containerBackground}
+      resizeMode='stretch'>
+      <Header />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.containerScrollview}
+        contentContainerStyle={styles.contentContainerScrollview}>
         {dataDetail.map((item, index) => {
+          const regex = /<[^>]*>?/gm
+          const ayat_translate = item.translation_aya_text.replace(regex, '')
+          const ayat_number = ArabicNumbers(item.aya_number)
+
           return (
             <View key={index}>
+              <View style={styles.containerAyat}>
+                <Text style={styles.textArabNumber}>({ayat_number})</Text>
+                <Text style={styles.textArab}>{item.aya_text}</Text>
+              </View>
               <Text
-                style={{
-                  fontFamily: FontType.arabBold,
-                  fontSize: 24,
-                  color: 'purple',
-                  marginRight: 12,
-                }}>
-                {item.aya_text}
-              </Text>
+                style={
+                  styles.textRegularBlack
+                }>{`${item.aya_number}. ${ayat_translate}`}</Text>
             </View>
           )
         })}
-      </View>
-    )
+      </ScrollView>
+    </ImageBackground>
+    //)
   )
 }
 
