@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
   },
   containerBgWelcome: {
     width: 250,
-    padding: '5%',
+    padding: 10,
     height: 'auto',
-    marginTop: '65%',
     marginLeft: '15%',
+    marginBottom : 100,
     alignSelf: 'center',
   },
   containerWelcome: {

@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
   textUsername: {
     marginBottom : 2,
     color: Color.black,
+    fontSize: FontSize.small,
     fontFamily: FontType.bold,
-    fontSize: FontSize.smallMedium,
   },
   TxtTimeTitle: {
     color: Color.black,
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     opacity: 2,
     color: Color.red,
     textAlign: 'right',
+    fontSize: FontSize.small,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
   },
   indicatorContainer : {
     alignItems:'center',

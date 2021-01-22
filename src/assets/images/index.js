@@ -54,7 +54,6 @@ export default {
   IconOpenGallery: require('./IconOpenGallery.svg'),
   IconFlipCamera: require('./IconFlipCamera.svg'),
   IconTakeCamera: require('./IconTakeCamera.svg'),
-  IconProfileDefault: require('./IconProfileDefault.svg'),
 
   //update profile
   Email: require('./profileEmailIcon.svg'),
@@ -109,10 +108,13 @@ export default {
 
   //Update Admin
   GrafisVoice: require('./GrafisVoice.svg'),
+  SidenavUser : require('./SidenavUser.svg'),
   AvatarUstadz: require('./AvatarUstadz.png'),
+  SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
+  SidenavInstrcutor: require('./SidenavInstructor.svg'),
   IconDownloadVoice: require('./IconDownloadVoice.svg'),
   WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
 

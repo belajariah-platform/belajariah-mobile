@@ -1,15 +1,16 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
-import { View, TouchableOpacity, ImageBackground, } from 'react-native'
+import {
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
 
-import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { styles } from './admin-dashboard.style'
 
 const AdminDashboard = () => {
-  const dispatch = useDispatch()
   const navigation = useNavigation()
 
   const AdminCard = () => {
@@ -34,9 +35,7 @@ const AdminDashboard = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        <TouchableOpacity onPress={async () => await dispatch(UserAPI.SignOut())}>
-          <Text>AdminDashboard</Text>
-        </TouchableOpacity>
+        <View style={{ flex : 1 }}/>
         <AdminCard />
       </ImageBackground>
     </View>

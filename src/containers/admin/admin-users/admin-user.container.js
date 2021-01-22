@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { View, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import AdminUserAll from './admin-user-all.container'
@@ -12,7 +11,6 @@ import { Images, Color } from '../../../assets'
 import { styles } from './admin-user.style'
 
 const AdminUser = () => {
-  const navigation = useNavigation()
   const Tab = createMaterialTopTabNavigator()
 
   const ViewHeader = () => {
@@ -22,14 +20,13 @@ const AdminUser = () => {
           style={{ flex : 1 }}>
           <Searchbox
             size='medium'
-            placeholder={'Temukan instruktur'}
+            placeholder={'Temukan user'}
             onFocus={() => console.log('hello')}
             style={styles.searchbox}
           />
         </View>
         <TouchableOpacity
-          style={styles.iconFilter}
-          onPress={()=> navigation.navigate('AdminInstructor')}>
+          style={styles.iconFilter}>
           <Images.Filter.default
             width={20}
             height={20}

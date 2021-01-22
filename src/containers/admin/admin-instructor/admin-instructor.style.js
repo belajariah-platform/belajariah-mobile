@@ -62,16 +62,21 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 10,
   },
+  email : {
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
   TxtTitleInstructor: {
     color: Color.black,
+    fontSize: FontSize.small,
     fontFamily: FontType.bold,
-    fontSize: FontSize.smallMedium,
   },
   TxtButtonDetail: {
     textAlign: 'right',
     color: Color.purpleText,
+    fontSize: FontSize.small,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
   },
   textSearch : {
     color : Color.white,

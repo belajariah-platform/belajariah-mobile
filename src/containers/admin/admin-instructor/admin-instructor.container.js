@@ -63,7 +63,7 @@ const AdminInstructor = () => {
                 <Image source={Images.AvatarUstadz} style={styles.ImgUstadz}/>
                 <View style={{ flex : 1 }}>
                   <Text style={styles.TxtTitleInstructor}>{item.fullname}</Text>
-                  <Text>{item.email || 'example@gmail.com'}</Text>
+                  <Text style={styles.email}>{item.email || 'example@gmail.com'}</Text>
                 </View>
               </View>
               <TouchableOpacity>
