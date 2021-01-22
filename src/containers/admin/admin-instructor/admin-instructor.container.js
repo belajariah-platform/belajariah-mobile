@@ -1,30 +1,48 @@
 import React from 'react'
-import { View, TouchableOpacity, ImageBackground, ScrollView, Image } from 'react-native'
-import { styles } from './admin-instructor.style'
-import { Text } from '@ui-kitten/components'
-import { Images } from '../../../assets'
-import { TextBox } from '../../../components'
 import { Card } from 'react-native-elements'
+import { Text } from '@ui-kitten/components'
+import {
+  View,
+  Image,
+  FlatList,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
+
+import { Images } from '../../../assets'
+import { Searchbox } from '../../../components'
+import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
+  const state = [
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+  ]
 
   const ViewHeader = () => {
     return(
-      <View>
-        <View style={styles.containerHeader}>
-          <View style={{top: '3%', left: '100%',}}>
-            <TextBox  
-            placeholder='Temukan user dengan cepat'
-            />
-          </View>
-          <TouchableOpacity>
-            <Images.Filter.default
-              width={40}
-              height={40}
-              style={styles.iconFilter}
-            />
-          </TouchableOpacity>
-      </View>
+      <View style={styles.containerHeader}>
+        <View
+          style={{ flex : 1 }}>
+          <Searchbox
+            size='medium'
+            placeholder={'Temukan instruktur'}
+            onFocus={() => console.log('hello')}
+            style={styles.searchbox}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.iconFilter}
+          onPress={() => console.log('icon')}>
+          <Images.Filter.default
+            width={20}
+            height={20}
+          />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -32,18 +50,28 @@ const AdminInstructor = () => {
   const CardInstructor = () => {
     return(
       <View>
-        <Card containerStyle={styles.cardInstructor}>
-          <View style={styles.ViewInstructorInfo}>
-            <Image source={Images.AvatarUstadz} style={styles.ImgUstadz}/>
-            <View>
-              <Text style={styles.TxtTitleInstructor}>Ustadz Maulana Al-Hafidz</Text>
-              <Text>example@gmail.com</Text>
-            </View>
-          </View>
-          <TouchableOpacity>
-            <Text style={styles.TxtButtonDetail}>Details Profile</Text>
-          </TouchableOpacity>
-        </Card>
+        <FlatList
+          data={state}
+          style={{ width:'100%' }}
+          showsVerticalScrollIndicator ={false}
+          keyExtractor={(item, index) =>  index.toString()}
+          renderItem={({ item, index }) => (
+            <Card
+              key={index}
+              containerStyle={styles.cardInstructor}>
+              <View style={styles.ViewInstructorInfo}>
+                <Image source={Images.AvatarUstadz} style={styles.ImgUstadz}/>
+                <View style={{ flex : 1 }}>
+                  <Text style={styles.TxtTitleInstructor}>{item.fullname}</Text>
+                  <Text style={styles.email}>{item.email || 'example@gmail.com'}</Text>
+                </View>
+              </View>
+              <TouchableOpacity>
+                <Text style={styles.TxtButtonDetail}>Details Profile</Text>
+              </TouchableOpacity>
+            </Card>
+          )}
+        />
       </View>
     )
   }
@@ -53,10 +81,8 @@ const AdminInstructor = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-          <ViewHeader />
-          <ScrollView>
-            <CardInstructor />
-          </ScrollView>
+        <ViewHeader />
+        <CardInstructor />
       </ImageBackground>
     </View>
   )

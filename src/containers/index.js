@@ -21,7 +21,7 @@ import {
   InstructorProfileEdit,
 } from './instructor'
 
-import { ClassUser, ClassLearning, ClassDetail } from './class'
+import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 
 export {
   Home,
@@ -30,6 +30,7 @@ export {
   Profile,
   Register,
   Timeline,
+  ClassExam,
   Promotion,
   AdminUser,
   ClassUser,

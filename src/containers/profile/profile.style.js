@@ -110,6 +110,65 @@ const styles = StyleSheet.create({
   containerButton: {
     width: 100,
   },
+  iconChoose : {
+    marginRight : 50,
+    alignItems : 'center',
+    flexDirection : 'column',
+  },
+  textChoose : {
+    marginVertical : 5,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.smallPoint,
+  },
+  textTitleChoose : {
+    top : -5,
+    marginBottom : 10,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.mediumLarge,
+  },
+  iconGallery : {
+    alignItems : 'center',
+    flexDirection : 'column',
+  },
+  containerCamera : {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: Color.black,
+  },
+  containerToolCamera : {
+    height : 110,
+    marginTop : -15,
+    flexDirection:'row',
+    alignItems : 'center',
+    justifyContent:'center',
+    borderTopLeftRadius : 16,
+    borderTopRightRadius : 16,
+    backgroundColor : Color.black
+  },
+  btnTakePicture : {
+    width: 67,
+    height: 67,
+    borderWidth : 4,
+    borderRadius: 100,
+    alignSelf: 'center',
+    borderColor : '#d1d1d1',
+    marginHorizontal : '15%',
+    backgroundColor: Color.white,
+  },
+  btnCancel : {
+    alignSelf: 'center',
+    marginHorizontal : '16%',
+  },
+  camera : {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  textCancel : {
+    color : Color.white,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.mediumLarge,
+  }
 })
 
 export { styles }

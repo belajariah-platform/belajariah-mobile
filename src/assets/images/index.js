@@ -49,6 +49,12 @@ export default {
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
+  //Camera
+  IconCancelCamera: require('./IconCancelCamera.svg'),
+  IconOpenGallery: require('./IconOpenGallery.svg'),
+  IconFlipCamera: require('./IconFlipCamera.svg'),
+  IconTakeCamera: require('./IconTakeCamera.svg'),
+
   //update profile
   Email: require('./profileEmailIcon.svg'),
   Phone: require('./profilePhoneIcon.svg'),
@@ -101,13 +107,14 @@ export default {
   DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
 
   //Update Admin
-  AvatarUser: require('./AvatarUser.png'),
   GrafisVoice: require('./GrafisVoice.svg'),
-  AvatarUser2: require('./AvatarUser2.png'),
+  SidenavUser : require('./SidenavUser.svg'),
   AvatarUstadz: require('./AvatarUstadz.png'),
+  SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
+  SidenavInstrcutor: require('./SidenavInstructor.svg'),
   IconDownloadVoice: require('./IconDownloadVoice.svg'),
   WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
 

@@ -80,14 +80,12 @@ const Profile = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-
       <Avatar
         size='large'
         activeOpacity={0.7}
         containerStyle={styles.avatar}
         onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
       />
-
       <View style={styles.containerProfileHeader}>
         <Text style={styles.headerName}>{userData.name}</Text>
         <View style={styles.containerEmailPhone}>

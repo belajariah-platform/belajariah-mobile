@@ -15,7 +15,7 @@ const ModalDate = (props) => {
         style={styles.backdropStyle}
         onBackdropPress={props.backdropPress}
       >
-        <View style={styles.modalStyle}>
+        <View style={[styles.modalStyle, props.containerStyle]}>
           <TouchableOpacity
             onPress={props.backdropPress}
             style={styles.closeStyle}>
@@ -34,6 +34,7 @@ ModalDate.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  containerStyle : PropTypes.object,
 }
 
 
