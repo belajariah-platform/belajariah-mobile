@@ -10,6 +10,7 @@ import {
   ToastAndroid,
   ImageBackground,
   TouchableOpacity,
+  PermissionsAndroid
 } from 'react-native'
 
 import { Images } from '../../../assets'
@@ -20,6 +21,27 @@ const ClassLearningPDF = (props) => {
 
   const _downloadFileFromServer = async (item) => {
     try {
+      try {
+        await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ])
+      } catch (err) {
+        console.warn(err)
+      }
+      const readGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+      const writeGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE)
+      if(!readGranted || !writeGranted) {
+        console.log('Read and write permissions have not been granted')
+        return
+      }
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      ])
+      if(granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('test')
+      }
       var date = new Date()
       var url = item.path
       var ext = extention(url)

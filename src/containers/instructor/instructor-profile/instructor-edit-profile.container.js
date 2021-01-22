@@ -59,7 +59,9 @@ const InstructorEditProfile = () => {
       <View style={styles.containerView}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerAvatar}>
-            <Avatar source={Images.AvatarProfile} style={styles.Avatar} />
+            <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
+              <Avatar source={Images.ImageProfileDefault} style={styles.avatar} />
+            </ImageBackground>
             <Text style={styles.containerTitleAvatar}>
               {filterText(strName)}
             </Text>

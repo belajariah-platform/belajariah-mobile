@@ -15,12 +15,12 @@ import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const state = [
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
-    { fullname : 'Ustadz Maulana Al-Hafidz', email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
+    { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
   ]
 
   const ViewHeader = () => {
@@ -53,6 +53,7 @@ const AdminInstructor = () => {
         <FlatList
           data={state}
           style={{ width:'100%' }}
+          contentContainerStyle={{ paddingBottom: 92 }}
           showsVerticalScrollIndicator ={false}
           keyExtractor={(item, index) =>  index.toString()}
           renderItem={({ item, index }) => (
@@ -60,7 +61,7 @@ const AdminInstructor = () => {
               key={index}
               containerStyle={styles.cardInstructor}>
               <View style={styles.ViewInstructorInfo}>
-                <Image source={Images.AvatarUstadz} style={styles.ImgUstadz}/>
+                <Image source={item.images} style={styles.ImgUstadz}/>
                 <View style={{ flex : 1 }}>
                   <Text style={styles.TxtTitleInstructor}>{item.fullname}</Text>
                   <Text style={styles.email}>{item.email || 'example@gmail.com'}</Text>

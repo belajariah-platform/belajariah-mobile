@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   containerProfileHeader: {
-    marginTop: 164,
+    marginTop: 172,
     alignSelf: 'center',
     position: 'absolute',
     alignItems: 'center',
@@ -107,14 +107,20 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     fontSize: FontSize.extraLarge,
   },
-  avatar: {
+  avatarBorder: {
     zIndex: 1,
-    width: 100,
-    height: 100,
+    width: 112,
+    height: 112,
     marginTop: 56,
-    borderWidth: 4,
     alignSelf: 'center',
     position: 'absolute',
+  },
+  avatar: {
+    zIndex: 1,
+    width: 90,
+    height: 90,
+    marginTop: 11,
+    alignSelf: 'center',
     borderRadius: 100 / 2,
     borderColor: Color.white,
     backgroundColor: Color.black,

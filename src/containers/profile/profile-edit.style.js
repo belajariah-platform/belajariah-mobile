@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 
-import { Resp } from '../../../utils'
-import { Color, FontType, FontSize } from '../../../assets'
+import { Resp } from '../../utils'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
-  //Instructor Profile Edit
+  //Profile Edit
   containerButtonBack: {
     top: 20,
     left: 0,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   containerViewBg: {
     flex: 1,
     zIndex: 1,
-    top: '-12%',
+    top: '-8.6%',
   },
   containerAvatar: {
     zIndex: 2,
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     width: 108,
     zIndex: 2,
     height: 108,
+    position: 'relative',
   },
   avatar: {
     width: 90,
@@ -57,6 +58,15 @@ const styles = StyleSheet.create({
   },
   containerViewTop: {
     top: '-8.5%',
+    borderRadius: 35,
+    paddingVertical: 20,
+    position: 'relative',
+    marginHorizontal: 30,
+    paddingHorizontal: 30,
+    backgroundColor: '#fff',
+  },
+  containerViewBottom: {
+    top: '-5.5%',
     borderRadius: 35,
     paddingVertical: 20,
     position: 'relative',
@@ -107,6 +117,65 @@ const styles = StyleSheet.create({
   containerButton: {
     width: 100,
   },
+  iconChoose : {
+    marginRight : 50,
+    alignItems : 'center',
+    flexDirection : 'column',
+  },
+  textChoose : {
+    marginVertical : 5,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.smallPoint,
+  },
+  textTitleChoose : {
+    top : -5,
+    marginBottom : 10,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.mediumLarge,
+  },
+  iconGallery : {
+    alignItems : 'center',
+    flexDirection : 'column',
+  },
+  containerCamera : {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: Color.black,
+  },
+  containerToolCamera : {
+    height : 110,
+    marginTop : -15,
+    flexDirection:'row',
+    alignItems : 'center',
+    justifyContent:'center',
+    borderTopLeftRadius : 16,
+    borderTopRightRadius : 16,
+    backgroundColor : Color.black
+  },
+  btnTakePicture : {
+    width: 67,
+    height: 67,
+    borderWidth : 4,
+    borderRadius: 100,
+    alignSelf: 'center',
+    borderColor : '#d1d1d1',
+    marginHorizontal : '15%',
+    backgroundColor: Color.white,
+  },
+  btnCancel : {
+    alignSelf: 'center',
+    marginHorizontal : '16%',
+  },
+  camera : {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  textCancel : {
+    color : Color.white,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.mediumLarge,
+  }
 })
 
 export { styles }

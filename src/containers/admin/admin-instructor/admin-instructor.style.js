@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   ImgUstadz: {
-    width: 50,
-    height: 50,
+    width: 44,
+    height: 44,
     marginRight: 10,
   },
   email : {

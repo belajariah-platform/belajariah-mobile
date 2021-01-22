@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     alignItems : 'center',
   },
   avatarUser: {
-    width: 50,
-    height: 50,
+    width: 44,
+    height: 44,
     marginRight: 10,
   },
   textUsername: {

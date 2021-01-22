@@ -9,11 +9,12 @@ import {
   ScrollView,
   ToastAndroid,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
 
 import { Images } from '../../assets'
-import { styles } from './profile-main.style'
+import { styles } from './profile.style'
 import { useNavigation } from '@react-navigation/native'
 
 const Profile = () => {
@@ -80,12 +81,15 @@ const Profile = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-      <Avatar
-        size='large'
-        activeOpacity={0.7}
-        containerStyle={styles.avatar}
-        onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
-      />
+      <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
+        <Avatar
+          source={Images.ImageProfileDefault}
+          size='large'
+          activeOpacity={0.7}
+          containerStyle={styles.avatar}
+          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
+        />
+      </ImageBackground>
       <View style={styles.containerProfileHeader}>
         <Text style={styles.headerName}>{userData.name}</Text>
         <View style={styles.containerEmailPhone}>

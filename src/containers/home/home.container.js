@@ -25,6 +25,7 @@ import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
 
 import { styles } from './home.style'
+import images from '../../assets/images'
 
 const Home = (props) => {
   const { isLogin } = useSelector((state) => state.UserReducer)
@@ -138,7 +139,7 @@ const Home = (props) => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.navigateSearch}
-        onPress={() => props.navigation.navigate('HomeSearch')}>
+        onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
         <Searchbox
           disabled
           style={styles.containerSearch}
@@ -359,11 +360,7 @@ const Home = (props) => {
         <View style={styles.headerFlex}>
           <View style={styles.headerContainer}>
             <View style={styles.headerFlex}>
-              <Avatar
-                rounded
-                activeOpacity={0.8}
-                containerStyle={{ ...styles.headerAvatar, marginLeft: 15 }}
-              />
+              <Images.LogoBelajariahHome.default height={40} width={40} />
             </View>
             <View>
               <TouchableOpacity
@@ -372,7 +369,14 @@ const Home = (props) => {
                 onPress={() =>
                   props.navigation.navigate(isLogin ? 'Profile' : 'Login')
                 }>
-                {!isLogin && <Images.LoginDirect.default />}
+                {isLogin ? (
+                  <Avatar
+                    source={images.ImageProfileDefault}
+                    style={styles.imageProfile}
+                  />
+                ) : (
+                  <Images.LoginDirect.default />
+                )}
               </TouchableOpacity>
             </View>
           </View>
