@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   containerViewBg: {
     flex: 1,
     zIndex: 1,
-    top: '-8%',
+    top: '-10%',
   },
   containerAvatar: {
     zIndex: 2,
@@ -58,22 +58,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: '#fff',
   },
-  containerViewBottom: {
-    top: '-5.5%',
-    borderRadius: 35,
-    paddingVertical: 20,
-    position: 'relative',
-    marginHorizontal: 30,
-    paddingHorizontal: 30,
-    backgroundColor: '#fff',
-  },
   containerTextJudul: {
     marginBottom: 28,
     color: Color.black,
     fontSize: FontSize.large,
     fontFamily: FontType.bold,
   },
-
   containerText: {
     marginTop: -8,
     marginBottom: 5,

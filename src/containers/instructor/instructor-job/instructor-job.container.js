@@ -21,7 +21,7 @@ const InstructorJob = () => {
       userQuestions: [
         {
           userName: 'Rico',
-          avatar: Images.AvatarUser1,
+          avatar: Images.AvatarUser,
           date: '16/01/2021',
           time: '16:23',
           sound: 'sound.wav',
@@ -89,7 +89,7 @@ const InstructorJob = () => {
         },
         {
           userName: 'Aduduh',
-          avatar: Images.AvatarUser1,
+          avatar: Images.AvatarUser,
           date: '01/01/2020',
           time: '17:59',
           sound: 'sound.wav',

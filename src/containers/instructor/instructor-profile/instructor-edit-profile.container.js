@@ -46,17 +46,6 @@ const InstructorEditProfile = () => {
     },
   })
 
-  const FormPassword = useFormik({
-    initialValues: {
-      old_password: '',
-      new_password: '',
-      confirm_password: '',
-    },
-    onSubmit: (values) => {
-      console.log(values)
-    },
-  })
-
   const filterText = (value) => {
     let valueFilter
     value.length > 25
@@ -68,13 +57,9 @@ const InstructorEditProfile = () => {
   return (
     <>
       <View style={styles.containerView}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerAvatar}>
-            <TouchableOpacity style={styles.containerTouch}>
-              <Avatar
-                source={Images.AvatarProfile}
-                style={styles.Avatar}></Avatar>
-            </TouchableOpacity>
+            <Avatar source={Images.AvatarProfile} style={styles.Avatar} />
             <Text style={styles.containerTitleAvatar}>
               {filterText(strName)}
             </Text>
@@ -96,7 +81,8 @@ const InstructorEditProfile = () => {
             <TextBox
               name='fullname'
               form={FormPersonal}
-              placeholder='Nama lengkap'
+              placeholder={strName}
+              disabled={true}
             />
             <Text style={styles.containerText}>Nomor Telepon</Text>
             <TextBox
@@ -142,35 +128,6 @@ const InstructorEditProfile = () => {
                 title='Simpan'
                 style={styles.containerButton}
                 onPress={FormPersonal.handleSubmit}
-              />
-            </View>
-          </View>
-
-          <View style={styles.containerViewBottom}>
-            <Text style={styles.containerTextJudul}>UBAH KATA SANDI</Text>
-            <Text style={styles.containerText}>Kata Sandi Lama</Text>
-            <TextBox
-              name='old_password'
-              form={FormPassword}
-              placeholder='Kata sandi lama'
-            />
-            <Text style={styles.containerText}>Kata Sandi Baru</Text>
-            <TextBox
-              name='new_password'
-              form={FormPassword}
-              placeholder='Kata sandi baru'
-            />
-            <Text style={styles.containerText}>Konfirmasi Kata Sandi</Text>
-            <TextBox
-              name='confirm_password'
-              form={FormPassword}
-              placeholder='Konfirmasi kata sandi'
-            />
-            <View style={styles.fixToText}>
-              <Buttons
-                title='Simpan'
-                style={styles.containerButton}
-                onPress={FormPassword.handleSubmit}
               />
             </View>
           </View>

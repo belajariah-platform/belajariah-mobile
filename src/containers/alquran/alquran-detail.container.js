@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { Text, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { FontType } from '../../assets'
 
 import {
   QURAN_DETAIL_REQ,
@@ -14,7 +15,9 @@ import { Response } from '../../utils'
 const AlquranDetail = (props) => {
   const { params } = props.route
   const dispatch = useDispatch()
-  const { dataDetail, loadingDetail } = useSelector((state) => state.QuranDetailReducer)
+  const { dataDetail, loadingDetail } = useSelector(
+    (state) => state.QuranDetailReducer,
+  )
 
   const fetchDataQuran = async (params) => {
     try {
@@ -31,7 +34,7 @@ const AlquranDetail = (props) => {
       }
     } catch (err) {
       dispatch({
-        type: QURAN_DETAIL_FAIL
+        type: QURAN_DETAIL_FAIL,
       })
       return err
     }
@@ -42,21 +45,31 @@ const AlquranDetail = (props) => {
     fetchDataQuran(params)
   }, [])
 
-  return !loadingDetail && (
-    <View>
-      {dataDetail.map((item, index) => {
-        return (
-          <View key={index}>
-            <Text>{item.aya_text}</Text>
-          </View>
-        )
-      })}
-    </View>
+  return (
+    !loadingDetail && (
+      <View>
+        {dataDetail.map((item, index) => {
+          return (
+            <View key={index}>
+              <Text
+                style={{
+                  fontFamily: FontType.arabBold,
+                  fontSize: 24,
+                  color: 'purple',
+                  marginRight: 12,
+                }}>
+                {item.aya_text}
+              </Text>
+            </View>
+          )
+        })}
+      </View>
+    )
   )
 }
 
 AlquranDetail.propTypes = {
-  route : PropTypes.object,
+  route: PropTypes.object,
 }
 
 export default AlquranDetail
