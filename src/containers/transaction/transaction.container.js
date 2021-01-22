@@ -74,30 +74,30 @@ const Transaction = () => {
   const TransactionCard = (item, index) => {
     let ribbon, icon, status, color
     switch (item.status) {
-      case 'success':
-        status = 'Completed'
-        color = Color.textSuccess
-        icon = Images.IconComplete
-        ribbon = Images.RibbonComplete
-        break
-      case 'failed':
-        status = 'Failed'
-        color = Color.textFailed
-        icon = Images.IconFailed
-        ribbon = Images.RibbonFailed
-        break
-      case 'waiting for payment':
-        status = 'Waiting for Payment'
-        color = Color.textPending
-        icon = Images.IconPending
-        ribbon = Images.RibbonPending
-        break
-      default:
-        status = 'Waiting for Payment'
-        color = Color.textPending
-        icon = Images.IconPending
-        ribbon = Images.RibbonPending
-        break
+    case 'success':
+      status = 'Completed'
+      color = Color.textSuccess
+      icon = Images.IconComplete
+      ribbon = Images.RibbonComplete
+      break
+    case 'failed':
+      status = 'Failed'
+      color = Color.textFailed
+      icon = Images.IconFailed
+      ribbon = Images.RibbonFailed
+      break
+    case 'waiting for payment':
+      status = 'Waiting for Payment'
+      color = Color.textPending
+      icon = Images.IconPending
+      ribbon = Images.RibbonPending
+      break
+    default:
+      status = 'Waiting for Payment'
+      color = Color.textPending
+      icon = Images.IconPending
+      ribbon = Images.RibbonPending
+      break
     }
     return (
       <View key={index}>
@@ -131,13 +131,13 @@ const Transaction = () => {
       <View style={styles.containerHeader}>
         <Text style={styles.titleHeader}>Transaksi</Text>
         <TouchableOpacity
+          style={styles.containerFilter}
           onPress={() => {
             setAvailable(!available)
           }}>
           <Images.Filter.default
-            width={40}
-            height={40}
-            style={styles.iconFilter}
+            width={20}
+            height={20}
           />
         </TouchableOpacity>
       </View>

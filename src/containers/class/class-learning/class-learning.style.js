@@ -251,18 +251,43 @@ const styles = StyleSheet.create({
     backgroundColor : Color.transactionBgColor,
   },
   containerHeaderPDF : {
-    height : 40,
+    height : 50,
+    paddingVertical : 7,
     flexDirection : 'row',
+    paddingHorizontal : 10,
     justifyContent: 'space-between',
   },
   buttonBackPDF : {
-    width : 40,
+    width : 'auto',
+    marginLeft : -5,
     height : 'auto',
   },
   buttonDownloadPDF : {
-    width : 40,
+    padding : 5,
+    elevation : 4,
+    width : 'auto',
     height : 'auto',
-    marginTop : 8,
+    borderRadius : 10,
+    alignItems : 'center',
+    flexDirection : 'row',
+    justifyContent : 'center',
+    backgroundColor : '#9956B3',
+  },
+  textDonwload : {
+    marginLeft : 3,
+    color : Color.white,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
+  textPdf : {
+    color : Color.white,
+    textAlign : 'left',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  containerTextPdf : {
+    flex : 1,
+    justifyContent : 'center',
   },
   star : { marginRight:1 }
 })

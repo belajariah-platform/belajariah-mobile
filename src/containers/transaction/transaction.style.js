@@ -4,7 +4,11 @@ import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
   containerHeader: {
+    paddingTop : 15,
+    height : 'auto',
     flexDirection: 'row',
+    alignItems : 'center',
+    paddingHorizontal : 20,
     justifyContent: 'space-between',
   },
   containerScrollView: {
@@ -22,8 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.transparentBg,
   },
   titleHeader: {
-    marginTop: '5%',
-    marginLeft: '5%',
     color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
@@ -61,10 +63,6 @@ const styles = StyleSheet.create({
     paddingVertical:12,
     paddingHorizontal:15,
     backgroundColor: Color.transparentBg,
-  },
-  iconFilter: {
-    top: '25%',
-    marginRight: '2%',
   },
   iconStatus: {
     marginRight: 8,
@@ -130,6 +128,10 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
   },
+  containerFilter : {
+    height : 'auto',
+    alignItems : 'flex-end',
+  }
 })
 
 export { styles }
