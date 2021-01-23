@@ -12,7 +12,7 @@ import Searchbox from './searchbox'
 import Progressbar from './progressbar'
 import ButtonGradient from './button-gradient'
 
-import { ModalInfo, ModalConfirm } from './modal'
+import { ModalInfo, ModalConfirm, ModalRating } from './modal'
 
 export {
   Cards,
@@ -27,6 +27,7 @@ export {
   TextView,
   Searchbox,
   ModalInfo,
+  ModalRating,
   Progressbar,
   ModalConfirm,
   ButtonGradient

@@ -7,19 +7,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.transactionBgColor,
   },
   containerHeader : {
+    paddingTop : 15,
+    height : 'auto',
     flexDirection: 'row',
+    alignItems : 'center',
+    paddingHorizontal : 20,
     justifyContent: 'space-between',
   },
   containerTextHeader : {
-    marginTop: '5%',
-    marginLeft: '5%',
     color: Color.white,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
-  },
-  containerButtonFilter : {
-    top: '25%',
-    marginRight: '2%',
   },
   containerTouchFilter : {
     width: 100,
@@ -110,6 +108,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
   },
+  TextTitleRating: {
+    fontSize: FontSize.large,
+    fontFamily: FontType.regular,
+  },
   progressBar : {
     padding: 6,
     height : 35,
@@ -153,12 +155,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#6e248d',
   },
   containerReview : {
+    paddingTop:5,
     height: 'auto',
-    borderRadius: 20,
-    marginBottom: 10,
-    paddingTop:10,
+    marginBottom: 5,
     paddingHorizontal: 20,
-    backgroundColor: '#FEF5FF',
   },
   containerClassReview : {
     display: 'flex',
@@ -205,6 +205,10 @@ const styles = StyleSheet.create({
     width: 23,
     height: 23,
     marginRight:3,
+  },
+  containerFilter : {
+    height : 'auto',
+    alignItems : 'flex-end',
   },
   containerTextArea : { marginTop: 20 },
   iconTop : { top:-4 }

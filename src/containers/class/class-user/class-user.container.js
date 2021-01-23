@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { Buttons, ButtonGradient, Progressbar } from '../../../components'
+import { Buttons, ButtonGradient, Progressbar, ModalRating } from '../../../components'
 
 import { styles } from '../class-user/class-user.style'
 
@@ -20,6 +20,8 @@ const ClassUser = (props) => {
   const maxRating = [1, 2, 3, 4, 5]
   const [available, setAvailable] = useState(false)
   const [defaultRating, setDefaultRating] = useState(0)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const Comment = [
     { 'value' : 'Terima kasih' },
@@ -69,20 +71,7 @@ const ClassUser = (props) => {
   const ReviewClass = () => {
     return (
       <View style={styles.containerReview}>
-        <FlatList
-          data={Comment}
-          numColumns={2}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.9}
-              style={styles.touchClassReview}
-            >
-              <Text style={styles.buttonClassReview}>{item.value}</Text>
-            </TouchableOpacity>
-          )}
-        />
+        <Text style={styles.TextTitleRating}>Berikkan pendapat dan ratingmu untuk kelas ini</Text>
         <View style={styles.containerTextArea}>
           <TextInput
             multiline={true}
@@ -101,6 +90,11 @@ const ClassUser = (props) => {
 
   return (
     <>
+    <ModalRating
+          isVisible={modalVisible}
+         
+          backdropPress={() => toggleModal()}
+    />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
@@ -196,13 +190,14 @@ const ClassUser = (props) => {
                                 title={
                                   item.status == 'in progress' && item.progress == 100 ? 'Selesai' :
                                     item.status == 'start' ? 'Mulai' : 'Lanjut'}
-                                onPress = {() => setFinishProgress(item)}/>
+                           
+                           
+                                    onPress = {toggleModal}/>
                             )}
                           </View>
                         </ImageBackground>
                       </View>
                     </View>
-                    <ReviewClass/>
                   </>
                 )}
               />
