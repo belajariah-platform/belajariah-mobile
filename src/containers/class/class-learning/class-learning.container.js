@@ -1,10 +1,14 @@
+import moment from 'moment'
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import Video from 'react-native-video'
-import { useState, useRef } from 'react'
 import { List } from 'react-native-paper'
-import { Text, View, ScrollView } from 'react-native'
+import { useState, useRef, createRef } from 'react'
+import { Avatar, Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import ButtonGradient from '../../../components/button-gradient'
+import { Text, View, ScrollView, Alert, TextInput } from 'react-native'
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls'
 
 import { Images } from '../../../assets'
@@ -25,6 +29,27 @@ const ClassLearning = () => {
   const [screenType, setScreenType] = useState('content')
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING)
+
+  const onGoingTask = [
+    {
+      idTask: 4,
+      status: 'ongoing',
+      name: 'Rico',
+      avatar: Images.ImageProfileDefault,
+      date: '17/01/2021',
+      time: '16:02',
+      userSound: 'sound.wav',
+      userSoundDuration: '8:12',
+      userDesc: 'Ustadz curhat dong',
+      instructorName: 'Ustadz Maulana Al-Hafidz',
+      instructorAva: Images.ImageProfileDefault,
+      instructorSound: 'sound.wav',
+      instructorSoundDuration: '12:15',
+      instructorDesc: 'Semoga bisa dipahami, terima kasih',
+      instructorDate: '18/01/2021',
+      instructorTime: '21:06',
+    },
+  ]
 
   const state = {
     rating : 4.7,
@@ -131,6 +156,271 @@ const ClassLearning = () => {
     )
   }
 
+  const RecentJobs = () => {
+    return (
+      <View style={styles.containerRecentJobs}>
+        <View>
+          {onGoingTask.map((task, index) => {
+            const dateTime = task.date + ' ' + task.time
+            const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
+            const [isPressed, setIsPressed] = useState(false)
+
+            return (
+              <List.Accordion
+                key={index}
+                left={() => (
+                  <Avatar
+                    source={task.avatar}
+                    containerStyle={styles.avatarUser}
+                  />
+                )}
+                title={task.name}
+                description={`${momentTime} (${task.date})`}
+                titleStyle={styles.textUsername}
+                descriptionStyle={styles.textMoment}
+                style={[
+                  styles.containerAccordion,
+                  isPressed ? { elevation: 1 } : { elevation: 0 },
+                ]}
+                onPress={() => {
+                  setIsPressed(!isPressed)
+                }}>
+                <View style={styles.semiBox} />
+                <Chatting task={task} />
+              </List.Accordion>
+            )
+          })}
+        </View>
+      </View>
+    )
+  }
+
+  const Chatting = ({ task }) => {
+    const [confirmCount, setConfirmCount] = useState(0)
+
+    return (
+      <View style={styles.containerChat}>
+        <ScrollView>
+          <UserChatItem task={task} />
+          <InstructorSoundItem
+            task={task}
+            confirmPress={() => {
+              setConfirmCount(confirmCount + 1)
+            }}
+          />
+          <InstructorChatItem
+            task={task}
+            confirmPress={() => {
+              setConfirmCount(confirmCount + 1)
+            }}
+          />
+          {confirmCount === 2 ? (
+            <InstructorFullItem task={task} />
+          ) : (
+            <View></View>
+          )}
+        </ScrollView>
+        <InputText />
+      </View>
+    )
+  }
+
+  const UserChatItem = ({ task }) => {
+    const time12hourformat = moment(task.time, 'hh:mm').format('h:mm a')
+    return (
+      <View>
+        <Card containerStyle={styles.containerUserChatItem}>
+          <View style={styles.containerUserSound}>
+            <TouchableOpacity>
+              <Images.IconPlayVoiceBlack.default
+                width={24}
+                height={24}
+                style={styles.btnPlayVoice}
+              />
+            </TouchableOpacity>
+            <Text>{task.userSound}</Text>
+            <Text style={styles.textSoundDuration}>
+              {task.userSoundDuration}
+            </Text>
+            <Avatar
+              source={task.avatar}
+              containerStyle={styles.containerAvatarUser}
+              avatarStyle={styles.avatarChatInstructor}
+            />
+          </View>
+          <View style={styles.containerUserDesc}>
+            <Text style={styles.textDesc}>Deskripsi Voice</Text>
+            <Text style={styles.textUserDesc}>{task.userDesc}</Text>
+            <Text style={styles.textTime}>{time12hourformat}</Text>
+          </View>
+        </Card>
+      </View>
+    )
+  }
+
+  const InstructorSoundItem = ({ task, confirmPress }) => {
+    return (
+      <View>
+        <View style={styles.containerConfirm}>
+          <TouchableOpacity>
+            <Images.IconCancel.default
+              width={20}
+              height={20}
+              style={{ marginRight: 8 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={confirmPress}>
+            <Images.IconConfirm.default width={20} height={20} />
+          </TouchableOpacity>
+        </View>
+        <Card containerStyle={styles.containerChatInstructor}>
+          <View style={styles.containerInstructorHeader}>
+            <Avatar
+              source={task.instructorAva}
+              containerStyle={styles.avatarChatInstructor}
+            />
+            <View>
+              <Text style={styles.textInstructorName}>
+                {task.instructorName}
+              </Text>
+              <View style={styles.containerInstructorSound}>
+                <TouchableOpacity>
+                  <Images.IconPlayVoiceBlack.default
+                    width={20}
+                    height={20}
+                    style={styles.btnPlayVoice}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.btnPlayVoiceSmall}>
+                  {task.instructorSound}
+                </Text>
+                <Text style={styles.textSoundDuration}>
+                  {task.instructorSoundDuration}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Card>
+      </View>
+    )
+  }
+
+  const InstructorChatItem = ({ task, confirmPress }) => {
+    return (
+      <View>
+        <View style={styles.containerConfirm}>
+          <TouchableOpacity>
+            <Images.IconCancel.default
+              width={20}
+              height={20}
+              style={{ marginRight: 8 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={confirmPress}>
+            <Images.IconConfirm.default width={20} height={20} />
+          </TouchableOpacity>
+        </View>
+        <Card containerStyle={styles.containerChatInstructor}>
+          <View style={styles.containerInstructorHeader}>
+            <Avatar
+              source={task.instructorAva}
+              containerStyle={styles.avatarChatInstructor}
+            />
+            <Text style={styles.textInstructorName}>{task.instructorName}</Text>
+          </View>
+          <View style={styles.containerInstructorDesc}>
+            <Text style={styles.textDesc}>Deskripsi</Text>
+            <Text style={styles.textInstructorDesc}>{task.instructorDesc}</Text>
+          </View>
+        </Card>
+      </View>
+    )
+  }
+
+  const InstructorFullItem = ({ task }) => {
+    const time12hourformat = moment(task.instructorTime, 'hh:mm').format(
+      'h:mm a',
+    )
+
+    return (
+      <Card containerStyle={styles.containerChatInstructorFull}>
+        <View style={styles.containerInstructorHeader}>
+          <Avatar
+            source={task.instructorAva}
+            containerStyle={styles.avatarChatInstructor}
+          />
+          <View>
+            <Text style={styles.textInstructorNameWhite}>
+              {task.instructorName}
+            </Text>
+            <View style={styles.containerInstructorSound}>
+              <TouchableOpacity>
+                <Images.IconPlayVoiceWhite.default
+                  width={20}
+                  height={20}
+                  style={styles.btnPlayVoice}
+                />
+              </TouchableOpacity>
+              <Text style={{ color: 'white' }}>{task.instructorSound}</Text>
+              <Text style={styles.textSoundDurationWhite}>
+                {task.instructorSoundDuration}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.containerInstructorDesc}>
+          <Text style={styles.textDescWhite}>Deskripsi Voice</Text>
+          <Text style={styles.textInstructorDescWhite}>
+            {task.instructorDesc}
+          </Text>
+          <Text style={styles.textTimeWhite}>{time12hourformat}</Text>
+        </View>
+      </Card>
+    )
+  }
+
+  const InputText = () => {
+    const [onType, setOnType] = useState(false)
+    const instructorTextInput = createRef()
+
+    return (
+      <View style={styles.containerTextInput}>
+        <TextInput
+          ref={instructorTextInput}
+          placeholder='Type message here'
+          style={styles.textInput}
+          onChangeText={() => setOnType(true)}
+        />
+        {onType ? (
+          <ButtonGradient
+            icon={<Images.IconSend.default width={28} height={28} />}
+            styles={styles.containerSend}
+            onPress={() => {
+              Alert.alert('Send message')
+              setOnType(false)
+              instructorTextInput.current.clear()
+            }}
+          />
+        ) : (
+          <ButtonGradient
+            icon={<Images.IconVoiceRecord.default width={28} height={28} />}
+            styles={styles.containerSend}
+            onPress={() => {
+              Alert.alert('Hold to record sound')
+              setOnType(false)
+              instructorTextInput.current.clear()
+            }}
+            onLongPress={InputSound}
+          />
+        )}
+      </View>
+    )
+  }
+
+  const InputSound = () => {
+    Alert.alert('Record Sound')
+  }
+
   const DescriptionClass = () => {
     return (
       <View style={styles.containerMenuDesc}>
@@ -155,23 +445,33 @@ const ClassLearning = () => {
 
   const ConsultationClass = () => {
     return (
-      <View style={styles.containerMenuDesc}>
-        <List.Section >
-          <List.Accordion
-            title={'Konsultasi Bacaan'}
-            style={styles.containerConsul}
-            descriptionStyle={{ backgroundColor:'white' }}
-            titleStyle={styles.textConsul}
-            left={() =>  <Images.IconConsultations.default/>}
-          >
-            <List.Item
-              style={styles.containerItemConsul}
-              titleStyle={styles.textRegular}
-              left={() => <Images.IconPlay.default style={styles.iconPlay}/>}
-              right={() => <Text style={styles.textDuration}> Menit</Text>}
-            />
-          </List.Accordion>
-        </List.Section>
+      <View style={styles.containerRecentJobs}>
+        <View style={styles.containerMenuDesc}>
+          {onGoingTask.map((task, index) => {
+            
+            const [isPressed, setIsPressed] = useState(false)
+
+            return (
+              <List.Accordion
+                key={index}
+                left={() =>  <Images.IconConsultations.default/>}
+                title={'Konsultasi Bacaan'}
+               
+                titleStyle={styles.textConsul}
+                descriptionStyle={styles.textMoment}
+                style={[
+                  styles.containerConsul,
+                  isPressed ? { elevation: 1 } : { elevation: 0 },
+                ]}
+                onPress={() => {
+                  setIsPressed(!isPressed)
+                }}>
+                <View style={styles.semiBox} />
+                <Chatting task={task} />
+              </List.Accordion>
+            )
+          })}
+        </View>
       </View>
     )
   }
@@ -314,6 +614,11 @@ const ClassLearning = () => {
       )}
     </>
   )
+}
+
+ClassLearning.propTypes = {
+  task: PropTypes.object,
+  confirmPress: PropTypes.number,
 }
 
 export default ClassLearning
