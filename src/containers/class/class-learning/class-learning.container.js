@@ -40,7 +40,7 @@ const ClassLearning = () => {
           { subtitle : 'Shifathul Huruf', video_duration : 12 }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
+        path : 'https://www.belajariah.com/document-assets/file.pdf'
       },
       {
         title: 'Harokat',

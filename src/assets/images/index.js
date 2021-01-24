@@ -151,6 +151,6 @@ export default {
 
   //Document PDF
   BGOpenPDF : require('./BgDocumentLoad.png'),
-  IconDownloadPDF : require('./IconDownloadPdf.svg'),
   AlquranDetailBG: require('./BgAlQuranDetail.png'),
+  IconDownloadPDF : require('./IconDownloadPdf.svg'),
 }
