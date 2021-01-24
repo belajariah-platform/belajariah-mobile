@@ -7,7 +7,6 @@ import {
   Image,
   FlatList,
   Platform,
-  TextInput,
   ToastAndroid,
   ImageBackground,
 } from 'react-native'
@@ -15,24 +14,17 @@ import moment from 'moment'
 import RNPrint from 'react-native-print'
 
 import { Images } from '../../../assets'
-import { Buttons, ButtonGradient, Progressbar } from '../../../components'
+import { ButtonGradient, Progressbar, ModalRating } from '../../../components'
 
 import { styles } from '../class-user/class-user.style'
 
 
 const ClassUser = (props) => {
-  const maxRating = [1, 2, 3, 4, 5]
   const [available, setAvailable] = useState(false)
-  const [defaultRating, setDefaultRating] = useState(0)
   const [selectedPrinter, setSelectedPrinter] = useState(null)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
-  const Comment = [
-    { 'value' : 'Terima kasih' },
-    { 'value' : 'Pengajar berkompeten' },
-    { 'value' : 'Belajariah keren' },
-    { 'value' : 'Banyak hadiah' },
-    { 'value' : 'Materinya mudah dipahami' }
-  ]
   const Progress = [
     { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'start', 'progress' : 0 },
     { 'value' : 'Bisa Ngaji dengan nada indah (Tilawah) seperti Qari profesional', 'status' : 'in progress', 'progress' : 50 },
@@ -44,13 +36,6 @@ const ClassUser = (props) => {
     username : 'Riki Jenifer',
     class : 'Belajar al-quran dari dasar dengan metode mudah dan menyenangkan',
     created_date : moment(new Date()).format('DD MMMM YYYY')
-  }
-
-  const setFinishProgress = (item) => {
-    if (item.status == 'in progress' &&
-    item.progress == 100 ) {
-      Progress[2].status = 'completed'
-    }
   }
 
   const selectPrinter = async () => {
@@ -120,74 +105,22 @@ const ClassUser = (props) => {
     )
   }
 
-  const RatingbarClass = () => {
-    return (
-      <View style={styles.customRatingBarStyle}>
-        {maxRating.map((item, index) => {
-          return (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              key={index}
-              onPress={() => setDefaultRating(item)}>
-              <Image
-                style={styles.starImageStyle}
-                source={
-                  item <= defaultRating
-                    ? Images.BintangFull
-                    : Images.BintangBorder
-                }
-              />
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-    )
-  }
-
-  const ReviewClass = () => {
-    return (
-      <View style={styles.containerReview}>
-        <FlatList
-          data={Comment}
-          numColumns={2}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.9}
-              style={styles.touchClassReview}
-            >
-              <Text style={styles.buttonClassReview}>{item.value}</Text>
-            </TouchableOpacity>
-          )}
-        />
-        <View style={styles.containerTextArea}>
-          <TextInput
-            multiline={true}
-            numberOfLines={10}
-            style={styles.textArea}/>
-        </View>
-        <View style={styles.containerRating}>
-          <RatingbarClass />
-          <Buttons
-            title='Kirim'
-            style={styles.ButtonClass} />
-        </View>
-      </View>
-    )
-  }
-
   return (
     <>
+      <ModalRating
+        isVisible={modalVisible}
+
+        backdropPress={() => toggleModal()}
+      />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
-          <TouchableOpacity
-            style={styles.containerFilter}
-            onPress={() => setAvailable(!available)}>
+          <TouchableOpacity onPress={() => setAvailable(!available)}>
             <Images.Filter.default
-              width={20}
-              height={20} />
+              width={40}
+              height={40}
+              style={styles.containerButtonFilter}
+            />
           </TouchableOpacity>
         </View>
         <ImageBackground
@@ -275,13 +208,12 @@ const ClassUser = (props) => {
                                 title={
                                   item.status == 'in progress' && item.progress == 100 ? 'Selesai' :
                                     item.status == 'start' ? 'Mulai' : 'Lanjut'}
-                                onPress = {() => setFinishProgress(item)}/>
+                                onPress = {toggleModal}/>
                             )}
                           </View>
                         </ImageBackground>
                       </View>
                     </View>
-                    <ReviewClass/>
                   </>
                 )}
               />
