@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.large,
     fontFamily: FontType.regular,
   },
-  containerTextArea : { 
-    marginTop: 10, 
+  containerTextArea : {
+    marginTop: 10,
   },
   textArea: {
     height:80,

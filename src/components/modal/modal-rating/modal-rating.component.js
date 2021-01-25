@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
 import { styles } from './modal-rating.style'
 import { View, TouchableOpacity, Text, TextInput, Image } from 'react-native'
-import { ButtonGradient, Progressbar } from '../../../components'
+import { ButtonGradient } from '../../../components'
 import { Images } from '../../../assets'
 
 const ModalRating = (props) => {
-
   const maxRating = [1, 2, 3, 4, 5]
   const [defaultRating, setDefaultRating] = useState(0)
 
@@ -38,9 +37,9 @@ const ModalRating = (props) => {
   const ReviewClass = () => {
     return (
       <View style={styles.containerReview}>
-        <View style={{marginTop: 10,}}>
-        <Text style={styles.TextTitleRating}>Berikan ratingmu untuk</Text>
-        <Text style={styles.TextTitleRating}>kelas ini</Text>
+        <View style={{ marginTop: 10, }}>
+          <Text style={styles.TextTitleRating}>Berikan ratingmu untuk</Text>
+          <Text style={styles.TextTitleRating}>kelas ini</Text>
         </View>
         <View style={styles.containerTextArea}>
           <TextInput
@@ -60,7 +59,7 @@ const ModalRating = (props) => {
       </View>
     )
   }
-  
+
   return (
     <>
       <Modal
