@@ -3,17 +3,20 @@ import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
 import { Icon, Text } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { View, ScrollView, Alert, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Alert, TouchableOpacity, Image, TextInput, Button } from 'react-native'
 
 import { Images } from '../../assets'
 import { FormatRupiah } from '../../utils'
-import { ButtonGradient } from '../../components'
+import { ButtonGradient, ModalInfo } from '../../components'
 
 import styles from './transaction-method.style'
 
 const TransactionMethod = () => {
   const navigation = useNavigation()
   const route = useRoute()
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   let { discountedPrice } = route.params ?? {}
 
@@ -27,6 +30,8 @@ const TransactionMethod = () => {
     rating: 4.5,
     price: discountedPrice,
     voucher: code,
+    titleModal: 'Punya kode voucher?',
+    modalDesc: 'Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher',
   }
 
   const [gateway, setGateway] = React.useState('ovo')
@@ -47,6 +52,22 @@ const TransactionMethod = () => {
           return <View key={index}>{val}</View>
         })}
         <Text style={styles.textRating}>{num}</Text>
+      </View>
+    )
+  }
+
+  const ModalVoucher = () => {
+    return(
+      <View style={styles.containerModal}>
+        <Text style={styles.TitleModal}>{classData.titleModal}</Text>
+        <Image source={Images.IconVoucher} style={styles.ImgVoucher}/>
+        <View style={styles.viewModal}>
+          <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
+          <View style={styles.viewModalInput}>
+            <TextInput style={styles.InputVoucher} placeholder='Contoh: BLJRIAH'/>
+            <Text style={styles.ButtonClaim}>KLAIM</Text>
+          </View>
+        </View>
       </View>
     )
   }
@@ -93,17 +114,7 @@ const TransactionMethod = () => {
           <Text style={styles.textBold}>Rating</Text>
           <View>{handleRating(classData.rating)}</View>
           <Card.Divider style={styles.divider} />
-          <TouchableOpacity onPress={() => {
-            Alert.alert('Pakai kode voucher?', 'Diskon 30% : NEWMEMBER', [
-              {
-                text: 'Gak usah',
-              },
-              {
-                text: 'Pakai dong',
-                onPress: () => setCode('NEWMEMBER')
-              }
-            ])
-          }}>
+          <TouchableOpacity onPress = {toggleModal}>
             <View style={styles.flexVoucher}>
               <Text style={styles.textRegularPurple}>
               Saya memiliki <Text style={styles.textBoldPurple}>kode Voucher</Text>
@@ -185,6 +196,11 @@ const TransactionMethod = () => {
 
   return (
     <View style={styles.containerMain}>
+      <ModalInfo
+          isVisible={modalVisible} 
+          renderItem={<ModalVoucher />}
+          backdropPress={() => toggleModal()}
+    />
       <Header />
       <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
         <PaymentDetail />

@@ -153,4 +153,10 @@ export default {
   BGOpenPDF : require('./BgDocumentLoad.png'),
   IconDownloadPDF : require('./IconDownloadPdf.svg'),
   AlquranDetailBG: require('./BgAlQuranDetail.png'),
+
+  //Update Detail Promotion
+  BannerPromo: require('./BannerPromo.png'),
+  IconVoucher: require('./IconVoucher.png'),
+  VoucherCode: require('./VoucherCode.svg'),
+  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
 }
