@@ -106,7 +106,7 @@ const Home = (props) => {
     {
       title: 'Promo 1',
       imgUrl:
-        'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg',
+        Images.BannerPromo
     },
     {
       title: 'Promo 2',
@@ -160,7 +160,7 @@ const Home = (props) => {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-          <Image style={styles.cardCustom} source={{ uri: item.imgUrl }} />
+          <Image style={styles.cardCustom} source={item.imgUrl} />
         </TouchableOpacity>
       </View>
     )
