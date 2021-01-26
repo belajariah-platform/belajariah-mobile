@@ -163,6 +163,51 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginHorizontal: -16,
   },
+  containerModal: {
+    top: '-3%',
+    alignItems: 'center',
+  },
+  TitleModal: {
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  TxtDescModal: {
+    color: Color.black,
+    textAlign: 'center',
+    marginVertical: 4,
+    marginHorizontal: '10%',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  },
+  ImgVoucher: {
+    marginVertical: 5,
+  },
+  viewModalInput: {
+    marginTop: 10,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  InputVoucher: {
+    height: 40,
+    width: '50%',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Color.grey,
+  },
+  ButtonClaim: {
+    width: 100,
+    height: 40,
+    padding: 10,
+    marginLeft: 5,
+    borderRadius: 10,
+    color: Color.white,
+    textAlign: 'center',
+    fontFamily: FontType.bold,
+    backgroundColor: Color.grey,
+  },
+  
 })
 
 export default styles

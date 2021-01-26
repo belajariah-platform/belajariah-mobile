@@ -156,4 +156,10 @@ export default {
 
   //IconEdit
   IconEdit : require('./IconEdit.svg'),
+
+  //Update Detail Promotion
+  BannerPromo: require('./BannerPromo.png'),
+  IconVoucher: require('./IconVoucher.png'),
+  VoucherCode: require('./VoucherCode.svg'),
+  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
 }
