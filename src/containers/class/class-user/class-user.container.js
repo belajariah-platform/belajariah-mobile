@@ -7,6 +7,7 @@ import {
   Image,
   FlatList,
   Platform,
+  TextInput,
   ToastAndroid,
   ImageBackground,
 } from 'react-native'
@@ -109,17 +110,20 @@ const ClassUser = (props) => {
     <>
       <ModalRating
         isVisible={modalVisible}
-
         backdropPress={() => toggleModal()}
+        title='Berikan ratingmu untuk kelas ini'
+        renderItem={  <TextInput
+          multiline={true}
+          numberOfLines={8}
+          style={styles.textArea}/>}
       />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
           <TouchableOpacity onPress={() => setAvailable(!available)}>
             <Images.Filter.default
-              width={40}
-              height={40}
-              style={styles.containerButtonFilter}
+              width={20}
+              height={20}
             />
           </TouchableOpacity>
         </View>
@@ -141,8 +145,9 @@ const ClassUser = (props) => {
             (
               <FlatList
                 data={Progress}
-                style={{ width:'90%', marginBottom : 105 }}
+                style={{ width:'90%' }}
                 showsVerticalScrollIndicator ={false}
+                contentContainerStyle={{ paddingBottom: 122 }}
                 keyExtractor={(item, index) =>  index.toString()}
                 renderItem={({ item, index }) => (
                   <>
@@ -172,7 +177,7 @@ const ClassUser = (props) => {
                         <ImageBackground
                           source={Images.BgClassLearning}
                           imageStyle={{ borderRadius: 20 }}
-                          style={{ height: 'auto' }}
+                          style={styles.imageBackgroundCard}
                         >
                           <View style={styles.containerIconProgress}>
                             <Image source={Images.TahsinImage} style={styles.ImageClass}/>

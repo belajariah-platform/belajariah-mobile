@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import { styles } from './modal-rating.style'
-import { View, TouchableOpacity, Text, TextInput, Image } from 'react-native'
-import { ButtonGradient } from '../../../components'
+import React, { useState } from 'react'
+import { View, TouchableOpacity, Text, Image } from 'react-native'
+
 import { Images } from '../../../assets'
+import { ButtonGradient } from '../../../components'
+
+import { styles } from './modal-rating.style'
 
 const ModalRating = (props) => {
   const maxRating = [1, 2, 3, 4, 5]
@@ -37,19 +39,15 @@ const ModalRating = (props) => {
   const ReviewClass = () => {
     return (
       <View style={styles.containerReview}>
-        <View style={{ marginTop: 10, }}>
-          <Text style={styles.TextTitleRating}>Berikan ratingmu untuk</Text>
-          <Text style={styles.TextTitleRating}>kelas ini</Text>
+        <View>
+          <Text style={styles.TextTitleRating}>{props.title}</Text>
         </View>
         <View style={styles.containerTextArea}>
-          <TextInput
-            multiline={true}
-            numberOfLines={10}
-            style={styles.textArea}/>
+          {props.renderItem}
         </View>
         <RatingbarClass />
         <View style={styles.containerRating}>
-          <TouchableOpacity onPress={props.backdropPress}>
+          <TouchableOpacity style={styles.touchClose} onPress={props.backdropPress}>
             <Text style={styles.TxtCloseModal}>Nanti</Text>
           </TouchableOpacity>
           <ButtonGradient
@@ -79,6 +77,7 @@ const ModalRating = (props) => {
 }
 
 ModalRating.propTypes = {
+  title : PropTypes.string,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,

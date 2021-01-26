@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
     marginTop: -172,
     borderRadius: 24,
   },
+  containerCard: {
+    borderRadius: 24,
+    borderWidth: 0,
+    marginTop: -172,
+    marginBottom: 20,
+  },
   wrapperCardStatus: {
     flexDirection: 'row',
     justifyContent: 'center',

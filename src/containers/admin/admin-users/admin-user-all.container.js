@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React, { useState } from 'react'
 import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
@@ -46,8 +47,7 @@ const AdminUserAll = () => {
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
-          size={30}
-          style={styles.indicator} />
+          size={30} />
       </View>
     ) : null
   }
@@ -58,10 +58,15 @@ const AdminUserAll = () => {
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
             <Image source={item.images} style={styles.avatarUser}/>
-            <View>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={()=> {navigation.navigate('AdminProfileAll', item)}}
+            >
               <Text style={styles.textUsername}>{item.username}</Text>
-              <Text style={styles.TxtTimeTitle}>{'8:12 AM (06/01/2021)'}</Text>
-            </View>
+              <Text style={styles.TxtTimeTitle}>
+                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.containerButtonAction}>
             <View style={styles.ViewButtonAction}>
@@ -99,7 +104,6 @@ const AdminUserAll = () => {
             <ButtonGradient
               title='Accept'
               styles={styles.ButtonAction}
-              onPress={()=> {navigation.navigate('AdminInstructor')}}
             />
           </View>
         </Card>
@@ -120,6 +124,7 @@ const AdminUserAll = () => {
           ListFooterComponent={renderFooter}
           onEndReached={(e) => onLoadMore(e)}
           showsVerticalScrollIndicator ={false}
+          contentContainerStyle={{ paddingBottom: 25 }}
           keyExtractor={(item, index) =>  index.toString()}
           renderItem={({ item, index }) => CardUser(item, index)}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>

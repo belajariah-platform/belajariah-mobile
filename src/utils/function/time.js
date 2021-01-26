@@ -4,4 +4,10 @@ const TimeConvert = (num) => {
   return `${minutes}:${seconds}`
 }
 
-export { TimeConvert }
+const TimeConvertToHour = (num) => {
+  const hour = Math.floor(num / 60)
+  const minutes = num % 60
+  return `${hour} Jam, ${minutes} Menit`
+}
+
+export { TimeConvert, TimeConvertToHour }

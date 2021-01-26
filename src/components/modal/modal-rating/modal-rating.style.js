@@ -1,32 +1,28 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { FontType, FontSize, Color } from '../../../assets'
-
-const { height }  = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   modalStyle : {
     width: 300,
     borderRadius: 22,
-    height:height/2.5,
+    height:'auto',
     alignSelf: 'center',
+    paddingHorizontal:25,
+    paddingTop: 20,
+    paddingBottom : 5,
     backgroundColor:Color.white,
   },
   closeStyle : {
     right:15,
-    marginTop:17,
     alignItems:'flex-end',
     justifyContent:'center',
   },
   modalContentSyle : {
-    flex:1,
-    marginTop:17,
     alignSelf: 'center',
     justifyContent:'center',
   },
   containerReview : {
-    marginTop: 10,
     height: 'auto',
-    marginBottom: 15,
   },
   TextTitleRating: {
     fontSize: FontSize.large,
@@ -49,30 +45,29 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
-    marginBottom: 20,
   },
   ButtonClass : {
-    top: '-8%',
     width: 90,
-    height: 35,
     borderRadius: 20,
   },
   customRatingBarStyle: {
     marginTop: 15,
-    marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   starImageStyle: {
     width: 35,
     height: 35,
-    marginRight:3,
+    marginRight:8,
   },
   TxtCloseModal: {
     color: Color.bgColor,
     fontSize: FontSize.medium,
   },
+  touchClose : {
+    width : 90,
+    alignItems : 'center',
+  }
 })
 
 export { styles }

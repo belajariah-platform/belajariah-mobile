@@ -113,14 +113,11 @@ const InstructorJob = () => {
     return (
       <View style={styles.containerHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Images.ButtonBackBlack.default style={styles.btnBack} />
+          <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
-        <View style={styles.containerTitle}>
-          <Text style={styles.textHeader1}>Jobs List</Text>
-          <Text style={styles.textHeader2}>{classes[idClass].className}</Text>
-        </View>
+        <Text style={styles.textHeader2}>{classes[idClass].className} (Job)</Text>
         <TouchableOpacity>
-          <Images.IconFilterBlack.default width={18} style={styles.btnFilter} />
+          <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
       </View>
     )
