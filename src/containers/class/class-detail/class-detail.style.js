@@ -6,6 +6,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flexButtonHeader: {
+    paddingRight:15,
+    alignItems:'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -47,13 +49,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: Color.softPink,
   },
-  iconBack: {
-    marginTop: 0,
-  },
-  iconShare: {
-    marginTop: 14,
-    marginRight: 16,
-  },
   textDesc: {
     marginTop: 0,
     color: Color.white,
@@ -88,7 +83,7 @@ const styles = StyleSheet.create({
   },
   semiBox: {
     height: 30,
-    marginTop: 2,
+    marginTop: 38,
     width: '100%',
     marginBottom:-5,
     borderTopLeftRadius: 20,

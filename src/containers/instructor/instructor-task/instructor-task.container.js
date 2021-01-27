@@ -160,7 +160,7 @@ const InstructorTask = () => {
     return (
       <View style={styles.containerHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Images.ButtonBackBlack.default style={styles.btnBack} />
+          <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>My Task</Text>
       </View>

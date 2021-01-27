@@ -1,26 +1,30 @@
+import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
 import { Icon, Text } from '@ui-kitten/components'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { View, ScrollView, Alert, TouchableOpacity, Image, TextInput, Button } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { View, ScrollView, TouchableOpacity, Image } from 'react-native'
 
-import { Images } from '../../assets'
+import { Images, Color } from '../../assets'
 import { FormatRupiah } from '../../utils'
-import { ButtonGradient, ModalInfo } from '../../components'
+import { ButtonGradient, ModalInfo, Buttons, TextBox } from '../../components'
 
 import styles from './transaction-method.style'
 
 const TransactionMethod = () => {
   const navigation = useNavigation()
-  const route = useRoute()
 
+  const [gateway, setGateway] = useState('ovo')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
-  let { discountedPrice } = route.params ?? {}
-
-  const [code, setCode] = useState('')
+  const FormVoucher = useFormik({
+    initialValues: { voucher_code: '' },
+    onSubmit:  (values) => {
+      console.log(values)
+    },
+  })
 
   const classData = {
     name: 'Kelas Tahsin',
@@ -28,13 +32,10 @@ const TransactionMethod = () => {
     ustadz: 'Ustadz Maulana Achmad Al-Hafiz, S. Ag',
     ustadzAbout: 'Hafidz Al-Qur\'an 30 Juz dan Guru SIT Al-Azhar Cairo Palembang',
     rating: 4.5,
-    price: discountedPrice,
-    voucher: code,
+    price: 1990000,
     titleModal: 'Punya kode voucher?',
     modalDesc: 'Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher',
   }
-
-  const [gateway, setGateway] = React.useState('ovo')
 
   const handleRating = (num) => {
     let rating = []
@@ -56,36 +57,20 @@ const TransactionMethod = () => {
     )
   }
 
-  const ModalVoucher = () => {
-    return(
-      <View style={styles.containerModal}>
-        <Text style={styles.TitleModal}>{classData.titleModal}</Text>
-        <Image source={Images.IconVoucher} style={styles.ImgVoucher}/>
-        <View style={styles.viewModal}>
-          <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
-          <View style={styles.viewModalInput}>
-            <TextInput style={styles.InputVoucher} placeholder='Contoh: BLJRIAH'/>
-            <Text style={styles.ButtonClaim}>KLAIM</Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  const handleVoucher = (code) => {
-    let discountedPrice = ''
-    switch (code) {
-    case 'NEWMEMBER':
-      discountedPrice = (classData.price - (classData.price * 30/100))
-      return (
-        <View style={styles.flexRow}>
-          <Text style={styles.textLineThroughPrice}>IDR {FormatRupiah(classData.price)}</Text>
-          <Text style={styles.textPrice}>IDR {FormatRupiah(discountedPrice)}</Text>
-        </View>
-      )
-    default:
-      return <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
-    }
+  const handleVoucher = () => {
+    // let discountedPrice = ''
+    // switch (code) {
+    // case 'NEWMEMBER':
+    //   discountedPrice = (classData.price - (classData.price * 30/100))
+    //   return (
+    //     <View style={styles.flexRow}>
+    //       <Text style={styles.textLineThroughPrice}>IDR {FormatRupiah(classData.price)}</Text>
+    //       <Text style={styles.textPrice}>IDR {FormatRupiah(discountedPrice)}</Text>
+    //     </View>
+    //   )
+    // default:
+    return <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
+    // }
   }
 
   const Header = () => {
@@ -112,9 +97,13 @@ const TransactionMethod = () => {
           <Text style={styles.textBold}>Instruktur</Text>
           <Text style={styles.textRegular}>{`${classData.ustadz}, ${classData.ustadzAbout}`}</Text>
           <Text style={styles.textBold}>Rating</Text>
-          <View>{handleRating(classData.rating)}</View>
+          <View>
+            {handleRating(classData.rating)}
+          </View>
           <Card.Divider style={styles.divider} />
-          <TouchableOpacity onPress = {toggleModal}>
+          <TouchableOpacity
+            onPress = {toggleModal}
+          >
             <View style={styles.flexVoucher}>
               <Text style={styles.textRegularPurple}>
               Saya memiliki <Text style={styles.textBoldPurple}>kode Voucher</Text>
@@ -197,10 +186,31 @@ const TransactionMethod = () => {
   return (
     <View style={styles.containerMain}>
       <ModalInfo
-          isVisible={modalVisible} 
-          renderItem={<ModalVoucher />}
-          backdropPress={() => toggleModal()}
-    />
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        renderItem={
+          <View style={styles.containerModal}>
+            <Text style={styles.TitleModal}>{classData.titleModal}</Text>
+            <Image source={Images.IconVoucher} style={styles.ImgVoucher}/>
+            <View style={styles.viewModal}>
+              <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
+              <View style={styles.viewModalInput}>
+                <TextBox
+                  customStyle={styles.InputVoucher}
+                  placeholder='Contoh: BLJRIAH'
+                  name='voucher_code'
+                  form={FormVoucher}
+                />
+                <Buttons style={[styles.ButtonClaim,
+                  FormVoucher.values['voucher_code'].length > 4 ?
+                    { backgroundColor : Color.purpleButton } :
+                    { backgroundColor : '#cbcbcb' } ]}
+                title='KLAIM'/>
+              </View>
+            </View>
+          </View>
+        }
+      />
       <Header />
       <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
         <PaymentDetail />

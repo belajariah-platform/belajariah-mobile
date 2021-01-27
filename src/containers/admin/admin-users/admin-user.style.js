@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   indicatorContainer : {
+    top : 10,
     alignItems:'center',
-    marginVertical : 10,
   },
 })
 

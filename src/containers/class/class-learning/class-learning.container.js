@@ -7,12 +7,13 @@ import { useState, useRef, createRef } from 'react'
 import { Avatar, Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import ButtonGradient from '../../../components/button-gradient'
 import { Text, View, ScrollView, Alert, TextInput } from 'react-native'
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls'
 
 import { Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
+import { ButtonGradient, TextView, ModalRating } from '../../../components'
+
 import { styles } from '../class-learning/class-learning.style'
 
 const ClassLearning = () => {
@@ -27,8 +28,11 @@ const ClassLearning = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [currentTime, setCurrentTime] = useState(0)
   const [screenType, setScreenType] = useState('content')
+  const [modalVisible, setModalVisible] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING)
+
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const onGoingTask = [
     {
@@ -55,7 +59,7 @@ const ClassLearning = () => {
     rating : 4.7,
     total_user : 1500,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
+    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
@@ -65,7 +69,7 @@ const ClassLearning = () => {
           { subtitle : 'Shifathul Huruf', video_duration : 12 }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
+        path : 'https://www.belajariah.com/document-assets/file.pdf'
       },
       {
         title: 'Harokat',
@@ -156,44 +160,6 @@ const ClassLearning = () => {
     )
   }
 
-  const RecentJobs = () => {
-    return (
-      <View style={styles.containerRecentJobs}>
-        <View>
-          {onGoingTask.map((task, index) => {
-            const dateTime = task.date + ' ' + task.time
-            const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
-            const [isPressed, setIsPressed] = useState(false)
-
-            return (
-              <List.Accordion
-                key={index}
-                left={() => (
-                  <Avatar
-                    source={task.avatar}
-                    containerStyle={styles.avatarUser}
-                  />
-                )}
-                title={task.name}
-                description={`${momentTime} (${task.date})`}
-                titleStyle={styles.textUsername}
-                descriptionStyle={styles.textMoment}
-                style={[
-                  styles.containerAccordion,
-                  isPressed ? { elevation: 1 } : { elevation: 0 },
-                ]}
-                onPress={() => {
-                  setIsPressed(!isPressed)
-                }}>
-                <View style={styles.semiBox} />
-                <Chatting task={task} />
-              </List.Accordion>
-            )
-          })}
-        </View>
-      </View>
-    )
-  }
 
   const Chatting = ({ task }) => {
     const [confirmCount, setConfirmCount] = useState(0)
@@ -262,7 +228,7 @@ const ClassLearning = () => {
     return (
       <View>
         <View style={styles.containerConfirm}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
             <Images.IconCancel.default
               width={20}
               height={20}
@@ -396,8 +362,8 @@ const ClassLearning = () => {
             icon={<Images.IconSend.default width={28} height={28} />}
             styles={styles.containerSend}
             onPress={() => {
-              Alert.alert('Send message')
               setOnType(false)
+              Alert.alert('Send message')
               instructorTextInput.current.clear()
             }}
           />
@@ -422,6 +388,16 @@ const ClassLearning = () => {
   }
 
   const DescriptionClass = () => {
+    const handleSplitString = (value) => {
+      const stringSplit = value.split('|')
+      return (
+        <>
+          {stringSplit.map((val, index) => {
+            return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
+          })}
+        </>
+      )
+    }
     return (
       <View style={styles.containerMenuDesc}>
         <Text style={styles.containerTextTitle}>{state.title}</Text>
@@ -438,7 +414,13 @@ const ClassLearning = () => {
             <Text style={styles.textStyle}>{state.rating}</Text>
           </View>
         </View>
-        <Text style={styles.containerTextDesc}>{state.description.substr(0, 300)}.....</Text>
+        <TextView
+          component={
+            <Text style={styles.containerTextDesc}>
+              {handleSplitString(state.description)}
+            </Text>
+          }
+        />
       </View>
     )
   }
@@ -448,7 +430,6 @@ const ClassLearning = () => {
       <View style={styles.containerRecentJobs}>
         <View style={styles.containerMenuDesc}>
           {onGoingTask.map((task, index) => {
-            
             const [isPressed, setIsPressed] = useState(false)
 
             return (
@@ -456,7 +437,7 @@ const ClassLearning = () => {
                 key={index}
                 left={() =>  <Images.IconConsultations.default/>}
                 title={'Konsultasi Bacaan'}
-               
+
                 titleStyle={styles.textConsul}
                 descriptionStyle={styles.textMoment}
                 style={[
@@ -566,6 +547,15 @@ const ClassLearning = () => {
         />
       ) : (
         <>
+          <ModalRating
+            isVisible={modalVisible}
+            backdropPress={() => toggleModal()}
+            title='Berikan ratingmu untuk kelas ini'
+            renderItem={  <TextInput
+              multiline={true}
+              numberOfLines={8}
+              style={styles.textArea}/>}
+          />
           <View style={styles.container}>
             <TouchableOpacity  style={styles.buttonBack}>
               <Images.ButtonBack.default/>

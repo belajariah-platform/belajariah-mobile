@@ -6,41 +6,56 @@ import { ScrollView, View, Text } from 'react-native'
 import styles from './class-about.style'
 import { Images } from '../../../assets'
 import { TextView } from '../../../components'
+import { TimeConvertToHour } from '../../../utils'
 
 const ClassAbout = () => {
-  const dataClass = {
-    description:
-      'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
-    topicCount: 5,
-    materialCount: 12,
-    duration: '02:12:00',
+  const state = {
+    rating : 4.7,
+    duration : 144,
+    total_topic : 4,
+    total_user : 1500,
+    total_subtopic : 12,
+    title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
-        materials: ['Dasar Hijaiyah', 'Dasar Makhraj', 'Shifathul Huruf'],
+        subtopic: [
+          { subtitle : 'Dasar Hijaiyah', video_duration : 10 },
+          { subtitle: 'Dasar Makhraj', video_duration : 8 },
+          { subtitle : 'Shifathul Huruf', video_duration : 12 }],
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://www.belajariah.com/document-assets/file.pdf'
       },
       {
         title: 'Harokat',
-        materials: ['Dasar Harokat', 'Harokat Lanjutan'],
+        subtopic: [
+          { subtitle : 'Dasar Hijaiyah', video_duration : 4 },
+          { subtitle: 'Dasar Makhraj', video_duration : 5 },
+          { subtitle : 'Shifathul Huruf', video_duration : 2 }],
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
       },
       {
         title: 'Tajwid',
-        materials: ['Qolqolah', 'Ikhfa', 'Iqlab', 'Idgham'],
+        subtopic: [
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
+          { subtitle: 'Dasar Makhraj', video_duration : 10 },
+          { subtitle : 'Shifathul Huruf', video_duration : 3 }],
+        document : 'Dasar Hijaiyah',
+        filename : 'http://www.africau.edu/images/default/sample.pdf',
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
       },
       {
         title: 'Mad',
-        materials: ['Dasar-dasar Mad'],
-      },
-      {
-        title: 'Tahsinul Qur\'an',
-        materials: ['Dasar-dasar Tahsinul Qur\'an'],
+        subtopic: [
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
+          { subtitle: 'Dasar Makhraj', video_duration : 7 },
+          { subtitle : 'Shifathul Huruf', video_duration : 7 }],
       },
     ],
-    options: {
-      price: 'Rp199.000',
-      consult: 8,
-      webinar: 1,
-    },
   }
 
   const BenefitCategory = [
@@ -69,7 +84,7 @@ const ClassAbout = () => {
         <TextView
           component={
             <Text style={styles.textRegularParaf}>
-              {handleSplitString(dataClass.description)}
+              {handleSplitString(state.description)}
             </Text>
           }
         />
@@ -84,22 +99,21 @@ const ClassAbout = () => {
           <Text style={styles.textBold}>Topik yang dibahas</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>{dataClass.topicCount}</Text> Topik,
-              <Text style={styles.textRegular}>{dataClass.materialCount}</Text> Materi
+              <Text style={styles.textRegular}>{state.total_topic}</Text> Topik,
+              <Text style={styles.textRegular}>{state.total_subtopic}</Text> Materi
             </Text>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>{dataClass.duration.substring(0, 2)}</Text> Jam,
-              <Text style={styles.textRegular}>{dataClass.duration.substring(3, 5)}</Text> Menit
+              {TimeConvertToHour(state.duration)}
             </Text>
           </View>
         </View>
         <View style={styles.containerList}>
-          {dataClass.topics.map((topic, index) => {
+          {state.topics.map((topic, index) => {
             return (
               <List.Accordion key={index} title={topic.title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                {topic.materials.map((material, index) => {
+                {topic.subtopic.map((item, index) => {
                   const no = index + 1
-                  const name = no + '. ' + material
+                  const name = no + '. ' + item.subtitle
                   return <List.Item key={index} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
                 })}
               </List.Accordion>

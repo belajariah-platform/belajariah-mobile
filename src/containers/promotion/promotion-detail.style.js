@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
   ImgBanner: {
     height: 310,
     width: '100%',
+    borderRadius : 20,
   },
   TitlePromo: {
     marginVertical: 5,
@@ -252,7 +253,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.mediumLarge,
   },
   DescPromo: {
-    marginVertical: 5,
+    marginTop: 10,
+    lineHeight : 17,
+    marginBottom : -15,
     color: Color.black,
     textAlign: 'justify',
     fontSize: FontSize.small,
@@ -265,10 +268,15 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   containerCodePromo: {
-      marginVertical: 10,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+    marginVertical: 10,
+    flexDirection: 'row',
+    alignItems : 'center',
+    justifyContent: 'space-between',
   },
+  containerBanner : {
+    alignItems: 'center',
+    marginHorizontal: 16,
+  }
 })
 
 export default styles

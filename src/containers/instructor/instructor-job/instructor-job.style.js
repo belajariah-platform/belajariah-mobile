@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
   },
   containerHeader: {
+    paddingLeft:5,
+    paddingRight:20,
+    paddingVertical:2,
+    alignItems:'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  containerTitle: {
-    marginRight: 12,
   },
   containerScrollView: {
     borderTopLeftRadius: 16,
@@ -35,15 +36,8 @@ const styles = StyleSheet.create({
     width: 190,
     padding: 0,
   },
-  textHeader1: {
-    marginTop: 8,
-    color: Color.black,
-    textAlign: 'center',
-    fontFamily: FontType.bold,
-    fontSize: FontSize.mediumLarge,
-  },
   textHeader2: {
-    marginBottom: 8,
+    marginRight:10,
     color: Color.black,
     textAlign: 'center',
     fontFamily: FontType.bold,

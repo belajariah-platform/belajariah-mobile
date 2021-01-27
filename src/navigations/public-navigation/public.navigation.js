@@ -10,6 +10,8 @@ import {
   AlquranDetail,
   ChangePassword,
   PromotionDetail,
+  InspiratifStory,
+  InspiratifStoryDetail,
 } from '../../containers'
 import Main from '..//user-navigation/user-main'
 
@@ -29,6 +31,8 @@ const PublicNavigation = () => {
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
       <Stack.Screen name='ChangePassword' component={ChangePassword} />
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
+      <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
+      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
     </Stack.Navigator>
   )
 }
