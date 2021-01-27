@@ -28,6 +28,7 @@ import {
   InstructorProfileEdit,
 } from './instructor'
 
+import { InspiratifStory, InspiratifStoryDetail } from './story'
 import { Login, Register, Introduction, ChangePassword } from './user'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 
@@ -57,6 +58,7 @@ export {
   InstructorTask,
   AdminProfileAll,
   PromotionDetail,
+  InspiratifStory,
   AdminInstructor,
   TransactionInfo,
   AdminProfileEdit,
@@ -64,6 +66,7 @@ export {
   TransactionMethod,
   TransactionConfirm,
   InstructorDashboard,
+  InspiratifStoryDetail,
   InstructorProfileEdit,
   AdminProfileInstructor,
 }

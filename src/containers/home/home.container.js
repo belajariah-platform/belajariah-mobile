@@ -5,7 +5,6 @@ import React, { useRef, useState } from 'react'
 import {
   Text,
   View,
-  Alert,
   Image,
   Animated,
   ScrollView,
@@ -77,11 +76,6 @@ const Home = (props) => {
       description:
         'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
     },
-    {
-      rating: 4.5,
-      description:
-        'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not',
-    },
   ]
 
   const Inspiratif = [
@@ -104,19 +98,10 @@ const Home = (props) => {
 
   const promotion = [
     {
-      title: 'Promo 1',
-      imgUrl:
-        'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg',
-    },
-    {
-      title: 'Promo 2',
-      imgUrl:
-        'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg',
-    },
-    {
-      title: 'Promo 3',
-      imgUrl:
-        'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg',
+      code_voucher: 'BLJRIAH',
+      title: 'Diskon 30% Pengguna Baru',
+      discount: 30,
+      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
   ]
 
@@ -160,28 +145,15 @@ const Home = (props) => {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-          <Image style={styles.cardCustom} source={{ uri: item.imgUrl }} />
+          <Image style={styles.cardCustom} source={Images.BannerPromo} />
         </TouchableOpacity>
       </View>
     )
   }
 
   const CategoryClassHome = () => {
-    const RenderItem = () => {
-      return (
-        <View>
-          <Text>{state}</Text>
-        </View>
-      )
-    }
-
     return (
       <>
-        <ModalInfo
-          isVisible={modalVisible}
-          renderItem={<RenderItem />}
-          backdropPress={() => toggleModal()}
-        />
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
@@ -338,7 +310,7 @@ const Home = (props) => {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.btnReadMore}
-                  onPress={() => Alert.alert('Page Artikel')}>
+                  onPress={() =>  props.navigation.navigate('InspiratifStory')}>
                   <Images.BtnReadMore.default />
                 </TouchableOpacity>
               </Card>
@@ -433,6 +405,15 @@ const Home = (props) => {
           </ScrollView>
         </Animated.View>
       </ImageBackground>
+      <ModalInfo
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        renderItem={
+          <View>
+            <Text>{state}</Text>
+          </View>
+        }
+      />
     </View>
   )
 }
