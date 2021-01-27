@@ -2,9 +2,10 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import {
   View,
-  ScrollView,
+  FlatList,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -18,7 +19,7 @@ import { Response } from '../../utils'
 
 import { Text } from '@ui-kitten/components'
 import { styles } from './alquran-detail.style'
-import { FontType, Images } from '../../assets'
+import { Images } from '../../assets'
 import { useNavigation } from '@react-navigation/native'
 import { ArabicNumbers } from 'react-native-arabic-numbers'
 
@@ -78,38 +79,42 @@ const AlquranDetail = (props) => {
     )
   }
 
-  return (
-    //!loadingDetail && (
+  return   (
     <ImageBackground
       source={Images.AlquranDetailBG}
       style={styles.containerBackground}
       resizeMode='stretch'>
       <Header />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.containerScrollview}
-        contentContainerStyle={styles.contentContainerScrollview}>
-        {dataDetail.map((item, index) => {
-          const regex = /<[^>]*>?/gm
-          const ayat_translate = item.translation_aya_text.replace(regex, '')
-          const ayat_number = ArabicNumbers(item.aya_number)
-
-          return (
-            <View key={index}>
-              <View style={styles.containerAyat}>
-                <Text style={styles.textArabNumber}>({ayat_number})</Text>
-                <Text style={styles.textArab}>{item.aya_text}</Text>
+      {loadingDetail ? (
+        <ActivityIndicator
+          color='purple'
+          size={30} />
+      ) : (
+        <FlatList
+          data={dataDetail}
+          style={styles.containerScrollview}
+          showsVerticalScrollIndicator ={false}
+          contentContainerStyle={{ paddingBottom: 25 }}
+          keyExtractor={(item, index) =>  index.toString()}
+          renderItem={({ item, index }) => {
+            const regex = /<[^>]*>?/gm
+            const ayat_translate = item.translation_aya_text.replace(regex, '')
+            const ayat_number = ArabicNumbers(item.aya_number)
+            return (
+              <View key={index}>
+                <View style={styles.containerAyat}>
+                  <Text style={styles.textArabNumber}>({ayat_number})</Text>
+                  <Text style={styles.textArab}>{item.aya_text}</Text>
+                </View>
+                <Text
+                  style={
+                    styles.textRegularBlack
+                  }>{`${item.aya_number}. ${ayat_translate}`}</Text>
               </View>
-              <Text
-                style={
-                  styles.textRegularBlack
-                }>{`${item.aya_number}. ${ayat_translate}`}</Text>
-            </View>
-          )
-        })}
-      </ScrollView>
+            )
+          }}/>
+      )}
     </ImageBackground>
-    //)
   )
 }
 

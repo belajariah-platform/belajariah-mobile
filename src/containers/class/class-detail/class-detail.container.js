@@ -64,10 +64,10 @@ const ClassDetail = () => {
     >
       <View style={styles.flexButtonHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Images.ButtonBack.default style={styles.iconBack} />
+          <Images.ButtonBack.default />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => ToastAndroid.show('Share', ToastAndroid.SHORT)}>
-          <Images.Share.default style={styles.iconShare} />
+          <Images.Share.default />
         </TouchableOpacity>
       </View>
 
@@ -87,7 +87,7 @@ const ClassDetail = () => {
         <Text style={styles.textRating}>{classData.rating}</Text>
       </View>
 
-      <View style={styles.flexTags}>
+      {/* <View style={styles.flexTags}>
         {classData.tags.map((tag, index) => {
           return (
             <Text key={index} style={styles.textTag}>
@@ -95,7 +95,7 @@ const ClassDetail = () => {
             </Text>
           )
         })}
-      </View>
+      </View> */}
 
       <View style={styles.semiBox}/>
 

@@ -1,7 +1,9 @@
+import moment from 'moment'
 import React, { useState } from 'react'
 import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
 import {
   View,
   Image,
@@ -17,6 +19,7 @@ import { TimeConvert } from '../../../utils'
 import { styles } from './admin-user.style'
 
 const AdminUserDecline = () => {
+  const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
@@ -42,8 +45,7 @@ const AdminUserDecline = () => {
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
-          size={30}
-          style={styles.indicator} />
+          size={30}/>
       </View>
     ) : null
   }
@@ -56,16 +58,21 @@ const AdminUserDecline = () => {
             <Image
               source={item.images}
               style={{ ...styles.avatarUser, opacity : 0.5 }}/>
-            <View style={{ flex : 1 }}>
+            <TouchableOpacity
+              style={{ flex : 1 }}
+              activeOpacity={0.5}
+              onPress={()=> {navigation.navigate('AdminProfileAll', item)}}
+            >
               <Text
                 style={{ ...styles.textUsername, opacity : 0.5 }}>
                 {item.username}
               </Text>
               <Text
                 style={{ ...styles.TxtTimeTitle,  opacity : 0.5 }}>
-                {'8:12 AM (06/01/2021)'}
+                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
               </Text>
-            </View>
+            </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={1}
               style={styles.iconAccept}>
@@ -125,6 +132,7 @@ const AdminUserDecline = () => {
           ListFooterComponent={renderFooter}
           onEndReached={(e) => onLoadMore(e)}
           showsVerticalScrollIndicator ={false}
+          contentContainerStyle={{ paddingBottom: 25 }}
           keyExtractor={(item, index) =>  index.toString()}
           renderItem={({ item, index }) => CardUser(item, index)}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>

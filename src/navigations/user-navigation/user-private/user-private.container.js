@@ -10,9 +10,11 @@ import {
   AlquranDetail,
   ClassLearning,
   PromotionDetail,
+  InspiratifStory,
   TransactionInfo,
   TransactionMethod,
   TransactionConfirm,
+  InspiratifStoryDetail,
 } from '../../../containers'
 import UserMain from '../user-main'
 
@@ -36,6 +38,8 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionMethod' component={TransactionMethod} />
       <Stack.Screen name='TransactionInfo' component={TransactionInfo} />
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
+      <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
+      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
     </Stack.Navigator>
   )
 }

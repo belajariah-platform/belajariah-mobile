@@ -74,7 +74,6 @@ const InstructorProfile = () => {
           <Images.BtnClose.default
             width={16}
             height={16}
-            style={styles.btnClose}
           />
         </TouchableOpacity>
         <TouchableOpacity

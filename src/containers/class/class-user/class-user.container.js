@@ -6,30 +6,26 @@ import {
   View,
   Image,
   FlatList,
+  Platform,
   TextInput,
+  ToastAndroid,
   ImageBackground,
 } from 'react-native'
+import moment from 'moment'
+import RNPrint from 'react-native-print'
 
 import { Images } from '../../../assets'
-import { Buttons, ButtonGradient, Progressbar, ModalRating } from '../../../components'
+import { ButtonGradient, Progressbar, ModalRating } from '../../../components'
 
 import { styles } from '../class-user/class-user.style'
 
 
 const ClassUser = (props) => {
-  const maxRating = [1, 2, 3, 4, 5]
   const [available, setAvailable] = useState(false)
-  const [defaultRating, setDefaultRating] = useState(0)
+  const [selectedPrinter, setSelectedPrinter] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
-  const Comment = [
-    { 'value' : 'Terima kasih' },
-    { 'value' : 'Pengajar berkompeten' },
-    { 'value' : 'Belajariah keren' },
-    { 'value' : 'Banyak hadiah' },
-    { 'value' : 'Materinya mudah dipahami' }
-  ]
   const Progress = [
     { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'start', 'progress' : 0 },
     { 'value' : 'Bisa Ngaji dengan nada indah (Tilawah) seperti Qari profesional', 'status' : 'in progress', 'progress' : 50 },
@@ -37,72 +33,97 @@ const ClassUser = (props) => {
     { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'completed', 'progress': 100 },
   ]
 
-  const setFinishProgress = (item) => {
-    if (item.status == 'in progress' &&
-    item.progress == 100 ) {
-      Progress[2].status = 'completed'
+  const state = {
+    username : 'Riki Jenifer',
+    class : 'Belajar al-quran dari dasar dengan metode mudah dan menyenangkan',
+    created_date : moment(new Date()).format('DD MMMM YYYY')
+  }
+
+  const selectPrinter = async () => {
+    const selectedPrinter =
+      await RNPrint.selectPrinter({ x: 100, y: 100 })
+    setSelectedPrinter(selectedPrinter)
+  }
+
+  const silentPrint = async () => {
+    if (!selectedPrinter) {
+      alert('Must Select Printer First')
     }
+    await RNPrint.print({
+      printerURL: selectedPrinter.url,
+      html: '<h1>Silent Print clicked</h1>',
+    })
   }
 
-  const RatingbarClass = () => {
-    return (
-      <View style={styles.customRatingBarStyle}>
-        {maxRating.map((item, index) => {
-          return (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              key={index}
-              onPress={() => setDefaultRating(item)}>
-              <Image
-                style={styles.starImageStyle}
-                source={
-                  item <= defaultRating
-                    ? Images.BintangFull
-                    : Images.BintangBorder
-                }
-              />
-            </TouchableOpacity>
-          )
-        })}
-      </View>
-    )
+  const printHTML = async () => {
+    const response = await RNPrint.print({
+      html:
+        `<div>
+            <img src="https://www.belajariah.com/img-assets/SertificateClass.png" 
+            width="1070px" height="720px"/>
+            <h1 style="margin-top:-405;text-align:center;
+            font-size:52px;color:white">
+            ${state.username}
+            </h1>
+            <p style="margin-top:35;text-align:center;
+            font-size:20px;color:white;font-style:italic">
+            "${state.class}"
+            </p>
+            <p style="margin-top:20;text-align:center;
+            font-size:20px;color:white;font-weight:bold">
+            ${state.created_date}
+            </p>    
+        </div>`, })
+    response == 'Document' ?
+      ToastAndroid.show('Berhasil disimpan', ToastAndroid.SHORT) : null
   }
 
-  const ReviewClass = () => {
+
+  const customOptions = () => {
     return (
-      <View style={styles.containerReview}>
-        <Text style={styles.TextTitleRating}>Berikkan pendapat dan ratingmu untuk kelas ini</Text>
-        <View style={styles.containerTextArea}>
-          <TextInput
-            multiline={true}
-            numberOfLines={10}
-            style={styles.textArea}/>
-        </View>
-        <View style={styles.containerRating}>
-          <RatingbarClass />
-          <Buttons
-            title='Kirim'
-            style={styles.ButtonClass} />
-        </View>
+      <View>
+        {selectedPrinter && (
+          <View>
+            <Text>
+              {`Selected Printer Name: ${selectedPrinter.name}`}
+            </Text>
+            <Text>
+              {`Selected Printer URI: ${selectedPrinter.url}`}
+            </Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={selectPrinter}>
+          <Text>Click to Select Printer</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={silentPrint}>
+          <Text>Click for Silent Print</Text>
+        </TouchableOpacity>
       </View>
     )
   }
 
   return (
     <>
-    <ModalRating
-          isVisible={modalVisible}
-         
-          backdropPress={() => toggleModal()}
-    />
+      <ModalRating
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        title='Berikan ratingmu untuk kelas ini'
+        renderItem={  <TextInput
+          multiline={true}
+          numberOfLines={8}
+          style={styles.textArea}/>}
+      />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
           <TouchableOpacity onPress={() => setAvailable(!available)}>
             <Images.Filter.default
-              width={40}
-              height={40}
-              style={styles.containerButtonFilter}
+              width={20}
+              height={20}
             />
           </TouchableOpacity>
         </View>
@@ -111,6 +132,7 @@ const ClassUser = (props) => {
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 30 }}
         >
+          {Platform.OS === 'ios' && customOptions()}
           {available ? (
             <View style={styles.containerViewClass}>
               <Images.IconClassEmpty.default/>
@@ -123,8 +145,9 @@ const ClassUser = (props) => {
             (
               <FlatList
                 data={Progress}
-                style={{ width:'90%', marginBottom : 105 }}
+                style={{ width:'90%' }}
                 showsVerticalScrollIndicator ={false}
+                contentContainerStyle={{ paddingBottom: 122 }}
                 keyExtractor={(item, index) =>  index.toString()}
                 renderItem={({ item, index }) => (
                   <>
@@ -154,7 +177,7 @@ const ClassUser = (props) => {
                         <ImageBackground
                           source={Images.BgClassLearning}
                           imageStyle={{ borderRadius: 20 }}
-                          style={{ height: 'auto' }}
+                          style={styles.imageBackgroundCard}
                         >
                           <View style={styles.containerIconProgress}>
                             <Image source={Images.TahsinImage} style={styles.ImageClass}/>
@@ -182,7 +205,7 @@ const ClassUser = (props) => {
                                 styles={styles.buttonClassCustom}
                                 icon={<Images.IconDownload.default
                                   style={styles.iconClassCustomRight}/>}
-                                onPress = {() => props.navigation.navigate('ClassLearning')}/>
+                                onPress = {printHTML}/>
                             ) : (
                               <ButtonGradient
                                 styles={styles.ButtonClass}
@@ -190,9 +213,7 @@ const ClassUser = (props) => {
                                 title={
                                   item.status == 'in progress' && item.progress == 100 ? 'Selesai' :
                                     item.status == 'start' ? 'Mulai' : 'Lanjut'}
-                           
-                           
-                                    onPress = {toggleModal}/>
+                                onPress = {toggleModal}/>
                             )}
                           </View>
                         </ImageBackground>

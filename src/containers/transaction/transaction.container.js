@@ -65,6 +65,7 @@ const Transaction = () => {
         data={state}
         style={styles.containerScrollView}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 122 }}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => TransactionCard(item, index)}
       />

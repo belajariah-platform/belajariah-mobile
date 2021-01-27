@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     marginHorizontal: -16,
   },
   containerModal: {
-    top: '-3%',
     alignItems: 'center',
   },
   TitleModal: {
@@ -181,33 +180,35 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   ImgVoucher: {
+    width : 90,
+    height : 90,
     marginVertical: 5,
   },
   viewModalInput: {
-    marginTop: 10,
-    alignSelf: 'center',
-    flexDirection: 'row',
+    marginTop : 15,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent : 'center',
   },
   InputVoucher: {
-    height: 40,
-    width: '50%',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: Color.grey,
+    width: '55%',
+    height : 40,
+    borderRadius : 10,
+    paddingHorizontal : 15,
+    borderColor: '#cbcbcb',
   },
   ButtonClaim: {
     width: 100,
-    height: 40,
-    padding: 10,
-    marginLeft: 5,
+    height : 40,
+    marginTop : 0,
+    marginBottom: 0,
     borderRadius: 10,
+    marginRight : 15,
     color: Color.white,
-    textAlign: 'center',
     fontFamily: FontType.bold,
-    backgroundColor: Color.grey,
+    backgroundColor: '#cbcbcb',
   },
-  
+
 })
 
 export default styles

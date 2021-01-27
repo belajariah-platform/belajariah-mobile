@@ -1,27 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
-import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import Clipboard from '@react-native-community/clipboard'
 import { View, ScrollView, TouchableOpacity, ToastAndroid, Image } from 'react-native'
 
 import { Images } from '../../assets'
-import styles from './promotion-detail.style'
 import { ButtonGradient } from '../../components'
 
+import styles from './promotion-detail.style'
+
 const PromotionDetail = (props) => {
-  const { params } = props.route
+  const item = props.route.params
   const navigation = useNavigation()
-
-  const classData = {
-    CodeVoucher: 'BLJRIAH',
-    TitlePromo: 'Diskon 30% Pengguna Baru',
-    titleCode: 'Kode Voucher Disc.30%',
-    DescPromo: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu',
-    DescOther: 'Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
-  }
-
+  const { isLogin } = useSelector((state) => state.UserReducer)
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -42,45 +35,55 @@ const PromotionDetail = (props) => {
     )
   }
 
-  const PaymentMethod = () => {
+  const DescriptionPromotion = () => {
+    const handleSplitString = (value) => {
+      const stringSplit = value.split('|')
+      return (
+        <>
+          {stringSplit.map((val, index) => {
+            return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
+          })}
+        </>
+      )
+    }
+
     return (
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View>
-            <Text style={styles.TitlePromo}>{classData.TitlePromo}</Text>
-            <Text style={styles.DescPromo}>{classData.DescPromo}</Text>
-            <Text style={styles.DescOtherPromo}>{classData.DescOther}</Text>
+            <Text style={styles.TitlePromo}>{item.title}</Text>
+            <Text style={styles.DescPromo}>{handleSplitString(item.description)}</Text>
           </View>
           <View>
-            <Text style={styles.TitlePromo}>{classData.titleCode}</Text>
+            <Text style={styles.TitlePromo}>Kode Voucher Disc. {item.discount}%</Text>
           </View>
-          <View style={styles.containerCodePromo}> 
+          <View style={styles.containerCodePromo}>
             <Images.VoucherCode.default />
-            <TouchableOpacity onPress={() => copyToClipboard(classData.CodeVoucher)}>
-                <Text style={styles.TxtButtonSalin}>SALIN</Text>
-             </TouchableOpacity>
+            <TouchableOpacity onPress={() => copyToClipboard(item.code_voucher)}>
+              <Text style={styles.TxtButtonSalin}>SALIN</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
     )
   }
 
-  const PaymentButton = () => {
+  const Footer = () => {
     return (
       <View>
         <ButtonGradient
           title='Gunakan Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={()=> {navigation.navigate('TransactionConfirm')}}
+          onPress={()=> navigation.navigate(isLogin ? 'TransactionMethod' : 'Login')}
         />
       </View>
     )
   }
 
-  const PaymentCheckout = () => {
+  const BannerPromotion = () => {
     return (
-      <View style={{marginHorizontal: '5%', alignItems: 'center',}}>
+      <View style={styles.containerBanner}>
         <Image source={Images.BannerPromotionsPenggunaBaru} style={styles.ImgBanner}/>
       </View>
     )
@@ -90,9 +93,9 @@ const PromotionDetail = (props) => {
     <View style={styles.containerMain}>
       <Header />
       <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
-        <PaymentCheckout />
-        <PaymentMethod />
-        <PaymentButton />
+        <BannerPromotion />
+        <DescriptionPromotion />
+        <Footer />
       </ScrollView>
     </View>
   )

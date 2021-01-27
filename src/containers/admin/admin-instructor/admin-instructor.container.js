@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card } from 'react-native-elements'
 import { Text } from '@ui-kitten/components'
+import { useNavigation } from '@react-navigation/native'
+
 import {
   View,
   Image,
@@ -14,6 +16,8 @@ import { Searchbox } from '../../../components'
 import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
+  const navigation = useNavigation()
+
   const state = [
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
@@ -67,7 +71,8 @@ const AdminInstructor = () => {
                   <Text style={styles.email}>{item.email || 'example@gmail.com'}</Text>
                 </View>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('AdminProfileInstructor', item)}>
                 <Text style={styles.TxtButtonDetail}>Details Profile</Text>
               </TouchableOpacity>
             </Card>
