@@ -159,4 +159,9 @@ export default {
   IconVoucher: require('./IconVoucher.png'),
   VoucherCode: require('./VoucherCode.svg'),
   BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+
+  //Bacaan Inspiratif
+  IconShareBlack: require('./IconShareBlack.svg'),
+  SandiagaUnoImg: require('./SandiagaUnoImg.png'),
+  ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 }
