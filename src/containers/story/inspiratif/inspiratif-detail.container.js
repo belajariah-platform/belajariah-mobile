@@ -13,7 +13,6 @@ const InspiratifStoryDetail = () => {
 
   const navigation = useNavigation()
   const classData = {
-
     Title: 'Jadi Sukses, Belajar dari Sandiaga Uno',
     Time: 'Senin, 12 Januari 20xx 12:20',
     Writer: 'Rico Febriansyah',

@@ -166,5 +166,6 @@ export default {
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
   SandiagaUnoImg: require('./SandiagaUnoImg.png'),
+  IconTokohInspiratif: require('./IconTokohInspiratif.png'),
   ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 }
