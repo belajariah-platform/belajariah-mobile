@@ -210,6 +210,10 @@ const styles = StyleSheet.create({
     height : 'auto',
     alignItems : 'flex-end',
   },
+  indicatorContainer : {
+    top : 10,
+    alignItems:'center',
+  },
   imageBackgroundCard : { height: 'auto', marginBottom:-15 },
   containerTextArea : { marginTop: 20 },
   iconTop : { top:-4 }

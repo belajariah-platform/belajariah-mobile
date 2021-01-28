@@ -13,15 +13,23 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
+
 import {
   State,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
+// import {
+//   Tab,
+//   Tabs,
+//   TabHeading,
+//   ScrollableTab
+// } from 'native-base'
+
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
+import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
 
 import { styles } from './home.style'
 import images from '../../assets/images'
@@ -40,6 +48,7 @@ const Home = (props) => {
   const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
   const mainScrollViewRef = useRef()
+  const horizontalScrollRef = useRef()
   const toggleModal = () => setModalVisible(!modalVisible)
 
   const handleSwipe = ({ nativeEvent }) => {
@@ -157,14 +166,42 @@ const Home = (props) => {
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {/* <Tabs
+            onChangeTab={(event) => {
+              handleModal('ok')
+              setCategorySelected(event.i)
+            }}
+            style={{ backgroundColor:'transparent', height : 50, }}
+            tabBarUnderlineStyle={{ backgroundColor : 'transparent' }}
+            renderTabBar={()=> <ScrollableTab
+              style={{ backgroundColor : 'transparent', height : 20, borderBottomWidth : 0 }}/>}>
+            {categories.map((item, index) => {
+              return (
+                <Tab
+                  key={index}
+                  heading={
+                    <TabHeading style={{ backgroundColor :
+                    categorySelected == index ?   Color.purpleButton : Color.grey, borderRadius : 16, marginHorizontal : 5 }}>
+                      <Text style={{ color : 'white' }}>{item.name}</Text>
+                    </TabHeading>
+                  }/>
+              )
+            })}
+          </Tabs> */}
+          <ScrollView
+            ref={horizontalScrollRef}
+            horizontal={true} showsHorizontalScrollIndicator={false}>
             {categories.map((category, index) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => {
+                  onPress={ () => {
                     handleModal(category.name)
                     setCategorySelected(category.id)
+                    // await horizontalScrollRef.current.scrollTo({
+                    //   x: 4000,
+                    //   animated: true,
+                    // })
                   }}>
                   <Text
                     style={[

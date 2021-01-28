@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flex: 9,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    backgroundColor: Color.white,
+    backgroundColor: Color.softPink,
   },
   fingerGesture: {
     height: 40,

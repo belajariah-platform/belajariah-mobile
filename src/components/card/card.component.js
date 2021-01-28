@@ -6,7 +6,6 @@ import { View, Text, Image } from 'react-native'
 import { styles } from './card.style'
 
 const  Cards = (props)  => {
-  console.log
   return (
     <View style={styles.container}>
       {props.imageTitle}
