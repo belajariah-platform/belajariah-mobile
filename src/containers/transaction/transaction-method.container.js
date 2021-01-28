@@ -6,8 +6,8 @@ import { Icon, Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native'
 
-import { Images, Color } from '../../assets'
 import { FormatRupiah } from '../../utils'
+import { Images, Color } from '../../assets'
 import { ButtonGradient, ModalInfo, Buttons, TextBox } from '../../components'
 
 import styles from './transaction-method.style'
@@ -36,6 +36,16 @@ const TransactionMethod = () => {
     titleModal: 'Punya kode voucher?',
     modalDesc: 'Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher',
   }
+
+  var method = [
+    { id: 0, type : 'virtual_account', value: 'Mandiri' },
+    { id: 1, type : 'virtual_account',  value: 'BNI' },
+    { id: 2, type : 'virtual_account',  value: 'BCA' },
+    { id: 3, type : 'e_wallet', value: 'OVO' },
+    { id: 3, type : 'e_wallet', value: 'GO-PAY' },
+    { id: 3, type : 'mart', value: 'Indomaret' },
+    { id: 3, type : 'mart', value: 'Alfamart' },
+  ]
 
   const handleRating = (num) => {
     let rating = []
@@ -125,41 +135,38 @@ const TransactionMethod = () => {
             <Text style={styles.textBold}>E-Wallet</Text>
             <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
             <View style={styles.flexRow}>
-              <RadioButton value='ovo' />
-              <Text style={styles.textGateway}>OVO</Text>
-              <RadioButton value='gopay' />
-              <Text style={styles.textGateway}>GO-PAY</Text>
+              {method.map((item, index) => {
+                return item.type == 'e_wallet' &&  (
+                  <>
+                    <RadioButton key={index} value={item.value} />
+                    <Text style={styles.textGateway}>{item.value}</Text>
+                  </>
+                )})}
             </View>
           </Card>
 
           <Card containerStyle={styles.cardMethods}>
             <Text style={styles.textBold}>Transfer Virtual Account</Text>
             <Text style={styles.textRegular}>Transfer pembayaran anda dengan mudah dan cepat</Text>
-            <View style={styles.flexRow}>
-              <RadioButton value='bankMandiri' />
-              <Text style={styles.textGateway}>Bank Mandiri</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <RadioButton value='bankBNI' />
-              <Text style={styles.textGateway}>Bank BNI</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <RadioButton value='bankBCA' />
-              <Text style={styles.textGateway}>Bank BCA</Text>
-            </View>
+            {method.map((item, index) => {
+              return item.type == 'virtual_account' &&  (
+                <View key={index} style={styles.flexRow}>
+                  <RadioButton value={item.value} />
+                  <Text style={styles.textGateway}>{item.value}</Text>
+                </View>
+              )})}
           </Card>
 
           <Card containerStyle={[styles.cardMethods, styles.cardMethodCustom]}>
             <Text style={styles.textBold}>Minimarket</Text>
             <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
-            <View style={styles.flexRow}>
-              <RadioButton value='indomaret' />
-              <Text style={styles.textGateway}>Indomaret</Text>
-            </View>
-            <View style={styles.flexRow}>
-              <RadioButton value='alfamart' />
-              <Text style={styles.textGateway}>Alfamart</Text>
-            </View>
+            {method.map((item, index) => {
+              return item.type == 'mart' &&  (
+                <View key={index} style={styles.flexRow}>
+                  <RadioButton value={item.value} />
+                  <Text style={styles.textGateway}>{item.value}</Text>
+                </View>
+              )})}
           </Card>
         </View>
       </RadioButton.Group>
@@ -187,7 +194,10 @@ const TransactionMethod = () => {
     <View style={styles.containerMain}>
       <ModalInfo
         isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
+        backdropPress={() => {
+          toggleModal()
+          FormVoucher.resetForm()
+        }}
         renderItem={
           <View style={styles.containerModal}>
             <Text style={styles.TitleModal}>{classData.titleModal}</Text>
@@ -201,11 +211,16 @@ const TransactionMethod = () => {
                   name='voucher_code'
                   form={FormVoucher}
                 />
-                <Buttons style={[styles.ButtonClaim,
-                  FormVoucher.values['voucher_code'].length > 4 ?
-                    { backgroundColor : Color.purpleButton } :
-                    { backgroundColor : '#cbcbcb' } ]}
-                title='KLAIM'/>
+                <Buttons
+                  title='KLAIM'
+                  onPress={FormVoucher.handleSubmit}
+                  disabled={FormVoucher.values['voucher_code']
+                    .length > 4 ? false : true}
+                  style={[styles.ButtonClaim,
+                    FormVoucher.values['voucher_code'].length > 4 ?
+                      { backgroundColor : Color.purpleButton } :
+                      { backgroundColor : '#cbcbcb' } ]}
+                />
               </View>
             </View>
           </View>

@@ -130,7 +130,11 @@ const styles = StyleSheet.create({
   containerFilter : {
     height : 'auto',
     alignItems : 'flex-end',
-  }
+  },
+  indicatorContainer : {
+    top : 10,
+    alignItems:'center',
+  },
 })
 
 export { styles }

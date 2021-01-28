@@ -175,7 +175,18 @@ const styles = StyleSheet.create({
     color : Color.white,
     fontFamily : FontType.regular,
     fontSize : FontSize.mediumLarge,
-  }
+  },
+  flexRow: {
+    flexDirection: 'row',
+  },
+  textRadioBtn: {
+    color: Color.black,
+    paddingVertical: 4,
+    alignSelf: 'center',
+    paddingHorizontal: 8,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
 })
 
 export { styles }

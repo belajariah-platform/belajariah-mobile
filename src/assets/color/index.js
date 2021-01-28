@@ -14,7 +14,7 @@ const Color = {
 
   //new
   red: 'red',
-  grey: 'grey',
+  grey: 'gray',
   white: 'white',
   black: '#1A1A1A',
   tosca: '#74ddc4',

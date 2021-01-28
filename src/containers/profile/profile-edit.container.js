@@ -21,7 +21,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../assets'
-import { Buttons, TextBox, ModalInfo } from '../../components'
+import { Buttons, TextBox, ModalInfo, ModalDate } from '../../components'
 
 import { styles } from './profile-edit.style'
 import { Avatar } from 'react-native-elements'
@@ -31,28 +31,27 @@ const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 const ProfileEdit = () => {
   const navigation = useNavigation()
 
-  const strName = 'Rico Darmawan'
   const [openCamera, setOpenCamera] = useState(false)
   const [dataCapture, setDataCapture] = useState({})
   // const [previewImage, setPreviewImage] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
 
-  const [date, setDate] = useState(new Date())
-  const [selectedIndex, setSelectedIndex] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalDateVisible, setModalDateVisible] = useState(false)
   // const [cameraVisible, setCameraVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalDate = () => setModalDateVisible(!modalDateVisible)
 
   const FormPersonal = useFormik({
     initialValues: {
-      fullname: '',
-      phone: '',
-      profesion: '',
-      gender: '',
-      birth: '',
-      province: '',
-      city: '',
-      address: '',
+      fullname: 'Rico Darmawan',
+      phone: '082184783116',
+      profesion: 'Content Creator',
+      gender: 0,
+      birth: new Date(),
+      province: 'Sumatera Selatan',
+      city: 'Palembang',
+      address: 'Jl.Ahmad Rivai',
     },
     onSubmit: (values) => {
       console.log(values)
@@ -115,7 +114,7 @@ const ProfileEdit = () => {
     if (RNCamera.camera) {
       const options = { quality:0.5, base64: true }
       const data = await RNCamera.camera.takePictureAsync(options)
-      const path = `${RNFetchBlob.fs.dirs.CacheDir}/test.png`
+      const path = `${RNFetchBlob.fs.dirs.CacheDir}/pict-bljrh.png`
       try {
         setPictureTaken(true)
         RNFetchBlob.fs.writeFile(path, data.base64, 'base64')
@@ -129,7 +128,7 @@ const ProfileEdit = () => {
             })
           })
       } catch (error) {
-        console.log('error 2', error)
+        console.log('error', error)
       }
     }
   }
@@ -283,7 +282,7 @@ const ProfileEdit = () => {
                       style={styles.avatar}/>
                   </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>
-                    {filterText(strName)}
+                    {filterText(FormPersonal.values['fullname'])}
                   </Text>
                 </View>
 
@@ -320,20 +319,24 @@ const ProfileEdit = () => {
                   />
                   <Text style={styles.containerText}>Jenis Kelamin</Text>
                   <RadioGroup
-                    selectedIndex={selectedIndex}
                     style={styles.containerRadio}
-                    onChange={(index) => setSelectedIndex(index)}>
+                    selectedIndex={FormPersonal.values['gender']}
+                    onChange={(e) => FormPersonal.setFieldValue('gender', e)}>
                     <Radio style={styles.containerInputRadio}>Laki-laki</Radio>
                     <Radio style={styles.containerInputRadio}>Perempuan</Radio>
                   </RadioGroup>
                   <Text style={styles.containerText}>Tanggal Lahir</Text>
-                  <Datepicker
-                    date={date}
-                    accessoryRight={CalendarIcon}
-                    style={styles.datePickerInput}
-                    controlStyle={styles.datePickerControl}
-                    onSelect={(nextDate) => setDate(nextDate)}
-                  />
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => setModalDateVisible(true)}>
+                    <Datepicker
+                      disabled
+                      accessoryRight={CalendarIcon}
+                      style={styles.datePickerInput}
+                      controlStyle={styles.datePickerControl}
+                      date={FormPersonal.values['birth']}
+                    />
+                  </TouchableOpacity>
                   <Text style={styles.containerText}>Provinsi</Text>
                   <TextBox
                     name='province'
@@ -389,6 +392,13 @@ const ProfileEdit = () => {
         containerStyle={{ height:125 }}
         renderItem={<ChooseTakeImage />}
         backdropPress={() => toggleModal()}
+      />
+      <ModalDate
+        mode='date'
+        isVisible={modalDateVisible}
+        date={FormPersonal.values['birth']}
+        backdropPress={() => toggleModalDate()}
+        dateChange={(e) => FormPersonal.setFieldValue('birth', e)}
       />
     </>
   )
