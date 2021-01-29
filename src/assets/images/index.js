@@ -87,6 +87,7 @@ export default {
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
   IconBankBNISyariah: require('./IconBankBNISyariah.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
+  ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
   IconCompleteTransaction: require('./IconCompleteTransaction.svg'),
 
   //Update Detail Class

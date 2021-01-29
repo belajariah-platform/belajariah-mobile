@@ -11,6 +11,7 @@ import {
   TransactionMethod,
   TransactionInfo,
   TransactionConfirm,
+  TransactionUpload,
 } from './transaction'
 import {
   AdminUser,
@@ -62,6 +63,7 @@ export {
   AdminInstructor,
   TransactionInfo,
   AdminProfileEdit,
+  TransactionUpload,
   InstructorProfile,
   TransactionMethod,
   TransactionConfirm,
