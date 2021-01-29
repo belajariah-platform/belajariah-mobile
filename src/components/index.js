@@ -12,7 +12,8 @@ import Searchbox from './searchbox'
 import Progressbar from './progressbar'
 import ButtonGradient from './button-gradient'
 
-import { ModalInfo, ModalConfirm, ModalRating } from './modal'
+import VideoPlayer from './video'
+import { ModalDate, ModalInfo, ModalConfirm, ModalRating } from './modal'
 
 export {
   Cards,
@@ -25,10 +26,12 @@ export {
   Carousel,
   Checkbox,
   TextView,
+  ModalDate,
   Searchbox,
   ModalInfo,
   ModalRating,
   Progressbar,
+  VideoPlayer,
   ModalConfirm,
   ButtonGradient
 }
