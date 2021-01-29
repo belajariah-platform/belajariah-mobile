@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
@@ -6,8 +6,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flexButtonHeader: {
-    paddingRight:15,
+    width: '100%',
+    paddingRight: 15,
+    flexDirection: 'row',
     alignItems:'center',
+    justifyContent: 'space-between',
+  },
+  flexButtonHeaderFullscreen: {
+    width: '100%',
+    position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -26,9 +33,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop:-20,
     paddingVertical: 2,
+    alignItems: 'center',
     flexDirection: 'row',
     alignSelf: 'flex-end',
-    alignItems: 'center',
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
@@ -40,22 +47,57 @@ const styles = StyleSheet.create({
   },
   backgroundHeader: {
     top: -8,
-    position: 'absolute',
   },
-  backgroundVideo: {
-    top : -10,
+  videoContainerStyle: {
     width: 176,
     height: 88,
     alignSelf: 'center',
     backgroundColor: Color.softPink,
   },
-  textDesc: {
+  videoFullscreenContainerStyle: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
+  },
+  videoStyle: {
+    width: 176,
+    height: 88,
+  },
+  videoFullscreenStyle: {
+    width: '100%',
+    height: '100%',
+  },
+  controllerStyle: {
+    width: 176,
+    height: 88,
+    marginTop: -88,
+    alignSelf: 'center',
+    backgroundColor: '#000000c4',
+    justifyContent: 'space-between',
+  },
+  controllerFullscreenStyle: {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    position: 'absolute',
+    backgroundColor: '#000000c4',
+    justifyContent: 'space-between',
+  },
+  iconBack: {
     marginTop: 0,
+  },
+  iconShare: {
+    marginTop: 14,
+    marginRight: 16,
+  },
+  textDesc: {
+    marginTop: 8,
     color: Color.white,
     textAlign: 'center',
     paddingHorizontal : '2%',
-    fontSize: FontSize.smallMedium,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallMedium,
   },
   textRating: {
     marginTop: 4,
@@ -69,29 +111,29 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 8,
     color: Color.white,
-    marginHorizontal: 4,
     paddingVertical: 4,
+    marginHorizontal: 4,
     paddingHorizontal: 16,
     fontSize: FontSize.medium,
     fontFamily: FontType.bold,
     backgroundColor: Color.bgColorBlue,
   },
   textBuyClass: {
-    fontFamily: FontType.bold,
     color: Color.white,
+    fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
   semiBox: {
     height: 30,
-    marginTop: 38,
     width: '100%',
+    marginTop: 32,
     marginBottom:-5,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: Color.softPink,
   },
   tabContainerStyle: {
-    marginTop: -54,
+    marginTop: -48,
   },
   labelStyle: {
     width:'100%',
@@ -100,9 +142,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallest,
   },
   indicatorStyle: {
-    left: '6%',
     width: 80,
     height: 4,
+    left: '6%',
     borderRadius: 2,
     backgroundColor: Color.bgColor,
   },
@@ -118,9 +160,9 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
   },
   price: {
+    fontSize: FontSize.small,
     color: Color.greyHintText,
     fontFamily: FontType.regular,
-    fontSize: FontSize.small,
     textDecorationLine: 'line-through',
   },
   btnBuyClass: {

@@ -5,8 +5,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  containerFullscreen: {
+    width: '100%',
+    height: '100%',
+  },
   containerView : {
-    flex:2.4,
+    flex: 2.4,
     backgroundColor: '#9956B3',
     fontFamily: FontType.regular,
   },
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
   },
-  containerParentReviw : {
+  containerParentReview : {
     flexDirection: 'row',
     marginVertical: '3%',
   },
@@ -145,25 +149,41 @@ const styles = StyleSheet.create({
     borderColor: '#e6e6e6',
     backgroundColor:'#fef5ff',
   },
-  video: {
+  videoContainerStyle: {
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
+    backgroundColor: Color.softPink,
+  },
+  videoFullscreenContainerStyle: {
+    width: '100%',
+    height: '100%',
     backgroundColor: 'black',
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').width * (9 / 16),
   },
-  toolbar: {
-    padding: 10,
-    marginTop: 30,
-    borderRadius: 5,
-    backgroundColor: 'white',
+  videoStyle: {
+    width: '100%',
+    height: '100%',
   },
-  mediaPlayer: {
+  videoFullscreenStyle: {
+    width: '100%',
+    height: '100%',
+  },
+  controllerStyle: {
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
+    position: 'absolute',
+    backgroundColor: '#000000c4',
+    justifyContent: 'space-between',
+  },
+  controllerFullscreenStyle: {
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     position: 'absolute',
-    backgroundColor: 'black',
-    justifyContent: 'center',
+    backgroundColor: '#000000c4',
+    justifyContent: 'space-between',
   },
   textStyle: {
     color: '#000',

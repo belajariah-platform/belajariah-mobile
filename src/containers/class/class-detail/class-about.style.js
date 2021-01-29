@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
   textRegularParaf: {
     lineHeight : 15,
     color: Color.black,
-    textAlign: 'justify',
     marginBottom : 10,
     flexDirection:'row',
+    textAlign: 'justify',
     fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
   },

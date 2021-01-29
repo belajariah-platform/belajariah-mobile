@@ -163,6 +163,15 @@ export default {
   VoucherCode: require('./VoucherCode.svg'),
   BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
 
+  //Video
+  VideoFullscreen: require('./BtnVideoFullscreen.svg'),
+  VideoPlay: require('./BtnVideoPlay.svg'),
+  VideoPause: require('./BtnVideoPause.svg'),
+  VideoSkipBack: require('./BtnVideoBackward.svg'),
+  VideoSkipForward: require('./BtnVideoForward.svg'),
+  VideoPrevious: require('./BtnVideoPrevious.svg'),
+  VideoNext: require('./BtnVideoNext.svg'),
+
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
   SandiagaUnoImg: require('./SandiagaUnoImg.png'),

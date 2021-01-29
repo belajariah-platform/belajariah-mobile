@@ -1,14 +1,12 @@
 import moment from 'moment'
-import * as React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Video from 'react-native-video'
 import { List } from 'react-native-paper'
 import { useState, useRef, createRef } from 'react'
 import { Avatar, Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, View, ScrollView, Alert, TextInput } from 'react-native'
-import MediaControls, { PLAYER_STATES } from 'react-native-media-controls'
 
 import { Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
@@ -16,21 +14,17 @@ import { ButtonGradient, TextView, ModalRating } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
 
+import { VideoPlayer } from '../../../components'
+
 const ClassLearning = () => {
   const navigation = useNavigation()
   // const [expanded, setExpanded] = React.useState(true)
   // const handlePress = () => setExpanded(!expanded)
-  const videoPlayer = useRef(null)
-  const [duration, setDuration] = useState(0)
-  const [paused, setPaused] = useState(false)
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [screenType, setScreenType] = useState('content')
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [isFullScreen, setIsFullScreen] = useState(false)
-  const [playerState, setPlayerState] = useState(PLAYER_STATES.PLAYING)
 
   const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -100,44 +94,6 @@ const ClassLearning = () => {
       },
     ],
   }
-
-  const onLoadStart = () => setIsLoading(true)
-  const onEnd = () => setPlayerState(PLAYER_STATES.ENDED)
-  const onSeek = (seek) => videoPlayer.current.seek(seek)
-  const onSeeking = (currentTime) => setCurrentTime(currentTime)
-
-  const onPaused = (playerState) => {
-    setPaused(!paused)
-    setPlayerState(playerState)
-  }
-
-  const onReplay = () => {
-    setPlayerState(PLAYER_STATES.PLAYING)
-    videoPlayer.current.seek(0)
-  }
-
-  const onProgress = (data) => {
-    if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
-      setCurrentTime(data.currentTime)
-    }
-  }
-
-  const onLoad = (data) => {
-    setDuration(data.duration)
-    setIsLoading(false)
-  }
-
-  const onFullScreen = () => {
-    setIsFullScreen(isFullScreen)
-    if (screenType == 'content') setScreenType('cover')
-    else setScreenType('content')
-  }
-
-  const renderToolbar = () => (
-    <View>
-      <Text style={styles.toolbar}> toolbar </Text>
-    </View>
-  )
 
   const handleRating = (num) => {
     let rating = []
@@ -402,7 +358,7 @@ const ClassLearning = () => {
       <View style={styles.containerMenuDesc}>
         <Text style={styles.containerTextTitle}>{state.title}</Text>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
-        <View style={styles.containerParentReviw}>
+        <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
             <Text style={styles.textRating}>{state.total_user/1000} K</Text>
@@ -547,49 +503,37 @@ const ClassLearning = () => {
         />
       ) : (
         <>
-          <ModalRating
-            isVisible={modalVisible}
-            backdropPress={() => toggleModal()}
-            title='Berikan ratingmu untuk kelas ini'
-            renderItem={  <TextInput
-              multiline={true}
-              numberOfLines={8}
-              style={styles.textArea}/>}
-          />
-          <View style={styles.container}>
-            <TouchableOpacity  style={styles.buttonBack}>
-              <Images.ButtonBack.default/>
-            </TouchableOpacity>
-            <Video
-              onEnd={onEnd}
-              onLoad={onLoad}
-              onLoadStart={onLoadStart}
-              onProgress={onProgress}
-              paused={paused}
-              ref={videoPlayer}
-              resizeMode={'screenType'}
-              onFullScreen={isFullScreen}
-              source={{
-                uri:
-                  'http://belajariah.com/assets/BELAJARIAH%20-%20Solusi%20Tepat%20Belajar%20Membaca%20Al-Quran%20dengan%20Mudah,%20Kapan%20dan%20Dimana%20Saja%20!!.mp4',
-              }}
-              repeat
-              style={styles.mediaPlayer}
-              volume={10}
+          <View style={isFullscreen? styles.containerFullscreen : styles.container}>
+            <ModalRating
+              isVisible={modalVisible}
+              backdropPress={() => toggleModal()}
+              title='Berikan ratingmu untuk kelas ini'
+              renderItem={  <TextInput
+                multiline={true}
+                numberOfLines={8}
+                style={styles.textArea}/>}
             />
-            <MediaControls
-              duration={duration}
-              isLoading={isLoading}
-              mainColor='#333'
-              onFullScreen={onFullScreen}
-              onPaused={onPaused}
-              onReplay={onReplay}
-              onSeek={onSeek}
-              onSeeking={onSeeking}
-              playerState={playerState}
-              progress={currentTime}
-              toolbar={renderToolbar()}
-            />
+            <View style={styles.container}>
+              <TouchableOpacity  style={styles.buttonBack}>
+                <Images.ButtonBack.default/>
+              </TouchableOpacity>
+
+              <VideoPlayer
+                posterLink={'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg'}
+                videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
+                iconPlaySize = {48}
+                iconSkipSize = {20}
+                iconPlaySizeFullscreen = {80}
+                iconSkipSizeFullscreen = {48}
+                videoStyle={styles.videoStyle}
+                style={styles.videoContainerStyle}
+                controllerStyle={styles.controllerStyle}
+                videoFullscreenStyle={styles.videoFullscreenStyle}
+                fullscreenStyle={styles.videoFullscreenContainerStyle}
+                onFullScreenPress={() => {setIsFullscreen(!isFullscreen)}}
+                controllerFullscreenStyle={styles.controllerFullscreenStyle}
+              />
+            </View>
           </View>
           <View style={styles.containerView}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -600,6 +544,7 @@ const ClassLearning = () => {
               </View>
             </ScrollView>
           </View>
+
         </>
       )}
     </>
