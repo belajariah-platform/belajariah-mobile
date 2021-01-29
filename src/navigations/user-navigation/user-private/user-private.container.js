@@ -13,6 +13,7 @@ import {
   InspiratifStory,
   TransactionInfo,
   TransactionMethod,
+  ConsultationDetail,
   TransactionConfirm,
   InspiratifStoryDetail,
 } from '../../../containers'
@@ -40,6 +41,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
+      <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
     </Stack.Navigator>
   )
 }

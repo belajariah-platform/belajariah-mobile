@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 import { useDispatch } from 'react-redux'
+import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 
 import {
   Text,
   View,
-  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
@@ -42,7 +40,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Lihat Pesan Suara'
           onPress={() => {
-            ToastAndroid.show('Lihat Pesan Suara', ToastAndroid.SHORT)
+            navigation.navigate('Consultation')
           }}
           labelStyle={styles.label}
         />
@@ -50,7 +48,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Tentang Belajariah'
           onPress={() => {
-            ToastAndroid.show('Tentang Belajariah', ToastAndroid.SHORT)
+            navigation.navigate('AboutUs')
           }}
           labelStyle={styles.label}
         />
@@ -58,23 +56,23 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Hubungi Kami'
           onPress={() => {
-            ToastAndroid.show('Hubungi Kami', ToastAndroid.SHORT)
+            navigation.navigate('ContactUs')
           }}
           labelStyle={styles.label}
         />
 
-        <DrawerItem
+        {/* <DrawerItem
           label='Bantuan'
           onPress={() => {
-            ToastAndroid.show('Bantuan', ToastAndroid.SHORT)
+            navigation.navigate('Help')
           }}
           labelStyle={styles.label}
-        />
+        /> */}
 
         <DrawerItem
           label='Kebijakan Privasi'
           onPress={() => {
-            ToastAndroid.show('Kebijakan Privasi', ToastAndroid.SHORT)
+            navigation.navigate('PrivacyPolicy')
           }}
           labelStyle={styles.label}
         />
@@ -82,7 +80,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Syarat & Ketentuan'
           onPress={() => {
-            ToastAndroid.show('Syarat & Ketentuan', ToastAndroid.SHORT)
+            navigation.navigate('TermsandConditions')
           }}
           labelStyle={styles.label}
         />
