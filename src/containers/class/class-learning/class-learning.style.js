@@ -89,8 +89,8 @@ const styles = StyleSheet.create({
   },
   containerMenuDesc : {
     width: '100%',
-    paddingTop: '5%',
-    paddingBottom: '5%',
+    paddingTop: 20,
+    paddingBottom: 5,
     paddingHorizontal: 18,
     backgroundColor: Color.softPink,
   },
@@ -313,8 +313,7 @@ const styles = StyleSheet.create({
     marginRight:1,
   },
   containerRecentJobs: {
-    marginTop: 8,
-    marginLeft: 12,
+    marginBottom:20
   },
   avatarUser: {
     width: 48,

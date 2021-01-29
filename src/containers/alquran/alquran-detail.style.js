@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontType, FontSize, FontWeight } from '../../assets'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
   containerBackground: {
@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginRight: 8,
     color: Color.purpleText,
+  },
+  indicatorContainer : {
+    flex : 1,
+    alignItems:'center',
+    justifyContent : 'center',
+    backgroundColor : Color.bgColorPurple
   },
 })
 

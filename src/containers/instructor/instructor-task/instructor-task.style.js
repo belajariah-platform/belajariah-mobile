@@ -1,8 +1,5 @@
 import { StyleSheet } from 'react-native'
-
-import { Resp } from '../../../utils'
 import { Color, FontType, FontSize } from '../../../assets'
-import { colors } from 'react-native-elements'
 
 const styles = StyleSheet.create({
   containerMain: {
@@ -10,6 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: Color.softPink,
   },
   containerHeader: {
+    paddingLeft:5,
+    paddingRight:20,
+    paddingVertical:2,
+    alignItems:'center',
     flexDirection: 'row',
   },
   containerRecentJobs: {
@@ -118,16 +119,11 @@ const styles = StyleSheet.create({
     marginRight: 16,
     backgroundColor: Color.white,
   },
-  btnBack: {
-    marginTop: 6,
-    marginLeft: 8,
-  },
   btnPlayVoice: {
     marginRight: 8,
   },
   textHeader: {
     width: '72%',
-    marginTop: 18,
     color: Color.black,
     textAlign: 'center',
     fontSize: FontSize.large,

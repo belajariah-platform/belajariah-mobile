@@ -5,7 +5,6 @@ import React, { useRef, useState } from 'react'
 import {
   Text,
   View,
-  Alert,
   Image,
   Animated,
   ScrollView,
@@ -14,15 +13,23 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
+
 import {
   State,
   Directions,
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
+// import {
+//   Tab,
+//   Tabs,
+//   TabHeading,
+//   ScrollableTab
+// } from 'native-base'
+
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
+import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
 
 import { styles } from './home.style'
 import images from '../../assets/images'
@@ -41,6 +48,7 @@ const Home = (props) => {
   const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
   const mainScrollViewRef = useRef()
+  const horizontalScrollRef = useRef()
   const toggleModal = () => setModalVisible(!modalVisible)
 
   const handleSwipe = ({ nativeEvent }) => {
@@ -77,11 +85,6 @@ const Home = (props) => {
       description:
         'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
     },
-    {
-      rating: 4.5,
-      description:
-        'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beiveri seyum not',
-    },
   ]
 
   const Inspiratif = [
@@ -104,19 +107,10 @@ const Home = (props) => {
 
   const promotion = [
     {
-      title: 'Promo 1',
-      imgUrl:
-        'https://idseducation.com/wp-content/uploads/2018/09/thumbnail-5-840x430.jpg',
-    },
-    {
-      title: 'Promo 2',
-      imgUrl:
-        'https://blognyalucy.files.wordpress.com/2018/11/flat-design-office-desk-02-preview-o.jpg',
-    },
-    {
-      title: 'Promo 3',
-      imgUrl:
-        'https://image.freepik.com/free-vector/designer-s-office-flat-illustration_23-2147492101.jpg',
+      code_voucher: 'BLJRIAH',
+      title: 'Diskon 30% Pengguna Baru',
+      discount: 30,
+      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
   ]
 
@@ -160,39 +154,54 @@ const Home = (props) => {
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-          <Image style={styles.cardCustom} source={{ uri: item.imgUrl }} />
+          <Image style={styles.cardCustom} source={Images.BannerPromo} />
         </TouchableOpacity>
       </View>
     )
   }
 
   const CategoryClassHome = () => {
-    const RenderItem = () => {
-      return (
-        <View>
-          <Text>{state}</Text>
-        </View>
-      )
-    }
-
     return (
       <>
-        <ModalInfo
-          isVisible={modalVisible}
-          renderItem={<RenderItem />}
-          backdropPress={() => toggleModal()}
-        />
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {/* <Tabs
+            onChangeTab={(event) => {
+              handleModal('ok')
+              setCategorySelected(event.i)
+            }}
+            style={{ backgroundColor:'transparent', height : 50, }}
+            tabBarUnderlineStyle={{ backgroundColor : 'transparent' }}
+            renderTabBar={()=> <ScrollableTab
+              style={{ backgroundColor : 'transparent', height : 20, borderBottomWidth : 0 }}/>}>
+            {categories.map((item, index) => {
+              return (
+                <Tab
+                  key={index}
+                  heading={
+                    <TabHeading style={{ backgroundColor :
+                    categorySelected == index ?   Color.purpleButton : Color.grey, borderRadius : 16, marginHorizontal : 5 }}>
+                      <Text style={{ color : 'white' }}>{item.name}</Text>
+                    </TabHeading>
+                  }/>
+              )
+            })}
+          </Tabs> */}
+          <ScrollView
+            ref={horizontalScrollRef}
+            horizontal={true} showsHorizontalScrollIndicator={false}>
             {categories.map((category, index) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={() => {
+                  onPress={ () => {
                     handleModal(category.name)
                     setCategorySelected(category.id)
+                    // await horizontalScrollRef.current.scrollTo({
+                    //   x: 4000,
+                    //   animated: true,
+                    // })
                   }}>
                   <Text
                     style={[
@@ -338,7 +347,7 @@ const Home = (props) => {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.btnReadMore}
-                  onPress={() => Alert.alert('Page Artikel')}>
+                  onPress={() =>  props.navigation.navigate('InspiratifStory')}>
                   <Images.BtnReadMore.default />
                 </TouchableOpacity>
               </Card>
@@ -433,6 +442,15 @@ const Home = (props) => {
           </ScrollView>
         </Animated.View>
       </ImageBackground>
+      <ModalInfo
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        renderItem={
+          <View>
+            <Text>{state}</Text>
+          </View>
+        }
+      />
     </View>
   )
 }

@@ -151,8 +151,11 @@ export default {
 
   //Document PDF
   BGOpenPDF : require('./BgDocumentLoad.png'),
-  IconDownloadPDF : require('./IconDownloadPdf.svg'),
   AlquranDetailBG: require('./BgAlQuranDetail.png'),
+  IconDownloadPDF : require('./IconDownloadPdf.svg'),
+
+  //IconEdit
+  IconEdit : require('./IconEdit.svg'),
 
   //Update Detail Promotion
   BannerPromo: require('./BannerPromo.png'),
@@ -169,4 +172,8 @@ export default {
   VideoPrevious: require('./BtnVideoPrevious.svg'),
   VideoNext: require('./BtnVideoNext.svg'),
 
+  //Bacaan Inspiratif
+  IconShareBlack: require('./IconShareBlack.svg'),
+  SandiagaUnoImg: require('./SandiagaUnoImg.png'),
+  ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 }

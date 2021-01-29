@@ -5,14 +5,21 @@ import { Home, HomeSearch } from './home'
 import { Profile, ProfileEdit } from './profile'
 import { Alquran, AlquranDetail } from './alquran'
 import { Promotion, PromotionDetail } from './promotion'
+
 import {
   Transaction,
   TransactionMethod,
   TransactionInfo,
   TransactionConfirm,
 } from './transaction'
-import { AdminUser, AdminDashboard, AdminInstructor } from './admin'
-import { Login, Register, Introduction, ChangePassword } from './user'
+import {
+  AdminUser,
+  AdminDashboard,
+  AdminInstructor,
+  AdminProfileAll,
+  AdminProfileEdit,
+  AdminProfileInstructor,
+} from './admin'
 import {
   InstructorJob,
   InstructorTask,
@@ -21,7 +28,10 @@ import {
   InstructorProfileEdit,
 } from './instructor'
 
+import { InspiratifStory, InspiratifStoryDetail } from './story'
+import { Login, Register, Introduction, ChangePassword } from './user'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
+
 
 export {
   Home,
@@ -46,12 +56,17 @@ export {
   ChangePassword,
   AdminDashboard,
   InstructorTask,
+  AdminProfileAll,
   PromotionDetail,
+  InspiratifStory,
   AdminInstructor,
   TransactionInfo,
+  AdminProfileEdit,
   InstructorProfile,
   TransactionMethod,
   TransactionConfirm,
   InstructorDashboard,
+  InspiratifStoryDetail,
   InstructorProfileEdit,
+  AdminProfileInstructor,
 }

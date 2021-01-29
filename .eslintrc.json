@@ -49,6 +49,6 @@
         "switches": "never"
       }
     ],
-    "max-len": ["error", {"code": 500}]
+    "max-len": ["error", {"code": 2000}]
   }
 }

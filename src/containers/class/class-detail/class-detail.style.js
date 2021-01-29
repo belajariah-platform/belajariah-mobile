@@ -7,7 +7,9 @@ const styles = StyleSheet.create({
   },
   flexButtonHeader: {
     width: '100%',
+    paddingRight: 15,
     flexDirection: 'row',
+    alignItems:'center',
     justifyContent: 'space-between',
   },
   flexButtonHeaderFullscreen: {

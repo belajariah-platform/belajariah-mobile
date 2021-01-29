@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontType, FontSize, FontWeight } from '../../assets'
+import { Color, FontType, FontSize } from '../../assets'
 
 const styles = StyleSheet.create({
   containerBackground: {
@@ -123,6 +123,12 @@ const styles = StyleSheet.create({
   },
   iconSearch: {
     marginRight: -12,
+  },
+  indicatorContainer : {
+    flex : 1,
+    alignItems:'center',
+    justifyContent : 'center',
+    backgroundColor : Color.bgColorPurple
   },
 })
 

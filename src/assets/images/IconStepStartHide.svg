@@ -23,7 +23,7 @@ viewBox="0 0 40 51.96"
    <![CDATA[
     @font-face { font-family:"Avenir LT 65 Medium";font-variant:normal;font-weight:normal;src:url("#FontID0") format(svg)}
     .fil0 {fill:#FEFEFE}
-    .fil1 {fill:#FEFEFE;fill-rule:nonzero;fill-opacity:0.4}
+    .fil1 {fill:#FEFEFE;fill-rule:nonzero;fill-opacity:0.3}
     .fnt0 {font-weight:normal;font-size:9.53px;font-family:'Avenir LT 65 Medium'}
    ]]>
   </style>

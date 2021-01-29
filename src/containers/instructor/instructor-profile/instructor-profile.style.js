@@ -26,11 +26,12 @@ const styles = StyleSheet.create({
   btnDrawer: {
     width: 20,
     height: 30,
-    marginTop: 8,
-    marginRight: 12,
   },
   containerDrawerButton: {
     width: '100%',
+    paddingVertical:8,
+    alignItems:'center',
+    paddingHorizontal:20,
     position: 'absolute',
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
   },
   containerScrollView: {
     width:'100%',
-    marginBottom: 105,
   },
   containerNoTransaction: {
     width: '90%',
@@ -131,7 +130,11 @@ const styles = StyleSheet.create({
   containerFilter : {
     height : 'auto',
     alignItems : 'flex-end',
-  }
+  },
+  indicatorContainer : {
+    top : 10,
+    alignItems:'center',
+  },
 })
 
 export { styles }
