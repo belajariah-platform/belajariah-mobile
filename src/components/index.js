@@ -12,6 +12,7 @@ import Searchbox from './searchbox'
 import Progressbar from './progressbar'
 import ButtonGradient from './button-gradient'
 
+import VideoPlayer from './video'
 import { ModalInfo, ModalConfirm, ModalRating } from './modal'
 
 export {
@@ -29,6 +30,7 @@ export {
   ModalInfo,
   ModalRating,
   Progressbar,
+  VideoPlayer,
   ModalConfirm,
   ButtonGradient
 }

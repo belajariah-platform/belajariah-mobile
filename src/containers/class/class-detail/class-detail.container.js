@@ -1,5 +1,4 @@
-import React from 'react'
-import Video from 'react-native-video'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -13,9 +12,10 @@ import ClassInstructor from './class-instructor.container'
 
 import { FormatRupiah } from '../../../utils'
 import { Color, Images } from '../../../assets'
-import { ButtonGradient } from '../../../components'
+import { ButtonGradient, VideoPlayer } from '../../../components'
 
 import styles from './class-detail.style'
+import { Alert } from 'react-native'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -23,6 +23,7 @@ const ClassDetail = () => {
   const route = useRoute()
   const navigation = useNavigation()
   const { isLogin } = useSelector((state) => state.UserReducer)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   let { price, discountedPrice } = route.params ?? {}
 
@@ -30,7 +31,7 @@ const ClassDetail = () => {
     name: 'Kelas Tahsin',
     quote: 'Belajar Alqur\'an dari dasar dengan metode yang mudah dan menyenangkan.',
     videoLink:
-      'https://cdn-cf-east.streamable.com/video/mp4/wh132q.mp4?Expires=1610504280&Signature=BGH7eUCTgDeTXicWLPcMY-b1v1dXNJVlYfa6wvkJNE3RVsgmaLgMD5lnzmG6NAicj64Sgyc7gKmKw6Xzc5O0vqj9nYS5Gm0qyeAUkSRjyMBGT1oeLpbs-1fNBlPZN5lCxulkQszTsrZpMirrOAqqj8z8xC2D0NRlUkNjyOcbdzG8E08jLiVC4zaPfUkvqJ0~vYg-XGxcyIDrH~QCV81JLx-1H3eevDJbM79eTs9rOGXnIXoFahvjlqsPl0z8yXsW9XWEm7wSQjptP9whT98n1pr2K0AXnqKS4h5ccNNqcLNoiUI7bqJbhTyYgDDVdfrgf8F7CLlTa9PKWQ131j4WlA__&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ',
+      'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
     posterLink: 'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg',
     rating: 4.5,
     tags: ['Populer'],
@@ -62,7 +63,7 @@ const ClassDetail = () => {
       source={Images.DetailClassHeaderBG}
       style={styles.flexFull}
     >
-      <View style={styles.flexButtonHeader}>
+      <View style={isFullscreen? styles.flexButtonHeaderFullscreen : styles.flexButtonHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBack.default style={styles.iconBack} />
         </TouchableOpacity>
@@ -71,14 +72,20 @@ const ClassDetail = () => {
         </TouchableOpacity>
       </View>
 
-      <Video
-        source={{ uri: classData.videoLink }}
-        style={styles.backgroundVideo}
-        controls={true}
-        paused={true}
-        poster={classData.posterLink}
-        resizeMode={'cover'}
-        posterResizeMode={'cover'}
+      <VideoPlayer
+        iconPlaySize = {20}
+        iconSkipSize = {20}
+        iconPlaySizeFullscreen = {80}
+        iconSkipSizeFullscreen = {48}
+        videoStyle={styles.videoStyle}
+        videoLink={classData.videoLink}
+        posterLink={classData.posterLink}
+        style={styles.videoContainerStyle}
+        controllerStyle={styles.controllerStyle}
+        videoFullscreenStyle={styles.videoFullscreenStyle}
+        fullscreenStyle={styles.videoFullscreenContainerStyle}
+        onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
+        controllerFullscreenStyle={styles.controllerFullscreenStyle}
       />
 
       <Text style={styles.textDesc}>{classData.quote}</Text>
