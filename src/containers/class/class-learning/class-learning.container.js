@@ -507,11 +507,10 @@ const ClassLearning = () => {
             <ModalRating
               isVisible={modalVisible}
               backdropPress={() => toggleModal()}
-              title='Berikan ratingmu untuk kelas ini'
-              renderItem={  <TextInput
-                multiline={true}
-                numberOfLines={8}
-                style={styles.textArea}/>}
+              title='Berikan rating untuk koreksi bacaanmu'
+              renderItem={<Text style={styles.textModal}>
+                Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?
+              </Text>}
             />
             <View style={styles.container}>
               <TouchableOpacity  style={styles.buttonBack}>

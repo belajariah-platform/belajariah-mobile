@@ -39,7 +39,6 @@ export default {
   StarFullClass: require('./StarFullClass.svg'),
   IconStepStart: require('./IconStepStart.svg'),
   BgProfileEdit: require('./BgProfileEdit.png'),
-  AvatarProfile: require('./AvatarProfile.png'),
   JudulTahsin: require('./CardJudulTahsin.svg'),
   IconStepFinish: require('./IconStepFinish.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
@@ -104,17 +103,15 @@ export default {
   BintangBorder: require('./BintangBorder.png'),
   BintangFull: require('./BintangFull.png'),
   Consultation: require('./IconConsultation.svg'),
-  AvatarInstructor1: require('./AvatarInstructor.svg'),
   IconConsultations: require('./IconConsultations.svg'),
-  ImageUstadzMaulana: require('./ImageUstadzMaulana.png'),
   DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
 
   //Update Admin
   GrafisVoice: require('./GrafisVoice.svg'),
   SidenavUser : require('./SidenavUser.svg'),
-  AvatarUstadz: require('./AvatarUstadz.png'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
+  GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
   SidenavInstrcutor: require('./SidenavInstructor.svg'),
@@ -123,7 +120,6 @@ export default {
 
   //Update instructor-navigation
   IconSend: require('./IconSend.svg'),
-  AvatarUser3: require('./AvatarUser3.png'),
   IconCancel: require('./IconCancel.svg'),
   IconConfirm: require('./IconConfirm.svg'),
   ButtonBackBlack: require('./ButtonBackBlack.svg'),
@@ -160,7 +156,7 @@ export default {
   //Update Detail Promotion
   BannerPromo: require('./BannerPromo.png'),
   IconVoucher: require('./IconVoucher.png'),
-  VoucherCode: require('./VoucherCode.svg'),
+  VoucherCode: require('./BgVoucher.png'),
   BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
 
   //Video
@@ -176,4 +172,12 @@ export default {
   IconShareBlack: require('./IconShareBlack.svg'),
   SandiagaUnoImg: require('./SandiagaUnoImg.png'),
   ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
+
+  //CosultationUser
+  CardMsg1 : require('./CardMsg1.png'),
+  CardMsg2 : require('./CardMsg2.png'),
+  CardMsg3 : require('./CardMsg3.png'),
+  CardMsg4 : require('./CardMsg4.png'),
+  CardMsg5 : require('./CardMsg5.png'),
+  CardMsg6 : require('./CardMsg6.png'),
 }

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     width : '90%',
     height : 45,
     borderRadius: 8,
-    marginTop: 4,
+    marginTop: 15,
     alignSelf: 'center',
     marginHorizontal: 4,
     borderColor: Color.white,
@@ -266,6 +266,13 @@ const styles = StyleSheet.create({
     color: Color.black,
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
+  },
+  textCode : {
+    marginTop: -32,
+    color: Color.black,
+    textAlign : 'center',
+    fontSize: FontSize.large,
+    fontFamily: FontType.bold,
   },
   containerCodePromo: {
     marginVertical: 10,

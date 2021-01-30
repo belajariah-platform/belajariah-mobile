@@ -58,7 +58,10 @@ const PromotionDetail = (props) => {
             <Text style={styles.TitlePromo}>Kode Voucher Disc. {item.discount}%</Text>
           </View>
           <View style={styles.containerCodePromo}>
-            <Images.VoucherCode.default />
+            <View>
+              <Image source={Images.VoucherCode} style={{ width : 151, height:37 }}/>
+              <Text style={styles.textCode}>{item.code_voucher}</Text>
+            </View>
             <TouchableOpacity onPress={() => copyToClipboard(item.code_voucher)}>
               <Text style={styles.TxtButtonSalin}>SALIN</Text>
             </TouchableOpacity>

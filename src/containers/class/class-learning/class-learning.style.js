@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
@@ -228,6 +228,11 @@ const styles = StyleSheet.create({
   textRegular: {
     fontSize: 13.5,
     color: Color.black,
+    fontFamily: FontType.regular,
+  },
+  textModal : {
+    color: Color.black,
+    fontSize: FontSize.smallMedium,
     fontFamily: FontType.regular,
   },
   textExam: {
