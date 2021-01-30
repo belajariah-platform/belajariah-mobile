@@ -86,6 +86,7 @@ export default {
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
   IconBankBNISyariah: require('./IconBankBNISyariah.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
+  ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
   IconCompleteTransaction: require('./IconCompleteTransaction.svg'),
 
   //Update Detail Class
@@ -171,6 +172,7 @@ export default {
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
   SandiagaUnoImg: require('./SandiagaUnoImg.png'),
+  IconTokohInspiratif: require('./IconTokohInspiratif.png'),
   ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 
   //CosultationUser
