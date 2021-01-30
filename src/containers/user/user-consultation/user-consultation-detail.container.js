@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
@@ -11,15 +12,17 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import { TimeConvert } from '../../../utils'
 import { Images } from '../../../assets'
-import { ButtonGradient } from '../../../components'
+import { TimeConvert } from '../../../utils'
+import { ButtonGradient, ModalRating } from '../../../components'
 
 import styles from './user-consultation.style'
 
 const ConsultationDetail = () => {
   const navigation = useNavigation()
-  const [onType, setOnType] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   // let flatList = createRef()
   const user_login = 1
@@ -31,6 +34,13 @@ const ConsultationDetail = () => {
     { user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
     { user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
   ]
+
+  const FormSendMessage = useFormik({
+    initialValues: { message: '', voice_note : '' },
+    onSubmit:  (values) => {
+      console.log(values)
+    },
+  })
 
   const Header = () => {
     return (
@@ -46,7 +56,7 @@ const ConsultationDetail = () => {
     )
   }
 
-  const Content = (item, index) => {
+  const Message = (item, index) => {
     return(
       <View
         key={index}
@@ -77,7 +87,7 @@ const ConsultationDetail = () => {
               <Text style={[styles.textDesc, { textAlign : 'right' }]}>
                 {item.username}
               </Text>
-              <View style={{ flexDirection : 'row' }}>
+              <View style={styles.flexRow}>
                 <TouchableOpacity>
                   <Images.IconPlayVoiceBlack.default
                     width={20}
@@ -106,47 +116,40 @@ const ConsultationDetail = () => {
             user_login == item.user_code && (styles.textWhite)]}>
             {item.message}
           </Text>
-          <Text style={[styles.textTime,
-            user_login == item.user_code && (styles.textWhite)]}>
-            {moment(item.created_date).format('h:mm A')}
-          </Text>
+          <View style={styles.containerTime}>
+            { user_login != item.user_code &&(
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text>Rating</Text>
+              </TouchableOpacity>
+            )}
+            <Text style={[styles.textTime,
+              user_login == item.user_code && (styles.textWhite)]}>
+              {moment(item.created_date).format('h:mm A')}
+            </Text>
+          </View>
         </View>
       </View>
     )
   }
 
   const Footer = () => {
+    let icons, alert
+    FormSendMessage.values['message'].length > 0 ?
+      (icons = Images.IconSend, alert = 'Send message') :
+      (icons = Images.IconVoiceRecord, alert = 'Hold to record')
+
     return (
-      <View style={styles.containerTextInput}>
-        <TextInput
-          placeholder='Type message here'
-          style={styles.textInput}
-          onChangeText={() => setOnType(true)}
-        />
-        {onType ? (
-          <ButtonGradient
-            icon={<Images.IconSend.default width={28} height={28} />}
-            styles={styles.containerSend}
-            onPress={() => {
-              setOnType(false)
-              Alert.alert('Send message')
-            }}
-          />
-        ) : (
-          <ButtonGradient
-            icon={<Images.IconVoiceRecord.default width={28} height={28} />}
-            styles={styles.containerSend}
-            onPress={() => {
-              setOnType(false)
-              Alert.alert('Hold to record sound')
-            }}
-            onLongPress={() => Alert.alert('Record')}
-          />
-        )}
-      </View>
+      <ButtonGradient
+        icon={<icons.default/>}
+        styles={styles.containerSend}
+        onPress={() => Alert.alert(alert)}
+        onLongPress={() =>  FormSendMessage.values['message']
+          .length == 0 &&(Alert.alert('Record'))}
+      />
     )
   }
-
 
   return (
     <View style={styles.containerMain}>
@@ -154,15 +157,28 @@ const ConsultationDetail = () => {
       <FlatList
         data={state}
         style={{ width:'100%' }}
-        // ref={ref => (flatList = ref)}
         showsVerticalScrollIndicator ={false}
         contentContainerStyle={{ paddingBottom : 50 }}
         keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => Content(item, index)}
-        // onLayout={() => flatList.scrollToEnd({ animated: true })}
-        // onContentSizeChange={() =>flatList.scrollToEnd({ animated: true })}
+        renderItem={({ item, index }) => Message(item, index)}
       />
-      <Footer/>
+      <View style={styles.containerTextInput}>
+        <TextInput
+          style={styles.textInput}
+          placeholder='Type message here'
+          onChangeText={(e) => FormSendMessage
+            .setFieldValue('message', e)}
+        />
+        <Footer/>
+      </View>
+      <ModalRating
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        title='Berikan rating untuk koreksi bacaanmu'
+        renderItem={<Text style={styles.textModal}>
+                Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?
+        </Text>}
+      />
     </View>
   )
 }

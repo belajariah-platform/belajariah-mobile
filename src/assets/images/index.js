@@ -40,6 +40,7 @@ export default {
   IconStepStart: require('./IconStepStart.svg'),
   BgProfileEdit: require('./BgProfileEdit.png'),
   JudulTahsin: require('./CardJudulTahsin.svg'),
+  IconNotifInfo : require('./IconNotifInfo.svg'),
   IconStepFinish: require('./IconStepFinish.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
   BotTransactHint: require('./TransactHint.svg'),

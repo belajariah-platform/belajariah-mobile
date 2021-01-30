@@ -106,9 +106,15 @@ const styles = StyleSheet.create({
     lineHeight : 18,
     color: Color.white,
     textAlign : 'center',
-    fontFamily: FontType.bold,
+    paddingHorizontal : 10,
     textTransform : 'capitalize',
+    fontFamily: FontType.berkshire,
+    fontSize: FontSize.medium,
+  },
+  textModal : {
+    color: Color.black,
     fontSize: FontSize.smallMedium,
+    fontFamily: FontType.regular,
   },
   containerCategory : {
     top : 28,
@@ -186,18 +192,30 @@ const styles = StyleSheet.create({
   },
   textUserDesc: {
     marginTop: 4,
+    marginBottom : 10,
     lineHeight : 15,
     color: Color.black,
     fontSize: FontSize.smallMedium,
     fontFamily: FontType.regular,
   },
   textTime: {
-    marginTop: 10,
+    flex : 1,
     marginRight: 16,
     textAlign: 'right',
     color: Color.black,
     fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
+  },
+  containerTime : {
+    marginTop : 10,
+    flexDirection : 'row',
+    alignItems : 'center',
+    justifyContent : 'space-between',
+  },
+  notif : {
+    top : 12,
+    right : 12,
+    position : 'absolute',
   },
   flexEnd : {
     alignSelf : 'flex-end',
@@ -217,15 +235,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
-  horizontal : {
-    marginHorizontal : 10,
-  },
-  textWhite : {
-    color : Color.white
-  },
-  textPurple : {
-    color : '#58006f'
-  }
+  textPurple : { color : '#58006f' },
+  textWhite : { color : Color.white },
+  flexRow : { flexDirection : 'row' },
+  horizontal : { marginHorizontal : 10 },
 })
 
 export default styles

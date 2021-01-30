@@ -206,10 +206,10 @@ const TransactionMethod = () => {
               <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
               <View style={styles.viewModalInput}>
                 <TextBox
-                  customStyle={styles.InputVoucher}
-                  placeholder='Contoh: BLJRIAH'
-                  name='voucher_code'
                   form={FormVoucher}
+                  name='voucher_code'
+                  placeholder='Contoh: BLJRIAH'
+                  customStyle={styles.InputVoucher}
                 />
                 <Buttons
                   title='KLAIM'

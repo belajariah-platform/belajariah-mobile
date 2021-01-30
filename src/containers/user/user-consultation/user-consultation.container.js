@@ -15,12 +15,12 @@ const Consultation = () => {
   const navigation = useNavigation()
 
   const state = [
-    { category : 'tahsin' },
-    { category : 'tilawah' },
-    { category : 'fiqih pernikahan' },
-    { category : 'fiqih ibadah' },
-    { category : 'bahasa arab' },
-    { category : 'fiqih penyelenggara jenazah' },
+    { category : 'tahsin', new_message : 1 },
+    { category : 'tilawah', new_message : 0 },
+    { category : 'fiqih pernikahan', new_message : 0 },
+    { category : 'fiqih ibadah', new_message : 0 },
+    { category : 'bahasa arab', new_message : 0 },
+    { category : 'fiqih penyelenggara jenazah', new_message : 0 },
 
   ]
 
@@ -69,6 +69,9 @@ const Consultation = () => {
         >
           <Image source={image}
             style={styles.cardCategory}/>
+          {item.new_message > 0 && (
+            <Images.IconNotifInfo.default style={styles.notif}/>
+          )}
           <View style={styles.containerCategory}>
             <Text style={styles.textCategory}>Kelas {item.category}</Text>
           </View>
@@ -89,7 +92,6 @@ const Consultation = () => {
         contentContainerStyle={{ alignItems : 'center' }}
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => Content(item, index)}
-        // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
       />
     </View>
   )

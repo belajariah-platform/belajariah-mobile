@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,
   },
+  info : {
+    top : 22,
+    right : 68,
+    position : 'absolute',
+  }
 })
 
 export { styles }

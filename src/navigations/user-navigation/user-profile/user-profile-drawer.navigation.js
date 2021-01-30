@@ -16,6 +16,7 @@ import { styles } from './user-profile.style'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
+  const count = 1
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
@@ -36,14 +37,21 @@ const CustomDrawer = ({ navigation }, props) => {
           }}
           labelStyle={styles.label}
         />
-
-        <DrawerItem
-          label='Lihat Pesan Suara'
-          onPress={() => {
-            navigation.navigate('Consultation')
-          }}
-          labelStyle={styles.label}
-        />
+        <View>
+          <DrawerItem
+            label='Lihat Pesan Suara'
+            onPress={() => {
+              navigation.navigate('Consultation')
+            }}
+            labelStyle={styles.label}
+          />
+          {count > 0 && (
+            <Images.IconNotifInfo.default
+              width={12}
+              height={12}
+              style={styles.info}/>
+          )}
+        </View>
 
         <DrawerItem
           label='Tentang Belajariah'
@@ -60,14 +68,6 @@ const CustomDrawer = ({ navigation }, props) => {
           }}
           labelStyle={styles.label}
         />
-
-        {/* <DrawerItem
-          label='Bantuan'
-          onPress={() => {
-            navigation.navigate('Help')
-          }}
-          labelStyle={styles.label}
-        /> */}
 
         <DrawerItem
           label='Kebijakan Privasi'
