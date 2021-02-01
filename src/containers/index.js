@@ -30,7 +30,7 @@ import {
 } from './instructor'
 
 import { InspiratifStory, InspiratifStoryDetail } from './story'
-import { Login, Register, Introduction, ChangePassword } from './user'
+import { Login, Register, Introduction, ChangePassword, ConfirmPassword, UserVerify } from './user'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 
 
@@ -46,6 +46,7 @@ export {
   AdminUser,
   ClassUser,
   HomeSearch,
+  UserVerify,
   ClassDetail,
   ProfileEdit,
   Transaction,
@@ -61,6 +62,7 @@ export {
   PromotionDetail,
   InspiratifStory,
   AdminInstructor,
+  ConfirmPassword,
   TransactionInfo,
   AdminProfileEdit,
   TransactionUpload,

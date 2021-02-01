@@ -1,5 +1,5 @@
 import React from 'react'
-import { Profile, ProfileEdit } from '../../../containers'
+import { Profile, ProfileEdit, ChangePassword } from '../../../containers'
 import CustomDrawer from './user-profile-drawer.navigation'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
@@ -17,6 +17,7 @@ const ProfileNavigation = () => {
 
       {/*Need New Components*/}
       <Drawer.Screen name='Voice Notes' component={Profile} />
+      <Drawer.Screen name='CheckEmail' component={ChangePassword} />
       <Drawer.Screen name='About' component={Profile} />
       <Drawer.Screen name='Contact Us' component={Profile} />
       <Drawer.Screen name='Help' component={Profile} />

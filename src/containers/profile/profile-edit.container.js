@@ -355,35 +355,6 @@ const ProfileEdit = () => {
                     />
                   </View>
                 </View>
-
-                <View style={styles.containerViewBottom}>
-                  <Text style={styles.containerTextJudul}>UBAH KATA SANDI</Text>
-                  <Text style={styles.containerText}>Kata Sandi Lama</Text>
-                  <TextBox
-                    name='old_password'
-                    form={FormPassword}
-                    placeholder='Kata sandi lama'
-                  />
-                  <Text style={styles.containerText}>Kata Sandi Baru</Text>
-                  <TextBox
-                    name='new_password'
-                    form={FormPassword}
-                    placeholder='Kata sandi baru'
-                  />
-                  <Text style={styles.containerText}>Konfirmasi Kata Sandi</Text>
-                  <TextBox
-                    name='confirm_password'
-                    form={FormPassword}
-                    placeholder='Konfirmasi kata sandi'
-                  />
-                  <View style={styles.fixToText}>
-                    <Buttons
-                      title='Simpan'
-                      style={styles.containerButton}
-                      onPress={FormPassword.handleSubmit}
-                    />
-                  </View>
-                </View>
               </ScrollView>
             )}
       </View>
