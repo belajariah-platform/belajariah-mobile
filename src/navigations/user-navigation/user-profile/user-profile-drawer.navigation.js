@@ -48,6 +48,12 @@ const CustomDrawer = ({ navigation }, props) => {
         />
 
         <DrawerItem
+          label='Ubah Kata Sandi'
+          onPress={() =>  navigation.navigate('CheckEmail')}
+          labelStyle={styles.label}
+        />
+
+        <DrawerItem
           label='Tentang Belajariah'
           onPress={() => {
             ToastAndroid.show('Tentang Belajariah', ToastAndroid.SHORT)
