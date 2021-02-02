@@ -115,7 +115,7 @@ const InstructorJob = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
-        <Text style={styles.textHeader2}>{classes[idClass].className} (Job)</Text>
+        <Text style={styles.textHeader2}>{classes[idClass].className}</Text>
         <TouchableOpacity>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
@@ -160,14 +160,14 @@ const InstructorJob = () => {
                   </Text>
                 </View>
                 <List.Accordion
-                  title='Deskripsi Voice user'
+                  title='Deskripsi konsultasi'
                   titleStyle={styles.textAccordionTitle}
                   style={styles.containerAccordion}>
                   <Text style={styles.textDesc}>{question.desc}</Text>
                 </List.Accordion>
 
                 <ButtonGradient
-                  title='Apply'
+                  title='Ambil'
                   styles={styles.btnApply}
                   onPress={() => {
                     Alert.alert(

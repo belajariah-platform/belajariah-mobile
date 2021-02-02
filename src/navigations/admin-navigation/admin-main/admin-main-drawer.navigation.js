@@ -50,7 +50,7 @@ const AdminDrawer = ({ navigation }, props) => {
             width={25}
             height={25}
           />
-          <Text style={styles.textIcon}>All User</Text>
+          <Text style={styles.textIcon}>Konsultasi</Text>
         </TouchableOpacity>
 
         <View style={styles.flexOne}>
@@ -78,7 +78,7 @@ const AdminDrawer = ({ navigation }, props) => {
             width={24}
             height={24}
           />
-          <Text style={styles.textIcon}>Logout</Text>
+          <Text style={styles.textIcon}>Keluar</Text>
         </TouchableOpacity>
 
       </View>

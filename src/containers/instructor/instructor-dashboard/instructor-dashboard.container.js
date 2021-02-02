@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  ScrollView,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
@@ -60,7 +59,7 @@ const InstructorDashboard = () => {
     return (
       <View style={styles.containerFooter}>
         <Text style={styles.textTitle}>
-          Bantu Koreksi bacaan user dan peroleh benefitnya!
+         Bantu jawab pertanyaan atau koreksi bacaan santri dan peroleh manfaatnya!
         </Text>
         <Text style={styles.textSubTitle}>
           ayo bantu mereka koreksi bacaannya
@@ -85,14 +84,14 @@ const InstructorDashboard = () => {
                         <Text
                           style={
                             styles.textTaskCount
-                          }>{`${item.taskCount} Task available`}</Text>
+                          }>{`${item.taskCount} Tugas Tersedia`}</Text>
                         <TouchableOpacity
                           onPress={() =>
                             navigation.navigate('InstructorJob', {
                               idClass: item.id,
                             })
                           }>
-                          <Text style={styles.textBtnViewTask}>View Task</Text>
+                          <Text style={styles.textBtnViewTask}>Lihat Tugas</Text>
                         </TouchableOpacity>
                       </ImageBackground>
                     </Card>

@@ -12,9 +12,8 @@ const ClassAbout = () => {
   const state = {
     rating : 4.7,
     duration : 144,
-    total_topic : 4,
+    total_topic : 48,
     total_user : 1500,
-    total_subtopic : 12,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     topics: [
@@ -99,8 +98,7 @@ const ClassAbout = () => {
           <Text style={styles.textBold}>Topik yang dibahas</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>{state.total_topic}</Text> Topik,
-              <Text style={styles.textRegular}>{state.total_subtopic}</Text> Materi
+              <Text style={styles.textRegular}>{state.total_topic}</Text> Topik
             </Text>
             <Text style={styles.textRegular}>
               {TimeConvertToHour(state.duration)}
@@ -147,10 +145,10 @@ const ClassAbout = () => {
                 />
                 <Text style={{ ...styles.textBoldCustom, top :4 }}>
                   {val.value.split('|')[0]}
-                  <Text style={styles.textBoldRed}>
+                  {/* <Text style={styles.textBoldRed}>
                     {stringSplit == 'video' ? ' (Unlimited)' :
                       stringSplit == 'consultation' || stringSplit == 'webinar' ? ' (Limited)' :''}
-                  </Text>
+                  </Text> */}
                 </Text>
               </View>
             </View>

@@ -1,12 +1,18 @@
 const TimeConvert = (num) => {
-  // let numMinute, numSecond
   const minutes = Math.floor(num / 60)
   const seconds = num % 60
-  // minutes.lenght == 1 ? numMinute = '0' :
-  // seconds.lenght == 1 ?
-  //   numSecond = '0' : numMinute = ''&&  numSecond = ''
-  // }
-  return `${minutes}:${seconds}`
+  return `${minutes}:${seconds < 10 ?
+    `0${seconds}` : seconds}`
+}
+
+const TimerObj = (num) => {
+  const minutes = Math.floor(num / 60)
+  const seconds = num % 60
+  const obj = {
+    minute : minutes,
+    second : seconds
+  }
+  return obj
 }
 
 const TimeConvertToHour = (num) => {
@@ -15,4 +21,4 @@ const TimeConvertToHour = (num) => {
   return `${hour} Jam, ${minutes} Menit`
 }
 
-export { TimeConvert, TimeConvertToHour }
+export { TimeConvert, TimerObj, TimeConvertToHour }

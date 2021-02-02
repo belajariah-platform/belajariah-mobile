@@ -13,14 +13,14 @@ const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   if (isLogin) {
     switch (userInfo.password) {
-      case 'admin':
-        return  <AdminNavigation/>
-      case 'user':
-        return  <UserNavigation/>
-      case 'instructor':
-        return  <InstructorNavigation/>
-      default :
-        return <PublicNavigation/>
+    case 'admin':
+      return  <AdminNavigation/>
+    case 'user':
+      return  <UserNavigation/>
+    case 'instructor':
+      return  <InstructorNavigation/>
+    default :
+      return <PublicNavigation/>
     }
   } else {
     return <PublicNavigation/>

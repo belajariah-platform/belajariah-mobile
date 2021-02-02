@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
   textTitleWhite: {
     color: Color.white,
     fontFamily: FontType.bold,
+    textTransform: 'capitalize',
     fontSize: FontSize.mediumLarge,
   },
   containerSetting: {
@@ -234,6 +235,16 @@ const styles = StyleSheet.create({
   avatarEnd: {
     flex: 1,
     alignItems: 'flex-end',
+  },
+  containerVoice : {
+    paddingTop : 15,
+    paddingBottom : 10,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal : 20,
+  },
+  cancel : {
+    marginLeft : '20%',
   },
   textPurple : { color : '#58006f' },
   textWhite : { color : Color.white },

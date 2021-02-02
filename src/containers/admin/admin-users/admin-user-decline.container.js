@@ -101,7 +101,7 @@ const AdminUserDecline = () => {
           </View>
           <List.Section>
             <List.Accordion
-              title='Deskripsi voice'
+              title='Deskripsi konsultasi'
               titleStyle={{ ...styles.textRegular, opacity : 0.5 }}
               style={styles.containerAccordion}>
               <View>

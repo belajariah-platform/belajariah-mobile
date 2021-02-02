@@ -48,7 +48,7 @@ const TransactionConfirm = () => {
           title='Selesai'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={()=> navigation.navigate('Transaction')}
+          onPress={() => navigation.navigate('Pembayaran')}
         />
       </View>
     )

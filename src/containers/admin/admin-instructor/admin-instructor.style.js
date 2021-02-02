@@ -88,7 +88,11 @@ const styles = StyleSheet.create({
     borderRadius : 20,
     backgroundColor : Color.white,
     borderColor : Color.transparent,
-  }
+  },
+  indicatorContainer : {
+    top : 10,
+    alignItems:'center',
+  },
 })
 
 export { styles }

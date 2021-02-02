@@ -110,25 +110,25 @@ const Transaction = () => {
     let ribbon, icon, status, color
     switch (item.status) {
     case 'success':
-      status = 'Completed'
+      status = 'Lunas'
       color = Color.textSuccess
       icon = Images.IconComplete
       ribbon = Images.RibbonComplete
       break
     case 'failed':
-      status = 'Failed'
+      status = 'Gagal'
       color = Color.textFailed
       icon = Images.IconFailed
       ribbon = Images.RibbonFailed
       break
-    case 'waiting for payment':
+    case 'Menunggu Pembayaran':
       status = 'Waiting for Payment'
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending
       break
     default:
-      status = 'Waiting for Payment'
+      status = 'Menunggu Pembayaran'
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending

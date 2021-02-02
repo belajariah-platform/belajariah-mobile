@@ -303,7 +303,7 @@ const ProfileEdit = () => {
                     name='fullname'
                     form={FormPersonal}
                     placeholder='Nama lengkap'
-                  />
+                  ></TextBox>
                   <Text style={styles.containerText}>Nomor Telepon</Text>
                   <TextBox
                     name='phone'

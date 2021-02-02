@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   logo: { marginTop: 12 },
   textTitle: {
     color: Color.black,
-    fontSize: FontSize.large,
+    fontSize: 18,
     fontFamily: FontType.regular,
   },
   textSubTitle: {

@@ -86,7 +86,7 @@ const CustomDrawer = ({ navigation }, props) => {
         />
 
         <DrawerItem
-          label='Logout'
+          label='Keluar'
           onPress={async () => await dispatch(UserAPI.SignOut())}
           labelStyle={styles.label}
           icon={() => (

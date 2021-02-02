@@ -15,7 +15,6 @@ import { Color, Images } from '../../../assets'
 import { ButtonGradient, VideoPlayer } from '../../../components'
 
 import styles from './class-detail.style'
-import { Alert } from 'react-native'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -94,16 +93,6 @@ const ClassDetail = () => {
         <Text style={styles.textRating}>{classData.rating}</Text>
       </View>
 
-      {/* <View style={styles.flexTags}>
-        {classData.tags.map((tag, index) => {
-          return (
-            <Text key={index} style={styles.textTag}>
-              {tag}
-            </Text>
-          )
-        })}
-      </View> */}
-
       <View style={styles.semiBox}/>
 
       <Tab.Navigator
@@ -128,7 +117,7 @@ const ClassDetail = () => {
         <Tab.Screen
           name='ClassReview'
           component={ClassReview}
-          options={{ title: 'Ulasan User' }}
+          options={{ title: 'Ulasan' }}
         />
       </Tab.Navigator>
 

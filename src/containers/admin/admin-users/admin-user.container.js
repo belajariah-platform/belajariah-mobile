@@ -52,17 +52,17 @@ const AdminUser = () => {
         <Tab.Screen
           name='AdminUserAll'
           component={AdminUserAll}
-          options={{ title: 'All User' }}
+          options={{ title: 'Semua' }}
         />
         <Tab.Screen
           name='AdminUserAccept'
           component={AdminUserAccept}
-          options={{ title: 'Accept' }}
+          options={{ title: 'Diterima' }}
         />
         <Tab.Screen
           name='AdminUserDecline'
           component={AdminUserDecline}
-          options={{ title: 'Decline' }}
+          options={{ title: 'Ditolak' }}
         />
       </Tab.Navigator>
     </View>

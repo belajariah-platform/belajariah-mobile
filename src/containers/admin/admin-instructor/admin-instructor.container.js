@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card } from 'react-native-elements'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
@@ -7,8 +7,10 @@ import {
   View,
   Image,
   FlatList,
+  RefreshControl,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native'
 
 import { Images } from '../../../assets'
@@ -17,6 +19,8 @@ import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   const state = [
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
@@ -26,6 +30,27 @@ const AdminInstructor = () => {
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
   ]
+
+  const onRefreshing = () => {
+    setRefreshing(true)
+    setRefreshing(false)
+  }
+
+  const onLoadMore = (e) => {
+    if (e.distanceFromEnd >= 0) {
+      setLoading(true)
+    }
+  }
+
+  const renderFooter = () => {
+    return loading ? (
+      <View style={styles.indicatorContainer}>
+        <ActivityIndicator
+          color='white'
+          size={30} />
+      </View>
+    ) : null
+  }
 
   const ViewHeader = () => {
     return(
@@ -57,9 +82,13 @@ const AdminInstructor = () => {
         <FlatList
           data={state}
           style={{ width:'100%' }}
-          contentContainerStyle={{ paddingBottom: 92 }}
+          onEndReachedThreshold={0.1}
+          ListFooterComponent={renderFooter}
+          onEndReached={(e) => onLoadMore(e)}
           showsVerticalScrollIndicator ={false}
+          contentContainerStyle={{ paddingBottom: 92 }}
           keyExtractor={(item, index) =>  index.toString()}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
           renderItem={({ item, index }) => (
             <Card
               key={index}
@@ -73,7 +102,7 @@ const AdminInstructor = () => {
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate('AdminProfileInstructor', item)}>
-                <Text style={styles.TxtButtonDetail}>Details Profile</Text>
+                <Text style={styles.TxtButtonDetail}>Detail Profil</Text>
               </TouchableOpacity>
             </Card>
           )}

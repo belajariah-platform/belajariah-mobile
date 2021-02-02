@@ -183,4 +183,8 @@ export default {
   CardMsg4 : require('./CardMsg4.png'),
   CardMsg5 : require('./CardMsg5.png'),
   CardMsg6 : require('./CardMsg6.png'),
+  IconGive : require('./IconGive.svg'),
+  IconPause : require('./BtnVideoPausePurple.svg'),
+  IconChecklist : require('./IconConfirmWhite.svg'),
+  IconPauseWhite : require('./BtnVideoPauseWhite.svg'),
 }

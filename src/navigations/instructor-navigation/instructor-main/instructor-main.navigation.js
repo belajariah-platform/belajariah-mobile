@@ -16,21 +16,21 @@ const InstructorMainNavigation = () => {
         tabBarIcon: ({ focused }) => {
           let iconName
           switch (route.name) {
-            case 'Dashboard':
-              iconName = focused
-                ? Images.IconInstructorHomePurple
-                : Images.IconInstructorHome
-              break
-            case 'Task':
-              iconName = focused
-                ? Images.IconInstructorMyTaskPurple
-                : Images.IconInstructorMyTask
-              break
-            case 'Profile':
-              iconName = focused
-                ? Images.IconInstructorProfilePurple
-                : Images.IconInstructorProfile
-              break
+          case 'Dashboard':
+            iconName = focused
+              ? Images.IconInstructorHomePurple
+              : Images.IconInstructorHome
+            break
+          case 'Tugas':
+            iconName = focused
+              ? Images.IconInstructorMyTaskPurple
+              : Images.IconInstructorMyTask
+            break
+          case 'Profil':
+            iconName = focused
+              ? Images.IconInstructorProfilePurple
+              : Images.IconInstructorProfile
+            break
           }
           return <iconName.default />
         },
@@ -49,9 +49,12 @@ const InstructorMainNavigation = () => {
         component={InstructorDashboard}
         options={{ headerShown: false }}
       />
-      <Screen name='Task' component={InstructorTask} />
       <Screen
-        name='Profile'
+        name='Tugas'
+        component={InstructorTask}
+      />
+      <Screen
+        name='Profil'
         component={InstructorProfileNavigation}
         options={{ tabBarVisible: false }}
       />

@@ -3,7 +3,6 @@ import CustomDrawer from './user-profile-drawer.navigation'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import {
-  // Helps,
   AboutUs,
   Profile,
   ContactUs,
@@ -27,7 +26,6 @@ const ProfileNavigation = () => {
       <Drawer.Screen name='Consultation' component={Consultation} />
       <Drawer.Screen name='AboutUs' component={AboutUs} />
       <Drawer.Screen name='ContactUs' component={ContactUs} />
-      {/* <Drawer.Screen name='Help' component={Helps} /> */}
       <Drawer.Screen name='PrivacyPolicy' component={PrivacyPolice} />
       <Drawer.Screen name='TermsandConditions' component={TermCondition} />
     </Drawer.Navigator>

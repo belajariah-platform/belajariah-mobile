@@ -373,10 +373,10 @@ const Home = (props) => {
             </View>
             <View>
               <TouchableOpacity
-                activeOpacity={0.9}
+                activeOpacity={0.5}
                 style={{ ...styles.headerAvatar, marginRight: 15 }}
                 onPress={() =>
-                  props.navigation.navigate(isLogin ? 'Profile' : 'Login')
+                  props.navigation.navigate(isLogin ? 'Profil' : 'Login')
                 }>
                 {isLogin ? (
                   <Avatar

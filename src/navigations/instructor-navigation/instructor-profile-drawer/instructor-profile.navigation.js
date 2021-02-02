@@ -1,9 +1,15 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import { InstructorProfile, InstructorProfileEdit } from '../../../containers'
 import CustomDrawer from './instructor-profile-drawer.navigation'
+import {
+  AboutUs,
+  ContactUs,
+  PrivacyPolice,
+  TermCondition,
+  InstructorProfile,
+  InstructorProfileEdit,
+} from '../../../containers'
 
 const InstructorProfileNavigation = () => {
   const Drawer = createDrawerNavigator()
@@ -15,21 +21,11 @@ const InstructorProfileNavigation = () => {
       drawerContent={(props) => <CustomDrawer {...props} />}
       backBehavior='initialRoute'>
       <Drawer.Screen name='Profile' component={InstructorProfile} />
-      <Drawer.Screen
-        name='InstructorProfileEdit'
-        component={InstructorProfileEdit}
-      />
-
-      {/*Need New Components*/}
-      <Drawer.Screen name='Voice Notes' component={InstructorProfile} />
-      <Drawer.Screen name='About' component={InstructorProfile} />
-      <Drawer.Screen name='Contact Us' component={InstructorProfile} />
-      <Drawer.Screen name='Help' component={InstructorProfile} />
-      <Drawer.Screen name='Privacy Policy' component={InstructorProfile} />
-      <Drawer.Screen
-        name='Terms and Conditions'
-        component={InstructorProfile}
-      />
+      <Drawer.Screen name='InstructorProfileEdit' component={InstructorProfileEdit}/>
+      <Drawer.Screen name='AboutUs' component={AboutUs} />
+      <Drawer.Screen name='ContactUs' component={ContactUs} />
+      <Drawer.Screen name='PrivacyPolicy' component={PrivacyPolice} />
+      <Drawer.Screen name='TermsandConditions' component={TermCondition} />
     </Drawer.Navigator>
   )
 }

@@ -94,7 +94,7 @@ const AdminUserAccept = () => {
             </TouchableOpacity>
           </View>
           <List.Section>
-            <List.Accordion title='Deskripsi voice' titleStyle={styles.textRegular} style={styles.containerAccordion}>
+            <List.Accordion title='Deskripsi konsultasi' titleStyle={styles.textRegular} style={styles.containerAccordion}>
               <View>
                 <Text style={styles.description}>{item.voice_description}</Text>
               </View>

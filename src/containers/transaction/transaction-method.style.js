@@ -68,12 +68,22 @@ const styles = StyleSheet.create({
     backgroundColor: Color.softPink,
   },
   cardDetail: {
-    borderRadius: 8,
+    marginTop : 15,
     borderWidth : 0,
+    borderRadius: 10,
+    paddingVertical : 15,
+    marginHorizontal : 20,
+    paddingHorizontal : 18,
+    backgroundColor : Color.white
   },
   cardMethods: {
-    borderRadius: 8,
+    marginTop : 15,
     borderWidth : 0,
+    borderRadius: 10,
+    paddingVertical : 15,
+    marginHorizontal : 20,
+    paddingHorizontal : 18,
+    backgroundColor : Color.white
   },
   cardMethodCustom : {
     marginBottom: '5%',
@@ -92,15 +102,15 @@ const styles = StyleSheet.create({
   textRegular: {
     marginBottom: 8,
     color: Color.black,
+    fontSize: FontSize.small,
     fontFamily: FontType.regular,
-    fontSize: FontSize.extraSmall,
   },
   textBold: {
     marginBottom: 4,
     textAlign: 'left',
     color: Color.black,
-    fontSize: FontSize.small,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallMedium,
   },
   textRegularPurple: {
     color: Color.purpleText,

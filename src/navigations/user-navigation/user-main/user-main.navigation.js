@@ -18,18 +18,18 @@ const UserMainNavigation = () => {
         tabBarIcon: ({ focused }) => {
           let iconName
           switch (route.name) {
-            case 'Home':
-              iconName = focused ? Images.BotHome : Images.BotHomeHint
-              break
-            case 'Class':
-              iconName = focused ? Images.BotClass : Images.BotClassHint
-              break
-            case 'Transaction':
-              iconName = focused ? Images.BotTransact : Images.BotTransactHint
-              break
-            case 'Profile':
-              iconName = focused ? Images.BotProfile : Images.BotProfileHint
-              break
+          case 'Home':
+            iconName = focused ? Images.BotHome : Images.BotHomeHint
+            break
+          case 'Kelas':
+            iconName = focused ? Images.BotClass : Images.BotClassHint
+            break
+          case 'Pembayaran':
+            iconName = focused ? Images.BotTransact : Images.BotTransactHint
+            break
+          case 'Profil':
+            iconName = focused ? Images.BotProfile : Images.BotProfileHint
+            break
           }
           return <iconName.default />
         },
@@ -43,13 +43,23 @@ const UserMainNavigation = () => {
         activeTintColor: Color.bgColor,
         inactiveTintColor: Color.textLightHint,
       }}>
-      <Screen name='Home' component={Home} options={{ headerShown: false }} />
+      <Screen
+        name='Home'
+        component={Home}
+        options={{ headerShown: false }}
+      />
       {isLogin && (
         <>
-          <Screen name='Class' component={ClassUser} />
-          <Screen name='Transaction' component={Transaction} />
           <Screen
-            name='Profile'
+            name='Kelas'
+            component={ClassUser}
+          />
+          <Screen
+            name='Pembayaran'
+            component={Transaction}
+          />
+          <Screen
+            name='Profil'
             component={ProfileNavigation}
             options={{ tabBarVisible: false }}
           />

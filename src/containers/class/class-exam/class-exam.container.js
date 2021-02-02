@@ -10,8 +10,8 @@ import { styles } from './class-exam.style'
 const ClassExam = () => {
   const mainScrollViewRef = useRef()
   const navigation = useNavigation()
-  const [ minutes, setMinutes ] = useState(4)
-  const [seconds, setSeconds ] =  useState(59)
+  const [minutes, setMinutes] = useState(4)
+  const [seconds, setSeconds] =  useState(59)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
   const [questionSelected, setQuestionSelected] = useState({})

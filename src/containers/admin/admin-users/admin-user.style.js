@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.extraSmall,
   },
   containerAccordion: {
-    width: '75%',
+    width: '85%',
     marginTop : -7,
     paddingVertical: 0,
     paddingHorizontal: 10,

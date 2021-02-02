@@ -89,7 +89,7 @@ const AdminUserAll = () => {
             </TouchableOpacity>
           </View>
           <List.Section>
-            <List.Accordion title='Deskripsi voice' titleStyle={styles.textRegular} style={styles.containerAccordion}>
+            <List.Accordion title='Deskripsi konsultasi' titleStyle={styles.textRegular} style={styles.containerAccordion}>
               <View>
                 <Text style={styles.description}>{item.voice_description}</Text>
               </View>
@@ -97,12 +97,12 @@ const AdminUserAll = () => {
           </List.Section>
           <View style={styles.ViewButtonActionVoice}>
             <ButtonGradient
-              title='Reject'
+              title='Tolak'
               styles={styles.ButtonAction}
               colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
             />
             <ButtonGradient
-              title='Accept'
+              title='Terima'
               styles={styles.ButtonAction}
             />
           </View>
