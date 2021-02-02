@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { ImageBackground } from 'react-native'
+import { Card, Avatar } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
@@ -10,12 +13,10 @@ import {
   ToastAndroid,
   TouchableOpacity,
 } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
+
 
 import { Images } from '../../../assets'
 import { styles } from './instructor-profile.style'
-import { useNavigation } from '@react-navigation/native'
-import { ImageBackground } from 'react-native'
 
 const InstructorProfile = () => {
   const navigation = useNavigation()
@@ -129,7 +130,7 @@ const InstructorProfile = () => {
         containerStyle={styles.containerCardStatus}
         wrapperStyle={styles.wrapperCardStatus}>
         <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusComplete}>Complete</Text>
+          <Text style={styles.textStatusComplete}>Selesai</Text>
           <Images.IconInstructorProfileComplete.default
             width={28}
             height={28}
@@ -140,7 +141,7 @@ const InstructorProfile = () => {
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOngoing}>Ongoing</Text>
+          <Text style={styles.textStatusOngoing}>Menunggu</Text>
           <Images.IconInstructorProfileOngoing.default
             width={28}
             height={28}
@@ -150,7 +151,7 @@ const InstructorProfile = () => {
             {userData.taskOngoingCount}
           </Text>
         </Card>
-        <Card containerStyle={styles.cardStatus}>
+        {/* <Card containerStyle={styles.cardStatus}>
           <Text style={styles.textStatusOverdue}>Overdue</Text>
           <Images.IconInstructorProfileOverdue.default
             width={28}
@@ -160,7 +161,7 @@ const InstructorProfile = () => {
           <Text style={styles.textOverdueCount}>
             {userData.taskOverdueCount}
           </Text>
-        </Card>
+        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>

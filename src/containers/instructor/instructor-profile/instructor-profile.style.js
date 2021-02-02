@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   cardStatus: {
+    width : '40%',
     borderWidth: 0,
     borderRadius: 16,
     marginVertical: 4,

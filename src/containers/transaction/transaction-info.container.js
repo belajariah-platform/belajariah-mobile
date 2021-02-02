@@ -81,9 +81,9 @@ const TransactionInfo = () => {
     return (
       <View>
         <ButtonGradient
-          title='Upload bukti transfer sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
+          title='Upload bukti transfer sekarang'
           onPress={()=> {navigation.navigate('TransactionUpload')}}
         />
         <TouchableOpacity style={styles.btnBuyClassTwo}
@@ -103,7 +103,7 @@ const TransactionInfo = () => {
             <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
           </View>
           <View style={styles.viewTextTotalPayment}>
-            <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas ya</Text>
+            <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas</Text>
           </View>
           <Text style={[styles.txtNotes, styles.margins]}>{classData.quote}</Text>
           <View style={styles.margins}>

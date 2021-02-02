@@ -30,13 +30,16 @@ import {
 } from './instructor'
 
 import { InspiratifStory, InspiratifStoryDetail } from './story'
-import { Login, Register, Introduction, ChangePassword, ConfirmPassword, UserVerify } from './user'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
+import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
+import { Login, Register, Introduction, ChangePassword, Consultation, ConsultationDetail, UserVerify, ConfirmPassword } from './user'
 
 
 export {
   Home,
+  Helps,
   Login,
+  AboutUs,
   Alquran,
   Profile,
   Register,
@@ -44,6 +47,7 @@ export {
   ClassExam,
   Promotion,
   AdminUser,
+  ContactUs,
   ClassUser,
   HomeSearch,
   UserVerify,
@@ -51,8 +55,11 @@ export {
   ProfileEdit,
   Transaction,
   Introduction,
+  Consultation,
   Notification,
   InstructorJob,
+  TermCondition,
+  PrivacyPolice,
   AlquranDetail,
   ClassLearning,
   ChangePassword,
@@ -68,6 +75,7 @@ export {
   TransactionUpload,
   InstructorProfile,
   TransactionMethod,
+  ConsultationDetail,
   TransactionConfirm,
   InstructorDashboard,
   InspiratifStoryDetail,

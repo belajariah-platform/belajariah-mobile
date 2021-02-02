@@ -101,7 +101,7 @@ const TransactionMethod = () => {
     return (
       <View>
         <Text style={styles.textTitleBlack}>Detail Pembayaran</Text>
-        <Card containerStyle={styles.cardDetail}>
+        <View style={styles.cardDetail}>
           <Text style={styles.textBold}>Judul Kelas:</Text>
           <Text style={styles.textRegular}>{classData.quote}</Text>
           <Text style={styles.textBold}>Instruktur</Text>
@@ -121,7 +121,7 @@ const TransactionMethod = () => {
               <Icon name='chevron-right-outline' style={styles.iconChevronRight} />
             </View>
           </TouchableOpacity>
-        </Card>
+        </View>
       </View>
     )
   }
@@ -131,7 +131,7 @@ const TransactionMethod = () => {
       <RadioButton.Group onValueChange={(newGateway) => setGateway(newGateway)} value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
-          <Card containerStyle={styles.cardMethods}>
+          <View style={styles.cardMethods}>
             <Text style={styles.textBold}>E-Wallet</Text>
             <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
             <View style={styles.flexRow}>
@@ -143,9 +143,9 @@ const TransactionMethod = () => {
                   </>
                 )})}
             </View>
-          </Card>
+          </View>
 
-          <Card containerStyle={styles.cardMethods}>
+          <View style={styles.cardMethods}>
             <Text style={styles.textBold}>Transfer Virtual Account</Text>
             <Text style={styles.textRegular}>Transfer pembayaran anda dengan mudah dan cepat</Text>
             {method.map((item, index) => {
@@ -155,9 +155,9 @@ const TransactionMethod = () => {
                   <Text style={styles.textGateway}>{item.value}</Text>
                 </View>
               )})}
-          </Card>
+          </View>
 
-          <Card containerStyle={[styles.cardMethods, styles.cardMethodCustom]}>
+          <View style={[styles.cardMethods, styles.cardMethodCustom]}>
             <Text style={styles.textBold}>Minimarket</Text>
             <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
             {method.map((item, index) => {
@@ -167,7 +167,7 @@ const TransactionMethod = () => {
                   <Text style={styles.textGateway}>{item.value}</Text>
                 </View>
               )})}
-          </Card>
+          </View>
         </View>
       </RadioButton.Group>
     )
@@ -206,10 +206,10 @@ const TransactionMethod = () => {
               <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
               <View style={styles.viewModalInput}>
                 <TextBox
-                  customStyle={styles.InputVoucher}
-                  placeholder='Contoh: BLJRIAH'
-                  name='voucher_code'
                   form={FormVoucher}
+                  name='voucher_code'
+                  placeholder='Contoh: BLJRIAH'
+                  customStyle={styles.InputVoucher}
                 />
                 <Buttons
                   title='KLAIM'

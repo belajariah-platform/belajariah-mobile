@@ -88,7 +88,7 @@ const ProfileInstrcutor = ({ route }) => {
         containerStyle={styles.containerCardStatus}
         wrapperStyle={styles.wrapperCardStatus}>
         <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusComplete}>Complete</Text>
+          <Text style={styles.textStatusComplete}>Selesai</Text>
           <Images.IconInstructorProfileComplete.default
             width={28}
             height={28}
@@ -99,7 +99,7 @@ const ProfileInstrcutor = ({ route }) => {
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOngoing}>Ongoing</Text>
+          <Text style={styles.textStatusOngoing}>Menunggu</Text>
           <Images.IconInstructorProfileOngoing.default
             width={28}
             height={28}
@@ -109,7 +109,7 @@ const ProfileInstrcutor = ({ route }) => {
             {3}
           </Text>
         </Card>
-        <Card containerStyle={styles.cardStatus}>
+        {/* <Card containerStyle={styles.cardStatus}>
           <Text style={styles.textStatusOverdue}>Overdue</Text>
           <Images.IconInstructorProfileOverdue.default
             width={28}
@@ -119,7 +119,7 @@ const ProfileInstrcutor = ({ route }) => {
           <Text style={styles.textOverdueCount}>
             {0}
           </Text>
-        </Card>
+        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>

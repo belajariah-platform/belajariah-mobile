@@ -82,13 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  containerInspiratif: {
-    marginBottom: '10%',
-  },
-  containerTopTitle: {
-    flexDirection: 'row',
-    marginHorizontal: '5%',
-  },
   TitleBacaan: {
     color: Color.black,
     fontFamily: FontType.bold,
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
   },
   containerHeading: {
     margin: 0,
-  },  
+  },
   ImgHeading: {
     width: '100%',
     height: 240,
@@ -113,69 +106,60 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallest,
     fontFamily: FontType.regular,
   },
-  containerWriter: {
-    marginHorizontal: '5%',
-    marginBottom: 10,
-  },
   TxtWriter: {
     color: Color.black,
     fontSize: FontSize.small,
     fontFamily: FontType.bold,
   },
-  ViewParagraf: {
-    marginVertical: '2%',
-    marginHorizontal: '5%',
-  },
-  Txtbacaan: {
-    color: Color.black,
-    fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
-  },
-  containerImg: {
-    marginVertical: '2%',
-    marginHorizontal: '5%',
-  },
-  ImgBody: {
-    width: '100%',
-    height: 260,
-  },
   searchbox : {
     borderWidth : 0,
     borderRadius : 20,
-    backgroundColor : Color.white,
     borderColor : '#e6e6e6',
+    backgroundColor : Color.white,
   },
-  cardInstructor: {
+  containerSearch : {
+    paddingBottom:10,
+    marginHorizontal :20,
+  },
+  cardStyle: {
+    padding: 15,
     width: 'auto',
     height: 'auto',
-    padding: 15,
-    borderRadius: 20,
     borderWidth : 0,
+    borderRadius: 20,
   },
-  ViewInstructorInfo: {
+  viewStyle: {
     flexDirection: 'row',
   },
-  ImgUstadz: {
-    width: 100,
-    height: 100,
+  imageStyle: {
+    width: 110,
+    height: 102,
     marginRight: 10,
   },
-  TxtTitleInstructor: {
+  textStyle: {
     color: Color.black,
-    fontSize: FontSize.medium,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallMedium,
   },
-  email : {
-    marginTop: '10%',
+  description : {
+    marginTop: 10,
     color: Color.black,
-    fontSize: FontSize.small,
+    fontSize: FontSize.smallPoint,
     fontFamily: FontType.regular,
+  },
+  containerDesc : {
+    flex : 1,
+    marginLeft : 5,
   },
   TxtButtonDetail: {
     textAlign: 'right',
     color: Color.purpleText,
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
+  },
+  indicatorContainer : {
+    top : 10,
+    alignItems:'center',
   },
 })
 

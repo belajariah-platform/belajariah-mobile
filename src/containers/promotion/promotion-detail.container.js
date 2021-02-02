@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 import Clipboard from '@react-native-community/clipboard'
@@ -14,7 +13,6 @@ import styles from './promotion-detail.style'
 const PromotionDetail = (props) => {
   const item = props.route.params
   const navigation = useNavigation()
-  const { isLogin } = useSelector((state) => state.UserReducer)
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -58,10 +56,13 @@ const PromotionDetail = (props) => {
             <Text style={styles.TitlePromo}>Kode Voucher Disc. {item.discount}%</Text>
           </View>
           <View style={styles.containerCodePromo}>
-            <Images.VoucherCode.default />
-            <TouchableOpacity onPress={() => copyToClipboard(item.code_voucher)}>
+            <View>
+              <Image source={Images.VoucherCode} style={{ width : 151, height:37 }}/>
+              <Text style={styles.textCode}>{item.code_voucher}</Text>
+            </View>
+            {/* <TouchableOpacity onPress={() => copyToClipboard(item.code_voucher)}>
               <Text style={styles.TxtButtonSalin}>SALIN</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -75,7 +76,7 @@ const PromotionDetail = (props) => {
           title='Gunakan Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={()=> navigation.navigate(isLogin ? 'TransactionMethod' : 'Login')}
+          onPress={() => copyToClipboard(item.code_voucher)}
         />
       </View>
     )

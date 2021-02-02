@@ -20,13 +20,6 @@ import {
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-// import {
-//   Tab,
-//   Tabs,
-//   TabHeading,
-//   ScrollableTab
-// } from 'native-base'
-
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
 import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
@@ -373,10 +366,10 @@ const Home = (props) => {
             </View>
             <View>
               <TouchableOpacity
-                activeOpacity={0.9}
+                activeOpacity={0.5}
                 style={{ ...styles.headerAvatar, marginRight: 15 }}
                 onPress={() =>
-                  props.navigation.navigate(isLogin ? 'Profile' : 'Login')
+                  props.navigation.navigate(isLogin ? 'Profil' : 'Login')
                 }>
                 {isLogin ? (
                   <Avatar

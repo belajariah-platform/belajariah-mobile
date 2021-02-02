@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 import { useDispatch } from 'react-redux'
+import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 
 import {
   Text,
   View,
-  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
@@ -18,6 +16,7 @@ import { styles } from './user-profile.style'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
+  const count = 1
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
@@ -38,14 +37,21 @@ const CustomDrawer = ({ navigation }, props) => {
           }}
           labelStyle={styles.label}
         />
-
-        <DrawerItem
-          label='Lihat Pesan Suara'
-          onPress={() => {
-            ToastAndroid.show('Lihat Pesan Suara', ToastAndroid.SHORT)
-          }}
-          labelStyle={styles.label}
-        />
+        <View>
+          <DrawerItem
+            label='Lihat Pesan Suara'
+            onPress={() => {
+              navigation.navigate('Consultation')
+            }}
+            labelStyle={styles.label}
+          />
+          {count > 0 && (
+            <Images.IconNotifInfo.default
+              width={12}
+              height={12}
+              style={styles.info}/>
+          )}
+        </View>
 
         <DrawerItem
           label='Ubah Kata Sandi'
@@ -56,7 +62,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Tentang Belajariah'
           onPress={() => {
-            ToastAndroid.show('Tentang Belajariah', ToastAndroid.SHORT)
+            navigation.navigate('AboutUs')
           }}
           labelStyle={styles.label}
         />
@@ -64,15 +70,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Hubungi Kami'
           onPress={() => {
-            ToastAndroid.show('Hubungi Kami', ToastAndroid.SHORT)
-          }}
-          labelStyle={styles.label}
-        />
-
-        <DrawerItem
-          label='Bantuan'
-          onPress={() => {
-            ToastAndroid.show('Bantuan', ToastAndroid.SHORT)
+            navigation.navigate('ContactUs')
           }}
           labelStyle={styles.label}
         />
@@ -80,7 +78,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Kebijakan Privasi'
           onPress={() => {
-            ToastAndroid.show('Kebijakan Privasi', ToastAndroid.SHORT)
+            navigation.navigate('PrivacyPolicy')
           }}
           labelStyle={styles.label}
         />
@@ -88,13 +86,13 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Syarat & Ketentuan'
           onPress={() => {
-            ToastAndroid.show('Syarat & Ketentuan', ToastAndroid.SHORT)
+            navigation.navigate('TermsandConditions')
           }}
           labelStyle={styles.label}
         />
 
         <DrawerItem
-          label='Logout'
+          label='Keluar'
           onPress={async () => await dispatch(UserAPI.SignOut())}
           labelStyle={styles.label}
           icon={() => (

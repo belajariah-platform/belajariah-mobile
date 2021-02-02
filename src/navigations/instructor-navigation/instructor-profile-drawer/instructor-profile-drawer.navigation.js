@@ -7,10 +7,11 @@ import { useDispatch } from 'react-redux'
 import {
   Text,
   View,
-  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+
+
 
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
@@ -40,17 +41,9 @@ const CustomDrawer = ({ navigation }, props) => {
         />
 
         <DrawerItem
-          label='Lihat Pesan Suara'
-          onPress={() => {
-            ToastAndroid.show('Lihat Pesan Suara', ToastAndroid.SHORT)
-          }}
-          labelStyle={styles.label}
-        />
-
-        <DrawerItem
           label='Tentang Belajariah'
           onPress={() => {
-            ToastAndroid.show('Tentang Belajariah', ToastAndroid.SHORT)
+            navigation.navigate('AboutUs')
           }}
           labelStyle={styles.label}
         />
@@ -58,15 +51,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Hubungi Kami'
           onPress={() => {
-            ToastAndroid.show('Hubungi Kami', ToastAndroid.SHORT)
-          }}
-          labelStyle={styles.label}
-        />
-
-        <DrawerItem
-          label='Bantuan'
-          onPress={() => {
-            ToastAndroid.show('Bantuan', ToastAndroid.SHORT)
+            navigation.navigate('ContactUs')
           }}
           labelStyle={styles.label}
         />
@@ -74,7 +59,7 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Kebijakan Privasi'
           onPress={() => {
-            ToastAndroid.show('Kebijakan Privasi', ToastAndroid.SHORT)
+            navigation.navigate('PrivacyPolicy')
           }}
           labelStyle={styles.label}
         />
@@ -82,13 +67,13 @@ const CustomDrawer = ({ navigation }, props) => {
         <DrawerItem
           label='Syarat & Ketentuan'
           onPress={() => {
-            ToastAndroid.show('Syarat & Ketentuan', ToastAndroid.SHORT)
+            navigation.navigate('TermsandConditions')
           }}
           labelStyle={styles.label}
         />
 
         <DrawerItem
-          label='Logout'
+          label='Keluar'
           onPress={async () => await dispatch(UserAPI.SignOut())}
           labelStyle={styles.label}
           icon={() => (

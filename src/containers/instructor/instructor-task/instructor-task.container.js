@@ -1,21 +1,23 @@
-import React, { createRef, useState } from 'react'
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  TextInput,
-  Alert,
-} from 'react-native'
-
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Images } from '../../../assets'
 import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
-import { styles } from './instructor-task.style'
+import React, { createRef, useState } from 'react'
 import { Avatar, Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
-import ButtonGradient from '../../../components/button-gradient'
+
+import {
+  View,
+  Alert,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
+
+import { Images } from '../../../assets'
+import { ButtonGradient } from '../../../components'
+
+import { styles } from './instructor-task.style'
 
 const InstructorTask = () => {
   const navigation = useNavigation()
@@ -162,7 +164,7 @@ const InstructorTask = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
-        <Text style={styles.textHeader}>My Task</Text>
+        <Text style={styles.textHeader}>Tugas Saya</Text>
       </View>
     )
   }
@@ -170,7 +172,7 @@ const InstructorTask = () => {
   const RecentJobs = () => {
     return (
       <View style={styles.containerRecentJobs}>
-        <Text style={styles.textTitle}>Recent Jobs</Text>
+        <Text style={styles.textTitle}>Konsultasi Terbaru</Text>
         <Text style={styles.textSubtitle}>
           Pekerjaan yang anda ambil saat ini
         </Text>
@@ -213,7 +215,7 @@ const InstructorTask = () => {
   const CompletedJobs = () => {
     return (
       <View style={styles.containerCompletedJobs}>
-        <Text style={styles.textTitle}>Completed Jobs</Text>
+        <Text style={styles.textTitle}>Konsultasi Terselesaikan</Text>
         <Text style={styles.textSubtitle}>
           Semua Pekerjaan yang telah anda selesaikan
         </Text>
@@ -299,7 +301,7 @@ const InstructorTask = () => {
             />
           </View>
           <View style={styles.containerUserDesc}>
-            <Text style={styles.textDesc}>Deskripsi Voice</Text>
+            <Text style={styles.textDesc}>Deskripsi</Text>
             <Text style={styles.textUserDesc}>{task.userDesc}</Text>
             <Text style={styles.textTime}>{time12hourformat}</Text>
           </View>

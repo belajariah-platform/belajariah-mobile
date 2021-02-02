@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
@@ -24,65 +24,6 @@ const styles = StyleSheet.create({
     zIndex : 10,
     position: 'absolute',
     backgroundColor:'yellow'
-  },
-  containerTouchFilter : {
-    width: 100,
-  },
-  containerClassProgress : {
-    marginTop: 20,
-    paddingTop: '3%',
-    paddingBottom: '8%',
-    flexDirection: 'row',
-    marginHorizontal: '5%',
-    paddingHorizontal: '7%',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    backgroundColor: '#9956B3',
-    justifyContent: 'space-between',
-  },
-  containerIconProgress : {
-    flexDirection: 'row',
-    paddingVertical: '3%',
-    paddingHorizontal: '7%',
-    justifyContent: 'space-between',
-  },
-  ImageClass : {
-    width: 100,
-    height: 100,
-    marginTop: 5,
-  },
-  TextClass : {
-    width: '60%',
-    fontSize: 16,
-    color: '#fff',
-    marginLeft: '3%',
-    marginTop: '-5%',
-    alignSelf: 'center',
-    fontFamily: FontType.regular,
-  },
-  ButtonTextClass : {
-    fontSize: 18,
-    color:'#fff',
-    marginTop: '-8%',
-    marginLeft: '12%',
-    fontWeight: 'bold',
-    alignSelf: 'center',
-  },
-  ButtonClass : {
-    width: 100,
-    height: 50,
-    paddingTop: 15,
-    borderRadius: 20,
-    marginRight: '5%',
-    backgroundColor: '#6e248d',
-  },
-  ButtonClassNew : {
-    width: 130,
-    height: 50,
-    paddingTop: 15,
-    borderRadius: 20,
-    marginRight: '5%',
-    backgroundColor: '#6e248d',
   },
   containerParentKelas : {
     backgroundColor: Color.softPink,
@@ -202,22 +143,6 @@ const styles = StyleSheet.create({
     height: 12,
     marginRight:2,
   },
-  containerConsul : {
-    width: '100%',
-    borderRadius: 20,
-    paddingVertical : 0,
-    paddingHorizontal: 25,
-    backgroundColor: '#9741ba',
-  },
-  containerItemConsul : {
-    height : 100,
-    width: '100%',
-    paddingVertical : 0,
-    paddingHorizontal: 25,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius : 20,
-    backgroundColor: Color.white,
-  },
   textConsul : {
     color: '#fff',
     marginLeft: '5%',
@@ -228,6 +153,11 @@ const styles = StyleSheet.create({
   textRegular: {
     fontSize: 13.5,
     color: Color.black,
+    fontFamily: FontType.regular,
+  },
+  textModal : {
+    color: Color.black,
+    fontSize: FontSize.smallMedium,
     fontFamily: FontType.regular,
   },
   textExam: {
@@ -312,197 +242,25 @@ const styles = StyleSheet.create({
   star : {
     marginRight:1,
   },
-  containerRecentJobs: {
+  containerConsultation: {
     marginBottom:20
   },
-  avatarUser: {
-    width: 48,
-    height: 48,
+  viewConsultation : {
+    height : 47,
+    marginTop : 0,
+    marginBottom :0,
+    borderRadius : 16,
+    paddingHorizontal : 20,
   },
-  textUsername: {
-    color: Color.black,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.bold,
+  buttonConsultation : {
+    alignItems : 'center',
+    alignSelf:'flex-start',
   },
-  textMoment: {
-    color: Color.black,
-    fontSize: FontSize.extraSmall,
-    fontFamily: FontType.regular,
-  },
-  semiBox: {
-    height: 12,
-    marginLeft: 0,
-    marginTop: -12,
-    marginRight: 16,
-    backgroundColor: Color.white,
-  },
-  containerChat: {
-    marginTop: 0,
-    marginLeft: 0,
-    paddingLeft: 0,
-    marginRight: 16,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-    backgroundColor: Color.white,
-  },
-  containerUserChatItem: {
-    width: '75%',
-    paddingTop: 4,
-    borderWidth: 0,
-    paddingLeft: 16,
-    paddingRight: 4,
-    borderRadius: 20,
-    paddingBottom: 16,
-    borderTopLeftRadius: 0,
-    backgroundColor: Color.softPink,
-  },
-  containerUserSound: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  btnPlayVoice: {
-    marginRight: 8,
-  },
-  textSoundDuration: {
-    color: Color.black,
-    marginHorizontal: 8,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  containerAvatarUser: {
-    flex: 1,
-    height: 44,
-    alignItems: 'flex-end',
-  },
-  avatarChatInstructor: {
-    width: 44,
-    height: 44,
-  },
-  containerUserDesc: {
-    paddingLeft: 10,
-  },
-  textDesc: {
-    marginTop: 2,
-    color: Color.black,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallest,
-  },
-  textUserDesc: {
-    marginTop: 2,
-    color: Color.black,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  textTime: {
-    marginTop: 4,
-    marginRight: 16,
-    textAlign: 'right',
-    color: Color.black,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  containerConfirm: {
-    marginTop: 8,
-    marginRight: 16,
-    marginBottom: -8,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  containerChatInstructor: {
-    padding: 4,
-    width: '75%',
-    borderWidth: 0,
-    borderRadius: 20,
-    alignSelf: 'flex-end',
-    borderTopRightRadius: 0,
-    backgroundColor: Color.softPink,
-  },
-  containerInstructorHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  textInstructorName: {
-    marginLeft: 8,
-    color: Color.black,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallest,
-  },
-  containerInstructorSound: {
-    marginTop: 4,
-    marginLeft: 8,
-    flexDirection: 'row',
-  },
-  textInstructorDesc: {
-    color: Color.black,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  containerChatInstructorFull: {
-    padding: 4,
-    width: '75%',
-    borderWidth: 0,
-    borderRadius: 20,
-    alignSelf: 'flex-end',
-    borderTopRightRadius: 0,
-    backgroundColor: Color.bgColorPurple,
-  },
-  containerInstructorDesc: {
-    marginTop: 4,
-    paddingLeft: 20,
-    marginBottom: 4,
-  },
-  textInstructorNameWhite: {
-    marginLeft: 8,
-    color: Color.white,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallest,
-  },
-  textSoundDurationWhite: {
-    color: Color.white,
-    marginHorizontal: 8,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  textDescWhite: {
-    marginTop: 2,
-    color: Color.white,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallest,
-  },
-  textInstructorDescWhite: {
-    color: Color.white,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  textTimeWhite: {
-    marginTop: 4,
-    marginRight: 16,
-    textAlign: 'right',
-    color: Color.white,
-    fontSize: FontSize.medium,
-    fontFamily: FontType.regular,
-  },
-  containerTextInput: {
-    flexDirection: 'row',
-  },
-  textInput: {
-    width: '75%',
-    marginLeft: 20,
-    marginRight: 16,
-    paddingLeft: 24,
-    borderRadius: 28,
-    marginVertical: 16,
-    backgroundColor: Color.softPink,
-  },
-  containerSend: {
-    height: 48,
-    width: '160%',
-    marginLeft: 4,
-    borderRadius: 20,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  textConsultation : {
+    marginHorizontal : 20,
+    fontSize : FontSize.medium
+
+  }
 })
 
 export { styles }

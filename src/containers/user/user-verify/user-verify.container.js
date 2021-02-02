@@ -2,28 +2,32 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { View, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { styles } from './user-verify.style'
+
 import { Topbar, Loader, Buttons, TextBox } from '../../../components'
+import { styles } from './user-verify.style'
 
 const UserVerify = () => {
+  const navigation = useNavigation()
+  const { isLogin } = useSelector((state) => state.UserReducer)
+
   const [loading, setLoading] = useState(false)
   const [success] = useState(true)
 
   const FormSubmit = useFormik({
-    initialValues: { email: '' },
+    initialValues: { verify_code: '' },
     validationSchema: Yup.object({
-      email: Yup.string()
-        .email('Masukan email yang valid')
-        .required('Email harus diisi'),
+      verify_code: Yup.string()
+        .required('Kode verifikasi harus diisi'),
     }),
     onSubmit: () => {
       setLoading(true)
       try {
         if (success === true) {
-          props.navigation.navigate('ConfirmPassword')
+          navigation.navigate(isLogin ? 'Profile' : 'Login')
         }
       } catch (err) {
         return err
@@ -34,18 +38,23 @@ const UserVerify = () => {
 
   return (
     <>
-      <Topbar title='lorem ipsum lorem ipsum' backIcon={true} />
+      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      <Topbar title='Verifikasi Akun' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ marginTop: 30 }}>
             <Text style={styles.content}>
-            lorem ipsum lorem ipsum
+            Kode verifikasi akun dikirim lewat email pengguna.
+            Masukkan 8 digit kode di bawah untuk dapat melakukan verifikasi.
             </Text>
             <Text style={styles.text}>Masukkan kode verifikasi</Text>
             <TextBox
+              name='verify_code'
+              form={FormSubmit}
               placeholder='Kode Verifikasi'
             />
-            <Buttons title='Verifikasi' onPress={() => navigation.navigate('UserVerify')}/>
+            <Buttons title='Verifikasi'
+              onPress={FormSubmit.handleSubmit}/>
           </View>
         </ScrollView>
       </View>
@@ -55,7 +64,7 @@ const UserVerify = () => {
 
 
 UserVerify.propTypes = {
-    navigation : PropTypes.object
-  }
+  navigation : PropTypes.object
+}
 
 export default UserVerify

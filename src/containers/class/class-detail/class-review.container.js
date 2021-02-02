@@ -64,10 +64,10 @@ const ClassReview = () => {
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Card containerStyle={styles.card}>
         <View style={styles.header}>
-          <Text style={styles.textBold}>Ulasan User</Text>
+          <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
             <Text style={styles.rating}>4.5</Text>
-            <Text style={styles.textBold}>{`Dari ${1258} Ulasan User`}</Text>
+            <Text style={styles.textBold}>{`Dari ${1258} ulasan`}</Text>
           </View>
         </View>
         <View style={styles.footer}>
