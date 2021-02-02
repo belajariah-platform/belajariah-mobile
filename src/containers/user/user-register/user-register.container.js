@@ -42,8 +42,8 @@ const Register = (props) => {
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
       password: Yup.string()
-        .min(8, 'password minimal 8 karakter')
-        .required('Passoword harus diisi'),
+        .min(8, 'Password minimal 8 karakter')
+        .required('Password harus diisi'),
     }),
     onSubmit: (values, form) => {
       if (checked === true) {

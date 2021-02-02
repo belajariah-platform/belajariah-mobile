@@ -54,6 +54,12 @@ const CustomDrawer = ({ navigation }, props) => {
         </View>
 
         <DrawerItem
+          label='Ubah Kata Sandi'
+          onPress={() =>  navigation.navigate('CheckEmail')}
+          labelStyle={styles.label}
+        />
+
+        <DrawerItem
           label='Tentang Belajariah'
           onPress={() => {
             navigation.navigate('AboutUs')

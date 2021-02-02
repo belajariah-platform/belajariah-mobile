@@ -20,13 +20,6 @@ import {
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-// import {
-//   Tab,
-//   Tabs,
-//   TabHeading,
-//   ScrollableTab
-// } from 'native-base'
-
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
 import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'

@@ -5,7 +5,7 @@ import { Color, FontType, FontSize } from '../../../assets'
 
 const styles = StyleSheet.create({
   containerButtonBack: {
-    top: 20,
+    top: 10,
     left: 0,
   },
   containerView: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   containerViewBg: {
     flex: 1,
     zIndex: 1,
-    top: '-8.6%',
+    top: '-11%',
   },
   containerAvatar: {
     zIndex: 2,
@@ -56,16 +56,7 @@ const styles = StyleSheet.create({
     height: Resp.HeaderProfileHP,
   },
   containerViewTop: {
-    top: '-8.5%',
-    borderRadius: 35,
-    paddingVertical: 20,
-    position: 'relative',
-    marginHorizontal: 30,
-    paddingHorizontal: 30,
-    backgroundColor: '#fff',
-  },
-  containerViewBottom: {
-    top: '-5.5%',
+    top: '-10%',
     borderRadius: 35,
     paddingVertical: 20,
     position: 'relative',

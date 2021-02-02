@@ -6,7 +6,7 @@ import { Color, FontType, FontSize } from '../../assets'
 const styles = StyleSheet.create({
   //Profile Edit
   containerButtonBack: {
-    top: 20,
+    top: 10,
     left: 0,
   },
   containerView: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   containerViewBg: {
     flex: 1,
     zIndex: 1,
-    top: '-8.6%',
+    top: '-11%',
   },
   containerAvatar: {
     zIndex: 2,
@@ -112,7 +112,9 @@ const styles = StyleSheet.create({
   },
   fixToText: {
     marginTop: 0,
-    alignItems: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   containerButton: {
     width: 100,
@@ -187,6 +189,12 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
   },
+  txtLupaSandi: {
+    textAlign: 'right',
+    color: Color.purpleButton,
+    fontFamily : FontType.regular,
+    fontSize : FontSize.smallMedium,
+  }
 })
 
 export { styles }

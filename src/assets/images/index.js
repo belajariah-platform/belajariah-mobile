@@ -44,6 +44,7 @@ export default {
   IconStepFinish: require('./IconStepFinish.svg'),
   JudulTilawah: require('./CardJudulTilawah.svg'),
   BotTransactHint: require('./TransactHint.svg'),
+  ImgLupaPassword: require('./ImgLupaPassword.png'),
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),

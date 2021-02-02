@@ -32,7 +32,7 @@ import {
 import { InspiratifStory, InspiratifStoryDetail } from './story'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
-import { Login, Register, Introduction, ChangePassword, Consultation, ConsultationDetail } from './user'
+import { Login, Register, Introduction, ChangePassword, Consultation, ConsultationDetail, UserVerify, ConfirmPassword } from './user'
 
 
 export {
@@ -50,6 +50,7 @@ export {
   ContactUs,
   ClassUser,
   HomeSearch,
+  UserVerify,
   ClassDetail,
   ProfileEdit,
   Transaction,
@@ -68,6 +69,7 @@ export {
   PromotionDetail,
   InspiratifStory,
   AdminInstructor,
+  ConfirmPassword,
   TransactionInfo,
   AdminProfileEdit,
   TransactionUpload,

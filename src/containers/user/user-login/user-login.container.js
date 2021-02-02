@@ -81,7 +81,10 @@ const Login = (props) => {
               secureTextEntry={secureTextEntry}
             />
             <TouchableOpacity
-              onPress={() => props.navigation.navigate('ChangePassword')}>
+              onPress={() => {
+                FormSubmit.resetForm()
+                props.navigation.navigate('ChangePassword')}
+              }>
               <Text style={styles.forgotPassword}>Lupa kata sandi ?</Text>
             </TouchableOpacity>
 
@@ -91,7 +94,10 @@ const Login = (props) => {
                 Belum punya akun ?
               </Text>
               <TouchableOpacity
-                onPress={() => props.navigation.navigate('Introduction')}>
+                onPress={() => {
+                  FormSubmit.resetForm()
+                  props.navigation.navigate('Introduction')
+                }}>
                 <Text style={styles.backToRegister}> Daftar</Text>
               </TouchableOpacity>
             </View>

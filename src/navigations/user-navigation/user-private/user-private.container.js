@@ -5,11 +5,13 @@ import {
   Alquran,
   ClassExam,
   HomeSearch,
+  UserVerify,
   ClassDetail,
   ProfileEdit,
   Consultation,
   AlquranDetail,
   ClassLearning,
+  ConfirmPassword,
   PromotionDetail,
   InspiratifStory,
   TransactionInfo,
@@ -33,6 +35,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='Alquran' component={Alquran} />
       <Stack.Screen name='ClassExam' component={ClassExam} />
       <Stack.Screen name='HomeSearch' component={HomeSearch} />
+      <Stack.Screen name='UserVerify' component={UserVerify} />
       <Stack.Screen name='ClassDetail' component={ClassDetail} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='Consultation' component={Consultation} />
@@ -41,6 +44,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
       <Stack.Screen name='TransactionInfo' component={TransactionInfo} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
+      <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
       <Stack.Screen name='TransactionMethod' component={TransactionMethod} />
       <Stack.Screen name='TransactionUpload' component={TransactionUpload} />
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
