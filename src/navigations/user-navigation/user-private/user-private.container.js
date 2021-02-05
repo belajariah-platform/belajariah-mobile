@@ -40,7 +40,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='Consultation' component={Consultation} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
-      <Stack.Screen name='ClassLearning' component={ClassLearning} />
+      <Stack.Screen name='ClassLearning' component={ClassLearning}/>
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
       <Stack.Screen name='TransactionInfo' component={TransactionInfo} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
@@ -49,7 +49,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionUpload' component={TransactionUpload} />
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
       <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
-      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
+      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail}/>
     </Stack.Navigator>
   )
 }

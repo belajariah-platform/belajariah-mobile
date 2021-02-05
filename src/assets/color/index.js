@@ -55,6 +55,12 @@ const Color = {
   dividerGrey: 'rgba(213, 213, 213, 0.8)',
   searchGrey: '#e6e6e6',
   textSurahName: '#9956b3',
+
+  //class-learning
+  disableGrey : '#a4a4a4',
+
+  //instructor-task-detail
+  userChatGrey : '#f2ebf5',
 }
 
 export { Color }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { List } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, View, ScrollView } from 'react-native'
 
@@ -10,8 +10,11 @@ import ClassLearningPDF from './class_learning-pdf.container'
 import { ButtonGradient, TextView, ModalRating, VideoPlayer } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
+import { Alert } from 'react-native'
+import { Color } from '../../../assets'
 
 const ClassLearning = () => {
+  const route = useRoute()
   const navigation = useNavigation()
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
@@ -20,18 +23,27 @@ const ClassLearning = () => {
 
   const toggleModal = () => setModalVisible(!modalVisible)
 
+  //update locked class logic
+  const topicCount = 12
+  let { passPreExam } = route.params ?? {}
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [progressCount, setProgressCount] = useState(1)
+  const [currentSubIndex, setCurrentSubIndex] = useState(0)
+  const progressPercentage = Number(progressCount / topicCount * 100).toFixed(1)
+
   const state = {
     rating : 4.7,
     total_user : 1500,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
+    preExamDone : passPreExam,
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 10 },
-          { subtitle: 'Dasar Makhraj', video_duration : 8 },
-          { subtitle : 'Shifathul Huruf', video_duration : 12 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://www.belajariah.com/document-assets/file.pdf'
@@ -39,9 +51,9 @@ const ClassLearning = () => {
       {
         title: 'Harokat',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 4 },
-          { subtitle: 'Dasar Makhraj', video_duration : 5 },
-          { subtitle : 'Shifathul Huruf', video_duration : 2 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
@@ -49,9 +61,9 @@ const ClassLearning = () => {
       {
         title: 'Tajwid',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 10 },
-          { subtitle : 'Shifathul Huruf', video_duration : 3 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
@@ -59,13 +71,12 @@ const ClassLearning = () => {
       {
         title: 'Mad',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 7 },
-          { subtitle : 'Shifathul Huruf', video_duration : 7 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
       },
     ],
   }
-
   const handleRating = (num) => {
     let rating = []
     const numRound = Math.round(num)
@@ -102,6 +113,7 @@ const ClassLearning = () => {
       <View style={styles.containerMenuDesc}>
         <Text style={styles.containerTextTitle}>{state.title}</Text>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
+        <Text>is it done? {String(state.preExamDone)}</Text>
         <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
@@ -169,16 +181,54 @@ const ClassLearning = () => {
                 titleStyle={styles.textRegular}
                 style={styles.containerAccordion}
               >
-                {topic.materials.map((subtopic, index) => {
+                {topic.materials.map((subtopic, subIndex) => {
+                  const [locked, setLocked] = useState(true)
+
                   return  (
                     <>
-                      <TouchableOpacity activeOpacity={0.6}>
+                      <TouchableOpacity
+                        key={subIndex}
+                        activeOpacity={0.6}
+                        onPress={() => {
+                          let count = 0
+
+                          if(state.preExamDone) {
+                            state.topics.forEach((topicCount, i) => {
+                              if(i <= index) {
+                                topicCount.materials.forEach((subtopicCount, j) => {
+                                  if(i < index) {
+                                    count = count + 1
+                                  } else {
+                                    if(j <= subIndex) {
+                                      count = count + 1
+                                    }
+                                  }
+                                })
+                              }
+                            })
+                            if(count > progressCount + 1) {
+                              Alert.alert('Tonton dulu materi sebelumnya ya ' + count)
+                            } else {
+                              setLocked(false)
+                              setProgressCount(count)
+                              setCurrentIndex(index)
+                              setCurrentSubIndex(subIndex)
+                            }
+                          } else {
+                            Alert.alert('Silahkan selesaikan Pre Exam terlebih dahulu ya')
+                          }
+                        }}>
                         <List.Item
-                          key={index}
+                          key={subIndex}
                           title={subtopic.subtitle}
-                          style={styles.containerItem}
+                          style={locked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
                           titleStyle={styles.textRegular}
-                          left={() => <Images.IconPlay.default style={styles.iconPlay}/>}
+                          left={() =>
+                            locked ?
+                              (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
+                              :
+                              (<Images.IconPlay.default style={styles.iconPlay}/>)
+                          }
                           right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
                         />
                       </TouchableOpacity>
@@ -250,7 +300,7 @@ const ClassLearning = () => {
               </TouchableOpacity>
 
               <VideoPlayer
-                posterLink={'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg'}
+                posterLink={state.topics[currentIndex].materials[currentSubIndex].posterLink}
                 videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
                 iconPlaySize = {48}
                 iconSkipSize = {20}

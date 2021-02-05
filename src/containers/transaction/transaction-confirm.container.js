@@ -30,7 +30,7 @@ const TransactionConfirm = () => {
       <View style={styles.containerTitle}>
         <Text style={styles.textTitleBlack}>Bukti pembayaran anda Terkirim</Text>
         <View style={styles.viewImage}>
-          <Images.IconCompleteTransaction.default />
+          <Images.IconCompletePurple.default />
         </View>
         <View style={styles.viewDesc}>
           <Text style={styles.viewTxtDesc}>{classData.note.split('|')[0]}.
