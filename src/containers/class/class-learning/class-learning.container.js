@@ -23,20 +23,12 @@ const ClassLearning = () => {
 
   const toggleModal = () => setModalVisible(!modalVisible)
 
-  //update locked class logic
-  const topicCount = 12
-  let { passPreExam } = route.params ?? {}
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [progressCount, setProgressCount] = useState(1)
-  const [currentSubIndex, setCurrentSubIndex] = useState(0)
-  const progressPercentage = Number(progressCount / topicCount * 100).toFixed(1)
-
   const state = {
     rating : 4.7,
     total_user : 1500,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
-    preExamDone : passPreExam,
+    materialCount : 12,
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
@@ -77,6 +69,17 @@ const ClassLearning = () => {
       },
     ],
   }
+
+  let { passPreExam } = route.params ?? {}
+  let { passPostExam } = route.params ?? {}
+  const [progress, setProgress] = useState(0)
+  const [playIndex, setPlayIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [playSubIndex, setPlaySubIndex] = useState(0)
+  const [currentSubIndex, setCurrentSubIndex] = useState(0)
+  const [isPostExamLocked, setIsPostExamLocked] = useState(true)
+  let percentage = Number(progress /  state.materialCount * 100).toFixed(1)
+
   const handleRating = (num) => {
     let rating = []
     const numRound = Math.round(num)
@@ -96,6 +99,10 @@ const ClassLearning = () => {
         })}
       </View>
     )
+  }
+
+  const handleVideoEnd = (index, subIndex) => {
+    Alert.alert('Video index ke-' + index + ' subindex ke-' + subIndex)
   }
 
   const DescriptionClass = () => {
@@ -158,13 +165,88 @@ const ClassLearning = () => {
   }
 
   const ContentClass = () => {
+    const playVideo = (index, subIndex) => {
+      if(passPreExam) {
+        if(index > currentIndex) {
+          Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
+        } else if(index < currentIndex) {
+          setPlayIndex(index)
+          setPlaySubIndex(subIndex)
+        } else {
+          if(subIndex > currentSubIndex) {
+            Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
+          } else {
+            setPlayIndex(index)
+            setPlaySubIndex(subIndex)
+          }
+        }
+      } else {
+        Alert.alert('Silahkan kerjakan pre-exam terlebih dahulu')
+      }
+    }
+
+    const unlockNext = (index, subIndex) => {
+      if(passPreExam) {
+        if(index == currentIndex && subIndex == currentSubIndex) {
+          let nextIndex = state.topics[currentIndex + 1]
+          let nextSubIndex = state.topics[currentIndex].materials[currentSubIndex + 1]
+
+          if(nextSubIndex == undefined) {
+            if(nextIndex == undefined) {
+              //end of array
+              if(isPostExamLocked) {
+                Alert.alert('Post exam unlocked!')
+                setProgress(progress + 1)
+                setIsPostExamLocked(false)
+              }
+            } else {
+              //next index
+              setProgress(progress + 1)
+              setCurrentIndex(currentIndex + 1)
+              setCurrentSubIndex(0)
+            }
+          } else {
+            //next subindex
+            setProgress(progress + 1)
+            setCurrentSubIndex(currentSubIndex + 1)
+          }
+        }
+      }
+    }
+
+    const getLockStatus = (index, subIndex) => {
+      if(passPreExam) {
+        if(index < currentIndex) {
+          return false
+        } else if(index > currentIndex) {
+          return true
+        } else {
+          if(subIndex < currentSubIndex) {
+            return false
+          } else if(subIndex > currentSubIndex) {
+            return true
+          } else {
+            return false
+          }
+        }
+      } else {
+        return true
+      }
+    }
+
     return (
       <View style={styles.containerMenuDetail}>
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={()=> {navigation.navigate('ClassExam')}}
+            onPress={()=> {
+              if(passPreExam) {
+                Alert.alert('Pre-exam sudah diselesaikan sebelumnya')
+              } else {
+                navigation.navigate('ClassExam')
+              }
+            }}
           >
             <List.Item
               title={'Pre Exam'}
@@ -182,63 +264,35 @@ const ClassLearning = () => {
                 style={styles.containerAccordion}
               >
                 {topic.materials.map((subtopic, subIndex) => {
-                  const [locked, setLocked] = useState(true)
+                  const isLocked = getLockStatus(index, subIndex)
 
                   return  (
-                    <>
-                      <TouchableOpacity
+                    <TouchableOpacity
+                      key={subIndex}
+                      activeOpacity={0.6}
+                      onPress={() => {
+                        playVideo(index, subIndex)
+                        unlockNext(index, subIndex)
+                      }}>
+                      <List.Item
                         key={subIndex}
-                        activeOpacity={0.6}
-                        onPress={() => {
-                          let count = 0
-
-                          if(state.preExamDone) {
-                            state.topics.forEach((topicCount, i) => {
-                              if(i <= index) {
-                                topicCount.materials.forEach((subtopicCount, j) => {
-                                  if(i < index) {
-                                    count = count + 1
-                                  } else {
-                                    if(j <= subIndex) {
-                                      count = count + 1
-                                    }
-                                  }
-                                })
-                              }
-                            })
-                            if(count > progressCount + 1) {
-                              Alert.alert('Tonton dulu materi sebelumnya ya ' + count)
-                            } else {
-                              setLocked(false)
-                              setProgressCount(count)
-                              setCurrentIndex(index)
-                              setCurrentSubIndex(subIndex)
-                            }
-                          } else {
-                            Alert.alert('Silahkan selesaikan Pre Exam terlebih dahulu ya')
-                          }
-                        }}>
-                        <List.Item
-                          key={subIndex}
-                          title={subtopic.subtitle}
-                          style={locked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
-                          titleStyle={styles.textRegular}
-                          left={() =>
-                            locked ?
-                              (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
-                              :
-                              (<Images.IconPlay.default style={styles.iconPlay}/>)
-                          }
-                          right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
-                        />
-                      </TouchableOpacity>
-                    </>
+                        title={subtopic.subtitle}
+                        style={isLocked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
+                        titleStyle={styles.textRegular}
+                        left={() =>
+                          isLocked ?
+                            (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
+                            :
+                            (<Images.IconPlay.default style={styles.iconPlay}/>)
+                        }
+                        right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
+                      />
+                    </TouchableOpacity>
                   )
                 })}
                 {topic.document &&(
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      key={index}
                       title={topic.document}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
@@ -262,8 +316,13 @@ const ClassLearning = () => {
             <List.Item
               title={'Post Exam'}
               titleStyle={styles.textRegular}
-              onPress={()=> {navigation.navigate('ClassExam')}}
-              style={{ ...styles.containerExam, borderTopWidth : 0 }}
+              onPress={()=> {
+                isPostExamLocked ?
+                  Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                  :
+                  navigation.navigate('ClassExam')
+              }}
+              style={isPostExamLocked ? { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey } : { ...styles.containerExam, borderTopWidth : 0 }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -300,10 +359,11 @@ const ClassLearning = () => {
               </TouchableOpacity>
 
               <VideoPlayer
-                posterLink={state.topics[currentIndex].materials[currentSubIndex].posterLink}
+                posterLink={state.topics[playIndex].materials[playSubIndex].posterLink}
                 videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
                 iconPlaySize = {48}
                 iconSkipSize = {20}
+                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)}
                 iconPlaySizeFullscreen = {80}
                 iconSkipSizeFullscreen = {48}
                 videoStyle={styles.videoStyle}
@@ -325,16 +385,10 @@ const ClassLearning = () => {
               </View>
             </ScrollView>
           </View>
-
         </>
       )}
     </>
   )
-}
-
-ClassLearning.propTypes = {
-  task: PropTypes.object,
-  confirmPress: PropTypes.number,
 }
 
 export default ClassLearning

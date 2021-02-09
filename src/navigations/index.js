@@ -48,7 +48,13 @@ const config = {
   screens: {
     MainRoutes : {
       screens: {
-        InspiratifStoryDetail: 'storydetail',
+        InspiratifStoryDetail: {
+          path : 'storydetail/:storyIndex',
+          parse : {
+            storyIndex : (storyIndex) => `${storyIndex}`
+          }
+        },
+        UserVerify: 'verif'
       }
     }
   }
