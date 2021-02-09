@@ -6,6 +6,7 @@ import {
   AdminUser,
   AdminDashboard,
   AdminInstructor,
+  AdminTransaction,
 } from '../../../containers'
 
 const ProfileNavigation = () => {
@@ -22,6 +23,7 @@ const ProfileNavigation = () => {
       <Drawer.Screen name='AdminDashboard' component={AdminDashboard} />
       <Drawer.Screen name='AdminUser' component={AdminUser} />
       <Drawer.Screen name='AdminInstructor' component={AdminInstructor} />
+      <Drawer.Screen name='AdminTransaction' component={AdminTransaction} />
     </Drawer.Navigator>
   )
 }

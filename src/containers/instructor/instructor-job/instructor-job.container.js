@@ -1,5 +1,5 @@
-import React from 'react'
 import moment from 'moment'
+import React, {useState} from 'react'
 import { List } from 'react-native-paper'
 import Images from '../../../assets/images'
 import { Text } from '@ui-kitten/components'
@@ -8,10 +8,13 @@ import { Avatar, Card } from 'react-native-elements'
 import ButtonGradient from '../../../components/button-gradient'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
+import {ModalFilterUstadz} from '../../../components'
 
 const InstructorJob = () => {
   const navigation = useNavigation()
   const route = useRoute()
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   let { idClass } = route.params ?? {}
 
@@ -116,7 +119,7 @@ const InstructorJob = () => {
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
         <Text style={styles.textHeader2}>{classes[idClass].className}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
       </View>
@@ -185,10 +188,16 @@ const InstructorJob = () => {
   }
 
   return (
+    <>
+    <ModalFilterUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     <View style={styles.container}>
       <Header />
       <CardList />
     </View>
+    </>
   )
 }
 
