@@ -48,6 +48,7 @@ export default {
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
+  IconLockedMaterial : require('./IconLockMaterial.svg'),
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
@@ -86,10 +87,10 @@ export default {
   NoTransactionBG: require('./NoClassBakcground.svg'),
   TransactionBG: require('./TransactionBackground.svg'),
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
+  IconCompletePurple: require('./IconCompletePurple.svg'),
   IconBankBNISyariah: require('./IconBankBNISyariah.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
   ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
-  IconCompleteTransaction: require('./IconCompleteTransaction.svg'),
 
   //Update Detail Class
   Share: require('./IconShare.svg'),
@@ -180,7 +181,7 @@ export default {
   IconTokohInspiratif: require('./IconTokohInspiratif.png'),
   ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 
-  //CosultationUser
+  //ConsultationUser
   CardMsg1 : require('./CardMsg1.png'),
   CardMsg2 : require('./CardMsg2.png'),
   CardMsg3 : require('./CardMsg3.png'),

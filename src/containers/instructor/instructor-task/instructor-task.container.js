@@ -1,26 +1,32 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { List } from 'react-native-paper'
+import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
-import React, { createRef, useState } from 'react'
-import { Avatar, Card } from 'react-native-elements'
+import { Avatar } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 
 import {
   View,
-  Alert,
-  TextInput,
-  ScrollView,
+  FlatList,
+  Dimensions,
   TouchableOpacity,
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { ButtonGradient } from '../../../components'
-
+import {ModalFilterUstadz} from '../../../components'
 import { styles } from './instructor-task.style'
 
 const InstructorTask = () => {
   const navigation = useNavigation()
+  const [index, setIndex] = useState(0)
+  const [routes] = useState([
+    { key: 1, title : 'Recent Task' },
+    { key: 2, title : 'Completed Task' }
+  ])
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
     {
@@ -30,16 +36,6 @@ const InstructorTask = () => {
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'sound.wav',
-      instructorSoundDuration: '12:15',
-      instructorDesc: 'Semoga bisa dipahami, terima kasih',
-      instructorDate: '18/01/2021',
-      instructorTime: '21:06',
     },
     {
       idTask: 6,
@@ -48,18 +44,6 @@ const InstructorTask = () => {
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc:
-        'Selamat pagi ustadz, mau bertanya, apakah pelafalan saya seperti pada voice diatas sudah benar? terima kasih ustadz',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'sound.wav',
-      instructorSoundDuration: '12:15',
-      instructorDesc:
-        'Jadi begini ya, nah begitu caranya. Semoga bisa dipahami dengan baik, terima kasih',
-      instructorDate: '18/01/2021',
-      instructorTime: '21:06',
     },
     {
       idTask: 8,
@@ -68,16 +52,6 @@ const InstructorTask = () => {
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'sound.wav',
-      instructorSoundDuration: '12:15',
-      instructorDesc: 'Semoga bisa dipahami, terima kasih',
-      instructorDate: '18/01/2021',
-      instructorTime: '21:06',
     },
     {
       idTask: 9,
@@ -86,75 +60,33 @@ const InstructorTask = () => {
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'sound.wav',
-      instructorSoundDuration: '12:15',
-      instructorDesc: 'Semoga bisa dipahami, terima kasih',
-      instructorDate: '18/01/2021',
-      instructorTime: '21:06',
     },
   ]
+
   const completedTask = [
     {
       idTask: 1,
-      status: 'ongoing',
+      status: 'completed',
       name: 'Saiki',
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'instructorSound.wav',
-      instructorSoundDuration: '10:15',
-      instructorDesc:
-        'Jadi begini ya, nah begitu caranya, semoga bisa dipahami dengan baik',
-      instructorDate: '17/01/2021',
-      instructorTime: '17:05',
     },
     {
       idTask: 2,
-      status: 'ongoing',
+      status: 'completed',
       name: 'Saiya',
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'instructorSound.wav',
-      instructorSoundDuration: '10:15',
-      instructorDesc:
-        'Jadi begini ya, nah begitu caranya, semoga bisa dipahami dengan baik',
-      instructorDate: '17/01/2021',
-      instructorTime: '20:00',
     },
     {
       idTask: 3,
-      status: 'ongoing',
+      status: 'completed',
       name: 'Hiyahiya',
       avatar: Images.ImageProfileDefault,
       date: '17/01/2021',
       time: '16:02',
-      userSound: 'sound.wav',
-      userSoundDuration: '8:12',
-      userDesc: 'Ustadz curhat dong',
-      instructorName: 'Ustadz Maulana Al-Hafidz',
-      instructorAva: Images.ImageProfileDefault,
-      instructorSound: 'instructorSound.wav',
-      instructorSoundDuration: '10:15',
-      instructorDesc:
-        'Jadi begini ya, nah begitu caranya, semoga bisa dipahami dengan baik',
-      instructorDate: '18/01/2021',
-      instructorTime: '08:12',
     },
   ]
 
@@ -165,328 +97,107 @@ const InstructorTask = () => {
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>Tugas Saya</Text>
+        <TouchableOpacity onPress = {toggleModal}>
+          <Images.IconFilterBlack.default width={20} height={20} />
+        </TouchableOpacity>
       </View>
     )
   }
 
   const RecentJobs = () => {
     return (
-      <View style={styles.containerRecentJobs}>
-        <Text style={styles.textTitle}>Konsultasi Terbaru</Text>
-        <Text style={styles.textSubtitle}>
-          Pekerjaan yang anda ambil saat ini
-        </Text>
-        <View>
-          {onGoingTask.map((task, index) => {
-            const dateTime = task.date + ' ' + task.time
-            const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
-            const [isPressed, setIsPressed] = useState(false)
-
-            return (
-              <List.Accordion
-                key={index}
-                left={() => (
-                  <Avatar
-                    source={task.avatar}
-                    containerStyle={styles.avatarUser}
-                  />
-                )}
-                title={task.name}
-                description={`${momentTime} (${task.date})`}
-                titleStyle={styles.textUsername}
-                descriptionStyle={styles.textMoment}
-                style={[
-                  styles.containerAccordion,
-                  isPressed ? { elevation: 1 } : { elevation: 0 },
-                ]}
-                onPress={() => {
-                  setIsPressed(!isPressed)
-                }}>
-                <View style={styles.semiBox} />
-                <Chatting task={task} />
-              </List.Accordion>
-            )
-          })}
-        </View>
-      </View>
+      <FlatList
+        data={onGoingTask}
+        numColumns={1}
+        style={{ marginTop: 8 }}
+        showsVerticalScrollIndicator ={false}
+        keyExtractor={(item, index) =>  index.toString()}
+        renderItem={({ item, index }) => Content(item, index)}
+      />
     )
   }
 
   const CompletedJobs = () => {
     return (
-      <View style={styles.containerCompletedJobs}>
-        <Text style={styles.textTitle}>Konsultasi Terselesaikan</Text>
-        <Text style={styles.textSubtitle}>
-          Semua Pekerjaan yang telah anda selesaikan
-        </Text>
-        <View>
-          {completedTask.map((task, index) => {
-            const dateTime = task.date + ' ' + task.time
-            const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
-
-            return (
-              <List.Accordion
-                key={index}
-                left={() => (
-                  <Avatar
-                    source={task.avatar}
-                    containerStyle={styles.avatarUser}
-                  />
-                )}
-                title={task.name}
-                description={`${momentTime} (${task.date})`}
-                style={styles.containerAccordion}
-                titleStyle={styles.textUsername}
-                descriptionStyle={styles.textMoment}
-                expanded={false}
-              />
-            )
-          })}
-        </View>
-      </View>
+      <FlatList
+        data={completedTask}
+        numColumns={1}
+        style={{ marginTop: 8 }}
+        showsVerticalScrollIndicator ={false}
+        keyExtractor={(item, index) =>  index.toString()}
+        renderItem={({ item, index }) => Content(item, index)}
+      />
     )
   }
 
-  const Chatting = ({ task }) => {
-    const [confirmCount, setConfirmCount] = useState(0)
+  const Content = (item, index) => {
+    const dateTime = item.date
+    const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
+    let isComplete = false
+    if(item.status === 'completed') isComplete = true
 
-    return (
-      <View style={styles.containerChat}>
-        <ScrollView>
-          <UserChatItem task={task} />
-          <InstructorSoundItem
-            task={task}
-            confirmPress={() => {
-              setConfirmCount(confirmCount + 1)
-            }}
-          />
-          <InstructorChatItem
-            task={task}
-            confirmPress={() => {
-              setConfirmCount(confirmCount + 1)
-            }}
-          />
-          {confirmCount === 2 ? (
-            <InstructorFullItem task={task} />
-          ) : (
-            <View></View>
-          )}
-        </ScrollView>
-        <InputText />
-      </View>
-    )
-  }
-
-  const UserChatItem = ({ task }) => {
-    const time12hourformat = moment(task.time, 'hh:mm').format('h:mm a')
-    return (
-      <View>
-        <Card containerStyle={styles.containerUserChatItem}>
-          <View style={styles.containerUserSound}>
-            <TouchableOpacity>
-              <Images.IconPlayVoiceBlack.default
-                width={24}
-                height={24}
-                style={styles.btnPlayVoice}
-              />
-            </TouchableOpacity>
-            <Text>{task.userSound}</Text>
-            <Text style={styles.textSoundDuration}>
-              {task.userSoundDuration}
-            </Text>
-            <Avatar
-              source={task.avatar}
-              containerStyle={styles.containerAvatarUser}
-              avatarStyle={styles.avatarChatInstructor}
-            />
-          </View>
-          <View style={styles.containerUserDesc}>
-            <Text style={styles.textDesc}>Deskripsi</Text>
-            <Text style={styles.textUserDesc}>{task.userDesc}</Text>
-            <Text style={styles.textTime}>{time12hourformat}</Text>
-          </View>
-        </Card>
-      </View>
-    )
-  }
-
-  const InstructorSoundItem = ({ task, confirmPress }) => {
-    return (
-      <View>
-        <View style={styles.containerConfirm}>
-          <TouchableOpacity>
-            <Images.IconCancel.default
-              width={20}
-              height={20}
-              style={{ marginRight: 8 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={confirmPress}>
-            <Images.IconConfirm.default width={20} height={20} />
-          </TouchableOpacity>
-        </View>
-        <Card containerStyle={styles.containerChatInstructor}>
-          <View style={styles.containerInstructorHeader}>
-            <Avatar
-              source={task.instructorAva}
-              containerStyle={styles.avatarChatInstructor}
-            />
-            <View>
-              <Text style={styles.textInstructorName}>
-                {task.instructorName}
-              </Text>
-              <View style={styles.containerInstructorSound}>
-                <TouchableOpacity>
-                  <Images.IconPlayVoiceBlack.default
-                    width={20}
-                    height={20}
-                    style={styles.btnPlayVoice}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.btnPlayVoiceSmall}>
-                  {task.instructorSound}
-                </Text>
-                <Text style={styles.textSoundDuration}>
-                  {task.instructorSoundDuration}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </Card>
-      </View>
-    )
-  }
-
-  const InstructorChatItem = ({ task, confirmPress }) => {
-    return (
-      <View>
-        <View style={styles.containerConfirm}>
-          <TouchableOpacity>
-            <Images.IconCancel.default
-              width={20}
-              height={20}
-              style={{ marginRight: 8 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={confirmPress}>
-            <Images.IconConfirm.default width={20} height={20} />
-          </TouchableOpacity>
-        </View>
-        <Card containerStyle={styles.containerChatInstructor}>
-          <View style={styles.containerInstructorHeader}>
-            <Avatar
-              source={task.instructorAva}
-              containerStyle={styles.avatarChatInstructor}
-            />
-            <Text style={styles.textInstructorName}>{task.instructorName}</Text>
-          </View>
-          <View style={styles.containerInstructorDesc}>
-            <Text style={styles.textDesc}>Deskripsi</Text>
-            <Text style={styles.textInstructorDesc}>{task.instructorDesc}</Text>
-          </View>
-        </Card>
-      </View>
-    )
-  }
-
-  const InstructorFullItem = ({ task }) => {
-    const time12hourformat = moment(task.instructorTime, 'hh:mm').format(
-      'h:mm a',
-    )
-
-    return (
-      <Card containerStyle={styles.containerChatInstructorFull}>
-        <View style={styles.containerInstructorHeader}>
+    return(
+      <TouchableOpacity onPress={() => navigation.navigate('InstructorTaskDetail', item)}>
+        <View key={index} style={styles.containerTaskList}>
           <Avatar
-            source={task.instructorAva}
-            containerStyle={styles.avatarChatInstructor}
+            source={item.avatar}
+            containerStyle={isComplete? [styles.avatarUser, { opacity: 0.5 }] : styles.avatarUser}
           />
           <View>
-            <Text style={styles.textInstructorNameWhite}>
-              {task.instructorName}
-            </Text>
-            <View style={styles.containerInstructorSound}>
-              <TouchableOpacity>
-                <Images.IconPlayVoiceWhite.default
-                  width={20}
-                  height={20}
-                  style={styles.btnPlayVoice}
-                />
-              </TouchableOpacity>
-              <Text style={{ color: 'white' }}>{task.instructorSound}</Text>
-              <Text style={styles.textSoundDurationWhite}>
-                {task.instructorSoundDuration}
-              </Text>
-            </View>
+            <Text style={isComplete? [styles.textUsername, { opacity: 0.5 }] : styles.textUsername}>{item.name}</Text>
+            <Text style={isComplete? [styles.textMoment, { opacity: 0.5 }] : styles.textMoment}>{`${momentTime} (${dateTime})`}</Text>
           </View>
+          {item.status === 'completed' && (
+            <Images.IconCompletePurple.default width={28} height={28} style={styles.iconComplete}/>
+          )}
         </View>
-        <View style={styles.containerInstructorDesc}>
-          <Text style={styles.textDescWhite}>Deskripsi Voice</Text>
-          <Text style={styles.textInstructorDescWhite}>
-            {task.instructorDesc}
-          </Text>
-          <Text style={styles.textTimeWhite}>{time12hourformat}</Text>
-        </View>
-      </Card>
+      </TouchableOpacity>
     )
   }
 
-  const InputText = () => {
-    const [onType, setOnType] = useState(false)
-    const instructorTextInput = createRef()
+  //deklarasi renderScene harus dibawah component yang mau di pakai
+  const renderScene = SceneMap({
+    1: RecentJobs,
+    2: CompletedJobs,
+  })
 
+  const renderTabBar = (props) => (
+    <TabBar
+      {...props}
+      indicatorStyle={styles.tabBarIndicatorStyle}
+      style={styles.tabBarStyle}
+      activeColor='purple'
+      inactiveColor='grey'
+      labelStyle={styles.tabBarLabelStyle}
+    />
+  )
+
+  const TabViewTask = () => {
     return (
-      <View style={styles.containerTextInput}>
-        <TextInput
-          ref={instructorTextInput}
-          placeholder='Type message here'
-          style={styles.textInput}
-          onChangeText={() => setOnType(true)}
-        />
-        {onType ? (
-          <ButtonGradient
-            icon={<Images.IconSend.default width={28} height={28} />}
-            styles={styles.containerSend}
-            onPress={() => {
-              Alert.alert('Send message')
-              setOnType(false)
-              instructorTextInput.current.clear()
-            }}
-          />
-        ) : (
-          <ButtonGradient
-            icon={<Images.IconVoiceRecord.default width={28} height={28} />}
-            styles={styles.containerSend}
-            onPress={() => {
-              Alert.alert('Hold to record sound')
-              setOnType(false)
-              instructorTextInput.current.clear()
-            }}
-            onLongPress={InputSound}
-          />
-        )}
-      </View>
+      <TabView
+        renderTabBar={renderTabBar}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        sceneContainerStyle={styles.sceneContainerStyle}
+      />
     )
-  }
-
-  const InputSound = () => {
-    Alert.alert('Record Sound')
   }
 
   return (
+    <>
+    <ModalFilterUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     <View style={styles.containerMain}>
       <Header />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <RecentJobs />
-        <CompletedJobs />
-      </ScrollView>
+      <TabViewTask />
     </View>
+    </>
   )
 }
 
-InstructorTask.propTypes = {
-  task: PropTypes.object,
-  confirmPress: PropTypes.number,
-}
 
 export default InstructorTask

@@ -33,7 +33,7 @@ const ClassExam = () => {
   const handleSubmit = async (state) => {
     console.log(state)
     ToastAndroid.show('Exam selesai', ToastAndroid.SHORT)
-    navigation.navigate('ClassLearning')
+    navigation.navigate('ClassLearning', { passPreExam : true })
   }
 
   const onScrollPosition = () => {

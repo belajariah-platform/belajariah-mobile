@@ -13,6 +13,7 @@ import VideoBar from './video-bar.component'
 import Orientation from 'react-native-orientation-locker'
 import VideoController from './video-controller.component'
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { Alert } from 'react-native'
 
 const VideoPlayer = (props) => {
   const videoRef = createRef(Video)
@@ -91,6 +92,9 @@ const VideoPlayer = (props) => {
   const onEnd = () => {
     setState({ ...state, play: false })
     videoRef.current.seek(0)
+    if(props.onVideoEnd != undefined) {
+      props.onVideoEnd()
+    }
   }
 
   const showControls = () => {
@@ -172,6 +176,7 @@ const VideoPlayer = (props) => {
 
 VideoPlayer.propTypes = {
   style : PropTypes.object,
+  onVideoEnd : PropTypes.func,
   videoLink : PropTypes.string,
   videoStyle : PropTypes.object,
   posterLink : PropTypes.string,

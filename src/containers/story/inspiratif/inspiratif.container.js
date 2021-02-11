@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
@@ -24,9 +25,9 @@ const InspiratifStory = () => {
 
   const state = [
     { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
+    { title : 'Jadi Sukses, Belajar dari Sandiaga Duo', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
+    { title : 'Jadi Sukses, Belajar dari Sandiaga Trowa', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
+    { title : 'Jadi Sukses, Belajar dari Sandiaga Quatre', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
   ]
 
   const onRefreshing = () => {
@@ -37,6 +38,15 @@ const InspiratifStory = () => {
   const onLoadMore = (e) => {
     if (e.distanceFromEnd >= 0) {
       setLoading(true)
+    }
+  }
+
+  const getInitialRouteName = () => {
+    const { isLogin } = useSelector(state => state.UserReducer)
+    if (isLogin) {
+      return 'UserMain'
+    } else {
+      return 'Main'
     }
   }
 
@@ -51,10 +61,11 @@ const InspiratifStory = () => {
   }
 
   const Header = () => {
+    const initialRouteName = getInitialRouteName()
     return (
       <View style={styles.containerHeader}>
         <View style={styles.flexHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate(initialRouteName)}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>Bacaan Inspiratif</Text>
@@ -97,7 +108,7 @@ const InspiratifStory = () => {
               <TouchableOpacity
                 key={index}
                 activeOpacity={0.7}
-                onPress={() =>  navigation.navigate('InspiratifStoryDetail')}>
+                onPress={() =>  navigation.navigate('InspiratifStoryDetail', { storyIndex : index })}>
                 <Card
                   containerStyle={styles.cardStyle}>
                   <View style={styles.viewStyle}>

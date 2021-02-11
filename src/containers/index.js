@@ -27,6 +27,7 @@ import {
   InstructorTask,
   InstructorProfile,
   InstructorDashboard,
+  InstructorTaskDetail,
   InstructorProfileEdit,
 } from './instructor'
 
@@ -80,6 +81,7 @@ export {
   ConsultationDetail,
   TransactionConfirm,
   InstructorDashboard,
+  InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,
   AdminProfileInstructor,
