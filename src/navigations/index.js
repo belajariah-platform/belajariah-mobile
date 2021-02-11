@@ -33,7 +33,7 @@ const RootNavigation = () => {
     SplashScreen.hide()
   })
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -43,4 +43,26 @@ const RootNavigation = () => {
     </NavigationContainer>
   )
 }
+
+const config = {
+  screens: {
+    MainRoutes : {
+      screens: {
+        InspiratifStoryDetail: {
+          path : 'storydetail/:storyIndex',
+          parse : {
+            storyIndex : (storyIndex) => `${storyIndex}`
+          }
+        },
+        UserVerify: 'verif'
+      }
+    }
+  }
+}
+
+const linking = {
+  prefixes: ['http://belajariah.com'],
+  config,
+}
+
 export default RootNavigation
