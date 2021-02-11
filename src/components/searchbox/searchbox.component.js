@@ -17,7 +17,7 @@ const Searchbox = (props) => {
 }
 
 Searchbox.propTypes = {
-  form : PropTypes.func,
+  form : PropTypes.object,
   size : PropTypes.string,
   name : PropTypes.string,
   renderItem : PropTypes.object

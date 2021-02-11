@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import {  useFormik } from 'formik'
 import { View, TouchableOpacity } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
@@ -8,21 +9,23 @@ import AdminUserDecline from './admin-user-decline.container'
 
 import { Searchbox } from '../../../components'
 import { Images, Color } from '../../../assets'
+
 import { styles } from './admin-user.style'
 
 const AdminUser = () => {
   const Tab = createMaterialTopTabNavigator()
+  const Search = useFormik({ initialValues: { search: '' } })
 
-  const ViewHeader = () => {
-    return(
+  return (
+    <View style={styles.containerMain}>
       <View style={styles.containerHeader}>
-        <View
-          style={{ flex : 1 }}>
+        <View style={styles.flexOne}>
           <Searchbox
             size='medium'
-            placeholder={'Temukan user'}
-            onFocus={() => console.log('hello')}
+            name='search'
+            form={Search}
             style={styles.searchbox}
+            placeholder='Temukan user'
           />
         </View>
         <TouchableOpacity
@@ -33,37 +36,32 @@ const AdminUser = () => {
           />
         </TouchableOpacity>
       </View>
-    )
-  }
 
-  return (
-    <View style={styles.containerMain}>
-      <ViewHeader />
       <Tab.Navigator
         tabBarOptions={{
-          style:{
-            backgroundColor: 'transparent',
-          },
-          inactiveTintColor: Color.white,
-          labelStyle: styles.labelStyle,
+          style:styles.bgColor,
           activeTintColor: Color.white,
+          labelStyle: styles.labelStyle,
+          inactiveTintColor: Color.white,
           indicatorStyle: styles.indicatorStyle,
         }}>
         <Tab.Screen
           name='AdminUserAll'
-          component={AdminUserAll}
-          options={{ title: 'Semua' }}
-        />
+          options={{ title: 'Semua' }}>
+          {() => <AdminUserAll search={Search.values['search']}/>}
+        </Tab.Screen>
+
         <Tab.Screen
           name='AdminUserAccept'
-          component={AdminUserAccept}
-          options={{ title: 'Diterima' }}
-        />
+          options={{ title: 'Diterima' }}>
+          {() => <AdminUserAccept search={Search.values['search']}/>}
+        </Tab.Screen>
+
         <Tab.Screen
           name='AdminUserDecline'
-          component={AdminUserDecline}
-          options={{ title: 'Ditolak' }}
-        />
+          options={{ title: 'Ditolak' }}>
+          {() => <AdminUserDecline search={Search.values['search']}/>}
+        </Tab.Screen>
       </Tab.Navigator>
     </View>
   )

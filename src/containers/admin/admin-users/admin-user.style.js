@@ -177,6 +177,8 @@ const styles = StyleSheet.create({
     top : 10,
     alignItems:'center',
   },
+  flexOne : { flex : 1 },
+  bgColor : { backgroundColor: Color.transparent }
 })
 
 export { styles }

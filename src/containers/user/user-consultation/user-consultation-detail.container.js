@@ -137,7 +137,10 @@ const ConsultationDetail = ({ route }) => {
         }
         if (seconds === 0) {
           if (minutes === 0) {
-            setMsgSelected({ ...msgSelected, is_play : false })
+            setOptionSelected({
+              ...optionSelected,
+              is_play : false
+            })
             clearInterval(intervalId)
           } else {
             setMinutes(minutes - 1)
