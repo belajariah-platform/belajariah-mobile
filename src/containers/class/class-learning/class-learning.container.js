@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { List } from 'react-native-paper'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, View, ScrollView } from 'react-native'
 
@@ -10,8 +10,11 @@ import ClassLearningPDF from './class_learning-pdf.container'
 import { ButtonGradient, TextView, ModalRating, VideoPlayer } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
+import { Alert } from 'react-native'
+import { Color } from '../../../assets'
 
 const ClassLearning = () => {
+  const route = useRoute()
   const navigation = useNavigation()
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
@@ -25,13 +28,14 @@ const ClassLearning = () => {
     total_user : 1500,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
+    materialCount : 12,
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 10 },
-          { subtitle: 'Dasar Makhraj', video_duration : 8 },
-          { subtitle : 'Shifathul Huruf', video_duration : 12 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://www.belajariah.com/document-assets/file.pdf'
@@ -39,9 +43,9 @@ const ClassLearning = () => {
       {
         title: 'Harokat',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 4 },
-          { subtitle: 'Dasar Makhraj', video_duration : 5 },
-          { subtitle : 'Shifathul Huruf', video_duration : 2 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
@@ -49,9 +53,9 @@ const ClassLearning = () => {
       {
         title: 'Tajwid',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 10 },
-          { subtitle : 'Shifathul Huruf', video_duration : 3 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
@@ -59,12 +63,22 @@ const ClassLearning = () => {
       {
         title: 'Mad',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 7 },
-          { subtitle : 'Shifathul Huruf', video_duration : 7 }],
+          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle: 'Dasar Makhraj', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
+          { subtitle : 'Shifathul Huruf', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
       },
     ],
   }
+
+  let { passPreExam } = route.params ?? {}
+  let { passPostExam } = route.params ?? {}
+  const [progress, setProgress] = useState(0)
+  const [playIndex, setPlayIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [playSubIndex, setPlaySubIndex] = useState(0)
+  const [currentSubIndex, setCurrentSubIndex] = useState(0)
+  const [isPostExamLocked, setIsPostExamLocked] = useState(true)
+  let percentage = Number(progress /  state.materialCount * 100).toFixed(1)
 
   const handleRating = (num) => {
     let rating = []
@@ -87,6 +101,10 @@ const ClassLearning = () => {
     )
   }
 
+  const handleVideoEnd = (index, subIndex) => {
+    Alert.alert('Video index ke-' + index + ' subindex ke-' + subIndex)
+  }
+
   const DescriptionClass = () => {
     const handleSplitString = (value) => {
       const stringSplit = value.split('|')
@@ -102,6 +120,7 @@ const ClassLearning = () => {
       <View style={styles.containerMenuDesc}>
         <Text style={styles.containerTextTitle}>{state.title}</Text>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
+        <Text>is it done? {String(state.preExamDone)}</Text>
         <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
@@ -146,13 +165,88 @@ const ClassLearning = () => {
   }
 
   const ContentClass = () => {
+    const playVideo = (index, subIndex) => {
+      if(passPreExam) {
+        if(index > currentIndex) {
+          Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
+        } else if(index < currentIndex) {
+          setPlayIndex(index)
+          setPlaySubIndex(subIndex)
+        } else {
+          if(subIndex > currentSubIndex) {
+            Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
+          } else {
+            setPlayIndex(index)
+            setPlaySubIndex(subIndex)
+          }
+        }
+      } else {
+        Alert.alert('Silahkan kerjakan pre-exam terlebih dahulu')
+      }
+    }
+
+    const unlockNext = (index, subIndex) => {
+      if(passPreExam) {
+        if(index == currentIndex && subIndex == currentSubIndex) {
+          let nextIndex = state.topics[currentIndex + 1]
+          let nextSubIndex = state.topics[currentIndex].materials[currentSubIndex + 1]
+
+          if(nextSubIndex == undefined) {
+            if(nextIndex == undefined) {
+              //end of array
+              if(isPostExamLocked) {
+                Alert.alert('Post exam unlocked!')
+                setProgress(progress + 1)
+                setIsPostExamLocked(false)
+              }
+            } else {
+              //next index
+              setProgress(progress + 1)
+              setCurrentIndex(currentIndex + 1)
+              setCurrentSubIndex(0)
+            }
+          } else {
+            //next subindex
+            setProgress(progress + 1)
+            setCurrentSubIndex(currentSubIndex + 1)
+          }
+        }
+      }
+    }
+
+    const getLockStatus = (index, subIndex) => {
+      if(passPreExam) {
+        if(index < currentIndex) {
+          return false
+        } else if(index > currentIndex) {
+          return true
+        } else {
+          if(subIndex < currentSubIndex) {
+            return false
+          } else if(subIndex > currentSubIndex) {
+            return true
+          } else {
+            return false
+          }
+        }
+      } else {
+        return true
+      }
+    }
+
     return (
       <View style={styles.containerMenuDetail}>
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={()=> {navigation.navigate('ClassExam')}}
+            onPress={()=> {
+              if(passPreExam) {
+                Alert.alert('Pre-exam sudah diselesaikan sebelumnya')
+              } else {
+                navigation.navigate('ClassExam')
+              }
+            }}
           >
             <List.Item
               title={'Pre Exam'}
@@ -169,26 +263,36 @@ const ClassLearning = () => {
                 titleStyle={styles.textRegular}
                 style={styles.containerAccordion}
               >
-                {topic.materials.map((subtopic, index) => {
+                {topic.materials.map((subtopic, subIndex) => {
+                  const isLocked = getLockStatus(index, subIndex)
+
                   return  (
-                    <>
-                      <TouchableOpacity activeOpacity={0.6}>
-                        <List.Item
-                          key={index}
-                          title={subtopic.subtitle}
-                          style={styles.containerItem}
-                          titleStyle={styles.textRegular}
-                          left={() => <Images.IconPlay.default style={styles.iconPlay}/>}
-                          right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
-                        />
-                      </TouchableOpacity>
-                    </>
+                    <TouchableOpacity
+                      key={subIndex}
+                      activeOpacity={0.6}
+                      onPress={() => {
+                        playVideo(index, subIndex)
+                        unlockNext(index, subIndex)
+                      }}>
+                      <List.Item
+                        key={subIndex}
+                        title={subtopic.subtitle}
+                        style={isLocked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
+                        titleStyle={styles.textRegular}
+                        left={() =>
+                          isLocked ?
+                            (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
+                            :
+                            (<Images.IconPlay.default style={styles.iconPlay}/>)
+                        }
+                        right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
+                      />
+                    </TouchableOpacity>
                   )
                 })}
                 {topic.document &&(
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      key={index}
                       title={topic.document}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
@@ -212,8 +316,13 @@ const ClassLearning = () => {
             <List.Item
               title={'Post Exam'}
               titleStyle={styles.textRegular}
-              onPress={()=> {navigation.navigate('ClassExam')}}
-              style={{ ...styles.containerExam, borderTopWidth : 0 }}
+              onPress={()=> {
+                isPostExamLocked ?
+                  Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                  :
+                  navigation.navigate('ClassExam')
+              }}
+              style={isPostExamLocked ? { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey } : { ...styles.containerExam, borderTopWidth : 0 }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -250,10 +359,11 @@ const ClassLearning = () => {
               </TouchableOpacity>
 
               <VideoPlayer
-                posterLink={'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg'}
+                posterLink={state.topics[playIndex].materials[playSubIndex].posterLink}
                 videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
                 iconPlaySize = {48}
                 iconSkipSize = {20}
+                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)}
                 iconPlaySizeFullscreen = {80}
                 iconSkipSizeFullscreen = {48}
                 videoStyle={styles.videoStyle}
@@ -275,16 +385,10 @@ const ClassLearning = () => {
               </View>
             </ScrollView>
           </View>
-
         </>
       )}
     </>
   )
-}
-
-ClassLearning.propTypes = {
-  task: PropTypes.object,
-  confirmPress: PropTypes.number,
 }
 
 export default ClassLearning

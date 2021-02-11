@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     backgroundColor : '#9956B3',
   },
-  textDonwload : {
+  textDownload : {
     marginLeft : 3,
     color : Color.white,
     fontSize: FontSize.small,
