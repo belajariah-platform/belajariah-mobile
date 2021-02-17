@@ -23,10 +23,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: Color.white,
   },
+  containerNoTask : {
+    alignItems : 'center',
+  },
   textHeader: {
     color: Color.black,
-    fontSize: FontSize.large,
     fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
   },
   textUsername: {
     marginLeft: 8,
@@ -37,8 +40,22 @@ const styles = StyleSheet.create({
   textMoment: {
     marginLeft: 8,
     color: Color.black,
-    fontSize: FontSize.extraSmall,
     fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
+  },
+  textNoTaskTitle : {
+    fontSize: 40,
+    marginRight: 10,
+    textAlign: 'center',
+    color: Color.purpleMedium,
+    fontFamily: FontType.bold,
+  },
+  textNoTask : {
+    marginRight:10,
+    color: Color.black,
+    textAlign: 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.mediumLarge,
   },
   avatarUser: {
     width: 48,

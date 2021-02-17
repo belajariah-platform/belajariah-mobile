@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
 import { styles } from './modal-info.style'
@@ -16,11 +16,13 @@ const ModalDate = (props) => {
         onBackdropPress={props.backdropPress}
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
-          <TouchableOpacity
-            onPress={props.backdropPress}
-            style={styles.closeStyle}>
-            <Images.ButtonClose.default/>
-          </TouchableOpacity>
+          {props.hideButtonClose || (
+            <TouchableOpacity
+              onPress={props.backdropPress}
+              style={styles.closeStyle}>
+              <Images.ButtonClose.default/>
+            </TouchableOpacity>
+          )}
           <View style={styles.modalContentSyle}>
             {props.renderItem}
           </View>
@@ -34,6 +36,7 @@ ModalDate.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  hideButtonClose : PropTypes.bool,
   containerStyle : PropTypes.object,
 }
 

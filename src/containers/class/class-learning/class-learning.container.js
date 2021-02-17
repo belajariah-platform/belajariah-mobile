@@ -1,17 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { List } from 'react-native-paper'
+import { List, RadioButton } from 'react-native-paper'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, View, ScrollView } from 'react-native'
 
-import { Images } from '../../../assets'
+import { FontType, Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
-import { ButtonGradient, TextView, ModalRating, VideoPlayer } from '../../../components'
+import { ButtonGradient, TextView, ModalInfo, ModalRating, VideoPlayer, Buttons } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
 import { Alert } from 'react-native'
 import { Color } from '../../../assets'
+import { Image } from 'react-native'
 
 const ClassLearning = () => {
   const route = useRoute()
@@ -19,9 +20,13 @@ const ClassLearning = () => {
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalRatingVisible, setModalRatingVisible] = useState(false)
+  const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
+  const [firstChecklist, setFirstChecklist] = useState(false)
+  const [secondChecklist, setSecondChecklist] = useState(false)
 
-  const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
+  const toggleModalChecklist = () => setModalChecklistVisible(!modalChecklistVisible)
 
   const state = {
     rating : 4.7,
@@ -101,8 +106,12 @@ const ClassLearning = () => {
     )
   }
 
+  const handleModalChecklist = () => {
+    setModalChecklistVisible(true)
+  }
+
   const handleVideoEnd = (index, subIndex) => {
-    Alert.alert('Video index ke-' + index + ' subindex ke-' + subIndex)
+    handleModalChecklist()
   }
 
   const DescriptionClass = () => {
@@ -118,9 +127,13 @@ const ClassLearning = () => {
     }
     return (
       <View style={styles.containerMenuDesc}>
-        <Text style={styles.containerTextTitle}>{state.title}</Text>
+        <View style={styles.containerTextTitle} >
+          <Text style={[styles.textTitle, { width: '82%' }]}>{state.title}</Text>
+          <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
+            <Images.IconChecklistLearning.default />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
-        <Text>is it done? {String(state.preExamDone)}</Text>
         <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
@@ -309,6 +322,21 @@ const ClassLearning = () => {
                     />
                   </TouchableOpacity>
                 )}
+
+                {/* Dummy */}
+                <TouchableOpacity activeOpacity={0.5}>
+                  <List.Item
+                    title='Dummy - Masuk ke page rekam'
+                    style={styles.containerItem}
+                    titleStyle={styles.textRegular}
+                    onPress={() => {
+                      Alert.alert('Ke page rekam')
+                    }}
+                    left={() => <Images.IconRecordVoice.default style={styles.iconPlay}/>}
+                    right={() => <Text style={styles.textDuration}>Rekam Bacaan</Text>}
+                  />
+                </TouchableOpacity>
+
               </List.Accordion>
             )
           })}
@@ -331,6 +359,56 @@ const ClassLearning = () => {
     )
   }
 
+  const ChecklistClass = () => {
+    return (
+      <View style={styles.containerModalChecklist}>
+        <View style={styles.containerModalChecklistHeader}>
+          <Image source={Images.ImgChecklist}/>
+          <View style={styles.containerModalTitle}>
+            <Text style={styles.textModalTitle}>Yukk, Lakukan Praktek dibawah ini</Text>
+            <Text style={styles.textRegular}>Dengan praktek dibawah ini akan membantu sobat Belajariah lebih cepat memahami loh...</Text>
+          </View>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.containerModalScrollview}>
+
+          <Image source={Images.ImgDummySoal} style={styles.imgMaterial}/>
+          <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
+          <View style={styles.containerRadioButton}>
+            <RadioButton
+              status={firstChecklist ? 'checked' : 'unchecked'}
+              onPress={() => setFirstChecklist(!firstChecklist)}
+              color={Color.purpleMedium} />
+            <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
+          </View>
+
+          <Image source={Images.ImgDummySoal} style={styles.imgMaterial}/>
+          <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
+          <View style={styles.containerRadioButton}>
+            <RadioButton
+              status={secondChecklist ? 'checked' : 'unchecked'}
+              onPress={() => setSecondChecklist(!secondChecklist)}
+              color={Color.purpleMedium} />
+            <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
+          </View>
+
+          <View style={styles.containerCancelSave}>
+            <Buttons
+              title='Batal'
+              onPress={toggleModalChecklist}
+              style={styles.buttonCancel}
+              textStyle={{ color : 'purple' }}
+            />
+            <ButtonGradient
+              title='Simpan'
+              onPress={toggleModalChecklist}
+              styles={styles.buttonSave}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+
   return (
     <>
       {viewPdf ? (
@@ -346,8 +424,8 @@ const ClassLearning = () => {
         <>
           <View style={isFullscreen? styles.containerFullscreen : styles.container}>
             <ModalRating
-              isVisible={modalVisible}
-              backdropPress={() => toggleModal()}
+              isVisible={modalRatingVisible}
+              backdropPress={() => toggleModalRating()}
               title='Berikan rating untuk koreksi bacaanmu'
               renderItem={<Text style={styles.textModal}>
                 Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?
@@ -362,8 +440,9 @@ const ClassLearning = () => {
                 posterLink={state.topics[playIndex].materials[playSubIndex].posterLink}
                 videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
                 iconPlaySize = {48}
-                iconSkipSize = {20}
-                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)}
+                iconSkipSize = {32}
+                showSkipButton={true}
+                showBackButton={true}
                 iconPlaySizeFullscreen = {80}
                 iconSkipSizeFullscreen = {48}
                 videoStyle={styles.videoStyle}
@@ -373,6 +452,7 @@ const ClassLearning = () => {
                 fullscreenStyle={styles.videoFullscreenContainerStyle}
                 onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                 controllerFullscreenStyle={styles.controllerFullscreenStyle}
+                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)}
               />
             </View>
           </View>
@@ -387,6 +467,12 @@ const ClassLearning = () => {
           </View>
         </>
       )}
+      <ModalInfo
+        isVisible={modalChecklistVisible}
+        hideButtonClose={true}
+        renderItem={ <ChecklistClass /> }
+        containerStyle={{ height : '92%' }}
+      />
     </>
   )
 }

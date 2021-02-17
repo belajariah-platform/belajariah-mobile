@@ -45,6 +45,7 @@ export default {
   JudulTilawah: require('./CardJudulTilawah.svg'),
   BotTransactHint: require('./TransactHint.svg'),
   ImgLupaPassword: require('./ImgLupaPassword.png'),
+  IconRecordVoice : require('./IconRecordVoice.svg'),
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
@@ -136,11 +137,14 @@ export default {
   IconInstructorMyTask: require('./IconInstructorMyTask.svg'),
   InstructorCardTilawah: require('./InstructorCardTilawah.png'),
   IconInstructorProfile: require('./IconInstructorProfile.svg'),
-  LogoBelajariahInstructor: require('./LogoBelajariahInstructor.svg'),
   IconInstructorHomePurple: require('./IconInstructorHomePurple.svg'),
+  IllustrationNoRecentTask: require('./IllustrationNoRecentTask.svg'),
+  LogoBelajariahInstructor: require('./LogoBelajariahInstructor.svg'),
   InstructorDashboardBackground: require('./BgInstructorDashboard.png'),
   IconInstructorMyTaskPurple: require('./IconInstructorMyTaskPurple.svg'),
   IconInstructorProfilePurple: require('./IconInstructorProfilePurple.svg'),
+  IllustrationNoCompletedTask: require('./IllustrationNoCompletedTask.svg'),
+  IllustrationNoTaskAvailable: require('./IllustrationNoTaskAvailable.svg'),
   IconInstructorProfileOngoing: require('./IconInstructorProfileOngoing.svg'),
   IconInstructorProfileOverdue: require('./IconInstructorProfileOverdue.svg'),
   IconInstructorProfileComplete: require('./IconInstructorProfileComplete.svg'),
@@ -189,4 +193,9 @@ export default {
   IconPause : require('./BtnVideoPausePurple.svg'),
   IconChecklist : require('./IconConfirmWhite.svg'),
   IconPauseWhite : require('./BtnVideoPauseWhite.svg'),
+
+  //Checklist post-material
+  ImgDummySoal : require('./ImgDummySoal.png'),
+  ImgChecklist : require('./ChecklistImage.png'),
+  IconChecklistLearning : require('./IconChecklist.svg'),
 }

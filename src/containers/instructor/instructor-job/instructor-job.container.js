@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import moment from 'moment'
 import { List } from 'react-native-paper'
 import Images from '../../../assets/images'
@@ -10,8 +10,9 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
 
 const InstructorJob = () => {
-  const navigation = useNavigation()
   const route = useRoute()
+  const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(false)
 
   let { idClass } = route.params ?? {}
 
@@ -115,8 +116,8 @@ const InstructorJob = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
-        <Text style={styles.textHeader2}>{classes[idClass].className}</Text>
-        <TouchableOpacity>
+        <Text style={styles.textHeader}>{classes[idClass].className}</Text>
+        <TouchableOpacity onPress={() => setIsEmpty(!isEmpty)}>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
       </View>
@@ -184,10 +185,20 @@ const InstructorJob = () => {
     )
   }
 
+  const EmptyList = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoTaskAvailable.default style={{ marginTop: '4%' }} />
+        <Text style={styles.textNoTaskTitle}>Maaf!</Text>
+        <Text style={styles.textNoTask}>Saat ini belum ada <Text style={styles.textHeader}>task</Text> yang tersediah yah</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <Header />
-      <CardList />
+      {isEmpty? <CardList/> : <EmptyList />}
     </View>
   )
 }

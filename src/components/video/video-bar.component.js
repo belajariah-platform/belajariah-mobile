@@ -12,7 +12,7 @@ const ProgressBar = (props) => {
   const fullDuration = getMinutesFromSeconds(props.duration)
 
   return (
-    <View style={styles.barWrapper}>
+    <View style={props.smallBar? styles.smallBarWrapper : styles.barWrapper}>
       <Slider
         value={props.currentTime}
         minimumValue={0}
@@ -49,6 +49,7 @@ const ProgressBar = (props) => {
 
 ProgressBar.propTypes = {
   onPress: PropTypes.func,
+  smallBar : PropTypes.bool,
   duration: PropTypes.number,
   fullscreen: PropTypes.bool,
   onSlideStart: PropTypes.func,

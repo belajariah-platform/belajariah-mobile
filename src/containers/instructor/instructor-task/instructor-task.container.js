@@ -24,6 +24,7 @@ const InstructorTask = () => {
     { key: 1, title : 'Recent Task' },
     { key: 2, title : 'Completed Task' }
   ])
+  const [isEmpty, setIsEmpty] = useState(false)
   const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
@@ -95,7 +96,7 @@ const InstructorTask = () => {
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>Tugas Saya</Text>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={() => setIsEmpty(!isEmpty)}>
           <Images.IconFilterBlack.default width={20} height={20} />
         </TouchableOpacity>
       </View>
@@ -115,6 +116,16 @@ const InstructorTask = () => {
     )
   }
 
+  const NoRecentJobs = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoRecentTask.default style={{ marginTop: '25%' }}/>
+        <Text style={styles.textNoTaskTitle}>Uupss</Text>
+        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu ambil nih</Text>
+      </View>
+    )
+  }
+
   const CompletedJobs = () => {
     return (
       <FlatList
@@ -125,6 +136,16 @@ const InstructorTask = () => {
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => Content(item, index)}
       />
+    )
+  }
+
+  const NoCompletedJobs = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoCompletedTask.default style={{ marginTop: '25%' }} />
+        <Text style={styles.textNoTaskTitle}>Uupss</Text>
+        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu selesaikan nih</Text>
+      </View>
     )
   }
 
@@ -155,8 +176,8 @@ const InstructorTask = () => {
 
   //deklarasi renderScene harus dibawah component yang mau di pakai
   const renderScene = SceneMap({
-    1: RecentJobs,
-    2: CompletedJobs,
+    1: isEmpty ? NoRecentJobs : RecentJobs,
+    2: isEmpty? NoCompletedJobs : CompletedJobs,
   })
 
   const renderTabBar = (props) => (
