@@ -14,13 +14,15 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { Searchbox } from '../../../components'
+import { Searchbox, ModalFilterAdminPageUstadz } from '../../../components'
 import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const state = [
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
@@ -66,7 +68,7 @@ const AdminInstructor = () => {
         </View>
         <TouchableOpacity
           style={styles.iconFilter}
-          onPress={() => console.log('icon')}>
+          onPress = {toggleModal}>
           <Images.Filter.default
             width={20}
             height={20}
@@ -112,6 +114,11 @@ const AdminInstructor = () => {
   }
 
   return (
+    <>
+    <ModalFilterAdminPageUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     <View style={styles.containerMain}>
       <ImageBackground
         source={Images.AdminBackground}
@@ -120,6 +127,7 @@ const AdminInstructor = () => {
         <CardInstructor />
       </ImageBackground>
     </View>
+    </>
   )
 }
 

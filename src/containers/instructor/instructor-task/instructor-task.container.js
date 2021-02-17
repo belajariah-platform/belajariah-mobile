@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-
+import {ModalFilterUstadz} from '../../../components'
 import { styles } from './instructor-task.style'
 
 const InstructorTask = () => {
@@ -24,6 +24,8 @@ const InstructorTask = () => {
     { key: 1, title : 'Recent Task' },
     { key: 2, title : 'Completed Task' }
   ])
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
   const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
@@ -95,7 +97,7 @@ const InstructorTask = () => {
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>Tugas Saya</Text>
-        <TouchableOpacity >
+        <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={20} height={20} />
         </TouchableOpacity>
       </View>
@@ -184,10 +186,16 @@ const InstructorTask = () => {
   }
 
   return (
+    <>
+    <ModalFilterUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     <View style={styles.containerMain}>
       <Header />
       <TabViewTask />
     </View>
+    </>
   )
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
@@ -17,9 +18,10 @@ const TransactionInfo = () => {
     account : '000-1234567',
     quote: 'Dicek dalam 24 jam setelah bukti pembayaran talh diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
     noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
-    noteTwo: 'Silahkan upload bukti transfer sebelum 1x-0x-2xxx',
+    noteTwo: 'Silahkan upload bukti transfer sebelum ',
     noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
     price: 199000,
+    Created_Date: new Date(),
   }
 
 
@@ -52,9 +54,7 @@ const TransactionInfo = () => {
           <View style={styles.viewDetailBank}>
             <View>
               <Text style={styles.textSmall}>No. Rekening : {classData.account}</Text>
-              <Text style={styles.textSmall}>Cabang : Palembang</Text>
               <Text style={styles.textSmall}>Nama Rekening : Belajariah</Text>
-              <Text style={styles.textSmall}>Indonesia</Text>
             </View>
             <View>
               <TouchableOpacity onPress={() => copyToClipboard(classData.account)}>
@@ -65,7 +65,7 @@ const TransactionInfo = () => {
           <View style={styles.viewMethod}>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>2</Text>
-              <Text style={styles.textSmall}>{classData.noteTwo}</Text>
+              <Text style={styles.textSmall}>{classData.noteTwo}<Text style={styles.textSmall}>{moment(classData.Created_Date).format('dddd, DD MMMM YYYY')}</Text></Text>
             </View>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>3</Text>
@@ -87,7 +87,7 @@ const TransactionInfo = () => {
           onPress={()=> {navigation.navigate('TransactionUpload')}}
         />
         <TouchableOpacity style={styles.btnBuyClassTwo}
-          onPress={()=> {navigation.navigate('Transaction')}}>
+          onPress={()=> {navigation.navigate('Pembayaran')}}>
           <Text style={styles.textBuyClassTwo}>Upload bukti transfer nanti</Text>
         </TouchableOpacity>
       </View>

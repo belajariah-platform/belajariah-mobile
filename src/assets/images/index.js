@@ -112,14 +112,17 @@ export default {
 
   //Update Admin
   GrafisVoice: require('./GrafisVoice.svg'),
+  IconGallery: require('./IconGallery.svg'),
   SidenavUser : require('./SidenavUser.svg'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
   GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
+  IconUnduhanAdmin: require('./IconUnduhanAdmin.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
   SidenavInstrcutor: require('./SidenavInstructor.svg'),
   IconDownloadVoice: require('./IconDownloadVoice.svg'),
+  IconTransactionAdmin: require('./IconTransactionAdmin.svg'),
   WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
 
   //Update instructor-navigation

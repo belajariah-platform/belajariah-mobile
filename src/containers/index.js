@@ -18,6 +18,7 @@ import {
   AdminDashboard,
   AdminInstructor,
   AdminProfileAll,
+  AdminTransaction,
   AdminProfileEdit,
   AdminProfileInstructor,
 } from './admin'
@@ -72,6 +73,7 @@ export {
   AdminInstructor,
   ConfirmPassword,
   TransactionInfo,
+  AdminTransaction,
   AdminProfileEdit,
   TransactionUpload,
   InstructorProfile,

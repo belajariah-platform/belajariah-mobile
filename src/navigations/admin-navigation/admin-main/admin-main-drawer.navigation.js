@@ -69,6 +69,23 @@ const AdminDrawer = ({ navigation }, props) => {
             />
             <Text style={styles.textIcon}>Ustadz/Ustadzah</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => {
+              setActived(4)
+              navigation.navigate('AdminTransaction')
+            }}
+            style={[styles.centered, actived == 4 ?
+              { backgroundColor : '#8a43a8' } : null
+            ]}>
+            <Images.IconTransactionAdmin.default
+              width={25}
+              height={25}
+            />
+            <Text style={styles.textIcon}>Transaksi</Text>
+          </TouchableOpacity>
+          
         </View>
 
         <TouchableOpacity

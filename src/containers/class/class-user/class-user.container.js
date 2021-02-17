@@ -16,7 +16,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { ButtonGradient, Progressbar, ModalRating } from '../../../components'
+import { ButtonGradient, Progressbar, ModalRating, ModalFilterUser } from '../../../components'
 
 import { styles } from '../class-user/class-user.style'
 
@@ -26,8 +26,11 @@ const ClassUser = (props) => {
   const [available, setAvailable] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [selectedPrinter, setSelectedPrinter] = useState(null)
   const toggleModal = () => setModalVisible(!modalVisible)
+
+  const [modalFilterVisible, setmodalFilterVisible] = useState(false)
+  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible) 
+  const [selectedPrinter, setSelectedPrinter] = useState(null)
 
   const Progress = [
     { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'start', 'progress' : 0 },
@@ -138,10 +141,15 @@ const ClassUser = (props) => {
           numberOfLines={8}
           style={styles.textArea}/>}
       />
+      <ModalFilterUser
+        isVisible={modalFilterVisible}
+        backdropPress={() => toggleModalFilter()}
+        
+      />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
-          <TouchableOpacity onPress={() => setAvailable(!available)}>
+          <TouchableOpacity onPress = {toggleModalFilter}>
             <Images.Filter.default
               width={20}
               height={20}
