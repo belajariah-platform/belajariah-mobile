@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-
+import { ModalFilterUstadz } from '../../../components'
 import { styles } from './instructor-task.style'
 
 const InstructorTask = () => {
@@ -24,7 +24,10 @@ const InstructorTask = () => {
     { key: 1, title : 'Recent Task' },
     { key: 2, title : 'Completed Task' }
   ])
-  const [isEmpty, setIsEmpty] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const [isRecentEmpty, setIsRecentEmpty] = useState(true)
+  const [isCompletedEmpty, setIsCompletedEmpty] = useState(true)
   const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
@@ -96,7 +99,7 @@ const InstructorTask = () => {
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>Tugas Saya</Text>
-        <TouchableOpacity onPress={() => setIsEmpty(!isEmpty)}>
+        <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={20} height={20} />
         </TouchableOpacity>
       </View>
@@ -176,8 +179,8 @@ const InstructorTask = () => {
 
   //deklarasi renderScene harus dibawah component yang mau di pakai
   const renderScene = SceneMap({
-    1: isEmpty ? NoRecentJobs : RecentJobs,
-    2: isEmpty? NoCompletedJobs : CompletedJobs,
+    1: isRecentEmpty ? NoRecentJobs : RecentJobs,
+    2: isCompletedEmpty? NoCompletedJobs : CompletedJobs,
   })
 
   const renderTabBar = (props) => (
@@ -205,10 +208,16 @@ const InstructorTask = () => {
   }
 
   return (
-    <View style={styles.containerMain}>
-      <Header />
-      <TabViewTask />
-    </View>
+    <>
+      <ModalFilterUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
+      <View style={styles.containerMain}>
+        <Header />
+        <TabViewTask />
+      </View>
+    </>
   )
 }
 

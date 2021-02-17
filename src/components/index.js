@@ -13,7 +13,18 @@ import Progressbar from './progressbar'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
-import { ModalDate, ModalInfo, ModalConfirm, ModalRating } from './modal'
+import { 
+  ModalDate, 
+  ModalInfo, 
+  ModalRating, 
+  ModalConfirm, 
+  ModalFilterUser, 
+  ModalFilterAdmin, 
+  ModalFilterUstadz,
+  ModalFilterAdminPageUser,
+  ModalFilterAdminPageUstadz,
+  ModalFilterUserTransaction, 
+} from './modal'
 
 export {
   Cards,
@@ -33,5 +44,11 @@ export {
   Progressbar,
   VideoPlayer,
   ModalConfirm,
-  ButtonGradient
+  ButtonGradient,
+  ModalFilterUser, 
+  ModalFilterAdmin,
+  ModalFilterUstadz,
+  ModalFilterAdminPageUser,
+  ModalFilterAdminPageUstadz,
+  ModalFilterUserTransaction,
 }

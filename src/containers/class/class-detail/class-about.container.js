@@ -95,10 +95,10 @@ const ClassAbout = () => {
     return (
       <Card containerStyle={styles.containerTopics}>
         <View style={styles.containerTopicsTitle}>
-          <Text style={styles.textBold}>Topik yang dibahas</Text>
+          <Text style={styles.textBold}>Video yang dibahas</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>{state.total_topic}</Text> Topik
+              <Text style={styles.textRegular}>{state.total_topic}</Text> Video
             </Text>
             <Text style={styles.textRegular}>
               {TimeConvertToHour(state.duration)}

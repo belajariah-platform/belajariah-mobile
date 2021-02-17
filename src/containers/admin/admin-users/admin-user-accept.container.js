@@ -20,6 +20,7 @@ import { styles } from './admin-user.style'
 
 const AdminUserAccept = () => {
   const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
@@ -105,22 +106,35 @@ const AdminUserAccept = () => {
     )
   }
 
+  const NoUser = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoConsulAccept.default />
+        <Text style={styles.TxtNoTask}>Saat ini belum ada aktivitas diterima nih</Text>
+      </View>
+    )
+  }
+
   return(
     <View style={styles.containerMain}>
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        <FlatList
-          data={state}
-          style={{ width:'100%' }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          onEndReached={(e) => onLoadMore(e)}
-          showsVerticalScrollIndicator ={false}
-          contentContainerStyle={{ paddingBottom: 25 }}
-          keyExtractor={(item, index) =>  index.toString()}
-          renderItem={({ item, index }) => CardUser(item, index)}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {isEmpty?
+          <NoUser/>
+          :
+          <FlatList
+            data={state}
+            style={{ width:'100%' }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
+            onEndReached={(e) => onLoadMore(e)}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ paddingBottom: 25 }}
+            keyExtractor={(item, index) =>  index.toString()}
+            renderItem={({ item, index }) => CardUser(item, index)}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        }
       </ImageBackground>
     </View>
   )

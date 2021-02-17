@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   containerWelcome: {
     padding: '3%',
   },
-  containerNoTask: {
+  containerNoTransaction: {
     margin: 12,
     height: '42%',
     borderRadius: 20,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
   },
-  TxtNoTask: {
+  TxtNoTransaction: {
     marginTop: 12,
     color: Color.white,
     fontSize: FontSize.medium,
@@ -75,11 +75,10 @@ const styles = StyleSheet.create({
     height: 'auto',
     borderWidth : 0,
     borderRadius: 20,
+    paddingHorizontal: '5%',
   },
   ViewInstructorInfo: {
     paddingBottom: 10,
-    flexDirection: 'row',
-    alignItems : 'center',
   },
   avatarUser: {
     width: 44,
@@ -89,12 +88,12 @@ const styles = StyleSheet.create({
   textUsername: {
     marginBottom : 2,
     color: Color.black,
-    fontSize: FontSize.small,
+    fontSize: FontSize.medium,
     fontFamily: FontType.bold,
   },
   TxtTimeTitle: {
     color: Color.black,
-    fontSize: FontSize.overSmall,
+    fontSize: FontSize.smallest,
     fontFamily: FontType.regular,
   },
   TxtTitleDesc: {
@@ -111,23 +110,27 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   containerButtonAction: {
-    justifyContent : 'space-between',
-    flexDirection: 'row',
+    alignItems: 'center',
+
   },
   ViewButtonAction: {
     flexDirection: 'row',
+    justifyContent : 'space-between',
   },
   containerDescUser: {
-    backgroundColor : 'yellow'
+    backgroundColor : 'yellow',
+  },
+  ViewPrice: {
+    marginVertical: 10,
   },
   ViewButtonActionVoice: {
     flexDirection: 'row',
-    justifyContent : 'flex-end'
+    justifyContent: 'space-between',
   },
   ButtonAction: {
-    width: 70,
-    height : 32,
-    marginTop : 0,
+    width: 80,
+    height : 35,
+    marginTop : 3,
     marginRight: 10,
     marginBottom : 0,
     borderRadius : 10,
@@ -150,9 +153,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   indicatorStyle: {
-    left: '10%',
     width: 40,
     height: 4,
+    left: '10%',
     borderRadius: 2,
     backgroundColor: Color.bgColor,
   },
@@ -174,8 +177,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.extraSmall,
   },
   textDuration : {
-    fontSize: FontSize.smallPoint,
     fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
   },
   iconAccept : {
     bottom : 15
@@ -190,6 +193,76 @@ const styles = StyleSheet.create({
   indicatorContainer : {
     top : 10,
     alignItems:'center',
+  },
+  ViewTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  TxtInvoice: {
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallest,
+  },
+  ViewLabel: {
+    left: '-7%',
+    width: '60%',
+    paddingVertical: '2%',
+    paddingHorizontal: '7%',
+    borderTopRightRadius: 20,
+    backgroundColor: '#ab69c6',
+    borderBottomRightRadius: 20,
+  },
+  TxtLabel : {
+    color: Color.white,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.bold,
+  },
+  viewTxtKelas: {
+    marginVertical: '3%',
+  },
+  TxtDescKelas: {
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallMedium,
+  },
+  viewFoto: {
+    padding: 6,
+    flexDirection: 'row',
+    backgroundColor: '#f0f0f0',
+  },
+  TxtBank: {
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
+  },
+  TxtHarga: {
+    color: Color.red,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  ViewButtonTolak: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    marginHorizontal: '5%',
+  },
+  ButtonActionTolak: {
+    width: 250,
+    height : 35,
+    marginTop : 3,
+    marginBottom : 0,
+    borderRadius : 10,
+  },
+  viewButtonModal: {
+    borderRadius: 15,
+    marginBottom: '2%',
+    marginVertical: '4%',
+    paddingVertical: '3%',
+  },
+  TxtButtonModal: {
+    textAlign: 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
   },
 })
 

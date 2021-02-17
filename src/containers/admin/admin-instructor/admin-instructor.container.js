@@ -14,13 +14,16 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { Searchbox } from '../../../components'
+import { Searchbox, ModalFilterAdminPageUstadz } from '../../../components'
 import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const state = [
     { fullname : 'Ustadz Maulana Al-Hafidz', images: Images.ImageProfileDefault, email : 'maulana@gmail.com' },
@@ -66,7 +69,7 @@ const AdminInstructor = () => {
         </View>
         <TouchableOpacity
           style={styles.iconFilter}
-          onPress={() => console.log('icon')}>
+          onPress = {toggleModal}>
           <Images.Filter.default
             width={20}
             height={20}
@@ -111,15 +114,30 @@ const AdminInstructor = () => {
     )
   }
 
+  const NoInstructor = () => {
+    return(
+      <View style={styles.containerNoInstructor}>
+        <Images.IllustrationsNoInstructor.default />
+        <Text style={styles.TxtNoData}>Oopss!</Text>
+      </View>
+    )
+  }
+
   return (
-    <View style={styles.containerMain}>
-      <ImageBackground
-        source={Images.AdminBackground}
-        style={styles.containerBackground}>
-        <ViewHeader />
-        <CardInstructor />
-      </ImageBackground>
-    </View>
+    <>
+      <ModalFilterAdminPageUstadz
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
+      <View style={styles.containerMain}>
+        <ImageBackground
+          source={Images.AdminBackground}
+          style={styles.containerBackground}>
+          <ViewHeader />
+          {isEmpty? <NoInstructor/> : <CardInstructor/>}
+        </ImageBackground>
+      </View>
+    </>
   )
 }
 
