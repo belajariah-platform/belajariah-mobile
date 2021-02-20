@@ -29,7 +29,7 @@ const AdminTransactionDecline = () => {
     const state = [
       { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
       { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
-      
+      { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds111', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR400.000' },
     ]
   
     const onRefreshing = () => {
@@ -97,7 +97,12 @@ const AdminTransactionDecline = () => {
               <Text style={styles.TxtBank}>{item.BankName}</Text>
               <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
             </View>
-            <View style={styles.ViewButtonTolak}>
+            <View style={styles.ViewButtonActionVoice}>
+              <ButtonGradient
+                title='Perbaiki'
+                styles={styles.ButtonActionTolak}
+                colors={['#0bb091', '#16c4a4', '#0bb091']}
+              />
               <ButtonGradient
                 title='Batalkan'
                 styles={styles.ButtonActionTolak}

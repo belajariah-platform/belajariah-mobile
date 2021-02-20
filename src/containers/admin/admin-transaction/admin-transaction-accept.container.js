@@ -18,7 +18,7 @@ import {
 import { Images } from '../../../assets'
 import { TimeConvert } from '../../../utils'
 import { styles } from './admin-transaction.style'
-import { ButtonGradient, ModalConfirm } from '../../../components'
+import { ButtonGradient, ModalConfirm, ModalRepair } from '../../../components'
 
 const AdminTransactionAccept = () => {
   const navigation = useNavigation()
@@ -26,10 +26,12 @@ const AdminTransactionAccept = () => {
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
+  const [modalRepairVisible, setmodalRepairVisible] = useState(false)
+  const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
   const state = [
     { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
     { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
-    
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds111', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR400.000' },
   ]
 
   const onRefreshing = () => {
@@ -57,6 +59,10 @@ const AdminTransactionAccept = () => {
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
+          <Images.IconMiniComplete.default style={styles.IconMini} 
+            width={40}
+            height={40}
+          />
           <View style={styles.ViewInstructorInfo}>
             <TouchableOpacity activeOpacity={0.5}>
               <Text style={styles.textUsername}>{item.username}</Text>
@@ -93,9 +99,19 @@ const AdminTransactionAccept = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.ViewPrice}>
-            <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+          <View style={styles.viewPriceTwo}>
+            <View>
+              <Text style={styles.TxtBank}>{item.BankName}</Text>
+              <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+            </View>
+            <View>
+              <ButtonGradient
+                title='Perbaiki'
+                styles={styles.ButtonActionTolak}
+                colors={['#0bb091', '#16c4a4', '#0bb091']}
+                onPress = {toggleModalRepair}
+              />
+            </View>
           </View>
         </Card>
       </View>
@@ -107,6 +123,10 @@ const AdminTransactionAccept = () => {
       <ModalConfirm
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+      />
+      <ModalRepair
+        isVisible={modalRepairVisible}
+        backdropPress={() => toggleModalRepair()}
       />
       <ImageBackground
         source={Images.AdminBackground}
