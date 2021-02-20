@@ -71,6 +71,7 @@ const ClassDetail = () => {
       </View>
 
       <VideoPlayer
+        useSmallBar={true}
         iconPlaySize = {20}
         iconSkipSize = {20}
         iconPlaySizeFullscreen = {80}

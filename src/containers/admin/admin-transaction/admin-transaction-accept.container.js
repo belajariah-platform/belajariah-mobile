@@ -22,6 +22,7 @@ import { ButtonGradient, ModalConfirm, ModalRepair } from '../../../components'
 
 const AdminTransactionAccept = () => {
   const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
@@ -29,9 +30,9 @@ const AdminTransactionAccept = () => {
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
   const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'Rp249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'Rp649.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds111', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank Mandiri', jumlahTransfer : 'Rp400.000' },
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
+
   ]
 
   const onRefreshing = () => {
@@ -68,34 +69,34 @@ const AdminTransactionAccept = () => {
               <Text style={styles.textUsername}>{item.username}</Text>
               <View style={styles.ViewTop}>
                 <Text style={styles.TxtTimeTitle}>
-                    {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                  {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
                 </Text>
                 <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.ViewLabel}>
-              <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
+            <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
           </View>
           <View style={styles.viewTxtKelas}>
-              <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
+            <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
           </View>
           <View style={styles.containerButtonAction}>
             <View style={styles.ViewButtonAction}>
               <TouchableOpacity>
-              <View style={styles.viewFoto}>
-                <Images.IconGallery.default
-                  width={20}
-                  height={20}
-                  style={{ marginRight: 5 }}/>
-                <Text>Screen_shoot787878xxx...</Text>
-              </View>
+                <View style={styles.viewFoto}>
+                  <Images.IconGallery.default
+                    width={20}
+                    height={20}
+                    style={{ marginRight: 5 }}/>
+                  <Text>Screen_shoot787878xxx...</Text>
+                </View>
               </TouchableOpacity>
               <TouchableOpacity>
-              <Images.IconUnduhanAdmin.default
-                width={30}
-                height={30}
-                style={{ marginRight: 5,  }}/>
+                <Images.IconUnduhanAdmin.default
+                  width={30}
+                  height={30}
+                  style={{ marginRight: 5,  }}/>
               </TouchableOpacity>
             </View>
           </View>
@@ -118,6 +119,15 @@ const AdminTransactionAccept = () => {
     )
   }
 
+  const NoTransaction = () => {
+    return(
+      <View style={styles.containerNoTransaction}>
+        <Images.IllustrationNoTransactionAccept.default />
+        <Text style={styles.TxtNoTransaction}>Belum ada transaksi yang diterima saat ini</Text>
+      </View>
+    )
+  }
+
   return (
     <View>
       <ModalConfirm
@@ -131,24 +141,29 @@ const AdminTransactionAccept = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        <FlatList
-          data={state}
-          style={{ width:'100%' }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          onEndReached={(e) => onLoadMore(e)}
-          showsVerticalScrollIndicator ={false}
-          contentContainerStyle={{ paddingBottom: 25 }}
-          keyExtractor={(item, index) =>  index.toString()}
-          renderItem={({ item, index }) => CardUser(item, index)}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {isEmpty ?
+          <NoTransaction />
+          :
+          <FlatList
+            data={state}
+            style={{ width:'100%' }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
+            onEndReached={(e) => onLoadMore(e)}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ paddingBottom: 25 }}
+            keyExtractor={(item, index) =>  index.toString()}
+            renderItem={({ item, index }) => CardUser(item, index)}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        }
+
       </ImageBackground>
     </View>
   )
 }
 
 AdminTransactionAccept.propTypes = {
-    navigation: PropTypes.object,
-}  
+  navigation: PropTypes.object,
+}
 
 export default AdminTransactionAccept

@@ -21,6 +21,14 @@ const styles = StyleSheet.create({
   containerWelcome: {
     padding: '3%',
   },
+  containerNoTransaction: {
+    margin: 12,
+    height: '42%',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.transparentBg,
+  },
   TxtTitle: {
     marginBottom: 5,
     color: Color.white,
@@ -37,6 +45,12 @@ const styles = StyleSheet.create({
     color: Color.white,
     fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
+  },
+  TxtNoTransaction: {
+    marginTop: 12,
+    color: Color.white,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
   },
   containerHeader: {
     paddingTop : 16,
@@ -97,7 +111,7 @@ const styles = StyleSheet.create({
   },
   containerButtonAction: {
     alignItems: 'center',
-    
+
   },
   ViewButtonAction: {
     flexDirection: 'row',
@@ -225,7 +239,7 @@ const styles = StyleSheet.create({
     color: Color.red,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
-  }, 
+  },
   ViewButtonTolak: {
     alignSelf: 'center',
     alignItems: 'center',
@@ -240,10 +254,10 @@ const styles = StyleSheet.create({
     borderRadius : 10,
   },
   viewButtonModal: {
-    borderRadius: 15, 
+    borderRadius: 15,
     marginBottom: '2%',
     marginVertical: '4%',
-    paddingVertical: '3%', 
+    paddingVertical: '3%',
   },
   TxtButtonModal: {
     textAlign: 'center',

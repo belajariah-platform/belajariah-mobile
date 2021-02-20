@@ -19,6 +19,7 @@ import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
@@ -113,20 +114,29 @@ const AdminInstructor = () => {
     )
   }
 
+  const NoInstructor = () => {
+    return(
+      <View style={styles.containerNoInstructor}>
+        <Images.IllustrationsNoInstructor.default />
+        <Text style={styles.TxtNoData}>Oopss!</Text>
+      </View>
+    )
+  }
+
   return (
     <>
-    <ModalFilterAdminPageUstadz
+      <ModalFilterAdminPageUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
-    <View style={styles.containerMain}>
-      <ImageBackground
-        source={Images.AdminBackground}
-        style={styles.containerBackground}>
-        <ViewHeader />
-        <CardInstructor />
-      </ImageBackground>
-    </View>
+      <View style={styles.containerMain}>
+        <ImageBackground
+          source={Images.AdminBackground}
+          style={styles.containerBackground}>
+          <ViewHeader />
+          {isEmpty? <NoInstructor/> : <CardInstructor/>}
+        </ImageBackground>
+      </View>
     </>
   )
 }

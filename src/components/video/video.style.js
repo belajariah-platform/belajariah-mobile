@@ -4,15 +4,15 @@ import { Color, FontSize, FontType } from '../../assets'
 const styles = StyleSheet.create({
   headerControl: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  headerControlFullscreen: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  headerWithoutBackButton : {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   fullscreenButton: {
-    top: 6,
-    paddingRight: 6,
+    top: '26%',
+    paddingRight: '16%',
     alignItems: 'flex-end',
   },
   controllerWrapper: {
@@ -28,8 +28,13 @@ const styles = StyleSheet.create({
   controllerTouchableDisabled: {
     opacity: 0.3,
   },
+  smallBarWrapper: {
+    marginBottom: '-10%',
+    justifyContent : 'flex-end',
+  },
   barWrapper: {
-    flex: 1,
+    marginBottom: 6,
+    justifyContent : 'flex-end',
   },
   timeWrapper: {
     alignItems: 'center',
@@ -40,17 +45,17 @@ const styles = StyleSheet.create({
   timeLeft: {
     flex: 1,
     fontSize: 16,
-    paddingLeft: FontSize.mediumLarge,
-    fontFamily: FontType.regular,
     color: Color.white,
+    fontFamily: FontType.regular,
+    paddingLeft: FontSize.mediumLarge,
   },
   timeRight: {
     flex: 1,
-    fontSize: FontSize.mediumLarge,
-    fontFamily: FontType.regular,
-    color: Color.white,
     paddingRight: 12,
     textAlign: 'right',
+    color: Color.white,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.mediumLarge,
   },
 })
 

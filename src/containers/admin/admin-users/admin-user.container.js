@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState} from 'react'
+import { useState } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
@@ -42,39 +42,39 @@ const AdminUser = () => {
 
   return (
     <>
-    <ModalFilterAdminPageUser
+      <ModalFilterAdminPageUser
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
-    <View style={styles.containerMain}>
-      <ViewHeader />
-      <Tab.Navigator
-        tabBarOptions={{
-          style:{
-            backgroundColor: 'transparent',
-          },
-          inactiveTintColor: Color.white,
-          labelStyle: styles.labelStyle,
-          activeTintColor: Color.white,
-          indicatorStyle: styles.indicatorStyle,
-        }}>
-        <Tab.Screen
-          name='AdminUserAll'
-          component={AdminUserAll}
-          options={{ title: 'Semua' }}
-        />
-        <Tab.Screen
-          name='AdminUserAccept'
-          component={AdminUserAccept}
-          options={{ title: 'Diterima' }}
-        />
-        <Tab.Screen
-          name='AdminUserDecline'
-          component={AdminUserDecline}
-          options={{ title: 'Ditolak' }}
-        />
-      </Tab.Navigator>
-    </View>
+      <View style={styles.containerMain}>
+        <ViewHeader />
+        <Tab.Navigator
+          tabBarOptions={{
+            style:{
+              backgroundColor: 'transparent',
+            },
+            inactiveTintColor: Color.white,
+            labelStyle: styles.labelStyle,
+            activeTintColor: Color.white,
+            indicatorStyle: styles.indicatorStyle,
+          }}>
+          <Tab.Screen
+            name='AdminUserAll'
+            component={AdminUserAll}
+            options={{ title: 'Semua' }}
+          />
+          <Tab.Screen
+            name='AdminUserAccept'
+            component={AdminUserAccept}
+            options={{ title: 'Diterima' }}
+          />
+          <Tab.Screen
+            name='AdminUserDecline'
+            component={AdminUserDecline}
+            options={{ title: 'Ditolak' }}
+          />
+        </Tab.Navigator>
+      </View>
     </>
   )
 }
