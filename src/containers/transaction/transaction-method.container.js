@@ -74,12 +74,12 @@ const TransactionMethod = () => {
     //   discountedPrice = (classData.price - (classData.price * 30/100))
     //   return (
     //     <View style={styles.flexRow}>
-    //       <Text style={styles.textLineThroughPrice}>IDR {FormatRupiah(classData.price)}</Text>
-    //       <Text style={styles.textPrice}>IDR {FormatRupiah(discountedPrice)}</Text>
+    //       <Text style={styles.textLineThroughPrice}>Rp {FormatRupiah(classData.price)}</Text>
+    //       <Text style={styles.textPrice}>Rp {FormatRupiah(discountedPrice)}</Text>
     //     </View>
     //   )
     // default:
-    return <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
+    return <Text style={styles.textPrice}>Rp {FormatRupiah(classData.price)}</Text>
     // }
   }
 
