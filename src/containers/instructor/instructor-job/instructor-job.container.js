@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { List } from 'react-native-paper'
 import Images from '../../../assets/images'
 import { Text } from '@ui-kitten/components'
@@ -8,11 +8,12 @@ import { Avatar, Card } from 'react-native-elements'
 import ButtonGradient from '../../../components/button-gradient'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
-import {ModalFilterUstadz} from '../../../components'
+import { ModalFilterUstadz } from '../../../components'
 
 const InstructorJob = () => {
-  const navigation = useNavigation()
   const route = useRoute()
+  const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -118,7 +119,7 @@ const InstructorJob = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
-        <Text style={styles.textHeader2}>{classes[idClass].className}</Text>
+        <Text style={styles.textHeader}>{classes[idClass].className}</Text>
         <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
@@ -187,16 +188,26 @@ const InstructorJob = () => {
     )
   }
 
+  const EmptyList = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoTaskAvailable.default style={{ marginTop: '4%' }} />
+        <Text style={styles.textNoTaskTitle}>Maaf!</Text>
+        <Text style={styles.textNoTask}>Saat ini belum ada <Text style={styles.textHeader}>task</Text> yang tersediah yah</Text>
+      </View>
+    )
+  }
+
   return (
     <>
-    <ModalFilterUstadz
+      <ModalFilterUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
-    <View style={styles.container}>
-      <Header />
-      <CardList />
-    </View>
+      <View style={styles.container}>
+        <Header />
+        {isEmpty? <EmptyList/> : <CardList />}
+      </View>
     </>
   )
 }

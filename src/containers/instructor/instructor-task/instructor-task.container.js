@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import {ModalFilterUstadz} from '../../../components'
+import { ModalFilterUstadz } from '../../../components'
 import { styles } from './instructor-task.style'
 
 const InstructorTask = () => {
@@ -26,6 +26,8 @@ const InstructorTask = () => {
   ])
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
+  const [isRecentEmpty, setIsRecentEmpty] = useState(true)
+  const [isCompletedEmpty, setIsCompletedEmpty] = useState(true)
   const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
@@ -117,6 +119,16 @@ const InstructorTask = () => {
     )
   }
 
+  const NoRecentJobs = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoRecentTask.default style={{ marginTop: '25%' }}/>
+        <Text style={styles.textNoTaskTitle}>Uupss</Text>
+        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu ambil nih</Text>
+      </View>
+    )
+  }
+
   const CompletedJobs = () => {
     return (
       <FlatList
@@ -127,6 +139,16 @@ const InstructorTask = () => {
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => Content(item, index)}
       />
+    )
+  }
+
+  const NoCompletedJobs = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoCompletedTask.default style={{ marginTop: '25%' }} />
+        <Text style={styles.textNoTaskTitle}>Uupss</Text>
+        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu selesaikan nih</Text>
+      </View>
     )
   }
 
@@ -157,8 +179,8 @@ const InstructorTask = () => {
 
   //deklarasi renderScene harus dibawah component yang mau di pakai
   const renderScene = SceneMap({
-    1: RecentJobs,
-    2: CompletedJobs,
+    1: isRecentEmpty ? NoRecentJobs : RecentJobs,
+    2: isCompletedEmpty? NoCompletedJobs : CompletedJobs,
   })
 
   const renderTabBar = (props) => (
@@ -187,14 +209,14 @@ const InstructorTask = () => {
 
   return (
     <>
-    <ModalFilterUstadz
+      <ModalFilterUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
-    <View style={styles.containerMain}>
-      <Header />
-      <TabViewTask />
-    </View>
+      <View style={styles.containerMain}>
+        <Header />
+        <TabViewTask />
+      </View>
     </>
   )
 }

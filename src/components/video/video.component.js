@@ -14,9 +14,11 @@ import Orientation from 'react-native-orientation-locker'
 import VideoController from './video-controller.component'
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { Alert } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const VideoPlayer = (props) => {
   const videoRef = createRef(Video)
+  const navigation = useNavigation()
   const [state, setState] = useState({
     fullscreen: false,
     play: false,
@@ -131,7 +133,7 @@ const VideoPlayer = (props) => {
       />
       {state.showControls && (
         <View style={state.fullscreen? props.controllerFullscreenStyle: props.controllerStyle}>
-          <View style={state.fullscreen? styles.headerControlFullscreen : styles.headerControl}>
+          <View style={state.fullscreen? styles.headerControl : (props.showBackButton ? styles.headerControl : styles.headerWithoutBackButton)}>
             {
               state.fullscreen?
                 <TouchableOpacity
@@ -140,7 +142,14 @@ const VideoPlayer = (props) => {
                   <Images.ButtonBack.default/>
                 </TouchableOpacity>
                 :
-                null
+                (props.showBackButton &&
+                  <TouchableOpacity
+                    onPress={navigation.goBack}
+                    hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}>
+                    <Images.ButtonBack.default />
+                  </TouchableOpacity>
+                )
+
             }
             <TouchableOpacity
               onPress={handleFullscreen}
@@ -157,7 +166,7 @@ const VideoPlayer = (props) => {
             showPreviousAndNext={false}
             skipBackwards={skipBackward}
             fullscreen={state.fullscreen}
-            showSkip={state.fullscreen? true : false}
+            showSkip={state.fullscreen? true : props.showSkipButton}
             iconPlaySize={state.fullscreen? props.iconPlaySizeFullscreen : props.iconPlaySize}
             iconSkipSize={state.fullscreen? props.iconSkipSizeFullscreen : props.iconSkipSize}
           />
@@ -167,6 +176,7 @@ const VideoPlayer = (props) => {
             onSlideStart={handlePlayPause}
             onSlideComplete={handlePlayPause}
             onSlideCapture={onSeek}
+            smallBar={props.useSmallBar}
           />
         </View>
       )}
@@ -178,10 +188,13 @@ VideoPlayer.propTypes = {
   style : PropTypes.object,
   onVideoEnd : PropTypes.func,
   videoLink : PropTypes.string,
+  useSmallBar : PropTypes.bool,
   videoStyle : PropTypes.object,
   posterLink : PropTypes.string,
   iconPlaySize : PropTypes.number,
   iconSkipSize : PropTypes.number,
+  showSkipButton : PropTypes.bool,
+  showBackButton : PropTypes.bool,
   controllerStyle : PropTypes.object,
   fullscreenStyle : PropTypes.object,
   onFullScreenPress : PropTypes.func,

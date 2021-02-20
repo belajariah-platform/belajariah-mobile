@@ -36,11 +36,32 @@ const styles = StyleSheet.create({
     width: 190,
     padding: 0,
   },
-  textHeader2: {
+  containerNoTask : {
+    flex: 1,
+    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor : Color.softPink,
+  },
+  textHeader: {
     marginRight:10,
     color: Color.black,
     textAlign: 'center',
     fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  textNoTaskTitle : {
+    fontSize: 40,
+    marginRight: 10,
+    textAlign: 'center',
+    color: Color.purpleMedium,
+    fontFamily: FontType.bold,
+  },
+  textNoTask : {
+    marginRight:10,
+    color: Color.black,
+    textAlign: 'center',
+    fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
   },
   textUsername: {

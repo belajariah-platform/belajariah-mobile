@@ -2,6 +2,13 @@ import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
+  buttonBack : {
+    top: 0,
+    left: 0,
+    zIndex : 10,
+    position: 'absolute',
+    backgroundColor:'yellow'
+  },
   container: {
     flex: 1,
   },
@@ -18,13 +25,6 @@ const styles = StyleSheet.create({
     height: '10%',
     backgroundColor: '#9956B3',
   },
-  buttonBack : {
-    top: 0,
-    left: 0,
-    zIndex : 10,
-    position: 'absolute',
-    backgroundColor:'yellow'
-  },
   containerParentKelas : {
     backgroundColor: Color.softPink,
   },
@@ -36,10 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.softPink,
   },
   containerTextTitle : {
-    lineHeight:18,
-    paddingVertical: 5,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.mediumLarge,
+    flexDirection: 'row',
   },
   containerTextCategory : {
     marginTop:2,
@@ -59,11 +56,6 @@ const styles = StyleSheet.create({
   containerReviewUser : {
     flexDirection: 'row',
     alignContent: 'space-between',
-  },
-  textRating : {
-    marginLeft: 10,
-    fontFamily: FontType.regular,
-    fontSize: FontSize.extraSmall,
   },
   containerMenuDetail : {
     height: 'auto',
@@ -90,6 +82,79 @@ const styles = StyleSheet.create({
     borderColor: '#e6e6e6',
     backgroundColor:'#fef5ff',
   },
+  containerAccordion: {
+    paddingVertical: 0,
+    paddingHorizontal: 9,
+    borderBottomWidth: 1,
+    borderColor: Color.lightGrey,
+    backgroundColor: Color.white,
+  },
+  containerExam : {
+    paddingVertical: 5,
+    borderTopWidth : 1,
+    borderBottomWidth : 1,
+    borderColor: Color.lightGrey,
+  },
+  containerItem: {
+    paddingVertical: 4,
+    borderBottomWidth: 1,
+    paddingHorizontal: 15,
+    borderColor: Color.lightGrey,
+    backgroundColor : Color.softPink
+  },
+  containerModalChecklist : {
+    width: '70%',
+    marginTop: 96,
+    paddingRight: 12,
+    flexDirection: 'column',
+  },
+  containerModalChecklistHeader : {
+    width: '100%',
+    marginLeft: -24,
+    flexDirection : 'row',
+  },
+  containerModalTitle : {
+    marginLeft: 12,
+    paddingRight: 4,
+  },
+  containerModalScrollview : {
+    marginTop: 8,
+    marginBottom: 48,
+  },
+  containerIconChecklist : {
+    padding: 8,
+    borderRadius: 36,
+    backgroundColor : Color.mediumPink,
+  },
+  containerRadioButton : {
+    marginLeft: -8,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  containerCancelSave : {
+    flexDirection: 'row',
+    justifyContent : 'space-between',
+  },
+  containerPDF : {
+    flex : 1,
+    backgroundColor : Color.transactionBgColor,
+  },
+  containerHeaderPDF : {
+    height : 50,
+    paddingVertical : 7,
+    flexDirection : 'row',
+    paddingHorizontal : 10,
+    justifyContent: 'space-between',
+  },
+  containerTextPdf : {
+    flex : 1,
+    justifyContent : 'center',
+  },
+  containerConsultation: {
+    marginBottom:20
+  },
+
+  //video
   videoContainerStyle: {
     width: '100%',
     height: '100%',
@@ -133,6 +198,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
   },
+
   customRatingBarStyle: {
     marginLeft: '10%',
     flexDirection: 'row',
@@ -142,6 +208,17 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     marginRight:2,
+  },
+  textRating : {
+    marginLeft: 10,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
+  },
+  textTitle : {
+    lineHeight:18,
+    paddingVertical: 5,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
   },
   textConsul : {
     color: '#fff',
@@ -157,8 +234,13 @@ const styles = StyleSheet.create({
   },
   textModal : {
     color: Color.black,
-    fontSize: FontSize.smallMedium,
     fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  },
+  textModalTitle : {
+    color: Color.purpleMedium,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallMedium,
   },
   textExam: {
     right : 7,
@@ -167,50 +249,38 @@ const styles = StyleSheet.create({
     alignSelf : 'center',
     fontFamily: FontType.regular,
   },
-  containerAccordion: {
-    paddingVertical: 0,
-    paddingHorizontal: 9,
-    borderBottomWidth: 1,
-    borderColor: Color.lightGrey,
-    backgroundColor: Color.white,
+  textDuration : {
+    fontSize: 10,
+    alignSelf:'center',
+    fontFamily: FontType.regular,
   },
-  containerExam : {
-    paddingVertical: 5,
-    borderTopWidth : 1,
-    borderBottomWidth : 1,
-    borderColor: Color.lightGrey,
+  textConsultation : {
+    marginHorizontal : 20,
+    fontSize : FontSize.medium
   },
-  containerItem: {
-    paddingVertical: 4,
-    borderBottomWidth: 1,
-    paddingHorizontal: 15,
-    borderColor: Color.lightGrey,
-    backgroundColor : Color.softPink
+  textDownload : {
+    marginLeft : 3,
+    color : Color.white,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
+  textPdf : {
+    textAlign : 'left',
+    color : Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  textPurpleMedium: {
+    color : Color.purpleMedium,
   },
   iconPlay : {
     marginRight:5,
     alignSelf:'center',
   },
-  textDuration : {
-    alignSelf:'center',
-    fontSize: 10,
-    fontFamily: FontType.regular,
-  },
-  containerPDF : {
-    flex : 1,
-    backgroundColor : Color.transactionBgColor,
-  },
-  containerHeaderPDF : {
-    height : 50,
-    paddingVertical : 7,
-    flexDirection : 'row',
-    paddingHorizontal : 10,
-    justifyContent: 'space-between',
-  },
   buttonBackPDF : {
     width : 'auto',
-    marginLeft : -5,
     height : 'auto',
+    marginLeft : -5,
   },
   buttonDownloadPDF : {
     padding : 5,
@@ -223,27 +293,8 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     backgroundColor : '#9956B3',
   },
-  textDownload : {
-    marginLeft : 3,
-    color : Color.white,
-    fontSize: FontSize.small,
-    fontFamily: FontType.regular,
-  },
-  textPdf : {
-    color : Color.white,
-    textAlign : 'left',
-    fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
-  },
-  containerTextPdf : {
-    flex : 1,
-    justifyContent : 'center',
-  },
   star : {
     marginRight:1,
-  },
-  containerConsultation: {
-    marginBottom:20
   },
   viewConsultation : {
     height : 47,
@@ -256,11 +307,21 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     alignSelf:'flex-start',
   },
-  textConsultation : {
-    marginHorizontal : 20,
-    fontSize : FontSize.medium
-
-  }
+  buttonCancel : {
+    width: 104,
+    borderWidth : 1,
+    borderColor : 'purple',
+    backgroundColor: 'white',
+  },
+  buttonSave : {
+    width: 104,
+  },
+  imgMaterial : {
+    height: 276,
+    marginTop: 12,
+    width : '100%',
+    marginBottom: 4,
+  },
 })
 
 export { styles }

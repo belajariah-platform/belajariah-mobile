@@ -20,6 +20,14 @@ const styles = StyleSheet.create({
   containerWelcome: {
     padding: '3%',
   },
+  containerNoInstructor: {
+    margin: 12,
+    height: '40%',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Color.transparentBg,
+  },
   TxtTitle: {
     marginBottom: 5,
     color: Color.white,
@@ -36,6 +44,12 @@ const styles = StyleSheet.create({
     color: Color.white,
     fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
+  },
+  TxtNoData: {
+    marginTop: 12,
+    color: Color.white,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
   },
   containerHeader: {
     padding : 16,

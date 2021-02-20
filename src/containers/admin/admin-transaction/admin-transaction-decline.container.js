@@ -21,62 +21,63 @@ import { styles } from './admin-transaction.style'
 import { ButtonGradient, ModalConfirm } from '../../../components'
 
 const AdminTransactionDecline = () => {
-    const navigation = useNavigation()
-    const [loading, setLoading] = useState(false)
-    const [refreshing, setRefreshing] = useState(false)
-    const [modalVisible, setModalVisible] = useState(false)
-    const toggleModal = () => setModalVisible(!modalVisible)
-    const state = [
-      { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-      { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
-      
-    ]
-  
-    const onRefreshing = () => {
-      setRefreshing(true)
-      setRefreshing(false)
+  const navigation = useNavigation()
+  const [isEmpty, setIsEmpty] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const state = [
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
+
+  ]
+
+  const onRefreshing = () => {
+    setRefreshing(true)
+    setRefreshing(false)
+  }
+
+  const onLoadMore = (e) => {
+    if (e.distanceFromEnd >= 0) {
+      setLoading(true)
     }
-  
-    const onLoadMore = (e) => {
-      if (e.distanceFromEnd >= 0) {
-        setLoading(true)
-      }
-    }
-  
-    const renderFooter = () => {
-      return loading ? (
-        <View style={styles.indicatorContainer}>
-          <ActivityIndicator
-            color='white'
-            size={30} />
-        </View>
-      ) : null
-    }
-  
-    const CardUser = (item, index) => {
-      return(
-        <View key={index}>
-          <Card containerStyle={styles.cardUserOpacity}>
-            <View style={styles.ViewInstructorInfo}>
-              <TouchableOpacity activeOpacity={0.5}>
-                <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.username}</Text>
-                <View style={{ ...styles.ViewTop, opacity : 0.5}}>
-                  <Text style={styles.TxtTimeTitle}>
-                      {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
-                  </Text>
-                  <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-            <View style={{ ...styles.ViewLabel, opacity : 0.5}}>
-                <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
-            </View>
-            <View style={{ ...styles.viewTxtKelas, opacity : 0.5}}>
-                <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
-            </View>
-            <View style={{ ...styles.containerButtonAction, opacity : 0.5}}>
-              <View style={styles.ViewButtonAction}>
-                <TouchableOpacity>
+  }
+
+  const renderFooter = () => {
+    return loading ? (
+      <View style={styles.indicatorContainer}>
+        <ActivityIndicator
+          color='white'
+          size={30} />
+      </View>
+    ) : null
+  }
+
+  const CardUser = (item, index) => {
+    return(
+      <View key={index}>
+        <Card containerStyle={styles.cardUserOpacity}>
+          <View style={styles.ViewInstructorInfo}>
+            <TouchableOpacity activeOpacity={0.5}>
+              <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.username}</Text>
+              <View style={{ ...styles.ViewTop, opacity : 0.5 }}>
+                <Text style={styles.TxtTimeTitle}>
+                  {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                </Text>
+                <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ ...styles.ViewLabel, opacity : 0.5 }}>
+            <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
+          </View>
+          <View style={{ ...styles.viewTxtKelas, opacity : 0.5 }}>
+            <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
+          </View>
+          <View style={{ ...styles.containerButtonAction, opacity : 0.5 }}>
+            <View style={styles.ViewButtonAction}>
+              <TouchableOpacity>
                 <View style={styles.viewFoto}>
                   <Images.IconGallery.default
                     width={20}
@@ -84,40 +85,52 @@ const AdminTransactionDecline = () => {
                     style={{ marginRight: 5 }}/>
                   <Text>Screen_shoot787878xxx...</Text>
                 </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
+              </TouchableOpacity>
+              <TouchableOpacity>
                 <Images.IconUnduhanAdmin.default
                   width={30}
                   height={30}
                   style={{ marginRight: 5,  }}/>
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
-            <View style={{ ...styles.ViewPrice, opacity : 0.5}}>
-              <Text style={styles.TxtBank}>{item.BankName}</Text>
-              <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
-            </View>
-            <View style={styles.ViewButtonTolak}>
-              <ButtonGradient
-                title='Batalkan'
-                styles={styles.ButtonActionTolak}
-                colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
-              />
-            </View>
-          </Card>
-        </View>
-      )
-    }
-  
-    return (
-      <View>
-        <ModalConfirm
-          isVisible={modalVisible}
-          backdropPress={() => toggleModal()}
-        />
-        <ImageBackground
-          source={Images.AdminBackground}
-          style={styles.containerBackground}>
+          </View>
+          <View style={{ ...styles.ViewPrice, opacity : 0.5 }}>
+            <Text style={styles.TxtBank}>{item.BankName}</Text>
+            <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+          </View>
+          <View style={styles.ViewButtonTolak}>
+            <ButtonGradient
+              title='Batalkan'
+              styles={styles.ButtonActionTolak}
+              colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+            />
+          </View>
+        </Card>
+      </View>
+    )
+  }
+
+  const NoTransaction = () => {
+    return(
+      <View style={styles.containerNoTransaction}>
+        <Images.IllustrationNoTransactionReject.default />
+        <Text style={styles.TxtNoTransaction}>Belum ada transaksi yang ditolak saat ini</Text>
+      </View>
+    )
+  }
+
+  return (
+    <View>
+      <ModalConfirm
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
+      <ImageBackground
+        source={Images.AdminBackground}
+        style={styles.containerBackground}>
+        {isEmpty?
+          <NoTransaction/>
+          :
           <FlatList
             data={state}
             style={{ width:'100%' }}
@@ -129,13 +142,15 @@ const AdminTransactionDecline = () => {
             keyExtractor={(item, index) =>  index.toString()}
             renderItem={({ item, index }) => CardUser(item, index)}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
-        </ImageBackground>
-      </View>
-    )
+        }
+
+      </ImageBackground>
+    </View>
+  )
 }
 
 AdminTransactionDecline.propTypes = {
-    navigation: PropTypes.object,
-}  
+  navigation: PropTypes.object,
+}
 
 export default AdminTransactionDecline
