@@ -5,7 +5,6 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { ImageBackground, ToastAndroid, View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-
 import ClassAbout from './class-about.container'
 import ClassReview from './class-review.container'
 import ClassInstructor from './class-instructor.container'
@@ -124,8 +123,8 @@ const ClassDetail = () => {
 
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
-          <Text style={styles.discountedPrice}>IDR {FormatRupiah(classData.discountedPrice)}</Text>
-          <Text style={styles.price}>IDR {FormatRupiah(classData.price)}</Text>
+          <Text style={styles.discountedPrice}>Rp {FormatRupiah(classData.discountedPrice)}</Text>
+          <Text style={styles.price}>Rp {FormatRupiah(classData.price)}</Text>
         </View>
         <ButtonGradient
           title='BELI KELAS'

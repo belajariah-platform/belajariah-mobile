@@ -85,7 +85,7 @@ const TransactionUpload = () => {
         <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Jumlah Transfer</Text>
-            <Text style={styles.Txtright}>IDR {FormatRupiah(state.total_price)}</Text>
+            <Text style={styles.Txtright}>Rp {FormatRupiah(state.total_price)}</Text>
           </View>
         </View>
         <View style={styles.cardDetail}>
