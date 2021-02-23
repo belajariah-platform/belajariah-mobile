@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 import {
   Text,
@@ -11,6 +11,7 @@ import {
   Dimensions,
   ImageBackground,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
 
@@ -22,7 +23,7 @@ import {
 
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
-import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
+import { Cards, Carousel, ModalInfo, Searchbox, ModalInfoClass } from '../../components'
 
 import { styles } from './home.style'
 import images from '../../assets/images'
@@ -35,6 +36,8 @@ const Home = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
+  const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+  const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
   const { height } = Dimensions.get('window')
   const swipeLength = height / 2
@@ -119,6 +122,12 @@ const Home = (props) => {
     { id: 0, name: 'A', price: '499000', discountedPrice: '199000' },
     { id: 1, name: 'B', price: '600000', discountedPrice: '249000' },
     { id: 2, name: 'C', price: '1500000', discountedPrice: '999000' },
+  ]
+
+  const package_category = [
+    { ID: 0, Type: 'Darussalam', Price_Package : 399000, Price_Discount: 599000, Duration : 1, Consultation: 8, Webinar : 1},
+    { ID: 1, Type: 'Naim', Price_Package : 899000,  Price_Discount: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
+    { ID: 2, Type: 'Firdaus', Price_Package : 1499000, Price_Discount: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
   const SearchHome = () => {
@@ -241,6 +250,25 @@ const Home = (props) => {
       )
     }
 
+    useEffect(() => {
+      console.log("hello ")
+      const backAction = () => {
+      if(modalVisible) {
+        setModalVisible(false)
+      } 
+      if(!modalVisible) {
+        return false
+      } else {
+        return true
+      }
+    }
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      )
+      return () => backHandler.remove()
+    }, [modalVisible])
+
     return (
       <View>
         <Text style={styles.textTitle}>Kelas Populer</Text>
@@ -250,12 +278,7 @@ const Home = (props) => {
             <TouchableOpacity
               key={index}
               activeOpacity={0.6}
-              onPress={() => {
-                props.navigation.navigate('ClassDetail', {
-                  price: options[optionSelected].price,
-                  discountedPrice: options[optionSelected].discountedPrice,
-                })
-              }}>
+              onPress={toggleModalInfoClass}>
               <Cards
                 images={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
@@ -356,7 +379,10 @@ const Home = (props) => {
     index: PropTypes.number,
   }
 
+
+
   return (
+    <>
     <View style={styles.headerFlex}>
       <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
         <View style={styles.headerFlex}>
@@ -435,6 +461,11 @@ const Home = (props) => {
           </ScrollView>
         </Animated.View>
       </ImageBackground>
+      <ModalInfoClass 
+        isVisible={modalInfoClassVisible}
+        state={package_category}
+        backdropPress={() => toggleModalInfoClass()}
+    />
       <ModalInfo
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
@@ -445,6 +476,7 @@ const Home = (props) => {
         }
       />
     </View>
+    </>
   )
 }
 
