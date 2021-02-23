@@ -209,6 +209,8 @@ export default {
   //Checklist post-material
   ImgDummySoal : require('./ImgDummySoal.png'),
   ImgChecklist : require('./ChecklistImage.png'),
+  ImgDummySoal2 : require('./ImgDummySoal2.png'),
+  ImgDummySoal3 : require('./ImgDummySoal3.png'),
   IconChecklistLearning : require('./IconChecklist.svg'),
 
   //Modal Paket Class
@@ -224,4 +226,16 @@ export default {
   IconBenefit1Darussalam : require('./IconBenefit1Darussalam.svg'),
   IconBenefit2Darussalam : require('./IconBenefit2Darussalam.svg'),
   IconBenefit3Darussalam : require('./IconBenefit3Darussalam.svg'),
+
+  //Modal Record
+  ModalRecordBG : require('./BgModalRecord.png'),
+  IconRecordStop : require('./IconRecordStop.svg'),
+  IconRecordSend : require('./IconRecordSend.svg'),
+  IconRecordPlay : require('./IconRecordPlay.svg'),
+  IconRecordSent : require('./IconRecordSent.svg'),
+  IconRecordStart : require('./IconRecordStart.svg'),
+  IconRecordReload : require('./IconRecordReload.svg'),
+  IconRecordSendGradation : require('./IconRecordSendGradation.svg'),
+  IconRecordStopGradation : require('./IconRecordStopGradation.svg'),
+  IconRecordStartGradation : require('./IconRecordStartGradation.svg'),
 }

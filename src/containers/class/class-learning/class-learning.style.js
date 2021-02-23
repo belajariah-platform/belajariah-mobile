@@ -2,13 +2,6 @@ import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
-  buttonBack : {
-    top: 0,
-    left: 0,
-    zIndex : 10,
-    position: 'absolute',
-    backgroundColor:'yellow'
-  },
   container: {
     flex: 1,
   },
@@ -37,6 +30,7 @@ const styles = StyleSheet.create({
   },
   containerTextTitle : {
     flexDirection: 'row',
+
   },
   containerTextCategory : {
     marginTop:2,
@@ -215,7 +209,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.extraSmall,
   },
   textTitle : {
-    lineHeight:18,
+    flexShrink: 1,
+    lineHeight: 18,
     paddingVertical: 5,
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,

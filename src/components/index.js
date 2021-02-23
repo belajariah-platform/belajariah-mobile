@@ -13,19 +13,20 @@ import Progressbar from './progressbar'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
-import { 
-  ModalDate, 
-  ModalInfo, 
-  ModalRating, 
+import {
+  ModalDate,
+  ModalInfo,
+  ModalRating,
+  ModalRecord,
   ModalRepair,
-  ModalConfirm, 
+  ModalConfirm,
   ModalInfoClass,
-  ModalFilterUser, 
-  ModalFilterAdmin, 
+  ModalFilterUser,
+  ModalFilterAdmin,
   ModalFilterUstadz,
   ModalFilterAdminPageUser,
   ModalFilterAdminPageUstadz,
-  ModalFilterUserTransaction, 
+  ModalFilterUserTransaction,
 } from './modal'
 
 export {
@@ -42,14 +43,15 @@ export {
   ModalDate,
   Searchbox,
   ModalInfo,
-  ModalRepair,
   ModalRating,
+  ModalRecord,
+  ModalRepair,
   Progressbar,
   VideoPlayer,
   ModalConfirm,
   ModalInfoClass,
   ButtonGradient,
-  ModalFilterUser, 
+  ModalFilterUser,
   ModalFilterAdmin,
   ModalFilterUstadz,
   ModalFilterAdminPageUser,

@@ -1,76 +1,80 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { List, RadioButton } from 'react-native-paper'
-import { useNavigation, useRoute } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Text, View, ScrollView } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { Alert, Text, View, ScrollView, Image } from 'react-native'
 
-import { FontType, Images } from '../../../assets'
+import { Color, FontType, Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
-import { ButtonGradient, TextView, ModalInfo, ModalRating, VideoPlayer, Buttons } from '../../../components'
+import { ButtonGradient, TextView, ModalInfo, ModalRating, ModalRecord, VideoPlayer, Buttons } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
-import { Alert } from 'react-native'
-import { Color } from '../../../assets'
-import { Image } from 'react-native'
 
 const ClassLearning = () => {
   const route = useRoute()
   const navigation = useNavigation()
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
+  const [showTask, setShowTask] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
-  const [firstChecklist, setFirstChecklist] = useState(false)
-  const [secondChecklist, setSecondChecklist] = useState(false)
+  const [modalRecordVisible, setModalRecordVisible] = useState(false)
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
   const toggleModalChecklist = () => setModalChecklistVisible(!modalChecklistVisible)
+  const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
 
   const state = {
+    isExpired : false,
     rating : 4.7,
     total_user : 1500,
     title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     materialCount : 12,
+    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
+    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
     topics: [
       {
         title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg' },
-          { subtitle: 'Dasar Makhraj', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg' },
-          { subtitle : 'Shifathul Huruf', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg' }],
+          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg', taskImages: [Images.ImgDummySoal], isDone : false },
+          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2, Images.ImgDummySoal3], isDone : false }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://www.belajariah.com/document-assets/file.pdf'
+        path : 'https://www.belajariah.com/document-assets/file.pdf',
+        sound : 'Sound.wav'
       },
       {
         title: 'Harokat',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle: 'Dasar Makhraj', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle : 'Shifathul Huruf', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
+          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
+        sound : 'Sound.wav'
       },
       {
         title: 'Tajwid',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle: 'Dasar Makhraj', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle : 'Shifathul Huruf', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
+          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
+        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
+        sound : 'Sound.wav'
       },
       {
         title: 'Mad',
         materials: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle: 'Dasar Makhraj', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' },
-          { subtitle : 'Shifathul Huruf', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg' }],
+          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
+          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
       },
     ],
   }
@@ -111,7 +115,23 @@ const ClassLearning = () => {
   }
 
   const handleVideoEnd = (index, subIndex) => {
-    handleModalChecklist()
+    state.isExpired ?
+      (
+        (index == currentIndex && subIndex == currentSubIndex) && (
+          Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
+        )
+      )
+      :
+      (
+        state.topics[index].materials[subIndex].isDone || (
+          setShowTask(true),
+          handleModalChecklist()
+        )
+      )
+  }
+
+  const handleModalRecord = () => {
+    setModalRecordVisible(true)
   }
 
   const DescriptionClass = () => {
@@ -128,10 +148,12 @@ const ClassLearning = () => {
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
-          <Text style={[styles.textTitle, { width: '82%' }]}>{state.title}</Text>
-          <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
-            <Images.IconChecklistLearning.default />
-          </TouchableOpacity>
+          <Text style={[styles.textTitle]}>{state.title}</Text>
+          {showTask && (
+            <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
+              <Images.IconChecklistLearning.default />
+            </TouchableOpacity>
+          )}
         </View>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
         <View style={styles.containerParentReview}>
@@ -198,35 +220,6 @@ const ClassLearning = () => {
       }
     }
 
-    const unlockNext = (index, subIndex) => {
-      if(passPreExam) {
-        if(index == currentIndex && subIndex == currentSubIndex) {
-          let nextIndex = state.topics[currentIndex + 1]
-          let nextSubIndex = state.topics[currentIndex].materials[currentSubIndex + 1]
-
-          if(nextSubIndex == undefined) {
-            if(nextIndex == undefined) {
-              //end of array
-              if(isPostExamLocked) {
-                Alert.alert('Post exam unlocked!')
-                setProgress(progress + 1)
-                setIsPostExamLocked(false)
-              }
-            } else {
-              //next index
-              setProgress(progress + 1)
-              setCurrentIndex(currentIndex + 1)
-              setCurrentSubIndex(0)
-            }
-          } else {
-            //next subindex
-            setProgress(progress + 1)
-            setCurrentSubIndex(currentSubIndex + 1)
-          }
-        }
-      }
-    }
-
     const getLockStatus = (index, subIndex) => {
       if(passPreExam) {
         if(index < currentIndex) {
@@ -285,7 +278,6 @@ const ClassLearning = () => {
                       activeOpacity={0.6}
                       onPress={() => {
                         playVideo(index, subIndex)
-                        unlockNext(index, subIndex)
                       }}>
                       <List.Item
                         key={subIndex}
@@ -303,6 +295,7 @@ const ClassLearning = () => {
                     </TouchableOpacity>
                   )
                 })}
+
                 {topic.document &&(
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
@@ -323,19 +316,18 @@ const ClassLearning = () => {
                   </TouchableOpacity>
                 )}
 
-                {/* Dummy */}
-                <TouchableOpacity activeOpacity={0.5}>
-                  <List.Item
-                    title='Dummy - Masuk ke page rekam'
-                    style={styles.containerItem}
-                    titleStyle={styles.textRegular}
-                    onPress={() => {
-                      Alert.alert('Ke page rekam')
-                    }}
-                    left={() => <Images.IconRecordVoice.default style={styles.iconPlay}/>}
-                    right={() => <Text style={styles.textDuration}>Rekam Bacaan</Text>}
-                  />
-                </TouchableOpacity>
+                {topic.sound && (
+                  <TouchableOpacity activeOpacity={0.5}>
+                    <List.Item
+                      title='Dummy - Masuk ke page rekam'
+                      style={styles.containerItem}
+                      titleStyle={styles.textRegular}
+                      onPress={handleModalRecord}
+                      left={() => <Images.IconRecordVoice.default style={styles.iconPlay}/>}
+                      right={() => <Text style={styles.textDuration}>Rekam Bacaan</Text>}
+                    />
+                  </TouchableOpacity>
+                )}
 
               </List.Accordion>
             )
@@ -346,7 +338,9 @@ const ClassLearning = () => {
               titleStyle={styles.textRegular}
               onPress={()=> {
                 isPostExamLocked ?
-                  Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                  (
+                    Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                  )
                   :
                   navigation.navigate('ClassExam')
               }}
@@ -360,6 +354,38 @@ const ClassLearning = () => {
   }
 
   const ChecklistClass = () => {
+    const [checkCount, setCheckCount] = useState(0)
+    const totalTask = state.topics[currentIndex].materials[currentSubIndex].taskImages.length
+
+    const unlockNext = (index, subIndex) => {
+      if(passPreExam) {
+        if(index == currentIndex && subIndex == currentSubIndex) {
+          let nextIndex = state.topics[currentIndex + 1]
+          let nextSubIndex = state.topics[currentIndex].materials[currentSubIndex + 1]
+
+          if(nextSubIndex == undefined) {
+            if(nextIndex == undefined) {
+              //end of array
+              if(isPostExamLocked) {
+                Alert.alert('Post exam unlocked!')
+                setProgress(progress + 1)
+                setIsPostExamLocked(false)
+              }
+            } else {
+              //next index
+              setProgress(progress + 1)
+              setCurrentIndex(currentIndex + 1)
+              setCurrentSubIndex(0)
+            }
+          } else {
+            //next subindex
+            setProgress(progress + 1)
+            setCurrentSubIndex(currentSubIndex + 1)
+          }
+        }
+      }
+    }
+
     return (
       <View style={styles.containerModalChecklist}>
         <View style={styles.containerModalChecklistHeader}>
@@ -371,25 +397,25 @@ const ClassLearning = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerModalScrollview}>
 
-          <Image source={Images.ImgDummySoal} style={styles.imgMaterial}/>
-          <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
-          <View style={styles.containerRadioButton}>
-            <RadioButton
-              status={firstChecklist ? 'checked' : 'unchecked'}
-              onPress={() => setFirstChecklist(!firstChecklist)}
-              color={Color.purpleMedium} />
-            <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
-          </View>
-
-          <Image source={Images.ImgDummySoal} style={styles.imgMaterial}/>
-          <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
-          <View style={styles.containerRadioButton}>
-            <RadioButton
-              status={secondChecklist ? 'checked' : 'unchecked'}
-              onPress={() => setSecondChecklist(!secondChecklist)}
-              color={Color.purpleMedium} />
-            <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
-          </View>
+          {state.topics[currentIndex].materials[currentSubIndex].taskImages.map((taskImage, taskIndex) => {
+            const [checked, setChecked] = useState(false)
+            return(
+              <View key={taskIndex}>
+                <Image source={taskImage} style={styles.imgMaterial}/>
+                <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
+                <View style={styles.containerRadioButton}>
+                  <RadioButton
+                    status={checked ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                      checked ? setCheckCount(checkCount - 1) : setCheckCount(checkCount + 1)
+                      setChecked(!checked)
+                    }}
+                    color={Color.purpleMedium} />
+                  <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
+                </View>
+              </View>
+            )
+          })}
 
           <View style={styles.containerCancelSave}>
             <Buttons
@@ -399,8 +425,16 @@ const ClassLearning = () => {
               textStyle={{ color : 'purple' }}
             />
             <ButtonGradient
-              title='Simpan'
-              onPress={toggleModalChecklist}
+              title='Selesai'
+              onPress={ () => {
+                toggleModalChecklist(),
+                checkCount == totalTask && (
+                  setShowTask(false),
+                  state.topics[currentIndex].materials[currentSubIndex].isDone = true,
+                  unlockNext(currentIndex, currentSubIndex)
+                )
+              }
+              }
               styles={styles.buttonSave}
             />
           </View>
@@ -432,13 +466,9 @@ const ClassLearning = () => {
               </Text>}
             />
             <View style={styles.container}>
-              <TouchableOpacity  style={styles.buttonBack}>
-                <Images.ButtonBack.default/>
-              </TouchableOpacity>
-
               <VideoPlayer
-                posterLink={state.topics[playIndex].materials[playSubIndex].posterLink}
-                videoLink={'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'}
+                posterLink = {passPreExam? state.topics[playIndex].materials[playSubIndex].posterLink : state.posterTrailerLink}
+                videoLink = {passPreExam ? state.topics[playIndex].materials[playSubIndex].video_link : state.videoTrailerLink}
                 iconPlaySize = {48}
                 iconSkipSize = {32}
                 showSkipButton={true}
@@ -452,8 +482,7 @@ const ClassLearning = () => {
                 fullscreenStyle={styles.videoFullscreenContainerStyle}
                 onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                 controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)}
-              />
+                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)} />
             </View>
           </View>
           <View style={styles.containerView}>
@@ -472,6 +501,10 @@ const ClassLearning = () => {
         hideButtonClose={true}
         renderItem={ <ChecklistClass /> }
         containerStyle={{ height : '92%' }}
+      />
+      <ModalRecord
+        isVisible={modalRecordVisible}
+        backdropPress={() => toggleModalRecord()}
       />
     </>
   )
