@@ -210,4 +210,18 @@ export default {
   ImgDummySoal : require('./ImgDummySoal.png'),
   ImgChecklist : require('./ChecklistImage.png'),
   IconChecklistLearning : require('./IconChecklist.svg'),
+
+  //Modal Paket Class
+  IconPaketNaim : require('./IconPaketNaim.svg'),
+  IconBenefit3Naim : require('./IconBenefit3Naim.svg'),
+  IconBenefit2Naim : require('./IconBenefit2Naim.svg'),
+  IconBenefit1Naim : require('./IconBenefit1Naim.svg'),
+  IconPaketFirdaus : require('./IconPaketFirdaus.svg'),
+  IconPaketDarussalam : require('./IconPaketDarussalam.svg'),
+  IconBenefit1Firdaus : require('./IconBenefit1Firdaus.svg'),
+  IconBenefit2Firdaus : require('./IconBenefit2Firdaus.svg'),
+  IconBenefit3Firdaus : require('./IconBenefit3Firdaus.svg'),
+  IconBenefit1Darussalam : require('./IconBenefit1Darussalam.svg'),
+  IconBenefit2Darussalam : require('./IconBenefit2Darussalam.svg'),
+  IconBenefit3Darussalam : require('./IconBenefit3Darussalam.svg'),
 }
