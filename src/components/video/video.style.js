@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   fullscreenButton: {
-    top: '26%',
-    paddingRight: '16%',
+    top: '4%',
+    paddingRight: '4%',
     alignItems: 'flex-end',
   },
   controllerWrapper: {

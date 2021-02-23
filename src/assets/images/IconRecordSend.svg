@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="16.93836mm"
+   height="16.93836mm"
+   version="1.1"
+   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
+   viewBox="0 0 1693.5048 1693.5048"
+   id="svg18"
+   sodipodi:docname="icon_kirim rekam.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata22"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview20"
+   showgrid="false"
+   inkscape:zoom="8.260392"
+   inkscape:cx="22.015541"
+   inkscape:cy="22.228286"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg18" />
+ <defs
+   id="defs9">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil1 {fill:white}
+    .fil0 {fill:url(#id0);fill-opacity:0.800000}
+   ]]>
+  </style>
+  <linearGradient
+   id="id0"
+   gradientUnits="userSpaceOnUse"
+   x1="0.18000001"
+   y1="664.63"
+   x2="1329.08"
+   y2="664.63">
+   <stop
+   offset="0"
+   style="stop-opacity:1; stop-color:#1ABC9C"
+   id="stop4" />
+   <stop
+   offset="1"
+   style="stop-opacity:1; stop-color:#159AA1"
+   id="stop6" />
+  </linearGradient>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   transform="scale(1.27427)">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <g
+   id="_582091755056">
+   <path
+   class="fil0"
+   d="m 665,0 c 367,0 664,298 664,665 0,367 -297,664 -664,664 C 298,1329 0,1032 0,665 0,298 298,0 665,0 Z"
+   id="path12"
+   style="fill:url(#id0)" />
+   <path
+   class="fil1"
+   d="M 892,435 Z M 603,676 Z m 103,260 z m 2,-1 z m 12,-13 z M 621,627 Z M 854,491 736,775 c -8,13 -6,45 23,43 l 27,-21 130,-316 v -9 -3 l -2,-8 1,-1 -9,-14 -14,-11 -3,-1 -33,-3 -405,91 -23,11 -3,3 -6,8 -4,34 2,7 9,12 15,9 162,70 h 1 l 66,250 h 1 l 5,6 25,6 5,-2 2,-1 12,-13 1,-16 -69,-261 -11,-8 v 0 l -4,-3 -16,-7 -139,-60 375,-84 z"
+   id="path14" />
+  </g>
+ </g>
+</svg>
