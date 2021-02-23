@@ -6,7 +6,7 @@ import { View, TouchableOpacity } from 'react-native'
 
 import { Images } from '../../../assets'
 
-const ModalDate = (props) => {
+const ModalInfo = (props) => {
   return (
     <>
       <Modal
@@ -32,7 +32,7 @@ const ModalDate = (props) => {
   )
 }
 
-ModalDate.propTypes = {
+ModalInfo.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
@@ -41,4 +41,4 @@ ModalDate.propTypes = {
 }
 
 
-export default ModalDate
+export default ModalInfo

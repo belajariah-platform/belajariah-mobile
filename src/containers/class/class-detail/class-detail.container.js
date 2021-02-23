@@ -17,7 +17,8 @@ import styles from './class-detail.style'
 
 const Tab = createMaterialTopTabNavigator()
 
-const ClassDetail = () => {
+const ClassDetail = (props) => {
+  const Item = props.route.params
   const route = useRoute()
   const navigation = useNavigation()
   const { isLogin } = useSelector((state) => state.UserReducer)
@@ -123,8 +124,9 @@ const ClassDetail = () => {
 
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
-          <Text style={styles.discountedPrice}>Rp {FormatRupiah(classData.discountedPrice)}</Text>
-          <Text style={styles.price}>Rp {FormatRupiah(classData.price)}</Text>
+          {console.log(Item)}
+          <Text style={styles.discountedPrice}>Rp {FormatRupiah(Item.Price_Package)}</Text>
+          <Text style={styles.price}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
         </View>
         <ButtonGradient
           title='BELI KELAS'

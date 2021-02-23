@@ -4,6 +4,7 @@ import ModalRepair from './modal-repair'
 import ModalRating from './modal-rating'
 import ModalRecord from './modal-record'
 import ModalConfirm from './modal-confirm'
+import ModalInfoClass from './modal-info-class'
 import {
   ModalFilterUser,
   ModalFilterAdmin,
@@ -16,10 +17,11 @@ import {
 export {
   ModalDate,
   ModalInfo,
-  ModalRepair,
   ModalRating,
   ModalRecord,
+  ModalRepair,
   ModalConfirm,
+  ModalInfoClass,
   ModalFilterUser,
   ModalFilterAdmin,
   ModalFilterUstadz,
