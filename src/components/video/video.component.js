@@ -1,22 +1,18 @@
 import React, { createRef, useEffect, useState } from 'react'
-import { View, StatusBar, BackHandler } from 'react-native'
+import { View, StatusBar, BackHandler, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 
 import PropTypes from 'prop-types'
 import { Images } from '../../assets'
 import { styles } from './video.style'
-import Video, {
-  OnSeekData,
-  OnLoadData,
-  OnProgressData,
-} from 'react-native-video'
+import Video from 'react-native-video'
 import VideoBar from './video-bar.component'
+import { useNavigation } from '@react-navigation/native'
 import Orientation from 'react-native-orientation-locker'
 import VideoController from './video-controller.component'
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { Alert } from 'react-native'
 
 const VideoPlayer = (props) => {
   const videoRef = createRef(Video)
+  const navigation = useNavigation()
   const [state, setState] = useState({
     fullscreen: false,
     play: false,
@@ -51,7 +47,6 @@ const VideoPlayer = (props) => {
   }
 
   const handlePlayPause = () => {
-    // If playing, pause and show controls immediately.
     if (state.play) {
       setState({ ...state, play: false, showControls: true })
       return
@@ -69,9 +64,10 @@ const VideoPlayer = (props) => {
     setState({ ...state, currentTime: state.currentTime + 15 })
   }
 
-  const onSeek = (data) => {
-    videoRef.current.seek(data.seekTime)
-    setState({ ...state, currentTime: data.seekTime })
+  const onSeek = (seekTime) => {
+    videoRef.current.seek(seekTime)
+    console.log(seekTime)
+    setState({ ...state, currentTime: seekTime })
   }
 
   const onLoadEnd = (data) => {
@@ -90,7 +86,7 @@ const VideoPlayer = (props) => {
   }
 
   const onEnd = () => {
-    setState({ ...state, play: false })
+    setState({ ...state, play: false, currentTime : 0 })
     videoRef.current.seek(0)
     if(props.onVideoEnd != undefined) {
       props.onVideoEnd()
@@ -115,61 +111,73 @@ const VideoPlayer = (props) => {
   }, [])
 
   return (
-    <TouchableWithoutFeedback style={state.fullscreen? props.fullscreenStyle: props.style} onPress={showControls}>
-      <Video
-        source={{ uri: props.videoLink }}
-        ref={videoRef}
-        controls={false}
-        style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
-        poster={props.posterLink}
-        resizeMode={'stretch'}
-        posterResizeMode={'stretch'}
-        onLoad={onLoadEnd}
-        onProgress={onProgress}
-        onEnd={onEnd}
-        paused={!state.play}
-      />
-      {state.showControls && (
-        <View style={state.fullscreen? props.controllerFullscreenStyle: props.controllerStyle}>
-          <View style={state.fullscreen? styles.headerControlFullscreen : styles.headerControl}>
-            {
-              state.fullscreen?
-                <TouchableOpacity
-                  onPress={handleFullscreen}
-                  hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}>
-                  <Images.ButtonBack.default/>
-                </TouchableOpacity>
-                :
-                null
-            }
-            <TouchableOpacity
-              onPress={handleFullscreen}
-              hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}
-              style={styles.fullscreenButton}>
-              <Images.VideoFullscreen.default width={state.fullscreen? 28 : 20} height={state.fullscreen? 28 : 20} />
-            </TouchableOpacity>
+    <TouchableWithoutFeedback
+      style={state.fullscreen? props.fullscreenStyle: props.style}
+      onPress={showControls}>
+      <View>
+        <Video
+          source={{ uri: props.videoLink }}
+          ref={videoRef}
+          controls={false}
+          style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
+          poster={props.posterLink}
+          resizeMode={'stretch'}
+          posterResizeMode={'stretch'}
+          onLoad={onLoadEnd}
+          onProgress={onProgress}
+          onEnd={onEnd}
+          paused={!state.play}
+        />
+
+        {state.showControls && (
+          <View style={state.fullscreen? props.controllerFullscreenStyle: props.controllerStyle}>
+            <View style={state.fullscreen? styles.headerControl : (props.showBackButton ? styles.headerControl : styles.headerWithoutBackButton)}>
+              {
+                state.fullscreen?
+                  <TouchableOpacity
+                    onPress={handleFullscreen}
+                    hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}>
+                    <Images.ButtonBack.default/>
+                  </TouchableOpacity>
+                  :
+                  (props.showBackButton &&
+                  <TouchableOpacity
+                    onPress={navigation.goBack}
+                    hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}>
+                    <Images.ButtonBack.default />
+                  </TouchableOpacity>
+                  )
+              }
+              <TouchableOpacity
+                onPress={handleFullscreen}
+                hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}
+                style={styles.fullscreenButton}>
+                <Images.VideoFullscreen.default width={state.fullscreen? 28 : 20} height={state.fullscreen? 28 : 20} />
+              </TouchableOpacity>
+            </View>
+            <VideoController
+              playing={state.play}
+              onPlay={handlePlayPause}
+              onPause={handlePlayPause}
+              skipForwards={skipForward}
+              showPreviousAndNext={false}
+              skipBackwards={skipBackward}
+              fullscreen={state.fullscreen}
+              showSkip={state.fullscreen? true : props.showSkipButton}
+              iconPlaySize={state.fullscreen? props.iconPlaySizeFullscreen : props.iconPlaySize}
+              iconSkipSize={state.fullscreen? props.iconSkipSizeFullscreen : props.iconSkipSize}
+            />
+            <VideoBar
+              currentTime={state.currentTime}
+              duration={state.duration > 0 ? state.duration : 0}
+              onSlideStart={handlePlayPause}
+              onSlideComplete={handlePlayPause}
+              onSlideCapture={(seekTime) => onSeek(seekTime)}
+              smallBar={props.useSmallBar}
+            />
           </View>
-          <VideoController
-            playing={state.play}
-            onPlay={handlePlayPause}
-            onPause={handlePlayPause}
-            skipForwards={skipForward}
-            showPreviousAndNext={false}
-            skipBackwards={skipBackward}
-            fullscreen={state.fullscreen}
-            showSkip={state.fullscreen? true : false}
-            iconPlaySize={state.fullscreen? props.iconPlaySizeFullscreen : props.iconPlaySize}
-            iconSkipSize={state.fullscreen? props.iconSkipSizeFullscreen : props.iconSkipSize}
-          />
-          <VideoBar
-            currentTime={state.currentTime}
-            duration={state.duration > 0 ? state.duration : 0}
-            onSlideStart={handlePlayPause}
-            onSlideComplete={handlePlayPause}
-            onSlideCapture={onSeek}
-          />
-        </View>
-      )}
+        )}
+      </View>
     </TouchableWithoutFeedback>
   )
 }
@@ -178,10 +186,13 @@ VideoPlayer.propTypes = {
   style : PropTypes.object,
   onVideoEnd : PropTypes.func,
   videoLink : PropTypes.string,
+  useSmallBar : PropTypes.bool,
   videoStyle : PropTypes.object,
   posterLink : PropTypes.string,
   iconPlaySize : PropTypes.number,
   iconSkipSize : PropTypes.number,
+  showSkipButton : PropTypes.bool,
+  showBackButton : PropTypes.bool,
   controllerStyle : PropTypes.object,
   fullscreenStyle : PropTypes.object,
   onFullScreenPress : PropTypes.func,

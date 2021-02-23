@@ -1,5 +1,5 @@
 import React from 'react'
-import {  useFormik } from 'formik'
+import {  useFormik, useState } from 'formik'
 import { View, TouchableOpacity } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
@@ -7,13 +7,15 @@ import AdminUserAll from './admin-user-all.container'
 import AdminUserAccept from './admin-user-accept.container'
 import AdminUserDecline from './admin-user-decline.container'
 
-import { Searchbox } from '../../../components'
+import { Searchbox, ModalFilterAdminPageUser } from '../../../components'
 import { Images, Color } from '../../../assets'
 
 import { styles } from './admin-user.style'
 
 const AdminUser = () => {
   const Tab = createMaterialTopTabNavigator()
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
   const Search = useFormik({ initialValues: { search: '' } })
 
   return (
@@ -29,6 +31,7 @@ const AdminUser = () => {
           />
         </View>
         <TouchableOpacity
+          onPress = {toggleModal}
           style={styles.iconFilter}>
           <Images.Filter.default
             width={20}
@@ -63,6 +66,10 @@ const AdminUser = () => {
           {() => <AdminUserDecline search={Search.values['search']}/>}
         </Tab.Screen>
       </Tab.Navigator>
+      <ModalFilterAdminPageUser
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     </View>
   )
 }

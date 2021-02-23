@@ -4,7 +4,7 @@ import { FontType, Color, FontSize } from '../../assets'
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    height: 245,
+    height: 210,
     elevation: 2,
     width: '100%',
     borderWidth: 0,

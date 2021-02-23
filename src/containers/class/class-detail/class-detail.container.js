@@ -1,10 +1,10 @@
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { ImageBackground, ToastAndroid, View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-
 
 import ClassAbout from './class-about.container'
 import ClassReview from './class-review.container'
@@ -18,8 +18,9 @@ import styles from './class-detail.style'
 
 const Tab = createMaterialTopTabNavigator()
 
-const ClassDetail = () => {
+const ClassDetail = (props) => {
   const route = useRoute()
+  const Item = props.route.params
   const navigation = useNavigation()
   const { isLogin } = useSelector((state) => state.UserReducer)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -30,7 +31,7 @@ const ClassDetail = () => {
     name: 'Kelas Tahsin',
     quote: 'Belajar Alqur\'an dari dasar dengan metode yang mudah dan menyenangkan.',
     videoLink:
-      'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+      'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
     posterLink: 'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg',
     rating: 4.5,
     tags: ['Populer'],
@@ -72,6 +73,7 @@ const ClassDetail = () => {
       </View>
 
       <VideoPlayer
+        useSmallBar={true}
         iconPlaySize = {20}
         iconSkipSize = {20}
         iconPlaySizeFullscreen = {80}
@@ -123,22 +125,24 @@ const ClassDetail = () => {
 
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
-          <Text style={styles.discountedPrice}>IDR {FormatRupiah(classData.discountedPrice)}</Text>
-          <Text style={styles.price}>IDR {FormatRupiah(classData.price)}</Text>
+          <Text style={styles.discountedPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
+          <Text style={styles.price}>Rp {FormatRupiah(Item.Price_Package)}</Text>
         </View>
         <ButtonGradient
           title='BELI KELAS'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           onPress={() => {
-            navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', {
-              discountedPrice: classData.discountedPrice
-            } )
+            navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', Item )
           }}
         />
       </View>
     </ImageBackground>
   )
+}
+
+ClassDetail.propTypes = {
+  route: PropTypes.object,
 }
 
 export default ClassDetail

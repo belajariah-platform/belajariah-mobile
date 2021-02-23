@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Card } from 'react-native-elements'
@@ -12,9 +13,9 @@ import { ButtonGradient, ModalInfo, Buttons, TextBox } from '../../components'
 
 import styles from './transaction-method.style'
 
-const TransactionMethod = () => {
+const TransactionMethod = (props) => {
+  const Item = props.route.params
   const navigation = useNavigation()
-
   const [gateway, setGateway] = useState('ovo')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -65,22 +66,6 @@ const TransactionMethod = () => {
         <Text style={styles.textRating}>{num}</Text>
       </View>
     )
-  }
-
-  const handleVoucher = () => {
-    // let discountedPrice = ''
-    // switch (code) {
-    // case 'NEWMEMBER':
-    //   discountedPrice = (classData.price - (classData.price * 30/100))
-    //   return (
-    //     <View style={styles.flexRow}>
-    //       <Text style={styles.textLineThroughPrice}>IDR {FormatRupiah(classData.price)}</Text>
-    //       <Text style={styles.textPrice}>IDR {FormatRupiah(discountedPrice)}</Text>
-    //     </View>
-    //   )
-    // default:
-    return <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
-    // }
   }
 
   const Header = () => {
@@ -178,7 +163,7 @@ const TransactionMethod = () => {
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
           <Text style={styles.textTotalPrice}>Total Harga</Text>
-          {handleVoucher(classData.voucher)}
+          <Text style={styles.textPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
         </View>
         <ButtonGradient
           title='Checkout Now'
@@ -234,6 +219,10 @@ const TransactionMethod = () => {
       <PaymentCheckout />
     </View>
   )
+}
+
+TransactionMethod.propTypes = {
+  route: PropTypes.object,
 }
 
 export default TransactionMethod

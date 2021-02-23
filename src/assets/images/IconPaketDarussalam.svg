@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="8.5512mm" height="7.1966mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 855 720"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil6 {fill:none}
+    .fil3 {fill:#1E003D}
+    .fil2 {fill:#3E005D}
+    .fil1 {fill:#4E046D}
+    .fil0 {fill:#6E248D}
+    .fil7 {fill:#FFFBC4}
+    .fil5 {fill:#1A1A1A;fill-opacity:0.101961}
+    .fil9 {fill:#4D4D4D;fill-opacity:0.101961}
+    .fil4 {fill:url(#id2)}
+    .fil10 {fill:url(#id3)}
+    .fil8 {fill:url(#id4)}
+   ]]>
+  </style>
+    <clipPath id="id0">
+     <path d="M105 432l-20 -35 186 10 -89 98 -77 -73z"/>
+    </clipPath>
+    <clipPath id="id1">
+     <path d="M176 495c-36,-42 -40,-86 -73,-109 65,-8 102,20 168,21l-95 88z"/>
+    </clipPath>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="128.08" y1="398.98" x2="228.02" y2="503.46">
+   <stop offset="0" style="stop-opacity:1; stop-color:#FFE3A6"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#E8AC88"/>
+  </linearGradient>
+  <linearGradient id="id3" gradientUnits="userSpaceOnUse" x1="46.35" y1="523.77" x2="175.01" y2="528.55">
+   <stop offset="0" style="stop-opacity:1; stop-color:#27AE60"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:#156E3A"/>
+  </linearGradient>
+  <linearGradient id="id4" gradientUnits="userSpaceOnUse" xlink:href="#id2" x1="139.85" y1="389.97" x2="234.33" y2="489.29">
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_216212457984">
+   <path class="fil0" d="M269 105l357 -96c38,-10 78,13 88,51l95 357c11,38 -12,77 -50,88l-96 25c1,-22 2,-42 7,-46 11,-51 56,-12 52,-44 -1,-1 -1,-3 -1,-4l-175 0 39 -28 -3 -3c39,-1 70,-1 83,-2 24,-137 -86,-127 -135,-161 -13,-10 -13,-16 -23,-23 -20,8 -8,17 -49,35 -55,23 -135,37 -112,145l-9 0 -7 6 -8 -13c-9,4 -18,10 -27,17l-17 -1 -2 -1 -58 -214c-10,-38 13,-78 51,-88zm293 452l-38 11 -70 -67 17 -13 91 0 0 69zm-96 26l-16 5 0 -10c5,1 10,3 16,5zm73 -398c-56,7 -63,-55 -7,-61 -34,-12 -67,3 -63,41 3,35 46,49 70,20z"/>
+   <rect class="fil0" transform="matrix(0.29747 -0.079707 0.079707 0.29747 621.331 623.587)" width="364" height="364" rx="247" ry="247"/>
+   <rect class="fil0" transform="matrix(0.127924 -0.0342772 0.0342772 0.127924 81.7026 153.652)" width="364" height="364" rx="575" ry="575"/>
+   <rect class="fil0" transform="matrix(0.215079 -0.0576303 0.0576303 0.215079 763.071 12.2446)" width="364" height="364" rx="342" ry="342"/>
+   <polygon class="fil1" points="39,416 38,439 122,541 2,664 9,671 50,638 178,541 105,457 "/>
+   <path class="fil2" d="M8 671l151 -138 158 67 -118 35c-1,-106 -150,23 -150,23l-41 13z"/>
+   <path class="fil0" d="M566 629l-136 -130 -222 11 -49 23 140 170 28 -8c-5,-131 78,-169 199,-55l40 -11z"/>
+   <polygon class="fil3" points="39,416 159,533 430,499 400,421 "/>
+   <polygon class="fil4" points="105,432 85,397 271,407 182,505 "/>
+   <g style="clip-path:url(#id0)">
+    <g>
+     <path id="1" class="fil5" d="M176 495c-36,-42 -47,-84 -81,-107 66,-8 110,18 176,19l-95 88z"/>
+    </g>
+   </g>
+   <polygon class="fil6" points="105,432 85,397 271,407 182,505 "/>
+   <path class="fil7" d="M182 525l126 -119 -11 -15c-39,18 -80,69 -121,104 -30,-33 -48,-81 -91,-98l-19 19 116 109z"/>
+   <polygon class="fil1" points="313,397 170,532 430,499 560,407 "/>
+   <polygon class="fil1" points="313,397 323,413 203,528 313,699 299,703 159,534 "/>
+   <polygon class="fil1" points="551,394 560,407 323,413 313,397 "/>
+   <path class="fil8" d="M176 495c-36,-42 -40,-86 -73,-109 65,-8 102,20 168,21l-95 88z"/>
+   <g style="clip-path:url(#id1)">
+    <g>
+     <path id="1" class="fil9" d="M190 357c0,0 -1,-1 0,-1 0,0 1,1 2,1 1,0 0,-1 0,-1 -1,-1 0,-1 0,-1 4,1 5,1 5,1 0,0 -2,1 -3,1 -1,0 -1,0 -2,0 -1,0 -2,1 -2,0z"/>
+    </g>
+   </g>
+   <path class="fil6" d="M176 495c-36,-42 -40,-86 -73,-109 65,-8 102,20 168,21l-95 88z"/>
+   <path class="fil10" d="M176 495c-1,-2 0,14 -28,30 -25,14 -48,14 -73,28 -14,8 -26,16 -16,3 5,-7 -42,0 12,-15 3,0 51,-9 80,-23 17,-8 21,-28 21,-28l4 5z"/>
+  </g>
+ </g>
+</svg>

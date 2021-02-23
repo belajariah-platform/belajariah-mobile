@@ -21,6 +21,7 @@ import { TimeConvert, TimerObj } from '../../../utils'
 import { styles } from './admin-user.style'
 
 const AdminUserDecline = ({ search }) => {
+  const [isEmpty] = useState(true)
   const navigation = useNavigation()
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
@@ -193,22 +194,36 @@ const AdminUserDecline = ({ search }) => {
     )
   }
 
+  const NoUser = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoConsulReject.default />
+        <Text style={styles.TxtNoTask}>Saat ini belum ada aktivitas diterima nih</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.containerMain}>
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        <FlatList
-          data={state}
-          style={{ width:'100%' }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          onEndReached={(e) => onLoadMore(e)}
-          showsVerticalScrollIndicator ={false}
-          contentContainerStyle={{ paddingBottom: 25 }}
-          keyExtractor={(item, index) =>  index.toString()}
-          renderItem={({ item, index }) => CardUser(item, index)}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {isEmpty ?
+          <NoUser/>
+          :
+          <FlatList
+            data={state}
+            style={{ width:'100%' }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
+            onEndReached={(e) => onLoadMore(e)}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ paddingBottom: 25 }}
+            keyExtractor={(item, index) =>  index.toString()}
+            renderItem={({ item, index }) => CardUser(item, index)}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        }
+
       </ImageBackground>
     </View>
   )

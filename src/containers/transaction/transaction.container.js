@@ -16,13 +16,15 @@ import {
 import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
+import {ModalFilterUserTransaction} from '../../components'
 
 const Transaction = () => {
   const navigation = useNavigation()
-
   const [loading, setLoading] = useState(false)
   const [available, setAvailable] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const state = [
     {
@@ -168,14 +170,17 @@ const Transaction = () => {
   }
 
   return (
+    <>
+    <ModalFilterUserTransaction
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+      />
     <View style={styles.bgHeader}>
       <View style={styles.containerHeader}>
         <Text style={styles.titleHeader}>Transaksi</Text>
         <TouchableOpacity
           style={styles.containerFilter}
-          onPress={() => {
-            setAvailable(!available)
-          }}>
+          onPress = {toggleModal}>
           <Images.Filter.default
             width={20}
             height={20}
@@ -189,6 +194,7 @@ const Transaction = () => {
         {available ? <NoTransaction /> : <TransactionList />}
       </ImageBackground>
     </View>
+    </>
   )
 }
 

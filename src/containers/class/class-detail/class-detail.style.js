@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../assets'
 
 const styles = StyleSheet.create({
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   videoStyle: {
+    alignSelf : 'center',
     width: 176,
     height: 88,
   },

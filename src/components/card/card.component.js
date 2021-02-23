@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card } from 'react-native-elements'
 import { View, Text, Image } from 'react-native'
 
 import { styles } from './card.style'
@@ -23,7 +22,6 @@ const  Cards = (props)  => {
         <View style={styles.rating}>
           {props.rating}
         </View>
-        <Card.Divider style={styles.divider}/>
         {props.price}
       </View>
     </View>

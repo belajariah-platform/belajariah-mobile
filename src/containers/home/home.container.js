@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 
 import {
   Text,
   View,
   Image,
   Animated,
+  BackHandler,
   ScrollView,
   Dimensions,
   ImageBackground,
@@ -20,9 +21,8 @@ import {
   FlingGestureHandler,
 } from 'react-native-gesture-handler'
 
-import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
-import { Cards, Carousel, ModalInfo, Searchbox } from '../../components'
+import { Cards, Carousel, ModalInfo, Searchbox, ModalInfoClass } from '../../components'
 
 import { styles } from './home.style'
 import images from '../../assets/images'
@@ -33,8 +33,9 @@ const Home = (props) => {
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
   const [modalVisible, setModalVisible] = useState(false)
-  const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
+  const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+  const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
   const { height } = Dimensions.get('window')
   const swipeLength = height / 2
@@ -67,6 +68,24 @@ const Home = (props) => {
     }
   }
 
+  useEffect(() => {
+    const backAction = () => {
+      if(modalInfoClassVisible) {
+        toggleModalInfoClass()
+      }
+      if(modalInfoClassVisible) {
+        return true
+      } else {
+        return false
+      }
+    }
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+    return () => backHandler.remove()
+  }, [modalInfoClassVisible])
+
   const handleModal = (event) => {
     setModalVisible(true)
     setState(event)
@@ -75,6 +94,7 @@ const Home = (props) => {
   const classPopular = [
     {
       rating: 5,
+      category : 0,
       description:
         'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
     },
@@ -115,10 +135,10 @@ const Home = (props) => {
     { id: 4, name: 'Bahasa Arab' },
   ]
 
-  const options = [
-    { id: 0, name: 'A', price: '499000', discountedPrice: '199000' },
-    { id: 1, name: 'B', price: '600000', discountedPrice: '249000' },
-    { id: 2, name: 'C', price: '1500000', discountedPrice: '999000' },
+  const package_category = [
+    { ID: 0, Type: 'Darussalam', Price_Discount : 399000, Price_Package: 599000, Duration : 1, Consultation: 8, Webinar : 1 },
+    { ID: 1, Type: 'Naim', Price_Discount : 899000,  Price_Package: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
+    { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
   const SearchHome = () => {
@@ -159,28 +179,6 @@ const Home = (props) => {
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          {/* <Tabs
-            onChangeTab={(event) => {
-              handleModal('ok')
-              setCategorySelected(event.i)
-            }}
-            style={{ backgroundColor:'transparent', height : 50, }}
-            tabBarUnderlineStyle={{ backgroundColor : 'transparent' }}
-            renderTabBar={()=> <ScrollableTab
-              style={{ backgroundColor : 'transparent', height : 20, borderBottomWidth : 0 }}/>}>
-            {categories.map((item, index) => {
-              return (
-                <Tab
-                  key={index}
-                  heading={
-                    <TabHeading style={{ backgroundColor :
-                    categorySelected == index ?   Color.purpleButton : Color.grey, borderRadius : 16, marginHorizontal : 5 }}>
-                      <Text style={{ color : 'white' }}>{item.name}</Text>
-                    </TabHeading>
-                  }/>
-              )
-            })}
-          </Tabs> */}
           <ScrollView
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -191,10 +189,6 @@ const Home = (props) => {
                   onPress={ () => {
                     handleModal(category.name)
                     setCategorySelected(category.id)
-                    // await horizontalScrollRef.current.scrollTo({
-                    //   x: 4000,
-                    //   animated: true,
-                    // })
                   }}>
                   <Text
                     style={[
@@ -250,12 +244,7 @@ const Home = (props) => {
             <TouchableOpacity
               key={index}
               activeOpacity={0.6}
-              onPress={() => {
-                props.navigation.navigate('ClassDetail', {
-                  price: options[optionSelected].price,
-                  discountedPrice: options[optionSelected].discountedPrice,
-                })
-              }}>
+              onPress={toggleModalInfoClass}>
               <Cards
                 images={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
@@ -263,44 +252,44 @@ const Home = (props) => {
                   <Images.JudulTahsin.default style={styles.svgClassTitle} />
                 }
                 description={item.description}
-                price={
-                  <View style={styles.containerPriceOptions}>
-                    <View style={styles.containerPriceFlex}>
-                      {options.map((option, index) => {
-                        return (
-                          <TouchableOpacity
-                            key={index}
-                            onPress={() => {
-                              setOptionSelected(option.id)
-                            }}>
-                            <Text
-                              style={[
-                                styles.textPriceOptions,
-                                option.id === optionSelected
-                                  ? {
-                                    backgroundColor: Color.purpleButton,
-                                    color: Color.white,
-                                  }
-                                  : {
-                                    backgroundColor: Color.greyHintExt,
-                                    color: Color.black,
-                                  },
-                              ]}>
-                              {option.name}
-                            </Text>
-                          </TouchableOpacity>
-                        )
-                      })}
-                    </View>
-                    <Text style={styles.textPrice}>
-                      IDR {FormatRupiah(options[optionSelected].price)}
-                    </Text>
-                    <Text style={styles.textDiscountedPrice}>
-                      IDR{' '}
-                      {FormatRupiah(options[optionSelected].discountedPrice)}
-                    </Text>
-                  </View>
-                }
+                // price={
+                //   <View style={styles.containerPriceOptions}>
+                //     <View style={styles.containerPriceFlex}>
+                //       {options.map((option, index) => {
+                //         return (
+                //           <TouchableOpacity
+                //             key={index}
+                //             onPress={() => {
+                //               setOptionSelected(option.id)
+                //             }}>
+                //             <Text
+                //               style={[
+                //                 styles.textPriceOptions,
+                //                 option.id === optionSelected
+                //                   ? {
+                //                     backgroundColor: Color.purpleButton,
+                //                     color: Color.white,
+                //                   }
+                //                   : {
+                //                     backgroundColor: Color.greyHintExt,
+                //                     color: Color.black,
+                //                   },
+                //               ]}>
+                //               {option.name}
+                //             </Text>
+                //           </TouchableOpacity>
+                //         )
+                //       })}
+                // </View>
+                //     <Text style={styles.textPrice}>
+                //       Rp {FormatRupiah(options[optionSelected].price)}
+                //     </Text>
+                //     <Text style={styles.textDiscountedPrice}>
+                //       {' '}
+                //       {FormatRupiah(options[optionSelected].discountedPrice)}
+                //     </Text>
+                //   </View>
+                // }
               />
             </TouchableOpacity>
           )
@@ -357,94 +346,101 @@ const Home = (props) => {
   }
 
   return (
-    <View style={styles.headerFlex}>
-      <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
-        <View style={styles.headerFlex}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerFlex}>
-              <Images.LogoBelajariahHome.default height={40} width={40} />
-            </View>
-            <View>
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={{ ...styles.headerAvatar, marginRight: 15 }}
-                onPress={() =>
-                  props.navigation.navigate(isLogin ? 'Profil' : 'Login')
-                }>
-                {isLogin ? (
-                  <Avatar
-                    source={images.ImageProfileDefault}
-                    style={styles.imageProfile}
-                  />
-                ) : (
-                  <Images.LoginDirect.default />
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.textBackContainer}>
-            <Text style={styles.textBack}>
-              Assalamualaikum Sobat
-              <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
-              Belajar
-              <Text style={styles.textBackBold}> AlQuran ?</Text>
-            </Text>
-          </View>
-        </View>
-        <Animated.View
-          style={[
-            styles.frontContainer,
-            { transform: [{ translateY: swipeAnimation }] },
-          ]}>
-          <FlingGestureHandler
-            onHandlerStateChange={handleSwipe}
-            direction={Directions.UP | Directions.DOWN}>
-            <View style={styles.fingerGesture}>
-              <View style={styles.topLine} />
-            </View>
-          </FlingGestureHandler>
-          <ScrollView
-            ref={mainScrollViewRef}
-            style={styles.scrollview}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.contentContainer}>
-              <SearchHome />
-              <View style={styles.carousel}>
-                <Carousel
-                  data={promotion}
-                  pagination={false}
-                  renderItem={PromotionHome}
-                />
+    <>
+      <View style={styles.headerFlex}>
+        <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
+          <View style={styles.headerFlex}>
+            <View style={styles.headerContainer}>
+              <View style={styles.headerFlex}>
+                <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
-              <CategoryClassHome />
-              <PopularClassHome />
-              <InspiratifStoryHome />
+              <View>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  style={{ ...styles.headerAvatar, marginRight: 15 }}
+                  onPress={() =>
+                    props.navigation.navigate(isLogin ? 'Profil' : 'Login')
+                  }>
+                  {isLogin ? (
+                    <Avatar
+                      source={images.ImageProfileDefault}
+                      style={styles.imageProfile}
+                    />
+                  ) : (
+                    <Images.LoginDirect.default />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <TouchableOpacity
-                onPress={() =>
-                  mainScrollViewRef.current.scrollTo({
-                    x: 0,
-                    y: 0,
-                    animated: true,
-                  })
-                }>
-                <Images.BtnArrowUp.default style={styles.iconArrowUp} />
-              </TouchableOpacity>
+            <View style={styles.textBackContainer}>
+              <Text style={styles.textBack}>
+              Assalamualaikum Sobat
+                <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
+              Belajar
+                <Text style={styles.textBackBold}> AlQuran ?</Text>
+              </Text>
             </View>
-          </ScrollView>
-        </Animated.View>
-      </ImageBackground>
-      <ModalInfo
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
-        renderItem={
-          <View>
-            <Text>{state}</Text>
           </View>
-        }
-      />
-    </View>
+          <Animated.View
+            style={[
+              styles.frontContainer,
+              { transform: [{ translateY: swipeAnimation }] },
+            ]}>
+            <FlingGestureHandler
+              onHandlerStateChange={handleSwipe}
+              direction={Directions.UP | Directions.DOWN}>
+              <View style={styles.fingerGesture}>
+                <View style={styles.topLine} />
+              </View>
+            </FlingGestureHandler>
+            <ScrollView
+              ref={mainScrollViewRef}
+              style={styles.scrollview}
+              showsVerticalScrollIndicator={false}>
+              <View style={styles.contentContainer}>
+                <SearchHome />
+                <View style={styles.carousel}>
+                  <Carousel
+                    data={promotion}
+                    pagination={false}
+                    renderItem={PromotionHome}
+                  />
+                </View>
+                <CategoryClassHome />
+                <PopularClassHome />
+                <InspiratifStoryHome />
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    mainScrollViewRef.current.scrollTo({
+                      x: 0,
+                      y: 0,
+                      animated: true,
+                    })
+                  }>
+                  <Images.BtnArrowUp.default style={styles.iconArrowUp} />
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Animated.View>
+        </ImageBackground>
+        <ModalInfoClass
+          state={package_category}
+          isVisible={modalInfoClassVisible}
+          backdropPress={() => toggleModalInfoClass()}
+        />
+        <ModalInfo
+          isVisible={modalVisible}
+          backdropPress={() => toggleModal()}
+          renderItem={
+            <View>
+              <Text>{state}</Text>
+            </View>
+          }
+        />
+      </View>
+    </>
   )
 }
 
