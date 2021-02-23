@@ -10,8 +10,8 @@ import { styles } from './class-exam.style'
 const ClassExam = () => {
   const mainScrollViewRef = useRef()
   const navigation = useNavigation()
-  const [minutes, setMinutes] = useState(4)
-  const [seconds, setSeconds] =  useState(59)
+  // const [minutes, setMinutes] = useState(4)
+  // const [seconds, setSeconds] =  useState(59)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
   const [questionSelected, setQuestionSelected] = useState({})
@@ -49,23 +49,23 @@ const ClassExam = () => {
     setQuestionSelected(item)
   }
 
-  useEffect(()=>{
-    const intervalId = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1)
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          handleSubmit(answerSelected)
-          clearInterval(intervalId)
-        } else {
-          setMinutes(minutes - 1)
-          setSeconds(59)
-        }
-      }
-    }, 1000)
-    return () => clearInterval(intervalId)
-  }, [seconds, minutes])
+  // useEffect(()=>{
+  //   const intervalId = setInterval(() => {
+  //     if (seconds > 0) {
+  //       setSeconds(seconds - 1)
+  //     }
+  //     if (seconds === 0) {
+  //       if (minutes === 0) {
+  //         handleSubmit(answerSelected)
+  //         clearInterval(intervalId)
+  //       } else {
+  //         setMinutes(minutes - 1)
+  //         setSeconds(59)
+  //       }
+  //     }
+  //   }, 1000)
+  //   return () => clearInterval(intervalId)
+  // }, [seconds, minutes])
 
   useEffect(() => {
     setAnswerSelected(state)
@@ -82,7 +82,7 @@ const ClassExam = () => {
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>Pre-Test</Text>
-          <Text style={styles.textTimer}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
+          {/* <Text style={styles.textTimer}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text> */}
         </View>
       </View>
     )
