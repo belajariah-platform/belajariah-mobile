@@ -100,7 +100,7 @@ const TransactionInfo = () => {
         <View style={styles.flexColumn}>
           <View style={styles.margins}>
             <Text style={styles.textTotalPrice}>Total Pembayaran</Text>
-            <Text style={styles.textPrice}>IDR {FormatRupiah(classData.price)}</Text>
+            <Text style={styles.textPrice}>Rp {FormatRupiah(classData.price)}</Text>
           </View>
           <View style={styles.viewTextTotalPayment}>
             <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas</Text>

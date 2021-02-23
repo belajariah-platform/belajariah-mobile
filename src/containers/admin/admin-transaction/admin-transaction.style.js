@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     width: 80,
     height : 35,
     marginTop : 3,
-    marginRight: 10,
+    marginRight: 3,
     marginBottom : 0,
     borderRadius : 10,
   },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
   },
   ButtonActionTolak: {
-    width: 250,
+    width: 80,
     height : 35,
     marginTop : 3,
     marginBottom : 0,
@@ -263,6 +263,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,
+  },
+  viewPriceTwo: {
+    marginTop: 15,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  IconMini: {
+    top: '-6%',
+    left: '85%',
   },
 })
 

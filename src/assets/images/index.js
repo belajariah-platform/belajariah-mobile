@@ -117,6 +117,8 @@ export default {
   SidenavUser : require('./SidenavUser.svg'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
+  IconMiniProgress: require('./IconMiniProgress.svg'),
+  IconMiniComplete: require('./IconMiniComplete.svg'),
   GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconUnduhanAdmin: require('./IconUnduhanAdmin.svg'),

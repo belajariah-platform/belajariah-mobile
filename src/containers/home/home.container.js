@@ -293,10 +293,10 @@ const Home = (props) => {
                       })}
                     </View>
                     <Text style={styles.textPrice}>
-                      IDR {FormatRupiah(options[optionSelected].price)}
+                      Rp {FormatRupiah(options[optionSelected].price)}
                     </Text>
                     <Text style={styles.textDiscountedPrice}>
-                      IDR{' '}
+                      {' '}
                       {FormatRupiah(options[optionSelected].discountedPrice)}
                     </Text>
                   </View>
