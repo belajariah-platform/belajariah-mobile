@@ -6,10 +6,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flexButtonHeader: {
-    width: '100%',
     paddingRight: 15,
+    alignItems: 'center',
     flexDirection: 'row',
-    alignItems:'center',
     justifyContent: 'space-between',
   },
   flexButtonHeaderFullscreen: {
@@ -62,6 +61,7 @@ const styles = StyleSheet.create({
   videoStyle: {
     width: 176,
     height: 88,
+    alignSelf: 'center',
   },
   videoFullscreenStyle: {
     width: '100%',
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     marginTop: -88,
     alignSelf: 'center',
     backgroundColor: '#000000c4',
-    justifyContent: 'space-between',
   },
   controllerFullscreenStyle: {
     top: 0,

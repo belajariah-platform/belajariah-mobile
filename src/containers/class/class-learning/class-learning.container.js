@@ -473,8 +473,6 @@ const ClassLearning = () => {
                 iconSkipSize = {32}
                 showSkipButton={true}
                 showBackButton={true}
-                iconPlaySizeFullscreen = {80}
-                iconSkipSizeFullscreen = {48}
                 videoStyle={styles.videoStyle}
                 style={styles.videoContainerStyle}
                 controllerStyle={styles.controllerStyle}

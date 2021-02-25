@@ -131,6 +131,7 @@ const VideoPlayer = (props) => {
 
         {state.showControls && (
           <View style={state.fullscreen? props.controllerFullscreenStyle: props.controllerStyle}>
+
             <View style={state.fullscreen? styles.headerControl : (props.showBackButton ? styles.headerControl : styles.headerWithoutBackButton)}>
               {
                 state.fullscreen?
@@ -150,11 +151,12 @@ const VideoPlayer = (props) => {
               }
               <TouchableOpacity
                 onPress={handleFullscreen}
-                hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }}
-                style={styles.fullscreenButton}>
+                style={styles.fullscreenButton}
+                hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }} >
                 <Images.VideoFullscreen.default width={state.fullscreen? 28 : 20} height={state.fullscreen? 28 : 20} />
               </TouchableOpacity>
             </View>
+
             <VideoController
               playing={state.play}
               onPlay={handlePlayPause}
@@ -164,16 +166,18 @@ const VideoPlayer = (props) => {
               skipBackwards={skipBackward}
               fullscreen={state.fullscreen}
               showSkip={state.fullscreen? true : props.showSkipButton}
-              iconPlaySize={state.fullscreen? props.iconPlaySizeFullscreen : props.iconPlaySize}
-              iconSkipSize={state.fullscreen? props.iconSkipSizeFullscreen : props.iconSkipSize}
+              iconPlaySize={state.fullscreen? 76 : props.iconPlaySize}
+              iconSkipSize={state.fullscreen? 44 : props.iconSkipSize}
             />
+
             <VideoBar
-              currentTime={state.currentTime}
-              duration={state.duration > 0 ? state.duration : 0}
+              smallBar={props.useSmallBar}
+              fullscreen={state.fullscreen}
               onSlideStart={handlePlayPause}
+              currentTime={state.currentTime}
               onSlideComplete={handlePlayPause}
               onSlideCapture={(seekTime) => onSeek(seekTime)}
-              smallBar={props.useSmallBar}
+              duration={state.duration > 0 ? state.duration : 0}
             />
           </View>
         )}
@@ -197,8 +201,6 @@ VideoPlayer.propTypes = {
   fullscreenStyle : PropTypes.object,
   onFullScreenPress : PropTypes.func,
   videoFullscreenStyle : PropTypes.object,
-  iconPlaySizeFullscreen : PropTypes.number,
-  iconSkipSizeFullscreen : PropTypes.number,
   controllerFullscreenStyle : PropTypes.object,
 }
 
