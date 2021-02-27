@@ -45,7 +45,8 @@ const ClassLearning = () => {
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://www.belajariah.com/document-assets/file.pdf',
-        sound : 'Sound.wav'
+        sound : 'Sound.wav',
+        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
       },
       {
         title: 'Harokat',
@@ -56,7 +57,8 @@ const ClassLearning = () => {
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav'
+        sound : 'Sound.wav',
+        ayats: [ 'قُلْ هُوَ اللّٰهُ اَحَدٌۚ', 'اَللّٰهُ الصَّمَدُۚ', 'لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ', 'وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ ࣖ' ],
       },
       {
         title: 'Tajwid',
@@ -67,7 +69,8 @@ const ClassLearning = () => {
         document : 'Dasar Hijaiyah',
         filename : 'http://www.africau.edu/images/default/sample.pdf',
         path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav'
+        sound : 'Sound.wav',
+        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
       },
       {
         title: 'Mad',
@@ -75,6 +78,7 @@ const ClassLearning = () => {
           { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
           { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
           { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
+        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
       },
     ],
   }
@@ -503,6 +507,7 @@ const ClassLearning = () => {
       <ModalRecord
         isVisible={modalRecordVisible}
         backdropPress={() => toggleModalRecord()}
+        ayats={state.topics[currentIndex].ayats}
       />
     </>
   )

@@ -33,6 +33,7 @@ const Home = (props) => {
 
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
+  const [hasPromo, setHasPromo] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
@@ -125,7 +126,7 @@ const Home = (props) => {
   ]
 
   const package_category = [
-    { ID: 0, Type: 'Darussalam', Price_Package : 399000, Price_Discount: 599000, Duration : 1, Consultation: 8, Webinar : 1},
+    { ID: 0, Type: 'Darussalam', Price_Package : 399000, Price_Discount: 599000, Duration : 1, Consultation: 8, Webinar : 1 },
     { ID: 1, Type: 'Naim', Price_Package : 899000,  Price_Discount: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
     { ID: 2, Type: 'Firdaus', Price_Package : 1499000, Price_Discount: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
@@ -153,11 +154,15 @@ const Home = (props) => {
   const PromotionHome = ({ index, item }) => {
     return (
       <View style={styles.container} key={index}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-          <Image style={styles.cardCustom} source={Images.BannerPromo} />
-        </TouchableOpacity>
+        {hasPromo ? (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => props.navigation.navigate('PromotionDetail', item)}>
+            <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
+          </TouchableOpacity>
+        ) : (
+          <Image style={styles.cardCustom} source={Images.BannerPromoDefault}/>
+        )}
       </View>
     )
   }
@@ -251,17 +256,17 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-      console.log("hello ")
+      console.log('hello ')
       const backAction = () => {
-      if(modalVisible) {
-        setModalVisible(false)
-      } 
-      if(!modalVisible) {
-        return false
-      } else {
-        return true
+        if(modalVisible) {
+          setModalVisible(false)
+        }
+        if(!modalVisible) {
+          return false
+        } else {
+          return true
+        }
       }
-    }
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         backAction
@@ -383,105 +388,106 @@ const Home = (props) => {
 
   return (
     <>
-    <View style={styles.headerFlex}>
-      <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
-        <View style={styles.headerFlex}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerFlex}>
-              <Images.LogoBelajariahHome.default height={40} width={40} />
-            </View>
-            <View>
-              <TouchableOpacity
-                activeOpacity={0.5}
-                style={{ ...styles.headerAvatar, marginRight: 15 }}
-                onPress={() =>
-                  props.navigation.navigate(isLogin ? 'Profil' : 'Login')
-                }>
-                {isLogin ? (
-                  <Avatar
-                    source={images.ImageProfileDefault}
-                    style={styles.imageProfile}
-                  />
-                ) : (
-                  <Images.LoginDirect.default />
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.textBackContainer}>
-            <Text style={styles.textBack}>
-              Assalamualaikum Sobat
-              <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
-              Belajar
-              <Text style={styles.textBackBold}> AlQuran ?</Text>
-            </Text>
-          </View>
-        </View>
-        <Animated.View
-          style={[
-            styles.frontContainer,
-            { transform: [{ translateY: swipeAnimation }] },
-          ]}>
-          <FlingGestureHandler
-            onHandlerStateChange={handleSwipe}
-            direction={Directions.UP | Directions.DOWN}>
-            <View style={styles.fingerGesture}>
-              <View style={styles.topLine} />
-            </View>
-          </FlingGestureHandler>
-          <ScrollView
-            ref={mainScrollViewRef}
-            style={styles.scrollview}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.contentContainer}>
-              <SearchHome />
-              <View style={styles.carousel}>
-                <Carousel
-                  data={promotion}
-                  pagination={false}
-                  renderItem={PromotionHome}
-                />
+      <View style={styles.headerFlex}>
+        <ImageBackground source={Images.HomeBG} style={styles.imageBackground}>
+          <View style={styles.headerFlex}>
+            <View style={styles.headerContainer}>
+              <View style={styles.headerFlex}>
+                <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
-              <CategoryClassHome />
-              <PopularClassHome />
-              <InspiratifStoryHome />
+              <View>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  style={{ ...styles.headerAvatar, marginRight: 15 }}
+                  onPress={() =>
+                    props.navigation.navigate(isLogin ? 'Profil' : 'Login')
+                  }>
+                  {isLogin ? (
+                    <Avatar
+                      source={images.ImageProfileDefault}
+                      style={styles.imageProfile}
+                    />
+                  ) : (
+                    <Images.LoginDirect.default />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
-            <View>
-              <TouchableOpacity
-                onPress={() =>
-                  mainScrollViewRef.current.scrollTo({
-                    x: 0,
-                    y: 0,
-                    animated: true,
-                  })
-                }>
-                <Images.BtnArrowUp.default style={styles.iconArrowUp} />
-              </TouchableOpacity>
+            <View style={styles.textBackContainer}>
+              <Text style={styles.textBack}>
+              Assalamualaikum Sobat
+                <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
+              Belajar
+                <Text style={styles.textBackBold}> AlQuran ?</Text>
+              </Text>
             </View>
-          </ScrollView>
-        </Animated.View>
-      </ImageBackground>
-      <ModalInfoClass 
-        isVisible={modalInfoClassVisible}
-        state={package_category}
-        backdropPress={() => toggleModalInfoClass()}
-    />
-      <ModalInfo
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
-        renderItem={
-          <View>
-            <Text>{state}</Text>
           </View>
-        }
-      />
-    </View>
+          <Animated.View
+            style={[
+              styles.frontContainer,
+              { transform: [{ translateY: swipeAnimation }] },
+            ]}>
+            <FlingGestureHandler
+              onHandlerStateChange={handleSwipe}
+              direction={Directions.UP | Directions.DOWN}>
+              <View style={styles.fingerGesture}>
+                <View style={styles.topLine} />
+              </View>
+            </FlingGestureHandler>
+            <ScrollView
+              ref={mainScrollViewRef}
+              style={styles.scrollview}
+              showsVerticalScrollIndicator={false}>
+              <View style={styles.contentContainer}>
+                <SearchHome />
+                <View style={styles.carousel}>
+                  <Carousel
+                    data={promotion}
+                    pagination={false}
+                    renderItem={PromotionHome}
+                  />
+                </View>
+                <CategoryClassHome />
+                <PopularClassHome />
+                <InspiratifStoryHome />
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    mainScrollViewRef.current.scrollTo({
+                      x: 0,
+                      y: 0,
+                      animated: true,
+                    })
+                  }>
+                  <Images.BtnArrowUp.default style={styles.iconArrowUp} />
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Animated.View>
+        </ImageBackground>
+        <ModalInfoClass
+          isVisible={modalInfoClassVisible}
+          state={package_category}
+          backdropPress={() => toggleModalInfoClass()}
+        />
+        <ModalInfo
+          isVisible={modalVisible}
+          backdropPress={() => toggleModal()}
+          renderItem={
+            <View>
+              <Text>{state}</Text>
+            </View>
+          }
+        />
+      </View>
     </>
   )
 }
 
 Home.propTypes = {
-  navigation: PropTypes.object,
+  navigation : PropTypes.object,
 }
+
 
 export default Home
