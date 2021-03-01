@@ -50,6 +50,7 @@ export default {
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
   IconLockedMaterial : require('./IconLockMaterial.svg'),
+  ImgModalComingSoon: require('./ImgModalComingSoon.png'),
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),

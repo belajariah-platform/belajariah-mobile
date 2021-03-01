@@ -111,7 +111,7 @@ const Home = (props) => {
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur/an' },
+    { id: 0, name: 'Al-Qur/an', Img: Images.ImgModalComingSoon},
     { id: 1, name: 'Fiqih' },
     { id: 2, name: 'Ekonomi Syariah' },
     { id: 3, name: 'Ibadah Kemasyarakatan' },
@@ -251,7 +251,6 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-      console.log("hello ")
       const backAction = () => {
       if(modalVisible) {
         setModalVisible(false)
@@ -471,7 +470,7 @@ const Home = (props) => {
         backdropPress={() => toggleModal()}
         renderItem={
           <View>
-            <Text>{state}</Text>
+            <Image source={Images.ImgModalComingSoon} resizeMode={'cover'} style={styles.BackroundImgModal}/>
           </View>
         }
       />
