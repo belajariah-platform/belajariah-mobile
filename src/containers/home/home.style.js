@@ -1,25 +1,22 @@
-import { Resp } from '../../utils'
 import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType, FontWeight } from '../../assets'
+import { Resp } from '../../utils'
 
 const styles = StyleSheet.create({
-  frontContainer: {
-    flex: 9,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    backgroundColor: Color.softPink,
-  },
-  fingerGesture: {
-    height: 40,
-    width: '100%',
-  },
   topLine: {
-    height: 5,
     width: 50,
+    height: 5,
     marginTop: 10,
     borderRadius: 10,
     alignSelf: 'center',
     backgroundColor: Color.greySwipe,
+  },
+  containerSheetHeader: {
+    top: 1,
+    paddingBottom: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: Color.softPink,
   },
   contentContainer: {
     paddingHorizontal: 16,
@@ -28,8 +25,8 @@ const styles = StyleSheet.create({
   containerSearch: {
     marginTop: 10,
     borderWidth: 0,
-    borderRadius: 100,
     maxWidth: '100%',
+    borderRadius: 100,
     borderColor: Color.greySearchBorder,
     backgroundColor: Color.greySearchBG,
   },
@@ -64,17 +61,16 @@ const styles = StyleSheet.create({
     borderColor: Color.transparent,
     backgroundColor: Color.greyMedium,
   },
-
   cardPopularClass: {
     elevation: 2,
-    marginTop: 10,
     width: '98%',
     height: '69%',
     marginLeft: 1,
+    marginTop: 10,
     borderWidth: 0,
     borderRadius: 20,
-    shadowColor: '#000',
     shadowRadius: 2.22,
+    shadowColor: '#000',
     shadowOpacity: 0.22,
     shadowOffset: { width: 0, height: 1 },
   },
@@ -125,8 +121,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     paddingHorizontal: 8,
     fontFamily: FontType.regular,
-    borderColor: Color.greyMedium,
     fontSize: FontSize.extraSmall,
+    borderColor: Color.greyMedium,
   },
   textClassDescription: {
     top: -92,
@@ -137,8 +133,8 @@ const styles = StyleSheet.create({
   textPriceOptions: {
     marginRight: 7,
     borderRadius: 15,
-    alignSelf: 'center',
     paddingVertical: 2,
+    alignSelf: 'center',
     paddingHorizontal: 7,
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
@@ -202,9 +198,9 @@ const styles = StyleSheet.create({
   },
   textBackContainer: {
     marginTop: 20,
+    alignSelf: 'center',
     width: Resp.TextBannerMainWP,
     height: Resp.TextBannerMainHP,
-    alignSelf: 'center',
   },
   headerContainer: {
     marginTop: 12,
@@ -223,10 +219,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  scrollview: { flex: 1 },
-  headerFlex: { flex: 1 },
-  btnReadMore: { alignItems: 'flex-end' },
-  textSearch: { color: Color.grey, fontSize: FontSize.small },
   imageProfile: {
     top: -2,
     width: 35,
@@ -236,6 +228,11 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     borderColor: Color.white,
   },
+  scrollview: { backgroundColor: Color.softPink },
+  headerFlex: { flex: 1 },
+  btnReadMore: { alignItems: 'flex-end' },
+  textSearch: { color: Color.grey, fontSize: FontSize.small },
 })
 
 export { styles }
+

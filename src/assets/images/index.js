@@ -179,6 +179,7 @@ export default {
   IconVoucher: require('./IconVoucher.png'),
   VoucherCode: require('./BgVoucher.png'),
   BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
 
   //Video
   VideoFullscreen: require('./BtnVideoFullscreen.svg'),

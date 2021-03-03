@@ -41,7 +41,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='Consultation' component={Consultation} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
       <Stack.Screen name='ClassLearning' component={ClassLearning}/>
-      <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
+      <Stack.Screen name='PromotionDetail' component={PromotionDetail}/>
       <Stack.Screen name='TransactionInfo' component={TransactionInfo} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />

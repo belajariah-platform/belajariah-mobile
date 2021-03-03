@@ -1,39 +1,29 @@
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
-import React, { useRef, useState, useEffect } from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
 import {
-  Text,
   View,
+  Text,
   Image,
-  Animated,
-  ScrollView,
   Dimensions,
+  ScrollView,
+  BackHandler,
   ImageBackground,
   TouchableOpacity,
-  BackHandler,
 } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
-
-import {
-  State,
-  Directions,
-  FlingGestureHandler,
-} from 'react-native-gesture-handler'
-
-import { FormatRupiah } from '../../utils'
+import { Avatar, Card } from 'react-native-elements'
+import { useSelector } from 'react-redux'
+import BottomSheet from 'reanimated-bottom-sheet'
 import { Color, Images } from '../../assets'
-import { Cards, Carousel, ModalInfo, Searchbox, ModalInfoClass } from '../../components'
-
-import { styles } from './home.style'
 import images from '../../assets/images'
+import { Cards, Carousel, ModalInfo, ModalInfoClass, Searchbox } from '../../components'
+import { FormatRupiah } from '../../utils'
+import { styles } from './home.style'
 
 const Home = (props) => {
   const { isLogin } = useSelector((state) => state.UserReducer)
 
   const [state, setState] = useState('')
-  const [beganY, setBeganY] = useState(null)
-  const [hasPromo, setHasPromo] = useState(false)
+  const [hasPromo, setHasPromo] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
@@ -41,35 +31,10 @@ const Home = (props) => {
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
   const { height } = Dimensions.get('window')
-  const swipeLength = height / 2
-  const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
   const toggleModal = () => setModalVisible(!modalVisible)
-
-  const handleSwipe = ({ nativeEvent }) => {
-    if (nativeEvent.state === State.BEGAN) {
-      setBeganY(nativeEvent.absoluteY)
-    }
-    if (nativeEvent.state === State.END) {
-      if (beganY > nativeEvent.absoluteY) {
-        Animated.spring(swipeAnimation, {
-          speed: 1,
-          toValue: 0,
-          bounciness: 1,
-          useNativeDriver: true,
-        }).start()
-      } else {
-        Animated.spring(swipeAnimation, {
-          speed: 1,
-          bounciness: 0,
-          toValue: swipeLength,
-          useNativeDriver: true,
-        }).start()
-      }
-    }
-  }
 
   const handleModal = (event) => {
     setModalVisible(true)
@@ -106,13 +71,23 @@ const Home = (props) => {
     {
       code_voucher: 'BLJRIAH',
       title: 'Diskon 30% Pengguna Baru',
+      banner : Images.BannerPromotionsPenggunaBaru,
       discount: 30,
-      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+      desc: 'Diskon 30% Pengguna Baru',
+      more_desc: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
+    {
+      code_voucher: 'AMALJARIAH',
+      title: 'Diskon 20% Untuk Perpanjangan Kelas',
+      banner : Images.BannerPromotionExtendClass,
+      discount: 20,
+      desc : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
+      more_desc: '*S&K berlaku',
+    }
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur/an' },
+    { id: 0, name: 'Al-Qur\'an' },
     { id: 1, name: 'Fiqih' },
     { id: 2, name: 'Ekonomi Syariah' },
     { id: 3, name: 'Ibadah Kemasyarakatan' },
@@ -157,7 +132,7 @@ const Home = (props) => {
         {hasPromo ? (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('PromotionDetail', item)}>
+            onPress={() => props.navigation.navigate('PromotionDetail', { promoIndex : index })}>
             <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
           </TouchableOpacity>
         ) : (
@@ -384,8 +359,6 @@ const Home = (props) => {
     index: PropTypes.number,
   }
 
-
-
   return (
     <>
       <View style={styles.headerFlex}>
@@ -422,49 +395,48 @@ const Home = (props) => {
               </Text>
             </View>
           </View>
-          <Animated.View
-            style={[
-              styles.frontContainer,
-              { transform: [{ translateY: swipeAnimation }] },
-            ]}>
-            <FlingGestureHandler
-              onHandlerStateChange={handleSwipe}
-              direction={Directions.UP | Directions.DOWN}>
-              <View style={styles.fingerGesture}>
+          <BottomSheet
+            snapPoints={[height / 2.7, height / 2.6, height - 92]}
+            initialSnap={2}
+            enabledContentGestureInteraction={false}
+            renderContent={() => (
+              <ScrollView
+                ref={mainScrollViewRef}
+                style={styles.scrollview}
+                showsVerticalScrollIndicator={false}>
+                <View style={styles.contentContainer}>
+                  <SearchHome />
+                  <View style={styles.carousel}>
+                    <Carousel
+                      data={promotion}
+                      pagination={false}
+                      renderItem={PromotionHome}
+                    />
+                  </View>
+                  <CategoryClassHome />
+                  <PopularClassHome />
+                  <InspiratifStoryHome />
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      mainScrollViewRef.current.scrollTo({
+                        x: 0,
+                        y: 0,
+                        animated: true,
+                      })
+                    }>
+                    <Images.BtnArrowUp.default style={styles.iconArrowUp} />
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            )}
+            renderHeader={() => (
+              <View style={styles.containerSheetHeader}>
                 <View style={styles.topLine} />
               </View>
-            </FlingGestureHandler>
-            <ScrollView
-              ref={mainScrollViewRef}
-              style={styles.scrollview}
-              showsVerticalScrollIndicator={false}>
-              <View style={styles.contentContainer}>
-                <SearchHome />
-                <View style={styles.carousel}>
-                  <Carousel
-                    data={promotion}
-                    pagination={false}
-                    renderItem={PromotionHome}
-                  />
-                </View>
-                <CategoryClassHome />
-                <PopularClassHome />
-                <InspiratifStoryHome />
-              </View>
-              <View>
-                <TouchableOpacity
-                  onPress={() =>
-                    mainScrollViewRef.current.scrollTo({
-                      x: 0,
-                      y: 0,
-                      animated: true,
-                    })
-                  }>
-                  <Images.BtnArrowUp.default style={styles.iconArrowUp} />
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </Animated.View>
+            )}
+          />
         </ImageBackground>
         <ModalInfoClass
           isVisible={modalInfoClassVisible}
