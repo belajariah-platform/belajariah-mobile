@@ -50,11 +50,13 @@ export default {
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
   IconLockedMaterial : require('./IconLockMaterial.svg'),
+  BannerPromoDefault: require('./BannerPromoDefault.png'),
   ImgModalComingSoon: require('./ImgModalComingSoon.png'),
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
+  BannerPerpanjangKelas: require('./BannerPerpanjangKelas.png'),
 
   //Camera
   IconCancelCamera: require('./IconCancelCamera.svg'),
@@ -230,12 +232,14 @@ export default {
 
   //Modal Record
   ModalRecordBG : require('./BgModalRecord.png'),
-  IconRecordStop : require('./IconRecordStop.svg'),
-  IconRecordSend : require('./IconRecordSend.svg'),
+  IconRecordNext : require('./IconRecordNext.svg'),
   IconRecordPlay : require('./IconRecordPlay.svg'),
+  IconRecordSend : require('./IconRecordSend.svg'),
   IconRecordSent : require('./IconRecordSent.svg'),
+  IconRecordStop : require('./IconRecordStop.svg'),
   IconRecordStart : require('./IconRecordStart.svg'),
   IconRecordReload : require('./IconRecordReload.svg'),
+  IconRecordPrevious : require('./IconRecordPrevious.svg'),
   IconRecordSendGradation : require('./IconRecordSendGradation.svg'),
   IconRecordStopGradation : require('./IconRecordStopGradation.svg'),
   IconRecordStartGradation : require('./IconRecordStartGradation.svg'),

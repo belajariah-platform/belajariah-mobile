@@ -12,12 +12,44 @@ import { Alert } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 const ModalRecord = (props) => {
+  const [state, setState] = useState({
+    start : true,
+    stop : false,
+    send : false,
+    sent : false,
+  })
+
   const Ayats = [
-    'قُلْ هُوَ اللّٰهُ اَحَدٌۚ',
-    'اَللّٰهُ الصَّمَدُۚ',
-    'لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ',
-    'وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ',
+    'وَالْعَصْرِۙ',
+    'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ',
+    'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ',
   ]
+
+  const handleRecord = () => {
+    state.start ? (
+      setState(s => ({ ...s, start : false, stop : true })),
+      alert('Recording....')
+    )
+      : (
+        state.stop ? (
+          setState(s => ({ ...s, stop : false, send : true })),
+          alert('Record done.')
+        )
+          :
+          state.send && (
+            setState(s => ({ ...s, send : false, sent : true })),
+            alert('Send now!')
+          )
+      )
+  }
+
+  const handlePlayRecord = () => {
+    alert('play record')
+  }
+
+  const handleReload = () => {
+    setState(s => ({ ...s, send : false, start : true }))
+  }
 
   return (
     <>
@@ -27,36 +59,88 @@ const ModalRecord = (props) => {
         style={styles.backdropStyle}
         onBackdropPress={props.backdropPress}
       >
-        <View style={[styles.modalStyle, props.containerStyle]}>
-          <Image source={Images.ModalRecordBG} style={{ position: 'absolute', height: '100%', width: '100%', borderTopLeftRadius: 20, borderTopRightRadius: 20, resizeMode : 'contain' }}/>
+        <View style={styles.modalStyle}>
+          <Image source={Images.ModalRecordBG} style={styles.imgBackground}/>
           <TouchableOpacity
             onPress={props.backdropPress}
-            style={styles.closeStyle}>
+            style={styles.iconClose}>
             <Images.ButtonClose.default/>
           </TouchableOpacity>
-          <View style={styles.modalContentSyle}>
-            <View></View>
-            <View style={{ minHeight : 120, maxHeight: 240 }}>
-              <Swiper
-                showsPagination={false}
-                loop={false}>
-                {Ayats.map((ayat, index) =>
-                  <ScrollView key={index} style={{ backgroundColor: 'white', maxHeight: 240, flexGrow: 0 }}>
-                    <Text style={styles.textAyat}>{ayat}</Text>
-                  </ScrollView>)
-                }
-              </Swiper>
-              <Text style={styles.textModal}>Ayoo praktek baca ayat diatas, lalu rekam bacaan~mu ya sobat. Dan jangan lupa kirim ya sobat</Text>
-            </View>
 
-            <View>
-              <Text style={styles.textTimer}>00:00:00</Text>
-              <Images.IconRecordStartGradation.default style={{ position : 'absolute', bottom : 46, alignSelf: 'center' }}/>
-              <TouchableOpacity onPress={() => Alert.alert('halo')} style={{ alignSelf : 'center', bottom: 56 }}>
-                <Images.IconRecordStart.default />
-              </TouchableOpacity>
+          {state.sent ? (
+            <View style={styles.containerRecordSent}>
+              <Images.IconRecordSent.default />
+              <Text style={styles.textSuccess}>Terkirim</Text>
+              <Text style={styles.textModal}>Rekaman anda terkirim</Text>
             </View>
-          </View>
+          ) : (
+            <View style={styles.containerStyle}>
+
+              <View style={styles.containerSwiper}>
+                <Swiper
+                  loop={false}
+                  showsPagination={false}
+                  showsButtons={true}
+                  prevButton={<Images.IconRecordPrevious.default />}
+                  nextButton={<Images.IconRecordNext.default />}
+                >
+                  {props.ayats.map((ayat, index) =>
+                    <ScrollView key={index} showsVerticalScrollIndicator={false} contentContainerStyle={styles.containerScrollview}>
+                      <Text style={styles.textAyat}>{ayat}</Text>
+                    </ScrollView>)
+                  }
+                </Swiper>
+                <Text style={styles.textModal}>Ayoo praktek baca ayat diatas, lalu rekam bacaan~mu ya sobat. Dan jangan lupa kirim ya sobat</Text>
+              </View>
+
+              {state.start && (
+                <View>
+                  <Text style={styles.textTimer}>00:00:00</Text>
+                  <Images.IconRecordStartGradation.default style={styles.iconRecordGradation}/>
+                  <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
+                    <Images.IconRecordStart.default />
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {state.stop && (
+                <View>
+                  <Text style={styles.textTimer}>00:00:14</Text>
+                  <Images.IconRecordStopGradation.default style={styles.iconRecordGradation}/>
+                  <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
+                    <Images.IconRecordStop.default />
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {state.send && (
+                <View>
+                  <Text style={styles.textTimer}>00:00:14</Text>
+                  <Images.IconRecordSendGradation.default style={styles.iconRecordGradation}/>
+                  <View style={styles.containerSend}>
+                    <TouchableOpacity onPress={handlePlayRecord} style={styles.iconRecord}>
+                      <Images.IconRecordPlay.default />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
+                      <Images.IconRecordSend.default />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleReload} style={styles.iconRecord}>
+                      <Images.IconRecordReload.default />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+
+              {state.sent && (
+                <View>
+                  <Text style={styles.textTimer}>Done ya</Text>
+                </View>
+              )}
+
+            </View>
+          )}
+
+
         </View>
       </Modal>
     </>
@@ -64,6 +148,7 @@ const ModalRecord = (props) => {
 }
 
 ModalRecord.propTypes = {
+  ayats : PropTypes.array,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,

@@ -31,10 +31,22 @@ const ProgressBar = (props) => {
         maximumTrackTintColor={Color.white}
         thumbTintColor={Color.bgColorPurple}
       />
-      <View style={styles.timeWrapper}>
-        <Text style={styles.timeLeft}>{getMinutesFromSeconds(props.currentTime)}</Text>
-        <Text style={styles.timeRight}>{getMinutesFromSeconds(props.duration)}</Text>
-      </View>
+      {props.smallBar ? (
+        props.fullscreen && (
+          <View style={styles.timeWrapper}>
+            <Text style={styles.timeLeft}>{getMinutesFromSeconds(props.currentTime)}</Text>
+            <Text style={styles.timeRight}>{getMinutesFromSeconds(props.duration)}</Text>
+          </View>
+        )
+      )
+        :
+        (
+          <View style={styles.timeWrapper}>
+            <Text style={styles.timeLeft}>{getMinutesFromSeconds(props.currentTime)}</Text>
+            <Text style={styles.timeRight}>{getMinutesFromSeconds(props.duration)}</Text>
+          </View>
+        )
+      }
     </View>
   )
 }
