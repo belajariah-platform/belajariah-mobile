@@ -236,6 +236,13 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     borderColor: Color.white,
   },
+  BackroundImgModal : {
+    borderRadius:25,
+    zIndex: -1,
+    top: '-7%',
+    width: 420,
+    height: '100%',
+  }
 })
 
 export { styles }

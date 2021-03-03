@@ -23,7 +23,7 @@ const ChangePassword = (props) => {
       setLoading(true)
       try {
         if (success === true) {
-          props.navigation.navigate('ConfirmPassword')
+          props.navigation.navigate('UserVerify')
         }
       } catch (err) {
         return err

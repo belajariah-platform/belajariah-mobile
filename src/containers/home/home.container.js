@@ -92,6 +92,12 @@ const Home = (props) => {
     setState(event)
   }
 
+  const ImgBanner = [
+    {
+      url : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
+    }
+  ]
+
   const classPopular = [
     {
       rating: 5,
@@ -129,7 +135,7 @@ const Home = (props) => {
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur/an' },
+    { id: 0, name: 'Al-Qur/an', Img: Images.ImgModalComingSoon},
     { id: 1, name: 'Fiqih' },
     { id: 2, name: 'Ekonomi Syariah' },
     { id: 3, name: 'Ibadah Kemasyarakatan' },
@@ -172,7 +178,7 @@ const Home = (props) => {
             <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
           </TouchableOpacity>
         ) : (
-          <Image style={styles.cardCustom} source={Images.BannerPromoDefault}/>
+          <Image style={styles.cardCustom} source={{uri:'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png'}}/>
         )}
       </View>
     )
@@ -459,7 +465,7 @@ const Home = (props) => {
           backdropPress={() => toggleModal()}
           renderItem={
             <View>
-              <Text>{state}</Text>
+              <Image source={Images.ImgModalComingSoon} resizeMode={'cover'} style={styles.BackroundImgModal}/>
             </View>
           }
         />
