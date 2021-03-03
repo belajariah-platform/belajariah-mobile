@@ -453,9 +453,7 @@ const Home = (props) => {
           isVisible={modalVisible}
           backdropPress={() => toggleModal()}
           renderItem={
-            <View>
-              <Image source={Images.ImgModalComingSoon} resizeMode={'cover'} style={styles.BackroundImgModal}/>
-            </View>
+            <Image source={Images.ImgModalComingSoon} resizeMethod='resize' resizeMode={'cover'} style={styles.BackroundImgModal}/>
           }
         />
       </View>

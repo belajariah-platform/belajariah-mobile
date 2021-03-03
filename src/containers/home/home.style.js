@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { Color, FontSize, FontType, FontWeight } from '../../assets'
 import { Resp } from '../../utils'
+
+const { width, height }  = Dimensions.get('window')
 
 const styles = StyleSheet.create({
   topLine: {
@@ -233,11 +235,12 @@ const styles = StyleSheet.create({
   btnReadMore: { alignItems: 'flex-end' },
   textSearch: { color: Color.grey, fontSize: FontSize.small },
   BackroundImgModal : {
-    borderRadius:25,
     zIndex: -1,
-    top: '-7%',
-    width: 420,
-    height: '100%',
+    width: width,
+    marginTop: '-5%',
+    height: height / 2.2,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
   }
 })
 
