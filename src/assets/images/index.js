@@ -51,10 +51,12 @@ export default {
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
   IconLockedMaterial : require('./IconLockMaterial.svg'),
   BannerPromoDefault: require('./BannerPromoDefault.png'),
+  ImgModalComingSoon: require('./ImgModalComingSoon.png'),
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
+  BannerPerpanjangKelas: require('./BannerPerpanjangKelas.png'),
 
   //Camera
   IconCancelCamera: require('./IconCancelCamera.svg'),

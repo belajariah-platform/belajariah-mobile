@@ -232,6 +232,13 @@ const styles = StyleSheet.create({
   headerFlex: { flex: 1 },
   btnReadMore: { alignItems: 'flex-end' },
   textSearch: { color: Color.grey, fontSize: FontSize.small },
+  BackroundImgModal : {
+    borderRadius:25,
+    zIndex: -1,
+    top: '-7%',
+    width: 420,
+    height: '100%',
+  }
 })
 
 export { styles }
