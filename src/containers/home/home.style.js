@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     backgroundColor: Color.softPink,
   },
+  containerPromo : {
+    marginTop : 10,
+  },
   fingerGesture: {
     height: 40,
     width: '100%',
@@ -82,6 +85,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 30,
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   cardReadQuran: {
     height: 120,
@@ -218,6 +222,16 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: Color.white,
     backgroundColor: Color.greyMedium,
+  },  
+  readMoreText : {
+    color: Color.purpleText,
+    textAlign: 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  flexStory : {
+    flexDirection : 'row', 
+    alignItems : 'center',
   },
   imageBackground: {
     width: '100%',

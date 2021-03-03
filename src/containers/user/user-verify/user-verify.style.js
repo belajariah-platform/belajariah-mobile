@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
     fontFamily: FontType.semiBold,
     fontSize: FontSize.smallMedium,
   },
+  leftText: {
+    marginTop: -10,
+    marginBottom: 20,
+    textAlign: 'right',
+    color: Color.purpleText,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  },
 })
 
 export { styles }

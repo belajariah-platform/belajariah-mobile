@@ -17,6 +17,7 @@ import {
   TransactionInfo,
   TransactionUpload,
   TransactionMethod,
+  UserVerifyPassword, 
   ConsultationDetail,
   TransactionConfirm,
   InspiratifStoryDetail,
@@ -49,6 +50,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionUpload' component={TransactionUpload} />
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
       <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
+      <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} initialParams={{ storyIndex : 0 }}/>
     </Stack.Navigator>
   )

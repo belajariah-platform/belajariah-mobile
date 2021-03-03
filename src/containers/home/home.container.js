@@ -23,7 +23,7 @@ import {
 
 import { FormatRupiah } from '../../utils'
 import { Color, Images } from '../../assets'
-import { Cards, Carousel, ModalInfo, Searchbox, ModalInfoClass } from '../../components'
+import { Cards, Carousel, ModalInfo, ModalInfoClass } from '../../components'
 
 import { styles } from './home.style'
 import images from '../../assets/images'
@@ -33,7 +33,6 @@ const Home = (props) => {
 
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
-  const [hasPromo, setHasPromo] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
@@ -76,15 +75,10 @@ const Home = (props) => {
     setState(event)
   }
 
-  const ImgBanner = [
-    {
-      url : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
-    }
-  ]
-
   const classPopular = [
     {
       rating: 5,
+      Class_Category : 'Al-Quran',
       description:
         'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
     },
@@ -113,16 +107,24 @@ const Home = (props) => {
       code_voucher: 'BLJRIAH',
       title: 'Diskon 30% Pengguna Baru',
       discount: 30,
+      Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromo.png',
+      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+    },
+    {
+      code_voucher: 'BLJEXPD',
+      title: 'Diskon 20% Pengguna Baru',
+      discount: 20,
+      Banner_Image : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
       description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur/an', Img: Images.ImgModalComingSoon},
-    { id: 1, name: 'Fiqih' },
-    { id: 2, name: 'Ekonomi Syariah' },
-    { id: 3, name: 'Ibadah Kemasyarakatan' },
-    { id: 4, name: 'Bahasa Arab' },
+    { id: 0, Value: 'Al-Quran', Img: Images.ImgModalComingSoon},
+    { id: 1, Value: 'Fiqih' },
+    { id: 2, Value: 'Ekonomi Syariah' },
+    { id: 3, Value: 'Ibadah Kemasyarakatan' },
+    { id: 4, Value: 'Bahasa Arab' },
   ]
 
   const options = [
@@ -137,37 +139,37 @@ const Home = (props) => {
     { ID: 2, Type: 'Firdaus', Price_Package : 1499000, Price_Discount: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
-  const SearchHome = () => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.navigateSearch}
-        onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
-        <Searchbox
-          disabled
-          style={styles.containerSearch}
-          accessoryRight={() => (
-            <Images.Search.default style={{ marginRight: -12 }} />
-          )}
-          renderItem={
-            <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
-          }
-        />
-      </TouchableOpacity>
-    )
-  }
+  // const SearchHome = () => {
+  //   return (
+  //     <TouchableOpacity
+  //       activeOpacity={0.8}
+  //       style={styles.navigateSearch}
+  //       onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
+  //       <Searchbox
+  //         disabled
+  //         style={styles.containerSearch}
+  //         accessoryRight={() => (
+  //           <Images.Search.default style={{ marginRight: -12 }} />
+  //         )}
+  //         renderItem={
+  //           <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
+  //         }
+  //       />
+  //     </TouchableOpacity>
+  //   )
+  // }
 
   const PromotionHome = ({ index, item }) => {
     return (
-      <View style={styles.container} key={index}>
-        {hasPromo ? (
+      <View style={styles.containerPromo} key={index}>
+        {promotion.length > 0  ? (
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-            <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
+            <Image style={styles.cardCustom} source={{uri : item.Banner_Image }} resizeMode='cover'/>
           </TouchableOpacity>
         ) : (
-          <Image style={styles.cardCustom} source={{uri:'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png'}}/>
+          <Image style={styles.cardCustom} source={{uri:'https://www.belajariah.com/img-assets/BannerPromoDefault.png'}}/>
         )}
       </View>
     )
@@ -179,28 +181,6 @@ const Home = (props) => {
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          {/* <Tabs
-            onChangeTab={(event) => {
-              handleModal('ok')
-              setCategorySelected(event.i)
-            }}
-            style={{ backgroundColor:'transparent', height : 50, }}
-            tabBarUnderlineStyle={{ backgroundColor : 'transparent' }}
-            renderTabBar={()=> <ScrollableTab
-              style={{ backgroundColor : 'transparent', height : 20, borderBottomWidth : 0 }}/>}>
-            {categories.map((item, index) => {
-              return (
-                <Tab
-                  key={index}
-                  heading={
-                    <TabHeading style={{ backgroundColor :
-                    categorySelected == index ?   Color.purpleButton : Color.grey, borderRadius : 16, marginHorizontal : 5 }}>
-                      <Text style={{ color : 'white' }}>{item.name}</Text>
-                    </TabHeading>
-                  }/>
-              )
-            })}
-          </Tabs> */}
           <ScrollView
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -208,13 +188,9 @@ const Home = (props) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={ () => {
-                    handleModal(category.name)
+                  onPress={  () => {
                     setCategorySelected(category.id)
-                    // await horizontalScrollRef.current.scrollTo({
-                    //   x: 4000,
-                    //   animated: true,
-                    // })
+                    handleModal(category.Value)
                   }}>
                   <Text
                     style={[
@@ -230,7 +206,7 @@ const Home = (props) => {
                           backgroundColor: Color.bgColorWhite,
                         },
                     ]}>
-                    {category.name}
+                    {category.Value}
                   </Text>
                 </TouchableOpacity>
               )
@@ -355,9 +331,14 @@ const Home = (props) => {
     return (
       <View>
         <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
-        <Text style={styles.textSubtitle}>
+        <View style={styles.flexStory}>
+        <Text style={{...styles.textSubtitle, flex : 1}}>
           Baca artikel terkini setiap hari!
         </Text>
+        <TouchableOpacity onPress={() =>  props.navigation.navigate('InspiratifStory')}>
+          <Text style={styles.readMoreText}>Lihat semua</Text>
+        </TouchableOpacity>
+        </View>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -374,7 +355,7 @@ const Home = (props) => {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.btnReadMore}
-                  onPress={() =>  props.navigation.navigate('InspiratifStory')}>
+                  onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { storyIndex : index })}>
                   <Images.BtnReadMore.default />
                 </TouchableOpacity>
               </Card>
@@ -445,10 +426,10 @@ const Home = (props) => {
               style={styles.scrollview}
               showsVerticalScrollIndicator={false}>
               <View style={styles.contentContainer}>
-                <SearchHome />
+                {/* <SearchHome /> */}
                 <View style={styles.carousel}>
                   <Carousel
-                    data={promotion}
+                    data={promotion.length > 0 ? promotion : [1]}
                     pagination={false}
                     renderItem={PromotionHome}
                   />
@@ -482,7 +463,21 @@ const Home = (props) => {
           backdropPress={() => toggleModal()}
           renderItem={
             <View>
-              <Image source={Images.ImgModalComingSoon} resizeMode={'cover'} style={styles.BackroundImgModal}/>
+              {classPopular.map((value, key) => {
+                  if (value.Class_Category == state) {
+                    return (
+                      <Text>{state}</Text> 
+                    ) 
+                  } else {
+                    return (
+                      <Image 
+                       resizeMode={'cover'}
+                       source={Images.ImgModalComingSoon}
+                       style={styles.BackroundImgModal}
+                         />
+                    )
+                  }
+                })}
             </View>
           }
         />

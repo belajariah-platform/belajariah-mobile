@@ -1,13 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
-import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  Image,
   FlatList,
   RefreshControl,
   ImageBackground,
@@ -16,23 +13,24 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { TimeConvert } from '../../../utils'
+import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
-import { ButtonGradient, ModalConfirm, ModalRepair } from '../../../components'
+import { ButtonGradient, ModalConfirm, ModalRepair, ImageView } from '../../../components'
 
 const AdminTransactionAccept = () => {
-  const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
-  const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
 
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+
+  const state = [
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', Status_Class : 'In Progress', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', Status_Class : 'Start', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
   ]
 
   const onRefreshing = () => {
@@ -57,14 +55,19 @@ const AdminTransactionAccept = () => {
   }
 
   const CardUser = (item, index) => {
+    let icon 
+    item.Status_Class == 'In Progress' ? 
+    icon = Images.IconTransactProgress : 
+    icon = Images.IconTransactComplete
+
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
-          <Images.IconMiniComplete.default style={styles.IconMini} 
+          <icon.default style={styles.IconMini} 
             width={40}
             height={40}
           />
-          <View style={styles.ViewInstructorInfo}>
+          <View style={{...styles.ViewInstructorInfo, marginTop : 20}}>
             <TouchableOpacity activeOpacity={0.5}>
               <Text style={styles.textUsername}>{item.username}</Text>
               <View style={styles.ViewTop}>
@@ -83,7 +86,7 @@ const AdminTransactionAccept = () => {
           </View>
           <View style={styles.containerButtonAction}>
             <View style={styles.ViewButtonAction}>
-              <TouchableOpacity>
+            <TouchableOpacity onPress={toggleModalFoto}>
                 <View style={styles.viewFoto}>
                   <Images.IconGallery.default
                     width={20}
@@ -103,15 +106,17 @@ const AdminTransactionAccept = () => {
           <View style={styles.viewPriceTwo}>
             <View>
               <Text style={styles.TxtBank}>{item.BankName}</Text>
-              <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+              <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.jumlahTransfer)}</Text>
             </View>
             <View>
+              {item.Status_Class == 'In Progress' &&(
               <ButtonGradient
                 title='Perbaiki'
                 styles={styles.ButtonActionTolak}
                 colors={['#0bb091', '#16c4a4', '#0bb091']}
                 onPress = {toggleModalRepair}
               />
+              )}
             </View>
           </View>
         </Card>
@@ -138,10 +143,15 @@ const AdminTransactionAccept = () => {
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
       />
+      <ImageView
+        isVisible={isModalFotoVisible}
+        setVisible={() => toggleModalFoto()}
+        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty ?
+        {state == 0 ?
           <NoTransaction />
           :
           <FlatList
