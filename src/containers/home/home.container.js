@@ -32,6 +32,7 @@ const Home = (props) => {
 
   const [state, setState] = useState('')
   const [beganY, setBeganY] = useState(null)
+  const [hasPromo, setHasPromo] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
@@ -164,11 +165,15 @@ const Home = (props) => {
   const PromotionHome = ({ index, item }) => {
     return (
       <View style={styles.container} key={index}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-          <Image style={styles.cardCustom} source={Images.BannerPromo} />
-        </TouchableOpacity>
+        {hasPromo ? (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => props.navigation.navigate('PromotionDetail', item)}>
+            <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
+          </TouchableOpacity>
+        ) : (
+          <Image style={styles.cardCustom} source={Images.BannerPromoDefault}/>
+        )}
       </View>
     )
   }
@@ -234,6 +239,25 @@ const Home = (props) => {
         </View>
       )
     }
+
+    useEffect(() => {
+      console.log('hello ')
+      const backAction = () => {
+        if(modalVisible) {
+          setModalVisible(false)
+        }
+        if(!modalVisible) {
+          return false
+        } else {
+          return true
+        }
+      }
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      )
+      return () => backHandler.remove()
+    }, [modalVisible])
 
     return (
       <View>
@@ -445,7 +469,8 @@ const Home = (props) => {
 }
 
 Home.propTypes = {
-  navigation: PropTypes.object,
+  navigation : PropTypes.object,
 }
+
 
 export default Home

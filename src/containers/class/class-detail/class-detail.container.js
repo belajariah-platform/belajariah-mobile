@@ -76,8 +76,6 @@ const ClassDetail = (props) => {
         useSmallBar={true}
         iconPlaySize = {20}
         iconSkipSize = {20}
-        iconPlaySizeFullscreen = {80}
-        iconSkipSizeFullscreen = {48}
         videoStyle={styles.videoStyle}
         videoLink={classData.videoLink}
         posterLink={classData.posterLink}

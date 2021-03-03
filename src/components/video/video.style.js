@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   smallBarWrapper: {
-    marginBottom: '-10%',
+    marginBottom: '2%',
     justifyContent : 'flex-end',
   },
   barWrapper: {
