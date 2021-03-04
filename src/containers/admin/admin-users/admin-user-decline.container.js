@@ -21,7 +21,6 @@ import { TimeConvert, TimerObj } from '../../../utils'
 import { styles } from './admin-user.style'
 
 const AdminUserDecline = ({ search }) => {
-  const [isEmpty] = useState(true)
   const navigation = useNavigation()
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
@@ -208,7 +207,7 @@ const AdminUserDecline = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty ?
+        {state == 0 ?
           <NoUser/>
           :
           <FlatList

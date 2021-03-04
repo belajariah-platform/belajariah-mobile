@@ -13,13 +13,12 @@ import { ModalFilterUstadz } from '../../../components'
 const InstructorJob = () => {
   const route = useRoute()
   const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
   let { idClass } = route.params ?? {}
 
-  const classes = [
+  const state = [
     {
       className: 'Kelas Tahsin',
       userQuestions: [
@@ -119,7 +118,7 @@ const InstructorJob = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
-        <Text style={styles.textHeader}>{classes[idClass].className}</Text>
+        <Text style={styles.textHeader}>{state[idClass].className}</Text>
         <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
@@ -132,7 +131,7 @@ const InstructorJob = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.containerScrollView}>
-        {classes[idClass].userQuestions.map((question, index) => {
+        {state[idClass].userQuestions.map((question, index) => {
           const datetime = question.date + ' ' + question.time
           return (
             <Card key={index} containerStyle={styles.containerCard}>
@@ -206,7 +205,7 @@ const InstructorJob = () => {
       />
       <View style={styles.container}>
         <Header />
-        {isEmpty? <EmptyList/> : <CardList />}
+        {state == 0 ? <EmptyList/> : <CardList />}
       </View>
     </>
   )

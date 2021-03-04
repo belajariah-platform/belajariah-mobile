@@ -1,16 +1,19 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import React, { useState } from 'react'
-import { View, TouchableOpacity, Text, Image } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
-import { Images } from '../../../assets'
-import { ButtonGradient } from '../../../components'
-
+import { Color } from '../../../assets'
 import { styles } from './modal-confirm.style'
 
 const ModalConfirm = (props) => {
-    return(
-        <>
+  let action, color
+  props.action == 'approved' ?  (action = 'menerima', color = '#6e248d' ) :
+    props.action == 'revised' ?  (action = 'membatalkan', color = '#d73c2c') :
+      (action = 'menolak', color = '#d73c2c')
+
+  return(
+    <>
       <Modal
         backdropOpacity={0.25}
         isVisible={props.isVisible}
@@ -19,23 +22,36 @@ const ModalConfirm = (props) => {
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.modalContentSyle}>
-            <Text style={styles.TextTitleRating}>Apakah anda yakin untuk menerima ini?</Text>
+            <Text style={styles.TextTitleRating}>Apakah kamu yakin ingin {action} ini</Text>
             <View style={styles.ViewButton}>
-            {props.renderItem}
+              <View>
+                <TouchableOpacity activeOpacity={0.8} onPress={props.submit}>
+                  <View style={{ ...styles.viewButtonModal, backgroundColor: color, }}>
+                    <Text style={{ ...styles.TxtButtonModal, color: Color.white }}>Ya, saya yakin!</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.8} onPress={props.backdropPress}>
+                  <View style={{ ...styles.viewButtonModal, borderColor: color, borderWidth: 1, }}>
+                    <Text style={{ ...styles.TxtButtonModal, color: color, }}>Batal</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
       </Modal>
     </>
-    )
+  )
 }
 
 ModalConfirm.propTypes = {
-    title : PropTypes.string,
-    isVisible : PropTypes.bool,
-    renderItem : PropTypes.object,
-    backdropPress : PropTypes.func,
-    containerStyle : PropTypes.object,
-  }
+  submit : PropTypes.func,
+  title : PropTypes.string,
+  action : PropTypes.string,
+  isVisible : PropTypes.bool,
+  renderItem : PropTypes.object,
+  backdropPress : PropTypes.func,
+  containerStyle : PropTypes.object,
+}
 
 export default ModalConfirm

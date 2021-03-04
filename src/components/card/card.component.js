@@ -10,7 +10,7 @@ const  Cards = (props)  => {
       {props.imageTitle}
       <View >
         <Image
-          source={props.images}
+          source={props.filepath}
           style={styles.images}
         />
       </View>
@@ -30,7 +30,7 @@ const  Cards = (props)  => {
 Cards.propTypes = {
   price : PropTypes.object,
   rating : PropTypes.object,
-  images : PropTypes.number,
+  filepath : PropTypes.number,
   imageTitle : PropTypes.object,
   description : PropTypes.string,
 }

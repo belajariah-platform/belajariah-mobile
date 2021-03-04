@@ -205,25 +205,26 @@ const styles = StyleSheet.create({
   },
   ViewLabel: {
     left: '-7%',
-    width: '60%',
-    paddingVertical: '2%',
-    paddingHorizontal: '7%',
+    flexDirection : 'row',
+    paddingVertical: 6,
+    paddingHorizontal: 20,
     borderTopRightRadius: 20,
     backgroundColor: '#ab69c6',
     borderBottomRightRadius: 20,
   },
   TxtLabel : {
+    left: '-7%',
     color: Color.white,
-    fontSize: FontSize.medium,
     fontFamily: FontType.bold,
+    fontSize: FontSize.smallPoint,
   },
-  viewTxtKelas: {
+  viewTxtClass: {
     marginVertical: '3%',
   },
   TxtDescKelas: {
     color: Color.black,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallMedium,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
   },
   viewFoto: {
     padding: 6,
@@ -240,13 +241,13 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
-  ViewButtonTolak: {
+  ViewButtonReject: {
     alignSelf: 'center',
     alignItems: 'center',
     alignContent: 'center',
     marginHorizontal: '5%',
   },
-  ButtonActionTolak: {
+  ButtonActionReject: {
     width: 80,
     height : 35,
     marginTop : 3,
@@ -271,9 +272,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   IconMini: {
-    top: '-6%',
+    top: '-7%',
     left: '85%',
+    position : 'absolute',
   },
+  hideModal : {
+    top : 22,
+    left : 10,
+    position : 'absolute',
+  }
 })
 
 export { styles }

@@ -50,13 +50,11 @@ export default {
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
   IconLockedMaterial : require('./IconLockMaterial.svg'),
-  BannerPromoDefault: require('./BannerPromoDefault.png'),
   ImgModalComingSoon: require('./ImgModalComingSoon.png'),
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
-  BannerPerpanjangKelas: require('./BannerPerpanjangKelas.png'),
 
   //Camera
   IconCancelCamera: require('./IconCancelCamera.svg'),
@@ -120,8 +118,8 @@ export default {
   SidenavUser : require('./SidenavUser.svg'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
-  IconMiniProgress: require('./IconMiniProgress.svg'),
-  IconMiniComplete: require('./IconMiniComplete.svg'),
+  IconTransactProgress: require('./IconMiniProgress.svg'),
+  IconTransactComplete: require('./IconMiniComplete.svg'),
   GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconUnduhanAdmin: require('./IconUnduhanAdmin.svg'),
@@ -177,10 +175,10 @@ export default {
   IconEdit : require('./IconEdit.svg'),
 
   //Update Detail Promotion
-  BannerPromo: require('./BannerPromo.png'),
   IconVoucher: require('./IconVoucher.png'),
   VoucherCode: require('./BgVoucher.png'),
   BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
 
   //Video
   VideoFullscreen: require('./BtnVideoFullscreen.svg'),

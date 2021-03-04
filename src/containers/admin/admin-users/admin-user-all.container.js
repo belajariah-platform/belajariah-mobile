@@ -22,7 +22,6 @@ import { TimeConvert, TimerObj } from '../../../utils'
 import { styles } from './admin-user.style'
 
 const AdminUserAll = ({ search }) => {
-  const [isEmpty] = useState(true)
   const navigation = useNavigation()
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
@@ -30,7 +29,7 @@ const AdminUserAll = ({ search }) => {
   const [msgSelected, setMsgSelected] = useState([])
   const [refreshing, setRefreshing] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
-  // console.log('ok', search)
+
   const state = [
     { id : 1, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 74, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
     { id : 2, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 60, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
@@ -112,7 +111,6 @@ const AdminUserAll = ({ search }) => {
     setMsgSelected(state)
   }, [])
 
-  console.log(seconds)
   const CardUser = (item, index) => {
     let icon
     optionSelected.is_play &&
@@ -200,7 +198,7 @@ const AdminUserAll = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty?
+        {state == 0?
           <NoUser/>
           :
           <FlatList

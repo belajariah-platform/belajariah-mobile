@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Text, Icon } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 
@@ -20,8 +21,9 @@ import { styles } from './user-confirm-password.style'
 
 const ConfirmPassword = () => {
   const navigation = useNavigation()
-  const [loading, setLoading] = useState(false)
+  const { isLogin } = useSelector((state) => state.UserReducer)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+  const [loading, setLoading] = useState(false) 
   const [success] = useState(true)
 
   const FormSubmit = useFormik({
@@ -38,7 +40,7 @@ const ConfirmPassword = () => {
       setLoading(true)
       try {
         if (success === true) {
-          navigation.navigate('UserVerify')
+          navigation.navigate(isLogin ? 'Profile' : 'Login')
         }
       } catch (err) {
         return err

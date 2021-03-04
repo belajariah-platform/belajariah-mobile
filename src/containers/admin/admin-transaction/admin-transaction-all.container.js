@@ -1,57 +1,62 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import Modal from 'react-native-modal'
 import React, { useState } from 'react'
-import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
-import ImageViewer from 'react-native-image-zoom-viewer'
-import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  Image,
-  Button,
   FlatList,
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native'
+import {
+  ImageView,
+  ModalRepair,
+  ModalConfirm,
+  ButtonGradient,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-import { TimeConvert } from '../../../utils'
+import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
-import { ButtonGradient, Buttons, ModalConfirm, ModalRepair } from '../../../components'
 
 const AdminTransactionAll = () => {
-  const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
+  const [action, setAction] = useState('')
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
+
+
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
-  ]
 
-  const imagesModal = [{
-    // Simplest usage.
-    url: 'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png',
- 
-    // width: number
-    // height: number
-    // Optional, if you know the image size, you can set the optimization performance
- 
-    // You can pass props to <Image />.
-    props: {
-        // headers: ...
+  const toggleModal = (e) => {
+    setAction(e)
+    setModalVisible(!modalVisible)
+  }
+
+  const handleSubmit = () => {
+    if (action == 'approved') {
+      console.log('approved')
+    } else {
+      console.log('rejected')
     }
-  }]
+  }
+
+  const handleRevised = () => {
+    console.log('Revised')
+  }
+
+  const state = [
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
+  ]
 
   const onRefreshing = () => {
     setRefreshing(true)
@@ -74,43 +79,23 @@ const AdminTransactionAll = () => {
     ) : null
   }
 
-  const ConfirmModal = () => {
-    return(
-      <View>
-        <TouchableOpacity activeOpacity={0.8}>
-          <View style={{ ...styles.viewButtonModal, backgroundColor: '#6e248d', }}>
-            <Text style={{ ...styles.TxtButtonModal, color: 'white' }}>Ya, saya yakin!</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8} onPress={() => { setModalVisible(!modalVisible) }}>
-          <View style={{ ...styles.viewButtonModal, borderColor: '#6e248d', borderWidth: 1, }}>
-            <Text style={{ ...styles.TxtButtonModal, color: '#6e248d', }}>Batal</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
-
   const CardUser = (item, index) => {
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <TouchableOpacity activeOpacity={0.5}>
-              <Text style={styles.textUsername}>{item.username}</Text>
-              <View style={styles.ViewTop}>
-                <Text style={styles.TxtTimeTitle}>
-                  {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
-                </Text>
-                <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
-              </View>
-            </TouchableOpacity>
+            <Text style={styles.textUsername}>{item.username}</Text>
+            <View style={styles.ViewTop}>
+              <Text style={styles.TxtTimeTitle}>
+                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+              </Text>
+              <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
+            </View>
           </View>
           <View style={styles.ViewLabel}>
             <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
           </View>
-          <View style={styles.viewTxtKelas}>
+          <View style={styles.viewTxtClass}>
             <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
           </View>
           <View style={styles.containerButtonAction}>
@@ -134,14 +119,14 @@ const AdminTransactionAll = () => {
           </View>
           <View style={styles.ViewPrice}>
             <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+            <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.jumlahTransfer)}</Text>
           </View>
           <View style={styles.ViewButtonActionVoice}>
             <ButtonGradient
               title='Tolak'
               styles={styles.ButtonAction}
               colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
-              onPress = {toggleModal}
+              onPress = {() => toggleModal('rejected')}
             />
             <ButtonGradient
               title='Perbaiki'
@@ -152,7 +137,7 @@ const AdminTransactionAll = () => {
             <ButtonGradient
               title='Terima'
               styles={styles.ButtonAction}
-              onPress = {toggleModal}
+              onPress = {() => toggleModal('approved')}
             />
           </View>
         </Card>
@@ -172,27 +157,25 @@ const AdminTransactionAll = () => {
   return (
     <View>
       <ModalConfirm
+        action={action}
         isVisible={modalVisible}
+        submit={() => handleSubmit()}
         backdropPress={() => toggleModal()}
-        renderItem={<ConfirmModal />}
       />
       <ModalRepair
+        submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
       />
-      <Modal isVisible={isModalFotoVisible}>
-        <View style={{flex: 1}}>
-          <ImageViewer imageUrls={imagesModal}/>
-          <Button
-              title='Hide Modal'
-              onPress={toggleModalFoto}
-           />
-        </View>
-      </Modal>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        setVisible={() => toggleModalFoto()}
+        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty?
+        {state == 0 ?
           <NoTransaction/>
           :
           <FlatList

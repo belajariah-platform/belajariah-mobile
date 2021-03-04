@@ -1,13 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
-import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  Image,
   FlatList,
   RefreshControl,
   ImageBackground,
@@ -15,23 +12,49 @@ import {
   ActivityIndicator,
 } from 'react-native'
 
+import {
+  ImageView,
+  ModalRepair,
+  ModalConfirm,
+  ButtonGradient,
+} from '../../../components'
+
 import { Images } from '../../../assets'
-import { TimeConvert } from '../../../utils'
+import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
-import { ButtonGradient, ModalConfirm } from '../../../components'
 
 const AdminTransactionDecline = () => {
-  const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
+  const [action, setAction] = useState('')
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const [modalRepairVisible, setmodalRepairVisible] = useState(false)
 
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+
+  const toggleModal = (e) => {
+    setAction(e)
+    setModalVisible(!modalVisible)
+  }
+
+  const state = [
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000, Status_Payment : 'Failed' },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000, Status_Payment : 'Canceled' },
   ]
+
+  const handleSubmit = () => {
+    if (action == 'approved') {
+      console.log('approved')
+    } else {
+      console.log('rejected')
+    }
+  }
+
+  const handleRevised = () => {
+    console.log('Revised')
+  }
 
   const onRefreshing = () => {
     setRefreshing(true)
@@ -59,20 +82,18 @@ const AdminTransactionDecline = () => {
       <View key={index}>
         <Card containerStyle={styles.cardUserOpacity}>
           <View style={styles.ViewInstructorInfo}>
-            <TouchableOpacity activeOpacity={0.5}>
-              <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.username}</Text>
-              <View style={{ ...styles.ViewTop, opacity : 0.5 }}>
-                <Text style={styles.TxtTimeTitle}>
-                  {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
-                </Text>
-                <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
-              </View>
-            </TouchableOpacity>
+            <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.username}</Text>
+            <View style={{ ...styles.ViewTop, opacity : 0.5 }}>
+              <Text style={styles.TxtTimeTitle}>
+                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+              </Text>
+              <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
+            </View>
           </View>
           <View style={{ ...styles.ViewLabel, opacity : 0.5 }}>
             <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
           </View>
-          <View style={{ ...styles.viewTxtKelas, opacity : 0.5 }}>
+          <View style={{ ...styles.viewTxtClass, opacity : 0.5 }}>
             <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
           </View>
           <View style={{ ...styles.containerButtonAction, opacity : 0.5 }}>
@@ -96,14 +117,23 @@ const AdminTransactionDecline = () => {
           </View>
           <View style={{ ...styles.ViewPrice, opacity : 0.5 }}>
             <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+            <Text style={styles.TxtHarga}>{FormatRupiah(item.jumlahTransfer)}</Text>
           </View>
-          <View style={styles.ViewButtonTolak}>
-            <ButtonGradient
-              title='Batalkan'
-              styles={styles.ButtonActionTolak}
-              colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
-            />
+          <View style={styles.ViewButtonReject}>
+            {item.Status_Payment == 'Failed' ?
+              <ButtonGradient
+                title='Perbaiki'
+                styles={styles.ButtonAction}
+                colors={['#0bb091', '#16c4a4', '#0bb091']}
+                onPress = {toggleModalRepair}
+              /> :
+              <ButtonGradient
+                title='Batalkan'
+                styles={styles.ButtonActionReject}
+                onPress = {() => toggleModal('revised')}
+                colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+              />
+            }
           </View>
         </Card>
       </View>
@@ -114,21 +144,34 @@ const AdminTransactionDecline = () => {
     return(
       <View style={styles.containerNoTransaction}>
         <Images.IllustrationNoTransactionReject.default />
-        <Text style={styles.TxtNoTransaction}>Belum ada transaksi yang ditolak saat ini</Text>
+        <Text style={styles.TxtNoTransaction}>
+          Belum ada transaksi yang ditolak saat ini
+        </Text>
       </View>
     )
   }
 
   return (
     <View>
+      <ModalRepair
+        submit={() => handleRevised()}
+        isVisible={modalRepairVisible}
+        backdropPress={() => toggleModalRepair()}
+      />
       <ModalConfirm
         isVisible={modalVisible}
+        submit={() => handleSubmit()}
         backdropPress={() => toggleModal()}
+      />
+      <ImageView
+        isVisible={isModalFotoVisible}
+        setVisible={() => toggleModalFoto()}
+        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty?
+        {state == 0 ?
           <NoTransaction/>
           :
           <FlatList
@@ -143,7 +186,6 @@ const AdminTransactionDecline = () => {
             renderItem={({ item, index }) => CardUser(item, index)}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
-
       </ImageBackground>
     </View>
   )

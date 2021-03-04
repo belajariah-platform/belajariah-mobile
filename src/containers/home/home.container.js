@@ -1,107 +1,55 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import React, { useRef, useState, useEffect } from 'react'
+import BottomSheet from 'reanimated-bottom-sheet'
+import { Avatar, Card } from 'react-native-elements'
+import React, { useEffect, useRef, useState } from 'react'
 
 import {
-  Text,
   View,
+  Text,
   Image,
-  Animated,
-  BackHandler,
-  ScrollView,
   Dimensions,
+  ScrollView,
+  BackHandler,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
-
 import {
-  State,
-  Directions,
-  FlingGestureHandler,
-} from 'react-native-gesture-handler'
-
-import { Color, Images } from '../../assets'
-import { Cards, Carousel, ModalInfo, Searchbox, ModalInfoClass } from '../../components'
-
+  Color,
+  Images,
+} from '../../assets'
+import {
+  Cards,
+  Carousel,
+  ModalInfo,
+  ModalInfoClass,
+} from '../../components'
 import { styles } from './home.style'
-import images from '../../assets/images'
 
 const Home = (props) => {
   const { isLogin } = useSelector((state) => state.UserReducer)
 
   const [state, setState] = useState('')
-  const [beganY, setBeganY] = useState(null)
-  const [hasPromo, setHasPromo] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
   const { height } = Dimensions.get('window')
-  const swipeLength = height / 2
-  const swipeAnimation = useRef(new Animated.Value(swipeLength)).current
 
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
   const toggleModal = () => setModalVisible(!modalVisible)
-
-  const handleSwipe = ({ nativeEvent }) => {
-    if (nativeEvent.state === State.BEGAN) {
-      setBeganY(nativeEvent.absoluteY)
-    }
-    if (nativeEvent.state === State.END) {
-      if (beganY > nativeEvent.absoluteY) {
-        Animated.spring(swipeAnimation, {
-          speed: 1,
-          toValue: 0,
-          bounciness: 1,
-          useNativeDriver: true,
-        }).start()
-      } else {
-        Animated.spring(swipeAnimation, {
-          speed: 1,
-          bounciness: 0,
-          toValue: swipeLength,
-          useNativeDriver: true,
-        }).start()
-      }
-    }
-  }
-
-  useEffect(() => {
-    const backAction = () => {
-      if(modalInfoClassVisible) {
-        toggleModalInfoClass()
-      }
-      if(modalInfoClassVisible) {
-        return true
-      } else {
-        return false
-      }
-    }
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    )
-    return () => backHandler.remove()
-  }, [modalInfoClassVisible])
 
   const handleModal = (event) => {
     setModalVisible(true)
     setState(event)
   }
 
-  const ImgBanner = [
-    {
-      url : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
-    }
-  ]
-
   const classPopular = [
     {
       rating: 5,
-      category : 0,
+      Class_Category : 'Al-Quran',
       description:
         'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
     },
@@ -129,17 +77,26 @@ const Home = (props) => {
     {
       code_voucher: 'BLJRIAH',
       title: 'Diskon 30% Pengguna Baru',
+      banner : Images.BannerPromotionsPenggunaBaru,
       discount: 30,
+      Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromo.png',
+      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+    },
+    {
+      code_voucher: 'BLJEXPD',
+      title: 'Diskon 20% Pengguna Baru',
+      discount: 20,
+      Banner_Image : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
       description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
   ]
 
   const categories = [
-    { id: 0, name: 'Al-Qur/an', Img: Images.ImgModalComingSoon},
-    { id: 1, name: 'Fiqih' },
-    { id: 2, name: 'Ekonomi Syariah' },
-    { id: 3, name: 'Ibadah Kemasyarakatan' },
-    { id: 4, name: 'Bahasa Arab' },
+    { id: 0, Value: 'Al-Quran', Img: Images.ImgModalComingSoon },
+    { id: 1, Value: 'Fiqih' },
+    { id: 2, Value: 'Ekonomi Syariah' },
+    { id: 3, Value: 'Ibadah Kemasyarakatan' },
+    { id: 4, Value: 'Bahasa Arab' },
   ]
 
   const package_category = [
@@ -148,37 +105,37 @@ const Home = (props) => {
     { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
-  const SearchHome = () => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.navigateSearch}
-        onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
-        <Searchbox
-          disabled
-          style={styles.containerSearch}
-          accessoryRight={() => (
-            <Images.Search.default style={{ marginRight: -12 }} />
-          )}
-          renderItem={
-            <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
-          }
-        />
-      </TouchableOpacity>
-    )
-  }
+  // const SearchHome = () => {
+  //   return (
+  //     <TouchableOpacity
+  //       activeOpacity={0.8}
+  //       style={styles.navigateSearch}
+  //       onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
+  //       <Searchbox
+  //         disabled
+  //         style={styles.containerSearch}
+  //         accessoryRight={() => (
+  //           <Images.Search.default style={{ marginRight: -12 }} />
+  //         )}
+  //         renderItem={
+  //           <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
+  //         }
+  //       />
+  //     </TouchableOpacity>
+  //   )
+  // }
 
   const PromotionHome = ({ index, item }) => {
     return (
-      <View style={styles.container} key={index}>
-        {hasPromo ? (
+      <View style={styles.containerPromo} key={index}>
+        {promotion.length > 0  ? (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('PromotionDetail', item)}>
-            <Image style={styles.cardCustom} source={Images.BannerPromo} resizeMode='cover'/>
+            onPress={() => props.navigation.navigate('PromotionDetail', { promoIndex : index })}>
+            <Image style={styles.cardCustom} source={{ uri : item.Banner_Image }} resizeMode='cover'/>
           </TouchableOpacity>
         ) : (
-          <Image style={styles.cardCustom} source={{uri:'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png'}}/>
+          <Image style={styles.cardCustom} source={{ uri:'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}/>
         )}
       </View>
     )
@@ -197,9 +154,9 @@ const Home = (props) => {
               return (
                 <TouchableOpacity
                   key={index}
-                  onPress={ () => {
-                    handleModal(category.name)
+                  onPress={  () => {
                     setCategorySelected(category.id)
+                    handleModal(category.Value)
                   }}>
                   <Text
                     style={[
@@ -215,7 +172,7 @@ const Home = (props) => {
                           backgroundColor: Color.bgColorWhite,
                         },
                     ]}>
-                    {category.name}
+                    {category.Value}
                   </Text>
                 </TouchableOpacity>
               )
@@ -276,7 +233,7 @@ const Home = (props) => {
               activeOpacity={0.6}
               onPress={toggleModalInfoClass}>
               <Cards
-                images={Images.BannerTahsin}
+                filepath={Images.BannerTahsin}
                 rating={handleRating(item.rating)}
                 imageTitle={
                   <Images.JudulTahsin.default style={styles.svgClassTitle} />
@@ -340,9 +297,14 @@ const Home = (props) => {
     return (
       <View>
         <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
-        <Text style={styles.textSubtitle}>
+        <View style={styles.flexStory}>
+          <Text style={{ ...styles.textSubtitle, flex : 1 }}>
           Baca artikel terkini setiap hari!
-        </Text>
+          </Text>
+          <TouchableOpacity onPress={() =>  props.navigation.navigate('InspiratifStory')}>
+            <Text style={styles.readMoreText}>Lihat semua</Text>
+          </TouchableOpacity>
+        </View>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -359,7 +321,7 @@ const Home = (props) => {
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.btnReadMore}
-                  onPress={() =>  props.navigation.navigate('InspiratifStory')}>
+                  onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { storyIndex : index })}>
                   <Images.BtnReadMore.default />
                 </TouchableOpacity>
               </Card>
@@ -393,8 +355,8 @@ const Home = (props) => {
                   }>
                   {isLogin ? (
                     <Avatar
-                      source={images.ImageProfileDefault}
                       style={styles.imageProfile}
+                      source={Images.ImageProfileDefault}
                     />
                   ) : (
                     <Images.LoginDirect.default />
@@ -411,49 +373,48 @@ const Home = (props) => {
               </Text>
             </View>
           </View>
-          <Animated.View
-            style={[
-              styles.frontContainer,
-              { transform: [{ translateY: swipeAnimation }] },
-            ]}>
-            <FlingGestureHandler
-              onHandlerStateChange={handleSwipe}
-              direction={Directions.UP | Directions.DOWN}>
-              <View style={styles.fingerGesture}>
+          <BottomSheet
+            snapPoints={[height / 2.7, height / 2.6, height - 92]}
+            initialSnap={2}
+            enabledContentGestureInteraction={false}
+            renderContent={() => (
+              <ScrollView
+                ref={mainScrollViewRef}
+                style={styles.scrollview}
+                showsVerticalScrollIndicator={false}>
+                <View style={styles.contentContainer}>
+                  {/* <SearchHome /> */}
+                  <View style={styles.carousel}>
+                    <Carousel
+                      data={promotion}
+                      pagination={false}
+                      renderItem={PromotionHome}
+                    />
+                  </View>
+                  <CategoryClassHome />
+                  <PopularClassHome />
+                  <InspiratifStoryHome />
+                </View>
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      mainScrollViewRef.current.scrollTo({
+                        x: 0,
+                        y: 0,
+                        animated: true,
+                      })
+                    }>
+                    <Images.BtnArrowUp.default style={styles.iconArrowUp} />
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            )}
+            renderHeader={() => (
+              <View style={styles.containerSheetHeader}>
                 <View style={styles.topLine} />
               </View>
-            </FlingGestureHandler>
-            <ScrollView
-              ref={mainScrollViewRef}
-              style={styles.scrollview}
-              showsVerticalScrollIndicator={false}>
-              <View style={styles.contentContainer}>
-                <SearchHome />
-                <View style={styles.carousel}>
-                  <Carousel
-                    data={promotion}
-                    pagination={false}
-                    renderItem={PromotionHome}
-                  />
-                </View>
-                <CategoryClassHome />
-                <PopularClassHome />
-                <InspiratifStoryHome />
-              </View>
-              <View>
-                <TouchableOpacity
-                  onPress={() =>
-                    mainScrollViewRef.current.scrollTo({
-                      x: 0,
-                      y: 0,
-                      animated: true,
-                    })
-                  }>
-                  <Images.BtnArrowUp.default style={styles.iconArrowUp} />
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </Animated.View>
+            )}
+          />
         </ImageBackground>
         <ModalInfoClass
           state={package_category}
@@ -465,7 +426,25 @@ const Home = (props) => {
           backdropPress={() => toggleModal()}
           renderItem={
             <View>
-              <Image source={Images.ImgModalComingSoon} resizeMode={'cover'} style={styles.BackroundImgModal}/>
+              {classPopular.map((value, index) => {
+                if (value.Class_Category == state) {
+                  return (
+                    <View key={index}>
+                      <Text>{state}</Text>
+                    </View>
+                  )
+                } else {
+                  return (
+                    <View key={index}>
+                      <Image
+                        resizeMode={'cover'}
+                        source={Images.ImgModalComingSoon}
+                        style={styles.BackroundImgModal}
+                      />
+                    </View>
+                  )
+                }
+              })}
             </View>
           }
         />

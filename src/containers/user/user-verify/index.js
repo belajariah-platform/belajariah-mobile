@@ -1,3 +1,4 @@
 import UserVerify from './user-verify.container'
+import UserVerifyPassword from './user-verify-password.container'
 
-export default UserVerify
+export { UserVerify, UserVerifyPassword}

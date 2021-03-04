@@ -54,7 +54,14 @@ const config = {
             storyIndex : (storyIndex) => `${storyIndex}`
           }
         },
-        UserVerify: 'verif'
+        UserVerify: 'verif',
+        PromotionDetail: {
+          path : 'promo/:promoIndex',
+          parse : {
+            promoIndex : (promoIndex) => `${promoIndex}`
+          }
+        },
+        TransactionUpload : 'upload',
       }
     }
   }

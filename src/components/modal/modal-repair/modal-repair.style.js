@@ -17,10 +17,7 @@ const styles = StyleSheet.create({
     alignItems:'flex-end',
     justifyContent:'center',
   },
-  modalContentSyle : {
-    
-  },
-  containerReview : {
+  container : {
     height: 'auto',
   },
   TextTitleRating: {
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     textAlignVertical: 'top',
   },
-  containerRating : {
+  containerButton : {
     paddingVertical:3,
     alignItems:'center',
     flexDirection: 'row',
