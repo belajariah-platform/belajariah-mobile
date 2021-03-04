@@ -1,16 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import Modal from 'react-native-modal'
 import React, { useState } from 'react'
-import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
-import ImageViewer from 'react-native-image-zoom-viewer'
-import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  Image,
-  Button,
   FlatList,
   RefreshControl,
   ImageBackground,
@@ -19,43 +13,30 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { TimeConvert } from '../../../utils'
+import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
-import { ButtonGradient, Buttons, ModalConfirm, ModalRepair } from '../../../components'
+import { ButtonGradient, ModalConfirm, ModalRepair, ImageView } from '../../../components'
 
 const AdminTransactionAll = () => {
-  const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  
   const toggleModal = () => setModalVisible(!modalVisible)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
   const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
   ]
-
-  const imagesModal = [{
-    // Simplest usage.
-    url: 'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png',
- 
-    // width: number
-    // height: number
-    // Optional, if you know the image size, you can set the optimization performance
- 
-    // You can pass props to <Image />.
-    props: {
-        // headers: ...
-    }
-  }]
 
   const onRefreshing = () => {
     setRefreshing(true)
-    setRefreshing(false)
+    setRefreshing(false)  
   }
 
   const onLoadMore = (e) => {
@@ -134,7 +115,7 @@ const AdminTransactionAll = () => {
           </View>
           <View style={styles.ViewPrice}>
             <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>{item.jumlahTransfer}</Text>
+            <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.jumlahTransfer)}</Text>
           </View>
           <View style={styles.ViewButtonActionVoice}>
             <ButtonGradient
@@ -180,19 +161,15 @@ const AdminTransactionAll = () => {
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
       />
-      <Modal isVisible={isModalFotoVisible}>
-        <View style={{flex: 1}}>
-          <ImageViewer imageUrls={imagesModal}/>
-          <Button
-              title='Hide Modal'
-              onPress={toggleModalFoto}
-           />
-        </View>
-      </Modal>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        setVisible={() => toggleModalFoto()}
+        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty?
+        {state == 0 ?
           <NoTransaction/>
           :
           <FlatList

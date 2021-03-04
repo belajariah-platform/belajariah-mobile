@@ -13,6 +13,7 @@ import {
   ConfirmPassword,
   PromotionDetail,
   InspiratifStory,
+  UserVerifyPassword, 
   InspiratifStoryDetail,
 } from '../../containers'
 import Main from '..//user-navigation/user-main'
@@ -36,6 +37,7 @@ const PublicNavigation = () => {
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
+      <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} initialParams={{ storyIndex : 0 }}/>
     </Stack.Navigator>
   )

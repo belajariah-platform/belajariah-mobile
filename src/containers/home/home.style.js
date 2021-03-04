@@ -5,6 +5,19 @@ import { Resp } from '../../utils'
 const { width, height }  = Dimensions.get('window')
 
 const styles = StyleSheet.create({
+  frontContainer: {
+    flex: 9,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: Color.softPink,
+  },
+  containerPromo : {
+    marginTop : 10,
+  },
+  fingerGesture: {
+    height: 40,
+    width: '100%',
+  },
   topLine: {
     width: 50,
     height: 5,
@@ -80,6 +93,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginVertical: 30,
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   cardReadQuran: {
     height: 120,
@@ -216,6 +230,16 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: Color.white,
     backgroundColor: Color.greyMedium,
+  },
+  readMoreText : {
+    color: Color.purpleText,
+    textAlign: 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  flexStory : {
+    flexDirection : 'row',
+    alignItems : 'center',
   },
   imageBackground: {
     width: '100%',

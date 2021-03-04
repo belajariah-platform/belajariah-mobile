@@ -16,20 +16,18 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { TimeConvert } from '../../../utils'
+import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
 import { ButtonGradient, ModalConfirm } from '../../../components'
 
 const AdminTransactionDecline = () => {
-  const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
   const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 'IDR249.000' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 'IDR649.000' },
+    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
+    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
 
   ]
 
@@ -128,7 +126,7 @@ const AdminTransactionDecline = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {isEmpty?
+        {state == 0 ?
           <NoTransaction/>
           :
           <FlatList

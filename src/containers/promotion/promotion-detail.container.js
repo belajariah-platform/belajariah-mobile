@@ -10,10 +10,10 @@ import { ButtonGradient } from '../../components'
 
 import styles from './promotion-detail.style'
 
-const PromotionDetail = (props) => {
+const PromotionDetail = () => {
   const route = useRoute()
-  const { promoIndex } = route.params ?? {}
   const navigation = useNavigation()
+  const { promoIndex } = route.params ?? {}
 
   const promotion = [
     {
@@ -25,7 +25,7 @@ const PromotionDetail = (props) => {
       more_desc: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
     },
     {
-      code_voucher: 'AMALJARIAH',
+      code_voucher: 'BLJEXPD',
       title: 'Diskon 20% Untuk Perpanjangan Kelas',
       banner : Images.BannerPromotionExtendClass,
       discount: 20,
@@ -80,9 +80,6 @@ const PromotionDetail = (props) => {
               <Image source={Images.VoucherCode} style={{ width : 151, height:37 }}/>
               <Text style={styles.textCode}>{promotion[promoIndex].code_voucher}</Text>
             </View>
-            {/* <TouchableOpacity onPress={() => copyToClipboard(promotion[promoIndex].code_voucher)}>
-              <Text style={styles.TxtButtonSalin}>SALIN</Text>
-            </TouchableOpacity> */}
           </View>
         </View>
       </View>

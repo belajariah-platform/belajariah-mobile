@@ -58,7 +58,7 @@ const InspiratifStoryDetail = () => {
     return (
       <View style={styles.containerHeader}>
         <View style={styles.flexHeader}>
-          <TouchableOpacity onPress={() => navigation.navigate('InspiratifStory')}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>Bacaan Inspiratif</Text>
