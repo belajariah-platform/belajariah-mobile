@@ -216,15 +216,15 @@ const styles = StyleSheet.create({
     left: '-7%',
     color: Color.white,
     fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.smallPoint,
   },
-  viewTxtKelas: {
+  viewTxtClass: {
     marginVertical: '3%',
   },
   TxtDescKelas: {
     color: Color.black,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.smallMedium,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
   },
   viewFoto: {
     padding: 6,
@@ -241,13 +241,13 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
-  ViewButtonTolak: {
+  ViewButtonReject: {
     alignSelf: 'center',
     alignItems: 'center',
     alignContent: 'center',
     marginHorizontal: '5%',
   },
-  ButtonActionTolak: {
+  ButtonActionReject: {
     width: 80,
     height : 35,
     marginTop : 3,
@@ -277,9 +277,9 @@ const styles = StyleSheet.create({
     position : 'absolute',
   },
   hideModal : {
-    top : 22, 
+    top : 22,
     left : 10,
-    position : 'absolute', 
+    position : 'absolute',
   }
 })
 

@@ -15,7 +15,7 @@ import {
 
 import { Images } from '../../../assets'
 import { TimeConvert, TimerObj } from '../../../utils'
-import { ButtonGradient, ModalRating } from '../../../components'
+import { ButtonGradient } from '../../../components'
 
 import { styles } from './instructor-task-detail.style'
 
@@ -29,17 +29,14 @@ const InstructorTaskDetail = ({ route }) => {
   const [record, setRecord] = useState(false)
   const [message, setMessage] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
 
   const voiceDuration =  (480 - ((minutes*60) + seconds))
-  const toggleModal = () => setModalVisible(!modalVisible)
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
-  const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
 
   const user_login = 2
 
-  const onGoingTask = [
+  const state = [
     { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
     { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
     { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
@@ -47,26 +44,6 @@ const InstructorTaskDetail = ({ route }) => {
     { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
     { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
   ]
-
-  const completedTask = [
-    { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
-    { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-  ]
-
-  const dataSelector = () => {
-    switch (param.status) {
-    case 'ongoing':
-      return onGoingTask
-    case 'completed':
-      return completedTask
-    default:
-      break
-    }
-  }
 
   const FormSendMessage = useFormik({
     initialValues: {
@@ -171,17 +148,7 @@ const InstructorTaskDetail = ({ route }) => {
   }, [seconds, minutes, record, play, optionSelected])
 
   useEffect(() => {
-    switch (param.status) {
-    case 'ongoing':
-      setMsgSelected(onGoingTask)
-      break
-    case 'completed':
-      setMsgSelected(completedTask)
-      break
-    default:
-      break
-    }
-
+    setMsgSelected(state)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
   }, [])
@@ -355,7 +322,7 @@ const InstructorTaskDetail = ({ route }) => {
     <View style={styles.containerMain}>
       <Header />
       <FlatList
-        data={dataSelector()}
+        data={state}
         style={{ width:'100%' }}
         showsVerticalScrollIndicator ={false}
         contentContainerStyle={{ paddingBottom : 50 }}
@@ -364,28 +331,31 @@ const InstructorTaskDetail = ({ route }) => {
       />
       <VoiceMessage/>
       <View style={styles.containerTextInput}>
-        <TextInput
-          editable={!record}
-          style={styles.textInput}
-          placeholder='Ketik pesan ...'
-          value={FormSendMessage.values['message']}
-          onChangeText={(e) => setInput('message', e)}>
-          {record ? (
-            <Text>
-              {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-            </Text>
-          ): null}
-        </TextInput>
-        <Footer/>
+        {param.status == 'ongoing' &&(
+          <>
+            <TextInput
+              editable={!record}
+              style={styles.textInput}
+              placeholder='Ketik pesan ...'
+              value={FormSendMessage.values['message']}
+              onChangeText={(e) => setInput('message', e)}>
+              {record ? (
+                <Text>
+                  {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                </Text>
+              ): null}
+            </TextInput>
+            <Footer/>
+          </>
+        )}
       </View>
-      <ModalRating
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
-        title='Berikan rating untuk koreksi bacaanmu'
-        renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
-      />
     </View>
   )
+}
+
+
+InstructorTaskDetail.propTypes = {
+  route : PropTypes.object,
 }
 
 export default InstructorTaskDetail

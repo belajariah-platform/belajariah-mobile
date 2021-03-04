@@ -92,7 +92,7 @@ const ClassLearning = () => {
   const [currentSubIndex, setCurrentSubIndex] = useState(0)
   const [isPostExamLocked, setIsPostExamLocked] = useState(true)
   let percentage = Number(progress /  state.materialCount * 100).toFixed(1)
-
+  console.log(progress, currentIndex, currentSubIndex)
   const handleRating = (num) => {
     let rating = []
     const numRound = Math.round(num)

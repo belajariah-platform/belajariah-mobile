@@ -70,9 +70,17 @@ const styles = StyleSheet.create({
     width : 90,
     alignItems : 'center',
   },
-  ViewButton: {
-    
-  }
+  viewButtonModal: {
+    borderRadius: 15,
+    marginBottom: '2%',
+    marginVertical: '4%',
+    paddingVertical: '3%',
+  },
+  TxtButtonModal: {
+    textAlign: 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  },
 })
 
 export { styles }

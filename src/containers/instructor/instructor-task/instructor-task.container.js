@@ -1,5 +1,4 @@
 import moment from 'moment'
-import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
@@ -26,8 +25,6 @@ const InstructorTask = () => {
   ])
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
-  const [isRecentEmpty, setIsRecentEmpty] = useState(true)
-  const [isCompletedEmpty, setIsCompletedEmpty] = useState(true)
   const initialLayout = { width: Dimensions.get('window').width }
 
   const onGoingTask = [
@@ -109,8 +106,8 @@ const InstructorTask = () => {
   const RecentJobs = () => {
     return (
       <FlatList
-        data={onGoingTask}
         numColumns={1}
+        data={onGoingTask}
         style={{ marginTop: 8 }}
         showsVerticalScrollIndicator ={false}
         keyExtractor={(item, index) =>  index.toString()}
@@ -122,9 +119,14 @@ const InstructorTask = () => {
   const NoRecentJobs = () => {
     return(
       <View style={styles.containerNoTask}>
-        <Images.IllustrationNoRecentTask.default style={{ marginTop: '25%' }}/>
+        <Images.IllustrationNoRecentTask.default
+          style={{ marginTop: '25%' }}/>
         <Text style={styles.textNoTaskTitle}>Uupss</Text>
-        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu ambil nih</Text>
+        <Text style={styles.textNoTask}>
+          Belum ada
+          <Text style={styles.textHeader}>task</Text>
+            yang kamu ambil nih
+        </Text>
       </View>
     )
   }
@@ -145,9 +147,14 @@ const InstructorTask = () => {
   const NoCompletedJobs = () => {
     return(
       <View style={styles.containerNoTask}>
-        <Images.IllustrationNoCompletedTask.default style={{ marginTop: '25%' }} />
+        <Images.IllustrationNoCompletedTask.default
+          style={{ marginTop: '25%' }} />
         <Text style={styles.textNoTaskTitle}>Uupss</Text>
-        <Text style={styles.textNoTask}>Belum ada <Text style={styles.textHeader}>task</Text> yang kamu selesaikan nih</Text>
+        <Text style={styles.textNoTask}>
+          Belum ada
+          <Text style={styles.textHeader}>task</Text>
+           yang kamu selesaikan nih
+        </Text>
       </View>
     )
   }
@@ -159,18 +166,35 @@ const InstructorTask = () => {
     if(item.status === 'completed') isComplete = true
 
     return(
-      <TouchableOpacity onPress={() => navigation.navigate('InstructorTaskDetail', item)}>
-        <View key={index} style={styles.containerTaskList}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('InstructorTaskDetail', item)}>
+        <View
+          key={index}
+          style={styles.containerTaskList}>
           <Avatar
             source={item.avatar}
-            containerStyle={isComplete? [styles.avatarUser, { opacity: 0.5 }] : styles.avatarUser}
+            containerStyle={isComplete ?
+              [styles.avatarUser, { opacity: 0.5 }] :
+              styles.avatarUser}
           />
           <View>
-            <Text style={isComplete? [styles.textUsername, { opacity: 0.5 }] : styles.textUsername}>{item.name}</Text>
-            <Text style={isComplete? [styles.textMoment, { opacity: 0.5 }] : styles.textMoment}>{`${momentTime} (${dateTime})`}</Text>
+            <Text style={isComplete ?
+              [styles.textUsername, { opacity: 0.5 }] :
+              styles.textUsername}>
+              {item.name}
+            </Text>
+            <Text style={isComplete ?
+              [styles.textMoment, { opacity: 0.5 }] :
+              styles.textMoment}>
+              {`${momentTime} (${dateTime})`}
+            </Text>
           </View>
           {item.status === 'completed' && (
-            <Images.IconCompletePurple.default width={28} height={28} style={styles.iconComplete}/>
+            <Images.IconCompletePurple.default
+              width={28}
+              height={28}
+              style={styles.iconComplete}
+            />
           )}
         </View>
       </TouchableOpacity>
@@ -179,29 +203,29 @@ const InstructorTask = () => {
 
   //deklarasi renderScene harus dibawah component yang mau di pakai
   const renderScene = SceneMap({
-    1: isRecentEmpty ? NoRecentJobs : RecentJobs,
-    2: isCompletedEmpty? NoCompletedJobs : CompletedJobs,
+    1: onGoingTask == 0 ? NoRecentJobs : RecentJobs,
+    2: completedTask == 0 ? NoCompletedJobs : CompletedJobs,
   })
 
   const renderTabBar = (props) => (
     <TabBar
       {...props}
-      indicatorStyle={styles.tabBarIndicatorStyle}
-      style={styles.tabBarStyle}
       activeColor='purple'
       inactiveColor='grey'
+      style={styles.tabBarStyle}
       labelStyle={styles.tabBarLabelStyle}
+      indicatorStyle={styles.tabBarIndicatorStyle}
     />
   )
 
   const TabViewTask = () => {
     return (
       <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
         onIndexChange={setIndex}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
         initialLayout={initialLayout}
+        navigationState={{ index, routes }}
         sceneContainerStyle={styles.sceneContainerStyle}
       />
     )

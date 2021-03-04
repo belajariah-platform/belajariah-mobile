@@ -6,10 +6,10 @@ import ModalFilterUserTransaction from './modal-filter-user-transaction.componen
 import ModalFilterAdminPageUstadz from './modal-filter-admin-page-ustadz.component'
 
 export {
-    ModalFilterUser, 
-    ModalFilterAdmin, 
-    ModalFilterUstadz, 
-    ModalFilterAdminPageUser,
-    ModalFilterAdminPageUstadz,
-    ModalFilterUserTransaction,
+  ModalFilterUser,
+  ModalFilterAdmin,
+  ModalFilterUstadz,
+  ModalFilterAdminPageUser,
+  ModalFilterAdminPageUstadz,
+  ModalFilterUserTransaction,
 }

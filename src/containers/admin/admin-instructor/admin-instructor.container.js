@@ -19,7 +19,6 @@ import { styles } from './admin-instructor.style'
 
 const AdminInstructor = () => {
   const navigation = useNavigation()
-  const [isEmpty, setIsEmpty] = useState(true)
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
@@ -134,7 +133,7 @@ const AdminInstructor = () => {
           source={Images.AdminBackground}
           style={styles.containerBackground}>
           <ViewHeader />
-          {isEmpty? <NoInstructor/> : <CardInstructor/>}
+          {state == 0 ? <NoInstructor/> : <CardInstructor/>}
         </ImageBackground>
       </View>
     </>

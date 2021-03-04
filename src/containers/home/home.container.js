@@ -24,8 +24,6 @@ import {
   ModalInfo,
   ModalInfoClass,
 } from '../../components'
-
-import { FormatRupiah } from '../../utils'
 import { styles } from './home.style'
 
 const Home = (props) => {
@@ -33,7 +31,6 @@ const Home = (props) => {
 
   const [state, setState] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
-  const [optionSelected, setOptionSelected] = useState(0)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
@@ -102,16 +99,10 @@ const Home = (props) => {
     { id: 4, Value: 'Bahasa Arab' },
   ]
 
-  const options = [
-    { id: 0, name: 'A', price: '499000', discountedPrice: '199000' },
-    { id: 1, name: 'B', price: '600000', discountedPrice: '249000' },
-    { id: 2, name: 'C', price: '1500000', discountedPrice: '999000' },
-  ]
-
   const package_category = [
-    { ID: 0, Type: 'Darussalam', Price_Package : 399000, Price_Discount: 599000, Duration : 1, Consultation: 8, Webinar : 1 },
-    { ID: 1, Type: 'Naim', Price_Package : 899000,  Price_Discount: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
-    { ID: 2, Type: 'Firdaus', Price_Package : 1499000, Price_Discount: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
+    { ID: 0, Type: 'Darussalam', Price_Discount : 399000, Price_Package: 599000, Duration : 1, Consultation: 8, Webinar : 1 },
+    { ID: 1, Type: 'Naim', Price_Discount : 899000,  Price_Package: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
+    { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
   // const SearchHome = () => {
@@ -248,44 +239,44 @@ const Home = (props) => {
                   <Images.JudulTahsin.default style={styles.svgClassTitle} />
                 }
                 description={item.description}
-                price={
-                  <View style={styles.containerPriceOptions}>
-                    <View style={styles.containerPriceFlex}>
-                      {options.map((option, index) => {
-                        return (
-                          <TouchableOpacity
-                            key={index}
-                            onPress={() => {
-                              setOptionSelected(option.id)
-                            }}>
-                            <Text
-                              style={[
-                                styles.textPriceOptions,
-                                option.id === optionSelected
-                                  ? {
-                                    backgroundColor: Color.purpleButton,
-                                    color: Color.white,
-                                  }
-                                  : {
-                                    backgroundColor: Color.greyHintExt,
-                                    color: Color.black,
-                                  },
-                              ]}>
-                              {option.name}
-                            </Text>
-                          </TouchableOpacity>
-                        )
-                      })}
-                    </View>
-                    <Text style={styles.textPrice}>
-                      Rp {FormatRupiah(options[optionSelected].price)}
-                    </Text>
-                    <Text style={styles.textDiscountedPrice}>
-                      {' '}
-                      {FormatRupiah(options[optionSelected].discountedPrice)}
-                    </Text>
-                  </View>
-                }
+                // price={
+                //   <View style={styles.containerPriceOptions}>
+                //     <View style={styles.containerPriceFlex}>
+                //       {options.map((option, index) => {
+                //         return (
+                //           <TouchableOpacity
+                //             key={index}
+                //             onPress={() => {
+                //               setOptionSelected(option.id)
+                //             }}>
+                //             <Text
+                //               style={[
+                //                 styles.textPriceOptions,
+                //                 option.id === optionSelected
+                //                   ? {
+                //                     backgroundColor: Color.purpleButton,
+                //                     color: Color.white,
+                //                   }
+                //                   : {
+                //                     backgroundColor: Color.greyHintExt,
+                //                     color: Color.black,
+                //                   },
+                //               ]}>
+                //               {option.name}
+                //             </Text>
+                //           </TouchableOpacity>
+                //         )
+                //       })}
+                // </View>
+                //     <Text style={styles.textPrice}>
+                //       Rp {FormatRupiah(options[optionSelected].price)}
+                //     </Text>
+                //     <Text style={styles.textDiscountedPrice}>
+                //       {' '}
+                //       {FormatRupiah(options[optionSelected].discountedPrice)}
+                //     </Text>
+                //   </View>
+                // }
               />
             </TouchableOpacity>
           )
@@ -426,8 +417,8 @@ const Home = (props) => {
           />
         </ImageBackground>
         <ModalInfoClass
-          isVisible={modalInfoClassVisible}
           state={package_category}
+          isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
         />
         <ModalInfo

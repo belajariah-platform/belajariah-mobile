@@ -15,11 +15,12 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   modalContentSyle : {
+    paddingVertical : 20,
     alignSelf: 'center',
     justifyContent:'center',
   },
   viewTxtJudulModal : {
-    marginVertical: '3%',
+    marginBottom: 20,
   },
   TxtJudulModal : {
     color: Color.black,
@@ -43,9 +44,9 @@ const styles = StyleSheet.create({
   },
   containerPaketDarussalam : {
     alignSelf: 'center',
-    marginBottom: '2%',
+    paddingVertical : 15,
+    paddingHorizontal : 20,
     justifyContent: 'center',
-    backgroundColor: '#f9edff',
   },
   containerPaketFirdaus : {
     alignSelf: 'center',
@@ -60,18 +61,8 @@ const styles = StyleSheet.create({
   viewTxtTitlePaket : {
     marginLeft: 10,
   },
-  TxtTitlePaketDarussalam : {
+  TxtTitlePaket : {
     color: Color.purpleText,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.mediumLarge,
-  },
-  TxtTitlePaketNaim : {
-    color: '#ea4c88',
-    fontFamily: FontType.bold,
-    fontSize: FontSize.mediumLarge,
-  },
-  TxtTitlePaketFirdaus : {
-    color: '#1abc9c',
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
@@ -81,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     fontFamily: FontType.bold,
     textDecorationStyle: 'solid',
-    textDecorationLine: 'line-through', 
+    textDecorationLine: 'line-through',
   },
   viewDescPaket : {
     marginBottom: 5,
@@ -103,10 +94,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: '10%',
   },
-  textBold: {
+  textRegular: {
     marginBottom: 7,
     color: Color.black,
-    fontFamily: FontType.bold,
+    fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
   },
   flexBenefits: {
