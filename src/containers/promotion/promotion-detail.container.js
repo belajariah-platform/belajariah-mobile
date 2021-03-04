@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import Clipboard from '@react-native-community/clipboard'
 import { View, ScrollView, TouchableOpacity, ToastAndroid, Image } from 'react-native'
 
@@ -10,9 +10,29 @@ import { ButtonGradient } from '../../components'
 
 import styles from './promotion-detail.style'
 
-const PromotionDetail = (props) => {
-  const item = props.route.params
+const PromotionDetail = () => {
+  const route = useRoute()
   const navigation = useNavigation()
+  const { promoIndex } = route.params ?? {}
+
+  const promotion = [
+    {
+      code_voucher: 'BLJRIAH',
+      title: 'Diskon 30% Pengguna Baru',
+      banner : Images.BannerPromotionsPenggunaBaru,
+      discount: 30,
+      desc: 'Diskon 30% Pengguna Baru',
+      more_desc: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+    },
+    {
+      code_voucher: 'BLJEXPD',
+      title: 'Diskon 20% Untuk Perpanjangan Kelas',
+      banner : Images.BannerPromotionExtendClass,
+      discount: 20,
+      desc : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
+      more_desc: '*S&K berlaku',
+    }
+  ]
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -23,10 +43,10 @@ const PromotionDetail = (props) => {
     return (
       <View style={styles.containerHeader}>
         <View style={styles.flexHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('UserMain')}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>Diskon 30% Pengguna Baru</Text>
+          <Text style={styles.textTitleWhite}>{promotion[promoIndex].title}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -49,20 +69,17 @@ const PromotionDetail = (props) => {
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View>
-            <Text style={styles.TitlePromo}>{item.title}</Text>
-            <Text style={styles.DescPromo}>{handleSplitString(item.description)}</Text>
+            <Text style={styles.TitlePromo}>{promotion[promoIndex].desc}</Text>
+            <Text style={styles.DescPromo}>{handleSplitString(promotion[promoIndex].more_desc)}</Text>
           </View>
           <View>
-            <Text style={styles.TitlePromo}>Kode Voucher Disc. {item.discount}%</Text>
+            <Text style={styles.TitlePromo}>Kode Voucher Disc. {promotion[promoIndex].discount}%</Text>
           </View>
           <View style={styles.containerCodePromo}>
             <View>
               <Image source={Images.VoucherCode} style={{ width : 151, height:37 }}/>
-              <Text style={styles.textCode}>{item.code_voucher}</Text>
+              <Text style={styles.textCode}>{promotion[promoIndex].code_voucher}</Text>
             </View>
-            {/* <TouchableOpacity onPress={() => copyToClipboard(item.code_voucher)}>
-              <Text style={styles.TxtButtonSalin}>SALIN</Text>
-            </TouchableOpacity> */}
           </View>
         </View>
       </View>
@@ -76,7 +93,7 @@ const PromotionDetail = (props) => {
           title='Gunakan Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={() => copyToClipboard(item.code_voucher)}
+          onPress={() => copyToClipboard(promotion[promoIndex].code_voucher)}
         />
       </View>
     )
@@ -85,7 +102,7 @@ const PromotionDetail = (props) => {
   const BannerPromotion = () => {
     return (
       <View style={styles.containerBanner}>
-        <Image source={Images.BannerPromotionsPenggunaBaru} style={styles.ImgBanner}/>
+        <Image source={promotion[promoIndex].banner} style={styles.ImgBanner}/>
       </View>
     )
   }
@@ -103,7 +120,7 @@ const PromotionDetail = (props) => {
 }
 
 PromotionDetail.propTypes = {
-  route : PropTypes.object,
+  promoIndex : PropTypes.number,
 }
 
 export default PromotionDetail
