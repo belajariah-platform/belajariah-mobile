@@ -14,12 +14,18 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { TimeConvert, TimerObj } from '../../../utils'
 import { ButtonGradient, ModalRating } from '../../../components'
+import {
+  TimerObj,
+  VoiceNote,
+  TimeConvert,
+} from '../../../utils'
 
 import styles from './user-consultation.style'
 
 const ConsultationDetail = ({ route }) => {
+  let sound = null
+  let music = null
   const param = route.params
   const navigation = useNavigation()
 
@@ -28,6 +34,7 @@ const ConsultationDetail = ({ route }) => {
   const [seconds, setSeconds] =  useState(0)
   const [record, setRecord] = useState(false)
   const [message, setMessage] = useState(false)
+  const [audioFile, setAudioFile] = useState([])
   const [msgSelected, setMsgSelected] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
@@ -39,12 +46,12 @@ const ConsultationDetail = ({ route }) => {
 
   const user_login = 1
   const state = [
-    { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
-    { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
+    { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid', Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+    { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',  Recording_Name : '' },
+    { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+    { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',  Recording_Name : '' },
+    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+    { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   ]
 
   const FormSendMessage = useFormik({
@@ -57,6 +64,7 @@ const ConsultationDetail = ({ route }) => {
       console.log(values)
       setPlay(false)
       setRecord(false)
+      setAudioFile([])
       setMessage(false)
       form.resetForm()
       form.setSubmitting(false)
@@ -65,6 +73,7 @@ const ConsultationDetail = ({ route }) => {
 
   const handleCancel = () => {
     setPlay(false)
+    setAudioFile([])
     setMessage(false)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
@@ -76,6 +85,12 @@ const ConsultationDetail = ({ route }) => {
       .values['duration']).minute)
     setSeconds(TimerObj(FormSendMessage
       .values['duration']).second)
+
+    if (play) {
+      VoiceNote.ReplayRecord(sound, audioFile)
+    } else {
+      VoiceNote.PauseRecord(sound)
+    }
   }
 
   const handlePlayList = (item) => {
@@ -89,15 +104,30 @@ const ConsultationDetail = ({ route }) => {
         setMinutes(TimerObj(val.voice_duration).minute)
         setSeconds(TimerObj(val.voice_duration).second)
         setOptionSelected(isPlay[i])
+        if (optionSelected.is_play) {
+          VoiceNote.StartPathRecord(music, item.Recording_Name)
+        } else {
+          VoiceNote.StopPathRecord(music)
+        }
       }
     })
   }
 
-  const handleRecord = () => {
+  const handleSetRecord = () => {
     setPlay(false)
     setRecord(false)
     setMessage(true)
     setInput('duration', voiceDuration)
+    const audioFile = VoiceNote.StopRecord()
+    setAudioFile(audioFile)
+  }
+
+  const handleRecord = () => {
+    FormSendMessage.values['message']
+      .length == 0 &&(
+      setRecord(true),
+      VoiceNote.StartRecord()
+    )
   }
 
   useEffect(() => {
@@ -156,6 +186,7 @@ const ConsultationDetail = ({ route }) => {
     setMsgSelected(state)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
+    VoiceNote.AskPermissionsRecording()
   }, [])
 
   const Header = () => {
@@ -207,32 +238,10 @@ const ConsultationDetail = ({ route }) => {
                 height={20}
               />
             </TouchableOpacity>
-            <Images.GrafisVoiceWhite.default style={styles.horizontal}/>
-            <Text style={[styles.textSoundDuration, styles.textWhite]}>
-              {optionSelected.is_play && optionSelected.id == item.id ? (
-                `${minutes}:${seconds < 10 ?
-                  `0${seconds}` : seconds}`
-              ) : (
-                TimeConvert(item.voice_duration)
-              )}
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.containerSoundEnd}>
-            <View>
-              <Text style={[styles.textDesc, { textAlign : 'right' }]}>
-                {item.username}
-              </Text>
-              <View style={styles.flexRow}>
-                <TouchableOpacity
-                  onPress={() => handlePlayList(item)}>
-                  <icon.default
-                    width={20}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <Images.GrafisVoice.default style={styles.horizontal}/>
-                <Text style={styles.textSoundDuration}>
+            {item.Recording_Name != '' &&(
+              <>
+                <Images.GrafisVoiceWhite.default style={styles.horizontal}/>
+                <Text style={[styles.textSoundDuration, styles.textWhite]}>
                   {optionSelected.is_play && optionSelected.id == item.id ? (
                     `${minutes}:${seconds < 10 ?
                       `0${seconds}` : seconds}`
@@ -240,7 +249,35 @@ const ConsultationDetail = ({ route }) => {
                     TimeConvert(item.voice_duration)
                   )}
                 </Text>
-              </View>
+              </>
+            )}
+          </View>
+        ) : (
+          <View style={styles.containerSoundEnd}>
+            <View>
+              <Text style={[styles.textDesc, { textAlign : 'right' }]}>
+                {item.username}
+              </Text>
+              {item.Recording_Name == '' && (
+                <View style={styles.flexRow}>
+                  <TouchableOpacity
+                    onPress={() => handlePlayList(item)}>
+                    <icon.default
+                      width={20}
+                      height={20}
+                    />
+                  </TouchableOpacity>
+                  <Images.GrafisVoice.default style={styles.horizontal}/>
+                  <Text style={styles.textSoundDuration}>
+                    {optionSelected.is_play && optionSelected.id == item.id ? (
+                      `${minutes}:${seconds < 10 ?
+                        `0${seconds}` : seconds}`
+                    ) : (
+                      TimeConvert(item.voice_duration)
+                    )}
+                  </Text>
+                </View>
+              )}
             </View>
             <Avatar
               source={ Images.ImageProfileDefault}
@@ -314,17 +351,16 @@ const ConsultationDetail = ({ route }) => {
       message ? (icons = Images.IconSend,
       submit = () => FormSendMessage.handleSubmit()) :
         record ? (icons = Images.IconChecklist,
-        submit = () => handleRecord()) :
+        submit = () => handleSetRecord()) :
           (icons = Images.IconVoiceRecord,
           submit = () => Alert.alert('Tahan untuk rekam'))
 
     return (
       <ButtonGradient
+        onPress={submit}
         icon={<icons.default/>}
         styles={styles.containerSend}
-        onPress={submit}
-        onLongPress={() =>  FormSendMessage.values['message']
-          .length == 0 &&(setRecord(true))}
+        onLongPress={() => handleRecord()}
       />
     )
   }
