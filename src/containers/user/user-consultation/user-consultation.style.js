@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   avatarChatInstructor: {
     width: 34,
     height: 34,
+    borderRadius: 34 / 2,
   },
   containerUserDesc: {
     paddingLeft: 20,

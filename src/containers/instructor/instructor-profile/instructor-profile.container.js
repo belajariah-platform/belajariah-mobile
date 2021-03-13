@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { ImageBackground } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
@@ -17,9 +17,14 @@ import {
 
 import { Images } from '../../../assets'
 import { styles } from './instructor-profile.style'
+import { ImageView } from '../../../components'
 
 const InstructorProfile = () => {
   const navigation = useNavigation()
+
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const userData = {
     name: 'Nama Orang',
@@ -65,6 +70,12 @@ const InstructorProfile = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+      />
+
       <Images.ProfileBackground.default
         width={'100%'}
         style={styles.background}
@@ -104,10 +115,11 @@ const InstructorProfile = () => {
 
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
-          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
           activeOpacity={0.7}
           containerStyle={styles.avatar}
+          onPress={toggleModalFoto}
+          source={Images.ImageProfileDefault}
+          avatarStyle={{ borderRadius : 90 / 2 }}
         />
       </ImageBackground>
 

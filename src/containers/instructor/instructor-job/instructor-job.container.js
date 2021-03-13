@@ -8,13 +8,16 @@ import { Avatar, Card } from 'react-native-elements'
 import ButtonGradient from '../../../components/button-gradient'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
-import { ModalFilterUstadz } from '../../../components'
+import { ImageView, ModalFilterUstadz } from '../../../components'
 
 const InstructorJob = () => {
   const route = useRoute()
   const navigation = useNavigation()
-  const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const [modalFilterVisible, setModalFilterVisible] = useState(false)
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const toggleModalFilter = () => setModalFilterVisible(!modalFilterVisible)
 
   let { idClass } = route.params ?? {}
 
@@ -119,7 +122,7 @@ const InstructorJob = () => {
           <Images.ButtonBackBlack.default/>
         </TouchableOpacity>
         <Text style={styles.textHeader}>{state[idClass].className}</Text>
-        <TouchableOpacity onPress = {toggleModal}>
+        <TouchableOpacity onPress = {toggleModalFilter}>
           <Images.IconFilterBlack.default width={18}/>
         </TouchableOpacity>
       </View>
@@ -139,7 +142,9 @@ const InstructorJob = () => {
                 <View style={styles.flexRow}>
                   <Avatar
                     source={question.avatar}
+                    onPress={toggleModalFoto}
                     containerStyle={styles.avatarUser}
+                    avatarStyle={{ borderRadius: 48 / 2 }}
                   />
                   <View style={styles.containerNameSound}>
                     <Text style={styles.textUsername}>{question.userName}</Text>
@@ -200,8 +205,13 @@ const InstructorJob = () => {
   return (
     <>
       <ModalFilterUstadz
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
+        isVisible={modalFilterVisible}
+        backdropPress={() => toggleModalFilter()}
+      />
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
       />
       <View style={styles.container}>
         <Header />
