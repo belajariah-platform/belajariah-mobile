@@ -1,8 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import {
   View,
   FlatList,
@@ -15,34 +17,70 @@ import {
 import {
   ImageView,
   ModalRepair,
+  LoadingView,
   ModalConfirm,
   ButtonGradient,
 } from '../../../components'
+import {
+  TRANSACT_DECLINE_REQ,
+  TRANSACT_DECLINE_SUCC,
+  TRANSACT_DECLINE_FAIL,
+  TRANSACT_DECLINE_SCROLL,
+} from '../../../action'
 
+import { Response } from '../../../utils'
+import { PaymentAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
 
-const AdminTransactionDecline = () => {
+const AdminTransactionDecline = ({ search }) => {
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+  const { loadingDecline, loadingDeclineScroll } = useSelector((state) => state.TransactionDeclineReducer)
+
   const [action, setAction] = useState('')
-  const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
-
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
+  const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+
+  const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      dispatch({ type: TRANSACT_DECLINE_REQ })
+      filterString='[{"type": "text", "field" : "status_payment", "value": "Failed"}]'
+      const response = await PaymentAPI.GetAllPayment(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+        dispatch({ type: TRANSACT_DECLINE_SUCC })
+      } else {
+        dispatch({ type: TRANSACT_DECLINE_FAIL })
+      }
+    } catch (err) {
+      dispatch({ type: TRANSACT_DECLINE_FAIL })
+      return err
+    }
+  }
+
+  const onDataStateChange = (event) => {
+    setDataState({
+      ...dataState,
+      search : event,
+    })
+  }
 
   const toggleModal = (e) => {
     setAction(e)
     setModalVisible(!modalVisible)
   }
-
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000, Status_Payment : 'Failed' },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000, Status_Payment : 'Canceled' },
-  ]
 
   const handleSubmit = () => {
     if (action == 'approved') {
@@ -58,17 +96,22 @@ const AdminTransactionDecline = () => {
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataTransaction(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: TRANSACT_DECLINE_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingDeclineScroll ? (
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
@@ -77,24 +120,41 @@ const AdminTransactionDecline = () => {
     ) : null
   }
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      onDataStateChange(search)
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [search])
+
+  useEffect(() => {
+    fetchDataTransaction(dataState)
+  }, [dataState])
+
   const CardUser = (item, index) => {
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUserOpacity}>
           <View style={styles.ViewInstructorInfo}>
-            <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.username}</Text>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={()=> navigation.navigate('AdminProfileAll', item)}
+            >
+              <Text style={{ ...styles.textUsername, opacity : 0.5 }}>{item.User_Name}</Text>
+            </TouchableOpacity>
             <View style={{ ...styles.ViewTop, opacity : 0.5 }}>
               <Text style={styles.TxtTimeTitle}>
-                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
-              <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
             </View>
+            <Card.Divider style={styles.divider} />
+            <Text style={styles.TxtInvoice}>{item.Invoice_Number}</Text>
           </View>
           <View style={{ ...styles.ViewLabel, opacity : 0.5 }}>
-            <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
+            <Text style={styles.TxtLabel}>{item.Class_Initial}</Text>
           </View>
           <View style={{ ...styles.viewTxtClass, opacity : 0.5 }}>
-            <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
+            <Text style={styles.TxtDescKelas}>{item.Class_Name}</Text>
           </View>
           <View style={{ ...styles.containerButtonAction, opacity : 0.5 }}>
             <View style={styles.ViewButtonAction}>
@@ -116,8 +176,8 @@ const AdminTransactionDecline = () => {
             </View>
           </View>
           <View style={{ ...styles.ViewPrice, opacity : 0.5 }}>
-            <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>{FormatRupiah(item.jumlahTransfer)}</Text>
+            <Text style={styles.TxtBank}>{item.Payment_Method}</Text>
+            <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.Total_Transfer)}</Text>
           </View>
           <View style={styles.ViewButtonReject}>
             {item.Status_Payment == 'Failed' ?
@@ -171,20 +231,22 @@ const AdminTransactionDecline = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {state == 0 ?
-          <NoTransaction/>
-          :
-          <FlatList
-            data={state}
-            style={{ width:'100%' }}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            onEndReached={(e) => onLoadMore(e)}
-            showsVerticalScrollIndicator ={false}
-            contentContainerStyle={{ paddingBottom: 25 }}
-            keyExtractor={(item, index) =>  index.toString()}
-            renderItem={({ item, index }) => CardUser(item, index)}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {loadingDecline && !loadingDeclineScroll ?
+          <LoadingView color='white'/> :
+          states == 0 ?
+            <NoTransaction/>
+            :
+            <FlatList
+              data={states}
+              style={{ width:'100%' }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              onEndReached={(e) => onLoadMore(e)}
+              showsVerticalScrollIndicator ={false}
+              contentContainerStyle={{ paddingBottom: 25 }}
+              keyExtractor={(item, index) =>  index.toString()}
+              renderItem={({ item, index }) => CardUser(item, index)}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
       </ImageBackground>
     </View>
@@ -192,7 +254,7 @@ const AdminTransactionDecline = () => {
 }
 
 AdminTransactionDecline.propTypes = {
-  navigation: PropTypes.object,
+  search: PropTypes.string,
 }
 
 export default AdminTransactionDecline

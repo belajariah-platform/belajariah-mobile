@@ -1,5 +1,6 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -12,65 +13,98 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native'
+import {
+  TRANSACT_USER_LIST_REQ,
+  TRANSACT_USER_LIST_FAIL,
+  TRANSACT_USER_LIST_SUCC,
+  TRANSACT_USER_LOAD_SCROLL,
+} from '../../action'
 
+import { Response } from '../../utils'
 import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
-import {ModalFilterUserTransaction} from '../../components'
+import { PaymentAPI, EnumAPI } from '../../api'
+import { ModalFilterUserTransaction, LoadingView } from '../../components'
 
 const Transaction = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-  const [loading, setLoading] = useState(false)
-  const [available, setAvailable] = useState(false)
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState([])
   const [refreshing, setRefreshing] = useState(false)
+  const [stateCategory, setStateCategory] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
+  const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+  const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'DESC' })
 
-  const state = [
-    {
-      invoice_number: 'BLJ-RIAH001',
-      status: 'failed',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH002',
-      status: 'success',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH003',
-      status: 'waiting for payment',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH004',
-      status: 'success',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-  ]
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const { loading, loadingScroll } = useSelector((state) => state.TransactionReducer)
+
+  const fetchDataTransaction = async ({ skip, take, filterString, sort }) => {
+    try {
+      dispatch({ type: TRANSACT_USER_LIST_REQ })
+      const response = await PaymentAPI.GetAllPaymentByUserID(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+        setCount(response.data.count)
+        dispatch({ type: TRANSACT_USER_LIST_SUCC })
+      } else {
+        dispatch({ type: TRANSACT_USER_LIST_FAIL })
+      }
+    } catch (err) {
+      dispatch({ type: TRANSACT_USER_LIST_FAIL })
+      return err
+    }
+  }
+
+  const fetchDataClassCategory = async ({ skip, take, filterString }) => {
+    try {
+      filterString='[{"type": "text", "field" : "type", "value": "payment_type"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateCategory(response.data.data)
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  const onDataStateChange = (sort, filter) => {
+    setDataState({
+      ...dataState,
+      sort : sort,
+      filterString : filter
+    })
+  }
+
+  useEffect(() => {
+    fetchDataTransaction(dataState)
+  }, [dataState])
+
+  useEffect(() => {
+    fetchDataClassCategory(dataStateCategory)
+  }, [])
 
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataTransaction(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: TRANSACT_USER_LOAD_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingScroll ? (
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
@@ -91,57 +125,42 @@ const Transaction = () => {
     )
   }
 
-  const TransactionList = () => {
-    return (
-      <FlatList
-        data={state}
-        onEndReachedThreshold={0.1}
-        style={styles.containerScrollView}
-        ListFooterComponent={renderFooter}
-        showsVerticalScrollIndicator={false}
-        onEndReached={(e) => onLoadMore(e)}
-        contentContainerStyle={{ paddingBottom: 122 }}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => TransactionCard(item, index)}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
-      />
-    )
-  }
 
   const TransactionCard = (item, index) => {
     let ribbon, icon, status, color
-    switch (item.status) {
-    case 'success':
-      status = 'Lunas'
+    switch (item.Payment_Type.split('|')[0]) {
+    case 'Completed':
+      status = item.Payment_Type.split('|')[2]
       color = Color.textSuccess
       icon = Images.IconComplete
       ribbon = Images.RibbonComplete
       break
-    case 'failed':
-      status = 'Gagal'
+    case 'Failed':
+      status = item.Payment_Type.split('|')[2]
       color = Color.textFailed
       icon = Images.IconFailed
       ribbon = Images.RibbonFailed
       break
-    case 'Menunggu Pembayaran':
-      status = 'Waiting for Payment'
+    case 'WaitingForPayment':
+      status = item.Payment_Type.split('|')[2]
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending
       break
     default:
-      status = 'Menunggu Pembayaran'
+      status = item.Payment_Type.split('|')[2]
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending
       break
     }
+
     return (
       <View key={index}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => navigation.navigate('TransactionInfo')}
-          disabled={item.status == 'waiting for payment' ? false : true}
+          onPress={() => navigation.navigate('TransactionInfo', item)}
+          disabled={item.Status_Payment == 'Waiting for Payment' ? false : true}
         >
           <LinearGradient
             end={{ x: 1, y: 1 }}
@@ -157,11 +176,11 @@ const Transaction = () => {
             </View>
             <Text style={styles.textInvoice}>
             No. Invoice:{' '}
-              <Text style={styles.textBold}>{item.invoice_number}</Text>
+              <Text style={styles.textBold}>{item.Invoice_Number}</Text>
             </Text>
-            <Text style={styles.textDesc}>{item.class_title}</Text>
+            <Text style={styles.textDesc}>{item.Class_Name}</Text>
             <Text style={styles.textDate}>
-            Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY')}
+            Tanggal Transaksi: {moment(item.Created_Date).format('DD MMM YYYY')}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -171,29 +190,47 @@ const Transaction = () => {
 
   return (
     <>
-    <ModalFilterUserTransaction
+      <ModalFilterUserTransaction
+        state={stateCategory}
+        submit={onDataStateChange}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
-    <View style={styles.bgHeader}>
-      <View style={styles.containerHeader}>
-        <Text style={styles.titleHeader}>Transaksi</Text>
-        <TouchableOpacity
-          style={styles.containerFilter}
-          onPress = {toggleModal}>
-          <Images.Filter.default
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+      <View style={styles.bgHeader}>
+        <View style={styles.containerHeader}>
+          <Text style={styles.titleHeader}>Transaksi</Text>
+          <TouchableOpacity
+            style={styles.containerFilter}
+            onPress = {toggleModal}>
+            <Images.Filter.default
+              width={20}
+              height={20}
+            />
+          </TouchableOpacity>
+        </View>
+        <ImageBackground
+          source={Images.TransactionBGPNG}
+          style={styles.imageBackground}
+          imageStyle={{ borderRadius: 30 }}>
+          {loading && !loadingScroll ?
+            <LoadingView color ='white'/> :
+            state.length == 0 ?
+              <NoTransaction /> :
+              <FlatList
+                data={state}
+                onEndReachedThreshold={0.1}
+                style={styles.containerScrollView}
+                ListFooterComponent={renderFooter}
+                showsVerticalScrollIndicator={false}
+                onEndReached={(e) => onLoadMore(e)}
+                contentContainerStyle={{ paddingBottom: 122 }}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item, index }) => TransactionCard(item, index)}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+              />
+          }
+        </ImageBackground>
       </View>
-      <ImageBackground
-        source={Images.TransactionBGPNG}
-        style={styles.imageBackground}
-        imageStyle={{ borderRadius: 30 }}>
-        {available ? <NoTransaction /> : <TransactionList />}
-      </ImageBackground>
-    </View>
     </>
   )
 }

@@ -14,40 +14,39 @@ import { styles } from './admin-transaction.style'
 
 const AdminTransaction = () => {
   const Tab = createMaterialTopTabNavigator()
+  const [sort, setSort] = useState('')
+  const [search, setSearch] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
-  const ViewHeader = () => {
-    return(
-      <View style={styles.containerHeader}>
-        <View
-          style={{ flex : 1 }}>
-          <Searchbox
-            size='medium'
-            placeholder={'Temukan user'}
-            onFocus={() => console.log('hello')}
-            style={styles.searchbox}
-          />
-        </View>
-        <TouchableOpacity
-          style={styles.iconFilter}
-          onPress = {toggleModal}>
-          <Images.Filter.default
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
-      </View>
-    )
-  }
 
   return (
     <>
       <ModalFilterAdminPageUser
+        setSort={setSort}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
-        <ViewHeader />
+        <View style={styles.containerHeader}>
+          <View
+            style={{ flex : 1 }}>
+            <Searchbox
+              size='medium'
+              placeholder={'Temukan user'}
+              style={styles.searchbox}
+              onChangeText={(e) => setSearch(e)}
+              onFocus={() => console.log('hello')}
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.iconFilter}
+            onPress = {toggleModal}>
+            <Images.Filter.default
+              width={20}
+              height={20}
+            />
+          </TouchableOpacity>
+        </View>
         <Tab.Navigator
           tabBarOptions={{
             style:{
@@ -60,19 +59,19 @@ const AdminTransaction = () => {
           }}>
           <Tab.Screen
             name='AdminTransactionAll'
-            component={AdminTransactionAll}
-            options={{ title: 'Semua' }}
-          />
+            options={{ title: 'Semua' }}>
+            {() => <AdminTransactionAll search={search} sort={sort}/>}
+          </Tab.Screen>
           <Tab.Screen
             name='AdminTransactionAccept'
-            component={AdminTransactionAccept}
-            options={{ title: 'Diterima' }}
-          />
+            options={{ title: 'Diterima' }}>
+            {() => <AdminTransactionAccept search={search} sort={sort}/>}
+          </Tab.Screen>
           <Tab.Screen
             name='AdminTransactionDecline'
-            component={AdminTransactionDecline}
-            options={{ title: 'Ditolak' }}
-          />
+            options={{ title: 'Ditolak' }}>
+            {() => <AdminTransactionDecline search={search} sort={sort}/>}
+          </Tab.Screen>
         </Tab.Navigator>
       </View>
     </>

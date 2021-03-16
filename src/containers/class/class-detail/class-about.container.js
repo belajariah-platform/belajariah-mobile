@@ -1,61 +1,37 @@
-import React from 'react'
+import PropTypes from 'prop-types'
 import { List } from 'react-native-paper'
 import { Card } from 'react-native-elements'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, View, Text } from 'react-native'
 
-import styles from './class-about.style'
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
+import { LearningAPI } from '../../../api'
 import { TextView } from '../../../components'
 import { TimeConvertToHour } from '../../../utils'
 
-const ClassAbout = () => {
-  const state = {
-    rating : 4.7,
-    duration : 144,
-    total_topic : 48,
-    total_user : 1500,
-    title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
-    topics: [
-      {
-        title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
-        subtopic: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 10 },
-          { subtitle: 'Dasar Makhraj', video_duration : 8 },
-          { subtitle : 'Shifathul Huruf', video_duration : 12 }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://www.belajariah.com/document-assets/file.pdf'
-      },
-      {
-        title: 'Harokat',
-        subtopic: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 4 },
-          { subtitle: 'Dasar Makhraj', video_duration : 5 },
-          { subtitle : 'Shifathul Huruf', video_duration : 2 }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
-      },
-      {
-        title: 'Tajwid',
-        subtopic: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 10 },
-          { subtitle : 'Shifathul Huruf', video_duration : 3 }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf'
-      },
-      {
-        title: 'Mad',
-        subtopic: [
-          { subtitle : 'Dasar Hijaiyah', video_duration : 7 },
-          { subtitle: 'Dasar Makhraj', video_duration : 7 },
-          { subtitle : 'Shifathul Huruf', video_duration : 7 }],
-      },
-    ],
+import styles from './class-about.style'
+
+const ClassAbout = ({ params }) => {
+  const [state, setState] = useState([])
+  const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+
+  const fetchDataLearning = async (state, code) => {
+    try {
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
+      const response = await LearningAPI.GetAllLearning(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+      }
+    } catch (err) {
+      return err
+    }
   }
+
+  useEffect(() => {
+    fetchDataLearning(dataState, params.Code)
+  }, [])
 
   const BenefitCategory = [
     { value : 'Akses video|video' },
@@ -83,7 +59,7 @@ const ClassAbout = () => {
         <TextView
           component={
             <Text style={styles.textRegularParaf}>
-              {handleSplitString(state.description)}
+              {handleSplitString(params.Class_Description)}
             </Text>
           }
         />
@@ -95,23 +71,23 @@ const ClassAbout = () => {
     return (
       <Card containerStyle={styles.containerTopics}>
         <View style={styles.containerTopicsTitle}>
-          <Text style={styles.textBold}>Video yang dibahas</Text>
+          <Text style={styles.textBold}>Topik yang dibahas</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>{state.total_topic}</Text> Video
+              <Text style={styles.textRegular}>{params.Total_Video}</Text> Video
             </Text>
             <Text style={styles.textRegular}>
-              {TimeConvertToHour(state.duration)}
+              {TimeConvertToHour(params.Total_Video_Duration)}
             </Text>
           </View>
         </View>
         <View style={styles.containerList}>
-          {state.topics.map((topic, index) => {
+          {state.map((topic, index) => {
             return (
-              <List.Accordion key={index} title={topic.title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                {topic.subtopic.map((item, index) => {
+              <List.Accordion key={index} title={topic.Title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
+                {topic.SubTitles.map((item, index) => {
                   const no = index + 1
-                  const name = no + '. ' + item.subtitle
+                  const name = no + '. ' + item.Sub_Title
                   return <List.Item key={index} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
                 })}
               </List.Accordion>
@@ -168,6 +144,10 @@ const ClassAbout = () => {
       <Benefits />
     </ScrollView>
   )
+}
+
+ClassAbout.propTypes = {
+  params : PropTypes.object,
 }
 
 export default ClassAbout

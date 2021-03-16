@@ -1,6 +1,6 @@
-import moment from 'moment'
-import { Text } from '@ui-kitten/components'
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import { Text } from '@ui-kitten/components'
 import DocumentPicker from 'react-native-document-picker'
 import { useNavigation } from '@react-navigation/native'
 
@@ -17,14 +17,10 @@ import { ButtonGradient, TextBox } from '../../components'
 
 import styles from './transaction-upload.style'
 
-const TransactionUpload = () => {
+const TransactionUpload = (props) => {
+  const item = props.route.params
   const navigation = useNavigation()
   const [dataImage, setDataImage] = useState({})
-
-  const state = {
-    total_price : 10000000,
-    created_date : new Date(),
-  }
 
   const Header = () => {
     return (
@@ -77,25 +73,25 @@ const TransactionUpload = () => {
           <View>
             <Text style={styles.textTitle}>Transfer ke bank</Text>
             <View style={styles.ViewDescBank}>
-              <Text style={styles.Txtright}>BNI Syariah</Text>
-              <Text style={styles.Txtright}>a/n Belajariah</Text>
+              <Text style={styles.Txtright}>{item.Payment_Method}</Text>
+              <Text style={styles.Txtright}>a/n {item.Account_Name}</Text>
             </View>
           </View>
         </View>
         <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Jumlah Transfer</Text>
-            <Text style={styles.Txtright}>Rp {FormatRupiah(state.total_price)}</Text>
+            <Text style={styles.Txtright}>Rp {FormatRupiah(item.Total_Transfer)}</Text>
           </View>
         </View>
-        <View style={styles.cardDetail}>
+        {/* <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Tanggal Transfer</Text>
             <Text style={styles.Txtright}>
-              {moment(state.created_date).format('DD MMM YYYY h:mm A')}
+              {moment(item.Created_Date).format('DD MMM YYYY h:mm A')}
             </Text>
           </View>
-        </View>
+        </View> */}
       </View>
     )
   }
@@ -179,6 +175,10 @@ const TransactionUpload = () => {
       </View>
     </>
   )
+}
+
+TransactionUpload.propTypes = {
+  route: PropTypes.object,
 }
 
 export default TransactionUpload

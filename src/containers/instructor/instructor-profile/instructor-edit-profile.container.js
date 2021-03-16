@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
   Icon,
@@ -16,7 +17,11 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
+import { Response } from '../../../utils'
 import { Images } from '../../../assets'
+import { Alerts } from '../../../components'
+import { USER_INFO } from  '../../../action'
+import { MentorAPI, UserAPI } from '../../../api'
 import { Buttons, TextBox } from '../../../components'
 
 import { styles } from './instructor-edit-profile.style'
@@ -24,27 +29,51 @@ import { styles } from './instructor-edit-profile.style'
 const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
 const InstructorEditProfile = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-
-  const strName = 'Rico Darmawan'
-  const [date, setDate] = useState(new Date())
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
   const FormPersonal = useFormik({
     initialValues: {
-      fullname: '',
-      phone: '',
-      profesion: '',
-      gender: '',
-      birth: '',
-      province: '',
-      city: '',
-      address: '',
+      Full_Name: userInfo.Full_Name,
+      Phone: userInfo.Phone,
+      Profesion: userInfo.Profession,
+      Gender: userInfo.Gender,
+      Birth: userInfo.Birth || new Date(),
+      Province: userInfo.Province,
+      City: userInfo.City,
+      Address: userInfo.Address,
     },
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: async (values) => {
+      try {
+        const response = await UserAPI.UpdateProfile(values)
+        if (response.status === Response.SUCCESS) {
+          Alerts(true, 'Profil berhasil diubah')
+          fetchDataMentor(userInfo.Email)
+        }
+      } catch (error) {
+        return error
+      }
     },
   })
+
+  const fetchDataMentor = async (email) => {
+    try {
+      const response = await MentorAPI.GetMentor(email)
+      if (response.status === Response.SUCCESS) {
+        await dispatch({
+          type: USER_INFO,
+          user: response.data.result,
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataMentor(userInfo.Email)
+  }, [])
 
   const filterText = (value) => {
     let valueFilter
@@ -63,7 +92,7 @@ const InstructorEditProfile = () => {
               <Avatar source={Images.ImageProfileDefault} style={styles.avatar} />
             </ImageBackground>
             <Text style={styles.containerTitleAvatar}>
-              {filterText(strName)}
+              {filterText(FormPersonal.values['Full_Name'])}
             </Text>
           </View>
 
@@ -81,50 +110,54 @@ const InstructorEditProfile = () => {
             <Text style={styles.containerTextJudul}>DATA PERSONAL</Text>
             <Text style={styles.containerText}>Nama Anda</Text>
             <TextBox
-              name='fullname'
-              form={FormPersonal}
-              placeholder={strName}
+              name='Full_Name'
               disabled={true}
+              form={FormPersonal}
+              placeholder='Nama lengkap'
             />
             <Text style={styles.containerText}>Nomor Telepon</Text>
             <TextBox
-              name='phone'
+              name='Phone'
               form={FormPersonal}
               placeholder='+62'
               keyboardType='phone-pad'
             />
             <Text style={styles.containerText}>Profesi</Text>
             <TextBox
-              name='profesion'
+              name='Profesion'
               form={FormPersonal}
               placeholder='Profesi'
             />
             <Text style={styles.containerText}>Jenis Kelamin</Text>
             <RadioGroup
-              selectedIndex={selectedIndex}
               style={styles.containerRadio}
-              onChange={(index) => setSelectedIndex(index)}>
+              selectedIndex={FormPersonal
+                .values['Gender'] == 'Laki-laki' ? 0 : 1}
+              onChange={(e) => FormPersonal
+                .setFieldValue('Gender', e == 0 ?
+                  'Laki-laki' : 'Perempuan'
+                )}>
               <Radio style={styles.containerInputRadio}>Laki-laki</Radio>
               <Radio style={styles.containerInputRadio}>Perempuan</Radio>
             </RadioGroup>
             <Text style={styles.containerText}>Tanggal Lahir</Text>
             <Datepicker
-              date={date}
+              disabled
               accessoryRight={CalendarIcon}
               style={styles.datePickerInput}
               controlStyle={styles.datePickerControl}
-              onSelect={(nextDate) => setDate(nextDate)}
+              date={new Date(FormPersonal.values['Birth'])}
             />
             <Text style={styles.containerText}>Provinsi</Text>
             <TextBox
-              name='province'
+              name='Province'
               form={FormPersonal}
               placeholder='Provinsi'
             />
             <Text style={styles.containerText}>Kota</Text>
-            <TextBox name='city' form={FormPersonal} placeholder='Kota' />
+            <TextBox name='City' form={FormPersonal} placeholder='Kota' />
             <Text style={styles.containerText}>Alamat</Text>
-            <TextBox name='address' form={FormPersonal} placeholder='Alamat' />
+            <TextBox name='Address' form={FormPersonal} placeholder='Alamat' />
             <View style={styles.fixToText}>
               <Buttons
                 title='Simpan'

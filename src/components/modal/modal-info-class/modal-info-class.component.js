@@ -1,6 +1,6 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import React from 'react'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -52,7 +52,7 @@ const ModalInfoClass = (props) => {
               key={index}
               onPress={() => {
                 props.backdropPress()
-                navigation.navigate('ClassDetail', value)
+                navigation.navigate('ClassDetail', { packages : value, classes : props.class })
               }}>
               <View style={[styles.containerPaketDarussalam, { backgroundColor: colors }]}>
                 <View style={styles.viewTitlePaket}>
@@ -129,6 +129,7 @@ const ModalInfoClass = (props) => {
 
 ModalInfoClass.propTypes = {
   title : PropTypes.string,
+  class : PropTypes.object,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,

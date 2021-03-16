@@ -12,11 +12,11 @@ const StopRecord = async () => {
   return audioFile
 }
 
-const PauseRecord = (sound) => {
+const PauseRecord = () => {
   sound.pause()
 }
 
-const load = (sound, audioFile) => {
+const load = (audioFile) => {
   return new Promise((resolve, reject) => {
     if (!audioFile) {
       const reason = 'File path is empty !'
@@ -33,9 +33,10 @@ const load = (sound, audioFile) => {
   })
 }
 
-const ReplayRecord = async (sound, audioFile) => {
+const ReplayRecord = async (audioFile) => {
+  console.log('ok', audioFile)
   try {
-    await load(sound, audioFile)
+    await load(audioFile)
   } catch (error) {
     console.log(error)
   }
@@ -54,7 +55,7 @@ const ReplayRecord = async (sound, audioFile) => {
   }
 }
 
-const StartPathRecord = (music, musicUrl) => {
+const StartPathRecord = (musicUrl) => {
   music = new Sound(musicUrl, Sound.MAIN_BUNDLE, (e) => {
     if (e) {
       console.log('error loading track:', e)
@@ -64,7 +65,7 @@ const StartPathRecord = (music, musicUrl) => {
   })
 }
 
-const StopPathRecord = (music) => {
+const StopPathRecord = () => {
   music.stop()
 }
 
@@ -122,9 +123,7 @@ const AskPermissionsRecording = async () => {
   }
   AudioRecord.init(options)
   AudioRecord.on('data', data => {
-    const chunk = Buffer.from(data, 'base64')
-    console.log('data', data)
-    console.log('chubk', chunk)
+    Buffer.from(data, 'base64')
   })
 }
 

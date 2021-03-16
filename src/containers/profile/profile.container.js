@@ -1,5 +1,7 @@
-import React from 'react'
+import moment from 'moment'
 import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
   View,
@@ -13,34 +15,44 @@ import {
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
 
+import { UserAPI } from '../../api'
 import { Images } from '../../assets'
+import { Response } from '../../utils'
 import { styles } from './profile.style'
+import { USER_INFO } from  '../../action'
 import { useNavigation } from '@react-navigation/native'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-
-  const userData = {
-    name: 'Nama Orang',
-    email: 'email@gmail.com',
-    phone: '+62-1234-5678',
-    fullName: 'Nama nama nama',
-    gender: 'Cwk',
-    birthday: '29 Februari 2021',
-    address: 'Jl. Jalan',
-    city: 'Palembang',
-    province: 'Sumatera Selatan',
-    job: 'Apa aja boleh',
-  }
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
   const rotateValue = new Animated.Value(0)
-
   const doRotation = rotateValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0 deg', '-360 deg'], // degree of rotation
+    outputRange: ['0 deg', '-360 deg'],
   })
 
   const transformStyle = { transform: [{ rotate: doRotation }] }
+
+  const fetchDataUser = async (email) => {
+    try {
+      const response = await UserAPI.GetUser(email)
+      if (response.status === Response.SUCCESS) {
+        await dispatch({
+          type: USER_INFO,
+          user: response.data.result,
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+
+  useEffect(() => {
+    fetchDataUser(userInfo.Email)
+  }, [])
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
@@ -90,44 +102,39 @@ const Profile = () => {
         />
       </ImageBackground>
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{userData.name}</Text>
+        <Text style={styles.headerName}>{userInfo.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{userData.email}</Text>
+          <Text style={styles.headerEmail}>{userInfo.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{userData.phone}</Text>
+          <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
         </View>
       </View>
-
       <Card containerStyle={styles.containerCard}>
         <Images.ProfilePurple.default width={36} style={styles.iconProfile} />
 
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{userData.fullName}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{userData.gender}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Tanggal Lahir</Text>
-        <Text style={styles.dataProfile}>{userData.birthday}</Text>
+        <Text style={styles.dataProfile}>{moment(userInfo.Birth).format('DD MMMM YYYY')}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Alamat</Text>
         <Text style={styles.dataProfile}>
-          {userData.address}
-          {', '}
-          {userData.city}
-          {', '}
-          {userData.province}
+          {userInfo.City}
         </Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{userData.job}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>

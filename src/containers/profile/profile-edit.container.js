@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import RNFetchBlob from 'rn-fetch-blob'
 import { RNCamera } from 'react-native-camera'
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import DocumentPicker from 'react-native-document-picker'
 import {
@@ -20,7 +21,11 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
+import { UserAPI } from '../../api'
 import { Images } from '../../assets'
+import { Response } from '../../utils'
+import { Alerts } from '../../components'
+import { USER_INFO } from  '../../action'
 import { Buttons, TextBox, ModalInfo, ModalDate } from '../../components'
 
 import { styles } from './profile-edit.style'
@@ -29,45 +34,62 @@ import { Avatar } from 'react-native-elements'
 const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
 const ProfileEdit = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
-  const [openCamera, setOpenCamera] = useState(false)
   const [dataCapture, setDataCapture] = useState({})
-  // const [previewImage, setPreviewImage] = useState(false)
+  const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
-
   const [modalVisible, setModalVisible] = useState(false)
   const [modalDateVisible, setModalDateVisible] = useState(false)
-  // const [cameraVisible, setCameraVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
   const toggleModalDate = () => setModalDateVisible(!modalDateVisible)
+  // const [previewImage, setPreviewImage] = useState(false)
+  // const [cameraVisible, setCameraVisible] = useState(false)
 
   const FormPersonal = useFormik({
     initialValues: {
-      fullname: 'Rico Darmawan',
-      phone: '082184783116',
-      profesion: 'Content Creator',
-      gender: 0,
-      birth: new Date(),
-      province: 'Sumatera Selatan',
-      city: 'Palembang',
-      address: 'Jl.Ahmad Rivai',
+      User_Code : userInfo.ID,
+      Full_Name: userInfo.Full_Name,
+      Phone: userInfo.Phone,
+      Profesion: userInfo.Profession,
+      Gender: userInfo.Gender,
+      Birth: userInfo.Birth || new Date(),
+      Province: userInfo.Province,
+      City: userInfo.City,
+      Address: userInfo.Address,
     },
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: async (values) => {
+      try {
+        const response = await UserAPI.UpdateProfile(values)
+        if (response.status === Response.SUCCESS) {
+          Alerts(true, 'Profil berhasil diubah')
+          fetchDataUser(userInfo.Email)
+        }
+      } catch (error) {
+        return error
+      }
     },
   })
 
-  const FormPassword = useFormik({
-    initialValues: {
-      old_password: '',
-      new_password: '',
-      confirm_password: '',
-    },
-    onSubmit: (values) => {
-      console.log(values)
-    },
-  })
+  const fetchDataUser = async (email) => {
+    try {
+      const response = await UserAPI.GetUser(email)
+      if (response.status === Response.SUCCESS) {
+        await dispatch({
+          type: USER_INFO,
+          user: response.data.result,
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataUser(userInfo.Email)
+  }, [])
 
   const filterText = (value) => {
     let valueFilter
@@ -282,7 +304,7 @@ const ProfileEdit = () => {
                       style={styles.avatar}/>
                   </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>
-                    {filterText(FormPersonal.values['fullname'])}
+                    {filterText(FormPersonal.values['Full_Name'])}
                   </Text>
                 </View>
 
@@ -300,28 +322,32 @@ const ProfileEdit = () => {
                   <Text style={styles.containerTextJudul}>DATA PERSONAL</Text>
                   <Text style={styles.containerText}>Nama Anda</Text>
                   <TextBox
-                    name='fullname'
+                    name='Full_Name'
                     form={FormPersonal}
                     placeholder='Nama lengkap'
                   ></TextBox>
                   <Text style={styles.containerText}>Nomor Telepon</Text>
                   <TextBox
-                    name='phone'
+                    name='Phone'
                     form={FormPersonal}
                     placeholder='+62'
                     keyboardType='phone-pad'
                   />
                   <Text style={styles.containerText}>Profesi</Text>
                   <TextBox
-                    name='profesion'
+                    name='Profesion'
                     form={FormPersonal}
                     placeholder='Profesi'
                   />
                   <Text style={styles.containerText}>Jenis Kelamin</Text>
                   <RadioGroup
                     style={styles.containerRadio}
-                    selectedIndex={FormPersonal.values['gender']}
-                    onChange={(e) => FormPersonal.setFieldValue('gender', e)}>
+                    selectedIndex={FormPersonal
+                      .values['Gender'] == 'Laki-laki' ? 0 : 1}
+                    onChange={(e) => FormPersonal
+                      .setFieldValue('Gender', e == 0 ?
+                        'Laki-laki' : 'Perempuan'
+                      )}>
                     <Radio style={styles.containerInputRadio}>Laki-laki</Radio>
                     <Radio style={styles.containerInputRadio}>Perempuan</Radio>
                   </RadioGroup>
@@ -334,19 +360,19 @@ const ProfileEdit = () => {
                       accessoryRight={CalendarIcon}
                       style={styles.datePickerInput}
                       controlStyle={styles.datePickerControl}
-                      date={FormPersonal.values['birth']}
+                      date={new Date(FormPersonal.values['Birth'])}
                     />
                   </TouchableOpacity>
                   <Text style={styles.containerText}>Provinsi</Text>
                   <TextBox
-                    name='province'
+                    name='Province'
                     form={FormPersonal}
                     placeholder='Provinsi'
                   />
                   <Text style={styles.containerText}>Kota</Text>
-                  <TextBox name='city' form={FormPersonal} placeholder='Kota' />
+                  <TextBox name='City' form={FormPersonal} placeholder='Kota' />
                   <Text style={styles.containerText}>Alamat</Text>
-                  <TextBox name='address' form={FormPersonal} placeholder='Alamat' />
+                  <TextBox name='Address' form={FormPersonal} placeholder='Alamat' />
                   <View style={styles.fixToText}>
                     <Buttons
                       title='Simpan'
@@ -367,9 +393,9 @@ const ProfileEdit = () => {
       <ModalDate
         mode='date'
         isVisible={modalDateVisible}
-        date={FormPersonal.values['birth']}
+        date={new Date(userInfo.Birth)}
         backdropPress={() => toggleModalDate()}
-        dateChange={(e) => FormPersonal.setFieldValue('birth', e)}
+        dateChange={(e) => FormPersonal.setFieldValue('Birth', e)}
       />
     </>
   )

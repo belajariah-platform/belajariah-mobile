@@ -1,28 +1,50 @@
-import { SIGN_IN, SIGN_OUT } from '../../action'
+import axios from 'axios'
+import { Config, Header } from '../config'
+import { SIGN_OUT } from '../../action'
 
-const SignIn = data => async dispatch => {
+const SignIn = async (formData) => {
   try {
-    // const response = await submitData('login', data)
-    if (data) {
-      await dispatch({
-        type: SIGN_IN,
-        payload: data,
-      })
-    }
-    // return response
-  } catch (err) {
-    // if (!(err.message === 'Network Error')) {
-    //   throw err;
-    // }
+    const response = await axios.post(
+      `${Config.BELAJARIAH_SERVICE_ENDPOINT}/login`,
+      formData,
+    )
+    return response
+  } catch (error) {
+    return error
   }
 }
+
 const SignOut = () => async dispatch => {
   await dispatch({
     type: SIGN_OUT,
   })
-  // await dispatch({
-  //   type: CLEAR_HISTORY,
-  // });
 }
 
-export default { SignIn, SignOut }
+const GetUser = async (email) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/user/${email}`,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const UpdateProfile = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.put(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/user`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default { SignIn, SignOut, GetUser, UpdateProfile }

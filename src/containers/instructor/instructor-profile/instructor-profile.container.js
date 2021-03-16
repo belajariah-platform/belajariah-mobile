@@ -1,7 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
 import { ImageBackground } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 import {
@@ -14,34 +15,43 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-
+import { MentorAPI } from '../../../api'
+import { Response } from '../../../utils'
 import { Images } from '../../../assets'
+import { USER_INFO } from  '../../../action'
 import { styles } from './instructor-profile.style'
 
 const InstructorProfile = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-
-  const userData = {
-    name: 'Nama Orang',
-    email: 'email@gmail.com',
-    phone: '+62-1234-5678',
-    rating: 4.5,
-    taskCompleteCount: 3,
-    taskOngoingCount: 3,
-    taskOverdueCount: 0,
-    fullName: 'Nama nama nama',
-    gender: 'Cwk',
-    job: 'Apa aja boleh',
-  }
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
   const rotateValue = new Animated.Value(0)
-
   const doRotation = rotateValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0 deg', '-360 deg'], // degree of rotation
   })
 
   const transformStyle = { transform: [{ rotate: doRotation }] }
+
+  const fetchDataMentor = async (email) => {
+    try {
+      const response = await MentorAPI.GetMentor(email)
+      if (response.status === Response.SUCCESS) {
+        await dispatch({
+          type: USER_INFO,
+          user: response.data.result,
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+
+  useEffect(() => {
+    fetchDataMentor(userInfo.Email)
+  }, [])
 
   const handleRating = (num) => {
     let rating = []
@@ -101,7 +111,6 @@ const InstructorProfile = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
           source={Images.ImageProfileDefault}
@@ -112,17 +121,17 @@ const InstructorProfile = () => {
       </ImageBackground>
 
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{userData.name}</Text>
+        <Text style={styles.headerName}>{userInfo.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{userData.email}</Text>
+          <Text style={styles.headerEmail}>{userInfo.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{userData.phone}</Text>
+          <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(userData.rating)}
+          {handleRating(userInfo.rating)}
         </View>
       </View>
 
@@ -137,7 +146,7 @@ const InstructorProfile = () => {
             style={styles.iconStatus}
           />
           <Text style={styles.textCompleteCount}>
-            {userData.taskCompleteCount}
+            {userInfo.Task_Completed}
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
@@ -148,33 +157,22 @@ const InstructorProfile = () => {
             style={styles.iconStatus}
           />
           <Text style={styles.textOngoingCount}>
-            {userData.taskOngoingCount}
+            {userInfo.Task_Inprogress}
           </Text>
         </Card>
-        {/* <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOverdue}>Overdue</Text>
-          <Images.IconInstructorProfileOverdue.default
-            width={28}
-            height={28}
-            style={styles.iconStatus}
-          />
-          <Text style={styles.textOverdueCount}>
-            {userData.taskOverdueCount}
-          </Text>
-        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{userData.fullName}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{userData.gender}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{userData.job}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>

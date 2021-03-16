@@ -1,5 +1,5 @@
-import React from 'react'
 import { Text } from '@ui-kitten/components'
+import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -8,21 +8,47 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
+import { Response } from '../../../utils'
 import { Images } from '../../../assets'
+import { UserClassAPI } from '../../../api'
+import { LoadingView } from '../../../components'
+
 import styles from './user-consultation.style'
 
 const Consultation = () => {
   const navigation = useNavigation()
 
-  const state = [
-    { category : 'tahsin', new_message : 1 },
-    { category : 'tilawah', new_message : 0 },
-    { category : 'fiqih pernikahan', new_message : 0 },
-    { category : 'fiqih ibadah', new_message : 0 },
-    { category : 'bahasa arab', new_message : 0 },
-    { category : 'fiqih penyelenggara jenazah', new_message : 0 },
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 100, filter: [], filterString: '[]' })
 
-  ]
+  const fetchDataUserClass = async ({ skip, take, filterString }) => {
+    try {
+      setLoading(true)
+      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+        setLoading(false)
+      }
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataUserClass(dataState)
+  }, [dataState])
+
+  // const state = [
+  //   { category : 'tahsin', new_message : 1 },
+  //   { category : 'tilawah', new_message : 0 },
+  //   { category : 'fiqih pernikahan', new_message : 0 },
+  //   { category : 'fiqih ibadah', new_message : 0 },
+  //   { category : 'bahasa arab', new_message : 0 },
+  //   { category : 'fiqih penyelenggara jenazah', new_message : 0 },
+
+  // ]
 
   const Header = () => {
     return (
@@ -40,23 +66,23 @@ const Consultation = () => {
 
   const Content = (item, index) => {
     let image
-    switch (item.category) {
-    case 'bahasa arab':
+    switch (item.Class_Initial) {
+    case 'Bahasa Arab':
       image = Images.CardMsg1
       break
-    case 'tilawah':
+    case 'Tilawah':
       image = Images.CardMsg2
       break
-    case 'fiqih ibadah':
+    case 'Tahsin':
       image = Images.CardMsg3
       break
-    case 'fiqih penyelenggara jenazah':
+    case 'Fiqih Penyelenggaraan Jenazah':
       image = Images.CardMsg4
       break
-    case 'tahsin':
+    case 'Fiqih Ibadah':
       image = Images.CardMsg5
       break
-    default:
+    case 'Fiqih Pernikahan':
       image = Images.CardMsg6
       break
     }
@@ -73,7 +99,7 @@ const Consultation = () => {
             <Images.IconNotifInfo.default style={styles.notif}/>
           )}
           <View style={styles.containerCategory}>
-            <Text style={styles.textCategory}>Kelas {item.category}</Text>
+            <Text style={styles.textCategory}>Kelas {item.Class_Initial}</Text>
           </View>
           <Text style={styles.textSeeMessage}>LIHAT PESAN</Text>
         </TouchableOpacity>
@@ -84,15 +110,20 @@ const Consultation = () => {
   return (
     <View style={styles.containerMain}>
       <Header />
-      <FlatList
-        data={state}
-        numColumns={2}
-        style={{ width:'100%' }}
-        showsVerticalScrollIndicator ={false}
-        contentContainerStyle={{ alignItems : 'center' }}
-        keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => Content(item, index)}
-      />
+      {loading ? <LoadingView/> :
+        state.length == 0 ? (
+          <Text>Belum ada pesan</Text>
+        ) : (
+          <FlatList
+            data={state}
+            numColumns={2}
+            style={{ width:'100%' }}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ alignItems : 'center' }}
+            keyExtractor={(item, index) =>  index.toString()}
+            renderItem={({ item, index }) => Content(item, index)}
+          />
+        )}
     </View>
   )
 }

@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import { ImageBackground, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { ImageBackground, ToastAndroid, View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import ClassAbout from './class-about.container'
@@ -19,25 +18,9 @@ import styles from './class-detail.style'
 const Tab = createMaterialTopTabNavigator()
 
 const ClassDetail = (props) => {
-  const route = useRoute()
-  const Item = props.route.params
   const navigation = useNavigation()
-  const { isLogin } = useSelector((state) => state.UserReducer)
+  const { classes, packages } = props.route.params
   const [isFullscreen, setIsFullscreen] = useState(false)
-
-  let { price, discountedPrice } = route.params ?? {}
-
-  const classData = {
-    name: 'Kelas Tahsin',
-    quote: 'Belajar Alqur\'an dari dasar dengan metode yang mudah dan menyenangkan.',
-    videoLink:
-      'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    posterLink: 'https://i.ibb.co/9Hd3kT7/Screenshot-5.jpg',
-    rating: 4.5,
-    tags: ['Populer'],
-    price: price,
-    discountedPrice: discountedPrice,
-  }
 
   const handleRating = (num) => {
     let rating = []
@@ -67,9 +50,6 @@ const ClassDetail = (props) => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.ButtonBack.default />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => ToastAndroid.show('Share', ToastAndroid.SHORT)}>
-          <Images.Share.default />
-        </TouchableOpacity>
       </View>
 
       <VideoPlayer
@@ -77,8 +57,8 @@ const ClassDetail = (props) => {
         iconPlaySize = {20}
         iconSkipSize = {20}
         videoStyle={styles.videoStyle}
-        videoLink={classData.videoLink}
-        posterLink={classData.posterLink}
+        videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
+        posterLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
         style={styles.videoContainerStyle}
         controllerStyle={styles.controllerStyle}
         videoFullscreenStyle={styles.videoFullscreenStyle}
@@ -87,10 +67,10 @@ const ClassDetail = (props) => {
         controllerFullscreenStyle={styles.controllerFullscreenStyle}
       />
 
-      <Text style={styles.textDesc}>{classData.quote}</Text>
+      <Text style={styles.textDesc}>{classes.Class_Name}</Text>
       <View style={styles.flexRating}>
-        <View>{handleRating(classData.rating)}</View>
-        <Text style={styles.textRating}>{classData.rating}</Text>
+        <View>{handleRating(classes.Class_Rating)}</View>
+        <Text style={styles.textRating}>{classes.Class_Rating}</Text>
       </View>
 
       <View style={styles.semiBox}/>
@@ -104,34 +84,43 @@ const ClassDetail = (props) => {
           activeTintColor: Color.purpleText,
           indicatorStyle: styles.indicatorStyle,
         }}>
+
         <Tab.Screen
           name='ClassAbout'
-          component={ClassAbout}
-          options={{ title: 'Tentang Kelas' }}
-        />
+          options={{ title: 'Tentang Kelas' }}>
+          {() => <ClassAbout params={classes}/>}
+        </Tab.Screen>
+
         <Tab.Screen
           name='ClassInstructor'
-          component={ClassInstructor}
-          options={{ title: 'Instruktur' }}
-        />
+          options={{ title: 'Instruktur' }}>
+          {() => <ClassInstructor params={classes}/>}
+        </Tab.Screen>
+
         <Tab.Screen
           name='ClassReview'
-          component={ClassReview}
-          options={{ title: 'Ulasan' }}
-        />
+          options={{ title: 'Ulasan' }}>
+          {() => <ClassReview params={classes}/>}
+        </Tab.Screen>
+
       </Tab.Navigator>
 
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
-          <Text style={styles.discountedPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
-          <Text style={styles.price}>Rp {FormatRupiah(Item.Price_Package)}</Text>
+          <Text style={styles.discountedPrice}>
+            Rp {FormatRupiah(packages.Price_Discount)}
+          </Text>
+          <Text style={styles.price}>
+            Rp {FormatRupiah(packages.Price_Package)}
+          </Text>
         </View>
         <ButtonGradient
           title='BELI KELAS'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           onPress={() => {
-            navigation.navigate(!isLogin ? 'Login' : 'TransactionMethod', Item )
+            navigation.navigate('TransactionMethod',
+              { classes : classes, packages : packages } )
           }}
         />
       </View>

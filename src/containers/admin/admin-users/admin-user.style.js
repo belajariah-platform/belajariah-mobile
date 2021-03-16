@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   TxtNoTask: {
     marginTop: 12,
     color: Color.white,
+    textAlign : 'center',
     fontSize: FontSize.medium,
     fontFamily: FontType.regular,
   },

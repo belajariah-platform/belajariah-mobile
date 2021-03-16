@@ -8,6 +8,7 @@ import { Images, Color } from '../../../assets'
 import { styles } from './modal-filter-admin.style'
 
 const ModalFilterAdmin = (props) => {
+  const [sort, setSort] = useState(1)
   const [categorySelected, setCategorySelected] = useState(0)
   const horizontalScrollRef = useRef()
 
@@ -16,9 +17,9 @@ const ModalFilterAdmin = (props) => {
     { id: 2, name: 'Tilawah' },
   ]
 
-  const categoriesWaktu = [
-    { no: 1, Desc: 'Terbaru ke Terlama' },
-    { no: 2, Desc: 'Terlama ke Terbaru' },
+  const sorting = [
+    { ID: 1, Type : 'DESC',  Value: 'Terbaru' },
+    { ID: 2, Type : 'ASC', Value: 'Terlama' },
   ]
 
   return(
@@ -90,21 +91,17 @@ const ModalFilterAdmin = (props) => {
               <ScrollView
                 ref={horizontalScrollRef}
                 horizontal={true} showsHorizontalScrollIndicator={false}>
-                {categoriesWaktu.map((categoriesWaktu, index) => {
+                {sorting.map((item, index) => {
                   return (
                     <TouchableOpacity
                       key={index}
                       onPress={ () => {
-                        setCategorySelected(categoriesWaktu.no)
-                        // await horizontalScrollRef.current.scrollTo({
-                        //   x: 4000,
-                        //   animated: true,
-                        // })
+                        setSort(item.ID)
                       }}>
                       <Text
                         style={[
                           styles.textCategories,
-                          categoriesWaktu.no === categorySelected
+                          item.ID === sort
                             ? {
                               color: Color.white,
                               borderColor: Color.transparent,
@@ -117,7 +114,7 @@ const ModalFilterAdmin = (props) => {
                               backgroundColor: Color.bgColorWhite,
                             },
                         ]}>
-                        {categoriesWaktu.Desc}
+                        {item.Value}
                       </Text>
                     </TouchableOpacity>
                   )

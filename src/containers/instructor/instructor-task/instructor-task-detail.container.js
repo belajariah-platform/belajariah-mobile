@@ -164,7 +164,7 @@ const InstructorTaskDetail = ({ route }) => {
             source={Images.ImageProfileDefault}
             containerStyle={styles.avatarUser}
           />
-          <Text style={styles.textTitleBold}>{param.name}</Text>
+          <Text style={styles.textTitleBold}>{param.User_Name}</Text>
         </View>
       </View>
     )

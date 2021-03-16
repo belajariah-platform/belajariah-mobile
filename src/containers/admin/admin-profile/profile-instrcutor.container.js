@@ -43,7 +43,7 @@ const ProfileInstrcutor = ({ route }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <Images.ProfileBackground.default
-        width={'100%'}
+        width='100%'
         style={styles.background}
       />
 
@@ -70,17 +70,17 @@ const ProfileInstrcutor = ({ route }) => {
       </ImageBackground>
 
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{item.fullname}</Text>
+        <Text style={styles.headerName}>{item.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{item.email}</Text>
+          <Text style={styles.headerEmail}>{item.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{'082184783116'}</Text>
+          <Text style={styles.headerPhone}>{item.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(4.5)}
+          {handleRating(item.Rating)}
         </View>
       </View>
 
@@ -95,7 +95,7 @@ const ProfileInstrcutor = ({ route }) => {
             style={styles.iconStatus}
           />
           <Text style={styles.textCompleteCount}>
-            {12}
+            {item.Task_Completed}
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
@@ -106,7 +106,7 @@ const ProfileInstrcutor = ({ route }) => {
             style={styles.iconStatus}
           />
           <Text style={styles.textOngoingCount}>
-            {3}
+            {item.Task_Inprogress}
           </Text>
         </Card>
         {/* <Card containerStyle={styles.cardStatus}>
@@ -124,15 +124,15 @@ const ProfileInstrcutor = ({ route }) => {
 
       <Card containerStyle={styles.containerCardProfile}>
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{item.fullname}</Text>
+        <Text style={styles.dataProfile}>{item.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{'Laki-laki'}</Text>
+        <Text style={styles.dataProfile}>{item.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{'Dosen'}</Text>
+        <Text style={styles.dataProfile}>{item.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>

@@ -1,30 +1,81 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { List, RadioButton } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert, Text, View, ScrollView, Image } from 'react-native'
 
+import {
+  Alert,
+  Text,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native'
+
+import {
+  Buttons,
+  TextView,
+  ModalInfo,
+  ModalRating,
+  ModalRecord,
+  VideoPlayer,
+  ButtonGradient,
+} from '../../../components'
+
+import { Response } from '../../../utils'
+import { LearningAPI } from '../../../api'
 import { Color, FontType, Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
-import { ButtonGradient, TextView, ModalInfo, ModalRating, ModalRecord, VideoPlayer, Buttons } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
 
-const ClassLearning = () => {
+const ClassLearning = (props) => {
   const route = useRoute()
+  const item = props.route.params
   const navigation = useNavigation()
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [showTask, setShowTask] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
-  const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
   const [modalRecordVisible, setModalRecordVisible] = useState(false)
+  const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+
+  let { passPreExam } = route.params ?? {}
+  let { passPostExam } = route.params ?? {}
+  const [progress, setProgress] = useState(0)
+  const [playIndex, setPlayIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [playSubIndex, setPlaySubIndex] = useState(0)
+  const [currentSubIndex, setCurrentSubIndex] = useState(0)
+  const [isPostExamLocked, setIsPostExamLocked] = useState(true)
+  let percentage = Number(progress /  count * 100).toFixed(1)
+  console.log(progress, currentIndex, currentSubIndex)
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-  const toggleModalChecklist = () => setModalChecklistVisible(!modalChecklistVisible)
   const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
+  const toggleModalChecklist = () => setModalChecklistVisible(!modalChecklistVisible)
+
+  const fetchDataLearning = async (state, code) => {
+    try {
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
+      const response = await LearningAPI.GetAllLearning(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataLearning(dataState, item.Class_Code)
+  }, [])
 
   const state = {
     isExpired : false,
@@ -83,16 +134,6 @@ const ClassLearning = () => {
     ],
   }
 
-  let { passPreExam } = route.params ?? {}
-  let { passPostExam } = route.params ?? {}
-  const [progress, setProgress] = useState(0)
-  const [playIndex, setPlayIndex] = useState(0)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [playSubIndex, setPlaySubIndex] = useState(0)
-  const [currentSubIndex, setCurrentSubIndex] = useState(0)
-  const [isPostExamLocked, setIsPostExamLocked] = useState(true)
-  let percentage = Number(progress /  state.materialCount * 100).toFixed(1)
-  console.log(progress, currentIndex, currentSubIndex)
   const handleRating = (num) => {
     let rating = []
     const numRound = Math.round(num)
@@ -119,7 +160,7 @@ const ClassLearning = () => {
   }
 
   const handleVideoEnd = (index, subIndex) => {
-    state.isExpired ?
+    item.Is_Expired ?
       (
         (index == currentIndex && subIndex == currentSubIndex) && (
           Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
@@ -127,7 +168,7 @@ const ClassLearning = () => {
       )
       :
       (
-        state.topics[index].materials[subIndex].isDone || (
+        states[index].SubTitles[subIndex].Is_Done || (
           setShowTask(true),
           handleModalChecklist()
         )
@@ -152,7 +193,7 @@ const ClassLearning = () => {
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
-          <Text style={[styles.textTitle]}>{state.title}</Text>
+          <Text style={[styles.textTitle]}>{item.Class_Name}</Text>
           {showTask && (
             <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
               <Images.IconChecklistLearning.default />
@@ -163,19 +204,19 @@ const ClassLearning = () => {
         <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
-            <Text style={styles.textRating}>{state.total_user/1000} K</Text>
+            <Text style={styles.textRating}>{item.Total_User/1000} K</Text>
           </View>
           <View style={styles.containerReviewUser}>
             <View style={styles.customRatingBarStyle}>
-              {handleRating(state.rating)}
+              {handleRating(item.Class_Rating)}
             </View>
-            <Text style={styles.textStyle}>{state.rating}</Text>
+            <Text style={styles.textStyle}>{item.Class_Rating}</Text>
           </View>
         </View>
         <TextView
           component={
             <Text style={styles.containerTextDesc}>
-              {handleSplitString(state.description)}
+              {handleSplitString(item.Class_Description)}
             </Text>
           }
         />
@@ -195,7 +236,7 @@ const ClassLearning = () => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('Consultation')}
+            onPress={() => navigation.navigate('Consultation', item)}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
@@ -205,7 +246,7 @@ const ClassLearning = () => {
 
   const ContentClass = () => {
     const playVideo = (index, subIndex) => {
-      if(passPreExam) {
+      if(item.Pre_Test_Scores !== 0) {
         if(index > currentIndex) {
           Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
         } else if(index < currentIndex) {
@@ -254,7 +295,7 @@ const ClassLearning = () => {
               if(passPreExam) {
                 Alert.alert('Pre-exam sudah diselesaikan sebelumnya')
               } else {
-                navigation.navigate('ClassExam')
+                navigation.navigate('ClassExam', item)
               }
             }}
           >
@@ -265,15 +306,15 @@ const ClassLearning = () => {
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
-          {state.topics.map((topic, index) => {
+          {states.map((topic, index) => {
             return (
               <List.Accordion
                 key={index}
-                title={topic.title}
+                title={topic.Title}
                 titleStyle={styles.textRegular}
                 style={styles.containerAccordion}
               >
-                {topic.materials.map((subtopic, subIndex) => {
+                {topic.SubTitles.map((subtopic, subIndex) => {
                   const isLocked = getLockStatus(index, subIndex)
 
                   return  (
@@ -285,7 +326,7 @@ const ClassLearning = () => {
                       }}>
                       <List.Item
                         key={subIndex}
-                        title={subtopic.subtitle}
+                        title={subtopic.Sub_Title}
                         style={isLocked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
                         titleStyle={styles.textRegular}
                         left={() =>
@@ -294,22 +335,22 @@ const ClassLearning = () => {
                             :
                             (<Images.IconPlay.default style={styles.iconPlay}/>)
                         }
-                        right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
+                        right={() => <Text style={styles.textDuration}>{subtopic.Video_Duration} Menit</Text>}
                       />
                     </TouchableOpacity>
                   )
                 })}
 
-                {topic.document &&(
+                {topic.Document &&(
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      title={topic.document}
+                      title={topic.Document_Name}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
                       onPress={() => {
                         const obj = {
-                          path : topic.path,
-                          filename : topic.filename,
+                          path : topic.Document_Path,
+                          filename : topic.Document_Name,
                         }
                         setViewPdf(!viewPdf)
                         setSourcePdf(obj)
@@ -320,7 +361,7 @@ const ClassLearning = () => {
                   </TouchableOpacity>
                 )}
 
-                {topic.sound && (
+                {topic.Exercises.ID !== 0 && (
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
                       title='Dummy - Masuk ke page rekam'
@@ -346,7 +387,7 @@ const ClassLearning = () => {
                     Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
                   )
                   :
-                  navigation.navigate('ClassExam')
+                  navigation.navigate('ClassExam', item)
               }}
               style={isPostExamLocked ? { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey } : { ...styles.containerExam, borderTopWidth : 0 }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
@@ -359,13 +400,13 @@ const ClassLearning = () => {
 
   const ChecklistClass = () => {
     const [checkCount, setCheckCount] = useState(0)
-    const totalTask = state.topics[currentIndex].materials[currentSubIndex].taskImages.length
+    const totalTask = states[currentIndex].SubTitles[currentSubIndex].taskImages.length
 
     const unlockNext = (index, subIndex) => {
       if(passPreExam) {
         if(index == currentIndex && subIndex == currentSubIndex) {
-          let nextIndex = state.topics[currentIndex + 1]
-          let nextSubIndex = state.topics[currentIndex].materials[currentSubIndex + 1]
+          let nextIndex = states[currentIndex + 1]
+          let nextSubIndex = states[currentIndex].materials[currentSubIndex + 1]
 
           if(nextSubIndex == undefined) {
             if(nextIndex == undefined) {
@@ -511,6 +552,10 @@ const ClassLearning = () => {
       />
     </>
   )
+}
+
+ClassLearning.propTypes = {
+  route: PropTypes.object,
 }
 
 export default ClassLearning

@@ -11,6 +11,7 @@ import TextView from './text-view'
 import Searchbox from './searchbox'
 import ImageView from './image-view'
 import Progressbar from './progressbar'
+import LoadingView from './loading-view'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
@@ -45,6 +46,7 @@ export {
   ModalDate,
   Searchbox,
   ModalInfo,
+  LoadingView,
   ModalRating,
   ModalRecord,
   ModalRepair,

@@ -46,9 +46,16 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.mediumLarge,
   },
+  divider: {
+    height: 1,
+    marginTop: 16,
+    marginHorizontal: -10,
+  },
   TxtNoTransaction: {
     marginTop: 12,
     color: Color.white,
+    textAlign : 'center',
+    paddingHorizontal : 10,
     fontSize: FontSize.medium,
     fontFamily: FontType.regular,
   },
@@ -199,7 +206,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   TxtInvoice: {
-    color: Color.black,
+    color: Color.red,
+    textAlign: 'right',
     fontFamily: FontType.bold,
     fontSize: FontSize.smallest,
   },

@@ -17,7 +17,7 @@ const  Cards = (props)  => {
       <View style={styles.content}>
         <Text
           style={styles.description}>
-          {props.description.substring(0, 150)} ...
+          {props.description.substring(0, 120)} ...
         </Text>
         <View style={styles.rating}>
           {props.rating}

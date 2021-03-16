@@ -1,34 +1,49 @@
+import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity, ScrollView,   ToastAndroid, } from 'react-native'
 
+import { TestAPI } from '../../../api'
+import { Response } from '../../../utils'
 import { Buttons } from '../../../components'
 import { Images, Color } from '../../../assets'
 
 import { styles } from './class-exam.style'
 
-const ClassExam = () => {
+const ClassExam = (props) => {
+  const item = props.route.params
   const mainScrollViewRef = useRef()
   const navigation = useNavigation()
-  // const [minutes, setMinutes] = useState(4)
-  // const [seconds, setSeconds] =  useState(59)
+  const [states, setStates] = useState([])
+  const [loading, setLoading] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
   const [questionSelected, setQuestionSelected] = useState({})
+  const [dataState] = useState({ skip: 0, take: 20, filter: [], filterString: '[]' })
+  // const [minutes, setMinutes] = useState(4)
+  // const [seconds, setSeconds] =  useState(59)
 
+  const fetchDataTest = async ({ skip, take, filterString }) => {
+    try {
+      setLoading(true)
+      const response = await TestAPI.GetAllClassTest(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setAnswerSelected(response.data.data)
+        if (response.data.data.length != 0 && optionSelected == 0) {
+          setQuestionSelected(response.data.data[0])
+        }
+        setLoading(false)
+      }
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
 
-  const state = [
-    { id : 1, question : 'Apa yang disebut makhorijul huruf…?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah', answer : 0 },
-    { id : 2, question : 'Terdapat dua garis diatas disebut harokat apakah itu ..?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 3, question : ' ...  مِنۡ شَرِّ مَا خَلَقَۙ Yang digaris bawahi merupakan Contoh bacaan dari', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 4, question : 'Jika ada nun mati (نْ  )  atau tanwin (ــًــ, ــٍــ, ــٌــ) bertemu dengan huruf ‘ain  عmaka dibaca jelas, hukum bacaanya disebut…?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 5, question : 'Sebutkan lima huruf bacaan qalqalah…!', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 6, question : 'Apabila ada nun mati atau tanwin (نْ  )  bertemu dengan huruf lam (ل)  dan ra ر) ( maka hukum bacaan ini disebut..?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 7, question : 'Hukum bacaan nun bertasydid dan mim bertasydid disebut...?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 8, question : 'Contoh bacaan لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ, yang digaris bawah adalah contoh bacaan..?', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 9, question : 'Sebutkan 3 huruf-huruf mad thobi’i..!', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-    { id : 10, question : 'Sebutkan huruf-huruf izhar..!', option_a : 'Sifat-sifat huruf', option_b : 'Tempat keluarnya huruf', option_c : 'Tempat masuknya huruf', 'option_d' : 'Huruf hijaiah',  answer : 0 },
-  ]
+  useEffect(() => {
+    fetchDataTest(dataState, item.Class_Code)
+  }, [dataState])
 
   const handleSubmit = async (state) => {
     console.log(state)
@@ -66,13 +81,6 @@ const ClassExam = () => {
   //   }, 1000)
   //   return () => clearInterval(intervalId)
   // }, [seconds, minutes])
-
-  useEffect(() => {
-    setAnswerSelected(state)
-    if (optionSelected == 0) {
-      setQuestionSelected(state[0])
-    }
-  }, [])
 
   const Header = () => {
     return (
@@ -113,7 +121,10 @@ const ClassExam = () => {
             )
           })}
         </ScrollView>
-        <Question/>
+        <View style={styles.questionBox} >
+          <Question/>
+          {!loading &&( <ButtonQuestion/>)}
+        </View>
       </View>
     )
   }
@@ -122,58 +133,55 @@ const ClassExam = () => {
     const optionArr = []
     Object.keys(questionSelected)
       .filter((val) =>
-        val == 'option_a' ||val == 'option_b' ||
-        val == 'option_c' || val == 'option_d')
+        val == 'Option_A' || val == 'Option_B' ||
+        val == 'Option_C' || val == 'Option_D')
       .forEach((v) => {
         optionArr.push(questionSelected[v])
       })
 
     return (
-      <View style={styles.questionBox} >
-        <View style={{ flex : 1 }}>
-          <Text style={styles.textQuestion}>
-            {optionSelected+1}. {questionSelected.question}
-          </Text>
-          {optionArr.map((value, index) => {
-            return (
-              <View
-                key={index}
-                style={styles.containerOption}>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  style={[styles.touchOption,
-                    (index+1) == questionSelected.answer ?
-                      { backgroundColor : Color.purpleMedium } :
-                      { backgroundColor : Color.greyExam }
-                  ]}
-                  onPress={() => {
-                    answerSelected.forEach((val, i) => {
-                      if (val.id == questionSelected.id) {
-                        let newAnswer = [...answerSelected]
-                        newAnswer[i] = { ...val, answer :
+      <View style={{ flex : 1 }}>
+        <Text style={styles.textQuestion}>
+          {!loading && (optionSelected+1 + '. ' + questionSelected.Question)}
+        </Text>
+        {!loading && optionArr.map((value, index) => {
+          return (
+            <View
+              key={index}
+              style={styles.containerOption}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={[styles.touchOption,
+                  (index+1) == questionSelected.answer ?
+                    { backgroundColor : Color.purpleMedium } :
+                    { backgroundColor : Color.greyExam }
+                ]}
+                onPress={() => {
+                  answerSelected.forEach((val, i) => {
+                    if (val.ID == questionSelected.ID) {
+                      let newAnswer = [...answerSelected]
+                      newAnswer[i] = { ...val, answer :
                         index == 0 ? 1 :
                           index == 1 ? 2 :
                             index == 2 ? 3 : 4 }
-                        setAnswerSelected([...newAnswer])
-                        setQuestionSelected(newAnswer[i])
-                      }
-                    })
-                  }
-                  }>
-                  <Text style={styles.textAlfabeth}>
-                    {index == 0 ? 'A' :
-                      index == 1 ? 'B' :
-                        index == 2 ? 'C' : 'D'}
-                  </Text>
-                </TouchableOpacity>
-                <Text style={styles.textOption}>
-                  {value}
+                      setAnswerSelected([...newAnswer])
+                      setQuestionSelected(newAnswer[i])
+                    }
+                  })
+                }
+                }>
+                <Text style={styles.textAlfabeth}>
+                  {index == 0 ? 'A' :
+                    index == 1 ? 'B' :
+                      index == 2 ? 'C' : 'D'}
                 </Text>
-              </View>
-            )
-          })}
-        </View>
-        <ButtonQuestion/>
+              </TouchableOpacity>
+              <Text style={styles.textOption}>
+                {value}
+              </Text>
+            </View>
+          )
+        })}
       </View>
     )
   }
@@ -188,20 +196,20 @@ const ClassExam = () => {
             textStyle={{ color : Color.purpleExHint }}
             onPress={() => {
               answerSelected.forEach((v, i ) => {
-                if (v.id == questionSelected.id) {
+                if (v.ID == questionSelected.ID) {
                   onNumberSelected(answerSelected[i-1], i-1)
                 }
               })
             }}
           />
         )}
-        {(optionSelected+1) != state.length ? (
+        {(optionSelected+1) != states.length ? (
           <Buttons
             title='Selanjutnya'
             style={styles.buttonNext}
             onPress={() => {
               answerSelected.forEach((v, i ) => {
-                if (v.id == questionSelected.id) {
+                if (v.ID == questionSelected.ID) {
                   onNumberSelected(answerSelected[i+1], i+1)
                   onScrollPosition(200)
                 }
@@ -225,6 +233,10 @@ const ClassExam = () => {
       <ScrollNumber />
     </View>
   )
+}
+
+ClassExam.propTypes = {
+  route: PropTypes.object,
 }
 
 export default ClassExam

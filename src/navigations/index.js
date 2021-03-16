@@ -12,12 +12,12 @@ import InstructorNavigation from './instructor-navigation'
 const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   if (isLogin) {
-    switch (userInfo.password) {
-    case 'admin':
+    switch (userInfo.Role) {
+    case 'Admin':
       return  <AdminNavigation/>
-    case 'user':
+    case 'Users':
       return  <UserNavigation/>
-    case 'instructor':
+    case 'Mentor':
       return  <InstructorNavigation/>
     default :
       return <PublicNavigation/>

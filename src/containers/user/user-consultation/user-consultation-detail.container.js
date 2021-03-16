@@ -1,8 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import {  useFormik } from 'formik'
+import Sound from 'react-native-sound'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
+import AudioRecord from 'react-native-audio-record'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -24,17 +26,14 @@ import {
 import styles from './user-consultation.style'
 
 const ConsultationDetail = ({ route }) => {
-  let sound = null
-  let music = null
   const param = route.params
   const navigation = useNavigation()
-
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
   const [record, setRecord] = useState(false)
   const [message, setMessage] = useState(false)
-  const [audioFile, setAudioFile] = useState([])
+  const [audioFile, setAudioFile] = useState('')
   const [msgSelected, setMsgSelected] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
@@ -43,14 +42,13 @@ const ConsultationDetail = ({ route }) => {
   const toggleModal = () => setModalVisible(!modalVisible)
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
-
   const user_login = 1
   const state = [
     { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid', Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
     { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',  Recording_Name : '' },
     { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
     { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',  Recording_Name : '' },
-    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : '' },
     { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   ]
 
@@ -71,9 +69,77 @@ const ConsultationDetail = ({ route }) => {
     },
   })
 
+  useEffect(() => {
+    let sound = null
+    let music = null
+    sound
+    music
+  }, [])
+
+  const StartRecord = () => {
+    AudioRecord.start()
+  }
+
+  const PauseRecord = () => {
+    sound.pause()
+  }
+
+  const StartPathRecord = (musicUrl) => {
+    console.log(musicUrl)
+    music = new Sound(musicUrl, Sound.MAIN_BUNDLE, (e) => {
+      if (e) {
+        console.log('error loading track:', e)
+      } else {
+        music.play()
+      }
+    })
+  }
+
+  const StopPathRecord = () => {
+    music.stop()
+  }
+
+  const loadRecord = () => {
+    return new Promise((resolve, reject) => {
+      if (!audioFile) {
+        const reason = 'File path is empty !'
+        return reject(reason)
+      }
+
+      sound = new Sound(audioFile, '', error => {
+        if (error) {
+          console.log('failed to load the file', error)
+          return reject(error)
+        }
+        return resolve()
+      })
+    })
+  }
+
+  const ReplayRecord = async () => {
+    try {
+      await loadRecord()
+    } catch (error) {
+      console.log(error)
+    }
+    Sound.setCategory('Playback')
+    try {
+      sound.play(success => {
+        if (success) {
+          console.log('successfully finished playing')
+        } else {
+          console.log('playback failed due to audio decoding errors')
+        }
+      })
+    } catch (error) {
+      console.log('ERROR =>', error)
+    }
+  }
+
   const handleCancel = () => {
+    sound.stop()
     setPlay(false)
-    setAudioFile([])
+    setAudioFile('')
     setMessage(false)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
@@ -85,12 +151,11 @@ const ConsultationDetail = ({ route }) => {
       .values['duration']).minute)
     setSeconds(TimerObj(FormSendMessage
       .values['duration']).second)
-
-    if (play) {
-      VoiceNote.ReplayRecord(sound, audioFile)
-    } else {
-      VoiceNote.PauseRecord(sound)
-    }
+    // if (play) {
+    ReplayRecord()
+    // } else {
+    //   VoiceNote.PauseRecord()
+    // }
   }
 
   const handlePlayList = (item) => {
@@ -104,30 +169,25 @@ const ConsultationDetail = ({ route }) => {
         setMinutes(TimerObj(val.voice_duration).minute)
         setSeconds(TimerObj(val.voice_duration).second)
         setOptionSelected(isPlay[i])
-        if (optionSelected.is_play) {
-          VoiceNote.StartPathRecord(music, item.Recording_Name)
-        } else {
-          VoiceNote.StopPathRecord(music)
-        }
       }
     })
   }
 
-  const handleSetRecord = () => {
+  const handleSetRecord = async () => {
     setPlay(false)
     setRecord(false)
     setMessage(true)
     setInput('duration', voiceDuration)
-    const audioFile = VoiceNote.StopRecord()
-    setAudioFile(audioFile)
+    let audio = await AudioRecord.stop()
+    setAudioFile(audio)
   }
 
   const handleRecord = () => {
-    FormSendMessage.values['message']
-      .length == 0 &&(
-      setRecord(true),
-      VoiceNote.StartRecord()
-    )
+    if ( FormSendMessage.values['message']
+      .length == 0) {
+      setRecord(true)
+      StartRecord()
+    }
   }
 
   useEffect(() => {
@@ -196,7 +256,7 @@ const ConsultationDetail = ({ route }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{param.category}</Text>
+          <Text style={styles.textTitleWhite}>{param.Class_Initial}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -204,18 +264,22 @@ const ConsultationDetail = ({ route }) => {
   }
 
   const Message = (item, index) => {
-    let icon, iconUser
+    let icon, iconUser, playRecord
     optionSelected.is_play &&
     optionSelected.id == item.id &&
     user_login != item.user_code ?
-      (icon = Images.IconPause) :
-      (icon =  Images.IconPlay)
+      (icon = Images.IconPause,
+      playRecord = () => StartPathRecord(item.Recording_Name)) :
+      (icon =  Images.IconPlay,
+      playRecord = () =>StopPathRecord())
 
     optionSelected.is_play &&
     optionSelected.id == item.id &&
     user_login == item.user_code ?
-      (iconUser =  Images.IconPauseWhite) :
-      (iconUser =  Images.IconPlayVoiceWhite)
+      (iconUser =  () =>Images.IconPauseWhite,
+      playRecord = StartPathRecord(item.Recording_Name)) :
+      (iconUser =  Images.IconPlayVoiceWhite,
+      playRecord = () => StopPathRecord())
 
     return (
       <View
@@ -231,15 +295,18 @@ const ConsultationDetail = ({ route }) => {
               source={ Images.ImageProfileDefault}
               avatarStyle={styles.avatarChatInstructor}
             />
-            <TouchableOpacity
-              onPress={() => handlePlayList(item)}>
-              <iconUser.default
-                width={20}
-                height={20}
-              />
-            </TouchableOpacity>
-            {item.Recording_Name != '' &&(
+            {item.Recording_Name.length != 0 &&(
               <>
+                <TouchableOpacity
+                  onPress={() => {
+                    handlePlayList(item)
+                    playRecord
+                  }}>
+                  <iconUser.default
+                    width={20}
+                    height={20}
+                  />
+                </TouchableOpacity>
                 <Images.GrafisVoiceWhite.default style={styles.horizontal}/>
                 <Text style={[styles.textSoundDuration, styles.textWhite]}>
                   {optionSelected.is_play && optionSelected.id == item.id ? (
@@ -258,10 +325,13 @@ const ConsultationDetail = ({ route }) => {
               <Text style={[styles.textDesc, { textAlign : 'right' }]}>
                 {item.username}
               </Text>
-              {item.Recording_Name == '' && (
+              {item.Recording_Name.length != 0 && (
                 <View style={styles.flexRow}>
                   <TouchableOpacity
-                    onPress={() => handlePlayList(item)}>
+                    onPress={() => {
+                      handlePlayList(item)
+                      playRecord
+                    }}>
                     <icon.default
                       width={20}
                       height={20}

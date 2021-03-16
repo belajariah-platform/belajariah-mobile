@@ -1,4 +1,5 @@
 const SIGN_IN = 'SIGN_IN'
 const SIGN_OUT = 'SIGN_OUT'
+const USER_INFO = 'USER_INFO'
 
-export { SIGN_IN, SIGN_OUT }
+export { SIGN_IN, SIGN_OUT, USER_INFO }

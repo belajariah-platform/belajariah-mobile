@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import {  useFormik } from 'formik'
 import { View, TouchableOpacity } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
@@ -14,20 +13,18 @@ import { styles } from './admin-user.style'
 
 const AdminUser = () => {
   const Tab = createMaterialTopTabNavigator()
+  const [search, setSearch] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
-  const Search = useFormik({ initialValues: { search: '' } })
-
   return (
     <View style={styles.containerMain}>
       <View style={styles.containerHeader}>
         <View style={styles.flexOne}>
           <Searchbox
             size='medium'
-            name='search'
-            form={Search}
             style={styles.searchbox}
             placeholder='Temukan user'
+            onChangeText={(e) => setSearch(e)}
           />
         </View>
         <TouchableOpacity
@@ -51,19 +48,19 @@ const AdminUser = () => {
         <Tab.Screen
           name='AdminUserAll'
           options={{ title: 'Semua' }}>
-          {() => <AdminUserAll search={Search.values['search']}/>}
+          {() => <AdminUserAll search={search}/>}
         </Tab.Screen>
 
         <Tab.Screen
           name='AdminUserAccept'
           options={{ title: 'Diterima' }}>
-          {() => <AdminUserAccept search={Search.values['search']}/>}
+          {() => <AdminUserAccept search={search}/>}
         </Tab.Screen>
 
         <Tab.Screen
           name='AdminUserDecline'
           options={{ title: 'Ditolak' }}>
-          {() => <AdminUserDecline search={Search.values['search']}/>}
+          {() => <AdminUserDecline search={search}/>}
         </Tab.Screen>
       </Tab.Navigator>
       <ModalFilterAdminPageUser

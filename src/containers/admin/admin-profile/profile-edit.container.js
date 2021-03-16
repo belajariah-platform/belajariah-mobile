@@ -50,25 +50,14 @@ const ProfileEdit = () => {
 
   const FormPersonal = useFormik({
     initialValues: {
-      fullname: 'Rico Darmawan',
-      phone: '082184783116',
-      profesion: 'Content Creator',
-      gender: 0,
-      birth: new Date(),
-      province: 'Sumatera Selatan',
-      city: 'Palembang',
-      address: 'Jl.Ahmad Rivai',
-    },
-    onSubmit: (values) => {
-      console.log(values)
-    },
-  })
-
-  const FormPassword = useFormik({
-    initialValues: {
-      old_password: '',
-      new_password: '',
-      confirm_password: '',
+      Full_Name: 'Rico Darmawan',
+      Phone: '082184783116',
+      Profession: 'Content Creator',
+      Gender: 0,
+      Birth: new Date(),
+      Province: 'Sumatera Selatan',
+      City: 'Palembang',
+      Address: 'Jl.Ahmad Rivai',
     },
     onSubmit: (values) => {
       console.log(values)
@@ -120,7 +109,7 @@ const ProfileEdit = () => {
     if (RNCamera.camera) {
       const options = { quality:0.5, base64: true }
       const data = await RNCamera.camera.takePictureAsync(options)
-      const path = `${RNFetchBlob.fs.dirs.CacheDir}/test.png`
+      const path = `${RNFetchBlob.fs.dirs.CacheDir}/default.png`
       try {
         setPictureTaken(true)
         RNFetchBlob.fs.writeFile(path, data.base64, 'base64')
@@ -288,7 +277,7 @@ const ProfileEdit = () => {
                       style={styles.avatar}/>
                   </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>
-                    {filterText(FormPersonal.values['fullname'])}
+                    {filterText(FormPersonal.values['Full_Name'])}
                   </Text>
                 </View>
 
@@ -306,28 +295,28 @@ const ProfileEdit = () => {
                   <Text style={styles.containerTextJudul}>DATA PERSONAL</Text>
                   <Text style={styles.containerText}>Nama Anda</Text>
                   <TextBox
-                    name='fullname'
+                    name='Full_Name'
                     form={FormPersonal}
                     placeholder='Nama lengkap'
                   />
                   <Text style={styles.containerText}>Nomor Telepon</Text>
                   <TextBox
-                    name='phone'
+                    name='Phone'
                     form={FormPersonal}
                     placeholder='+62'
                     keyboardType='phone-pad'
                   />
                   <Text style={styles.containerText}>Profesi</Text>
                   <TextBox
-                    name='profesion'
+                    name='Profession'
                     form={FormPersonal}
                     placeholder='Profesi'
                   />
                   <Text style={styles.containerText}>Jenis Kelamin</Text>
                   <RadioGroup
                     style={styles.containerRadio}
-                    selectedIndex={FormPersonal.values['gender']}
-                    onChange={(e) => FormPersonal.setFieldValue('gender', e)}>
+                    selectedIndex={FormPersonal.values['Gender']}
+                    onChange={(e) => FormPersonal.setFieldValue('Gender', e)}>
                     <Radio style={styles.containerInputRadio}>Laki-laki</Radio>
                     <Radio style={styles.containerInputRadio}>Perempuan</Radio>
                   </RadioGroup>
@@ -340,19 +329,19 @@ const ProfileEdit = () => {
                       accessoryRight={CalendarIcon}
                       style={styles.datePickerInput}
                       controlStyle={styles.datePickerControl}
-                      date={FormPersonal.values['birth']}
+                      date={FormPersonal.values['Birth']}
                     />
                   </TouchableOpacity>
                   <Text style={styles.containerText}>Provinsi</Text>
                   <TextBox
-                    name='province'
+                    name='Province'
                     form={FormPersonal}
                     placeholder='Provinsi'
                   />
                   <Text style={styles.containerText}>Kota</Text>
-                  <TextBox name='city' form={FormPersonal} placeholder='Kota' />
+                  <TextBox name='City' form={FormPersonal} placeholder='Kota' />
                   <Text style={styles.containerText}>Alamat</Text>
-                  <TextBox name='address' form={FormPersonal} placeholder='Alamat' />
+                  <TextBox name='Address' form={FormPersonal} placeholder='Alamat' />
                   <View style={styles.fixToText}>
                     <Buttons
                       title='Simpan'
@@ -361,8 +350,6 @@ const ProfileEdit = () => {
                     />
                   </View>
                 </View>
-
-                
               </ScrollView>
             )}
       </View>

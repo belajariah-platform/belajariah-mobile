@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon, Text } from '@ui-kitten/components'
+// import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin'
 
 import {
   View,
@@ -14,6 +15,7 @@ import {
 } from 'react-native'
 
 import {
+  Alerts,
   Topbar,
   Buttons,
   TextBox
@@ -21,11 +23,18 @@ import {
 
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
+import { SIGN_IN } from '../../../action'
+import { Response } from '../../../utils'
 import { styles } from './user-login.style'
+
+// GoogleSignin.configure({
+//   webClientId : '',
+//   offlineAccess : true
+// })
 
 const Login = (props) => {
   const dispatch = useDispatch()
-  const [success] = useState(true)
+  // const [googleInfo, setGoogleInfo] = useState({})
   const [secureTextEntry, setSecureTextEntry] = useState(true)
 
   const FormSubmit = useFormik({
@@ -37,11 +46,19 @@ const Login = (props) => {
       password: Yup.string()
         .required('Passoword harus diisi'),
     }),
-    onSubmit:  (values) => {
+    onSubmit: async (values) => {
       try {
-        const response =  dispatch(UserAPI.SignIn(values))
-        if (success === true) {
-          return response
+        const response =   await UserAPI.SignIn(values)
+        if (response.status === Response.SUCCESS) {
+          if (!response.data.result) {
+            Alerts(response.data.result, response.data.message)
+          } else {
+            await dispatch({
+              type: SIGN_IN,
+              token : response.data.token,
+              user: response.data.data,
+            })
+          }
         }
       } catch (err) {
         return err

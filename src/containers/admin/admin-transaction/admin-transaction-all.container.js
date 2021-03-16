@@ -1,8 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import {
   View,
   FlatList,
@@ -13,26 +15,65 @@ import {
 } from 'react-native'
 import {
   ImageView,
+  LoadingView,
   ModalRepair,
   ModalConfirm,
   ButtonGradient,
 } from '../../../components'
+import {
+  TRANSACT_ALL_REQ,
+  TRANSACT_ALL_SUCC,
+  TRANSACT_ALL_FAIL,
+  TRANSACT_ALL_SCROLL,
+} from '../../../action'
 
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
+import { PaymentAPI } from '../../../api'
 import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
 
-const AdminTransactionAll = () => {
+const AdminTransactionAll = ({ search }) => {
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+  const { loadingAll, loadingAllScroll } = useSelector((state) => state.TransactionAllReducer)
+
   const [action, setAction] = useState('')
-  const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
-
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
+  const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+  const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      dispatch({ type: TRANSACT_ALL_REQ })
+      // filterString='[{"type": "text", "field" : "status_payment", "value": "Has been Payment"}]'
+      const response = await PaymentAPI.GetAllPayment(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+        dispatch({ type: TRANSACT_ALL_SUCC })
+      } else {
+        dispatch({ type: TRANSACT_ALL_FAIL })
+      }
+    } catch (err) {
+      dispatch({ type: TRANSACT_ALL_FAIL })
+      return err
+    }
+  }
+
+  const onDataStateChange = (event) => {
+    setDataState({
+      ...dataState,
+      search : event,
+    })
+  }
 
   const toggleModal = (e) => {
     setAction(e)
@@ -51,26 +92,24 @@ const AdminTransactionAll = () => {
     console.log('Revised')
   }
 
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/10gitukd68/03/2021', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
-  ]
-
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataTransaction(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: TRANSACT_ALL_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingAllScroll ? (
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
@@ -79,24 +118,41 @@ const AdminTransactionAll = () => {
     ) : null
   }
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      onDataStateChange(search)
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [search])
+
+  useEffect(() => {
+    fetchDataTransaction(dataState)
+  }, [dataState])
+
   const CardUser = (item, index) => {
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <Text style={styles.textUsername}>{item.username}</Text>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={()=> navigation.navigate('AdminProfileAll', item)}
+            >
+              <Text style={styles.textUsername}>{item.User_Name}</Text>
+            </TouchableOpacity>
             <View style={styles.ViewTop}>
               <Text style={styles.TxtTimeTitle}>
-                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
-              <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
             </View>
+            <Card.Divider style={styles.divider} />
+            <Text style={styles.TxtInvoice}>{item.Invoice_Number}</Text>
           </View>
           <View style={styles.ViewLabel}>
-            <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
+            <Text style={styles.TxtLabel}>{item.Class_Initial}</Text>
           </View>
           <View style={styles.viewTxtClass}>
-            <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
+            <Text style={styles.TxtDescKelas}>{item.Class_Name}</Text>
           </View>
           <View style={styles.containerButtonAction}>
             <View style={styles.ViewButtonAction}>
@@ -118,8 +174,8 @@ const AdminTransactionAll = () => {
             </View>
           </View>
           <View style={styles.ViewPrice}>
-            <Text style={styles.TxtBank}>{item.BankName}</Text>
-            <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.jumlahTransfer)}</Text>
+            <Text style={styles.TxtBank}>{item.Payment_Method}</Text>
+            <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.Total_Transfer)}</Text>
           </View>
           <View style={styles.ViewButtonActionVoice}>
             <ButtonGradient
@@ -175,20 +231,22 @@ const AdminTransactionAll = () => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {state == 0 ?
-          <NoTransaction/>
-          :
-          <FlatList
-            data={state}
-            style={{ width:'100%' }}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            onEndReached={(e) => onLoadMore(e)}
-            showsVerticalScrollIndicator ={false}
-            contentContainerStyle={{ paddingBottom: 25 }}
-            keyExtractor={(item, index) =>  index.toString()}
-            renderItem={({ item, index }) => CardUser(item, index)}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {loadingAll && !loadingAllScroll?
+          <LoadingView color='white'/>  :
+          states.length == 0 ?
+            <NoTransaction/>
+            :
+            <FlatList
+              data={states}
+              style={{ width:'100%' }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              onEndReached={(e) => onLoadMore(e)}
+              showsVerticalScrollIndicator ={false}
+              contentContainerStyle={{ paddingBottom: 25 }}
+              keyExtractor={(item, index) =>  index.toString()}
+              renderItem={({ item, index }) => CardUser(item, index)}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
 
       </ImageBackground>
@@ -197,7 +255,7 @@ const AdminTransactionAll = () => {
 }
 
 AdminTransactionAll.propTypes = {
-  navigation: PropTypes.object,
+  search: PropTypes.string,
 }
 
 export default AdminTransactionAll

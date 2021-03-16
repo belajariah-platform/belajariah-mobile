@@ -1,7 +1,7 @@
-import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import RNPrint from 'react-native-print'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {
   Text,
@@ -15,35 +15,90 @@ import {
   ActivityIndicator,
 } from 'react-native'
 
+import {
+  USER_CLASS_LIST_REQ,
+  USER_CLASS_LIST_SUCC,
+  USER_CLASS_LIST_FAIL,
+  USER_CLASS_LOAD_SCROLL,
+} from '../../../action'
+
+import {
+  Progressbar,
+  LoadingView,
+  ModalRating,
+  ButtonGradient,
+  ModalFilterUser,
+} from '../../../components'
 import { Images } from '../../../assets'
-import { ButtonGradient, Progressbar, ModalRating, ModalFilterUser } from '../../../components'
+import { Response } from '../../../utils'
+import { UserClassAPI, EnumAPI } from '../../../api'
 
 import { styles } from '../class-user/class-user.style'
 
 
 const ClassUser = (props) => {
-  const [loading, setLoading] = useState(false)
-  const [available, setAvailable] = useState(false)
+  const dispatch = useDispatch()
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
-
-  const [modalFilterVisible, setmodalFilterVisible] = useState(false)
-  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible) 
   const [selectedPrinter, setSelectedPrinter] = useState(null)
+  const [modalFilterVisible, setmodalFilterVisible] = useState(false)
 
-  const Progress = [
-    { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'start', 'progress' : 0 },
-    { 'value' : 'Bisa Ngaji dengan nada indah (Tilawah) seperti Qari profesional', 'status' : 'in progress', 'progress' : 50 },
-    { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'in progress', 'progress': 100 },
-    { 'value' : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan', 'status' : 'completed', 'progress': 100 },
-  ]
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState([])
+  const [stateCategory, setStateCategory] = useState([])
+  const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+  const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'DESC' })
 
-  const state = {
-    username : 'Riki Jenifer',
-    class : 'Belajar al-quran dari dasar dengan metode mudah dan menyenangkan',
-    created_date : moment(new Date()).format('DD MMMM YYYY')
+
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
+  const { loading, loadingScroll } = useSelector((state) => state.UserClassReducer)
+
+
+  const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
+    try {
+      dispatch({ type: USER_CLASS_LIST_REQ })
+      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+        setCount(response.data.count)
+        dispatch({ type: USER_CLASS_LIST_SUCC })
+      } else {
+        dispatch({ type: USER_CLASS_LIST_FAIL })
+      }
+    } catch (err) {
+      dispatch({ type: USER_CLASS_LIST_FAIL })
+      return err
+    }
   }
+
+  const fetchDataClassCategory = async ({ skip, take, filterString }) => {
+    try {
+      filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateCategory(response.data.data)
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  const onDataStateChange = (sort, filter) => {
+    setDataState({
+      ...dataState,
+      sort : sort,
+      filterString : filter
+    })
+  }
+
+  useEffect(() => {
+    fetchDataUserClass(dataState)
+  }, [dataState])
+
+  useEffect(() => {
+    fetchDataClassCategory(dataStateCategory)
+  }, [])
 
   const selectPrinter = async () => {
     const selectedPrinter =
@@ -84,17 +139,22 @@ const ClassUser = (props) => {
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataUserClass(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: USER_CLASS_LOAD_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingScroll ? (
       <View style={styles.indicatorContainer}>
         <ActivityIndicator
           color='white'
@@ -142,9 +202,11 @@ const ClassUser = (props) => {
           style={styles.textArea}/>}
       />
       <ModalFilterUser
+        state={stateCategory}
+        submit={onDataStateChange}
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
-        
+
       />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
@@ -162,102 +224,104 @@ const ClassUser = (props) => {
           imageStyle={{ borderRadius: 30 }}
         >
           {Platform.OS === 'ios' && customOptions()}
-          {available ? (
-            <View style={styles.containerViewClass}>
-              <Images.IconClassEmpty.default/>
-              <Text style={styles.containerTextClass}>Oops!</Text>
-              <Text style={styles.containerChildTextClass}>Saat ini tidak ada kelas</Text>
-              <Text style={styles.containerChildTextClass}>yang anda ikuti, <Text style={styles.containerChildTextClass2}>Yuk gabung</Text></Text>
-              <Text style={styles.containerChildTextClass2}>kelas sekarang juga</Text>
-            </View>
-          ) :
-            (
-              <FlatList
-                data={Progress}
-                style={{ width:'90%' }}
-                onEndReachedThreshold={0.1}
-                ListFooterComponent={renderFooter}
-                onEndReached={(e) => onLoadMore(e)}
-                showsVerticalScrollIndicator ={false}
-                contentContainerStyle={{ paddingBottom: 122 }}
-                keyExtractor={(item, index) =>  index.toString()}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
-                renderItem={({ item, index }) => (
-                  <View key={index}>
-                    <View style={styles.containerClassProgress}>
-                      <Images.IconStepStart.default />
-                      {item.status == 'in progress' ||
-                        item.status == 'completed' ? (
+          {loading && !loadingScroll ? (
+            <LoadingView color ='white'/>) :
+            state.length == 0 ? (
+              <View style={styles.containerViewClass}>
+                <Images.IconClassEmpty.default/>
+                <Text style={styles.containerTextClass}>Oops!</Text>
+                <Text style={styles.containerChildTextClass}>Saat ini tidak ada kelas</Text>
+                <Text style={styles.containerChildTextClass}>yang anda ikuti, <Text style={styles.containerChildTextClass2}>Yuk gabung</Text></Text>
+                <Text style={styles.containerChildTextClass2}>kelas sekarang juga</Text>
+              </View>
+            ) :
+              (
+                <FlatList
+                  data={state}
+                  style={{ width:'90%' }}
+                  onEndReachedThreshold={0.1}
+                  ListFooterComponent={renderFooter}
+                  onEndReached={(e) => onLoadMore(e)}
+                  showsVerticalScrollIndicator ={false}
+                  contentContainerStyle={{ paddingBottom: 122 }}
+                  keyExtractor={(item, index) =>  index.toString()}
+                  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+                  renderItem={({ item, index }) => (
+                    <View key={index}>
+                      <View style={styles.containerClassProgress}>
+                        <Images.IconStepStart.default />
+                        {item.Status == 'In Progress' ||
+                        item.Status == 'Completed' ? (
+                            <Images.IconLine.default style={styles.iconTop}/> ) : (
+                            <Images.IconLineHide.default style={styles.iconTop}/>
+                          )}
+                        {item.Status == 'In Progress' ||
+                          item.Status == 'Completed' ? (
+                            <Images.IconStepProgress.default /> ) : (
+                            <Images.IconStepProgressHide.default />
+                          )}
+                        {item.Status == 'Completed' ? (
                           <Images.IconLine.default style={styles.iconTop}/> ) : (
                           <Images.IconLineHide.default style={styles.iconTop}/>
                         )}
-                      {item.status == 'in progress' ||
-                          item.status == 'completed' ? (
-                          <Images.IconStepProgress.default /> ) : (
-                          <Images.IconStepProgressHide.default />
+                        {item.Status == 'Completed' ? (
+                          <Images.IconStepFinish.default /> ) : (
+                          <Images.IconStepFinishHide.default />
                         )}
-                      {item.status == 'completed' ? (
-                        <Images.IconLine.default style={styles.iconTop}/> ) : (
-                        <Images.IconLineHide.default style={styles.iconTop}/>
-                      )}
-                      {item.status == 'completed' ? (
-                        <Images.IconStepFinish.default /> ) : (
-                        <Images.IconStepFinishHide.default />
-                      )}
+                      </View>
+                      <View style={{ bottom: 20 }}>
+                        <ImageBackground
+                          source={Images.BgClassLearning}
+                          imageStyle={{ borderRadius: 20 }}
+                          style={styles.imageBackgroundCard}
+                        >
+                          <View style={styles.containerIconProgress}>
+                            <Image source={Images.TahsinImage} style={styles.ImageClass}/>
+                            <Text style={styles.TextClass}>{item.Class_Name}</Text>
+                          </View>
+                          <Text style={styles.ButtonTextClass}>Nilai Exam : {item.Post_Test_Scores}</Text>
+                          <View style={[styles.containerIconProgress, styles.customIconProgress]}>
+                            {item.Status  == 'Completed' ? (
+                              <ButtonGradient
+                                title='Akses Video'
+                                textStyle={styles.textButton}
+                                styles={styles.buttonClassCustom}
+                                icon={<Images.IconVideo.default style={styles.iconClassCustomLeft}/>}
+                                onPress = {() => props.navigation.navigate('ClassLearning', item)}/>
+                            ) : (
+                              <View style={styles.progressBar}>
+                                <Text style={styles.progressBarText}>Progress kelas</Text>
+                                <Progressbar progress={item.Progress}/>
+                              </View>
+                            )}
+                            {item.Status  == 'Completed' ? (
+                              <ButtonGradient
+                                title='Unduh Sertifikat'
+                                textStyle={styles.textButton}
+                                styles={styles.buttonClassCustom}
+                                icon={<Images.IconDownload.default
+                                  style={styles.iconClassCustomRight}/>}
+                                onPress = {printHTML}/>
+                            ) : (
+                              <ButtonGradient
+                                styles={styles.ButtonClass}
+                                textStyle={styles.textButton}
+                                title={
+                                  item.Status == 'In Progress' && item.progress == 100 ? 'Selesai' :
+                                    item.Status == 'Start' ? 'Mulai' : 'Lanjut'}
+                                onPress = {  item.Status == 'Start' ||
+                              item.Status == 'In Progress' && item.progress != 100  ?
+                                  () => props.navigation.navigate('ClassLearning', item) :
+                                  item.Status == 'In Progress' && item.progress == 100 ?
+                                    toggleModal : null}/>
+                            )}
+                          </View>
+                        </ImageBackground>
+                      </View>
                     </View>
-                    <View style={{ bottom: 20 }}>
-                      <ImageBackground
-                        source={Images.BgClassLearning}
-                        imageStyle={{ borderRadius: 20 }}
-                        style={styles.imageBackgroundCard}
-                      >
-                        <View style={styles.containerIconProgress}>
-                          <Image source={Images.TahsinImage} style={styles.ImageClass}/>
-                          <Text style={styles.TextClass}>{item.value}</Text>
-                        </View>
-                        <Text style={styles.ButtonTextClass}>Nilai Exam : 0</Text>
-                        <View style={[styles.containerIconProgress, styles.customIconProgress]}>
-                          {item.status  == 'completed' ? (
-                            <ButtonGradient
-                              title='Akses Video'
-                              textStyle={styles.textButton}
-                              styles={styles.buttonClassCustom}
-                              icon={<Images.IconVideo.default style={styles.iconClassCustomLeft}/>}
-                              onPress = {() => props.navigation.navigate('ClassLearning')}/>
-                          ) : (
-                            <View style={styles.progressBar}>
-                              <Text style={styles.progressBarText}>Progress kelas</Text>
-                              <Progressbar progress={item.progress}/>
-                            </View>
-                          )}
-                          {item.status  == 'completed' ? (
-                            <ButtonGradient
-                              title='Unduh Sertifikat'
-                              textStyle={styles.textButton}
-                              styles={styles.buttonClassCustom}
-                              icon={<Images.IconDownload.default
-                                style={styles.iconClassCustomRight}/>}
-                              onPress = {printHTML}/>
-                          ) : (
-                            <ButtonGradient
-                              styles={styles.ButtonClass}
-                              textStyle={styles.textButton}
-                              title={
-                                item.status == 'in progress' && item.progress == 100 ? 'Selesai' :
-                                  item.status == 'start' ? 'Mulai' : 'Lanjut'}
-                              onPress = {  item.status == 'start' ||
-                              item.status == 'in progress' && item.progress != 100  ?
-                                () => props.navigation.navigate('ClassLearning') :
-                                item.status == 'in progress' && item.progress == 100 ?
-                                  toggleModal : null}/>
-                          )}
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  </View>
-                )}
-              />
-            )
+                  )}
+                />
+              )
           }
         </ImageBackground>
       </View>

@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
@@ -11,19 +12,16 @@ import { FormatRupiah } from '../../utils'
 import styles from './transaction-info.style'
 import { ButtonGradient } from '../../components'
 
-const TransactionInfo = () => {
+const TransactionInfo = (props) => {
   const navigation = useNavigation()
+  const item = props.route.params
 
   const classData = {
-    account : '000-1234567',
-    quote: 'Dicek dalam 24 jam setelah bukti pembayaran talh diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
-    noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
-    noteTwo: 'Silahkan upload bukti transfer sebelum ',
-    noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
-    price: 199000,
-    Created_Date: new Date(),
+    firstNote: 'Dicek dalam 24 jam setelah bukti pembayaran telah diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
+    secondNote: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
+    thirdNote: 'Silahkan upload bukti transfer sebelum ',
+    fourthNote: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
   }
-
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -53,11 +51,11 @@ const TransactionInfo = () => {
           </View>
           <View style={styles.viewDetailBank}>
             <View>
-              <Text style={styles.textSmall}>No. Rekening : {classData.account}</Text>
-              <Text style={styles.textSmall}>Nama Rekening : Belajariah</Text>
+              <Text style={styles.textSmall}>No. Rekening : {item.Account_Name}</Text>
+              <Text style={styles.textSmall}>Nama Rekening : {item.Account_Number}</Text>
             </View>
             <View>
-              <TouchableOpacity onPress={() => copyToClipboard(classData.account)}>
+              <TouchableOpacity onPress={() => copyToClipboard(item.Account_Number)}>
                 <Text style={styles.TxtButtonSalin}>SALIN</Text>
               </TouchableOpacity>
             </View>
@@ -65,11 +63,11 @@ const TransactionInfo = () => {
           <View style={styles.viewMethod}>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>2</Text>
-              <Text style={styles.textSmall}>{classData.noteTwo}<Text style={styles.textSmall}>{moment(classData.Created_Date).format('dddd, DD MMMM YYYY')}</Text></Text>
+              <Text style={styles.textSmall}>{classData.thirdNote}<Text style={styles.textSmall}>{moment(item.Expired_Date).format('dddd, DD MMMM YYYY')}</Text></Text>
             </View>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>3</Text>
-              <Text style={styles.textSmall}>{classData.noteThree}</Text>
+              <Text style={styles.textSmall}>{classData.fourthNote}</Text>
             </View>
           </View>
         </View>
@@ -84,7 +82,7 @@ const TransactionInfo = () => {
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           title='Upload bukti transfer sekarang'
-          onPress={()=> {navigation.navigate('TransactionUpload')}}
+          onPress={()=> navigation.navigate('TransactionUpload', item)}
         />
         <TouchableOpacity style={styles.btnBuyClassTwo}
           onPress={()=> {navigation.navigate('Pembayaran')}}>
@@ -100,18 +98,18 @@ const TransactionInfo = () => {
         <View style={styles.flexColumn}>
           <View style={styles.margins}>
             <Text style={styles.textTotalPrice}>Total Pembayaran</Text>
-            <Text style={styles.textPrice}>Rp {FormatRupiah(classData.price)}</Text>
+            <Text style={styles.textPrice}>Rp {FormatRupiah(item.Total_Transfer)}</Text>
           </View>
           <View style={styles.viewTextTotalPayment}>
             <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas</Text>
           </View>
-          <Text style={[styles.txtNotes, styles.margins]}>{classData.quote}</Text>
+          <Text style={[styles.txtNotes, styles.margins]}>{classData.firstNote}</Text>
           <View style={styles.margins}>
             <Card.Divider style={styles.divider} />
           </View>
           <View style={styles.viewNoteOne}>
             <Text style={styles.txtViewNoteOne}>1</Text>
-            <Text style={styles.textSmall}>{classData.noteOne}</Text>
+            <Text style={styles.textSmall}>{classData.secondNote}</Text>
           </View>
         </View>
       </View>
@@ -129,5 +127,10 @@ const TransactionInfo = () => {
     </View>
   )
 }
+
+TransactionInfo.propTypes = {
+  route: PropTypes.object,
+}
+
 
 export default TransactionInfo
