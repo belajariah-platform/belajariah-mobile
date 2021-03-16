@@ -464,6 +464,7 @@ const ClassLearning = () => {
             <ModalRating
               isVisible={modalRatingVisible}
               backdropPress={() => toggleModalRating()}
+              backButtonPress={() => toggleModalRating()}
               title='Berikan rating untuk koreksi bacaanmu'
               renderItem={<Text style={styles.textModal}>
                 Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?
@@ -507,6 +508,7 @@ const ClassLearning = () => {
       <ModalRecord
         isVisible={modalRecordVisible}
         backdropPress={() => toggleModalRecord()}
+        backButtonPress={() => toggleModalRecord()}
         ayats={state.topics[currentIndex].ayats}
       />
     </>

@@ -16,7 +16,7 @@ import {
 import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
-import {ModalFilterUserTransaction} from '../../components'
+import { ModalFilterUserTransaction } from '../../components'
 
 const Transaction = () => {
   const navigation = useNavigation()
@@ -171,29 +171,30 @@ const Transaction = () => {
 
   return (
     <>
-    <ModalFilterUserTransaction
+      <ModalFilterUserTransaction
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
-    <View style={styles.bgHeader}>
-      <View style={styles.containerHeader}>
-        <Text style={styles.titleHeader}>Transaksi</Text>
-        <TouchableOpacity
-          style={styles.containerFilter}
-          onPress = {toggleModal}>
-          <Images.Filter.default
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+      <View style={styles.bgHeader}>
+        <View style={styles.containerHeader}>
+          <Text style={styles.titleHeader}>Transaksi</Text>
+          <TouchableOpacity
+            style={styles.containerFilter}
+            onPress = {toggleModal}>
+            <Images.Filter.default
+              width={20}
+              height={20}
+            />
+          </TouchableOpacity>
+        </View>
+        <ImageBackground
+          source={Images.TransactionBGPNG}
+          style={styles.imageBackground}
+          imageStyle={{ borderRadius: 30 }}>
+          {available ? <NoTransaction /> : <TransactionList />}
+        </ImageBackground>
       </View>
-      <ImageBackground
-        source={Images.TransactionBGPNG}
-        style={styles.imageBackground}
-        imageStyle={{ borderRadius: 30 }}>
-        {available ? <NoTransaction /> : <TransactionList />}
-      </ImageBackground>
-    </View>
     </>
   )
 }

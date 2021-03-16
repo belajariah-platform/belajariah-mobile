@@ -183,6 +183,10 @@ const TransactionMethod = (props) => {
           toggleModal()
           FormVoucher.resetForm()
         }}
+        backButtonPress={() => {
+          toggleModal()
+          FormVoucher.resetForm()
+        }}
         renderItem={
           <View style={styles.containerModal}>
             <Text style={styles.TitleModal}>{classData.titleModal}</Text>

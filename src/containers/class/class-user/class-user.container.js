@@ -29,7 +29,7 @@ const ClassUser = (props) => {
   const toggleModal = () => setModalVisible(!modalVisible)
 
   const [modalFilterVisible, setmodalFilterVisible] = useState(false)
-  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible) 
+  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
   const [selectedPrinter, setSelectedPrinter] = useState(null)
 
   const Progress = [
@@ -135,6 +135,7 @@ const ClassUser = (props) => {
       <ModalRating
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
         title='Berikan ratingmu untuk kelas ini'
         renderItem={  <TextInput
           multiline={true}
@@ -144,7 +145,7 @@ const ClassUser = (props) => {
       <ModalFilterUser
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
-        
+        backButtonPress={() => toggleModalFilter()}
       />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>

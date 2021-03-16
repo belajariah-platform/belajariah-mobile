@@ -100,9 +100,9 @@ const Home = (props) => {
   ]
 
   const package_category = [
-    { ID: 0, Type: 'Darussalam', Price_Discount : 399000, Price_Package: 599000, Duration : 1, Consultation: 8, Webinar : 1 },
-    { ID: 1, Type: 'Naim', Price_Discount : 899000,  Price_Package: 1000000,  Duration : 3, Consultation: 24, Webinar : 3 },
-    { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 1699000,  Duration : 6, Consultation: 32, Webinar : 6 },
+    { ID: 0, Type: 'Darussalam', Price_Discount : 399000, Price_Package: 800000, Duration : 1, Consultation: 8, Webinar : 1 },
+    { ID: 1, Type: 'Naim', Price_Discount : 899000,  Price_Package: 1500000,  Duration : 3, Consultation: 24, Webinar : 3 },
+    { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 2200000,  Duration : 6, Consultation: 32, Webinar : 6 },
   ]
 
   // const SearchHome = () => {
@@ -420,10 +420,12 @@ const Home = (props) => {
           state={package_category}
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
+          backButtonPress={() => toggleModalInfoClass()}
         />
         <ModalInfo
           isVisible={modalVisible}
           backdropPress={() => toggleModal()}
+          backButtonPress={() => toggleModal()}
           renderItem={
             <View>
               {classPopular.map((value, index) => {

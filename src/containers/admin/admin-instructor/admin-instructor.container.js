@@ -127,6 +127,7 @@ const AdminInstructor = () => {
       <ModalFilterAdminPageUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
         <ImageBackground

@@ -360,6 +360,7 @@ const InstructorTaskDetail = ({ route }) => {
         isVisible={isModalFotoVisible}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
     </View>
   )

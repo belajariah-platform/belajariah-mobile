@@ -19,7 +19,7 @@ const  ImageView = (props)  => {
 
   return (
     <>
-      <Modal isVisible={props.isVisible}>
+      <Modal isVisible={props.isVisible} onBackButtonPress={props.backButtonPress}>
         <View style={styles.modalContainer}>
           <ImageViewer
             imageUrls={imagesModal} />
@@ -39,6 +39,7 @@ ImageView.propTypes = {
   hideModal : PropTypes.func,
   filepath : PropTypes.string,
   setVisible : PropTypes.func,
+  backButtonPress : PropTypes.func,
 }
 
 

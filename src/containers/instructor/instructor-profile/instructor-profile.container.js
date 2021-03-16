@@ -74,6 +74,7 @@ const InstructorProfile = () => {
         isVisible={isModalFotoVisible}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
 
       <Images.ProfileBackground.default

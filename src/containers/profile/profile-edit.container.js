@@ -363,6 +363,7 @@ const ProfileEdit = () => {
         containerStyle={{ height:125 }}
         renderItem={<ChooseTakeImage />}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <ModalDate
         mode='date'

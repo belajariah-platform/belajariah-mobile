@@ -364,6 +364,7 @@ const ConsultationDetail = ({ route }) => {
       <ModalRating
         isVisible={modalRatingVisible}
         backdropPress={() => toggleModalRating()}
+        backButtonPress={() => toggleModalRating()}
         title='Berikan rating untuk koreksi bacaanmu'
         renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
       />
@@ -371,6 +372,7 @@ const ConsultationDetail = ({ route }) => {
         isVisible={isModalFotoVisible}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
     </View>
   )

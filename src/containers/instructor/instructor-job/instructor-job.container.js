@@ -207,11 +207,13 @@ const InstructorJob = () => {
       <ModalFilterUstadz
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
+        backButtonPress={() => toggleModalFilter()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
       <View style={styles.container}>
         <Header />
