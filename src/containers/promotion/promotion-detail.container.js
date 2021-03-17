@@ -61,6 +61,19 @@ const PromotionDetail = () => {
     },
   ]
 
+  const invalidCode = [
+    {
+      title : 'Halaman Promo',
+      banner_image : Images.BannerPromotionInvalidVoucher,
+      description : 'Kode voucher yang anda masukkan tidak tersedia',
+    },
+    {
+      title : 'Halaman Promo',
+      banner_image : Images.BannerPromotionQuotaFull,
+      description : 'Kuota saat ini sudah terpenuhi',
+    },
+  ]
+
   //jika masuk melalui voucher code, bukan mapping index
   promoIndex == undefined && (
     promoIndex = promotion.findIndex(item => item.code_voucher === promo_code)
@@ -78,7 +91,7 @@ const PromotionDetail = () => {
           <TouchableOpacity onPress={() => navigation.navigate('UserMain')}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{promotion[promoIndex] == undefined ? 'Halaman Promo' : promotion[promoIndex].title}</Text>
+          <Text style={styles.textTitleWhite}>{promotion[promoIndex] == undefined ? invalidCode[0].title : promotion[promoIndex].title}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -133,9 +146,15 @@ const PromotionDetail = () => {
 
   const BannerPromotion = () => {
     return (
-      <View style={styles.containerBanner}>
-        <Image source={promotion[promoIndex].banner_image} style={styles.ImgBanner}/>
-      </View>
+      promotion[promoIndex] == undefined ? (
+        <View style={styles.containerBanner}>
+          <Image source={invalidCode[0].banner_image} style={styles.ImgInvalidBanner} resizeMode='cover'/>
+        </View>
+      ) : (
+        <View style={styles.containerBanner}>
+          <Image source={promotion[promoIndex].banner_image} style={styles.ImgBanner}/>
+        </View>
+      )
     )
   }
 
@@ -143,8 +162,13 @@ const PromotionDetail = () => {
     promotion[promoIndex] == undefined ? (
       <View style={styles.containerMain}>
         <Header />
-        <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
-          <Text style={styles.textRegular}>Maaf, voucher tidak tersedia</Text>
+        <ScrollView style={styles.containerInvalidPromo} showsVerticalScrollIndicator={false}>
+          <BannerPromotion />
+          <View style={styles.containerMethod}>
+            <View style={styles.cardMethods}>
+              <Text style={styles.DescInvalidPromo}>{invalidCode[0].description}</Text>
+            </View>
+          </View>
         </ScrollView>
       </View>
     ) : (

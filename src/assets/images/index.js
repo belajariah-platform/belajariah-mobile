@@ -175,19 +175,21 @@ export default {
   IconEdit : require('./IconEdit.svg'),
 
   //Update Detail Promotion
-  IconVoucher: require('./IconVoucher.png'),
   VoucherCode: require('./BgVoucher.png'),
-  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  IconVoucher: require('./IconVoucher.png'),
+  BannerPromotionQuotaFull : require('./BannerPromotionQuotaFull.png'),
   BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
+  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
 
   //Video
-  VideoFullscreen: require('./BtnVideoFullscreen.svg'),
+  VideoNext: require('./BtnVideoNext.svg'),
   VideoPlay: require('./BtnVideoPlay.svg'),
   VideoPause: require('./BtnVideoPause.svg'),
+  VideoPrevious: require('./BtnVideoPrevious.svg'),
   VideoSkipBack: require('./BtnVideoBackward.svg'),
   VideoSkipForward: require('./BtnVideoForward.svg'),
-  VideoPrevious: require('./BtnVideoPrevious.svg'),
-  VideoNext: require('./BtnVideoNext.svg'),
+  VideoFullscreen: require('./BtnVideoFullscreen.svg'),
 
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
