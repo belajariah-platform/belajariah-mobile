@@ -51,9 +51,8 @@ const AdminTransactionAccept = ({ search }) => {
   const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
     try {
       dispatch({ type: TRANSACT_ACCEPT_REQ })
-      // filterString='[{"type": "text", "field" : "status_payment", "value": "Completed"}]'
+      filterString='[{"type": "text", "field" : "status_payment", "value": "Completed"}]'
       const response = await PaymentAPI.GetAllPayment(skip, take, filterString, sort, search)
-      console.log(response.data.data)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
@@ -204,10 +203,12 @@ const AdminTransactionAccept = ({ search }) => {
         submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
+        backButtonPress={() => toggleModalRepair()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
         filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground

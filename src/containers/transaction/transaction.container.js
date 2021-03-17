@@ -195,6 +195,7 @@ const Transaction = () => {
         submit={onDataStateChange}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.bgHeader}>
         <View style={styles.containerHeader}>

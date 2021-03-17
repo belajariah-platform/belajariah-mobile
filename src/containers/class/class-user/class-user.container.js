@@ -195,6 +195,7 @@ const ClassUser = (props) => {
       <ModalRating
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
         title='Berikan ratingmu untuk kelas ini'
         renderItem={  <TextInput
           multiline={true}
@@ -206,7 +207,6 @@ const ClassUser = (props) => {
         submit={onDataStateChange}
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
-
       />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>

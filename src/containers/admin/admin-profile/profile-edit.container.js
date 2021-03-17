@@ -358,13 +358,15 @@ const ProfileEdit = () => {
         containerStyle={{ height:125 }}
         renderItem={<ChooseTakeImage />}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <ModalDate
         mode='date'
         isVisible={modalDateVisible}
-        date={FormPersonal.values['birth']}
+        date={FormPersonal.values['Birth']}
         backdropPress={() => toggleModalDate()}
-        dateChange={(e) => FormPersonal.setFieldValue('birth', e)}
+        backButtonPress={() => toggleModalDate()}
+        dateChange={(e) => FormPersonal.setFieldValue('Birth', e)}
       />
     </>
   )

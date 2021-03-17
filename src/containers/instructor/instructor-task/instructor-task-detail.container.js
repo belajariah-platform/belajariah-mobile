@@ -15,7 +15,7 @@ import {
 
 import { Images } from '../../../assets'
 import { TimeConvert, TimerObj } from '../../../utils'
-import { ButtonGradient } from '../../../components'
+import { ButtonGradient, ImageView } from '../../../components'
 
 import { styles } from './instructor-task-detail.style'
 
@@ -30,6 +30,9 @@ const InstructorTaskDetail = ({ route }) => {
   const [message, setMessage] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
   const [optionSelected, setOptionSelected] = useState({})
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const voiceDuration =  (480 - ((minutes*60) + seconds))
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
@@ -161,8 +164,10 @@ const InstructorTaskDetail = ({ route }) => {
             <Images.ButtonBackBlack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Avatar
-            source={Images.ImageProfileDefault}
+            onPress={toggleModalFoto}
             containerStyle={styles.avatarUser}
+            source={Images.ImageProfileDefault}
+            avatarStyle={{ borderRadius : 36 / 2 }}
           />
           <Text style={styles.textTitleBold}>{param.User_Name}</Text>
         </View>
@@ -194,6 +199,7 @@ const InstructorTaskDetail = ({ route }) => {
         {user_login == item.user_code ? (
           <View style={styles.containerSoundStart}>
             <Avatar
+              onPress={toggleModalFoto}
               containerStyle={styles.avatarStart}
               source={ Images.ImageProfileDefault}
               avatarStyle={styles.avatarChatInstructor}
@@ -239,8 +245,9 @@ const InstructorTaskDetail = ({ route }) => {
               )}
             </Text>
             <Avatar
-              source={ Images.ImageProfileDefault}
+              onPress={toggleModalFoto}
               containerStyle={styles.avatarEnd}
+              source={ Images.ImageProfileDefault}
               avatarStyle={styles.avatarChatInstructor}
             />
           </View>
@@ -349,6 +356,12 @@ const InstructorTaskDetail = ({ route }) => {
           </>
         )}
       </View>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
+      />
     </View>
   )
 }

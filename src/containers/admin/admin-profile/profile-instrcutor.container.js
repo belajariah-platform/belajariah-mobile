@@ -54,10 +54,10 @@ const ProfileInstrcutor = ({ route }) => {
             height={16}
           />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate('AdminProfileEdit')}>
           <Images.IconEdit.default />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
@@ -80,7 +80,7 @@ const ProfileInstrcutor = ({ route }) => {
           <Text style={styles.headerPhone}>{item.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(item.Rating)}
+          {item.Rating != 0 &&(handleRating(item.Rating))}
         </View>
       </View>
 
@@ -109,17 +109,6 @@ const ProfileInstrcutor = ({ route }) => {
             {item.Task_Inprogress}
           </Text>
         </Card>
-        {/* <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOverdue}>Overdue</Text>
-          <Images.IconInstructorProfileOverdue.default
-            width={28}
-            height={28}
-            style={styles.iconStatus}
-          />
-          <Text style={styles.textOverdueCount}>
-            {0}
-          </Text>
-        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>

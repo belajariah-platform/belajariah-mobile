@@ -38,12 +38,13 @@ const VideoPlayer = (props) => {
   const handleBackButton = () => {
     state.fullscreen
       ? (
-        console.log(state.fullscreen),
-        Orientation.lockToPortrait(),
-        props.onFullScreenPress()
+        props.onFullScreenPress(),
+        Orientation.lockToPortrait()
       ) : (
+        navigation.goBack(),
         Orientation.lockToPortrait()
       )
+    return true
   }
 
   const handlePlayPause = () => {
@@ -108,7 +109,7 @@ const VideoPlayer = (props) => {
       Orientation.removeOrientationListener(handleOrientation)
       BackHandler.removeEventListener('hardwareBackPress', handleBackButton)
     }
-  }, [])
+  }, [handleBackButton])
 
   return (
     <TouchableWithoutFeedback

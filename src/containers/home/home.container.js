@@ -140,7 +140,7 @@ const Home = (props) => {
         {statePromotion.length > 0  ? (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('PromotionDetail', { promoIndex : index })}>
+            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
             <Image
               style={styles.cardCustom}
               source={{ uri : item.Banner_Image ?
@@ -410,10 +410,12 @@ const Home = (props) => {
           state={statePackage}
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
+          backButtonPress={() => toggleModalInfoClass()}
         />
         <ModalInfo
           isVisible={modalVisible}
           backdropPress={() => toggleModal()}
+          backButtonPress={() => toggleModal()}
           renderItem={
             <View>
               {stateClass.map((value, index) => {

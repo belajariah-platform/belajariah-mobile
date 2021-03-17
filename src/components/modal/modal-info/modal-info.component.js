@@ -14,6 +14,7 @@ const ModalInfo = (props) => {
         isVisible={props.isVisible}
         style={styles.backdropStyle}
         onBackdropPress={props.backdropPress}
+        onBackButtonPress={props.backButtonPress}
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           {props.hideButtonClose || (
@@ -36,6 +37,7 @@ ModalInfo.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  backButtonPress : PropTypes.func,
   hideButtonClose : PropTypes.bool,
   containerStyle : PropTypes.object,
 }

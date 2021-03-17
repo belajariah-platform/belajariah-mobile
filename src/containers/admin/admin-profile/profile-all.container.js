@@ -22,7 +22,7 @@ const ProfileAll = ({ route }) => {
   const item = route.params
   const navigation = useNavigation()
   const [userInfo, setUserInfo] = useState({})
-  console.log(userInfo)
+
   const fetchDataUser = async (email) => {
     try {
       const response = await UserAPI.GetUser(email)

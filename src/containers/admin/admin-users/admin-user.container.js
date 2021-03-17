@@ -66,6 +66,7 @@ const AdminUser = () => {
       <ModalFilterAdminPageUser
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
     </View>
   )

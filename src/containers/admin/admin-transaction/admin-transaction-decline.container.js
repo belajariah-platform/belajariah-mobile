@@ -217,15 +217,18 @@ const AdminTransactionDecline = ({ search }) => {
         submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
+        backButtonPress={() => toggleModalRepair()}
       />
       <ModalConfirm
         isVisible={modalVisible}
         submit={() => handleSubmit()}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
         filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground

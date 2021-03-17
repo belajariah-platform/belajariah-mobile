@@ -25,6 +25,7 @@ const AdminTransaction = () => {
         setSort={setSort}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
         <View style={styles.containerHeader}>

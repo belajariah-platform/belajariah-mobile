@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
 import { ImageBackground } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Card, Avatar } from 'react-native-elements'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
@@ -11,7 +11,6 @@ import {
   Easing,
   Animated,
   ScrollView,
-  ToastAndroid,
   TouchableOpacity,
 } from 'react-native'
 
@@ -20,11 +19,15 @@ import { Response } from '../../../utils'
 import { Images } from '../../../assets'
 import { USER_INFO } from  '../../../action'
 import { styles } from './instructor-profile.style'
+import { ImageView } from '../../../components'
 
 const InstructorProfile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const rotateValue = new Animated.Value(0)
   const doRotation = rotateValue.interpolate({
@@ -75,6 +78,13 @@ const InstructorProfile = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
+      />
+
       <Images.ProfileBackground.default
         width={'100%'}
         style={styles.background}
@@ -113,10 +123,11 @@ const InstructorProfile = () => {
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
-          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
           activeOpacity={0.7}
           containerStyle={styles.avatar}
+          onPress={toggleModalFoto}
+          source={Images.ImageProfileDefault}
+          avatarStyle={{ borderRadius : 90 / 2 }}
         />
       </ImageBackground>
 
@@ -131,7 +142,7 @@ const InstructorProfile = () => {
           <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(userInfo.rating)}
+          {userInfo.Rating != 0 &&(handleRating(userInfo.Rating))}
         </View>
       </View>
 

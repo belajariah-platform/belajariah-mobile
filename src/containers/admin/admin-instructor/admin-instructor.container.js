@@ -138,6 +138,7 @@ const AdminInstructor = () => {
       <ModalFilterAdminPageUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
         <ImageBackground
@@ -150,7 +151,6 @@ const AdminInstructor = () => {
                 size='medium'
                 style={styles.searchbox}
                 placeholder={'Temukan pengajar'}
-                onFocus={() => console.log('hello')}
                 onChangeText={(e) => onDataStateChange(e)}
               />
             </View>

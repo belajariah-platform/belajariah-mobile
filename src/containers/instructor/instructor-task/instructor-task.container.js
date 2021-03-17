@@ -46,7 +46,7 @@ const InstructorTask = () => {
     try {
       setLoadingWaiting(true)
       filterString= GenerateFilter(filter, { type : 'text', field : 'status', value : 'Waiting for Response' })
-      console.log(filterString)
+
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search )
       if (response.status === Response.SUCCESS) {
         setStateWaiting(response.data.data)
@@ -91,7 +91,6 @@ const InstructorTask = () => {
   }
 
   const onDataStateChange = (sort, filters) => {
-    console.log('oks', filters)
     setDataStateWaiting({
       ...dataStateWaiting,
       sort : sort,
@@ -270,6 +269,7 @@ const InstructorTask = () => {
         submit={onDataStateChange}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
         <Header />

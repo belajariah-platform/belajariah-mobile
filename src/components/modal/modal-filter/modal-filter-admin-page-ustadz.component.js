@@ -23,6 +23,7 @@ const ModalFilterAdminPageUstadz = (props) => {
         isVisible={props.isVisible}
         style={styles.backdropStyle}
         onBackdropPress={props.backdropPress}
+        onBackButtonPress={props.backButtonPress}
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.containerHeader}>
@@ -90,6 +91,7 @@ ModalFilterAdminPageUstadz.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  backButtonPress : PropTypes.func,
   containerStyle : PropTypes.object,
 }
 

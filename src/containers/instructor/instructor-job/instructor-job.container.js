@@ -28,7 +28,7 @@ import {
 
 import { Response } from '../../../utils'
 import { Images, Color } from '../../../assets'
-import { LoadingView } from '../../../components'
+import { LoadingView, ImageView } from '../../../components'
 import { ConsultationAPI, EnumAPI } from '../../../api'
 
 import { styles } from './instructor-job.style'
@@ -85,6 +85,9 @@ const InstructorJob = ({ route }) => {
       filterString : filter
     })
   }
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   useEffect(() => {
     fetchDataConsultation(dataState)
@@ -202,6 +205,13 @@ const InstructorJob = ({ route }) => {
         submit={onDataStateChange}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
+      />
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
       <View style={styles.container}>
         <Header />
