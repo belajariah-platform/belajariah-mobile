@@ -88,7 +88,33 @@ const styles = StyleSheet.create({
   imageStyle : {
     opacity : 0.3,
     borderRadius : 10,
-  }
+  },
+  containerModal: {
+    alignItems: 'center',
+  },
+  contentModal: {
+    marginHorizontal: '6%',
+  },
+  textModalTitle: {
+    color: Color.black,
+    textAlign: 'center',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  textModalDesc: {
+    lineHeight: 24,
+    textAlign: 'center',
+    fontSize: FontSize.smallMedium,
+  },
+  textModalDescBold: {
+    lineHeight: 24,
+    textAlign: 'center',
+    fontFamily : FontType.bold,
+    fontSize: FontSize.smallMedium,
+  },
+  iconComplete: {
+    marginVertical: '4%',
+  },
 })
 
 export default styles

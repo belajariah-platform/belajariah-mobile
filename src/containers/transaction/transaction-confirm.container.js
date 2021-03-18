@@ -11,7 +11,7 @@ const TransactionConfirm = () => {
   const navigation = useNavigation()
 
   const classData = {
-    note: 'Terima Kasih, Bukti pembayaran anda sedang kami proses untuk melakukan verifikasi|Kami akan mengirim email jika bukti pembayaran anda telah diverifikasi untuk mengakses kelas anda',
+    note: 'Terima Kasih, Bukti pembayaran anda sedang kami proses untuk dilakukan verifikasi|Kami akan mengirim email jika bukti pembayaran anda telah diverifikasi untuk mengakses kelas anda',
   }
 
   const Header = () => {
