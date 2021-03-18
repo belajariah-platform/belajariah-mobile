@@ -139,11 +139,14 @@ const InstructorJob = ({ route }) => {
 
   const CardList = (items, index) => {
     return (
-      <Card key={index} containerStyle={styles.containerCard}>
+      <Card
+        key={index}
+        containerStyle={styles.containerCard}>
         <View>
           <View style={styles.flexRow}>
             <Avatar
-              source={ Images.ImageProfileDefault}
+              source={items.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :items.User_Image }}
               containerStyle={styles.avatarUser}
             />
             <View style={styles.containerNameSound}>

@@ -26,8 +26,8 @@ const ClassInstructor = ({ params }) => {
           <Text style={styles.textTitle}>Tentang Instruktur</Text>
           <View style={styles.flexRow}>
             <Avatar.Image
-              source={  params.Instructor_Image ?
-                { uri : params.Instructor_Image } : Images.ImageProfileDefault}
+              source={  params.Instructor_Image == '' ?
+                Images.ImageProfileDefault : { uri : params.Instructor_Image }}
               style={styles.avatar}
             />
             <View style={styles.flexColumn}>

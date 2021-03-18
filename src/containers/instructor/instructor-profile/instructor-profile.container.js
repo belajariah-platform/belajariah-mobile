@@ -32,7 +32,7 @@ const InstructorProfile = () => {
   const rotateValue = new Animated.Value(0)
   const doRotation = rotateValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0 deg', '-360 deg'], // degree of rotation
+    outputRange: ['0 deg', '-360 deg'],
   })
 
   const transformStyle = { transform: [{ rotate: doRotation }] }
@@ -80,6 +80,7 @@ const InstructorProfile = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <ImageView
         isVisible={isModalFotoVisible}
+        filepath={userInfo.Image_Filename}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
@@ -124,10 +125,11 @@ const InstructorProfile = () => {
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
           activeOpacity={0.7}
-          containerStyle={styles.avatar}
           onPress={toggleModalFoto}
-          source={Images.ImageProfileDefault}
+          containerStyle={styles.avatar}
           avatarStyle={{ borderRadius : 90 / 2 }}
+          source={userInfo.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
         />
       </ImageBackground>
 

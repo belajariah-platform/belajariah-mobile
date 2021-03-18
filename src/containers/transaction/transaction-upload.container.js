@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import DocumentPicker from 'react-native-document-picker'
@@ -7,20 +8,67 @@ import { useNavigation } from '@react-navigation/native'
 import {
   View,
   ScrollView,
+  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
 
+import {
+  Loader,
+  TextBox,
+  ButtonGradient,
+} from '../../components'
+
 import { Images } from '../../assets'
+import { PaymentAPI } from '../../api'
 import { FormatRupiah } from '../../utils'
-import { ButtonGradient, TextBox } from '../../components'
 
 import styles from './transaction-upload.style'
 
 const TransactionUpload = (props) => {
   const item = props.route.params
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
   const [dataImage, setDataImage] = useState({})
+
+  const FormUpload = useFormik({
+    initialValues: {
+      ID: item.ID,
+      Payment_Method_Code: item.Payment_Method_Code,
+      Status_Payment_Code : item.Status_Payment_Code,
+      Sender_Bank : '',
+      Sender_Name : '',
+      Image_Code : 0,
+      Total_Transfer : item.Total_Transfer,
+      Action : 'Approved',
+
+    },
+    onSubmit:   (values) => {
+      console.log(values)
+      if (values.Sender_Bank != '' || values.Sender_Name !='') {
+        uploadPayment(values)
+      } else {
+        ToastAndroid.show('Mohon lengkapi semua data',
+          ToastAndroid.SHORT)
+      }
+    },
+  })
+
+  const uploadPayment = async (values) => {
+    try {
+      setLoading(true)
+      const response = await PaymentAPI.UploadPayment(values)
+      console.log(response.data.result)
+      if (response.data.result) {
+        navigation.navigate('TransactionConfirm')
+      }
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      return error
+    }
+  }
+
 
   const Header = () => {
     return (
@@ -56,20 +104,6 @@ const TransactionUpload = (props) => {
     return(
       <View>
         <View style={styles.cardDetail}>
-          <Text style={styles.textTitle}>Nama pengirim di rekening Bank</Text>
-          <TextBox
-            placeholder='NAMA LENGKAP'
-            customStyle={styles.textInput}
-          />
-        </View>
-        <View style={styles.cardDetail}>
-          <Text style={styles.textTitle}>Transfer dari bank</Text>
-          <TextBox
-            placeholder='NAMA BANK'
-            customStyle={styles.textInput}
-          />
-        </View>
-        <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Transfer ke bank</Text>
             <View style={styles.ViewDescBank}>
@@ -84,14 +118,6 @@ const TransactionUpload = (props) => {
             <Text style={styles.Txtright}>Rp {FormatRupiah(item.Total_Transfer)}</Text>
           </View>
         </View>
-        {/* <View style={styles.cardDetail}>
-          <View>
-            <Text style={styles.textTitle}>Tanggal Transfer</Text>
-            <Text style={styles.Txtright}>
-              {moment(item.Created_Date).format('DD MMM YYYY h:mm A')}
-            </Text>
-          </View>
-        </View> */}
       </View>
     )
   }
@@ -103,7 +129,7 @@ const TransactionUpload = (props) => {
           title='Kirim'
           styles={styles.buttonStyle}
           textStyle={styles.textBuyClass}
-          onPress={()=> {navigation.navigate('TransactionConfirm')}}
+          onPress={FormUpload.handleSubmit}
         />
       </View>
     )
@@ -164,11 +190,30 @@ const TransactionUpload = (props) => {
   return (
     <>
       <View style={styles.containerMain}>
+        <Loader loading={loading}/>
         <Header />
         <ScrollView
           style={styles.containerScrollView}
           showsVerticalScrollIndicator={false}>
           <ButtonUpload />
+          <View style={styles.cardDetail}>
+            <Text style={styles.textTitle}>Nama pengirim di rekening Bank</Text>
+            <TextBox
+              form={FormUpload}
+              name='Sender_Name'
+              placeholder='NAMA LENGKAP'
+              customStyle={styles.textInput}
+            />
+          </View>
+          <View style={styles.cardDetail}>
+            <Text style={styles.textTitle}>Transfer dari bank</Text>
+            <TextBox
+              form={FormUpload}
+              name='Sender_Bank'
+              placeholder='NAMA BANK'
+              customStyle={styles.textInput}
+            />
+          </View>
           <DescUpload />
           <ButtonSend />
         </ScrollView>

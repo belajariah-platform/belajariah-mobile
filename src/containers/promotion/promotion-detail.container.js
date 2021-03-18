@@ -48,57 +48,6 @@ const PromotionDetail = () => {
     fetchDataPromotionDetail(promo_code)
   }, [])
 
-  // const promotion = [
-  //   {
-  //     ID: 1,
-  //     code: 'PRC00000001',
-  //     class_Code: 'CLC00000001',
-  //     title: 'Diskon 30% Pengguna Baru',
-  //     description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
-  //     promo_code : 'BLJRIAH',
-  //     discount: 30,
-  //     banner_image : Images.BannerPromotionsPenggunaBaru,
-  //     Header_Image: '',
-  //     Expired_Date: '',
-  //     Quota_User: 1000000,
-  //     Quota_Used: 0,
-  //     Is_Active: true,
-  //     Created_By: 'belajariah20@gmail.com',
-  //     Created_Date: '2021-02-04T11:22:39+07:00',
-  //     Modified_By: 'belajariah20@gmail.com',
-  //     Modified_Date: '2021-02-04T11:22:39+07:00',
-  //     Deleted_By: '',
-  //     Deleted_Date: '1753-07-01T00:00:00+07:07',
-  //   },
-  //   {
-  //     ID: 2,
-  //     code: 'PRC00000002',
-  //     class_Code: 'CLC00000001',
-  //     code_voucher: 'BLJEXPD',
-  //     title: 'Diskon 20% Untuk Perpanjangan Kelas',
-  //     description : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
-  //     promo_code : 'BLJRIAH',
-  //     discount: 20,
-  //     banner_image : Images.BannerPromotionExtendClass,
-  //     Header_Image: '',
-  //     Expired_Date: '',
-  //     Quota_User: 1000000,
-  //     Quota_Used: 0,
-  //     Is_Active: true,
-  //     Created_By: 'belajariah20@gmail.com',
-  //     Created_Date: '2021-02-04T11:22:39+07:00',
-  //     Modified_By: 'belajariah20@gmail.com',
-  //     Modified_Date: '2021-02-04T11:22:39+07:00',
-  //     Deleted_By: '',
-  //     Deleted_Date: '1753-07-01T00:00:00+07:07',
-  //   },
-  // ]
-
-  // //jika masuk melalui voucher code, bukan mapping index
-  // promoIndex == undefined && (
-  //   promoIndex = promotion.findIndex(item => item.code_voucher == promo_code)
-  // )
-
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
     await ToastAndroid.show('Kode Voucher Disalin', ToastAndroid.SHORT)
@@ -146,10 +95,8 @@ const PromotionDetail = () => {
           <View style={styles.containerCodePromo}>
             <View>
               <Image
-                style={{ width : 151, height:37 }}
-                source={state.Header_Image == '' ?
-                  Images.VoucherCode :
-                  { uri : state.Header_Image }}/>
+                source={Images.VoucherCode}
+                style={{ width : 151, height:37 }}/>
               <Text style={styles.textCode}>{state.Promo_Code}</Text>
             </View>
           </View>
@@ -176,7 +123,9 @@ const PromotionDetail = () => {
       <View style={styles.containerBanner}>
         <Image
           style={styles.ImgBanner}
-          source={Images.BannerPromotionExtendClass}
+          source={state.Header_Image == '' ?
+            Images.ImgDefault1 :
+            { uri :state.Header_Image }}
         />
       </View>
     )

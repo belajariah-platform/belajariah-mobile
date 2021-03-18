@@ -54,7 +54,10 @@ const InspiratifStoryDetail = () => {
           </View>
         </View>
         <View>
-          <Image source={Images.ImgHeadingBacaanInspiratif} style={styles.ImgHeading}/>
+          <Image
+            source={params.Header_Image == '' ?
+              Images.ImgDefault2 : params.Header_Image}
+            style={styles.ImgHeading}/>
           <TouchableOpacity
             activeOpacity={0.5}
             style={styles.TouchText}

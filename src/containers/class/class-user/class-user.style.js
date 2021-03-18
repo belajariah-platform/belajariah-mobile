@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   ImageClass : {
     width: 80,
     height: 80,
+    borderRadius : 12
   },
   TextClass : {
     width: '64%',

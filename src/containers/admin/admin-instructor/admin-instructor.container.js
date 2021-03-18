@@ -102,13 +102,17 @@ const AdminInstructor = () => {
   }
 
   const CardMentor = (item, index) => {
-    return(
+    return (
       <View>
         <Card
           key={index}
           containerStyle={styles.cardInstructor}>
           <View style={styles.ViewInstructorInfo}>
-            <Image source={Images.ImageProfileDefault} style={styles.ImgUstadz}/>
+            <Image
+              style={styles.ImgUstadz}
+              source={item.Image_Filepath == '' ?
+                Images.ImageProfileDefault : { uri : item.Image_Filepath }}
+            />
             <View style={{ flex : 1 }}>
               <Text style={styles.TxtTitleInstructor}>{item.Full_Name}</Text>
               <Text style={styles.email}>{item.email || 'example@gmail.com'}</Text>

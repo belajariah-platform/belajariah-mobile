@@ -50,8 +50,7 @@ const Profile = () => {
       return err
     }
   }
-
-
+  console.log(userInfo)
   useEffect(() => {
     fetchDataUser(userInfo.Email)
   }, [])
@@ -60,13 +59,14 @@ const Profile = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <ImageView
         isVisible={isModalFotoVisible}
+        filepath={userInfo.Image_Filename}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
       />
 
       <Images.ProfileBackground.default
-        width={'100%'}
+        width='100%'
         style={styles.background}
       />
 
@@ -103,11 +103,12 @@ const Profile = () => {
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
           size='large'
           activeOpacity={0.7}
-          containerStyle={styles.avatar}
           onPress={toggleModalFoto}
+          containerStyle={styles.avatar}
+          source={userInfo.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
         />
       </ImageBackground>
       <View style={styles.containerProfileHeader}>

@@ -165,7 +165,11 @@ const AdminUserAccept = ({ search }) => {
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <Image source={item.images} style={styles.avatarUser}/>
+            <Image
+              style={styles.avatarUser}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
+            />
             <TouchableOpacity
               style={{ flex : 1 }}
               activeOpacity={0.5}

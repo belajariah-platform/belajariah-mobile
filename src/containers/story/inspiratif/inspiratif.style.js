@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     width: 110,
     height: 102,
     marginRight: 10,
+    borderRadius : 12,
   },
   textStyle: {
     color: Color.black,

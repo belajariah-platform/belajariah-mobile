@@ -243,12 +243,20 @@ export default {
   IconRecordStartGradation : require('./IconRecordStartGradation.svg'),
 
   //Update Logo Payment
-  LogoOVO : require('./LogoOVO.png'),
-  LogoGopay : require('./LogoGopay.png'),
-  LogoBankBSI : require('./LogoBankBSI.png'),
-  LogoBankBCA : require('./LogoBankBCA.png'),
-  LogoBankBRI : require('./LogoBankBRI.png'),
-  LogoAlfamart : require('./LogoAlfamart.png'),
-  LogoIndomaret : require('./LogoIndomaret.png'),
-  LogoBankMandiri : require('./LogoBankMandiri.png'),
+  LogoOVO : require('./LogoOVO.svg'),
+  LogoGopay : require('./LogoGopay.svg'),
+  LogoBankBSI : require('./LogoBankBSI.svg'),
+  LogoBankBCA : require('./LogoBankBCA.svg'),
+  LogoBankBRI : require('./LogoBankBRI.svg'),
+  LogoAlfamart : require('./LogoAlfamart.svg'),
+  LogoIndomaret : require('./LogoIndomaret.svg'),
+  LogoBankMandiri : require('./LogoBankMandiri.svg'),
+
+  //Image Default
+  ImgDefault1 : require('./ImageDefault1.png'),
+  ImgDefault2 : require('./ImageDefault2.png'),
+  ImgDefault3 : require('./ImageDefault3.png'),
+  ImgDefault4 : require('./ImageDefault4.png'),
+  ImgDefault5 : require('./ImageDefault5.png'),
 }
+

@@ -40,6 +40,7 @@ const AdminTransactionDecline = ({ search }) => {
   const { loadingDecline, loadingDeclineScroll } = useSelector((state) => state.TransactionDeclineReducer)
 
   const [action, setAction] = useState('')
+  const [imagePath, setImagePath] = useState('')
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
@@ -132,6 +133,9 @@ const AdminTransactionDecline = ({ search }) => {
   }, [dataState])
 
   const CardUser = (item, index) => {
+    let isDisable, proofName
+    item.Image_Proof == '' ? (isDisable = true, proofName = 'Proof empty ...') :
+      (isDisable = false, proofName = item.Image_Filename)
     return(
       <View key={index}>
         <Card containerStyle={styles.cardUserOpacity}>
@@ -158,16 +162,23 @@ const AdminTransactionDecline = ({ search }) => {
           </View>
           <View style={{ ...styles.containerButtonAction, opacity : 0.5 }}>
             <View style={styles.ViewButtonAction}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                disabled={isDisable}
+                style={{ flex : 1 }}
+                onPress={() => {
+                  toggleModalFoto()
+                  setImagePath(item.Image_Proof)
+                }}>
                 <View style={styles.viewFoto}>
                   <Images.IconGallery.default
                     width={20}
                     height={20}
                     style={{ marginRight: 5 }}/>
-                  <Text>Screen_shoot787878xxx...</Text>
+                  <Text>{proofName}</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                disabled={isDisable}>
                 <Images.IconUnduhanAdmin.default
                   width={30}
                   height={30}
@@ -226,10 +237,11 @@ const AdminTransactionDecline = ({ search }) => {
         backButtonPress={() => toggleModal()}
       />
       <ImageView
+        filepath={imagePath}
         isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
-        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground
         source={Images.AdminBackground}

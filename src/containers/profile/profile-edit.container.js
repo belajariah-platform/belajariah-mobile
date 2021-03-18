@@ -299,9 +299,11 @@ const ProfileEdit = () => {
                   <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
                     <Avatar
                       activeOpacity={0.7}
-                      source={Images.ImageProfileDefault}
                       onPress={() =>  setModalVisible(true)}
-                      style={styles.avatar}/>
+                      style={styles.avatar}
+                      source={userInfo.Image_Filename == '' ?
+                        Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
+                    />
                   </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>
                     {filterText(FormPersonal.values['Full_Name'])}

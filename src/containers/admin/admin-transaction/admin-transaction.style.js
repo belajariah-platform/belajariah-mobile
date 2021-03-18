@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
 
   },
   ViewButtonAction: {
+    width : '100%',
     flexDirection: 'row',
     justifyContent : 'space-between',
   },

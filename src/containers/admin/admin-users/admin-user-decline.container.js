@@ -167,7 +167,8 @@ const AdminUserDecline = ({ search }) => {
         <Card containerStyle={styles.cardUserOpacity}>
           <View style={styles.ViewInstructorInfo}>
             <Image
-              source={item.images}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
               style={{ ...styles.avatarUser, opacity : 0.5 }}/>
             <TouchableOpacity
               style={{ flex : 1 }}

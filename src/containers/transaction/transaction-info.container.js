@@ -41,13 +41,24 @@ const TransactionInfo = (props) => {
       </View>
     )
   }
-
+  // console.log('ok', item)
   const PaymentMethod = () => {
+    let icon
+    item.Payment_Method == 'Ovo' ? icon = Images.LogoOVO :
+      item.Payment_Method == 'Go-pay' ? icon = Images.LogoGopay :
+        item.Payment_Method == 'BSI' ? icon = Images.LogoBankBSI :
+          item.Payment_Method == 'BCA' ? icon = Images.LogoBankBCA :
+            item.Payment_Method == 'BRI' ? icon = Images.LogoBankBRI :
+              item.Payment_Method == 'Mandiri' ? icon = Images.LogoBankMandiri :
+                item.Payment_Method == 'Indomaret' ? icon = Images.LogoIndomaret :
+                  item.Payment_Method == 'Alfamart' ? icon = Images.LogoAlfamart :
+                    icon = Images.LogoBankBSI
+
     return (
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View style={styles.viewIconBank}>
-            <Images.IconBankBNISyariah.default/>
+            <icon.default width={50} height={35}/>
           </View>
           <View style={styles.viewDetailBank}>
             <View>
@@ -82,10 +93,10 @@ const TransactionInfo = (props) => {
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           title='Upload bukti transfer sekarang'
-          onPress={()=> navigation.navigate('TransactionUpload', item)}
+          onPress={() => navigation.navigate('TransactionUpload', item)}
         />
         <TouchableOpacity style={styles.btnBuyClassTwo}
-          onPress={()=> {navigation.navigate('Pembayaran')}}>
+          onPress={() => navigation.navigate('Pembayaran')}>
           <Text style={styles.textBuyClassTwo}>Upload bukti transfer nanti</Text>
         </TouchableOpacity>
       </View>

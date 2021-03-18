@@ -2,15 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Image } from 'react-native'
 
+import { Images } from '../../assets'
 import { styles } from './card.style'
 
 const  Cards = (props)  => {
+  console.log(props.filepath)
   return (
     <View style={styles.container}>
       {props.imageTitle}
       <View >
         <Image
-          source={props.filepath}
+          source={props.filepath == '' ? Images.ImgDefault3 :
+            { uri : props.filepath }}
           style={styles.images}
         />
       </View>
@@ -30,7 +33,7 @@ const  Cards = (props)  => {
 Cards.propTypes = {
   price : PropTypes.object,
   rating : PropTypes.object,
-  filepath : PropTypes.number,
+  filepath : PropTypes.string,
   imageTitle : PropTypes.object,
   description : PropTypes.string,
 }

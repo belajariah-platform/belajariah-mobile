@@ -276,7 +276,10 @@ const ClassUser = (props) => {
                           style={styles.imageBackgroundCard}
                         >
                           <View style={styles.containerIconProgress}>
-                            <Image source={Images.TahsinImage} style={styles.ImageClass}/>
+                            <Image
+                              source={item.Class_Image == '' ?
+                                Images.ImgDefault5  : { uri : item.Class_Image }}
+                              style={styles.ImageClass}/>
                             <Text style={styles.TextClass}>{item.Class_Name}</Text>
                           </View>
                           <Text style={styles.ButtonTextClass}>Nilai Exam : {item.Post_Test_Scores}</Text>

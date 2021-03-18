@@ -104,6 +104,16 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 20,
   },
+  storyView : {
+    paddingVertical : 10,
+    paddingHorizontal : 15,
+  },
+  storyImage : {
+    width : 296,
+    height : 120,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   cardArticle: {
     width: 296,
     height: 227,
@@ -115,6 +125,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.22,
     marginHorizontal: 12,
+    backgroundColor : Color.white,
     shadowOffset: { width: 0, height: 1 },
   },
   textTitle: {

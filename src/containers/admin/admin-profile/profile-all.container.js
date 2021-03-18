@@ -55,10 +55,11 @@ const ProfileAll = ({ route }) => {
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
           size='large'
           activeOpacity={0.7}
           containerStyle={styles.avatar}
+          source={userInfo.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
           onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
         />
       </ImageBackground>

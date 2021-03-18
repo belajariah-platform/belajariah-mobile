@@ -62,10 +62,11 @@ const ProfileInstrcutor = ({ route }) => {
 
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
-          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
           activeOpacity={0.7}
           containerStyle={styles.avatar}
+          source={item.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : item.Image_Filename }}
+          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
         />
       </ImageBackground>
 

@@ -89,7 +89,11 @@ const InstructorEditProfile = () => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerAvatar}>
             <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
-              <Avatar source={Images.ImageProfileDefault} style={styles.avatar} />
+              <Avatar
+                style={styles.avatar}
+                source={userInfo.Image_Filename == '' ?
+                  Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
+              />
             </ImageBackground>
             <Text style={styles.containerTitleAvatar}>
               {filterText(FormPersonal.values['Full_Name'])}

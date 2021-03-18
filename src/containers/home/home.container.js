@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
+import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
-import { Avatar, Card } from 'react-native-elements'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
@@ -143,8 +143,8 @@ const Home = (props) => {
             onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
             <Image
               style={styles.cardCustom}
-              source={{ uri : item.Banner_Image ?
-                item.Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromo.png' }}
+              source={item.Banner_Image == '' ? Images.ImgDefault5 : {
+                uri : item.Banner_Image  }}
               resizeMode='cover'
             />
           </TouchableOpacity>
@@ -250,7 +250,7 @@ const Home = (props) => {
               activeOpacity={0.6}
               onPress={() => openModalInfoClass(item)}>
               <Cards
-                filepath={Images.BannerTahsin}
+                filepath={item.Class_Image}
                 rating={handleRating(item.Class_Rating)}
                 imageTitle={
                   <Images.JudulTahsin.default style={styles.svgClassTitle} />
@@ -303,20 +303,22 @@ const Home = (props) => {
           style={{ height: 238 }}>
           {stateStory.map((item, index) => {
             return (
-              <Card containerStyle={styles.cardArticle} key={index}>
-                <Images.BlogExample.default
-                  style={styles.svgArticleBackground}
-                />
-                <Text style={styles.textArticleDescription}>
-                  {handleSplitString(item.Content.substring(0, 90))} ...
-                </Text>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.btnReadMore}
-                  onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
-                  <Images.BtnReadMore.default />
-                </TouchableOpacity>
-              </Card>
+              <View style={styles.cardArticle} key={index}>
+                <Image source={item.Banner_Image == '' ?
+                  Images.ImgDefault2 : { uri : item.Banner_Image }}
+                style={styles.storyImage}/>
+                <View style={styles.storyView}>
+                  <Text style={styles.textArticleDescription}>
+                    {handleSplitString(item.Content.substring(0, 90))} ...
+                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.btnReadMore}
+                    onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
+                    <Images.BtnReadMore.default />
+                  </TouchableOpacity>
+                </View>
+              </View>
             )
           })}
         </ScrollView>

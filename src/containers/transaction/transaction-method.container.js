@@ -20,10 +20,17 @@ import {
   PaymentMethodAPI,
 } from '../../api'
 
+import {
+  Alerts,
+  Loader,
+  Buttons,
+  TextBox,
+  ModalInfo,
+  ButtonGradient,
+} from '../../components'
 import { Response } from '../../utils'
 import { FormatRupiah } from '../../utils'
 import { Images, Color } from '../../assets'
-import { ButtonGradient, ModalInfo, Buttons, TextBox, Alerts } from '../../components'
 
 import styles from './transaction-method.style'
 
@@ -35,8 +42,8 @@ const TransactionMethod = (props) => {
   const { userInfo } = useSelector((state) => state.UserReducer)
 
   const [state, setState] = useState([])
-  const [gateway, setGateway] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [gateway, setGateway] = useState('')
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [dataState] = useState({ skip: 0, take: 50, filter: [], filterString: '[]' })
 
@@ -51,9 +58,15 @@ const TransactionMethod = (props) => {
     }
   }
 
+  const FormVoucher = useFormik({
+    initialValues: { voucher_code: '' },
+    onSubmit:  (values) => {
+      claimVoucherCode(values.voucher_code)
+    },
+  })
+
   const claimVoucherCode = async (code) => {
     try {
-      setLoading(true)
       const response = await PromotionAPI.GetPromotion(code)
       const value =  FormCheckout.values['Total_Transfer']
       const res = response.data.result
@@ -72,29 +85,10 @@ const TransactionMethod = (props) => {
         FormCheckout.setFieldValue('Total_Transfer',
           value - (value * res.Discount/100))
       }
-      setLoading(false)
     } catch (err) {
-      setLoading(false)
       return err
     }
   }
-
-  const checkoutPayment = async (values) => {
-    console.log(values)
-    if (Object.keys(gateway).length != 0) {
-      navigation.navigate('TransactionInfo', gateway)
-    } else {
-      ToastAndroid.show('Metode pembayaran belum dipilih',
-        ToastAndroid.SHORT)
-    }
-  }
-
-  const FormVoucher = useFormik({
-    initialValues: { voucher_code: '' },
-    onSubmit:  (values) => {
-      claimVoucherCode(values.voucher_code)
-    },
-  })
 
   const FormCheckout = useFormik({
     initialValues: {
@@ -102,15 +96,34 @@ const TransactionMethod = (props) => {
       Class_Code: classes.Code,
       Promo_Code : '',
       Package_Code : packages.Code,
-      Payment_Method_Code : gateway.Code,
+      Payment_Method_Code : '',
       Status_Payment_Code : 'ENC00000047',
       Total_Transfer : parseInt(packages.Price_Discount),
 
     },
     onSubmit:  (values) => {
-      checkoutPayment(values)
+      if (values.Payment_Method_Code != '') {
+        checkoutPayment(values)
+      } else {
+        ToastAndroid.show('Metode pembayaran belum dipilih',
+          ToastAndroid.SHORT)
+      }
     },
   })
+
+  const checkoutPayment = async (values) => {
+    try {
+      setLoadingBtn(true)
+      const response =   await PaymentAPI.InsertPayment(values)
+      if (response.data.result) {
+        navigation.navigate('TransactionInfo', response.data.data)
+      }
+      setLoadingBtn(false)
+    } catch (error) {
+      setLoadingBtn(false)
+      return error
+    }
+  }
 
   useEffect(() => {
     fetchDataPaymentMethod(dataState)
@@ -181,7 +194,10 @@ const TransactionMethod = (props) => {
 
   const PaymentMethod = () => {
     return (
-      <RadioButton.Group onValueChange={(newGateway) => setGateway(newGateway)} value={gateway}>
+      <RadioButton.Group onValueChange={(newGateway) => {
+        FormCheckout.setFieldValue('Payment_Method_Code', newGateway)
+        setGateway(newGateway)}}
+      value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
           <View style={styles.cardMethods}>
@@ -191,7 +207,7 @@ const TransactionMethod = (props) => {
               {state.map((item, index) => {
                 return item.Type == 'e_wallet' &&  (
                   <View key={index} style={{ flexDirection : 'row' }}>
-                    <RadioButton key={index} value={item} />
+                    <RadioButton key={index} value={item.Code} />
                     <Text style={[styles.textGateway,
                       { textTransform: 'uppercase' }]}>
                       {item.Value}
@@ -207,7 +223,7 @@ const TransactionMethod = (props) => {
             {state.map((item, index) => {
               return item.Type == 'virtual_account' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item}/>
+                  <RadioButton value={item.Code}/>
                   <Text style={styles.textGateway}>{item.Value}</Text>
                 </View>
               )})}
@@ -219,7 +235,7 @@ const TransactionMethod = (props) => {
             {state.map((item, index) => {
               return item.Type == 'mart' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item} />
+                  <RadioButton value={item.Code} />
                   <Text style={styles.textGateway}>{item.Value}</Text>
                 </View>
               )})}
@@ -240,6 +256,7 @@ const TransactionMethod = (props) => {
           title='Checkout Now'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
+          disabled={loadingBtn ? true : false}
           onPress={FormCheckout.handleSubmit}
         />
       </View>
@@ -248,6 +265,7 @@ const TransactionMethod = (props) => {
 
   return (
     <View style={styles.containerMain}>
+      <Loader loading={loadingBtn}/>
       <ModalInfo
         isVisible={modalVisible}
         backdropPress={() => {

@@ -149,9 +149,9 @@ const AdminUserAll = ({ search }) => {
   }, [search])
 
   useEffect(() => {
+    fetchDataConsultation(dataState)
     setOptionSelected({})
     setMsgSelected(states)
-    fetchDataConsultation(dataState)
   }, [dataState])
 
   // useEffect(() => {
@@ -170,7 +170,11 @@ const AdminUserAll = ({ search }) => {
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <Image source={item.images} style={styles.avatarUser}/>
+            <Image
+              style={styles.avatarUser}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
+            />
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={()=> navigation.navigate('AdminProfileAll', item)}

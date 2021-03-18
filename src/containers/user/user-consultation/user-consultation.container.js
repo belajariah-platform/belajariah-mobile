@@ -20,12 +20,13 @@ const Consultation = () => {
 
   const [state, setState] = useState([])
   const [loading, setLoading] = useState(false)
-  const [dataState] = useState({ skip: 0, take: 100, filter: [], filterString: '[]' })
+  const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'ASC' })
 
-  const fetchDataUserClass = async ({ skip, take, filterString }) => {
+
+  const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
     try {
       setLoading(true)
-      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString)
+      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
         setLoading(false)

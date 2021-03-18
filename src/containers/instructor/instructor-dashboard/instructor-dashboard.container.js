@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
+import { LoadingView } from '../../../components'
 import { ClassAPI, } from '../../../api'
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
@@ -54,41 +55,43 @@ const InstructorDashboard = () => {
         <Text style={styles.textSubTitle}>
           ayo bantu mereka koreksi bacaannya
         </Text>
-        <Swiper
-          containerStyle={styles.contentSwiper}
-          activeDotStyle={styles.activeDot}
-          loop={false}>
-          {state.map((classes, classgroupIndex) => {
-            return (
-              <View key={classgroupIndex} style={styles.containerRowView}>
-                {ClassesGrouping[0].map((item, classIndex) => {
-                  return (
-                    <Card
-                      key={classIndex}
-                      containerStyle={styles.containerCard}>
-                      <ImageBackground
-                        source={Images.InstructorCardTahsin}
-                        style={styles.cardBackground}
-                        imageStyle={styles.illustration}>
-                        <Text style={styles.textClassName}>Kelas {item.Class_Initial}</Text>
-                        <Text
-                          style={
-                            styles.textTaskCount
-                          }>{`${100} Tugas Tersedia`}</Text>
-                        <TouchableOpacity
-                          onPress={() =>
-                            navigation.navigate('InstructorJob', item)
-                          }>
-                          <Text style={styles.textBtnViewTask}>Lihat Tugas</Text>
-                        </TouchableOpacity>
-                      </ImageBackground>
-                    </Card>
-                  )
-                })}
-              </View>
-            )
-          })}
-        </Swiper>
+        {loading ? <LoadingView/> : (
+          <Swiper
+            containerStyle={styles.contentSwiper}
+            activeDotStyle={styles.activeDot}
+            loop={false}>
+            {state.map((classes, classgroupIndex) => {
+              return (
+                <View key={classgroupIndex} style={styles.containerRowView}>
+                  {ClassesGrouping[0].map((item, classIndex) => {
+                    return (
+                      <Card
+                        key={classIndex}
+                        containerStyle={styles.containerCard}>
+                        <ImageBackground
+                          source={Images.InstructorCardTahsin}
+                          style={styles.cardBackground}
+                          imageStyle={styles.illustration}>
+                          <Text style={styles.textClassName}>Kelas {item.Class_Initial}</Text>
+                          <Text
+                            style={
+                              styles.textTaskCount
+                            }>{`${100} Tugas Tersedia`}</Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('InstructorJob', item)
+                            }>
+                            <Text style={styles.textBtnViewTask}>Lihat Tugas</Text>
+                          </TouchableOpacity>
+                        </ImageBackground>
+                      </Card>
+                    )
+                  })}
+                </View>
+              )
+            })}
+          </Swiper>
+        )}
       </View>
     )
   }
