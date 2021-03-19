@@ -34,8 +34,8 @@ const AlquranDetail = (props) => {
   const fetchDataQuran = async (params) => {
     try {
       const dataObj = {
-        id: params.id,
-        count: params.count_ayat,
+        id: params.number,
+        count: params.numberOfVerses,
       }
       const response = await QuranAPI.GetDetailQuran(dataObj)
       if (response.status === Response.SUCCESS) {
@@ -64,14 +64,16 @@ const AlquranDetail = (props) => {
           <Images.ButtonBack.default />
         </TouchableOpacity>
         <View style={styles.containerTitle}>
-          <Text style={styles.textTitle}>{params.surat_name}</Text>
+          <Text style={styles.textTitle}>{params.name.transliteration.id}</Text>
           <View style={styles.containerTitleMetadata}>
+            <Text style={styles.textRegularWhite}>{params.revelation.id}</Text>
+            <Text style={styles.textRegularWhite}> - </Text>
             <Text style={styles.textRegularWhite}>
-              {params.surat_terjemahan}
+              {params.name.translation.id}
             </Text>
             <Text style={styles.textRegularWhite}> - </Text>
             <Text style={styles.textRegularWhite}>
-              {params.count_ayat} Ayat
+              {params.numberOfVerses} Ayat
             </Text>
           </View>
         </View>
@@ -91,25 +93,24 @@ const AlquranDetail = (props) => {
           size={30} />
       ) : (
         <FlatList
-          data={dataDetail}
+          data={dataDetail.verses}
           style={styles.containerScrollview}
           showsVerticalScrollIndicator ={false}
           contentContainerStyle={{ paddingBottom: 25 }}
           keyExtractor={(item, index) =>  index.toString()}
           renderItem={({ item, index }) => {
-            const regex = /<[^>]*>?/gm
-            const ayat_translate = item.translation_aya_text.replace(regex, '')
-            const ayat_number = ArabicNumbers(item.aya_number)
+            const ayat_translate = item.translation.id
+            const ayat_number = ArabicNumbers(item.number.inSurah)
             return (
-              <View key={index}>
+              <View key={index} style={{ paddingBottom: 4, borderBottomWidth: 0.5 }}>
                 <View style={styles.containerAyat}>
                   <Text style={styles.textArabNumber}>({ayat_number})</Text>
-                  <Text style={styles.textArab}>{item.aya_text}</Text>
+                  <Text style={styles.textArab}>{item.text.arab}</Text>
                 </View>
                 <Text
                   style={
                     styles.textRegularBlack
-                  }>{`${item.aya_number}. ${ayat_translate}`}</Text>
+                  }>{`${item.number.inSurah}. ${ayat_translate}`}</Text>
               </View>
             )
           }}/>
