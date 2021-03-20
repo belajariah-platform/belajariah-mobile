@@ -5,9 +5,9 @@ import {
   Login,
   Alquran,
   Register,
+  CheckEmail,
   UserVerify,
   Introduction,
-  ChangePassword,
   ConfirmPassword,
   UserVerifyPassword,
 } from '../../containers'
@@ -23,8 +23,8 @@ const PublicNavigation = () => {
       <Stack.Screen name='Alquran' component={Alquran} />
       <Stack.Screen name='Register' component={Register} />
       <Stack.Screen name='UserVerify' component={UserVerify}/>
+      <Stack.Screen name='CheckEmail' component={CheckEmail} />
       <Stack.Screen name='Introduction' component={Introduction} />
-      <Stack.Screen name='ChangePassword' component={ChangePassword} />
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
       <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
     </Stack.Navigator>

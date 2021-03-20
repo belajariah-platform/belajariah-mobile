@@ -14,6 +14,19 @@ const GetAllPayment = async (skip, take, filters, sort, search) =>  {
   }
 }
 
+const GetAllPaymentReject = async (skip, take, filters, sort, search) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments_reject?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}&search=${search}`,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 const GetAllPaymentByUserID = async (skip, take, filters, sort) =>  {
   try {
     const headers = await Header()
@@ -71,6 +84,7 @@ const UploadPayment = async (formData) => {
 
 export default {
   GetAllPayment,
+  GetAllPaymentReject,
   GetAllPaymentByUserID,
   InsertPayment,
   ConfirmPayment,

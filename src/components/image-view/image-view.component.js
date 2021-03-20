@@ -17,7 +17,6 @@ const  ImageView = (props)  => {
       url: props.filepath,
     }]
 
-  console.log(props.source)
   return (
     <>
       <Modal isVisible={props.isVisible} onBackButtonPress={props.backButtonPress}>

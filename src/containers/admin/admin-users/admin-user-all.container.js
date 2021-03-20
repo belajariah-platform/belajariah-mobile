@@ -10,6 +10,7 @@ import {
   View,
   Image,
   FlatList,
+  ToastAndroid,
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
@@ -38,6 +39,7 @@ const AdminUserAll = ({ search }) => {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
   const [msgSelected, setMsgSelected] = useState([])
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
 
@@ -48,6 +50,7 @@ const AdminUserAll = ({ search }) => {
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
       dispatch({ type: CONSUL_ALL_REQ })
+      filterString='[{"type": "text", "field" : "Status", "value": "Waiting for Approval"}]'
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
@@ -70,6 +73,33 @@ const AdminUserAll = ({ search }) => {
       })
     }, 500)
     return () => clearTimeout(delay)
+  }
+
+  const handleConfirm = async (action, item) => {
+    const values = {
+      ID : item.ID,
+      Action : action,
+      User_Code : item.User_Code,
+      Class_Code : item.Class_Code,
+      Status_Code : item.Status_Code,
+      Expired_Date : item.Expired_Date,
+    }
+
+    try {
+      setLoadingBtn(true)
+      const response = await ConsultationAPI.ConfirmConsultation(values)
+      if (!response.data.result) {
+        ToastAndroid.show(`Errror ${response.data.error}`,
+          ToastAndroid.SHORT)
+        setLoadingBtn(false)
+      } else {
+        setLoadingBtn(false)
+        fetchDataConsultation(dataState)
+      }
+    } catch (error) {
+      setLoadingBtn(false)
+      return error
+    }
   }
 
   const handlePlayList = (item) => {
@@ -229,11 +259,15 @@ const AdminUserAll = ({ search }) => {
             <ButtonGradient
               title='Tolak'
               styles={styles.ButtonAction}
+              disabled={loadingBtn ? true : false}
               colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+              onPress={() => handleConfirm('Rejected', item)}
             />
             <ButtonGradient
               title='Terima'
               styles={styles.ButtonAction}
+              disabled={loadingBtn ? true : false}
+              onPress={() => handleConfirm('Approved', item)}
             />
           </View>
         </Card>

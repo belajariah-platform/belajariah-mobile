@@ -34,7 +34,7 @@ import {
 import { InspiratifStory, InspiratifStoryDetail } from './story'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
-import { Login, Register, Introduction, ChangePassword, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword } from './user'
+import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword } from './user'
 
 
 export {
@@ -51,6 +51,7 @@ export {
   AdminUser,
   ContactUs,
   ClassUser,
+  CheckEmail,
   HomeSearch,
   UserVerify,
   ClassDetail,
@@ -64,7 +65,6 @@ export {
   PrivacyPolice,
   AlquranDetail,
   ClassLearning,
-  ChangePassword,
   AdminDashboard,
   InstructorTask,
   AdminProfileAll,

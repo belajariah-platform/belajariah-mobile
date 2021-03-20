@@ -59,31 +59,27 @@ const TransactionMethod = (props) => {
   }
 
   const FormVoucher = useFormik({
-    initialValues: { voucher_code: '' },
+    initialValues: {
+      Promo_Code: '',
+      Class_Code : classes.Code,
+    },
     onSubmit:  (values) => {
-      claimVoucherCode(values.voucher_code)
+      claimVoucherCode(values)
     },
   })
 
-  const claimVoucherCode = async (code) => {
+  const claimVoucherCode = async (values) => {
     try {
-      const response = await PromotionAPI.GetPromotion(code)
-      const value =  FormCheckout.values['Total_Transfer']
-      const res = response.data.result
-      if (res.id == 0) {
-        Alerts(false, 'Mohon maaf kode promo sudah tidak berlaku lagi')
-      } else if (res.id !== 0 && res.Quota_User === res.Quota_Used) {
-        Alerts(false, 'Mohon maaf kuota promo sudah penuh ')
-      } else if (code == 'BLJEXPD') {
-        const filter = `[{"type": "text", "field" : "class_code", "value": "${classes.Code}"},
-        {"type": "text", "field" : "promo_code", "value": "${res.Code}"}]`
-        const response = await PaymentAPI.GetAllPaymentByUserID(0, 2, filter)
-        if (response.data.data.length !== 0) {
-          Alerts(false, 'Mohon maaf kode promo tidak bisa digunakan')
+      const response = await PromotionAPI.ClaimPromotion(values)
+      if (response.status === Response.SUCCESS) {
+        if (response.data.data.Discount == 0) {
+          Alerts(false, response.data.message)
+        } else {
+          const value =  FormCheckout.values['Total_Transfer']
+          setModalVisible(false)
+          FormCheckout.setFieldValue('Total_Transfer',
+            value - (value * response.data.data.Discount/100))
         }
-      } else {
-        FormCheckout.setFieldValue('Total_Transfer',
-          value - (value * res.Discount/100))
       }
     } catch (err) {
       return err
@@ -287,17 +283,17 @@ const TransactionMethod = (props) => {
               <View style={styles.viewModalInput}>
                 <TextBox
                   form={FormVoucher}
-                  name='voucher_code'
+                  name='Promo_Code'
                   placeholder='Contoh: BLJRIAH'
                   customStyle={styles.InputVoucher}
                 />
                 <Buttons
                   title='KLAIM'
                   onPress={FormVoucher.handleSubmit}
-                  disabled={FormVoucher.values['voucher_code']
+                  disabled={FormVoucher.values['Promo_Code']
                     .length > 4 ? false : true}
                   style={[styles.ButtonClaim,
-                    FormVoucher.values['voucher_code'].length > 4 ?
+                    FormVoucher.values['Promo_Code'].length > 4 ?
                       { backgroundColor : Color.purpleButton } :
                       { backgroundColor : '#cbcbcb' } ]}
                 />

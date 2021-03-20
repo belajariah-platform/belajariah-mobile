@@ -2,20 +2,23 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
-import { View, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
 
-import { Topbar, Loader, Buttons, TextBox } from '../../../components'
+import {
+  Alerts,
+  Topbar,
+  Loader,
+  Buttons,
+  TextBox,
+} from '../../../components'
+import { UserAPI } from '../../../api'
 import { styles } from './user-verify.style'
 
 const UserVerify = () => {
   const navigation = useNavigation()
-  const { isLogin } = useSelector((state) => state.UserReducer)
-
   const [loading, setLoading] = useState(false)
-  const [success] = useState(true)
 
   const FormSubmit = useFormik({
     initialValues: { verify_code: '' },
@@ -23,11 +26,17 @@ const UserVerify = () => {
       verify_code: Yup.string()
         .required('Kode verifikasi harus diisi'),
     }),
-    onSubmit: () => {
+    onSubmit: async (values, form) => {
       setLoading(true)
       try {
-        if (success === true) {
-          navigation.navigate(isLogin ? 'Profile' : 'Login')
+        const response = await UserAPI.VerifyAccount(values)
+        if (!response.data.result) {
+          setLoading(false)
+          Alerts(response.data.result, response.data.message)
+        } else {
+          form.resetForm()
+          setLoading(false)
+          navigation.navigate('Login')
         }
       } catch (err) {
         return err
@@ -36,9 +45,20 @@ const UserVerify = () => {
     },
   })
 
+  const resetVerification = async (email) => {
+    try {
+      const response = await UserAPI.ResetVerification(email)
+      if (!response.data.result) {
+        //
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      {loading && <Loader loading={loading}/>}
       <Topbar title='Verifikasi Akun' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -53,6 +73,10 @@ const UserVerify = () => {
               form={FormSubmit}
               placeholder='Kode Verifikasi'
             />
+            <TouchableOpacity
+              onPress={() => resetVerification()}>
+              <Text style={styles.leftText}>Reset kode verifikasi</Text>
+            </TouchableOpacity>
             <Buttons title='Verifikasi'
               onPress={FormSubmit.handleSubmit}/>
           </View>

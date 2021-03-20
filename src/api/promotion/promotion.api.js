@@ -27,4 +27,18 @@ const GetPromotion = async (code) =>  {
   }
 }
 
-export default { GetAllPromotion, GetPromotion }
+const ClaimPromotion = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/promotion/claim`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default { GetAllPromotion, GetPromotion, ClaimPromotion }

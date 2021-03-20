@@ -24,7 +24,6 @@ import {
   ImageView,
   ModalRepair,
   LoadingView,
-  ButtonGradient,
 } from '../../../components'
 
 import { Images } from '../../../assets'
@@ -72,10 +71,6 @@ const AdminTransactionAccept = ({ search }) => {
       ...dataState,
       search : event,
     })
-  }
-
-  const handleRevised = () => {
-    console.log('Revised')
   }
 
   const onRefreshing = () => {
@@ -184,16 +179,16 @@ const AdminTransactionAccept = ({ search }) => {
               <Text style={styles.TxtBank}>{item.Payment_Method}</Text>
               <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.Total_Transfer)}</Text>
             </View>
-            <View>
+            {/* <View>
               {item.Status_Class == 'In Progress' &&(
                 <ButtonGradient
                   title='Perbaiki'
                   styles={styles.ButtonActionReject}
-                  colors={['#0bb091', '#16c4a4', '#0bb091']}
                   onPress = {toggleModalRepair}
+                  colors={['#0bb091', '#16c4a4', '#0bb091']}
                 />
               )}
-            </View>
+            </View> */}
           </View>
         </Card>
       </View>
@@ -212,7 +207,6 @@ const AdminTransactionAccept = ({ search }) => {
   return (
     <View>
       <ModalRepair
-        submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
         backButtonPress={() => toggleModalRepair()}

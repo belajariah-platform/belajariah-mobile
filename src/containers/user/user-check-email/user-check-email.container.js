@@ -5,25 +5,38 @@ import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { View, ScrollView } from 'react-native'
 
-import { styles } from './user-change-password.style'
-import { Topbar, Loader, Buttons, TextBox } from '../../../components'
+import {
+  Alerts,
+  Topbar,
+  Loader,
+  Buttons,
+  TextBox,
+} from '../../../components'
+
+import { UserAPI } from '../../../api'
+import { styles } from './user-check-email.style'
 
 const ChangePassword = (props) => {
   const [loading, setLoading] = useState(false)
-  const [success] = useState(true)
 
   const FormSubmit = useFormik({
-    initialValues: { email: '' },
+    initialValues: { Email: '' },
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
     }),
-    onSubmit: () => {
+    onSubmit: async (values, form) => {
       setLoading(true)
       try {
-        if (success === true) {
-          props.navigation.navigate('UserVerifyPassword')
+        const response = await UserAPI.GetUser(values.Email)
+        if (response.data.result.ID == 0) {
+          setLoading(false)
+          Alerts(false, 'Email tidak ditemukan')
+        } else {
+          form.resetForm()
+          setLoading(false)
+          props.navigation.navigate('UserVerify')
         }
       } catch (err) {
         return err
@@ -46,7 +59,7 @@ const ChangePassword = (props) => {
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
               form={FormSubmit}
-              name='email'
+              name='Email'
               placeholder='Alamat Email'
             />
             <Buttons title='Kirim' onPress={FormSubmit.handleSubmit} />

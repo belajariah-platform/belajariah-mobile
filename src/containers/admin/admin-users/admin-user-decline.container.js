@@ -48,6 +48,7 @@ const AdminUserDecline = ({ search }) => {
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
       dispatch({ type: CONSUL_DECLINE_REQ })
+      filterString='[{"type": "text", "field" : "Status", "value": "Rejected"}]'
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)

@@ -20,6 +20,76 @@ const SignOut = () => async dispatch => {
   })
 }
 
+const SignUp = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/register`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const VerifyAccount = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.put(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/verify_account`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const VerifyPassword = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.put(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/verifiy_password`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const ResetVerification = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.put(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/reset_verification`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const ChangePassword = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.put(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/change_password`,
+    formData,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 const GetUser = async (email) =>  {
   try {
     const headers = await Header()
@@ -47,4 +117,14 @@ const UpdateProfile = async (formData) =>  {
   }
 }
 
-export default { SignIn, SignOut, GetUser, UpdateProfile }
+export default {
+  SignIn,
+  SignOut,
+  SignUp,
+  GetUser,
+  VerifyAccount,
+  UpdateProfile,
+  ChangePassword,
+  VerifyPassword,
+  ResetVerification,
+}

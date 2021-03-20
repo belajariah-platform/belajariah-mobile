@@ -8,8 +8,8 @@ import { styles } from './modal-confirm.style'
 
 const ModalConfirm = (props) => {
   let action, color
-  props.action == 'approved' ?  (action = 'menerima', color = '#6e248d' ) :
-    props.action == 'revised' ?  (action = 'membatalkan', color = '#d73c2c') :
+  props.action == 'Approved' ?  (action = 'menerima', color = '#6e248d' ) :
+    props.action == 'Revised' ?  (action = 'membatalkan', color = '#d73c2c') :
       (action = 'menolak', color = '#d73c2c')
 
   return(

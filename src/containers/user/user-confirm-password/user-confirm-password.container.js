@@ -9,10 +9,12 @@ import { useNavigation } from '@react-navigation/native'
 import {
   View,
   Image,
+  Alerts,
   ScrollView,
   TouchableWithoutFeedback
 } from 'react-native'
 
+import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { Topbar, Loader, Buttons, TextBox } from '../../../components'
 
@@ -22,24 +24,30 @@ import { styles } from './user-confirm-password.style'
 const ConfirmPassword = () => {
   const navigation = useNavigation()
   const { isLogin } = useSelector((state) => state.UserReducer)
+
+  const [loading, setLoading] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
-  const [loading, setLoading] = useState(false) 
-  const [success] = useState(true)
 
   const FormSubmit = useFormik({
-    initialValues: { password: '', confirm_password: '' },
+    initialValues: { Password: '', Confirm_Password: '' },
     validationSchema: Yup.object({
-      password: Yup.string()
+      Password: Yup.string()
         .min(8, 'Password minimal 8 karakter')
         .required('Password harus diisi'),
-      confirm_password: Yup.string()
-        .oneOf([Yup.ref('password')], 'Konfirmasi password tidak sama')
+      Confirm_Password: Yup.string()
+        .oneOf([Yup.ref('Password')], 'Konfirmasi password tidak sama')
         .required('Password harus diisi'),
     }),
-    onSubmit: () => {
+    onSubmit: async (values, form) => {
       setLoading(true)
       try {
-        if (success === true) {
+        const response = await UserAPI.ChangePassword(values)
+        if (!response.data.result) {
+          setLoading(false)
+          Alerts(response.data.result, response.data.message)
+        } else {
+          form.resetForm()
+          setLoading(false)
           navigation.navigate(isLogin ? 'Profile' : 'Login')
         }
       } catch (err) {
@@ -61,7 +69,7 @@ const ConfirmPassword = () => {
 
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      {loading && <Loader loading={loading}/>}
       <Topbar title='Setel Ulang Kata Sandi' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,7 +80,7 @@ const ConfirmPassword = () => {
             </Text>
             <Text style={styles.text}>Password Baru</Text>
             <TextBox
-              name='password'
+              name='Password'
               form={FormSubmit}
               placeholder='Password Baru'
               accessoryRight={renderIcon}
@@ -80,10 +88,10 @@ const ConfirmPassword = () => {
             />
             <Text style={styles.text}>Konfirmasi Password</Text>
             <TextBox
-              name='confirm_password'
               form={FormSubmit}
-              placeholder='Konfirmasi Password'
+              name='Confirm_Password'
               accessoryRight={renderIcon}
+              placeholder='Konfirmasi Password'
               secureTextEntry={secureTextEntry}
             />
             <Buttons title='Ubah'

@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import {
   View,
   FlatList,
+  ToastAndroid,
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
@@ -40,13 +41,15 @@ const AdminTransactionDecline = ({ search }) => {
   const { loadingDecline, loadingDeclineScroll } = useSelector((state) => state.TransactionDeclineReducer)
 
   const [action, setAction] = useState('')
+  const [dataObj, setDataObj] = useState({})
+  const [remarks, setRemarks] = useState('')
   const [imagePath, setImagePath] = useState('')
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-  const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
 
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
@@ -56,15 +59,12 @@ const AdminTransactionDecline = ({ search }) => {
   const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
     try {
       dispatch({ type: TRANSACT_DECLINE_REQ })
-      filterString='[{"type": "text", "field" : "status_payment", "value": "Failed"}]'
-      const response = await PaymentAPI.GetAllPayment(skip, take, filterString, sort, search)
+      const response = await PaymentAPI.GetAllPaymentReject(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: TRANSACT_DECLINE_SUCC })
-      } else {
-        dispatch({ type: TRANSACT_DECLINE_FAIL })
       }
+      dispatch({ type: TRANSACT_DECLINE_SUCC })
     } catch (err) {
       dispatch({ type: TRANSACT_DECLINE_FAIL })
       return err
@@ -78,21 +78,43 @@ const AdminTransactionDecline = ({ search }) => {
     })
   }
 
-  const toggleModal = (e) => {
-    setAction(e)
+  const toggleModal = (action, item) => {
+    setDataObj(item)
+    setAction(action)
     setModalVisible(!modalVisible)
   }
 
-  const handleSubmit = () => {
-    if (action == 'approved') {
-      console.log('approved')
-    } else {
-      console.log('rejected')
-    }
+  const toggleModalRepair = (item) => {
+    setDataObj(item)
+    setmodalRepairVisible(!modalRepairVisible)
   }
 
-  const handleRevised = () => {
-    console.log('Revised')
+  const handleRevised = async (item) => {
+    const values = {
+      ID : item.ID,
+      Remarks : remarks,
+      Action : 'Revised',
+      User_Code : item.User_Code,
+      Class_Code : item.Class_Code,
+      Package_Code : item.Package_Code,
+      Status_Payment_Code : item.Status_Payment_Code,
+    }
+
+    try {
+      setLoadingBtn(true)
+      const response = await PaymentAPI.ConfirmPayment(values)
+      if (!response.data.result) {
+        ToastAndroid.show(`Errror ${response.data.error}`,
+          ToastAndroid.SHORT)
+        setLoadingBtn(false)
+      } else {
+        setLoadingBtn(false)
+        fetchDataTransaction(dataState)
+      }
+    } catch (error) {
+      setLoadingBtn(false)
+      return error
+    }
   }
 
   const onRefreshing = () => {
@@ -195,14 +217,16 @@ const AdminTransactionDecline = ({ search }) => {
               <ButtonGradient
                 title='Perbaiki'
                 styles={styles.ButtonAction}
+                disabled={loadingBtn ? true : false}
                 colors={['#0bb091', '#16c4a4', '#0bb091']}
-                onPress = {toggleModalRepair}
+                onPress = {() => toggleModalRepair(item)}
               /> :
               <ButtonGradient
                 title='Batalkan'
                 styles={styles.ButtonActionReject}
-                onPress = {() => toggleModal('revised')}
+                disabled={loadingBtn ? true : false}
                 colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+                onPress = {() => toggleModal('Revised', item)}
               />
             }
           </View>
@@ -224,17 +248,19 @@ const AdminTransactionDecline = ({ search }) => {
 
   return (
     <View>
-      <ModalRepair
-        submit={() => handleRevised()}
-        isVisible={modalRepairVisible}
-        backdropPress={() => toggleModalRepair()}
-        backButtonPress={() => toggleModalRepair()}
-      />
       <ModalConfirm
+        action={action}
         isVisible={modalVisible}
-        submit={() => handleSubmit()}
+        submit={() => handleRevised(dataObj)}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
+      />
+      <ModalRepair
+        isVisible={modalRepairVisible}
+        onChangeText={(e) => setRemarks(e)}
+        submit={() => handleRevised(dataObj)}
+        backdropPress={() => toggleModalRepair()}
+        backButtonPress={() => toggleModalRepair()}
       />
       <ImageView
         filepath={imagePath}

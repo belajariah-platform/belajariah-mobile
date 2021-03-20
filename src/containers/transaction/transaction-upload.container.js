@@ -16,6 +16,7 @@ import {
 import {
   Loader,
   TextBox,
+  ModalInfo,
   ButtonGradient,
 } from '../../components'
 
@@ -30,6 +31,7 @@ const TransactionUpload = (props) => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [dataImage, setDataImage] = useState({})
+  const [modalVisible, setModalVisible] = useState(false)
 
   const FormUpload = useFormik({
     initialValues: {
@@ -60,7 +62,7 @@ const TransactionUpload = (props) => {
       const response = await PaymentAPI.UploadPayment(values)
       console.log(response.data.result)
       if (response.data.result) {
-        navigation.navigate('TransactionConfirm')
+        toggleModal()
       }
       setLoading(false)
     } catch (error) {
@@ -69,6 +71,7 @@ const TransactionUpload = (props) => {
     }
   }
 
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const Header = () => {
     return (
@@ -187,6 +190,23 @@ const TransactionUpload = (props) => {
       }
     }
   }
+
+  const UploadSent = () => {
+    return (
+      <View style={styles.containerModal}>
+        <Text style={styles.textModalTitle}>Bukti pembayaran anda Terkirim</Text>
+        <View style={styles.iconComplete}>
+          <Images.IconCompletePurple.default width={120} height={120} />
+        </View>
+        <View style={styles.contentModal}>
+          <Text style={styles.textModalDesc}>Terima Kasih, bukti pembayaran anda sedang diproses.
+            <Text style={styles.textModalDescBold}> Kelas dapat diakses setelah pembayaran anda kami verifikasi.</Text>
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <>
       <View style={styles.containerMain}>
@@ -218,6 +238,12 @@ const TransactionUpload = (props) => {
           <ButtonSend />
         </ScrollView>
       </View>
+      <ModalInfo
+        isVisible={modalVisible}
+        backdropPress={() => navigation.navigate('Pembayaran')}
+        backButtonPress={() => navigation.navigate('Pembayaran')}
+        renderItem={<UploadSent/>}
+      />
     </>
   )
 }

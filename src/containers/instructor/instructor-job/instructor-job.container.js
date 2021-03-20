@@ -9,8 +9,8 @@ import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
-  Alert,
   FlatList,
+  ToastAndroid,
   RefreshControl,
   TouchableOpacity,
   ActivityIndicator,
@@ -37,15 +37,21 @@ const InstructorJob = ({ route }) => {
   const item = route.params
   const dispatch = useDispatch()
   const navigation = useNavigation()
+
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [stateCategory, setStateCategory] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
-  const [stateCategory, setStateCategory] = useState([])
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
 
+
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const { userInfo } = useSelector((state) => state.UserReducer)
   const { loading, loadingScroll } = useSelector((state) => state.ConsultationReducer)
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
@@ -78,6 +84,34 @@ const InstructorJob = ({ route }) => {
     }
   }
 
+  const handleSubmit = async  (item) => {
+    const values = {
+      ID : item.ID,
+      Action : 'Approved',
+      Is_Action_Taken : true,
+      Taken_Code : userInfo.ID,
+      User_Code : item.User_Code,
+      Class_Code : item.Class_Code,
+      Status_Code : item.Status_Code,
+      Expired_Date : item.Expired_Date,
+    }
+    try {
+      setLoadingBtn(true)
+      const response = await ConsultationAPI.UpdateConsultation(values)
+      if (!response.data.result) {
+        ToastAndroid.show(`Errror ${response.data.error}`,
+          ToastAndroid.SHORT)
+        setLoadingBtn(false)
+      } else {
+        fetchDataConsultation(dataState)
+        setLoadingBtn(false)
+      }
+    } catch (error) {
+      setLoadingBtn(false)
+      return error
+    }
+  }
+
   const onDataStateChange = (sort, filter) => {
     setDataState({
       ...dataState,
@@ -85,9 +119,6 @@ const InstructorJob = ({ route }) => {
       filterString : filter
     })
   }
-  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
-
-  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   useEffect(() => {
     fetchDataConsultation(dataState)
@@ -179,12 +210,8 @@ const InstructorJob = ({ route }) => {
           <ButtonGradient
             title='Ambil'
             styles={styles.btnApply}
-            onPress={() => {
-              Alert.alert(
-                'Accept Job, Pop Card, and go to InstructorTask',
-              )
-              navigation.navigate('InstructorTask')
-            }}
+            onPress={() => handleSubmit(items)}
+            disabled={loadingBtn ? true : false}
           />
         </View>
       </Card>

@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
+  containerInvalidPromo: {
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingTop: '16%',
+  },
   containerMethod: {
     marginVertical: 16,
   },
@@ -246,6 +251,10 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius : 20,
   },
+  ImgInvalidBanner: {
+    height: 260,
+    width: 340,
+  },
   TitlePromo: {
     marginVertical: 5,
     color: Color.black,
@@ -261,10 +270,12 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
   },
-  DescOtherPromo: {
+  DescInvalidPromo: {
+    lineHeight: 26,
     marginVertical: 5,
     color: Color.black,
-    fontSize: FontSize.small,
+    textAlign: 'center',
+    fontSize: FontSize.large,
     fontFamily: FontType.regular,
   },
   textCode : {

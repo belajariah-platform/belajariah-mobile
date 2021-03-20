@@ -100,7 +100,7 @@ const Login = (props) => {
             <TouchableOpacity
               onPress={() => {
                 FormSubmit.resetForm()
-                props.navigation.navigate('ChangePassword')}
+                props.navigation.navigate('CheckEmail')}
               }>
               <Text style={styles.forgotPassword}>Lupa kata sandi ?</Text>
             </TouchableOpacity>

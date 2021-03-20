@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Overlay } from 'react-native-elements'
-import { Circle } from 'react-native-animated-spinkit'
+import { Flow } from 'react-native-animated-spinkit'
 
 import { Color } from '../../assets'
 
@@ -18,7 +18,7 @@ const  Loader = (props) => {
         overlayBackgroundColor='purple'
         windowBackgroundColor='rgba(49, 49, 60, .8)'
         overlayStyle={{ padding: 15 }}>
-        <Circle size={35} color={Color.bgColor} />
+        <Flow size={35} color={Color.bgColor} />
       </Overlay>
     </>
   )

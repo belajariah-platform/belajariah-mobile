@@ -50,7 +50,7 @@ const Profile = () => {
       return err
     }
   }
-  console.log(userInfo)
+
   useEffect(() => {
     fetchDataUser(userInfo.Email)
   }, [])
