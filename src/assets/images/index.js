@@ -181,13 +181,13 @@ export default {
   BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
 
   //Video
-  VideoFullscreen: require('./BtnVideoFullscreen.svg'),
   VideoPlay: require('./BtnVideoPlay.svg'),
+  VideoNext: require('./BtnVideoNext.svg'),
   VideoPause: require('./BtnVideoPause.svg'),
   VideoSkipBack: require('./BtnVideoBackward.svg'),
-  VideoSkipForward: require('./BtnVideoForward.svg'),
   VideoPrevious: require('./BtnVideoPrevious.svg'),
-  VideoNext: require('./BtnVideoNext.svg'),
+  VideoSkipForward: require('./BtnVideoForward.svg'),
+  VideoFullscreen: require('./BtnVideoFullscreen.svg'),
 
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
@@ -241,4 +241,7 @@ export default {
   IconRecordSendGradation : require('./IconRecordSendGradation.svg'),
   IconRecordStopGradation : require('./IconRecordStopGradation.svg'),
   IconRecordStartGradation : require('./IconRecordStartGradation.svg'),
+
+  //Img Check Connection
+  ImgModalNoConnection : require('./ImgModalNoConnection.png'),
 }
