@@ -9,7 +9,6 @@ import {ModalNoConnection} from '../../../components'
 import { Images } from '../../../assets'
 import styles from './inspiratif-detail.style'
 import NetInfo from '@react-native-community/netinfo'
-import NoConnectionScreen from './noConnectionScreen'
 
 const InspiratifStoryDetail = () => {
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
