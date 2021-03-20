@@ -16,7 +16,7 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { ButtonGradient, Progressbar, ModalRating, ModalFilterUser } from '../../../components'
+import { ButtonGradient, Progressbar, ModalRating, ModalFilterUser, ModalNoConnection } from '../../../components'
 
 import { styles } from '../class-user/class-user.style'
 
@@ -142,7 +142,7 @@ const ClassUser = (props) => {
           numberOfLines={8}
           style={styles.textArea}/>}
       />
-      <ModalFilterUser
+      <ModalNoConnection
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
         backButtonPress={() => toggleModalFilter()}

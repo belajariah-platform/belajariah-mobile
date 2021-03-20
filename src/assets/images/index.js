@@ -243,4 +243,7 @@ export default {
   IconRecordSendGradation : require('./IconRecordSendGradation.svg'),
   IconRecordStopGradation : require('./IconRecordStopGradation.svg'),
   IconRecordStartGradation : require('./IconRecordStartGradation.svg'),
+
+  //Img Check Connection
+  ImgModalNoConnection : require('./ImgModalNoConnection.png'),
 }

@@ -1,18 +1,29 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import moment from 'moment'
 import { Text } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import Clipboard from '@react-native-community/clipboard'
 import { View, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native'
 
+import {ModalNoConnection} from '../../../components'
 import { Images } from '../../../assets'
 import styles from './inspiratif-detail.style'
+import NetInfo from '@react-native-community/netinfo'
 
 const InspiratifStoryDetail = () => {
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const route = useRoute()
+  const [connectStatus, setconnectStatus] = useState(false)
+    
   const navigation = useNavigation()
 
   const { storyIndex } = route.params ?? {}
+
+  useEffect(() => {
+    NetInfo.fetch().then(res=>{
+      setconnectStatus(res.isConnected)
+  })
+  }, [])
 
   const state = [
     {
@@ -114,14 +125,16 @@ const InspiratifStoryDetail = () => {
       </View>
     )
   }
-
   return (
-    <View style={styles.containerMain}>
-      <Header />
-      <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
-        <Inspiratif />
-      </ScrollView>
-    </View>
+      <View style={styles.containerMain}>
+        <ModalNoConnection 
+          isVisible={!connectStatus}
+          backdropPress={togglemodalNoConnection}/> 
+        <Header />
+        <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
+          <Inspiratif />
+        </ScrollView>
+      </View>
   )
 }
 
