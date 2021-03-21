@@ -183,8 +183,8 @@ export default {
   BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
 
   //Video
-  VideoNext: require('./BtnVideoNext.svg'),
   VideoPlay: require('./BtnVideoPlay.svg'),
+  VideoNext: require('./BtnVideoNext.svg'),
   VideoPause: require('./BtnVideoPause.svg'),
   VideoPrevious: require('./BtnVideoPrevious.svg'),
   VideoSkipBack: require('./BtnVideoBackward.svg'),
@@ -260,5 +260,8 @@ export default {
   ImgDefault3 : require('./ImageDefault3.png'),
   ImgDefault4 : require('./ImageDefault4.png'),
   ImgDefault5 : require('./ImageDefault5.png'),
+
+  //Img Check Connection
+  ImgModalNoConnection : require('./ImgModalNoConnection.png'),
 }
 

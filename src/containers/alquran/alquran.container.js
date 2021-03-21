@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -14,15 +14,19 @@ import { QuranAPI } from '../../api'
 import { Response } from '../../utils'
 import { QURAN_LIST_REQ, QURAN_LIST_SUCC, QURAN_LIST_FAIL } from '../../action'
 
+import NetInfo from '@react-native-community/netinfo'
 import { Images } from '../../assets'
 import { styles } from './alquran.style'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
+import {ModalNoConnection} from '../../components'
 // import { TabBar, TabView, SceneMap } from 'react-native-tab-view'
 
 const Alquran = (props) => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const [connectStatus, setconnectStatus] = useState(false)
   const { data, loading } = useSelector((state) => state.QuranReducer)
 
   // const [index, setIndex] = useState(0)
@@ -46,6 +50,12 @@ const Alquran = (props) => {
   }
 
   useEffect(() => {
+    NetInfo.fetch().then(res=>{
+      setconnectStatus(res.isConnected)
+      dispatch({
+        type: QURAN_LIST_FAIL,
+      })
+  })
     dispatch({ type: QURAN_LIST_REQ })
     fetchDataQuran()
   }, [])
@@ -172,6 +182,9 @@ const Alquran = (props) => {
         source={Images.AlQuranBG}
         style={styles.containerBackground}
         resizeMode='stretch'>
+          <ModalNoConnection 
+          isVisible={!connectStatus}
+          backdropPress={togglemodalNoConnection}/> 
         <View style={styles.containerHeader}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default />

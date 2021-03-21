@@ -1,16 +1,27 @@
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import { Text } from '@ui-kitten/components'
-import React  from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { View, ScrollView, TouchableOpacity, Image } from 'react-native'
 
+import { ModalNoConnection } from '../../../components'
 import { Images } from '../../../assets'
 import styles from './inspiratif-detail.style'
+import NetInfo from '@react-native-community/netinfo'
 
 const InspiratifStoryDetail = () => {
   const route = useRoute()
   const navigation = useNavigation()
   const { params } = route.params ?? {}
+
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  useEffect(() => {
+    NetInfo.fetch().then(res=>{
+      setconnectStatus(res.isConnected)
+    })
+  }, [])
 
   const Header = () => {
     return (
@@ -71,9 +82,11 @@ const InspiratifStoryDetail = () => {
       </View>
     )
   }
-
   return (
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={!connectStatus}
+        backdropPress={togglemodalNoConnection}/>
       <Header />
       <ScrollView
         style={styles.containerScrollView}

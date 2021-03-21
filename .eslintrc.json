@@ -21,7 +21,7 @@
     "sourceType": "module"
   },
   "globals": {
-    "__DEV__": false
+    "_DEV_": false
   },
   "plugins": ["react"],
   "rules": {

@@ -29,6 +29,7 @@ import {
   ModalRating,
   ButtonGradient,
   ModalFilterUser,
+  ModalNoConnection,
 } from '../../../components'
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
@@ -251,6 +252,8 @@ const ClassUser = (props) => {
       <ModalFilterUser
         state={stateCategory}
         submit={onDataStateChange}
+      />
+      <ModalNoConnection
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
       />
