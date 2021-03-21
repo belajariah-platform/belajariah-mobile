@@ -2,6 +2,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import {  useFormik } from 'formik'
 import Sound from 'react-native-sound'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
 import AudioRecord from 'react-native-audio-record'
@@ -15,19 +16,28 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import { Images } from '../../../assets'
-import { ButtonGradient, ModalRating, ImageView } from '../../../components'
+import {
+  Alerts,
+  ImageView,
+  ModalRating,
+  ButtonGradient,
+} from '../../../components'
 import {
   TimerObj,
   VoiceNote,
   TimeConvert,
 } from '../../../utils'
 
+import { Images } from '../../../assets'
+import { ConsultationAPI, RatingAPI } from '../../../api'
 import styles from './user-consultation.style'
 
 const ConsultationDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
+  const [dataObj, setDataObj] = useState({})
+  const { userInfo } = useSelector((state) => state.UserReducer)
+
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
@@ -35,16 +45,20 @@ const ConsultationDetail = ({ route }) => {
   const [message, setMessage] = useState(false)
   const [audioFile, setAudioFile] = useState('')
   const [msgSelected, setMsgSelected] = useState([])
-  const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const [modalRatingVisible, setModalRatingVisible] = useState(false)
 
-  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
+  const toggleModalRating = (item) => {
+    setDataObj(item)
+    setModalRatingVisible(!modalRatingVisible)
+  }
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const voiceDuration =  (480 - ((minutes*60) + seconds))
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
+
   const user_login = 1
   const state = [
     { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid', Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
@@ -57,20 +71,50 @@ const ConsultationDetail = ({ route }) => {
 
   const FormSendMessage = useFormik({
     initialValues: {
-      message: '',
-      voice_note : '',
-      duration : 0,
+      User_Code : userInfo.ID,
+      Class_Code : param.Class_Code,
+      Recording_Code : 0,
+      Recording_Duration : 0,
+      Status_Code : 'ENC00000020',
+      Description : '',
+      Taken_Code : 0,
+      Expired_Date : '2021-04-25T21:33:13.000Z',
+      Action : 'Approved'
     },
-    onSubmit:  (values, form) => {
-      console.log(values)
-      setPlay(false)
-      setRecord(false)
-      setAudioFile([])
-      setMessage(false)
-      form.resetForm()
-      form.setSubmitting(false)
+    onSubmit: async (values, form) => {
+      const response =  await ConsultationAPI.GetAllConsultationSpamUser(values)
+      if (response.data.count >= 2) {
+        Alerts(false, 'Pesan kamu sudah melebihi batas')
+      } else {
+        const res = await ConsultationAPI.InsertConsultation(values)
+        if (res.data.result) {
+          form.setSubmitting(false)
+          form.resetForm()
+          setMessage(false)
+          setAudioFile([])
+          setRecord(false)
+          setPlay(false)
+        }
+      }
     },
   })
+
+  const giveRatingMentor = async (rating) => {
+    const values = {
+      Comment : '',
+      Rating : rating,
+      User_Code : dataObj.Taken_Code,
+      Mentor_Code : dataObj.User_Code,
+    }
+    try {
+      const response = await RatingAPI.InsertRatingMentor(values)
+      if (response.data.result) {
+        Alerts(true, 'Terimakasih telah memberikan review')
+      }
+    } catch (err) {
+      return err
+    }
+  }
 
   useEffect(() => {
     let sound = null
@@ -151,9 +195,9 @@ const ConsultationDetail = ({ route }) => {
   const handlePlay = () => {
     setPlay(!play)
     setMinutes(TimerObj(FormSendMessage
-      .values['duration']).minute)
+      .values['Recording_Duration']).minute)
     setSeconds(TimerObj(FormSendMessage
-      .values['duration']).second)
+      .values['Recording_Duration']).second)
     // if (play) {
     ReplayRecord()
     // } else {
@@ -186,7 +230,7 @@ const ConsultationDetail = ({ route }) => {
   }
 
   const handleRecord = () => {
-    if ( FormSendMessage.values['message']
+    if ( FormSendMessage.values['Description']
       .length == 0) {
       setRecord(true)
       StartRecord()
@@ -216,8 +260,8 @@ const ConsultationDetail = ({ route }) => {
         if (seconds === 0) {
           if (minutes === 0) {
             setPlay(!play)
-            setMinutes(TimerObj(FormSendMessage.values['duration']).minute)
-            setSeconds(TimerObj(FormSendMessage.values['duration']).second)
+            setMinutes(TimerObj(FormSendMessage.values['Recording_Duration']).minute)
+            setSeconds(TimerObj(FormSendMessage.values['Recording_Duration']).second)
             clearInterval(intervalId)
           } else {
             setMinutes(minutes - 1)
@@ -374,7 +418,7 @@ const ConsultationDetail = ({ route }) => {
             { user_login != item.user_code &&(
               <TouchableOpacity
                 activeOpacity={0.2}
-                onPress={() => setModalRatingVisible(!modalRatingVisible)}>
+                onPress={() => toggleModalRating(item)}>
                 <Images.IconGive.default/>
               </TouchableOpacity>
             )}
@@ -406,7 +450,7 @@ const ConsultationDetail = ({ route }) => {
             `${minutes}:${seconds < 10 ?
               `0${seconds}` : seconds}`
           ) : (
-            TimeConvert(FormSendMessage.values['duration'])
+            TimeConvert(FormSendMessage.values['Recording_Duration'])
           )}
         </Text>
         <TouchableOpacity
@@ -420,7 +464,7 @@ const ConsultationDetail = ({ route }) => {
 
   const Footer = () => {
     let icons, submit
-    FormSendMessage.values['message'].length > 0 ? (
+    FormSendMessage.values['Description'].length > 0 ? (
       icons = Images.IconSend,
       submit = () => FormSendMessage.handleSubmit()) :
       message ? (icons = Images.IconSend,
@@ -457,8 +501,8 @@ const ConsultationDetail = ({ route }) => {
           editable={!record}
           style={styles.textInput}
           placeholder='Ketik pesan ...'
-          value={FormSendMessage.values['message']}
-          onChangeText={(e) => setInput('message', e)}>
+          value={FormSendMessage.values['Description']}
+          onChangeText={(e) => setInput('Description', e)}>
           {record ? (
             <Text>
               {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -468,6 +512,7 @@ const ConsultationDetail = ({ route }) => {
         <Footer/>
       </View>
       <ModalRating
+        submit={giveRatingMentor}
         isVisible={modalRatingVisible}
         backdropPress={() => toggleModalRating()}
         backButtonPress={() => toggleModalRating()}

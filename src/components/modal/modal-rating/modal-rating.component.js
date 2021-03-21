@@ -52,6 +52,7 @@ const ModalRating = (props) => {
           </TouchableOpacity>
           <ButtonGradient
             title='Kirim'
+            onPress={() => props.submit(defaultRating)}
             style={styles.ButtonClass} />
         </View>
       </View>
@@ -78,6 +79,7 @@ const ModalRating = (props) => {
 }
 
 ModalRating.propTypes = {
+  submit : PropTypes.func,
   title : PropTypes.string,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, TouchableOpacity, ScrollView,   ToastAndroid, } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
 
 import { TestAPI } from '../../../api'
 import { Response } from '../../../utils'
-import { Buttons } from '../../../components'
 import { Images, Color } from '../../../assets'
+import { Buttons, Alerts, Loader } from '../../../components'
 
 import { styles } from './class-exam.style'
 
@@ -16,12 +16,11 @@ const ClassExam = (props) => {
   const navigation = useNavigation()
   const [states, setStates] = useState([])
   const [loading, setLoading] = useState(false)
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
   const [questionSelected, setQuestionSelected] = useState({})
   const [dataState] = useState({ skip: 0, take: 20, filter: [], filterString: '[]' })
-  // const [minutes, setMinutes] = useState(4)
-  // const [seconds, setSeconds] =  useState(59)
 
   const fetchDataTest = async ({ skip, take, filterString }) => {
     try {
@@ -41,22 +40,33 @@ const ClassExam = (props) => {
     }
   }
 
-  useEffect(() => {
-    fetchDataTest(dataState, item.Class_Code)
-  }, [dataState])
-
   const handleSubmit = async (state) => {
-    console.log(state)
-    ToastAndroid.show('Exam selesai', ToastAndroid.SHORT)
-    navigation.navigate('ClassLearning', { passPreExam : true })
-  }
-
-  const onScrollPosition = () => {
-    mainScrollViewRef.current.scrollTo({
-      x: 1000,
-      y: 100,
-      animated: true,
-    })
+    let count
+    state.forEach((v) => {
+      if (v.Answer == 0) {
+        count = count + 1
+      }})
+    const values = {
+      ID : item.ID,
+      Test_Type : item.Test_Type,
+      Answers : state
+    }
+    if (count == 0) {
+      try {
+        setLoadingBtn(true)
+        const response = await TestAPI.UpdateClassTest(values)
+        if (response.status === Response.SUCCESS) {
+          Alerts(true, `Kamu mendapatkan nilai ${response.data.message}`,
+            () =>  navigation.navigate('ClassLearning'))
+        }
+        setLoadingBtn(false)
+      } catch (err) {
+        setLoadingBtn(false)
+        return err
+      }
+    } else {
+      Alerts(false, 'Mohon selesaikan semua pertanyaan')
+    }
   }
 
   const onNumberSelected = (item, index) => {
@@ -64,23 +74,9 @@ const ClassExam = (props) => {
     setQuestionSelected(item)
   }
 
-  // useEffect(()=>{
-  //   const intervalId = setInterval(() => {
-  //     if (seconds > 0) {
-  //       setSeconds(seconds - 1)
-  //     }
-  //     if (seconds === 0) {
-  //       if (minutes === 0) {
-  //         handleSubmit(answerSelected)
-  //         clearInterval(intervalId)
-  //       } else {
-  //         setMinutes(minutes - 1)
-  //         setSeconds(59)
-  //       }
-  //     }
-  //   }, 1000)
-  //   return () => clearInterval(intervalId)
-  // }, [seconds, minutes])
+  useEffect(() => {
+    fetchDataTest(dataState, item.Class_Code)
+  }, [])
 
   const Header = () => {
     return (
@@ -152,7 +148,7 @@ const ClassExam = (props) => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={[styles.touchOption,
-                  (index+1) == questionSelected.answer ?
+                  (index+1) == questionSelected.Answer ?
                     { backgroundColor : Color.purpleMedium } :
                     { backgroundColor : Color.greyExam }
                 ]}
@@ -211,7 +207,6 @@ const ClassExam = (props) => {
               answerSelected.forEach((v, i ) => {
                 if (v.ID == questionSelected.ID) {
                   onNumberSelected(answerSelected[i+1], i+1)
-                  onScrollPosition(200)
                 }
               })
             }}
@@ -229,6 +224,7 @@ const ClassExam = (props) => {
 
   return (
     <View style={styles.containerMain}>
+      <Loader loading={loadingBtn}/>
       <Header />
       <ScrollNumber />
     </View>

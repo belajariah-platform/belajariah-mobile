@@ -23,6 +23,7 @@ import {
 } from '../../../action'
 
 import {
+  Alerts,
   Progressbar,
   LoadingView,
   ModalRating,
@@ -31,13 +32,15 @@ import {
 } from '../../../components'
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
-import { UserClassAPI, EnumAPI } from '../../../api'
+import { UserClassAPI, EnumAPI, RatingAPI } from '../../../api'
 
 import { styles } from '../class-user/class-user.style'
 
 
 const ClassUser = (props) => {
   const dispatch = useDispatch()
+  const [comment, setComment] = useState('')
+  const [dataObj, setDataObj] = useState({})
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedPrinter, setSelectedPrinter] = useState(null)
@@ -49,10 +52,14 @@ const ClassUser = (props) => {
   const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
   const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'DESC' })
 
-
-  const toggleModal = () => setModalVisible(!modalVisible)
-  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
+  const { userInfo } = useSelector((state) => state.UserReducer)
   const { loading, loadingScroll } = useSelector((state) => state.UserClassReducer)
+
+  const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
+  const toggleModal = (item) => {
+    setDataObj(item)
+    setModalVisible(!modalVisible)
+  }
 
 
   const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
@@ -92,6 +99,43 @@ const ClassUser = (props) => {
     })
   }
 
+  const giveRatingClass = async (rating) => {
+    const values = {
+      Rating : rating,
+      Comment : comment,
+      Class_Code : dataObj.Class_Code,
+      User_Code : dataObj.User_Code,
+    }
+    try {
+      const response = await RatingAPI.InsertRatingClass(values)
+      if (response.data.result) {
+        Alerts(true, 'Terimakasih telah memberikan review')
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  const updateProgressClass = async (item) => {
+    const values = {
+      ID : dataObj.ID,
+      Status : 'Completed',
+      Progress : dataObj.Progress,
+      User_Code : dataObj.User_Code,
+      progress_Index : dataObj.progress_Index,
+      progress_Subindex : dataObj.progress_Subindex,
+    }
+    try {
+      const response = await UserClassAPI.UpdateProgressUserClass(values)
+      if (response.data.result) {
+        await fetchDataUserClass(dataState)
+        await toggleModal(item)
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
   useEffect(() => {
     fetchDataUserClass(dataState)
   }, [dataState])
@@ -116,7 +160,7 @@ const ClassUser = (props) => {
     })
   }
 
-  const printHTML = async () => {
+  const printHTML = async (item) => {
     await RNPrint.print({
       html:
         `<div>
@@ -124,15 +168,15 @@ const ClassUser = (props) => {
             width="1070px" height="720px"/>
             <h1 style="margin-top:-405;text-align:center;
             font-size:52px;color:white">
-            ${state.username}
+            ${userInfo.Full_Name}
             </h1>
             <p style="margin-top:35;text-align:center;
             font-size:20px;color:white;font-style:italic">
-            "${state.class}"
+            "${item.Class_Name}"
             </p>
             <p style="margin-top:20;text-align:center;
             font-size:20px;color:white;font-weight:bold">
-            ${state.created_date}
+            ${item.Post_Test_Date}
             </p>    
         </div>`, })
   }
@@ -193,6 +237,7 @@ const ClassUser = (props) => {
   return (
     <>
       <ModalRating
+        submit={giveRatingClass}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
@@ -200,6 +245,7 @@ const ClassUser = (props) => {
         renderItem={  <TextInput
           multiline={true}
           numberOfLines={8}
+          onChangeText={(e) => setComment(e)}
           style={styles.textArea}/>}
       />
       <ModalFilterUser
@@ -304,7 +350,7 @@ const ClassUser = (props) => {
                                 styles={styles.buttonClassCustom}
                                 icon={<Images.IconDownload.default
                                   style={styles.iconClassCustomRight}/>}
-                                onPress = {printHTML}/>
+                                onPress = {() => printHTML(item)}/>
                             ) : (
                               <ButtonGradient
                                 styles={styles.ButtonClass}
@@ -316,7 +362,7 @@ const ClassUser = (props) => {
                               item.Status == 'In Progress' && item.progress != 100  ?
                                   () => props.navigation.navigate('ClassLearning', item) :
                                   item.Status == 'In Progress' && item.progress == 100 ?
-                                    toggleModal : null}/>
+                                    () => updateProgressClass(item) : null}/>
                             )}
                           </View>
                         </ImageBackground>
