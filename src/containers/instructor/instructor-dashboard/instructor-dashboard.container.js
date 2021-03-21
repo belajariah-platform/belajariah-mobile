@@ -2,14 +2,18 @@ import Swiper from 'react-native-swiper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
-import { LoadingView } from '../../../components'
 import { ClassAPI, } from '../../../api'
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
@@ -19,7 +23,14 @@ const InstructorDashboard = () => {
   const navigation = useNavigation()
   const [state, setState] = useState([])
   const [loading, setLoading] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataClass(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataClass = async ({ skip, take, filterString }) => {
     try {
@@ -27,8 +38,12 @@ const InstructorDashboard = () => {
       const response = await ClassAPI.GetAllClass(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
-        setLoading(false)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoading(false)
     } catch (err) {
       setLoading(false)
       return err
@@ -98,6 +113,12 @@ const InstructorDashboard = () => {
 
   return (
     <View style={styles.container}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageBackground
         source={Images.InstructorDashboardBackground}
         style={styles.containerBackground}>

@@ -2,6 +2,7 @@ import moment from 'moment'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 
@@ -12,15 +13,20 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalFilterUstadz,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
 import { styles } from './instructor-task.style'
 import { ConsultationAPI, EnumAPI } from '../../../api'
 import { Response, GenerateFilter } from '../../../utils'
-import { ModalFilterUstadz, LoadingView } from '../../../components'
 
 const InstructorTask = () => {
   const navigation = useNavigation()
+  const initialLayout = { width: Dimensions.get('window').width }
 
   const [routes] = useState([
     { key: 1, title : 'Recent Task' },
@@ -29,18 +35,27 @@ const InstructorTask = () => {
   const [index, setIndex] = useState(0)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-
-  const [stateWaiting, setStateWaiting] = useState([])
-  const [stateCompleted, setStateCompleted] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
   const [loadingWaiting, setLoadingWaiting] = useState(false)
   const [loadingCompleted, setLoadingCompleted] = useState(false)
+
+  const [stateWaiting, setStateWaiting] = useState([])
   const [stateCategory, setStateCategory] = useState([])
+  const [stateCompleted, setStateCompleted] = useState([])
+
   const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
   const [dataStateWaiting, setDataStateWaiting] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
   const [dataStateCompleted, setDataStateCompleted] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
 
   const toggleModal = () => setModalVisible(!modalVisible)
-  const initialLayout = { width: Dimensions.get('window').width }
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataClassCategory(dataStateCategory)
+    fetchDataConsultationWaiting(dataStateWaiting)
+    fetchDataConsultationCompleted(dataStateCompleted)
+  }
 
   const fetchDataConsultationWaiting = async ({ skip, take, filter, filterString, sort, search  }) => {
     try {
@@ -50,10 +65,12 @@ const InstructorTask = () => {
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search )
       if (response.status === Response.SUCCESS) {
         setStateWaiting(response.data.data)
-        setLoadingWaiting(false)
       } else {
-        setLoadingWaiting(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoadingWaiting(false)
     } catch (err) {
       setLoadingWaiting(false)
       return err
@@ -67,10 +84,12 @@ const InstructorTask = () => {
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStateCompleted(response.data.data)
-        setLoadingCompleted(false)
       } else {
-        setLoadingCompleted(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoadingCompleted(false)
     } catch (err) {
       setLoadingCompleted(false)
       return err
@@ -83,6 +102,10 @@ const InstructorTask = () => {
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -269,6 +292,12 @@ const InstructorTask = () => {
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <View style={styles.containerMain}>
         <Header />

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -20,6 +21,7 @@ import {
   LoadingView,
   ModalConfirm,
   ButtonGradient,
+  ModalNoConnection,
 } from '../../../components'
 import {
   TRANSACT_DECLINE_REQ,
@@ -46,14 +48,21 @@ const AdminTransactionDecline = ({ search }) => {
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
-  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
 
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    fetchDataTransaction(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
     try {
@@ -62,6 +71,10 @@ const AdminTransactionDecline = ({ search }) => {
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
       dispatch({ type: TRANSACT_DECLINE_SUCC })
     } catch (err) {
@@ -112,6 +125,9 @@ const AdminTransactionDecline = ({ search }) => {
       }
     } catch (error) {
       setLoadingBtn(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return error
     }
   }
@@ -260,6 +276,12 @@ const AdminTransactionDecline = ({ search }) => {
         submit={() => handleRevised(dataObj)}
         backdropPress={() => toggleModalRepair()}
         backButtonPress={() => toggleModalRepair()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         filepath={imagePath}

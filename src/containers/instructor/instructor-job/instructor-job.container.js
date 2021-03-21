@@ -4,6 +4,7 @@ import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import React, { useState, useEffect } from 'react'
 import { Avatar, Card } from 'react-native-elements'
+import NetInfo from '@react-native-community/netinfo'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -24,10 +25,14 @@ import {
   CONSUL_MENTOR_LIST_SUCC,
   CONSUL_MENTOR_LOAD_SCROLL,
 } from '../../../action'
+import {
+  ImageView,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Response } from '../../../utils'
 import { Images, Color } from '../../../assets'
-import { LoadingView, ImageView } from '../../../components'
 import { ConsultationAPI, EnumAPI } from '../../../api'
 
 import { styles } from './instructor-job.style'
@@ -36,6 +41,8 @@ const InstructorJob = ({ route }) => {
   const item = route.params
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const { userInfo } = useSelector((state) => state.UserReducer)
+  const { loading, loadingScroll } = useSelector((state) => state.ConsultationReducer)
 
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
@@ -43,15 +50,20 @@ const InstructorJob = ({ route }) => {
   const [refreshing, setRefreshing] = useState(false)
   const [stateCategory, setStateCategory] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
+
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
 
-
+  const toggleModal = () => setModalVisible(!modalVisible)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-  const { userInfo } = useSelector((state) => state.UserReducer)
-  const { loading, loadingScroll } = useSelector((state) => state.ConsultationReducer)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataConsultation(dataState)
+    fetchDataClassCategory(dataStateCategory)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
@@ -64,6 +76,9 @@ const InstructorJob = ({ route }) => {
         dispatch({ type: CONSUL_MENTOR_LIST_SUCC })
       } else {
         dispatch({ type: CONSUL_MENTOR_LIST_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: CONSUL_MENTOR_LIST_FAIL })
@@ -77,6 +92,10 @@ const InstructorJob = ({ route }) => {
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -107,6 +126,9 @@ const InstructorJob = ({ route }) => {
       }
     } catch (error) {
       setLoadingBtn(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return error
     }
   }
@@ -235,6 +257,12 @@ const InstructorJob = ({ route }) => {
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         isVisible={isModalFotoVisible}

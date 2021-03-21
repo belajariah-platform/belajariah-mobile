@@ -59,15 +59,14 @@ const InstructorEditProfile = () => {
     onSubmit: async (values) => {
       try {
         const response = await UserAPI.UpdateProfile(values)
-        if (response.status === Response.SUCCESS) {
+        if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataMentor(userInfo.Email)
-        } else {
-          NetInfo.fetch().then(res => {
-            setconnectStatus(!res.isConnected)
-          })
         }
       } catch (error) {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
         return error
       }
     },

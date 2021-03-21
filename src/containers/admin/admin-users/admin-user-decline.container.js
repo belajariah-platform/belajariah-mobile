@@ -4,6 +4,7 @@ import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -27,7 +28,7 @@ import { ConsultationAPI } from '../../../api'
 import { TimeConvert, TimerObj } from '../../../utils'
 
 import { styles } from './admin-user.style'
-import { LoadingView } from '../../../components'
+import { LoadingView, ModalNoConnection } from '../../../components'
 
 const AdminUserDecline = ({ search }) => {
   const dispatch = useDispatch()
@@ -39,10 +40,17 @@ const AdminUserDecline = ({ search }) => {
   const [msgSelected, setMsgSelected] = useState([])
   const [refreshing, setRefreshing] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
 
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataConsultation(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
@@ -55,6 +63,9 @@ const AdminUserDecline = ({ search }) => {
         dispatch({ type: CONSUL_DECLINE_SUCC })
       } else {
         dispatch({ type: CONSUL_DECLINE_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: CONSUL_DECLINE_FAIL })
@@ -251,6 +262,12 @@ const AdminUserDecline = ({ search }) => {
 
   return (
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>

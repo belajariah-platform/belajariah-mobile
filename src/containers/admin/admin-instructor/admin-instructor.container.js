@@ -1,6 +1,7 @@
 import { Card } from 'react-native-elements'
 import { Text } from '@ui-kitten/components'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -23,6 +24,7 @@ import {
 import {
   Searchbox,
   LoadingView,
+  ModalNoConnection,
   ModalFilterAdminPageUstadz,
 } from '../../../components'
 
@@ -34,14 +36,22 @@ import { styles } from './admin-instructor.style'
 const AdminInstructor = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const [refreshing, setRefreshing] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
-  const toggleModal = () => setModalVisible(!modalVisible)
   const { loading, loadingScroll } = useSelector((state) => state.MentorReducer)
 
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    fetchDataMentor(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataMentor = async ({ skip, take, filterString, sort, search }) => {
     try {
@@ -53,6 +63,9 @@ const AdminInstructor = () => {
         dispatch({ type: MENTOR_SUCC })
       } else {
         dispatch({ type: MENTOR_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: MENTOR_FAIL })
@@ -61,17 +74,17 @@ const AdminInstructor = () => {
   }
 
   const onDataStateChange = (event) => {
-    setDataState({
-      ...dataState,
-      search : event,
-    })
+    const delay = setTimeout(() => {
+      setDataState({
+        ...dataState,
+        search : event,
+      })
+    }, 500)
+    return () => clearTimeout(delay)
   }
 
   useEffect(() => {
-    const delay = setTimeout(() => {
-      fetchDataMentor(dataState)
-    }, 500)
-    return () => clearTimeout(delay)
+    fetchDataMentor(dataState)
   }, [dataState])
 
   const onRefreshing = () => {
@@ -138,6 +151,12 @@ const AdminInstructor = () => {
 
   return (
     <>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ModalFilterAdminPageUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}

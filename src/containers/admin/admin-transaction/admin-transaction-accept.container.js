@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -23,6 +24,7 @@ import {
   ImageView,
   ModalRepair,
   LoadingView,
+  ModalNoConnection,
 } from '../../../components'
 
 import { Images } from '../../../assets'
@@ -40,12 +42,19 @@ const AdminTransactionAccept = ({ search }) => {
   const [states, setStates] = useState([])
   const [imagePath, setImagePath] = useState('')
   const [refreshing, setRefreshing] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    fetchDataTransaction(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
     try {
@@ -55,10 +64,12 @@ const AdminTransactionAccept = ({ search }) => {
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: TRANSACT_ACCEPT_SUCC })
       } else {
-        dispatch({ type: TRANSACT_ACCEPT_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      dispatch({ type: TRANSACT_ACCEPT_SUCC })
     } catch (err) {
       dispatch({ type: TRANSACT_ACCEPT_FAIL })
       return err
@@ -209,6 +220,12 @@ const AdminTransactionAccept = ({ search }) => {
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
         backButtonPress={() => toggleModalRepair()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         filepath={imagePath}
