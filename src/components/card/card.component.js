@@ -6,7 +6,6 @@ import { Images } from '../../assets'
 import { styles } from './card.style'
 
 const  Cards = (props)  => {
-  console.log(props.filepath)
   return (
     <View style={styles.container}>
       {props.imageTitle}

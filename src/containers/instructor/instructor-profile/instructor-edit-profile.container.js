@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -16,13 +17,17 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+import {
+  Buttons,
+  TextBox,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Response } from '../../../utils'
 import { Images } from '../../../assets'
 import { Alerts } from '../../../components'
 import { USER_INFO } from  '../../../action'
 import { MentorAPI, UserAPI } from '../../../api'
-import { Buttons, TextBox } from '../../../components'
 
 import { styles } from './instructor-edit-profile.style'
 
@@ -31,7 +36,14 @@ const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 const InstructorEditProfile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const [connectStatus, setconnectStatus] = useState(false)
   const { userInfo } = useSelector((state) => state.UserReducer)
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataMentor(userInfo.Email)
+    setconnectStatus(!connectStatus)
+  }
 
   const FormPersonal = useFormik({
     initialValues: {
@@ -50,6 +62,10 @@ const InstructorEditProfile = () => {
         if (response.status === Response.SUCCESS) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataMentor(userInfo.Email)
+        } else {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
         }
       } catch (error) {
         return error
@@ -86,6 +102,12 @@ const InstructorEditProfile = () => {
   return (
     <>
       <View style={styles.containerView}>
+        <ModalNoConnection
+          isVisible={connectStatus}
+          retry={() => retryConnection()}
+          backdropPress={() => togglemodalNoConnection()}
+          backButtonPress={() => togglemodalNoConnection()}
+        />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.containerAvatar}>
             <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>

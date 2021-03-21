@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     borderColor : Color.transparent,
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
 })

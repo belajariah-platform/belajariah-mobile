@@ -13,7 +13,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   CONSUL_DECLINE_REQ,
@@ -109,7 +108,7 @@ const AdminUserDecline = ({ search }) => {
   const renderFooter = () => {
     return loadingDeclineScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>

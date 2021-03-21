@@ -183,8 +183,8 @@ export default {
   BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
 
   //Video
-  VideoPlay: require('./BtnVideoPlay.svg'),
   VideoNext: require('./BtnVideoNext.svg'),
+  VideoPlay: require('./BtnVideoPlay.svg'),
   VideoPause: require('./BtnVideoPause.svg'),
   VideoPrevious: require('./BtnVideoPrevious.svg'),
   VideoSkipBack: require('./BtnVideoBackward.svg'),

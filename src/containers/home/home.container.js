@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
+import NetInfo from '@react-native-community/netinfo'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
@@ -32,6 +33,7 @@ import {
   Carousel,
   ModalInfo,
   ModalInfoClass,
+  ModalNoConnection,
 } from '../../components'
 import { styles } from './home.style'
 import { Response } from '../../utils'
@@ -40,27 +42,38 @@ const Home = (props) => {
   const [category, setCategory] = useState('')
   const [classObj, setClassObj] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
-
 
   const [stateStory, setStateStory] = useState([])
   const [stateClass, setStateClass] = useState([])
   const [statePackage, setStatePackage] = useState([])
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
+  const [loading, setLoading] = useState({ class : false, package : false })
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
-  const { height } = Dimensions.get('window')
 
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
+  const { height } = Dimensions.get('window')
+
   const toggleModal = () => setModalVisible(!modalVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
   const handleModal = (event) => {
     setModalVisible(true)
     setCategory(event)
+  }
+
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataStory(dataState)
+    fetchDataClass(dataState)
+    fetchDataCategory(dataState)
+    fetchDataPromotion(dataState)
   }
 
   const openModalInfoClass = async (item) => {
@@ -74,6 +87,10 @@ const Home = (props) => {
       const response = await ClassAPI.GetAllClass(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateClass(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -85,6 +102,10 @@ const Home = (props) => {
       const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStatePromotion(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -96,6 +117,10 @@ const Home = (props) => {
       const response = await StoryAPI.GetAllStory(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateStory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -108,6 +133,10 @@ const Home = (props) => {
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -116,13 +145,26 @@ const Home = (props) => {
 
   const fetchDataPackage = async (state, code) => {
     try {
+      setLoading({ ...loading,
+        package : true
+      })
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await PackageAPI.GetAllPackage(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStatePackage(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoading({ ...loading,
+        package : false
+      })
     } catch (err) {
+      setLoading({ ...loading,
+        package : false
+      })
       return err
     }
   }
@@ -139,7 +181,7 @@ const Home = (props) => {
       <View style={styles.containerPromo} key={index}>
         {statePromotion.length > 0  ? (
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
             <Image
               style={styles.cardCustom}
@@ -247,7 +289,7 @@ const Home = (props) => {
           return (
             <TouchableOpacity
               key={index}
-              activeOpacity={0.6}
+              activeOpacity={0.5}
               onPress={() => openModalInfoClass(item)}>
               <Cards
                 filepath={item.Class_Image}
@@ -262,7 +304,7 @@ const Home = (props) => {
         })}
         <View>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             style={styles.bannerAlquranContainer}
             onPress={() => props.navigation.navigate('Alquran')}>
             <Image source={Images.BannerAlquran} style={styles.cardCustom} />
@@ -312,7 +354,7 @@ const Home = (props) => {
                     {handleSplitString(item.Content.substring(0, 90))} ...
                   </Text>
                   <TouchableOpacity
-                    activeOpacity={0.8}
+                    activeOpacity={0.5}
                     style={styles.btnReadMore}
                     onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
                     <Images.BtnReadMore.default />
@@ -407,9 +449,16 @@ const Home = (props) => {
             )}
           />
         </ImageBackground>
+        <ModalNoConnection
+          isVisible={connectStatus}
+          retry={() => retryConnection()}
+          backdropPress={() => togglemodalNoConnection()}
+          backButtonPress={() => togglemodalNoConnection()}
+        />
         <ModalInfoClass
           class={classObj}
           state={statePackage}
+          loading={loading.package}
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
           backButtonPress={() => toggleModalInfoClass()}

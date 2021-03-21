@@ -41,7 +41,7 @@ const TransactionInfo = (props) => {
       </View>
     )
   }
-  // console.log('ok', item)
+
   const PaymentMethod = () => {
     let icon
     item.Payment_Method == 'Ovo' ? icon = Images.LogoOVO :

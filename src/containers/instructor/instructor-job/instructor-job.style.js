@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
   containerHeader: {

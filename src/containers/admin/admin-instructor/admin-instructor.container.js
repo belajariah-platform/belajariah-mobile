@@ -11,7 +11,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -94,7 +93,7 @@ const AdminInstructor = () => {
   const renderFooter = () => {
     return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>

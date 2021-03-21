@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { List, RadioButton } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
@@ -35,6 +35,7 @@ const ClassLearning = (props) => {
   const navigation = useNavigation()
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
+  const [expand, setExpand] = useState([])
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [showTask, setShowTask] = useState(false)
@@ -44,16 +45,16 @@ const ClassLearning = (props) => {
   const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
 
-  let { passPreExam } = route.params ?? {}
-  let { passPostExam } = route.params ?? {}
-  const [progress, setProgress] = useState(0)
-  const [playIndex, setPlayIndex] = useState(0)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [playSubIndex, setPlaySubIndex] = useState(0)
-  const [currentSubIndex, setCurrentSubIndex] = useState(0)
-  const [isPostExamLocked, setIsPostExamLocked] = useState(true)
-  let percentage = Number(progress /  count * 100).toFixed(1)
-  console.log(progress, currentIndex, currentSubIndex)
+  const [progress, setProgress] = useState({
+    count : 0,
+    percentage : 0,
+    playIndex  : 0,
+    playSubIndex : 0,
+    currentIndex : 0,
+    currentSubIndex : 0,
+    passPreExam : 0,
+    passPostExam : 0,
+  })
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
   const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
@@ -76,12 +77,17 @@ const ClassLearning = (props) => {
   useEffect(() => {
     fetchDataLearning(dataState, item.Class_Code)
   }, [])
+  const toggleExpand = (index) => {
+    let tempExpand = [...expand]
+    tempExpand[index] = !tempExpand[index]
+    setExpand(tempExpand)
+  }
 
   const state = {
     isExpired : false,
     rating : 4.7,
     total_user : 1500,
-    title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
+    title : 'Belajar Al-Qur\'an dari dasar dengan metode yang mudah dan menyenangkan',
     description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
     materialCount : 12,
     posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
@@ -162,7 +168,7 @@ const ClassLearning = (props) => {
   const handleVideoEnd = (index, subIndex) => {
     item.Is_Expired ?
       (
-        (index == currentIndex && subIndex == currentSubIndex) && (
+        (index == progress.currentIndex && subIndex == progress.currentSubIndex) && (
           Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
         )
       )
@@ -177,6 +183,10 @@ const ClassLearning = (props) => {
 
   const handleModalRecord = () => {
     setModalRecordVisible(true)
+  }
+
+  const calculatePercentage = (count, totalMaterial) => {
+    return Number(count / totalMaterial * 100).toFixed(1)
   }
 
   const DescriptionClass = () => {
@@ -246,18 +256,18 @@ const ClassLearning = (props) => {
 
   const ContentClass = () => {
     const playVideo = (index, subIndex) => {
-      if(item.Pre_Test_Scores !== 0) {
-        if(index > currentIndex) {
+      if(progress.passPreExam > 0) {
+        if(index > progress.currentIndex) {
           Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
-        } else if(index < currentIndex) {
-          setPlayIndex(index)
-          setPlaySubIndex(subIndex)
+        } else if(index < progress.currentIndex) {
+          setProgress(s => ({ ...s, playIndex : index }))
+          setProgress(s => ({ ...s, playSubIndex : subIndex }))
         } else {
-          if(subIndex > currentSubIndex) {
+          if(subIndex > progress.currentSubIndex) {
             Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
           } else {
-            setPlayIndex(index)
-            setPlaySubIndex(subIndex)
+            setProgress(s => ({ ...s, playIndex : index }))
+            setProgress(s => ({ ...s, playSubIndex : subIndex }))
           }
         }
       } else {
@@ -266,15 +276,15 @@ const ClassLearning = (props) => {
     }
 
     const getLockStatus = (index, subIndex) => {
-      if(passPreExam) {
-        if(index < currentIndex) {
+      if(progress.passPreExam > 0) {
+        if(index < progress.currentIndex) {
           return false
-        } else if(index > currentIndex) {
+        } else if(index > progress.currentIndex) {
           return true
         } else {
-          if(subIndex < currentSubIndex) {
+          if(subIndex < progress.currentSubIndex) {
             return false
-          } else if(subIndex > currentSubIndex) {
+          } else if(subIndex > progress.currentSubIndex) {
             return true
           } else {
             return false
@@ -290,10 +300,10 @@ const ClassLearning = (props) => {
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
           <TouchableOpacity
-            activeOpacity={0.6}
+            activeOpacity={0.5}
             onPress={()=> {
-              if(passPreExam) {
-                Alert.alert('Pre-exam sudah diselesaikan sebelumnya')
+              if(progress.passPreExam > 2) {
+                Alert.alert('Pre-exam hanya dapat dilakukan maksimal 2 kali')
               } else {
                 navigation.navigate('ClassExam', item)
               }
@@ -313,6 +323,8 @@ const ClassLearning = (props) => {
                 title={topic.Title}
                 titleStyle={styles.textRegular}
                 style={styles.containerAccordion}
+                onPress={() => toggleExpand(index)}
+                expanded={expand[index]}
               >
                 {topic.SubTitles.map((subtopic, subIndex) => {
                   const isLocked = getLockStatus(index, subIndex)
@@ -320,7 +332,7 @@ const ClassLearning = (props) => {
                   return  (
                     <TouchableOpacity
                       key={subIndex}
-                      activeOpacity={0.6}
+                      activeOpacity={0.5}
                       onPress={() => {
                         playVideo(index, subIndex)
                       }}>
@@ -382,14 +394,17 @@ const ClassLearning = (props) => {
               title={'Post Exam'}
               titleStyle={styles.textRegular}
               onPress={()=> {
-                isPostExamLocked ?
-                  (
-                    Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                progress.percentage == 100 ? (
+                  progress.passPostExam < 2 ? (
+                    navigation.navigate('ClassExam')
+                  ) : (
+                    Alert.alert('Post exam hanya dapat diselesaikan maksimal 2 kali')
                   )
-                  :
-                  navigation.navigate('ClassExam', item)
+                ) : (
+                  Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
+                )
               }}
-              style={isPostExamLocked ? { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey } : { ...styles.containerExam, borderTopWidth : 0 }}
+              style={progress.percentage == 100 ? { ...styles.containerExam, borderTopWidth : 0 } : { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -400,32 +415,46 @@ const ClassLearning = (props) => {
 
   const ChecklistClass = () => {
     const [checkCount, setCheckCount] = useState(0)
-    const totalTask = states[currentIndex].SubTitles[currentSubIndex].taskImages.length
+    const totalTask = state.topics[progress.currentIndex].materials[progress.currentSubIndex].taskImages.length
 
     const unlockNext = (index, subIndex) => {
-      if(passPreExam) {
-        if(index == currentIndex && subIndex == currentSubIndex) {
-          let nextIndex = states[currentIndex + 1]
-          let nextSubIndex = states[currentIndex].materials[currentSubIndex + 1]
+      if(progress.passPreExam > 0) {
+        if(index == progress.currentIndex && subIndex == progress.currentSubIndex) {
+          let nextIndex = state.topics[progress.currentIndex + 1]
+          let nextSubIndex = state.topics[progress.currentIndex].materials[progress.currentSubIndex + 1]
 
           if(nextSubIndex == undefined) {
             if(nextIndex == undefined) {
               //end of array
-              if(isPostExamLocked) {
+              if(progress.percentage < 100) {
                 Alert.alert('Post exam unlocked!')
-                setProgress(progress + 1)
-                setIsPostExamLocked(false)
+
+                const count = progress.count + 1
+                const percentage = calculatePercentage(count, state.materialCount)
+
+                setProgress(s => ({ ...s, count : count }))
+                setProgress(s => ({ ...s, percentage : percentage }))
               }
             } else {
               //next index
-              setProgress(progress + 1)
-              setCurrentIndex(currentIndex + 1)
-              setCurrentSubIndex(0)
+              const count = progress.count + 1
+              const percentage = calculatePercentage(count, state.materialCount)
+
+              setProgress(s => ({ ...s, count : count }))
+              setProgress(s => ({ ...s, percentage : percentage }))
+
+              setProgress(s => ({ ...s, currentSubIndex : 0 }))
+              setProgress(s => ({ ...s, currentIndex : progress.currentIndex + 1 }))
             }
           } else {
             //next subindex
-            setProgress(progress + 1)
-            setCurrentSubIndex(currentSubIndex + 1)
+            const count = progress.count + 1
+            const percentage = calculatePercentage(count, state.materialCount)
+
+            setProgress(s => ({ ...s, count : count }))
+            setProgress(s => ({ ...s, percentage : percentage }))
+
+            setProgress(s => ({ ...s, currentSubIndex : progress.currentSubIndex + 1 }))
           }
         }
       }
@@ -442,7 +471,7 @@ const ClassLearning = (props) => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerModalScrollview}>
 
-          {state.topics[currentIndex].materials[currentSubIndex].taskImages.map((taskImage, taskIndex) => {
+          {state.topics[progress.currentIndex].materials[progress.currentSubIndex].taskImages.map((taskImage, taskIndex) => {
             const [checked, setChecked] = useState(false)
             return(
               <View key={taskIndex}>
@@ -475,8 +504,8 @@ const ClassLearning = (props) => {
                 toggleModalChecklist(),
                 checkCount == totalTask && (
                   setShowTask(false),
-                  state.topics[currentIndex].materials[currentSubIndex].isDone = true,
-                  unlockNext(currentIndex, currentSubIndex)
+                  state.topics[progress.currentIndex].materials[progress.currentSubIndex].isDone = true,
+                  unlockNext(progress.currentIndex, progress.currentSubIndex)
                 )
               }
               }
@@ -487,6 +516,25 @@ const ClassLearning = (props) => {
       </View>
     )
   }
+
+  useEffect(() => {
+    let { passPreExam } = route.params ?? {}
+    let { passPostExam } = route.params ?? {}
+
+    if(passPreExam != undefined) {
+      setProgress(s => ({ ...s, passPreExam : progress.passPreExam + 1 }))
+    }
+
+    if(passPostExam != undefined) {
+      setProgress(s => ({ ...s, passPostExam : progress.passPostExam + 1 }))
+    }
+
+    if(expand.length <= 0) {
+      state.topics.map(() => {
+        setExpand(expand => [...expand, false])
+      })
+    }
+  }, [route.params])
 
   return (
     <>
@@ -513,8 +561,8 @@ const ClassLearning = (props) => {
             />
             <View style={styles.container}>
               <VideoPlayer
-                posterLink = {passPreExam? state.topics[playIndex].materials[playSubIndex].posterLink : state.posterTrailerLink}
-                videoLink = {passPreExam ? state.topics[playIndex].materials[playSubIndex].video_link : state.videoTrailerLink}
+                posterLink = {progress.passPreExam > 0 ? state.topics[progress.playIndex].materials[progress.playSubIndex].posterLink : state.posterTrailerLink}
+                videoLink = {progress.passPreExam > 0 ? state.topics[progress.playIndex].materials[progress.playSubIndex].video_link : state.videoTrailerLink}
                 iconPlaySize = {48}
                 iconSkipSize = {32}
                 showSkipButton={true}
@@ -526,7 +574,7 @@ const ClassLearning = (props) => {
                 fullscreenStyle={styles.videoFullscreenContainerStyle}
                 onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                 controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                onVideoEnd = { () => handleVideoEnd(playIndex, playSubIndex)} />
+                onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
             </View>
           </View>
           <View style={styles.containerView}>
@@ -550,7 +598,7 @@ const ClassLearning = (props) => {
         isVisible={modalRecordVisible}
         backdropPress={() => toggleModalRecord()}
         backButtonPress={() => toggleModalRecord()}
-        ayats={state.topics[currentIndex].ayats}
+        ayats={state.topics[progress.currentIndex].ayats}
       />
     </>
   )

@@ -2,8 +2,9 @@ import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
-import DocumentPicker from 'react-native-document-picker'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
+import DocumentPicker from 'react-native-document-picker'
 
 import {
   View,
@@ -18,6 +19,7 @@ import {
   TextBox,
   ModalInfo,
   ButtonGradient,
+  ModalNoConnection,
 } from '../../components'
 
 import { Images } from '../../assets'
@@ -32,6 +34,12 @@ const TransactionUpload = (props) => {
   const [loading, setLoading] = useState(false)
   const [dataImage, setDataImage] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+  }
 
   const FormUpload = useFormik({
     initialValues: {
@@ -46,7 +54,6 @@ const TransactionUpload = (props) => {
 
     },
     onSubmit:   (values) => {
-      console.log(values)
       if (values.Sender_Bank != '' || values.Sender_Name !='') {
         uploadPayment(values)
       } else {
@@ -60,13 +67,15 @@ const TransactionUpload = (props) => {
     try {
       setLoading(true)
       const response = await PaymentAPI.UploadPayment(values)
-      console.log(response.data.result)
       if (response.data.result) {
         toggleModal()
       }
       setLoading(false)
     } catch (error) {
       setLoading(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return error
     }
   }
@@ -238,6 +247,12 @@ const TransactionUpload = (props) => {
           <ButtonSend />
         </ScrollView>
       </View>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ModalInfo
         isVisible={modalVisible}
         backdropPress={() => navigation.navigate('Pembayaran')}

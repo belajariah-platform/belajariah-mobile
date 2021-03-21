@@ -1,6 +1,7 @@
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -10,7 +11,6 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -19,23 +19,34 @@ import {
   STORY_LIST_SUCC,
   STORY_LOAD_SCROLL,
 } from '../../../action'
+import {
+  Searchbox,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { StoryAPI } from '../../../api'
 import { Response } from '../../../utils'
 import { Images, Color } from '../../../assets'
-import { Searchbox, LoadingView } from '../../../components'
 
 import styles from './inspiratif.style'
 
 const InspiratifStory = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const [refreshing, setRefreshing] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const { loading, loadingScroll } = useSelector((state) => state.StoryReducer)
 
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [refreshing, setRefreshing] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataState, setDataState] = useState({ skip: 0, take: 6, filter: [], filterString: '[]' })
+
+  const retryConnection = () => {
+    fetchDataStory(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const onDataStateChange = (event) => {
     setDataState({
@@ -68,6 +79,11 @@ const InspiratifStory = () => {
         setState(response.data.data)
         setCount(response.data.count)
         dispatch({ type: STORY_LIST_SUCC })
+      } else {
+        dispatch({ type: STORY_LIST_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: STORY_LIST_FAIL })
@@ -94,7 +110,7 @@ const InspiratifStory = () => {
   const renderFooter = () => {
     return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           size={30}
           color={Color.purpleMedium}/>
       </View>
@@ -120,7 +136,7 @@ const InspiratifStory = () => {
     return(
       <TouchableOpacity
         key={index}
-        activeOpacity={0.7}
+        activeOpacity={0.5}
         onPress={() =>  navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
         <Card
           containerStyle={styles.cardStyle}>
@@ -142,6 +158,12 @@ const InspiratifStory = () => {
 
   return (
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Header />
       <View style={styles.containerSearch}>
         <Searchbox

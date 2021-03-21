@@ -104,7 +104,7 @@ const ClassExam = (props) => {
             return (
               <View key={index}>
                 <TouchableOpacity
-                  activeOpacity={0.7}
+                  activeOpacity={0.5}
                   onPress={() => onNumberSelected(item, index)}
                   style={[styles.scrollTouch,
                     index === optionSelected ?
@@ -146,7 +146,7 @@ const ClassExam = (props) => {
               key={index}
               style={styles.containerOption}>
               <TouchableOpacity
-                activeOpacity={0.7}
+                activeOpacity={0.5}
                 style={[styles.touchOption,
                   (index+1) == questionSelected.Answer ?
                     { backgroundColor : Color.purpleMedium } :

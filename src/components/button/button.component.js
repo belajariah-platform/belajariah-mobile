@@ -10,7 +10,7 @@ const Buttons = (props) =>  {
   return (
     <TouchableOpacity
       {...props}
-      activeOpacity={0.9}
+      activeOpacity={0.5}
       style={[styles.button, props.style]}>
       <View style={styles.viewButton}>
         {props.icon}

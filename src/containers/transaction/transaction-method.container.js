@@ -5,6 +5,7 @@ import { Card } from 'react-native-elements'
 import { RadioButton } from 'react-native-paper'
 import React, { useState, useEffect } from 'react'
 import { Icon, Text } from '@ui-kitten/components'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -27,6 +28,7 @@ import {
   TextBox,
   ModalInfo,
   ButtonGradient,
+  ModalNoConnection,
 } from '../../components'
 import { Response } from '../../utils'
 import { FormatRupiah } from '../../utils'
@@ -45,13 +47,24 @@ const TransactionMethod = (props) => {
   const [gateway, setGateway] = useState('')
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 50, filter: [], filterString: '[]' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataPaymentMethod(dataState)
+  }
 
   const fetchDataPaymentMethod = async ({ skip, take, filterString }) => {
     try {
       const response = await PaymentMethodAPI.GetAllPaymentMethod(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -80,6 +93,10 @@ const TransactionMethod = (props) => {
           FormCheckout.setFieldValue('Total_Transfer',
             value - (value * response.data.data.Discount/100))
         }
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -117,6 +134,9 @@ const TransactionMethod = (props) => {
       setLoadingBtn(false)
     } catch (error) {
       setLoadingBtn(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return error
     }
   }
@@ -246,7 +266,7 @@ const TransactionMethod = (props) => {
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
           <Text style={styles.textTotalPrice}>Total Harga</Text>
-          <Text style={styles.textPrice}>Rp {FormatRupiah(packages.Price_Discount)}</Text>
+          <Text style={styles.textPrice}>Rp {FormatRupiah(FormCheckout.values['Total_Transfer'])}</Text>
         </View>
         <ButtonGradient
           title='Checkout Now'
@@ -262,6 +282,12 @@ const TransactionMethod = (props) => {
   return (
     <View style={styles.containerMain}>
       <Loader loading={loadingBtn}/>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ModalInfo
         isVisible={modalVisible}
         backdropPress={() => {

@@ -62,7 +62,7 @@ const ProfileInstrcutor = ({ route }) => {
 
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           containerStyle={styles.avatar}
           source={item.Image_Filename == '' ?
             Images.ImageProfileDefault : { uri : item.Image_Filename }}

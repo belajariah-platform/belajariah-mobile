@@ -55,7 +55,6 @@ const InstructorTaskDetail = ({ route }) => {
       duration : 0,
     },
     onSubmit:  (values, form) => {
-      console.log(values)
       setPlay(false)
       setRecord(false)
       setMessage(false)

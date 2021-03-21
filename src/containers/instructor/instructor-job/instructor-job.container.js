@@ -13,7 +13,6 @@ import {
   ToastAndroid,
   RefreshControl,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   ButtonGradient,
@@ -141,7 +140,7 @@ const InstructorJob = ({ route }) => {
   const renderFooter = () => {
     return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color={Color.purpleButton}
           size={30} />
       </View>

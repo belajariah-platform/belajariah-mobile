@@ -12,7 +12,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   ImageView,
@@ -125,7 +124,6 @@ const AdminTransactionAll = ({ search }) => {
       Package_Code : item.Package_Code,
       Status_Payment_Code : item.Status_Payment_Code,
     }
-    console.log(values)
     try {
       setLoadingBtn(true)
       const response = await PaymentAPI.ConfirmPayment(values)
@@ -159,7 +157,7 @@ const AdminTransactionAll = ({ search }) => {
   const renderFooter = () => {
     return loadingAllScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, ActivityIndicator } from 'react-native'
+import { View } from 'react-native'
+import { Flow } from 'react-native-animated-spinkit'
 
 import { Color } from '../../assets'
 import { styles } from './loading-view.style'
@@ -8,14 +9,15 @@ import { styles } from './loading-view.style'
 const LoadingView = (props) => {
   return (
     <View style={[styles.indicatorContainer, props.loadingStyle]}>
-      <ActivityIndicator
+      <Flow
         color={props.color || Color.purpleMedium}
-        size={40} />
+        size={props.size || 40} />
     </View>
   )
 }
 
 LoadingView.propTypes = {
+  size : PropTypes.number,
   color : PropTypes.string,
   loadingStyle : PropTypes.object
 }

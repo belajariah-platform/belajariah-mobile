@@ -216,7 +216,7 @@ const ProfileEdit = () => {
         <Text style={styles.textTitleChoose}>Pilih foto profil</Text>
         <View  style={{ flexDirection : 'row', paddingRight : '38%' }}>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.iconChoose}
             onPress={() => {
               setModalVisible(false)
@@ -226,7 +226,7 @@ const ProfileEdit = () => {
             <Text style={styles.textChoose}>Camera</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.iconGallery}
             onPress={() => onClickChooseFile()}
           >
@@ -271,7 +271,7 @@ const ProfileEdit = () => {
                 <View style={styles.containerAvatar}>
                   <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
                     <Avatar
-                      activeOpacity={0.7}
+                      activeOpacity={0.5}
                       source={Images.ImageProfileDefault}
                       onPress={() =>  setModalVisible(true)}
                       style={styles.avatar}/>
@@ -322,7 +322,7 @@ const ProfileEdit = () => {
                   </RadioGroup>
                   <Text style={styles.containerText}>Tanggal Lahir</Text>
                   <TouchableOpacity
-                    activeOpacity={0.7}
+                    activeOpacity={0.5}
                     onPress={() => setModalDateVisible(true)}>
                     <Datepicker
                       disabled

@@ -189,7 +189,8 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
   flexOne : { flex : 1 },

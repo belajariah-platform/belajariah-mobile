@@ -1,7 +1,13 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useNavigation } from '@react-navigation/native'
 
+import {
+  Card,
+  Avatar,
+} from 'react-native-elements'
 import {
   View,
   Text,
@@ -10,24 +16,34 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
 
 import { UserAPI } from '../../../api'
 import { Response } from '../../../utils'
 import { Images } from '../../../assets'
 import { styles } from './profile.style'
-import { useNavigation } from '@react-navigation/native'
+import { ModalNoConnection } from '../../../components'
 
 const ProfileAll = ({ route }) => {
   const item = route.params
   const navigation = useNavigation()
   const [userInfo, setUserInfo] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataUser(item.Created_By)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataUser = async (email) => {
     try {
       const response = await UserAPI.GetUser(email)
       if (response.status === Response.SUCCESS) {
         setUserInfo(response.data.result)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -44,7 +60,12 @@ const ProfileAll = ({ route }) => {
         width='100%'
         style={styles.background}
       />
-
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <View style={{ ...styles.containerDrawerButton, paddingVertical:15 }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.BtnClose.default
@@ -56,7 +77,7 @@ const ProfileAll = ({ route }) => {
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
           size='large'
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           containerStyle={styles.avatar}
           source={userInfo.Image_Filename == '' ?
             Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}

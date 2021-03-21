@@ -12,7 +12,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   TRANSACT_ACCEPT_SUCC,
@@ -92,7 +91,7 @@ const AdminTransactionAccept = ({ search }) => {
   const renderFooter = () => {
     return loadingAcceptScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>

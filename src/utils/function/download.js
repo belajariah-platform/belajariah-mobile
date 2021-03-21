@@ -27,7 +27,7 @@ const DownloadFile = async (item) => {
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
     ])
     if(granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('test')
+      //
     }
     var date = new Date()
     var url = item.path

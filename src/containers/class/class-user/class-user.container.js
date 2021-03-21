@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import RNPrint from 'react-native-print'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useDispatch, useSelector } from 'react-redux'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {
@@ -12,7 +13,6 @@ import {
   TextInput,
   RefreshControl,
   ImageBackground,
-  ActivityIndicator,
 } from 'react-native'
 
 import {
@@ -44,6 +44,7 @@ const ClassUser = (props) => {
   const [dataObj, setDataObj] = useState({})
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [selectedPrinter, setSelectedPrinter] = useState(null)
   const [modalFilterVisible, setmodalFilterVisible] = useState(false)
 
@@ -54,6 +55,7 @@ const ClassUser = (props) => {
   const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'DESC' })
 
   const { userInfo } = useSelector((state) => state.UserReducer)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const { loading, loadingScroll } = useSelector((state) => state.UserClassReducer)
 
   const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
@@ -62,6 +64,11 @@ const ClassUser = (props) => {
     setModalVisible(!modalVisible)
   }
 
+  const retryConnection = () => {
+    fetchDataUserClass(dataState)
+    fetchDataClassCategory(dataStateCategory)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
     try {
@@ -73,6 +80,10 @@ const ClassUser = (props) => {
         dispatch({ type: USER_CLASS_LIST_SUCC })
       } else {
         dispatch({ type: USER_CLASS_LIST_FAIL })
+        NetInfo.fetch().then(res => {
+          console.log(res)
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: USER_CLASS_LIST_FAIL })
@@ -86,6 +97,10 @@ const ClassUser = (props) => {
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -201,7 +216,7 @@ const ClassUser = (props) => {
   const renderFooter = () => {
     return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>
@@ -252,10 +267,14 @@ const ClassUser = (props) => {
       <ModalFilterUser
         state={stateCategory}
         submit={onDataStateChange}
-      />
-      <ModalNoConnection
         isVisible={modalFilterVisible}
         backdropPress={() => toggleModalFilter()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
@@ -273,8 +292,11 @@ const ClassUser = (props) => {
           imageStyle={{ borderRadius: 30 }}
         >
           {Platform.OS === 'ios' && customOptions()}
-          {loading && !loadingScroll ? (
-            <LoadingView color ='white'/>) :
+          {loading && !loadingScroll ?
+            <LoadingView
+              color ='white'
+              loadingStyle={{ marginTop : -100 }}
+            /> :
             state.length == 0 ? (
               <View style={styles.containerViewClass}>
                 <Images.IconClassEmpty.default/>

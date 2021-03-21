@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import Clipboard from '@react-native-community/clipboard'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import {
@@ -13,6 +14,7 @@ import {
 import {
   LoadingView,
   ButtonGradient,
+  ModalNoConnection,
 } from '../../components'
 
 import { Images } from '../../assets'
@@ -24,9 +26,17 @@ import styles from './promotion-detail.style'
 const PromotionDetail = () => {
   const route = useRoute()
   const navigation = useNavigation()
+  let { promo_code } = route.params ?? {}
+
   const [state, setState] = useState({})
   const [loading, setLoading] = useState(false)
-  let { promo_code } = route.params ?? {}
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataPromotionDetail(promo_code)
+  }
 
   const fetchDataPromotionDetail = async (code) => {
     try {
@@ -37,6 +47,9 @@ const PromotionDetail = () => {
         setLoading(false)
       } else {
         setLoading(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       setLoading(false)
@@ -141,6 +154,12 @@ const PromotionDetail = () => {
             <ScrollView
               style={styles.containerScrollView}
               showsVerticalScrollIndicator={false}>
+              <ModalNoConnection
+                isVisible={connectStatus}
+                retry={() => retryConnection()}
+                backdropPress={() => togglemodalNoConnection()}
+                backButtonPress={() => togglemodalNoConnection()}
+              />
               <Text style={styles.textRegular}>
                 Maaf, voucher tidak tersedia
               </Text>
@@ -149,6 +168,12 @@ const PromotionDetail = () => {
             <ScrollView
               style={styles.containerScrollView}
               showsVerticalScrollIndicator={false}>
+              <ModalNoConnection
+                isVisible={connectStatus}
+                retry={() => retryConnection()}
+                backdropPress={() => togglemodalNoConnection()}
+                backButtonPress={() => togglemodalNoConnection()}
+              />
               <BannerPromotion />
               <DescriptionPromotion />
               <Footer />

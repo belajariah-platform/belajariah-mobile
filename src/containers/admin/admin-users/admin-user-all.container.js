@@ -14,7 +14,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   CONSUL_ALL_REQ,
@@ -138,7 +137,7 @@ const AdminUserAll = ({ search }) => {
   const renderFooter = () => {
     return loadingAllScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>

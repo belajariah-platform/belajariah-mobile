@@ -24,7 +24,7 @@ const AdminDrawer = ({ navigation }, props) => {
       <View style={styles.drawerBackground}>
 
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           onPress={() => {
             setActived(1)
             navigation.navigate('AdminDashboard')
@@ -38,7 +38,7 @@ const AdminDrawer = ({ navigation }, props) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           onPress={() => {
             setActived(2)
             navigation.navigate('AdminUser')
@@ -55,7 +55,7 @@ const AdminDrawer = ({ navigation }, props) => {
 
         <View style={styles.flexOne}>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             onPress={() => {
               setActived(3)
               navigation.navigate('AdminInstructor')
@@ -71,7 +71,7 @@ const AdminDrawer = ({ navigation }, props) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             onPress={() => {
               setActived(4)
               navigation.navigate('AdminTransaction')
@@ -85,7 +85,7 @@ const AdminDrawer = ({ navigation }, props) => {
             />
             <Text style={styles.textIcon}>Transaksi</Text>
           </TouchableOpacity>
-          
+
         </View>
 
         <TouchableOpacity

@@ -77,7 +77,7 @@ const TimelineNews = () => {
                         }}>
                         <TouchableOpacity
                           style={{ position: 'absolute', right: 0 }}
-                          activeOpacity={0.4}>
+                          activeOpacity={0.5}>
                           <Icon
                             fill={Color.textHintContent}
                             name={'link'}

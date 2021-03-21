@@ -3,19 +3,18 @@ import { Config } from '../config'
 
 const GetAllQuran = async () =>  {
   try {
-    const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/v1/surat`)
+    const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/surah`)
     return response
   } catch (error) {
     return error
   }
 }
 
-const GetDetailQuran = async ({ id, count })  => {
+const GetDetailQuran = async ({ id })  => {
   try {
-    const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/v1/ayatweb/${id}/0/0/${count}`)
+    const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/surah/${id}`)
     return response
   } catch (error) {
-    
     return error
   }
 }

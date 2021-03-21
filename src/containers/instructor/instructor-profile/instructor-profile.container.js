@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import { ImageBackground } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Card, Avatar } from 'react-native-elements'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -13,21 +14,31 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
+import {
+  ImageView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { MentorAPI } from '../../../api'
 import { Response } from '../../../utils'
 import { Images } from '../../../assets'
 import { USER_INFO } from  '../../../action'
 import { styles } from './instructor-profile.style'
-import { ImageView } from '../../../components'
 
 const InstructorProfile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
+
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataMentor(userInfo.Email)
+    setconnectStatus(!connectStatus)
+  }
 
   const rotateValue = new Animated.Value(0)
   const doRotation = rotateValue.interpolate({
@@ -44,6 +55,10 @@ const InstructorProfile = () => {
         await dispatch({
           type: USER_INFO,
           user: response.data.result,
+        })
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
         })
       }
     } catch (err) {
@@ -85,7 +100,12 @@ const InstructorProfile = () => {
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
       />
-
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Images.ProfileBackground.default
         width={'100%'}
         style={styles.background}
@@ -124,7 +144,7 @@ const InstructorProfile = () => {
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           onPress={toggleModalFoto}
           containerStyle={styles.avatar}
           avatarStyle={{ borderRadius : 90 / 2 }}

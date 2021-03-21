@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   textRegularBlack: {
+    lineHeight: 20,
     color: Color.black,
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,

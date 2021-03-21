@@ -2,19 +2,34 @@ import PropTypes from 'prop-types'
 import { List } from 'react-native-paper'
 import { Card } from 'react-native-elements'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
+import {
+  View,
+  Text,
+  ScrollView,
+} from 'react-native'
+import {
+  TextView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
 import { LearningAPI } from '../../../api'
-import { TextView } from '../../../components'
 import { TimeConvertToHour } from '../../../utils'
 
 import styles from './class-about.style'
 
 const ClassAbout = ({ params }) => {
   const [state, setState] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataLearning(dataState, params.Code)
+  }
 
   const fetchDataLearning = async (state, code) => {
     try {
@@ -23,6 +38,10 @@ const ClassAbout = ({ params }) => {
       const response = await LearningAPI.GetAllLearning(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -139,6 +158,12 @@ const ClassAbout = ({ params }) => {
       style={styles.container}
       showsVerticalScrollIndicator={false}
     >
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Desc />
       <Topics />
       <Benefits />

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon, Text } from '@ui-kitten/components'
+import NetInfo from '@react-native-community/netinfo'
 // import { GoogleSignin, GoogleSigninButton } from '@react-native-community/google-signin'
 
 import {
@@ -18,7 +19,8 @@ import {
   Alerts,
   Topbar,
   Buttons,
-  TextBox
+  TextBox,
+  ModalNoConnection,
 } from '../../../components'
 
 import { UserAPI } from '../../../api'
@@ -34,8 +36,11 @@ import { styles } from './user-login.style'
 
 const Login = (props) => {
   const dispatch = useDispatch()
-  // const [googleInfo, setGoogleInfo] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+
+  const toggleSecureEntry = () => setSecureTextEntry(!secureTextEntry)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
     initialValues: { email: '', password: '' },
@@ -59,16 +64,16 @@ const Login = (props) => {
               user: response.data.data,
             })
           }
+        } else {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
         }
       } catch (err) {
         return err
       }
     },
   })
-
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry)
-  }
 
   const renderIcon = props => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
@@ -79,6 +84,9 @@ const Login = (props) => {
   return (
     <>
       <Topbar title='Masuk' backIcon={false} />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        backdropPress={togglemodalNoConnection}/>
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
           <Image source={Images.Login} style={styles.image} />
@@ -124,7 +132,7 @@ const Login = (props) => {
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 style={styles.anotherLogin}
-                activeOpacity={0.6}
+                activeOpacity={0.5}
               >
                 <Image
                   source={Images.Google}

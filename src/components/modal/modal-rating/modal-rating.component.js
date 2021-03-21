@@ -18,7 +18,7 @@ const ModalRating = (props) => {
         {maxRating.map((item, index) => {
           return (
             <TouchableOpacity
-              activeOpacity={0.7}
+              activeOpacity={0.5}
               key={index}
               onPress={() => setDefaultRating(item)}>
               <Image

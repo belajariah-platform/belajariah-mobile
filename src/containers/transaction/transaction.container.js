@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -11,7 +12,6 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 import {
   TRANSACT_USER_LIST_REQ,
@@ -19,27 +19,40 @@ import {
   TRANSACT_USER_LIST_SUCC,
   TRANSACT_USER_LOAD_SCROLL,
 } from '../../action'
+import {
+  LoadingView,
+  ModalNoConnection,
+  ModalFilterUserTransaction,
+} from '../../components'
 
 import { Response } from '../../utils'
 import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
 import { PaymentAPI, EnumAPI } from '../../api'
-import { ModalFilterUserTransaction, LoadingView } from '../../components'
 
 const Transaction = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
   const [refreshing, setRefreshing] = useState(false)
   const [stateCategory, setStateCategory] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
   const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'DESC' })
 
   const toggleModal = () => setModalVisible(!modalVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const { loading, loadingScroll } = useSelector((state) => state.TransactionReducer)
+
+  const retryConnection = () => {
+    fetchDataTransaction(dataState)
+    fetchDataClassCategory(dataStateCategory)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataTransaction = async ({ skip, take, filterString, sort }) => {
     try {
@@ -51,6 +64,9 @@ const Transaction = () => {
         dispatch({ type: TRANSACT_USER_LIST_SUCC })
       } else {
         dispatch({ type: TRANSACT_USER_LIST_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       dispatch({ type: TRANSACT_USER_LIST_FAIL })
@@ -64,6 +80,10 @@ const Transaction = () => {
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
       return err
@@ -106,7 +126,7 @@ const Transaction = () => {
   const renderFooter = () => {
     return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>
@@ -158,7 +178,7 @@ const Transaction = () => {
     return (
       <View key={index}>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           onPress={() => navigation.navigate('TransactionInfo', item)}
           disabled={item.Status_Payment == 'Waiting for Payment' ? false : true}
         >
@@ -187,7 +207,7 @@ const Transaction = () => {
       </View>
     )
   }
-
+  console.log(connectStatus)
   return (
     <>
       <ModalFilterUserTransaction
@@ -196,6 +216,12 @@ const Transaction = () => {
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <View style={styles.bgHeader}>
         <View style={styles.containerHeader}>
@@ -214,7 +240,10 @@ const Transaction = () => {
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 30 }}>
           {loading && !loadingScroll ?
-            <LoadingView color ='white'/> :
+            <LoadingView
+              color ='white'
+              loadingStyle={{ marginTop : -100 }}
+            /> :
             state.length == 0 ?
               <NoTransaction /> :
               <FlatList

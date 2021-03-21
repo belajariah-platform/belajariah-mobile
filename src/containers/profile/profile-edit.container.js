@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 import RNFetchBlob from 'rn-fetch-blob'
 import { RNCamera } from 'react-native-camera'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import DocumentPicker from 'react-native-document-picker'
@@ -24,8 +25,8 @@ import {
 import { UserAPI } from '../../api'
 import { Images } from '../../assets'
 import { Response } from '../../utils'
-import { Alerts } from '../../components'
 import { USER_INFO } from  '../../action'
+import { Alerts, ModalNoConnection } from '../../components'
 import { Buttons, TextBox, ModalInfo, ModalDate } from '../../components'
 
 import { styles } from './profile-edit.style'
@@ -42,9 +43,17 @@ const ProfileEdit = () => {
   const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [modalDateVisible, setModalDateVisible] = useState(false)
+
   const toggleModal = () => setModalVisible(!modalVisible)
   const toggleModalDate = () => setModalDateVisible(!modalDateVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const retryConnection = () => {
+    fetchDataUser(userInfo.Email)
+    setconnectStatus(!connectStatus)
+  }
   // const [previewImage, setPreviewImage] = useState(false)
   // const [cameraVisible, setCameraVisible] = useState(false)
 
@@ -63,11 +72,14 @@ const ProfileEdit = () => {
     onSubmit: async (values) => {
       try {
         const response = await UserAPI.UpdateProfile(values)
-        if (response.status === Response.SUCCESS) {
+        if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
         }
       } catch (error) {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
         return error
       }
     },
@@ -80,6 +92,10 @@ const ProfileEdit = () => {
         await dispatch({
           type: USER_INFO,
           user: response.data.result,
+        })
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
         })
       }
     } catch (err) {
@@ -243,7 +259,7 @@ const ProfileEdit = () => {
         <Text style={styles.textTitleChoose}>Pilih foto profil</Text>
         <View  style={{ flexDirection : 'row', paddingRight : '38%' }}>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.iconChoose}
             onPress={() => {
               setModalVisible(false)
@@ -253,7 +269,7 @@ const ProfileEdit = () => {
             <Text style={styles.textChoose}>Camera</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.iconGallery}
             onPress={() => onClickChooseFile()}
           >
@@ -298,7 +314,7 @@ const ProfileEdit = () => {
                 <View style={styles.containerAvatar}>
                   <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
                     <Avatar
-                      activeOpacity={0.7}
+                      activeOpacity={0.5}
                       onPress={() =>  setModalVisible(true)}
                       style={styles.avatar}
                       source={userInfo.Image_Filename == '' ?
@@ -355,7 +371,7 @@ const ProfileEdit = () => {
                   </RadioGroup>
                   <Text style={styles.containerText}>Tanggal Lahir</Text>
                   <TouchableOpacity
-                    activeOpacity={0.7}
+                    activeOpacity={0.5}
                     onPress={() => setModalDateVisible(true)}>
                     <Datepicker
                       disabled
@@ -386,6 +402,12 @@ const ProfileEdit = () => {
               </ScrollView>
             )}
       </View>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ModalInfo
         isVisible={modalVisible}
         containerStyle={{ height:125 }}

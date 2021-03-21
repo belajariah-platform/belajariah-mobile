@@ -1,6 +1,7 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -20,14 +21,22 @@ import { Response } from '../../utils'
 import { styles } from './profile.style'
 import { USER_INFO } from  '../../action'
 import { useNavigation } from '@react-navigation/native'
-import { ImageView } from '../../components'
+import { ImageView, ModalNoConnection } from '../../components'
 
 const Profile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
+
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataUser(userInfo.Email)
+    setconnectStatus(!connectStatus)
+  }
 
   const rotateValue = new Animated.Value(0)
   const doRotation = rotateValue.interpolate({
@@ -44,6 +53,10 @@ const Profile = () => {
         await dispatch({
           type: USER_INFO,
           user: response.data.result,
+        })
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
         })
       }
     } catch (err) {
@@ -64,7 +77,12 @@ const Profile = () => {
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
       />
-
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Images.ProfileBackground.default
         width='100%'
         style={styles.background}
@@ -104,7 +122,7 @@ const Profile = () => {
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
           size='large'
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           onPress={toggleModalFoto}
           containerStyle={styles.avatar}
           source={userInfo.Image_Filename == '' ?

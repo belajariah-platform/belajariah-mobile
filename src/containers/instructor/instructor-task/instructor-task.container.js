@@ -64,7 +64,6 @@ const InstructorTask = () => {
     try {
       setLoadingCompleted(true)
       filterString= GenerateFilter(filter, { type : 'text', field : 'status', value : 'Completed' })
-      console.log('ok', filterString)
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStateCompleted(response.data.data)
