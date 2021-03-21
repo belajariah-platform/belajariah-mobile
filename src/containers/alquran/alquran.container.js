@@ -150,18 +150,18 @@ const Alquran = (props) => {
                 <View style={styles.containerListSurah}>
                   <View style={styles.containerIdSurah}>
                     <Images.IconSurah.default style={styles.iconSurah} />
-                    <Text style={styles.textIdSurah}>{item.id}</Text>
+                    <Text style={styles.textIdSurah}>{item.number}</Text>
                   </View>
                   <View style={styles.containerSurahName}>
-                    <Text style={styles.textSurahName}>{item.surat_name}</Text>
+                    <Text style={styles.textSurahName}>{item.name.transliteration.id}</Text>
                     <View style={styles.containerTranslateAyatCount}>
                       <Text style={styles.textRegular}>
-                        {item.surat_terjemahan}
+                        {item.name.translation.id}
                       </Text>
-                      <Text style={styles.textRegular}>({item.count_ayat})</Text>
+                      <Text style={styles.textRegular}>({item.numberOfVerses})</Text>
                     </View>
                   </View>
-                  <Text style={styles.textSurahNameArab}>{item.surat_text}</Text>
+                  <Text style={styles.textSurahNameArab}>{item.name.short}</Text>
                 </View>
               </TouchableOpacity>
             )

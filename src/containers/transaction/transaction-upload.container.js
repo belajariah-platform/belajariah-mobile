@@ -13,18 +13,21 @@ import {
 
 import { Images } from '../../assets'
 import { FormatRupiah } from '../../utils'
-import { ButtonGradient, TextBox } from '../../components'
+import { ButtonGradient, TextBox, ModalInfo } from '../../components'
 
 import styles from './transaction-upload.style'
 
 const TransactionUpload = () => {
   const navigation = useNavigation()
   const [dataImage, setDataImage] = useState({})
+  const [modalVisible, setModalVisible] = useState(false)
 
   const state = {
     total_price : 10000000,
     created_date : new Date(),
   }
+
+  const toggleModal = () => setModalVisible(!modalVisible)
 
   const Header = () => {
     return (
@@ -107,7 +110,7 @@ const TransactionUpload = () => {
           title='Kirim'
           styles={styles.buttonStyle}
           textStyle={styles.textBuyClass}
-          onPress={()=> {navigation.navigate('TransactionConfirm')}}
+          onPress={toggleModal}
         />
       </View>
     )
@@ -165,6 +168,23 @@ const TransactionUpload = () => {
       }
     }
   }
+
+  const UploadSent = () => {
+    return (
+      <View style={styles.containerModal}>
+        <Text style={styles.textModalTitle}>Bukti pembayaran anda Terkirim</Text>
+        <View style={styles.iconComplete}>
+          <Images.IconCompletePurple.default width={120} height={120} />
+        </View>
+        <View style={styles.contentModal}>
+          <Text style={styles.textModalDesc}>Terima Kasih, bukti pembayaran anda sedang diproses.
+            <Text style={styles.textModalDescBold}> Kelas dapat diakses setelah pembayaran anda kami verifikasi.</Text>
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <>
       <View style={styles.containerMain}>
@@ -177,6 +197,12 @@ const TransactionUpload = () => {
           <ButtonSend />
         </ScrollView>
       </View>
+      <ModalInfo
+        isVisible={modalVisible}
+        backdropPress={() => navigation.navigate('Pembayaran')}
+        backButtonPress={() => navigation.navigate('Pembayaran')}
+        renderItem={<UploadSent/>}
+      />
     </>
   )
 }

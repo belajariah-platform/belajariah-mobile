@@ -15,7 +15,7 @@ import {
 
 import { Images } from '../../../assets'
 import { TimeConvert, TimerObj } from '../../../utils'
-import { ButtonGradient, ModalRating } from '../../../components'
+import { ButtonGradient, ImageView, ModalRating } from '../../../components'
 
 import styles from './user-consultation.style'
 
@@ -29,11 +29,14 @@ const ConsultationDetail = ({ route }) => {
   const [record, setRecord] = useState(false)
   const [message, setMessage] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+
+  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const voiceDuration =  (480 - ((minutes*60) + seconds))
-  const toggleModal = () => setModalVisible(!modalVisible)
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
 
@@ -196,6 +199,7 @@ const ConsultationDetail = ({ route }) => {
         {user_login == item.user_code ? (
           <View style={styles.containerSoundStart}>
             <Avatar
+              onPress={toggleModalFoto}
               containerStyle={styles.avatarStart}
               source={ Images.ImageProfileDefault}
               avatarStyle={styles.avatarChatInstructor}
@@ -243,8 +247,9 @@ const ConsultationDetail = ({ route }) => {
               </View>
             </View>
             <Avatar
-              source={ Images.ImageProfileDefault}
+              onPress={toggleModalFoto}
               containerStyle={styles.avatarEnd}
+              source={ Images.ImageProfileDefault}
               avatarStyle={styles.avatarChatInstructor}
             />
           </View>
@@ -262,7 +267,7 @@ const ConsultationDetail = ({ route }) => {
             { user_login != item.user_code &&(
               <TouchableOpacity
                 activeOpacity={0.2}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => setModalRatingVisible(!modalRatingVisible)}>
                 <Images.IconGive.default/>
               </TouchableOpacity>
             )}
@@ -357,10 +362,17 @@ const ConsultationDetail = ({ route }) => {
         <Footer/>
       </View>
       <ModalRating
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
+        isVisible={modalRatingVisible}
+        backdropPress={() => toggleModalRating()}
+        backButtonPress={() => toggleModalRating()}
         title='Berikan rating untuk koreksi bacaanmu'
         renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
+      />
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
       />
     </View>
   )

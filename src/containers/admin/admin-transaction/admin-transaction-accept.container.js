@@ -139,10 +139,12 @@ const AdminTransactionAccept = () => {
         submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
+        backButtonPress={() => toggleModalRepair()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
         setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
         filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground

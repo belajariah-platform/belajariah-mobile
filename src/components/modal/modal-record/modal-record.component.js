@@ -58,6 +58,7 @@ const ModalRecord = (props) => {
         isVisible={props.isVisible}
         style={styles.backdropStyle}
         onBackdropPress={props.backdropPress}
+        onBackButtonPress={props.backButtonPress}
       >
         <View style={styles.modalStyle}>
           <Image source={Images.ModalRecordBG} style={styles.imgBackground}/>
@@ -152,6 +153,7 @@ ModalRecord.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  backButtonPress : PropTypes.func,
   hideButtonClose : PropTypes.bool,
   containerStyle : PropTypes.object,
 }

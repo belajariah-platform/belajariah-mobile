@@ -1,5 +1,6 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
@@ -7,18 +8,19 @@ import {
   Easing,
   Animated,
   ScrollView,
-  ToastAndroid,
-  TouchableOpacity,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native'
 import { Card, Avatar } from 'react-native-elements'
 
 import { Images } from '../../assets'
 import { styles } from './profile.style'
-import { useNavigation } from '@react-navigation/native'
+import { ImageView } from '../../components'
 
 const Profile = () => {
   const navigation = useNavigation()
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
   const userData = {
     name: 'Nama Orang',
@@ -44,6 +46,13 @@ const Profile = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
+      <ImageView
+        isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
+        setVisible={() => toggleModalFoto()}
+        backButtonPress={() => toggleModalFoto()}
+      />
+
       <Images.ProfileBackground.default
         width={'100%'}
         style={styles.background}
@@ -86,7 +95,7 @@ const Profile = () => {
           size='large'
           activeOpacity={0.7}
           containerStyle={styles.avatar}
-          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
+          onPress={toggleModalFoto}
         />
       </ImageBackground>
       <View style={styles.containerProfileHeader}>

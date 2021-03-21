@@ -61,6 +61,11 @@ const Color = {
 
   //instructor-task-detail
   userChatGrey : '#f2ebf5',
+
+  //modal-class-info
+  textPink : '#ea4c88',
+  textGreen : '#1abc9c',
+  softGreen : '#e7fcf8',
 }
 
 export { Color }

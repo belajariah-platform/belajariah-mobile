@@ -56,9 +56,9 @@ const config = {
         },
         UserVerify: 'verif',
         PromotionDetail: {
-          path : 'promo/:promoIndex',
+          path : 'promo/:promo_code',
           parse : {
-            promoIndex : (promoIndex) => `${promoIndex}`
+            promo_code : (promo_code) => `${promo_code}`
           }
         },
         TransactionUpload : 'upload',

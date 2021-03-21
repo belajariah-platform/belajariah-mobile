@@ -236,6 +236,7 @@ const InstructorTask = () => {
       <ModalFilterUstadz
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
       />
       <View style={styles.containerMain}>
         <Header />

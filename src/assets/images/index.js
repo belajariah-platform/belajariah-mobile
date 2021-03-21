@@ -175,17 +175,19 @@ export default {
   IconEdit : require('./IconEdit.svg'),
 
   //Update Detail Promotion
-  IconVoucher: require('./IconVoucher.png'),
   VoucherCode: require('./BgVoucher.png'),
-  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  IconVoucher: require('./IconVoucher.png'),
+  BannerPromotionQuotaFull : require('./BannerPromotionQuotaFull.png'),
   BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
+  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
+  BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
 
   //Video
-  VideoPlay: require('./BtnVideoPlay.svg'),
   VideoNext: require('./BtnVideoNext.svg'),
+  VideoPlay: require('./BtnVideoPlay.svg'),
   VideoPause: require('./BtnVideoPause.svg'),
-  VideoSkipBack: require('./BtnVideoBackward.svg'),
   VideoPrevious: require('./BtnVideoPrevious.svg'),
+  VideoSkipBack: require('./BtnVideoBackward.svg'),
   VideoSkipForward: require('./BtnVideoForward.svg'),
   VideoFullscreen: require('./BtnVideoFullscreen.svg'),
 

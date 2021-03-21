@@ -13,26 +13,71 @@ import styles from './promotion-detail.style'
 const PromotionDetail = () => {
   const route = useRoute()
   const navigation = useNavigation()
-  const { promoIndex } = route.params ?? {}
+  let { promoIndex, promo_code } = route.params ?? {}
 
   const promotion = [
     {
-      code_voucher: 'BLJRIAH',
+      ID: 1,
+      code: 'PRC00000001',
+      class_Code: 'CLC00000001',
       title: 'Diskon 30% Pengguna Baru',
-      banner : Images.BannerPromotionsPenggunaBaru,
+      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+      promo_code : 'BLJRIAH',
       discount: 30,
-      desc: 'Diskon 30% Pengguna Baru',
-      more_desc: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
+      banner_image : Images.BannerPromotionsPenggunaBaru,
+      Header_Image: '',
+      Expired_Date: '',
+      Quota_User: 1000000,
+      Quota_Used: 0,
+      Is_Active: true,
+      Created_By: 'belajariah20@gmail.com',
+      Created_Date: '2021-02-04T11:22:39+07:00',
+      Modified_By: 'belajariah20@gmail.com',
+      Modified_Date: '2021-02-04T11:22:39+07:00',
+      Deleted_By: '',
+      Deleted_Date: '1753-07-01T00:00:00+07:07',
     },
     {
+      ID: 2,
+      code: 'PRC00000002',
+      class_Code: 'CLC00000001',
       code_voucher: 'BLJEXPD',
       title: 'Diskon 20% Untuk Perpanjangan Kelas',
-      banner : Images.BannerPromotionExtendClass,
+      description : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
+      promo_code : 'BLJRIAH',
       discount: 20,
-      desc : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
-      more_desc: '*S&K berlaku',
-    }
+      banner_image : Images.BannerPromotionExtendClass,
+      Header_Image: '',
+      Expired_Date: '',
+      Quota_User: 1000000,
+      Quota_Used: 0,
+      Is_Active: true,
+      Created_By: 'belajariah20@gmail.com',
+      Created_Date: '2021-02-04T11:22:39+07:00',
+      Modified_By: 'belajariah20@gmail.com',
+      Modified_Date: '2021-02-04T11:22:39+07:00',
+      Deleted_By: '',
+      Deleted_Date: '1753-07-01T00:00:00+07:07',
+    },
   ]
+
+  const invalidCode = [
+    {
+      title : 'Halaman Promo',
+      banner_image : Images.BannerPromotionInvalidVoucher,
+      description : 'Kode voucher yang anda masukkan tidak tersedia',
+    },
+    {
+      title : 'Halaman Promo',
+      banner_image : Images.BannerPromotionQuotaFull,
+      description : 'Kuota saat ini sudah terpenuhi',
+    },
+  ]
+
+  //jika masuk melalui voucher code, bukan mapping index
+  promoIndex == undefined && (
+    promoIndex = promotion.findIndex(item => item.code_voucher === promo_code)
+  )
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -46,7 +91,7 @@ const PromotionDetail = () => {
           <TouchableOpacity onPress={() => navigation.navigate('UserMain')}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{promotion[promoIndex].title}</Text>
+          <Text style={styles.textTitleWhite}>{promotion[promoIndex] == undefined ? invalidCode[0].title : promotion[promoIndex].title}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -69,8 +114,8 @@ const PromotionDetail = () => {
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View>
-            <Text style={styles.TitlePromo}>{promotion[promoIndex].desc}</Text>
-            <Text style={styles.DescPromo}>{handleSplitString(promotion[promoIndex].more_desc)}</Text>
+            <Text style={styles.TitlePromo}>{promotion[promoIndex].title}</Text>
+            <Text style={styles.DescPromo}>{handleSplitString(promotion[promoIndex].description)}</Text>
           </View>
           <View>
             <Text style={styles.TitlePromo}>Kode Voucher Disc. {promotion[promoIndex].discount}%</Text>
@@ -101,21 +146,41 @@ const PromotionDetail = () => {
 
   const BannerPromotion = () => {
     return (
-      <View style={styles.containerBanner}>
-        <Image source={promotion[promoIndex].banner} style={styles.ImgBanner}/>
-      </View>
+      promotion[promoIndex] == undefined ? (
+        <View style={styles.containerBanner}>
+          <Image source={invalidCode[0].banner_image} style={styles.ImgInvalidBanner} resizeMode='cover'/>
+        </View>
+      ) : (
+        <View style={styles.containerBanner}>
+          <Image source={promotion[promoIndex].banner_image} style={styles.ImgBanner}/>
+        </View>
+      )
     )
   }
 
   return (
-    <View style={styles.containerMain}>
-      <Header />
-      <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
-        <BannerPromotion />
-        <DescriptionPromotion />
-        <Footer />
-      </ScrollView>
-    </View>
+    promotion[promoIndex] == undefined ? (
+      <View style={styles.containerMain}>
+        <Header />
+        <ScrollView style={styles.containerInvalidPromo} showsVerticalScrollIndicator={false}>
+          <BannerPromotion />
+          <View style={styles.containerMethod}>
+            <View style={styles.cardMethods}>
+              <Text style={styles.DescInvalidPromo}>{invalidCode[0].description}</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    ) : (
+      <View style={styles.containerMain}>
+        <Header />
+        <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
+          <BannerPromotion />
+          <DescriptionPromotion />
+          <Footer />
+        </ScrollView>
+      </View>
+    )
   )
 }
 

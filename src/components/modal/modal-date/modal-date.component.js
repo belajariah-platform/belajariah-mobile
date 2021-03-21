@@ -23,6 +23,7 @@ const ModalDate = (props) => {
         isVisible={props.isVisible}
         style={styles.backdropStyle}
         onBackdropPress={() => onClose()}
+        onBackButtonPress={() => onClose()}
       >
         <View style={styles.modalDateBackgroundStyle}>
           <View style={styles.containerHeader}>
