@@ -16,6 +16,7 @@ import {
 } from 'react-native'
 
 import {
+  Loader,
   ImageView,
   ModalRepair,
   LoadingView,
@@ -111,7 +112,6 @@ const AdminTransactionDecline = ({ search }) => {
       Package_Code : item.Package_Code,
       Status_Payment_Code : item.Status_Payment_Code,
     }
-
     try {
       setLoadingBtn(true)
       const response = await PaymentAPI.ConfirmPayment(values)
@@ -122,6 +122,8 @@ const AdminTransactionDecline = ({ search }) => {
       } else {
         setLoadingBtn(false)
         fetchDataTransaction(dataState)
+        setmodalRepairVisible(false)
+        setModalVisible(false)
       }
     } catch (error) {
       setLoadingBtn(false)
@@ -263,6 +265,7 @@ const AdminTransactionDecline = ({ search }) => {
 
   return (
     <View>
+      <Loader loading={loadingBtn}/>
       <ModalConfirm
         action={action}
         isVisible={modalVisible}

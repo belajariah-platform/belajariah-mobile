@@ -163,6 +163,12 @@ const styles = StyleSheet.create({
     marginBottom : 7,
     alignItems:'center',
   },
+  containerNoStory: {
+    margin: 12,
+    height: '40%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default styles

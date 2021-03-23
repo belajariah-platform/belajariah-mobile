@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import { styles } from './modal-record.style'
-import { View, TouchableOpacity } from 'react-native'
-
-import { Images } from '../../../assets'
-import { Text } from 'react-native'
-import { Image } from 'react-native'
-import { ScrollView } from 'react-native'
-import { Alert } from 'react-native'
+import React, { useState } from 'react'
 import Swiper from 'react-native-swiper'
+import { styles } from './modal-record.style'
+
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
+
+import { ExerciseAPI } from '../../../api'
+import { Images } from '../../../assets'
 
 const ModalRecord = (props) => {
   const [state, setState] = useState({
@@ -19,11 +23,28 @@ const ModalRecord = (props) => {
     sent : false,
   })
 
-  const Ayats = [
-    'وَالْعَصْرِۙ',
-    'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ',
-    'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ',
-  ]
+  // const Ayats = [
+  //   'وَالْعَصْرِۙ',
+  //   'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ',
+  //   'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ',
+  // ]
+  const InsertRecord = async () => {
+    const values = {
+      User_Code              : 18,
+      Class_Code             : 'CLC00000001',
+      Recording_Code         : 1,
+      Duration               : 2,
+      Expired_Date           : '2021-03-27T13:07:09.000Z'
+    }
+    try {
+      const response = await ExerciseAPI.InsertExerciseReading(values)
+      if (response.data.result) {
+        //
+      }
+    } catch (error) {
+      return error
+    }
+  }
 
   const handleRecord = () => {
     state.start ? (
@@ -38,6 +59,7 @@ const ModalRecord = (props) => {
           :
           state.send && (
             setState(s => ({ ...s, send : false, sent : true })),
+            InsertRecord(),
             alert('Send now!')
           )
       )
@@ -140,8 +162,6 @@ const ModalRecord = (props) => {
 
             </View>
           )}
-
-
         </View>
       </Modal>
     </>
@@ -149,6 +169,7 @@ const ModalRecord = (props) => {
 }
 
 ModalRecord.propTypes = {
+  data : PropTypes.object,
   ayats : PropTypes.array,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,

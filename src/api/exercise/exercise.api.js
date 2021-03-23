@@ -3,9 +3,10 @@ import { Config, Header } from '../config'
 
 const GetAllExercise = async (skip, take, filters) =>  {
   try {
+    const headers = await Header()
     const response = await axios.get(`
-    ${Config.MAIN_SERVICE_ENDPOINT}/exercises?skip=${skip}&take=${take}&filter=${filters}`,
-    Header(),
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/exercises?skip=${skip}&take=${take}&filter=${filters}`,
+    headers,
     )
     return response
   } catch (error) {
@@ -15,9 +16,10 @@ const GetAllExercise = async (skip, take, filters) =>  {
 
 const GetAllExerciseReading = async (skip, take, filters) =>  {
   try {
+    const headers = await Header()
     const response = await axios.get(`
-      ${Config.MAIN_SERVICE_ENDPOINT}/exercise_reading?skip=${skip}&take=${take}&filter=${filters}`,
-    Header(),
+      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/exercise_reading?skip=${skip}&take=${take}&filter=${filters}`,
+    headers,
     )
     return response
   } catch (error) {
@@ -25,4 +27,18 @@ const GetAllExerciseReading = async (skip, take, filters) =>  {
   }
 }
 
-export default { GetAllExercise, GetAllExerciseReading }
+const InsertExerciseReading = async (formData) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(`
+      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_exercise_reading`,
+    formData,
+    headers,
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default { GetAllExercise, GetAllExerciseReading, InsertExerciseReading }

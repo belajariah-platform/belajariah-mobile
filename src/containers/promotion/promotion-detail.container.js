@@ -29,7 +29,7 @@ const PromotionDetail = () => {
   let { promo_code } = route.params ?? {}
 
   const [state, setState] = useState({})
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [connectStatus, setconnectStatus] = useState(false)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
@@ -40,7 +40,6 @@ const PromotionDetail = () => {
 
   const fetchDataPromotionDetail = async (code) => {
     try {
-      setLoading(true)
       const response = await PromotionAPI.GetPromotion(code)
       if (response.status === Response.SUCCESS) {
         setState(response.data.result)
@@ -152,7 +151,7 @@ const PromotionDetail = () => {
         state.ID == 0 || Object.keys(state).length == 0 ?
           (
             <ScrollView
-              style={styles.containerScrollView}
+              style={styles.containerScrollView }
               showsVerticalScrollIndicator={false}>
               <ModalNoConnection
                 isVisible={connectStatus}
@@ -160,9 +159,7 @@ const PromotionDetail = () => {
                 backdropPress={() => togglemodalNoConnection()}
                 backButtonPress={() => togglemodalNoConnection()}
               />
-              <Text style={styles.textRegular}>
-                Maaf, voucher tidak tersedia
-              </Text>
+              <Image source={Images.IconPromoEmpty} style={{ width : 260, height : 200, alignContent : 'center', alignSelf : 'center' }}/>
             </ScrollView>
           ) : (
             <ScrollView

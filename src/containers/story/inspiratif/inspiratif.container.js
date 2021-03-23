@@ -14,7 +14,6 @@ import {
 } from 'react-native'
 
 import {
-  STORY_LIST_REQ,
   STORY_LIST_FAIL,
   STORY_LIST_SUCC,
   STORY_LOAD_SCROLL,
@@ -35,10 +34,11 @@ const InspiratifStory = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
-  const { loading, loadingScroll } = useSelector((state) => state.StoryReducer)
+  const { loadingScroll } = useSelector((state) => state.StoryReducer)
 
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [dataState, setDataState] = useState({ skip: 0, take: 6, filter: [], filterString: '[]' })
@@ -73,19 +73,20 @@ const InspiratifStory = () => {
 
   const fetchDataStory = async ({ skip, take, filterString }) => {
     try {
-      dispatch({ type: STORY_LIST_REQ })
+      setLoading(true)
       const response = await StoryAPI.GetAllStory(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: STORY_LIST_SUCC })
       } else {
-        dispatch({ type: STORY_LIST_FAIL })
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading(false)
+      dispatch({ type: STORY_LIST_SUCC })
     } catch (err) {
+      setLoading(false)
       dispatch({ type: STORY_LIST_FAIL })
       return err
     }
@@ -156,6 +157,14 @@ const InspiratifStory = () => {
     )
   }
 
+  const NoStory = () => {
+    return(
+      <View style={styles.containerNoStory}>
+        <Images.IconStoryEmpty.default width={250} height={250}/>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.containerMain}>
       <ModalNoConnection
@@ -178,17 +187,18 @@ const InspiratifStory = () => {
       </View>
       {loading && !loadingScroll ?
         <LoadingView/> :
-        <FlatList
-          data={state}
-          style={{ width:'100%' }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          onEndReached={(e) => onLoadMore(e)}
-          showsVerticalScrollIndicator ={false}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          keyExtractor={(item, index) =>  index.toString()}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
-          renderItem={({ item, index }) => Inspiratif(item, index)}/>
+        state == 0 ? <NoStory/>:
+          <FlatList
+            data={state}
+            style={{ width:'100%' }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
+            onEndReached={(e) => onLoadMore(e)}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            keyExtractor={(item, index) =>  index.toString()}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+            renderItem={({ item, index }) => Inspiratif(item, index)}/>
       }
     </View>
   )

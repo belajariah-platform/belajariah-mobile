@@ -20,12 +20,12 @@ import {
   ModalFilterUstadz,
 } from '../../../components'
 import {
-  CONSUL_MENTOR_LIST_REQ,
   CONSUL_MENTOR_LIST_FAIL,
   CONSUL_MENTOR_LIST_SUCC,
   CONSUL_MENTOR_LOAD_SCROLL,
 } from '../../../action'
 import {
+  Loader,
   ImageView,
   LoadingView,
   ModalNoConnection,
@@ -42,10 +42,11 @@ const InstructorJob = ({ route }) => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
-  const { loading, loadingScroll } = useSelector((state) => state.ConsultationReducer)
+  const { loadingScroll } = useSelector((state) => state.ConsultationReducer)
 
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [stateCategory, setStateCategory] = useState([])
@@ -67,20 +68,21 @@ const InstructorJob = ({ route }) => {
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
-      dispatch({ type: CONSUL_MENTOR_LIST_REQ })
+      setLoading(true)
       filterString='[{"type": "text", "field" : "status", "value": "Approved"}]'
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: CONSUL_MENTOR_LIST_SUCC })
       } else {
-        dispatch({ type: CONSUL_MENTOR_LIST_FAIL })
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading(false)
+      dispatch({ type: CONSUL_MENTOR_LIST_SUCC })
     } catch (err) {
+      setLoading(false)
       dispatch({ type: CONSUL_MENTOR_LIST_FAIL })
       return err
     }
@@ -113,6 +115,7 @@ const InstructorJob = ({ route }) => {
       Status_Code : item.Status_Code,
       Expired_Date : item.Expired_Date,
     }
+    console.log(values)
     try {
       setLoadingBtn(true)
       const response = await ConsultationAPI.UpdateConsultation(values)
@@ -121,6 +124,7 @@ const InstructorJob = ({ route }) => {
           ToastAndroid.SHORT)
         setLoadingBtn(false)
       } else {
+        navigation.navigate('Tugas', { fetch : true })
         fetchDataConsultation(dataState)
         setLoadingBtn(false)
       }
@@ -251,6 +255,7 @@ const InstructorJob = ({ route }) => {
 
   return (
     <>
+      <Loader loading={loadingBtn}/>
       <ModalFilterUstadz
         state={stateCategory}
         submit={onDataStateChange}

@@ -3,8 +3,8 @@ import { combineReducers } from 'redux'
 import UserReducer from './user'
 import StoryReducer from './story'
 import MentorReducer from './mentor'
-import UserClassReducer from './user-class'
 import { QuranReducer, QuranDetailReducer } from './alquran'
+import { UserClassReducer, UserClassDetailReducer } from './user-class'
 import {
   TransactionReducer,
   TransactionAllReducer,
@@ -26,9 +26,10 @@ export default combineReducers({
   UserClassReducer,
   QuranDetailReducer,
   ConsultationReducer,
-  ConsultationAllReducer,
   TransactionReducer,
   TransactionAllReducer,
+  ConsultationAllReducer,
+  UserClassDetailReducer,
   TransactionAcceptReducer,
   TransactionDeclineReducer,
   ConsultationAcceptReducer,

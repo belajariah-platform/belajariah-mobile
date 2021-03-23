@@ -16,7 +16,6 @@ import {
 } from 'react-native'
 
 import {
-  USER_CLASS_LIST_REQ,
   USER_CLASS_LIST_SUCC,
   USER_CLASS_LIST_FAIL,
   USER_CLASS_LOAD_SCROLL,
@@ -42,6 +41,7 @@ const ClassUser = (props) => {
   const dispatch = useDispatch()
   const [comment, setComment] = useState('')
   const [dataObj, setDataObj] = useState({})
+  const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
@@ -56,7 +56,7 @@ const ClassUser = (props) => {
 
   const { userInfo } = useSelector((state) => state.UserReducer)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
-  const { loading, loadingScroll } = useSelector((state) => state.UserClassReducer)
+  const { loadingScroll } = useSelector((state) => state.UserClassReducer)
 
   const toggleModalFilter = () => setmodalFilterVisible(!modalFilterVisible)
   const toggleModal = (item) => {
@@ -72,20 +72,20 @@ const ClassUser = (props) => {
 
   const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
     try {
-      dispatch({ type: USER_CLASS_LIST_REQ })
+      setLoading(true)
       const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: USER_CLASS_LIST_SUCC })
       } else {
-        dispatch({ type: USER_CLASS_LIST_FAIL })
         NetInfo.fetch().then(res => {
-          console.log(res)
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading(false)
+      dispatch({ type: USER_CLASS_LIST_SUCC })
     } catch (err) {
+      setLoading(false)
       dispatch({ type: USER_CLASS_LIST_FAIL })
       return err
     }

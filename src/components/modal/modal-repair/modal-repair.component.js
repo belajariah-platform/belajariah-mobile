@@ -51,6 +51,7 @@ const ModalRepair = (props) => {
 
 ModalRepair.propTypes = {
   submit : PropTypes.func,
+  loading : PropTypes.bool,
   title : PropTypes.string,
   isVisible : PropTypes.bool,
   onChangeText : PropTypes.func,

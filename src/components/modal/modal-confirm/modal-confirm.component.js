@@ -47,6 +47,7 @@ const ModalConfirm = (props) => {
 
 ModalConfirm.propTypes = {
   submit : PropTypes.func,
+  loading : PropTypes.bool,
   title : PropTypes.string,
   action : PropTypes.string,
   isVisible : PropTypes.bool,

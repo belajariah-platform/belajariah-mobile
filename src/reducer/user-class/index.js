@@ -1,3 +1,3 @@
-import UserClassReducer from './user-class.reducer'
+import { UserClassReducer, UserClassDetailReducer } from './user-class.reducer'
 
-export default UserClassReducer
+export { UserClassReducer, UserClassDetailReducer }

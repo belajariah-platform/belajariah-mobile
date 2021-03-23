@@ -1,17 +1,21 @@
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
 
-import { TestAPI } from '../../../api'
 import { Response } from '../../../utils'
 import { Images, Color } from '../../../assets'
-import { Buttons, Alerts, Loader } from '../../../components'
+import { TestAPI, UserClassAPI } from '../../../api'
+import { Buttons, Alerts, Loader, ModalNoConnection } from '../../../components'
 
 import { styles } from './class-exam.style'
 
 const ClassExam = (props) => {
-  const item = props.route.params
+  const dispatch = useDispatch()
+  const { item, type } = props.route.params
+
   const mainScrollViewRef = useRef()
   const navigation = useNavigation()
   const [states, setStates] = useState([])
@@ -19,8 +23,14 @@ const ClassExam = (props) => {
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [optionSelected, setOptionSelected] = useState(0)
   const [answerSelected, setAnswerSelected] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
   const [questionSelected, setQuestionSelected] = useState({})
   const [dataState] = useState({ skip: 0, take: 20, filter: [], filterString: '[]' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataTest = async ({ skip, take, filterString }) => {
     try {
@@ -41,27 +51,43 @@ const ClassExam = (props) => {
   }
 
   const handleSubmit = async (state) => {
-    let count
+    let count = 0
     state.forEach((v) => {
       if (v.Answer == 0) {
         count = count + 1
       }})
     const values = {
       ID : item.ID,
-      Test_Type : item.Test_Type,
-      Answers : state
+      Answers : state,
+      Test_Type : type,
     }
+
     if (count == 0) {
       try {
+        let msg
         setLoadingBtn(true)
+        dispatch(UserClassAPI.GetUserClass(item.Class_Code))
         const response = await TestAPI.UpdateClassTest(values)
-        if (response.status === Response.SUCCESS) {
-          Alerts(true, `Kamu mendapatkan nilai ${response.data.message}`,
-            () =>  navigation.navigate('ClassLearning'))
+        if (response.data.result) {
+          response.data.message <= 50 ?
+            msg = 'Opps sepertinya kamu harus belar lagi, ayo tetap semangat belajarnya ya' :
+            response.data.message > 50 &&  response.data.message <= 70 ?
+              msg = 'Wahh skor kamu lumayan ya, ayo tingkatkan lagi' :
+              response.data.message > 70 && response.data.message <= 90 ?
+                msg = 'Luar biasa, skor kamu hampir sempurna' :
+                response.data.message > 90 && response.data.message <= 100 ?
+                  msg = 'Masyaallah, skor kamu sangat sempurna' : ''
+
+          Alerts(true, `Kamu mendapatkan nilai ${response.data.message}, ${msg}`,
+            () =>  navigation.navigate('ClassLearning')
+          )
         }
         setLoadingBtn(false)
       } catch (err) {
         setLoadingBtn(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
         return err
       }
     } else {
@@ -156,7 +182,7 @@ const ClassExam = (props) => {
                   answerSelected.forEach((val, i) => {
                     if (val.ID == questionSelected.ID) {
                       let newAnswer = [...answerSelected]
-                      newAnswer[i] = { ...val, answer :
+                      newAnswer[i] = { ...val, Answer :
                         index == 0 ? 1 :
                           index == 1 ? 2 :
                             index == 2 ? 3 : 4 }
@@ -224,6 +250,12 @@ const ClassExam = (props) => {
 
   return (
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Loader loading={loadingBtn}/>
       <Header />
       <ScrollNumber />

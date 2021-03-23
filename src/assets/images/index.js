@@ -25,12 +25,9 @@ export default {
   BgClassUser: require('./BgClassUser.png'),
   BtnReadMore: require('./BtnReadMore.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
-  BlogExample: require('./BlogExample.svg'),
-  BannerTahsin: require('./CardTahsin.png'),
   LoginDirect: require('./LoginDirect.svg'),
   IconClassEmpty: require('./IconClass.svg'),
   AvatarBorder: require('./AvatarBorder.png'),
-  BannerTilawah: require('./CardTilawah.svg'),
   BannerAlquran: require('./CardAlquran.png'),
   IconLineHide: require('./IconLineHide.svg'),
   IconDownload: require('./IconDownload.svg'),
@@ -177,10 +174,8 @@ export default {
   //Update Detail Promotion
   VoucherCode: require('./BgVoucher.png'),
   IconVoucher: require('./IconVoucher.png'),
-  BannerPromotionQuotaFull : require('./BannerPromotionQuotaFull.png'),
-  BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
-  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
-  BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
+  IconPromoFull : require('./IllustrationNoPromo2.png'),
+  IconPromoEmpty : require('./IllustrationNoPromo.png'),
 
   //Video
   VideoNext: require('./BtnVideoNext.svg'),
@@ -193,9 +188,6 @@ export default {
 
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
-  SandiagaUnoImg: require('./SandiagaUnoImg.png'),
-  IconTokohInspiratif: require('./IconTokohInspiratif.png'),
-  ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 
   //ConsultationUser
   CardMsg1 : require('./CardMsg1.png'),
@@ -263,5 +255,6 @@ export default {
 
   //Img Check Connection
   ImgModalNoConnection : require('./ImgModalNoConnection.png'),
+  IconStoryEmpty : require('./IllustrationNoStory.svg'),
 }
 

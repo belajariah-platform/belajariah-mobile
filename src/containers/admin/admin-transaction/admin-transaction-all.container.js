@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import {
+  Loader,
   ImageView,
   LoadingView,
   ModalRepair,
@@ -112,16 +113,17 @@ const AdminTransactionAll = ({ search }) => {
       Status_Payment_Code : item.Status_Payment_Code,
     }
     try {
+      console.log(values)
       setLoadingBtn(true)
       const response = await PaymentAPI.ConfirmPayment(values)
       if (!response.data.result) {
         ToastAndroid.show(`Errror ${response.data.error}`,
           ToastAndroid.SHORT)
-        setLoadingBtn(false)
       } else {
-        setLoadingBtn(false)
+        setModalVisible(!modalVisible)
         fetchDataTransaction(dataState)
       }
+      setLoadingBtn(false)
     } catch (error) {
       setLoadingBtn(false)
       NetInfo.fetch().then(res => {
@@ -142,11 +144,15 @@ const AdminTransactionAll = ({ search }) => {
       Status_Payment_Code : item.Status_Payment_Code,
     }
     try {
+      console.log(values)
       setLoadingBtn(true)
       const response = await PaymentAPI.ConfirmPayment(values)
       if (!response.data.result) {
         ToastAndroid.show(`Errror ${response.data.error}`,
           ToastAndroid.SHORT)
+      } else {
+        setmodalRepairVisible(!modalRepairVisible)
+        fetchDataTransaction(dataState)
       }
       setLoadingBtn(false)
     } catch (error) {
@@ -291,6 +297,7 @@ const AdminTransactionAll = ({ search }) => {
 
   return (
     <View>
+      <Loader loading={loadingBtn}/>
       <ModalConfirm
         action={action}
         isVisible={modalVisible}

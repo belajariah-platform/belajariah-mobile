@@ -2,10 +2,12 @@ import {
   USER_CLASS_LIST_REQ,
   USER_CLASS_LIST_FAIL,
   USER_CLASS_LIST_SUCC,
+  USER_CLASS_DETAIL_REQ,
   USER_CLASS_LOAD_SCROLL
 } from '../../action'
 
 const initialState = {
+  detail : {},
   loading: false,
   loadingScroll: false,
 }
@@ -39,4 +41,16 @@ const UserClassReducer = (state = { ...initialState }, action) => {
   }
 }
 
-export default UserClassReducer
+const UserClassDetailReducer = (state = { ...initialState }, action) => {
+  switch (action.type) {
+  case USER_CLASS_DETAIL_REQ:
+    return {
+      ...state,
+      detail: action.payload,
+    }
+  default:
+    return state
+  }
+}
+
+export { UserClassReducer, UserClassDetailReducer }

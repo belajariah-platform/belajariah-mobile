@@ -61,13 +61,12 @@ const AdminUserAccept = ({ search }) => {
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: CONSUL_ACCEPT_SUCC })
       } else {
-        dispatch({ type: CONSUL_ACCEPT_FAIL })
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
         })
       }
+      dispatch({ type: CONSUL_ACCEPT_SUCC })
     } catch (err) {
       dispatch({ type: CONSUL_ACCEPT_FAIL })
       return err
@@ -101,6 +100,7 @@ const AdminUserAccept = ({ search }) => {
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataConsultation(dataState)
     setMsgSelected(states)
     setOptionSelected({})
     setRefreshing(false)

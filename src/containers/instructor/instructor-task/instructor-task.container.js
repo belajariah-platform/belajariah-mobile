@@ -36,8 +36,8 @@ const InstructorTask = () => {
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
-  const [loadingWaiting, setLoadingWaiting] = useState(false)
-  const [loadingCompleted, setLoadingCompleted] = useState(false)
+  const [loadingWaiting, setLoadingWaiting] = useState(true)
+  const [loadingCompleted, setLoadingCompleted] = useState(true)
 
   const [stateWaiting, setStateWaiting] = useState([])
   const [stateCategory, setStateCategory] = useState([])
@@ -61,8 +61,7 @@ const InstructorTask = () => {
     try {
       setLoadingWaiting(true)
       filterString= GenerateFilter(filter, { type : 'text', field : 'status', value : 'Waiting for Response' })
-
-      const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search )
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort, search )
       if (response.status === Response.SUCCESS) {
         setStateWaiting(response.data.data)
       } else {
@@ -81,7 +80,7 @@ const InstructorTask = () => {
     try {
       setLoadingCompleted(true)
       filterString= GenerateFilter(filter, { type : 'text', field : 'status', value : 'Completed' })
-      const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
         setStateCompleted(response.data.data)
       } else {
@@ -301,7 +300,7 @@ const InstructorTask = () => {
       />
       <View style={styles.containerMain}>
         <Header />
-        <TabViewTask />
+        {/* <TabViewTask /> */}
       </View>
     </>
   )

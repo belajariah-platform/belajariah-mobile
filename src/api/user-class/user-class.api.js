@@ -1,5 +1,7 @@
 import axios from 'axios'
+import { Response } from '../../utils'
 import { Config, Header } from '../config'
+import { USER_CLASS_DETAIL_REQ } from '../../action'
 
 const GetAllUserClass = async (skip, take, filters, sort) =>  {
   try {
@@ -11,6 +13,25 @@ const GetAllUserClass = async (skip, take, filters, sort) =>  {
     return response
   } catch (error) {
     return error
+  }
+}
+
+const GetUserClass = (code) => async dispatch => {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class/detail/${code}`,
+    headers
+    )
+    if (response.status == Response.SUCCESS) {
+      await dispatch({
+        type: USER_CLASS_DETAIL_REQ,
+        payload: response.data.result,
+      })
+    }
+    return response
+  } catch (err) {
+    return err
   }
 }
 
@@ -28,4 +49,4 @@ const UpdateProgressUserClass = async (formData) => {
   }
 }
 
-export default { GetAllUserClass, UpdateProgressUserClass }
+export default { GetAllUserClass, GetUserClass, UpdateProgressUserClass }

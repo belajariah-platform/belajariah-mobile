@@ -14,7 +14,6 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import {
-  TRANSACT_USER_LIST_REQ,
   TRANSACT_USER_LIST_FAIL,
   TRANSACT_USER_LIST_SUCC,
   TRANSACT_USER_LOAD_SCROLL,
@@ -37,6 +36,7 @@ const Transaction = () => {
 
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [stateCategory, setStateCategory] = useState([])
   const [modalVisible, setModalVisible] = useState(false)
@@ -46,7 +46,7 @@ const Transaction = () => {
 
   const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
-  const { loading, loadingScroll } = useSelector((state) => state.TransactionReducer)
+  const { loadingScroll } = useSelector((state) => state.TransactionReducer)
 
   const retryConnection = () => {
     fetchDataTransaction(dataState)
@@ -56,19 +56,20 @@ const Transaction = () => {
 
   const fetchDataTransaction = async ({ skip, take, filterString, sort }) => {
     try {
-      dispatch({ type: TRANSACT_USER_LIST_REQ })
+      setLoading(true)
       const response = await PaymentAPI.GetAllPaymentByUserID(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
         setCount(response.data.count)
-        dispatch({ type: TRANSACT_USER_LIST_SUCC })
       } else {
-        dispatch({ type: TRANSACT_USER_LIST_FAIL })
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading(false)
+      dispatch({ type: TRANSACT_USER_LIST_SUCC })
     } catch (err) {
+      setLoading(false)
       dispatch({ type: TRANSACT_USER_LIST_FAIL })
       return err
     }
@@ -207,7 +208,7 @@ const Transaction = () => {
       </View>
     )
   }
-  console.log(connectStatus)
+
   return (
     <>
       <ModalFilterUserTransaction

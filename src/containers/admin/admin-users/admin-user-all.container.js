@@ -24,6 +24,7 @@ import {
 } from '../../../action'
 
 import {
+  Loader,
   LoadingView,
   ButtonGradient,
   ModalNoConnection,
@@ -304,6 +305,7 @@ const AdminUserAll = ({ search }) => {
 
   return (
     <View>
+      <Loader loading={loadingBtn}/>
       <ModalNoConnection
         isVisible={connectStatus}
         retry={() => retryConnection()}
