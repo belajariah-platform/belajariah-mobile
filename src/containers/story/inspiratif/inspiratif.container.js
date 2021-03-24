@@ -13,15 +13,15 @@ import {
   ActivityIndicator,
 } from 'react-native'
 
-import { Images, Color } from '../../../assets'
-import { Searchbox } from '../../../components'
-
 import styles from './inspiratif.style'
+import { Images, Color } from '../../../assets'
+import { Searchbox, ShimmerInspiratifStory } from '../../../components'
 
 const InspiratifStory = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [loadingShimmerInspiratifStory, setloadingShimmerInspiratifStory] = useState(true)
 
   const state = [
     { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
@@ -104,7 +104,7 @@ const InspiratifStory = () => {
           keyExtractor={(item, index) =>  index.toString()}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
           renderItem={({ item, index }) => {
-            return (
+            return loadingShimmerInspiratifStory ? <ShimmerInspiratifStory /> : (
               <TouchableOpacity
                 key={index}
                 activeOpacity={0.7}

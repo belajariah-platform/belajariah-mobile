@@ -8,9 +8,10 @@ import { styles } from './modal-confirm.style'
 
 const ModalConfirm = (props) => {
   let action, color
-  props.action == 'approved' ?  (action = 'menerima', color = '#6e248d' ) :
-    props.action == 'revised' ?  (action = 'membatalkan', color = '#d73c2c') :
-      (action = 'menolak', color = '#d73c2c')
+  props.action == 'approved' ?  (action = 'menerima ini', color = '#6e248d' ) :
+    props.action == 'revised' ?  (action = 'membatalkan ini', color = '#d73c2c') :
+      props.action == 'logout' ?  (action = 'logout dari halaman ini', color = '#6e248d' ) :
+        (action = 'menolak ini', color = '#d73c2c')
 
   return(
     <>
@@ -23,7 +24,7 @@ const ModalConfirm = (props) => {
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.modalContentSyle}>
-            <Text style={styles.TextTitleRating}>Apakah kamu yakin ingin {action} ini</Text>
+            <Text style={styles.TextTitleRating}>Apakah kamu yakin ingin {action}</Text>
             <View style={styles.ViewButton}>
               <View>
                 <TouchableOpacity activeOpacity={0.8} onPress={props.submit}>
