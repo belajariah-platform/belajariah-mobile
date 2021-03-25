@@ -14,14 +14,19 @@ import {
 } from 'react-native'
 
 import { Images } from '../../../assets'
-import { TimeConvert, TimerObj } from '../../../utils'
+import { ConsultationAPI } from '../../../api'
 import { ButtonGradient, ImageView } from '../../../components'
+import { TimeConvert, TimerObj, Response } from '../../../utils'
 
 import { styles } from './instructor-task-detail.style'
 
 const InstructorTaskDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
+
+  const [states, setStates] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [dataState] = useState({ skip: 0, take: 5, filterString: '[]' })
 
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
@@ -33,10 +38,28 @@ const InstructorTaskDetail = ({ route }) => {
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-
+  console.log(loading)
   const voiceDuration =  (480 - ((minutes*60) + seconds))
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
 
+  const fetchDataConsultation = async ({ skip, take, filterString  }) => {
+    try {
+      setLoading(true)
+      const response = await ConsultationAPI.GetAllConsultationMentor(skip, take, filterString )
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+      } else {
+        // NetInfo.fetch().then(res => {
+        //   setconnectStatus(!res.isConnected)
+        // })
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+  console.log(states)
   const user_login = 2
 
   const state = [
@@ -153,6 +176,7 @@ const InstructorTaskDetail = ({ route }) => {
     setMsgSelected(state)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
+    fetchDataConsultation(dataState)
   }, [])
 
   const Header = () => {
@@ -337,7 +361,7 @@ const InstructorTaskDetail = ({ route }) => {
       />
       <VoiceMessage/>
       <View style={styles.containerTextInput}>
-        {param.status == 'ongoing' &&(
+        {param.Status == 'ongoing' &&(
           <>
             <TextInput
               editable={!record}

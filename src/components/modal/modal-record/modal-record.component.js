@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import React, { useState } from 'react'
 import Swiper from 'react-native-swiper'
 import { styles } from './modal-record.style'
+import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 
 import {
   View,
@@ -11,56 +12,100 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
+import {
+  Loader,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
-import { ExerciseAPI } from '../../../api'
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
+import { ExerciseAPI, QuranAPI } from '../../../api'
 
 const ModalRecord = (props) => {
-  const [state, setState] = useState({
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [loadingBtn, setLoadingBtn] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState, setDataState] = useState({
     start : true,
     stop : false,
     send : false,
     sent : false,
   })
+  console.log(props.user.Expired_Date)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataQuran()
+    setconnectStatus(!connectStatus)
+  }
 
-  // const Ayats = [
-  //   'وَالْعَصْرِۙ',
-  //   'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ',
-  //   'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ',
-  // ]
+  const fetchDataQuran = async (data) => {
+    try {
+      const dataObj = {
+        id: data.Surat_Code,
+        count: 100,
+      }
+      setLoading(true)
+      const response = await QuranAPI.GetDetailQuran(dataObj)
+      if (response.status === Response.SUCCESS) {
+        const dataArr = []
+        response.data.data.verses.forEach((val, index) => {
+          if (index + 1 >= data.Ayat_Start && index + 1 <= data.Ayat_End) {
+            dataArr.push(val)
+          }
+        })
+        setState(dataArr)
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataQuran(props.data)
+  }, [props.data])
+
   const InsertRecord = async () => {
     const values = {
-      User_Code              : 18,
-      Class_Code             : 'CLC00000001',
+      User_Code              : props.user.User_Code,
+      Class_Code             : props.user.Class_Code,
+      Title_Code             : props.data.Title_Code,
       Recording_Code         : 1,
       Duration               : 2,
-      Expired_Date           : '2021-03-27T13:07:09.000Z'
+      Expired_Date           : props.user.Expired_Date,
     }
     try {
+      setLoadingBtn(true)
       const response = await ExerciseAPI.InsertExerciseReading(values)
       if (response.data.result) {
-        //
+        setDataState(s => ({ ...s, send : false, sent : true }))
       }
+      setLoadingBtn(false)
     } catch (error) {
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
+      setLoadingBtn(false)
       return error
     }
   }
 
   const handleRecord = () => {
-    state.start ? (
-      setState(s => ({ ...s, start : false, stop : true })),
+    dataState.start ? (
+      setDataState(s => ({ ...s, start : false, stop : true })),
       alert('Recording....')
     )
       : (
-        state.stop ? (
-          setState(s => ({ ...s, stop : false, send : true })),
+        dataState.stop ? (
+          setDataState(s => ({ ...s, stop : false, send : true })),
           alert('Record done.')
         )
           :
-          state.send && (
-            setState(s => ({ ...s, send : false, sent : true })),
-            InsertRecord(),
-            alert('Send now!')
+          dataState.send && (
+            InsertRecord()
           )
       )
   }
@@ -70,11 +115,18 @@ const ModalRecord = (props) => {
   }
 
   const handleReload = () => {
-    setState(s => ({ ...s, send : false, start : true }))
+    setDataState(s => ({ ...s, send : false, start : true }))
   }
 
   return (
     <>
+      <Loader loading={loadingBtn}/>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Modal
         backdropOpacity={0.25}
         isVisible={props.isVisible}
@@ -90,7 +142,7 @@ const ModalRecord = (props) => {
             <Images.ButtonClose.default/>
           </TouchableOpacity>
 
-          {state.sent ? (
+          {dataState.sent ? (
             <View style={styles.containerRecordSent}>
               <Images.IconRecordSent.default />
               <Text style={styles.textSuccess}>Terkirim</Text>
@@ -100,23 +152,26 @@ const ModalRecord = (props) => {
             <View style={styles.containerStyle}>
 
               <View style={styles.containerSwiper}>
-                <Swiper
-                  loop={false}
-                  showsPagination={false}
-                  showsButtons={true}
-                  prevButton={<Images.IconRecordPrevious.default />}
-                  nextButton={<Images.IconRecordNext.default />}
-                >
-                  {props.ayats.map((ayat, index) =>
-                    <ScrollView key={index} showsVerticalScrollIndicator={false} contentContainerStyle={styles.containerScrollview}>
-                      <Text style={styles.textAyat}>{ayat}</Text>
-                    </ScrollView>)
-                  }
-                </Swiper>
-                <Text style={styles.textModal}>Ayoo praktek baca ayat diatas, lalu rekam bacaan~mu ya sobat. Dan jangan lupa kirim ya sobat</Text>
+                {loading ?
+                  <LoadingView/> :
+                  <Swiper
+                    loop={false}
+                    showsPagination={false}
+                    showsButtons={true}
+                    prevButton={<Images.IconRecordPrevious.default />}
+                    nextButton={<Images.IconRecordNext.default />}
+                  >
+                    {state.map((ayat, index) =>
+                      <ScrollView key={index} showsVerticalScrollIndicator={false} contentContainerStyle={styles.containerScrollview}>
+                        <Text style={styles.textAyat}>{ayat.text.arab}</Text>
+                      </ScrollView>)
+                    }
+                  </Swiper>
+                }
+                <Text style={styles.textModal}>Ayoo praktek baca ayat diatas, lalu rekam bacaan~mu ya sobat dan jangan lupa kirim ya.</Text>
               </View>
 
-              {state.start && (
+              {dataState.start && (
                 <View>
                   <Text style={styles.textTimer}>00:00:00</Text>
                   <Images.IconRecordStartGradation.default style={styles.iconRecordGradation}/>
@@ -126,7 +181,7 @@ const ModalRecord = (props) => {
                 </View>
               )}
 
-              {state.stop && (
+              {dataState.stop && (
                 <View>
                   <Text style={styles.textTimer}>00:00:14</Text>
                   <Images.IconRecordStopGradation.default style={styles.iconRecordGradation}/>
@@ -136,7 +191,7 @@ const ModalRecord = (props) => {
                 </View>
               )}
 
-              {state.send && (
+              {dataState.send && (
                 <View>
                   <Text style={styles.textTimer}>00:00:14</Text>
                   <Images.IconRecordSendGradation.default style={styles.iconRecordGradation}/>
@@ -154,7 +209,7 @@ const ModalRecord = (props) => {
                 </View>
               )}
 
-              {state.sent && (
+              {dataState.sent && (
                 <View>
                   <Text style={styles.textTimer}>Done ya</Text>
                 </View>
@@ -169,8 +224,9 @@ const ModalRecord = (props) => {
 }
 
 ModalRecord.propTypes = {
+  user : PropTypes.object,
   data : PropTypes.object,
-  ayats : PropTypes.array,
+  loading : PropTypes.bool,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,

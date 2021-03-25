@@ -1,4 +1,5 @@
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
@@ -24,7 +25,9 @@ import { styles } from './instructor-task.style'
 import { ConsultationAPI, EnumAPI } from '../../../api'
 import { Response, GenerateFilter } from '../../../utils'
 
-const InstructorTask = () => {
+const InstructorTask = (props) => {
+  const items = props.route.params
+
   const navigation = useNavigation()
   const initialLayout = { width: Dimensions.get('window').width }
 
@@ -134,7 +137,7 @@ const InstructorTask = () => {
   useEffect(() => {
     fetchDataConsultationWaiting(dataStateWaiting)
     fetchDataConsultationCompleted(dataStateCompleted)
-  }, [dataStateWaiting, dataStateCompleted])
+  }, [dataStateWaiting, dataStateCompleted, items])
 
   useEffect(() => {
     fetchDataClassCategory(dataStateCategory)
@@ -270,19 +273,6 @@ const InstructorTask = () => {
     />
   )
 
-  const TabViewTask = () => {
-    return (
-      <TabView
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-        renderTabBar={renderTabBar}
-        initialLayout={initialLayout}
-        navigationState={{ index, routes }}
-        sceneContainerStyle={styles.sceneContainerStyle}
-      />
-    )
-  }
-
   return (
     <>
       <ModalFilterUstadz
@@ -300,11 +290,21 @@ const InstructorTask = () => {
       />
       <View style={styles.containerMain}>
         <Header />
-        {/* <TabViewTask /> */}
+        <TabView
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          initialLayout={initialLayout}
+          navigationState={{ index, routes }}
+          sceneContainerStyle={styles.sceneContainerStyle}
+        />
       </View>
     </>
   )
 }
 
+InstructorTask.propTypes = {
+  route: PropTypes.object,
+}
 
 export default InstructorTask

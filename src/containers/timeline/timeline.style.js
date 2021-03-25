@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   Avatar: {
-    width: 30,
-    height: 30,
+    width: 100,
+    height: 50,
     borderRadius: 100,
   },
   banner: {

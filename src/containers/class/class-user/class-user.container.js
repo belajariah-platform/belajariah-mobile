@@ -126,28 +126,35 @@ const ClassUser = (props) => {
       const response = await RatingAPI.InsertRatingClass(values)
       if (response.data.result) {
         Alerts(true, 'Terimakasih telah memberikan review')
+        setModalVisible(false)
       }
     } catch (err) {
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return err
     }
   }
 
   const updateProgressClass = async (item) => {
     const values = {
-      ID : dataObj.ID,
+      ID : item.ID,
       Status : 'Completed',
-      Progress : dataObj.Progress,
-      User_Code : dataObj.User_Code,
-      progress_Index : dataObj.progress_Index,
-      progress_Subindex : dataObj.progress_Subindex,
+      Progress : item.Progress,
+      User_Code : item.User_Code,
+      Progress_Count : item.Progress_Count,
+      progress_Index : item.progress_Index,
+      progress_Subindex : item.progress_Subindex,
     }
     try {
       const response = await UserClassAPI.UpdateProgressUserClass(values)
       if (response.data.result) {
         await fetchDataUserClass(dataState)
-        await toggleModal(item)
       }
     } catch (err) {
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return err
     }
   }

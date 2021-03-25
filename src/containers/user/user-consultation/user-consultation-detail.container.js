@@ -24,6 +24,7 @@ import {
 } from '../../../components'
 import {
   TimerObj,
+  Response,
   VoiceNote,
   TimeConvert,
 } from '../../../utils'
@@ -37,6 +38,10 @@ const ConsultationDetail = ({ route }) => {
   const navigation = useNavigation()
   const [dataObj, setDataObj] = useState({})
   const { userInfo } = useSelector((state) => state.UserReducer)
+
+  const [states, setStates] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [dataState] = useState({ skip: 0, take: 10, filterString: '[]' })
 
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
@@ -69,17 +74,31 @@ const ConsultationDetail = ({ route }) => {
     { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid',  Recording_Name : 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
   ]
 
+  const fetchDataConsultation = async ({ skip, take, filterString }) => {
+    try {
+      setLoading(true)
+      const response = await ConsultationAPI.GetAllConsultationUser(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setLoading(false)
+      }
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
   const FormSendMessage = useFormik({
     initialValues: {
-      User_Code : userInfo.ID,
-      Class_Code : param.Class_Code,
-      Recording_Code : 0,
-      Recording_Duration : 0,
-      Status_Code : 'ENC00000020',
-      Description : '',
       Taken_Code : 0,
-      Expired_Date : '2021-04-25T21:33:13.000Z',
-      Action : 'Approved'
+      Description : '',
+      Recording_Code : 0,
+      Action : 'Approved',
+      Recording_Duration : 0,
+      User_Code : userInfo.ID,
+      Status_Code : 'ENC00000020',
+      Class_Code : param.Class_Code,
+      Expired_Date : param.Expired_Date,
     },
     onSubmit: async (values, form) => {
       const response =  await ConsultationAPI.GetAllConsultationSpamUser(values)
@@ -291,6 +310,7 @@ const ConsultationDetail = ({ route }) => {
 
   useEffect(() => {
     setMsgSelected(state)
+    fetchDataConsultation(dataState)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
     VoiceNote.AskPermissionsRecording()

@@ -138,7 +138,8 @@ const InspiratifStory = () => {
       <TouchableOpacity
         key={index}
         activeOpacity={0.5}
-        onPress={() =>  navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
+        onPress={() =>  navigation.navigate('InspiratifStoryDetail',
+          { params : item, storyIndex : index })}>
         <Card
           containerStyle={styles.cardStyle}>
           <View style={styles.viewStyle}>

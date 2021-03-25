@@ -3,10 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { List, RadioButton } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import {
-  // useRoute,
-  useNavigation,
-} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Alert,
@@ -39,7 +36,6 @@ import ClassLearningPDF from './class_learning-pdf.container'
 import { styles } from '../class-learning/class-learning.style'
 
 const ClassLearning = (props) => {
-  // const route = useRoute()
   const dispatch = useDispatch()
   const item = props.route.params
   const navigation = useNavigation()
@@ -71,6 +67,7 @@ const ClassLearning = (props) => {
     playIndex  : 0,
     playSubIndex : 0,
     subtitleCode : '',
+    isExercise : false,
     // passPreExam : 0,
     // passPostExam : 0,
     // count : detail.Progress_Count,
@@ -80,10 +77,8 @@ const ClassLearning = (props) => {
   })
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-  const toggleModalRecord = (item) => {
-    setRecord(item)
-    setModalRecordVisible(!modalRecordVisible)
-  }
+  const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
+
   const toggleModalChecklist = () => {
     setModalChecklistVisible(!modalChecklistVisible)
     fetchDataExercise(dataState, progress.subtitleCode)
@@ -91,12 +86,18 @@ const ClassLearning = (props) => {
 
   const fetchDataLearning = async (state, code) => {
     try {
+      setLoadingExc(true)
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await LearningAPI.GetAllLearning(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
         setCount(response.data.count)
+        if(expand.length <= 0) {
+          response.data.data.map(() => {
+            setExpand(expand => [...expand, false])
+          })
+        }
       }
       setLoading(false)
     } catch (err) {
@@ -120,14 +121,14 @@ const ClassLearning = (props) => {
     }
   }
 
-  const updateProgressClass = async (percentage, count, index, subIndex) => {
+  const updateProgressClass = async (percentages, count, index, subIndex) => {
     const values = {
       ID : detail.ID,
       Status : 'In Progress',
-      Progress : percentage,
+      Progress : parseInt(percentages),
       Progress_Count : count,
       Progress_Index: index,
-      progress_Subindex : subIndex,
+      Progress_Subindex : subIndex,
       User_Code : detail.User_Code,
     }
     try {
@@ -143,75 +144,12 @@ const ClassLearning = (props) => {
   useEffect(() => {
     dispatch(UserClassAPI.GetUserClass(item.Class_Code))
     fetchDataLearning(dataState, item.Class_Code)
-
-    if(expand.length <= 0) {
-      state.topics.map(() => {
-        setExpand(expand => [...expand, false])
-      })
-    }
   }, [])
 
   const toggleExpand = (index) => {
     let tempExpand = [...expand]
     tempExpand[index] = !tempExpand[index]
     setExpand(tempExpand)
-  }
-
-  const state = {
-    isExpired : false,
-    rating : 4.7,
-    total_user : 1500,
-    title : 'Belajar Al-Qur\'an dari dasar dengan metode yang mudah dan menyenangkan',
-    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
-    materialCount : 12,
-    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
-    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    topics: [
-      {
-        title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg', taskImages: [Images.ImgDummySoal], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2, Images.ImgDummySoal3], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://www.belajariah.com/document-assets/file.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-      {
-        title: 'Harokat',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'قُلْ هُوَ اللّٰهُ اَحَدٌۚ', 'اَللّٰهُ الصَّمَدُۚ', 'لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ', 'وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ ࣖ' ],
-      },
-      {
-        title: 'Tajwid',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-      {
-        title: 'Mad',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-    ],
   }
 
   const handleRating = (num) => {
@@ -237,6 +175,7 @@ const ClassLearning = (props) => {
 
   const handleModalChecklist = () => {
     setModalChecklistVisible(true)
+    fetchDataExercise(dataState, progress.subtitleCode)
   }
 
   const handleVideoEnd = (index, subIndex) => {
@@ -244,14 +183,18 @@ const ClassLearning = (props) => {
       (index == detail.Progress_Index && subIndex == detail.Progress_Subindex) && (
         Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
       )
-    ) : (
+    ) : progress.isExercise ?   (
       states[index].SubTitles[subIndex].Is_Done || (
         setShowTask(true),
         handleModalChecklist()
-      ))
+      )
+    ) : (
+      unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+    )
   }
 
-  const handleModalRecord = () => {
+  const handleModalRecord = (item) => {
+    setRecord(item)
     setModalRecordVisible(true)
   }
 
@@ -325,9 +268,13 @@ const ClassLearning = (props) => {
   }
 
   const ContentClass = () => {
-    const playVideo = (index, subIndex, code) => {
+    const playVideo = (index, subIndex, topic) => {
       if(detail.Pre_Test_Total > 0) {
-        setProgress(s => ({ ...s, subtitleCode : code }))
+        setProgress(s => ({
+          ...s,
+          subtitleCode : topic.Code,
+          isExercise : topic.Is_Exercise,
+        }))
         if(index > detail.Progress_Index) {
           Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
         } else if(index < detail.Progress_Index) {
@@ -405,7 +352,7 @@ const ClassLearning = (props) => {
                       key={subIndex}
                       activeOpacity={0.5}
                       onPress={() => {
-                        playVideo(index, subIndex, topic.Code)
+                        playVideo(index, subIndex, topic)
                       }}>
                       <List.Item
                         key={subIndex}
@@ -447,7 +394,7 @@ const ClassLearning = (props) => {
                 {topic.Exercises.ID !== 0 && (
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      title='Dummy - Masuk ke page rekam'
+                      title='Masuk ke page rekam'
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
                       onPress={() => handleModalRecord(topic.Exercises)}
@@ -487,51 +434,40 @@ const ClassLearning = (props) => {
     )
   }
 
-  const ChecklistClass = () => {
-    const [checkCount, setCheckCount] = useState(0)
+  const unlockNext = (index, subIndex) => {
+    if(detail.Pre_Test_Total > 0) {
+      if(index == detail.Progress_Index && subIndex == detail.Progress_Subindex) {
+        let nextIndex = states[detail.Progress_Index + 1]
+        let nextSubIndex = states[detail.Progress_Index].SubTitles[detail.Progress_Subindex + 1]
 
-    const unlockNext = (index, subIndex) => {
-      if(detail.Pre_Test_Total > 0) {
-        if(index == detail.Progress_Index && subIndex == detail.Progress_Subindex) {
-          let nextIndex = states[detail.Progress_Index + 1]
-          let nextSubIndex = states[detail.Progress_Index].SubTitles[detail.Progress_Subindex + 1]
+        if(nextSubIndex == undefined) {
+          if(nextIndex == undefined) {
+            //end of array
+            if(detail.Progress < 100) {
+              Alert.alert('Post exam unlocked!')
 
-          if(nextSubIndex == undefined) {
-            if(nextIndex == undefined) {
-              //end of array
-              if(detail.Progress < 100) {
-                Alert.alert('Post exam unlocked!')
-
-                const count = detail.Progress_Count + 1
-                const percentage = calculatePercentage(count, counts)
-                updateProgressClass(percentage, count, detail.Progress_Index, detail.Progress_Subindex)
-                // setProgress(s => ({ ...s, count : count }))
-                // setProgress(s => ({ ...s, percentage : percentage }))
-              }
-            } else {
-              //next index
-              const count = detail.Progress_Count  + 1
-              const percentage = calculatePercentage(count, counts)
-              updateProgressClass(percentage, count, detail.Progress_Index + 1, 0)
-
-              // setProgress(s => ({ ...s, count : count }))
-              // setProgress(s => ({ ...s, currentSubIndex : 0 }))
-              // setProgress(s => ({ ...s, percentage : percentage }))
-              // setProgress(s => ({ ...s, currentIndex : progress.currentIndex + 1 }))
+              const count = detail.Progress_Count + 1
+              const percentages = calculatePercentage(count, counts)
+              updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex)
             }
           } else {
-            //next subindex
+            //next index
             const count = detail.Progress_Count  + 1
-            const percentage = calculatePercentage(count, counts)
-            updateProgressClass(percentage, count, detail.Progress_Index, detail.Progress_Subindex + 1)
-
-            // setProgress(s => ({ ...s, count : count }))
-            // setProgress(s => ({ ...s, percentage : percentage }))
-            // setProgress(s => ({ ...s, currentSubIndex : progress.currentSubIndex + 1 }))
+            const percentages = calculatePercentage(count, counts)
+            updateProgressClass(percentages, count, detail.Progress_Index + 1, 0)
           }
+        } else {
+          //next subindex
+          const count = detail.Progress_Count  + 1
+          const percentages = calculatePercentage(count, counts)
+          updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex + 1)
         }
       }
     }
+  }
+
+  const ChecklistClass = () => {
+    const [checkCount, setCheckCount] = useState(0)
 
     return (
       <View style={styles.containerModalChecklist}>
@@ -591,22 +527,6 @@ const ClassLearning = (props) => {
       </View>
     )
   }
-
-  // useEffect(() => {
-  // let { passPreExam } = route.params ?? {}
-  // let { passPostExam } = route.params ?? {}
-  // if(passPreExam != undefined) {
-  //   setProgress(s => ({ ...s, passPreExam : progress.passPreExam + 1 }))
-  // }
-  // if(passPostExam != undefined) {
-  //   setProgress(s => ({ ...s, passPostExam : progress.passPostExam + 1 }))
-  // }
-  // if(expand.length <= 0) {
-  //   state.topics.map(() => {
-  //     setExpand(expand => [...expand, false])
-  //   })
-  // }
-  // }, [])
 
   return (
     <>
@@ -670,10 +590,10 @@ const ClassLearning = (props) => {
       />
       <ModalRecord
         data={record}
+        user={detail}
         isVisible={modalRecordVisible}
         backdropPress={() => toggleModalRecord()}
         backButtonPress={() => toggleModalRecord()}
-        ayats={state.topics[progress.currentIndex].ayats}
       />
     </>
   )

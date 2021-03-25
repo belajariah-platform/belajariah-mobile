@@ -34,9 +34,9 @@ const Alquran = (props) => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const [connectStatus, setconnectStatus] = useState(false)
-  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const { data, loading } = useSelector((state) => state.QuranReducer)
 
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
     fetchDataQuran()
     setconnectStatus(!connectStatus)
@@ -186,7 +186,8 @@ const Alquran = (props) => {
     <ImageBackground
       source={Images.AlQuranBG}
       style={styles.containerBackground}
-      resizeMode='stretch'>
+      resizeMode='stretch'
+    >
       <ModalNoConnection
         isVisible={connectStatus}
         retry={() => retryConnection()}

@@ -19,7 +19,7 @@ const Consultation = () => {
   const navigation = useNavigation()
 
   const [state, setState] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'ASC' })
 
 
@@ -40,16 +40,6 @@ const Consultation = () => {
   useEffect(() => {
     fetchDataUserClass(dataState)
   }, [dataState])
-
-  // const state = [
-  //   { category : 'tahsin', new_message : 1 },
-  //   { category : 'tilawah', new_message : 0 },
-  //   { category : 'fiqih pernikahan', new_message : 0 },
-  //   { category : 'fiqih ibadah', new_message : 0 },
-  //   { category : 'bahasa arab', new_message : 0 },
-  //   { category : 'fiqih penyelenggara jenazah', new_message : 0 },
-
-  // ]
 
   const Header = () => {
     return (

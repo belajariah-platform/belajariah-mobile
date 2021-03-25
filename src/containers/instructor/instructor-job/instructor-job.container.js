@@ -68,7 +68,6 @@ const InstructorJob = ({ route }) => {
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
-      setLoading(true)
       filterString='[{"type": "text", "field" : "status", "value": "Approved"}]'
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
@@ -115,7 +114,7 @@ const InstructorJob = ({ route }) => {
       Status_Code : item.Status_Code,
       Expired_Date : item.Expired_Date,
     }
-    console.log(values)
+
     try {
       setLoadingBtn(true)
       const response = await ConsultationAPI.UpdateConsultation(values)
@@ -146,12 +145,20 @@ const InstructorJob = ({ route }) => {
   }
 
   useEffect(() => {
+    setLoading(true)
     fetchDataConsultation(dataState)
   }, [dataState])
 
   useEffect(() => {
     fetchDataClassCategory(dataStateCategory)
   }, [])
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     fetchDataConsultation(dataState)
+  //   }, 5000)
+  //   return () => clearInterval(intervalId)
+  // }, [dataState])
 
   const onLoadMore = (e) => {
     if (dataState.take < count && e.distanceFromEnd >= 0) {
