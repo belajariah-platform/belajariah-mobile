@@ -23,6 +23,9 @@ import {
   Carousel,
   ModalInfo,
   ModalInfoClass,
+  ShimmerCardPromotion,
+  ShimmerCardClassPopuler,
+  ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
 
@@ -33,8 +36,10 @@ const Home = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+  const [loadingShimmerCardPromotion, setloadingShimmerCardPromotion] = useState(false)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
-
+  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(false)
+  const [loadingShimmerCardInspiratifStory, setloadingShimmerCardInspiratifStory] = useState(false)
   const { height } = Dimensions.get('window')
 
   const mainScrollViewRef = useRef()
@@ -126,7 +131,7 @@ const Home = (props) => {
   // }
 
   const PromotionHome = ({ index, item }) => {
-    return (
+    return loadingShimmerCardPromotion ? <ShimmerCardPromotion /> : (
       <View style={styles.containerPromo} key={index}>
         {promotion.length > 0  ? (
           <TouchableOpacity
@@ -227,7 +232,7 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {classPopular.map((item, index) => {
-          return (
+          return loadingShimmerCardClassPopuler ? <ShimmerCardClassPopuler /> : (
             <TouchableOpacity
               key={index}
               activeOpacity={0.6}
@@ -310,7 +315,7 @@ const Home = (props) => {
           showsHorizontalScrollIndicator={false}
           style={{ height: 238 }}>
           {Inspiratif.map((item, index) => {
-            return (
+            return loadingShimmerCardInspiratifStory ? <ShimmerCardInspiratifStory /> : (
               <Card containerStyle={styles.cardArticle} key={index}>
                 <Images.BlogExample.default
                   style={styles.svgArticleBackground}
