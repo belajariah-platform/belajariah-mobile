@@ -1,5 +1,6 @@
 import {
     Shimmer,
+    ShimmerListCategory,
     ShimmerCardPromotion,
     ShimmerInspiratifStory,
     ShimmerCardClassPopuler,
@@ -8,6 +9,7 @@ import {
 
 export {
     Shimmer,
+    ShimmerListCategory,
     ShimmerCardPromotion,
     ShimmerInspiratifStory,
     ShimmerCardClassPopuler,
