@@ -42,7 +42,10 @@ import { styles } from './home.style'
 import { Response } from '../../utils'
 
 const Home = (props) => {
-  const [category, setCategory] = useState('')
+  const mainScrollViewRef = useRef()
+  const horizontalScrollRef = useRef()
+  const { height } = Dimensions.get('window')
+
   const [classObj, setClassObj] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
@@ -55,29 +58,24 @@ const Home = (props) => {
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
-  const [loading, setLoading] = useState({
-    class : true,
-    story : true,
-    Promo : true,
-    package : true,
-    category : true,
-  })
 
-  // const [loadingPromo, setloadingPromo] = useState(true)
-  // const [loadingClass, setloadingClass] = useState(true)
-  // const [loadingStory, setloadingStory] = useState(true)
-
-  const mainScrollViewRef = useRef()
-  const horizontalScrollRef = useRef()
-  const { height } = Dimensions.get('window')
+  const [loadingPromo, setloadingPromo] = useState(true)
+  const [loadingClass, setloadingClass] = useState(true)
+  const [loadingStory, setloadingStory] = useState(true)
+  const [loadingPackage, setloadingPackage] = useState(true)
+  const [loadingCategory, setloadingCategory] = useState(true)
 
   const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
 
-  const handleModal = (event) => {
-    setModalVisible(true)
-    setCategory(event)
+
+  const handleCategoryChange = (category) => {
+    setCategorySelected(category.ID)
+    stateClass.forEach((val) => {
+      val.Class_Category == category.Value ?
+        fetchDataClass(dataState) : toggleModal()
+    })
   }
 
   const retryConnection = () => {
@@ -96,7 +94,7 @@ const Home = (props) => {
 
   const fetchDataClass = async ({ skip, take, filterString }) => {
     try {
-      setLoading({ ...loading, class : true })
+      setloadingClass(true)
       const response = await ClassAPI.GetAllClass(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateClass(response.data.data)
@@ -105,16 +103,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading, class : false })
+      setloadingClass(false)
     } catch (err) {
-      setLoading({ ...loading, class : false })
+      setloadingClass(false)
       return err
     }
   }
 
   const fetchDataPromotion = async ({ skip, take, filterString }) => {
     try {
-      setLoading({ ...loading, Promo : true })
+      setloadingPromo(true)
       const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStatePromotion(response.data.data)
@@ -123,16 +121,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading, Promo : false })
+      setloadingPromo(false)
     } catch (err) {
-      setLoading({ ...loading, Promo : false })
+      setloadingPromo(false)
       return err
     }
   }
 
   const fetchDataStory = async ({ skip, take, filterString }) => {
     try {
-      setLoading({ ...loading, story : true })
+      setloadingStory(true)
       const response = await StoryAPI.GetAllStory(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateStory(response.data.data)
@@ -141,16 +139,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading, story : false })
+      setloadingStory(false)
     } catch (err) {
-      setLoading({ ...loading, story : false })
+      setloadingStory(false)
       return err
     }
   }
 
   const fetchDataCategory = async ({ skip, take, filterString }) => {
     try {
-      setLoading({ ...loading, category : true })
+      setloadingCategory(true)
       filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
@@ -160,16 +158,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading, package : false })
+      setloadingCategory(false)
     } catch (err) {
-      setLoading({ ...loading, package : false })
+      setloadingCategory(false)
       return err
     }
   }
 
   const fetchDataPackage = async (state, code) => {
     try {
-      setLoading({ ...loading, package : true })
+      setloadingPackage(true)
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await PackageAPI.GetAllPackage(skip, take, filterString)
@@ -180,9 +178,9 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading, package : false })
+      setloadingPackage(false)
     } catch (err) {
-      setLoading({ ...loading, package : false })
+      setloadingPackage(false)
       return err
     }
   }
@@ -195,7 +193,7 @@ const Home = (props) => {
   }, [])
 
   const PromotionHome = ({ index, item }) => {
-    return loading.Promo ? <ShimmerCardPromotion /> : (
+    return loadingPromo ? <ShimmerCardPromotion /> : (
       <View style={styles.containerPromo} key={index}>
         {statePromotion.length > 0  ? (
           <TouchableOpacity
@@ -229,13 +227,10 @@ const Home = (props) => {
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
             {stateCategory.map((category, index) => {
-              return (
+              return !loadingCategory &&(
                 <TouchableOpacity
                   key={index}
-                  onPress={  () => {
-                    setCategorySelected(category.ID)
-                    handleModal(category.Value)
-                  }}>
+                  onPress={() => handleCategoryChange(category)}>
                   <Text
                     style={[
                       styles.textCategories,
@@ -304,7 +299,7 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          return loading.class ? <ShimmerCardClassPopuler /> : (
+          return loadingClass ? <ShimmerCardClassPopuler /> : (
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
@@ -362,7 +357,7 @@ const Home = (props) => {
           showsHorizontalScrollIndicator={false}
           style={{ height: 238 }}>
           {stateStory.map((item, index) => {
-            return loading.story ? <ShimmerCardInspiratifStory /> :(
+            return loadingStory ? <ShimmerCardInspiratifStory /> :(
               <View style={styles.cardArticle} key={index}>
                 <Image source={item.Banner_Image == '' ?
                   Images.ImgDefault2 : { uri : item.Banner_Image }}
@@ -476,7 +471,7 @@ const Home = (props) => {
         <ModalInfoClass
           class={classObj}
           state={statePackage}
-          loading={loading.package}
+          loading={loadingPackage}
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
           backButtonPress={() => toggleModalInfoClass()}
@@ -487,25 +482,13 @@ const Home = (props) => {
           backButtonPress={() => toggleModal()}
           renderItem={
             <View>
-              {stateClass.map((value, index) => {
-                if (value.Class_Category == category) {
-                  return (
-                    <View key={index}>
-                      <Text>{category}</Text>
-                    </View>
-                  )
-                } else {
-                  return (
-                    <View key={index}>
-                      <Image
-                        resizeMode={'cover'}
-                        source={Images.ImgModalComingSoon}
-                        style={styles.BackroundImgModal}
-                      />
-                    </View>
-                  )
-                }
-              })}
+              <View>
+                <Image
+                  resizeMode='cover'
+                  source={Images.ImgModalComingSoon}
+                  style={styles.BackroundImgModal}
+                />
+              </View>
             </View>
           }
         />

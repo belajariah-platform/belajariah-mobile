@@ -10,7 +10,8 @@ const ModalConfirm = (props) => {
   let action, color
   props.action == 'Approved' ?  (action = 'menerima', color = '#6e248d' ) :
     props.action == 'Revised' ?  (action = 'membatalkan', color = '#d73c2c') :
-      (action = 'menolak', color = '#d73c2c')
+      props.action == 'Rejected' ? (action = 'menolak', color = '#d73c2c') :
+        (action = 'keluar', color = '#6e248d')
 
   return(
     <>

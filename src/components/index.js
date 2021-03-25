@@ -4,7 +4,6 @@ import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
 import {
-  Shimmer,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,
@@ -44,7 +43,6 @@ export {
   Topbar,
   Buttons,
   Loader,
-  Shimmer,
   TextBox,
   Carousel,
   Checkbox,

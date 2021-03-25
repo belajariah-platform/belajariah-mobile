@@ -1,24 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { View } from 'react-native'
 import { Card } from 'react-native-elements'
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 import { Color } from '../../assets'
-
-const Shimmer = (props) => {
-  return (
-    <ShimmerPlaceHolder
-      autoRun={true}
-      colorShimmer={['#eeedf2', '#e6e4ea', '#eeedf2']}
-      duration={1000}
-      visible={props.visible}
-      {...props}>
-      {props.component}
-    </ShimmerPlaceHolder>
-  )
-}
 
 const ShimmerInspiratifStory = () => {
   return(
@@ -119,13 +104,7 @@ const ShimmerCardInspiratifStory = () => {
   )
 }
 
-Shimmer.propTypes = {
-  visible : PropTypes.bool,
-  component : PropTypes.object,
-}
-
 export {
-  Shimmer,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,

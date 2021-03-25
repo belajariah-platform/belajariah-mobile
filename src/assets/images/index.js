@@ -253,6 +253,13 @@ export default {
   ImgDefault4 : require('./ImageDefault4.png'),
   ImgDefault5 : require('./ImageDefault5.png'),
 
+  //Social Media
+  SMYoutube : require('./SMYoutube.svg'),
+  SMWebsite : require('./SMWebsite.svg'),
+  SMFacebook : require('./SMFacebook.svg'),
+  SMInstagram : require('./SMInstagram.svg'),
+  SMTelephone : require('./SMTelephone.svg'),
+
   //Img Check Connection
   ImgModalNoConnection : require('./ImgModalNoConnection.png'),
   IconStoryEmpty : require('./IllustrationNoStory.svg'),

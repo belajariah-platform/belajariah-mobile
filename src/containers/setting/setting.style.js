@@ -65,6 +65,18 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,
   },
+  textParagraphContact: {
+    lineHeight : 17,
+    marginLeft : 15,
+    color: Color.black,
+    alignSelf : 'center',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallMedium,
+  },
+  containerContactUs : {
+    marginBottom : 13,
+    flexDirection : 'row',
+  },
   textTitleBold: {
     marginTop : 5,
     lineHeight : 17,

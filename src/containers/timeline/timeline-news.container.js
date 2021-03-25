@@ -1,30 +1,32 @@
-import React, { useState } from 'react'
-import { Text, Icon, Avatar } from '@ui-kitten/components'
-import { View, Image, FlatList, TouchableOpacity } from 'react-native'
+import React from 'react'
+// import { Text, Icon, Avatar } from '@ui-kitten/components'
+import { View,
+  //  Image, FlatList, TouchableOpacity
+} from 'react-native'
 
-import { Color } from '../../assets'
-import DataContent from './column-content.json'
-import { Shimmer, TextView } from '../../components'
+// import { Color } from '../../assets'
+// import DataContent from './column-content.json'
+// import { Shimmer, TextView } from '../../components'
 
-import { styles } from './timeline.style'
+// import { styles } from './timeline.style'
 
 const TimelineNews = () => {
-  const [shimmer] = useState(true)
-  const [like, setLike] = useState(false)
-  const [addLike, setAddLike] = useState(false)
+  // const [shimmer] = useState(true)
+  // const [like, setLike] = useState(false)
+  // const [addLike, setAddLike] = useState(false)
 
-  const handleLike = () => {
-    setLike(!like)
-    if (like === true) {
-      setAddLike(true)
-    } else {
-      setAddLike(false)
-    }
-  }
+  // const handleLike = () => {
+  //   setLike(!like)
+  //   if (like === true) {
+  //     setAddLike(true)
+  //   } else {
+  //     setAddLike(false)
+  //   }
+  // }
 
   return (
     <View style={{ flex: 1, marginTop: 2 }}>
-      <FlatList
+      {/* <FlatList
         keyExtractor={(i, idx) => idx}
         data={DataContent}
         renderItem={({ item }) => (
@@ -114,7 +116,7 @@ const TimelineNews = () => {
             </View>
           </>
         )}
-      />
+      /> */}
     </View>
   )
 }

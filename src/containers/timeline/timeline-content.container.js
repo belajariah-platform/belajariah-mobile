@@ -1,27 +1,29 @@
-import React, { useState } from 'react'
-import { View, Image, FlatList, TouchableOpacity } from 'react-native'
-import { Text, Icon, Avatar } from '@ui-kitten/components'
+import React from 'react'
+import { View,
+  // Image, FlatList, TouchableOpacity
+} from 'react-native'
+// import { Text, Icon, Avatar } from '@ui-kitten/components'
 
-import { Shimmer, TextView } from '../../components'
+// import { Shimmer, TextView } from '../../components'
 
-import { Color } from '../../assets'
-import DataContent from './column-content.json'
+// import { Color } from '../../assets'
+// import DataContent from './column-content.json'
 
-import { styles } from './timeline.style'
+// import { styles } from './timeline.style'
 
 const TimelineContent = () => {
-  const [like, setLike] = useState(false)
-  const [addLike, setAddLike] = useState(false)
-  const [shimmer] = useState(true)
+  // const [like, setLike] = useState(false)
+  // const [addLike, setAddLike] = useState(false)
+  // const [shimmer] = useState(true)
 
-  const handleLike = () => {
-    setLike(!like)
-    if (like === true) {
-      setAddLike(true)
-    } else {
-      setAddLike(false)
-    }
-  }
+  // const handleLike = () => {
+  //   setLike(!like)
+  //   if (like === true) {
+  //     setAddLike(true)
+  //   } else {
+  //     setAddLike(false)
+  //   }
+  // }
 
   const renderData = () => {
     return (
@@ -29,7 +31,7 @@ const TimelineContent = () => {
         style={{
           flex: 1,
         }}>
-        <View
+        {/* <View
           style={{
             flex: 6,
             backgroundColor: 'white',
@@ -117,7 +119,7 @@ const TimelineContent = () => {
               </>
             )}
           />
-        </View>
+        </View> */}
       </View>
     )
   }
