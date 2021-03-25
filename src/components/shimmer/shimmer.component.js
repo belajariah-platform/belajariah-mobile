@@ -5,7 +5,8 @@ import { Card } from 'react-native-elements'
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
-import { Color, FontSize, FontType, FontWeight } from '../../assets'
+import {styles} from './shimmer.style'
+import { Color } from '../../assets'
 
 const Shimmer = (props) => {
   return (
@@ -30,14 +31,14 @@ const ShimmerInspiratifStory = (props) => {
       borderWidth : 0,
       borderRadius: 20,}}
       >
-      <SkeletonPlaceholder >
-        <View style={{ flexDirection: 'row',}}>
-          <View style={{ width: 110, height: 102, marginRight: 10, borderRadius: 20,}} />
-          <View style={{ marginLeft: 10, }}>
-            <View style={{ width: 170, height: 20, borderRadius: 4 }} />
-            <View style={{ marginTop: 6, width: 150, height: 15, borderRadius: 4 }}/>
-            <View style={{ marginTop: 24, width: 150, height: 12, borderRadius: 4 }}/>
-            <View style={{ marginTop: 6, width: 160, height: 12, borderRadius: 4 }}/>
+      <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
+        <View style={styles.container}>
+          <View style={styles.containerImg} />
+          <View style={styles.containerTxt}>
+            <View style={styles.ViewTitle} />
+            <View style={styles.ViewTxt1}/>
+            <View style={styles.ViewTxt2}/>
+            <View style={styles.ViewTxt3}/>
           </View>
         </View>
       </SkeletonPlaceholder>
@@ -47,7 +48,7 @@ const ShimmerInspiratifStory = (props) => {
 
 const ShimmerCardPromotion = (props) => {
   return(
-    <SkeletonPlaceholder >
+    <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={{
           height: 100,
           borderWidth: 0,
@@ -60,11 +61,28 @@ const ShimmerCardPromotion = (props) => {
   )
 }
 
+const ShimmerListCategory = (props) => {
+  return(
+    <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
+      <View style={{
+        width: 70,
+        marginTop: 4,
+        borderWidth: 1,
+        borderRadius: 14,
+        paddingVertical: 13,
+        marginHorizontal: 4,
+        paddingHorizontal: 18,
+        backgroundColor: 'red',
+      }}></View>
+    </SkeletonPlaceholder>
+  )
+}
+
 const ShimmerCardClassPopuler = (props) => {
   return(
     <View style={{flex:1,
       height: 210,
-      elevation: 2,
+      // elevation: 2,
       width: '100%',
       borderWidth: 0,
       borderRadius: 20,
@@ -73,15 +91,51 @@ const ShimmerCardClassPopuler = (props) => {
       shadowColor: '#000',
       borderColor: '#dddddd',
       backgroundColor: Color.white}}>
-      <SkeletonPlaceholder >
+      <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={{
-          height: 210,
+          height: 120,
           borderWidth: 0,
-          borderRadius: 20,
           maxWidth: '100%',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           borderColor: Color.transparent,
           backgroundColor: Color.greyMedium,}}>
         </View>
+        <View style={{
+          height: 10,
+          marginTop: 8,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          width: '80%',
+          height: 10,
+          marginTop: 5,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          width: '40%',
+          height: 10,
+          marginTop: 5,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          width: '40%',
+          height: 18,
+          marginTop: 10,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
       </SkeletonPlaceholder>  
     </View>
   )
@@ -93,27 +147,57 @@ const ShimmerCardInspiratifStory = (props) => {
       padding:0,
       width: 296,
       height: 227,
-      elevation: 3,
+      // elevation: 3,
       borderWidth: 0,
       borderRadius: 20,
       marginVertical: 8,
-      shadowRadius: 2.22,
-      shadowColor: '#000',
-      shadowOpacity: 0.22,
-      marginHorizontal: 12,
-      shadowOffset: { width: 0, height: 1 },}}>
-      <SkeletonPlaceholder >
+      marginHorizontal: 12,}}>
+      <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={{
           width: '100%',
-          height: '100%',
-          elevation: 3,
+          height: 120,
           borderWidth: 0,
-          borderRadius: 20,
           shadowRadius: 2.22,
           shadowColor: '#000',
           shadowOpacity: 0.22,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           shadowOffset: { width: 0, height: 1 },}}>
         </View>
+        <View style={{
+          height: 10,
+          marginTop: 6,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          height: 10,
+          marginTop: 6,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          height: 10,
+          marginTop: 6,
+          borderWidth: 0,
+          borderRadius: 5,
+          marginHorizontal: '3%',
+          borderColor: Color.transparent,
+          }}></View>
+        <View style={{
+          height: 24,
+          left: '63%',
+          width: '30%',
+          marginTop: 15,
+          marginHorizontal: '3%',
+          borderWidth: 0,
+          borderRadius: 5,
+          borderColor: Color.transparent,
+          }}></View>
       </SkeletonPlaceholder>
     </Card>
   )
@@ -126,6 +210,7 @@ Shimmer.propTypes = {
 
 export {
   Shimmer, 
+  ShimmerListCategory,
   ShimmerCardPromotion, 
   ShimmerInspiratifStory, 
   ShimmerCardClassPopuler,

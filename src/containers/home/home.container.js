@@ -23,6 +23,7 @@ import {
   Carousel,
   ModalInfo,
   ModalInfoClass,
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
@@ -36,10 +37,11 @@ const Home = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
-  const [loadingShimmerCardPromotion, setloadingShimmerCardPromotion] = useState(false)
+  const [loadingShimmerListCategory, setloadingShimmerListCategory] = useState(true)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
-  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(false)
-  const [loadingShimmerCardInspiratifStory, setloadingShimmerCardInspiratifStory] = useState(false)
+  const [loadingShimmerCardPromotion, setloadingShimmerCardPromotion] = useState(true)
+  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(true)
+  const [loadingShimmerCardInspiratifStory, setloadingShimmerCardInspiratifStory] = useState(true)
   const { height } = Dimensions.get('window')
 
   const mainScrollViewRef = useRef()
@@ -156,7 +158,7 @@ const Home = (props) => {
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
             {categories.map((category, index) => {
-              return (
+              return loadingShimmerListCategory ? <ShimmerListCategory /> : (
                 <TouchableOpacity
                   key={index}
                   onPress={  () => {
