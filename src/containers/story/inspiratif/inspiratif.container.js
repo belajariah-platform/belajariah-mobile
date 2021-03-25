@@ -22,6 +22,7 @@ import {
   Searchbox,
   LoadingView,
   ModalNoConnection,
+  ShimmerInspiratifStory
 } from '../../../components'
 
 import { StoryAPI } from '../../../api'
@@ -187,7 +188,7 @@ const InspiratifStory = () => {
         />
       </View>
       {loading && !loadingScroll ?
-        <LoadingView/> :
+        <ShimmerInspiratifStory /> :
         state == 0 ? <NoStory/>:
           <FlatList
             data={state}

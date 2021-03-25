@@ -3,7 +3,13 @@ import Alerts from './alert'
 import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
-import Shimmer from './shimmer'
+import {
+  Shimmer,
+  ShimmerCardPromotion,
+  ShimmerInspiratifStory,
+  ShimmerCardClassPopuler,
+  ShimmerCardInspiratifStory,
+} from './shimmer'
 import TextBox from './textbox'
 import Carousel from './carousel'
 import Checkbox from './checkbox'
@@ -60,7 +66,11 @@ export {
   ModalFilterAdmin,
   ModalNoConnection,
   ModalFilterUstadz,
+  ShimmerCardPromotion,
+  ShimmerInspiratifStory,
+  ShimmerCardClassPopuler,
   ModalFilterAdminPageUser,
+  ShimmerCardInspiratifStory,
   ModalFilterAdminPageUstadz,
   ModalFilterUserTransaction,
 }

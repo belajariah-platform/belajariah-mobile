@@ -34,6 +34,9 @@ import {
   ModalInfo,
   ModalInfoClass,
   ModalNoConnection,
+  ShimmerCardPromotion,
+  ShimmerCardClassPopuler,
+  ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
 import { Response } from '../../utils'
@@ -51,9 +54,18 @@ const Home = (props) => {
   const [statePackage, setStatePackage] = useState([])
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
-  const [loading, setLoading] = useState({ class : false, package : false })
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+  const [loading, setLoading] = useState({
+    class : true,
+    story : true,
+    Promo : true,
+    package : true,
+    category : true,
+  })
 
+  // const [loadingPromo, setloadingPromo] = useState(true)
+  // const [loadingClass, setloadingClass] = useState(true)
+  // const [loadingStory, setloadingStory] = useState(true)
 
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
@@ -84,6 +96,7 @@ const Home = (props) => {
 
   const fetchDataClass = async ({ skip, take, filterString }) => {
     try {
+      setLoading({ ...loading, class : true })
       const response = await ClassAPI.GetAllClass(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateClass(response.data.data)
@@ -92,13 +105,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading({ ...loading, class : false })
     } catch (err) {
+      setLoading({ ...loading, class : false })
       return err
     }
   }
 
   const fetchDataPromotion = async ({ skip, take, filterString }) => {
     try {
+      setLoading({ ...loading, Promo : true })
       const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStatePromotion(response.data.data)
@@ -107,13 +123,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading({ ...loading, Promo : false })
     } catch (err) {
+      setLoading({ ...loading, Promo : false })
       return err
     }
   }
 
   const fetchDataStory = async ({ skip, take, filterString }) => {
     try {
+      setLoading({ ...loading, story : true })
       const response = await StoryAPI.GetAllStory(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateStory(response.data.data)
@@ -122,13 +141,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading({ ...loading, story : false })
     } catch (err) {
+      setLoading({ ...loading, story : false })
       return err
     }
   }
 
   const fetchDataCategory = async ({ skip, take, filterString }) => {
     try {
+      setLoading({ ...loading, category : true })
       filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
@@ -138,16 +160,16 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading({ ...loading, package : false })
     } catch (err) {
+      setLoading({ ...loading, package : false })
       return err
     }
   }
 
   const fetchDataPackage = async (state, code) => {
     try {
-      setLoading({ ...loading,
-        package : true
-      })
+      setLoading({ ...loading, package : true })
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await PackageAPI.GetAllPackage(skip, take, filterString)
@@ -158,13 +180,9 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setLoading({ ...loading,
-        package : false
-      })
+      setLoading({ ...loading, package : false })
     } catch (err) {
-      setLoading({ ...loading,
-        package : false
-      })
+      setLoading({ ...loading, package : false })
       return err
     }
   }
@@ -177,7 +195,7 @@ const Home = (props) => {
   }, [])
 
   const PromotionHome = ({ index, item }) => {
-    return (
+    return loading.Promo ? <ShimmerCardPromotion /> : (
       <View style={styles.containerPromo} key={index}>
         {statePromotion.length > 0  ? (
           <TouchableOpacity
@@ -286,7 +304,7 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          return (
+          return loading.class ? <ShimmerCardClassPopuler /> : (
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
@@ -344,7 +362,7 @@ const Home = (props) => {
           showsHorizontalScrollIndicator={false}
           style={{ height: 238 }}>
           {stateStory.map((item, index) => {
-            return (
+            return loading.story ? <ShimmerCardInspiratifStory /> :(
               <View style={styles.cardArticle} key={index}>
                 <Image source={item.Banner_Image == '' ?
                   Images.ImgDefault2 : { uri : item.Banner_Image }}

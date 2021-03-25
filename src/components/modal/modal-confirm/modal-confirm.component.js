@@ -23,7 +23,7 @@ const ModalConfirm = (props) => {
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.modalContentSyle}>
-            <Text style={styles.TextTitleRating}>Apakah kamu yakin ingin {action} ini</Text>
+            <Text style={styles.TextTitleRating}>Apakah kamu yakin ingin {action}</Text>
             <View style={styles.ViewButton}>
               <View>
                 <TouchableOpacity activeOpacity={0.8} onPress={props.submit}>
