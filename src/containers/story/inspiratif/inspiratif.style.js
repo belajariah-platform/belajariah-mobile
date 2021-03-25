@@ -161,6 +161,30 @@ const styles = StyleSheet.create({
     top : 10,
     alignItems:'center',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: '300',
+    marginBottom: 20,
+  },
+  loading: {
+    marginVertical: 10,
+  },
+  loadingText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  reactLogo: {
+    width: 150,
+    height: 150,
+  },
+  
 })
 
 export default styles

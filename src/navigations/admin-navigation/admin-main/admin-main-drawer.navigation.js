@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
-
 
 import {
   Text,
@@ -12,17 +11,32 @@ import {
 
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
+import { ModalConfirm} from '../../../components'
 import { styles } from './admin-main.style'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const AdminDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
   const [actived, setActived] = useState(1)
+  const [action, setAction] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const toggleModal = (e) => {
+    setAction(e)
+    setModalVisible(!modalVisible)
+  }
 
   return (
+    <>
+    <ModalConfirm
+        action={action}
+        isVisible={modalVisible}
+        submit={async () => await dispatch(UserAPI.SignOut())}
+        backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
+    />
     <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
       <View style={styles.drawerBackground}>
-
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => {
@@ -85,12 +99,11 @@ const AdminDrawer = ({ navigation }, props) => {
             />
             <Text style={styles.textIcon}>Transaksi</Text>
           </TouchableOpacity>
-          
         </View>
 
         <TouchableOpacity
           style={styles.centeredBottom}
-          onPress={async () => await dispatch(UserAPI.SignOut())}>
+          onPress = {() => toggleModal('logout')}>
           <Images.Logout.default
             width={24}
             height={24}
@@ -100,6 +113,7 @@ const AdminDrawer = ({ navigation }, props) => {
 
       </View>
     </DrawerContentScrollView>
+    </>
   )
 }
 

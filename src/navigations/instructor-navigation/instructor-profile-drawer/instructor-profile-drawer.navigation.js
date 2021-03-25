@@ -1,8 +1,7 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-
-import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
+import React, {useState} from 'react'
 import { useDispatch } from 'react-redux'
+import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 
 import {
   Text,
@@ -11,16 +10,30 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-
-
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
+import { ModalConfirm} from '../../../components'
 import { styles } from './instructor-profile.style'
 
 const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
+  const [action, setAction] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const toggleModal = (e) => {
+    setAction(e)
+    setModalVisible(!modalVisible)
+  }
 
   return (
+    <>
+    <ModalConfirm
+        action={action}
+        isVisible={modalVisible}
+        submit={async () => await dispatch(UserAPI.SignOut())}
+        backdropPress={() => toggleModal()}
+        backButtonPress={() => toggleModal()}
+    />
     <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
       <ImageBackground
         source={Images.ProfileDrawerBackgroundPNG}
@@ -74,7 +87,7 @@ const CustomDrawer = ({ navigation }, props) => {
 
         <DrawerItem
           label='Keluar'
-          onPress={async () => await dispatch(UserAPI.SignOut())}
+          onPress = {() => toggleModal('logout')}
           labelStyle={styles.label}
           icon={() => (
             <Images.Logout.default
@@ -91,6 +104,7 @@ const CustomDrawer = ({ navigation }, props) => {
         </View>
       </ImageBackground>
     </DrawerContentScrollView>
+    </>
   )
 }
 
