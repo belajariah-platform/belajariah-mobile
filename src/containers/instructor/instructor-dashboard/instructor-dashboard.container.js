@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   ImageBackground,
@@ -10,9 +10,14 @@ import { Text } from '@ui-kitten/components'
 import { styles } from './instructor-dashboard.style'
 import { useNavigation } from '@react-navigation/native'
 import Swiper from 'react-native-swiper'
+import { ToastAndroid } from 'react-native'
+import { BackHandler } from 'react-native'
+import { useIsFocused } from '@react-navigation/core'
 
 const InstructorDashboard = () => {
+  const isFocused = useIsFocused()
   const navigation = useNavigation()
+  const [exitApp, setExitApp] = useState(0)
 
   const Classes = [
     {
@@ -104,6 +109,32 @@ const InstructorDashboard = () => {
       </View>
     )
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      setTimeout(() => {
+        setExitApp(0)
+      }, 2000)
+
+      if(exitApp == 0) {
+        ToastAndroid.showWithGravityAndOffset('Tekan sekali lagi untuk keluar', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 200)
+        setExitApp(1)
+      }
+
+      if(exitApp == 1) {
+        BackHandler.exitApp()
+      }
+      return true
+    }
+
+    if(isFocused) {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      )
+      return () => backHandler.remove()
+    }
+  }, [exitApp])
 
   return (
     <View style={styles.container}>

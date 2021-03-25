@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
@@ -11,16 +12,19 @@ import { FormatRupiah } from '../../utils'
 import styles from './transaction-info.style'
 import { ButtonGradient } from '../../components'
 
-const TransactionInfo = () => {
+const TransactionInfo = (props) => {
+  const paymentDetails = props.route.params
   const navigation = useNavigation()
 
   const classData = {
-    account : '000-1234567',
-    quote: 'Dicek dalam 24 jam setelah bukti pembayaran talh diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
+    gateway_type : paymentDetails.Gateway_Type,
+    gateway_value : paymentDetails.Gateway_Value,
+    account : '0123456789',
+    quote: 'Dicek dalam 24 jam setelah bukti pembayaran telah diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
     noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
     noteTwo: 'Silahkan upload bukti transfer sebelum ',
     noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
-    price: 199000,
+    price: paymentDetails.Price_Discount,
     Created_Date: new Date(),
   }
 
@@ -50,6 +54,8 @@ const TransactionInfo = () => {
         <View style={styles.cardMethods}>
           <View style={styles.viewIconBank}>
             <Images.IconBankBNISyariah.default/>
+            <Text style={styles.textSmall}>Tipe Pembayaran : {classData.gateway_type}</Text>
+            <Text style={styles.textSmall}>Opsi Pembayaran : {classData.gateway_value}</Text>
           </View>
           <View style={styles.viewDetailBank}>
             <View>
@@ -128,6 +134,10 @@ const TransactionInfo = () => {
       </ScrollView>
     </View>
   )
+}
+
+TransactionInfo.propTypes = {
+  route: PropTypes.object,
 }
 
 export default TransactionInfo

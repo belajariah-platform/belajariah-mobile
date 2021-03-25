@@ -16,7 +16,7 @@ const ProfileNavigation = () => {
     <Drawer.Navigator
       drawerPosition='left'
       drawerType='permanent'
-      initialRouteName='Admin'
+      initialRouteName='AdminDashboard'
       drawerStyle={{ width : 60 }}
       drawerContent={(props) => <AdminDrawer {...props} />}
       backBehavior='initialRoute'>
