@@ -88,6 +88,23 @@ const ConsultationDetail = ({ route }) => {
     }
   }
 
+  const giveRatingMentor = async (rating) => {
+    const values = {
+      Comment : '',
+      Rating : rating,
+      User_Code : dataObj.Taken_Code,
+      Mentor_Code : dataObj.User_Code,
+    }
+    try {
+      const response = await RatingAPI.InsertRatingMentor(values)
+      if (response.data.result) {
+        Alerts(true, 'Terimakasih telah memberikan review')
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
   const FormSendMessage = useFormik({
     initialValues: {
       Taken_Code : 0,
@@ -117,23 +134,6 @@ const ConsultationDetail = ({ route }) => {
       }
     },
   })
-
-  const giveRatingMentor = async (rating) => {
-    const values = {
-      Comment : '',
-      Rating : rating,
-      User_Code : dataObj.Taken_Code,
-      Mentor_Code : dataObj.User_Code,
-    }
-    try {
-      const response = await RatingAPI.InsertRatingMentor(values)
-      if (response.data.result) {
-        Alerts(true, 'Terimakasih telah memberikan review')
-      }
-    } catch (err) {
-      return err
-    }
-  }
 
   useEffect(() => {
     let sound = null

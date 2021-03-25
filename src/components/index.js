@@ -4,6 +4,7 @@ import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
 import {
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,
@@ -64,6 +65,7 @@ export {
   ModalFilterAdmin,
   ModalNoConnection,
   ModalFilterUstadz,
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,

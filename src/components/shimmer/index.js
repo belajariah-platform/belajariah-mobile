@@ -1,4 +1,5 @@
 import {
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,
@@ -6,6 +7,7 @@ import {
 } from './shimmer.component'
 
 export {
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,

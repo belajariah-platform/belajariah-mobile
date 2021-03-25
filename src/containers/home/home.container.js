@@ -34,6 +34,7 @@ import {
   ModalInfo,
   ModalInfoClass,
   ModalNoConnection,
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
@@ -227,7 +228,7 @@ const Home = (props) => {
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
             {stateCategory.map((category, index) => {
-              return !loadingCategory &&(
+              return loadingCategory ? <ShimmerListCategory /> : (
                 <TouchableOpacity
                   key={index}
                   onPress={() => handleCategoryChange(category)}>

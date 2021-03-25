@@ -3,26 +3,21 @@ import { View } from 'react-native'
 import { Card } from 'react-native-elements'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
+import { styles } from './shimmer.style'
 import { Color } from '../../assets'
 
 const ShimmerInspiratifStory = () => {
   return(
     <Card
-      containerStyle={{
-        padding: 15,
-        width: 'auto',
-        height: 'auto',
-        borderWidth : 0,
-        borderRadius: 20, }}
-    >
-      <SkeletonPlaceholder >
-        <View style={{ flexDirection: 'row', }}>
-          <View style={{ width: 110, height: 102, marginRight: 10, borderRadius: 20, }} />
-          <View style={{ marginLeft: 10, }}>
-            <View style={{ width: 170, height: 20, borderRadius: 4 }} />
-            <View style={{ marginTop: 6, width: 150, height: 15, borderRadius: 4 }}/>
-            <View style={{ marginTop: 24, width: 150, height: 12, borderRadius: 4 }}/>
-            <View style={{ marginTop: 6, width: 160, height: 12, borderRadius: 4 }}/>
+      containerStyle={styles.shimmerStory}>
+      <SkeletonPlaceholder backgroundColor={Color.shimmer}>
+        <View style={styles.container}>
+          <View style={styles.containerImg} />
+          <View style={styles.containerTxt}>
+            <View style={styles.ViewTitle} />
+            <View style={styles.ViewTxt1}/>
+            <View style={styles.ViewTxt2}/>
+            <View style={styles.ViewTxt3}/>
           </View>
         </View>
       </SkeletonPlaceholder>
@@ -32,41 +27,29 @@ const ShimmerInspiratifStory = () => {
 
 const ShimmerCardPromotion = () => {
   return(
-    <SkeletonPlaceholder >
-      <View style={{
-        height: 100,
-        borderWidth: 0,
-        borderRadius: 20,
-        maxWidth: '100%',
-        borderColor: Color.transparent,
-        backgroundColor: Color.greyMedium, }}>
-      </View>
+    <SkeletonPlaceholder backgroundColor={Color.shimmer}>
+      <View style={styles.shimmerPromo}/>
+    </SkeletonPlaceholder>
+  )
+}
+
+const ShimmerListCategory = () => {
+  return(
+    <SkeletonPlaceholder backgroundColor={Color.shimmer}>
+      <View style={styles.shimmerCategory}/>
     </SkeletonPlaceholder>
   )
 }
 
 const ShimmerCardClassPopuler = () => {
   return(
-    <View style={{ flex:1,
-      height: 210,
-      elevation: 2,
-      width: '100%',
-      borderWidth: 0,
-      borderRadius: 20,
-      alignSelf:'center',
-      marginVertical :10,
-      shadowColor: '#000',
-      borderColor: '#dddddd',
-      backgroundColor: Color.white }}>
-      <SkeletonPlaceholder >
-        <View style={{
-          height: 210,
-          borderWidth: 0,
-          borderRadius: 20,
-          maxWidth: '100%',
-          borderColor: Color.transparent,
-          backgroundColor: Color.greyMedium, }}>
-        </View>
+    <View style={styles.shimmerClass}>
+      <SkeletonPlaceholder backgroundColor={Color.shimmer}>
+        <View style={styles.shimmerClass1}/>
+        <View style={styles.shimmerClass2}/>
+        <View style={styles.shimmerClass3}/>
+        <View style={styles.shimmerClass4}/>
+        <View style={styles.shimmerClass5}/>
       </SkeletonPlaceholder>
     </View>
   )
@@ -74,37 +57,20 @@ const ShimmerCardClassPopuler = () => {
 
 const ShimmerCardInspiratifStory = () => {
   return(
-    <Card containerStyle={{
-      padding:0,
-      width: 296,
-      height: 227,
-      elevation: 3,
-      borderWidth: 0,
-      borderRadius: 20,
-      marginVertical: 8,
-      shadowRadius: 2.22,
-      shadowColor: '#000',
-      shadowOpacity: 0.22,
-      marginHorizontal: 12,
-      shadowOffset: { width: 0, height: 1 }, }}>
-      <SkeletonPlaceholder >
-        <View style={{
-          width: '100%',
-          height: '100%',
-          elevation: 3,
-          borderWidth: 0,
-          borderRadius: 20,
-          shadowRadius: 2.22,
-          shadowColor: '#000',
-          shadowOpacity: 0.22,
-          shadowOffset: { width: 0, height: 1 }, }}>
-        </View>
+    <Card containerStyle={styles.shimmerStoryPage}>
+      <SkeletonPlaceholder backgroundColor={Color.shimmer}>
+        <View style={styles.shimmerStoryPage1}/>
+        <View style={styles.shimmerStoryPage2}/>
+        <View style={styles.shimmerStoryPage3}/>
+        <View style={styles.shimmerStoryPage4}/>
+        <View style={styles.shimmerStoryPage5}/>
       </SkeletonPlaceholder>
     </Card>
   )
 }
 
 export {
+  ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
   ShimmerCardClassPopuler,
