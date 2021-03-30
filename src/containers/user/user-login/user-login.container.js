@@ -80,7 +80,6 @@ const Login = (props) => {
     </TouchableWithoutFeedback>
   )
 
-
  const signIn = async () => {
   try {
     await GoogleSignin.hasPlayServices();
@@ -99,7 +98,6 @@ const Login = (props) => {
     console.log(error)
   }
 };
-
 
   return (
     <>
@@ -145,6 +143,13 @@ const Login = (props) => {
             </View>
             <View>
               <Text style={styles.anotherText}>Atau</Text>
+            </View>
+            <View>
+            <GoogleSigninButton
+              style={{ width: 192, height: 48 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={signIn} />
             </View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity

@@ -192,7 +192,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation(project(":react-native-google-signin"))
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0' // <-- add this; newer versions should work too
     android {
         defaultConfig {
             multiDexEnabled true
