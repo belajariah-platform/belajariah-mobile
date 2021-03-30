@@ -16,10 +16,7 @@ import styles from './transaction-method.style'
 const TransactionMethod = (props) => {
   const Item = props.route.params
   const navigation = useNavigation()
-  const [gateway, setGateway] = useState({
-    type : '',
-    value : 'BCA',
-  })
+  const [gateway, setGateway] = useState('bca')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -42,14 +39,14 @@ const TransactionMethod = (props) => {
   }
 
   var method = [
-    { id: 0, type : 'virtual_account', value: 'BCA' },
-    { id: 1, type : 'virtual_account',  value: 'BNI' },
-    { id: 2, type : 'virtual_account',  value: 'BRI' },
-    { id: 3, type : 'e_wallet', value: 'OVO' },
-    { id: 3, type : 'e_wallet', value: 'GO-PAY' },
-    { id: 3, type : 'mart', value: 'Indomaret' },
-    { id: 3, type : 'mart', value: 'Alfamart' },
-    { id: 4, type : 'bank_transfer', value: 'Bank BSI' },
+    { id: 0, type : 'virtual_account', name : 'BCA', code : 'bca' },
+    { id: 1, type : 'virtual_account',  name : 'BNI', code : 'bni' },
+    { id: 2, type : 'virtual_account',  name : 'BRI', code : 'bri' },
+    { id: 3, type : 'e_wallet', name : 'GO-PAY', code : 'gopay' },
+    { id: 4, type : 'e_wallet', name : 'Shopeepay', code : 'shopeepay' },
+    { id: 5, type : 'mart', name : 'Indomaret', code : 'indomaret' },
+    { id: 6, type : 'mart', name : 'Alfamart', code : 'alfamart' },
+    { id: 7, type : 'bank_transfer', name : 'Bank BSI', code : 'bsi' },
   ]
 
   const handleRating = (num) => {
@@ -116,33 +113,8 @@ const TransactionMethod = (props) => {
   }
 
   const PaymentMethod = () => {
-    const setGatewayDetails = (newGateway) => {
-      switch(newGateway) {
-      case('BCA') :
-      case('BNI') :
-      case('BRI') :
-        setGateway(s => ({ ...s, type : 'virtual_account' }))
-        break
-      case('OVO') :
-      case('GOPAY') :
-        setGateway(s => ({ ...s, type : 'e_wallet' }))
-        break
-      case('Indomaret') :
-      case('Alfamart') :
-        setGateway(s => ({ ...s, type : 'mart' }))
-        break
-      case('Bank BSI') :
-        setGateway(s => ({ ...s, type : 'bank_transfer' }))
-        break
-      default :
-        alert('Radiobutton exception')
-      }
-
-      setGateway(s => ({ ...s, value : newGateway }))
-    }
-
     return (
-      <RadioButton.Group onValueChange={(newGateway) => setGatewayDetails(newGateway)} value={gateway.value}>
+      <RadioButton.Group onValueChange={(newGateway) => setGateway(newGateway)} value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
 
@@ -167,8 +139,8 @@ const TransactionMethod = (props) => {
             {method.map((item, index) => {
               return item.type == 'virtual_account' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.value} />
-                  <Text style={styles.textGateway}>{item.value}</Text>
+                  <RadioButton value={item.code} />
+                  <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
           </View>
@@ -179,8 +151,8 @@ const TransactionMethod = (props) => {
             {method.map((item, index) => {
               return item.type == 'mart' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.value} />
-                  <Text style={styles.textGateway}>{item.value}</Text>
+                  <RadioButton value={item.code} />
+                  <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
           </View>
@@ -191,8 +163,8 @@ const TransactionMethod = (props) => {
             {method.map((item, index) => {
               return item.type == 'bank_transfer' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.value} />
-                  <Text style={styles.textGateway}>{item.value}</Text>
+                  <RadioButton value={item.code} />
+                  <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
           </View>
@@ -207,15 +179,16 @@ const TransactionMethod = (props) => {
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
           <Text style={styles.textTotalPrice}>Total Harga</Text>
-          <Text style={styles.textPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
+          <Text style={styles.textPrice}>Rp{FormatRupiah(Item.Price_Discount)}</Text>
         </View>
         <ButtonGradient
           title='Checkout Now'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           onPress={()=> {
-            Item.Gateway_Type = gateway.type
-            Item.Gateway_Value = gateway.value
+            const selectedGateway = method.findIndex(item => item.code === gateway)
+            Item.Gateway_Type = method[selectedGateway].type
+            Item.Gateway_Value = method[selectedGateway].code
             navigation.navigate('TransactionInfo', Item)
           }}
         />

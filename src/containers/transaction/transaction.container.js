@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -17,6 +17,7 @@ import { Images, Color } from '../../assets'
 import { Card } from 'react-native-elements'
 import { styles } from './transaction.style'
 import { ModalFilterUserTransaction } from '../../components'
+import { PaymentAPI } from '../../api'
 
 const Transaction = () => {
   const navigation = useNavigation()
@@ -25,6 +26,16 @@ const Transaction = () => {
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
+
+  const order_id = [
+    'BLJ-Tahsin-0326202134928', //alfamart
+    'BLJ-Tahsin-0326202132147', //bca
+    'BLJ-Tahsin-0326202130755', //bni
+    'BLJ-Tahsin-0326202141543', //bri
+    'BLJ-Tahsin-0326202141630', //indomaret
+  ]
+
+  const [result, setResult] = useState('')
 
   const state = [
     {
@@ -57,6 +68,19 @@ const Transaction = () => {
     },
   ]
 
+  const getTransaction = async (order_id) => {
+    try {
+      const response = await PaymentAPI.getTransaction(order_id)
+      console.log('isi response')
+      console.log(response)
+      setResult('hello')
+      console.log('isi state')
+      console.log(result)
+      alert(result)
+    } catch (error) {
+      alert('fetch data error')
+    }
+  }
 
   const onRefreshing = () => {
     setRefreshing(true)
@@ -168,6 +192,14 @@ const Transaction = () => {
       </View>
     )
   }
+
+  useEffect(() => {
+    // const intervalId = setInterval(() => {
+    //   getAllTransaction()
+    // }, 10000)
+    // return () => clearInterval(intervalId)
+    getTransaction(order_id[1])
+  }, [])
 
   return (
     <>
