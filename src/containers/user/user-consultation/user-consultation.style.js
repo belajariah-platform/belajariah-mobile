@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
+  containerNoTask : {
+    flex: 1,
+    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   flexHeader: {
     paddingBottom: 16,
     alignItems: 'center',

@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   shimmerCategory : {
     width: 70,
     marginTop: 4,
-    borderWidth: 1,
     borderRadius: 14,
     paddingVertical: 13,
     marginHorizontal: 4,
@@ -89,10 +88,10 @@ const styles = StyleSheet.create({
     padding:0,
     width: 296,
     height: 227,
-    borderWidth: 0,
     borderRadius: 20,
     marginVertical: 8,
     marginHorizontal: 12,
+    backgroundColor : Color.white,
   },
   shimmerStoryPage1 : {
     width: '100%',

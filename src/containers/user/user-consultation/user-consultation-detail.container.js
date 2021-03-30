@@ -5,8 +5,9 @@ import Sound from 'react-native-sound'
 import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
-import AudioRecord from 'react-native-audio-record'
 import React, { useState, useEffect } from 'react'
+import AudioRecord from 'react-native-audio-record'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -21,6 +22,7 @@ import {
   ImageView,
   ModalRating,
   ButtonGradient,
+  ModalNoConnection,
 } from '../../../components'
 import {
   TimerObj,
@@ -34,9 +36,10 @@ import { ConsultationAPI, RatingAPI } from '../../../api'
 import styles from './user-consultation.style'
 
 const ConsultationDetail = ({ route }) => {
-  const param = route.params
+  const { classes, notif } = route.params
   const navigation = useNavigation()
   const [dataObj, setDataObj] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
   const { userInfo } = useSelector((state) => state.UserReducer)
 
   const [states, setStates] = useState([])
@@ -58,7 +61,10 @@ const ConsultationDetail = ({ route }) => {
     setDataObj(item)
     setModalRatingVisible(!modalRatingVisible)
   }
+  const retryConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
 
   const voiceDuration =  (480 - ((minutes*60) + seconds))
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
@@ -80,8 +86,12 @@ const ConsultationDetail = ({ route }) => {
       const response = await ConsultationAPI.GetAllConsultationUser(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStates(response.data.data)
-        setLoading(false)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoading(false)
     } catch (err) {
       setLoading(false)
       return err
@@ -101,6 +111,9 @@ const ConsultationDetail = ({ route }) => {
         Alerts(true, 'Terimakasih telah memberikan review')
       }
     } catch (err) {
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
       return err
     }
   }
@@ -114,8 +127,8 @@ const ConsultationDetail = ({ route }) => {
       Recording_Duration : 0,
       User_Code : userInfo.ID,
       Status_Code : 'ENC00000020',
-      Class_Code : param.Class_Code,
-      Expired_Date : param.Expired_Date,
+      Class_Code : classes.Class_Code,
+      Expired_Date : classes.Expired_Date,
     },
     onSubmit: async (values, form) => {
       const response =  await ConsultationAPI.GetAllConsultationSpamUser(values)
@@ -130,10 +143,24 @@ const ConsultationDetail = ({ route }) => {
           setAudioFile([])
           setRecord(false)
           setPlay(false)
+        } else {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
         }
       }
     },
   })
+
+  useEffect(() => {
+    if (notif.length != 0) {
+      const values = {
+        Taken_Code : userInfo.ID,
+        User_Code : notif.User_Code,
+      }
+      ConsultationAPI.ReadConsultation(values)
+    }
+  }, [notif])
 
   useEffect(() => {
     let sound = null
@@ -323,7 +350,7 @@ const ConsultationDetail = ({ route }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{param.Class_Initial}</Text>
+          <Text style={styles.textTitleWhite}>{classes.Class_Initial}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -538,6 +565,12 @@ const ConsultationDetail = ({ route }) => {
         backButtonPress={() => toggleModalRating()}
         title='Berikan rating untuk koreksi bacaanmu'
         renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         isVisible={isModalFotoVisible}

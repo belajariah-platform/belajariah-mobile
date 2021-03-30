@@ -18,7 +18,6 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  BackHandler,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
@@ -194,7 +193,7 @@ const Home = (props) => {
   }, [])
 
   const PromotionHome = ({ index, item }) => {
-    return loadingPromo ? <ShimmerCardPromotion /> : (
+    return (
       <View style={styles.containerPromo} key={index}>
         {statePromotion.length > 0  ? (
           <TouchableOpacity
@@ -228,7 +227,7 @@ const Home = (props) => {
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
             {stateCategory.map((category, index) => {
-              return loadingCategory ? <ShimmerListCategory /> : (
+              return (
                 <TouchableOpacity
                   key={index}
                   onPress={() => handleCategoryChange(category)}>
@@ -277,30 +276,12 @@ const Home = (props) => {
       )
     }
 
-    useEffect(() => {
-      const backAction = () => {
-        if(modalVisible) {
-          setModalVisible(false)
-        }
-        if(!modalVisible) {
-          return false
-        } else {
-          return true
-        }
-      }
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        backAction
-      )
-      return () => backHandler.remove()
-    }, [modalVisible])
-
     return (
       <View>
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          return loadingClass ? <ShimmerCardClassPopuler /> : (
+          return (
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
@@ -358,7 +339,7 @@ const Home = (props) => {
           showsHorizontalScrollIndicator={false}
           style={{ height: 238 }}>
           {stateStory.map((item, index) => {
-            return loadingStory ? <ShimmerCardInspiratifStory /> :(
+            return (
               <View style={styles.cardArticle} key={index}>
                 <Image source={item.Banner_Image == '' ?
                   Images.ImgDefault2 : { uri : item.Banner_Image }}
@@ -430,17 +411,28 @@ const Home = (props) => {
                 style={styles.scrollview}
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
-                  {/* <SearchHome /> */}
                   <View style={styles.carousel}>
-                    <Carousel
-                      data={statePromotion}
-                      pagination={false}
-                      renderItem={PromotionHome}
-                    />
+                    {loadingPromo ?
+                      <ShimmerCardPromotion /> :
+                      <Carousel
+                        data={statePromotion}
+                        pagination={false}
+                        renderItem={PromotionHome}
+                      />
+                    }
                   </View>
-                  <CategoryClassHome />
-                  <PopularClassHome />
-                  <InspiratifStoryHome />
+                  {loadingCategory ?
+                    <ShimmerListCategory /> :
+                    <CategoryClassHome />
+                  }
+                  {loadingClass ?
+                    <ShimmerCardClassPopuler /> :
+                    <PopularClassHome />
+                  }
+                  {loadingStory ?
+                    <ShimmerCardInspiratifStory /> :
+                    <InspiratifStoryHome />
+                  }
                 </View>
                 <View>
                   <TouchableOpacity

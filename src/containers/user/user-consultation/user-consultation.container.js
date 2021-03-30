@@ -1,5 +1,6 @@
 import { Text } from '@ui-kitten/components'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -7,11 +8,17 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
+import {
+  UserClassAPI,
+  ConsultationAPI,
+} from '../../../api'
 
-import { Response } from '../../../utils'
 import { Images } from '../../../assets'
-import { UserClassAPI } from '../../../api'
-import { LoadingView } from '../../../components'
+import { Response } from '../../../utils'
 
 import styles from './user-consultation.style'
 
@@ -20,8 +27,15 @@ const Consultation = () => {
 
   const [state, setState] = useState([])
   const [loading, setLoading] = useState(true)
-  const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]',  sort : 'ASC' })
+  const [stateNotif, setStateNotif] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 10, filterString: '[]',  sort : 'ASC' })
 
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataUserClass(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
     try {
@@ -29,8 +43,31 @@ const Consultation = () => {
       const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
-        setLoading(false)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  const fetchDataConsultation = async ({ skip, take, filterString, sort }) => {
+    try {
+      setLoading(true)
+      filterString='[{"type": "bool", "field" : "is_read", "value": "false"}]'
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        setStateNotif(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
     } catch (err) {
       setLoading(false)
       return err
@@ -39,6 +76,7 @@ const Consultation = () => {
 
   useEffect(() => {
     fetchDataUserClass(dataState)
+    fetchDataConsultation(dataState)
   }, [dataState])
 
   const Header = () => {
@@ -54,6 +92,15 @@ const Consultation = () => {
       </View>
     )
   }
+
+  const EmptyList = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoRecentTask.default style={{ marginTop: 12 }} />
+      </View>
+    )
+  }
+
 
   const Content = (item, index) => {
     let image
@@ -77,16 +124,18 @@ const Consultation = () => {
       image = Images.CardMsg6
       break
     }
+
     return(
       <View key={index}>
         <TouchableOpacity
           activeOpacity={0.5}
           style={{ alignItems : 'center' }}
-          onPress={() => navigation.navigate('ConsultationDetail', item)}
+          onPress={() => navigation.navigate('ConsultationDetail',
+            { classes : item, notif : stateNotif.length == 0 ? [] : stateNotif[0] })}
         >
           <Image source={image}
             style={styles.cardCategory}/>
-          {item.new_message > 0 && (
+          {stateNotif.length > 0 && (
             <Images.IconNotifInfo.default style={styles.notif}/>
           )}
           <View style={styles.containerCategory}>
@@ -103,7 +152,7 @@ const Consultation = () => {
       <Header />
       {loading ? <LoadingView/> :
         state.length == 0 ? (
-          <Text>Belum ada pesan</Text>
+          <EmptyList/>
         ) : (
           <FlatList
             data={state}
@@ -115,6 +164,12 @@ const Consultation = () => {
             renderItem={({ item, index }) => Content(item, index)}
           />
         )}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
     </View>
   )
 }

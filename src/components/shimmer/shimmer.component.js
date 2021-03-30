@@ -1,6 +1,5 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Card } from 'react-native-elements'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 import { styles } from './shimmer.style'
@@ -8,8 +7,8 @@ import { Color } from '../../assets'
 
 const ShimmerInspiratifStory = () => {
   return(
-    <Card
-      containerStyle={styles.shimmerStory}>
+    <View
+      style={styles.shimmerStory}>
       <SkeletonPlaceholder backgroundColor={Color.shimmer}>
         <View style={styles.container}>
           <View style={styles.containerImg} />
@@ -21,7 +20,7 @@ const ShimmerInspiratifStory = () => {
           </View>
         </View>
       </SkeletonPlaceholder>
-    </Card>
+    </View>
   )
 }
 
@@ -57,7 +56,7 @@ const ShimmerCardClassPopuler = () => {
 
 const ShimmerCardInspiratifStory = () => {
   return(
-    <Card containerStyle={styles.shimmerStoryPage}>
+    <View style={styles.shimmerStoryPage}>
       <SkeletonPlaceholder backgroundColor={Color.shimmer}>
         <View style={styles.shimmerStoryPage1}/>
         <View style={styles.shimmerStoryPage2}/>
@@ -65,7 +64,7 @@ const ShimmerCardInspiratifStory = () => {
         <View style={styles.shimmerStoryPage4}/>
         <View style={styles.shimmerStoryPage5}/>
       </SkeletonPlaceholder>
-    </Card>
+    </View>
   )
 }
 
