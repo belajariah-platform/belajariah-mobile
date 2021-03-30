@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "324403427572",
+    "project_id": "belajariah-mobile-a3ffa",
+    "storage_bucket": "belajariah-mobile-a3ffa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324403427572:android:9b261db0ca6909046846a1",
+        "android_client_info": {
+          "package_name": "com.belajariah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324403427572-p0be2b4r7ga5mnm3v2jg9kd9rs2ei5if.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVaBPF2_fjgeugyOtUEqmQw3jrD-cxwBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324403427572-p0be2b4r7ga5mnm3v2jg9kd9rs2ei5if.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
