@@ -21,7 +21,7 @@ const chargeBankVA = async (data) => {
       'name' : data.item_details.name
     },
     'bank_transfer' : {
-      'bank' : data.code
+      'bank' : data.option
       //bisa pakai va_number tertentu
       //va_number : '12345678'
     }
@@ -55,7 +55,7 @@ const chargeCStore = async (data) => {
       'name' : data.item_details.name
     },
     'cstore' : {
-      'store' : data.code
+      'store' : data.option
     }
   }
 

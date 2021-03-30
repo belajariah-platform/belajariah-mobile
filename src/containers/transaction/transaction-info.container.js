@@ -16,25 +16,26 @@ import { useEffect } from 'react'
 import { Response } from '../../utils'
 
 const TransactionInfo = (props) => {
-  const paymentDetails = props.route.params
+  const paymentDetail = props.route.params
   const navigation = useNavigation()
-  const [result, setResult] = useState(0)
+
+  const [va_number, setVA_number] = useState(0)
 
   const classData = {
-    gateway_type : paymentDetails.Gateway_Type,
-    gateway_value : paymentDetails.Gateway_Value,
+    gateway_type : paymentDetail.Gateway_Type,
+    gateway_option : paymentDetail.Gateway_Option,
     account : '0123456789',
     quote: 'Dicek dalam 24 jam setelah bukti pembayaran telah diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
     noteOne: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
     noteTwo: 'Silahkan upload bukti transfer sebelum ',
     noteThree: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
-    price: paymentDetails.Price_Discount,
+    price: paymentDetail.Gateway_Price,
     Created_Date: moment().locale('id').format('Do MMMM YYYY'),
     Created_DateTime : moment().locale('id').format('MMDDYYYYhmmss')
   }
 
   const data = {
-    code : classData.gateway_value,
+    option : classData.gateway_option,
     customer_details: {
       email: 'belajariah20@gmail.com',
       first_name: 'Belajariah',
@@ -42,12 +43,12 @@ const TransactionInfo = (props) => {
       phone: '+6281234567890'
     },
     transaction_details : {
-      gross_amount : paymentDetails.Price_Discount,
+      gross_amount : paymentDetail.Gateway_Price,
       order_id : 'BLJ-Tahsin-' + classData.Created_DateTime
     },
     item_details : {
       id : 'tahsin',
-      price : paymentDetails.Price_Discount,
+      price : paymentDetail.Gateway_Price,
       quantity : 1,
       name : 'Kelas Tahsin'
     },
@@ -59,17 +60,22 @@ const TransactionInfo = (props) => {
     await ToastAndroid.show('Nomor rekening disalin', ToastAndroid.SHORT)
   }
 
+  const getInvoice = () => {
+    classData.VA_Number = paymentDetail.VA_Number
+    classData.Created_Date = paymentDetail.Created_Date
+  }
+
   const chargePayment = async () => {
     try {
       let response
       switch(classData.gateway_type) {
-      case ('virtual_account') :
+      case ('bank_transfer') :
         response = await PaymentAPI.chargeBankVA(data)
         break
-      case ('mart') :
+      case ('cstore') :
         response = await PaymentAPI.chargeCStore(data)
         break
-      case ('bank_transfer') :
+      case ('manual_transfer') :
         response = await PaymentAPI.chargeBankTransfer(data)
         break
       }
@@ -77,14 +83,15 @@ const TransactionInfo = (props) => {
       if (response.status_code == Response.CREATED) {
         console.log(response)
         switch(classData.gateway_type) {
-        case ('virtual_account') :
-          alert(`charge berhasil, va_number: ${response.va_numbers[0].va_number}`)
-          setResult(response.va_numbers[0].va_number)
-          break
-        case ('mart') :
-          alert(`charge berhasil, kode: ${response.payment_code}`)
-          break
         case ('bank_transfer') :
+          alert(`charge berhasil, va_number: ${response.va_numbers[0].va_number}`)
+          setVA_number(response.va_numbers[0].va_number)
+          break
+        case ('cstore') :
+          alert(`charge berhasil, kode: ${response.payment_code}`)
+          setVA_number(response.payment_code)
+          break
+        case ('manual_transfer') :
           alert('charge berhasil, no rekening: ')
           break
         }
@@ -99,7 +106,12 @@ const TransactionInfo = (props) => {
   }
 
   useEffect(() => {
-    chargePayment()
+    paymentDetail.Gateway_Create ? (
+      chargePayment()
+    ) : (
+      getInvoice()
+    )
+    console.log(paymentDetail)
   }, [])
 
   const Header = () => {
@@ -123,15 +135,15 @@ const TransactionInfo = (props) => {
           <View style={styles.viewIconBank}>
             <Images.IconBankBNISyariah.default/>
             <Text style={styles.textSmall}>Tipe Pembayaran : {classData.gateway_type}</Text>
-            <Text style={styles.textSmall}>Opsi Pembayaran : {classData.gateway_value}</Text>
+            <Text style={styles.textSmall}>Opsi Pembayaran : {paymentDetail.Gateway_Option}</Text>
             {
-              classData.gateway_type === 'virtual_account' ? (
-                <Text style={styles.textSmall}>Virtual Account Number : {result}</Text>
+              classData.gateway_type === 'bank_transfer' ? (
+                <Text style={styles.textSmall}>Virtual Account Number : {paymentDetail.Gateway_Create ? va_number : paymentDetail.Gateway_Code}</Text>
               ) : (
-                classData.gateway_type === 'mart' ? (
-                  <Text style={styles.textSmall}>Kode Pembayaran : {classData.gateway_type}</Text>
+                classData.gateway_type === 'cstore' ? (
+                  <Text style={styles.textSmall}>Kode Pembayaran : {paymentDetail.Gateway_Create ? va_number : paymentDetail.Gateway_Code}</Text>
                 ) : (
-                  classData.gateway_type === 'bank_transfer' && (
+                  classData.gateway_type === 'manual_transfer' && (
                     <>
                       <Text style={styles.textSmall}>No. Rekening : {classData.gateway_type}</Text>
                       <Text style={styles.textSmall}>Nama Rekening : Belajariah</Text>
@@ -190,7 +202,7 @@ const TransactionInfo = (props) => {
         <View style={styles.flexColumn}>
           <View style={styles.margins}>
             <Text style={styles.textTotalPrice}>Total Pembayaran</Text>
-            <Text style={styles.textPrice}>Rp {FormatRupiah(classData.price)}</Text>
+            <Text style={styles.textPrice}>Rp{FormatRupiah(classData.price)}</Text>
           </View>
           <View style={styles.viewTextTotalPayment}>
             <Text style={styles.txtPayment}>Bayar Pesanan anda sesuai diatas</Text>

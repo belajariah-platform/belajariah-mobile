@@ -39,15 +39,20 @@ const TransactionMethod = (props) => {
   }
 
   var method = [
-    { id: 0, type : 'virtual_account', name : 'BCA', code : 'bca' },
-    { id: 1, type : 'virtual_account',  name : 'BNI', code : 'bni' },
-    { id: 2, type : 'virtual_account',  name : 'BRI', code : 'bri' },
-    { id: 3, type : 'e_wallet', name : 'GO-PAY', code : 'gopay' },
-    { id: 4, type : 'e_wallet', name : 'Shopeepay', code : 'shopeepay' },
-    { id: 5, type : 'mart', name : 'Indomaret', code : 'indomaret' },
-    { id: 6, type : 'mart', name : 'Alfamart', code : 'alfamart' },
-    { id: 7, type : 'bank_transfer', name : 'Bank BSI', code : 'bsi' },
+    { id: 0, type : 'bank_transfer', name : 'BCA', value : 'bca' },
+    { id: 1, type : 'bank_transfer',  name : 'BNI', value : 'bni' },
+    { id: 2, type : 'bank_transfer',  name : 'BRI', value : 'bri' },
+    { id: 3, type : 'e_wallet', name : 'GO-PAY', value : 'gopay' },
+    { id: 4, type : 'e_wallet', name : 'Shopeepay', value : 'shopeepay' },
+    { id: 5, type : 'cstore', name : 'Indomaret', value : 'indomaret' },
+    { id: 6, type : 'cstore', name : 'Alfamart', value : 'alfamart' },
+    { id: 7, type : 'manual_transfer', name : 'Bank BSI', value : 'bsi' },
   ]
+
+  const paymentDetail = {
+    Gateway_ClassName : 'Kelas Tahsin',
+    Gateway_Price : Item.Price_Discount
+  }
 
   const handleRating = (num) => {
     let rating = []
@@ -137,9 +142,9 @@ const TransactionMethod = (props) => {
             <Text style={styles.textBold}>Transfer Virtual Account</Text>
             <Text style={styles.textRegular}>Lakukan pembayaran anda dengan mudah dan cepat</Text>
             {method.map((item, index) => {
-              return item.type == 'virtual_account' &&  (
+              return item.type == 'bank_transfer' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.code} />
+                  <RadioButton value={item.value} />
                   <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
@@ -149,9 +154,9 @@ const TransactionMethod = (props) => {
             <Text style={styles.textBold}>Minimarket</Text>
             <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
             {method.map((item, index) => {
-              return item.type == 'mart' &&  (
+              return item.type == 'cstore' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.code} />
+                  <RadioButton value={item.value} />
                   <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
@@ -161,9 +166,9 @@ const TransactionMethod = (props) => {
             <Text style={styles.textBold}>Transfer ke Rekening Bank</Text>
             <Text style={styles.textRegular}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
             {method.map((item, index) => {
-              return item.type == 'bank_transfer' &&  (
+              return item.type == 'manual_transfer' &&  (
                 <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.code} />
+                  <RadioButton value={item.value} />
                   <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
@@ -186,10 +191,11 @@ const TransactionMethod = (props) => {
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           onPress={()=> {
-            const selectedGateway = method.findIndex(item => item.code === gateway)
-            Item.Gateway_Type = method[selectedGateway].type
-            Item.Gateway_Value = method[selectedGateway].code
-            navigation.navigate('TransactionInfo', Item)
+            const selectedGateway = method.findIndex(item => item.value === gateway)
+            paymentDetail.Gateway_Create = true
+            paymentDetail.Gateway_Type = method[selectedGateway].type
+            paymentDetail.Gateway_Option = method[selectedGateway].value
+            navigation.navigate('TransactionInfo', paymentDetail)
           }}
         />
       </View>

@@ -22,7 +22,6 @@ import { PaymentAPI } from '../../api'
 const Transaction = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
-  const [available, setAvailable] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -30,53 +29,51 @@ const Transaction = () => {
   const order_id = [
     'BLJ-Tahsin-0326202134928', //alfamart
     'BLJ-Tahsin-0326202132147', //bca
-    'BLJ-Tahsin-0326202130755', //bni
+    'BLJ-Tahsin-0330202120745', //bni
     'BLJ-Tahsin-0326202141543', //bri
     'BLJ-Tahsin-0326202141630', //indomaret
   ]
 
-  const [result, setResult] = useState('')
+  const [result, setResult] = useState([])
 
-  const state = [
-    {
-      invoice_number: 'BLJ-RIAH001',
-      status: 'failed',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH002',
-      status: 'success',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH003',
-      status: 'waiting for payment',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-    {
-      invoice_number: 'BLJ-RIAH004',
-      status: 'success',
-      class_title:
-        'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan',
-      created_date: new Date(),
-    },
-  ]
-
-  const getTransaction = async (order_id) => {
+  const getAllTransaction = async () => {
+    setResult([])
     try {
-      const response = await PaymentAPI.getTransaction(order_id)
-      console.log('isi response')
-      console.log(response)
-      setResult('hello')
-      console.log('isi state')
-      console.log(result)
-      alert(result)
+      const responses = await order_id.map((code) => {
+        return PaymentAPI.getTransaction(code)
+      })
+      Promise.all(responses).then( response => {
+        response.map((data) => {
+          console.log(data)
+
+          let code, option
+
+          switch(data.payment_type) {
+          case 'bank_transfer' :
+            code = data.va_numbers[0].va_number
+            option = data.va_numbers[0].bank
+            break
+          case 'cstore' :
+            code = data.payment_code
+            option = data.store
+            break
+          default :
+            code = 'none'
+            option = 'none'
+          }
+
+          setResult(s=> [ ...s, {
+            gateway_code : code,
+            gateway_option : option,
+            price : data.gross_amount,
+            invoice_number : data.order_id,
+            status : data.transaction_status,
+            gateway_type : data.payment_type,
+            created_date : data.transaction_time,
+            class_title : 'Belajar Al-Qur/an dari dasar dengan metode yang mudah dan menyenangkan'
+          } ])
+        })
+      })
     } catch (error) {
       alert('fetch data error')
     }
@@ -118,7 +115,7 @@ const Transaction = () => {
   const TransactionList = () => {
     return (
       <FlatList
-        data={state}
+        data={result}
         onEndReachedThreshold={0.1}
         style={styles.containerScrollView}
         ListFooterComponent={renderFooter}
@@ -134,38 +131,43 @@ const Transaction = () => {
 
   const TransactionCard = (item, index) => {
     let ribbon, icon, status, color
+    console.log(item)
     switch (item.status) {
-    case 'success':
+    case 'settlement':
       status = 'Lunas'
       color = Color.textSuccess
       icon = Images.IconComplete
       ribbon = Images.RibbonComplete
       break
-    case 'failed':
-      status = 'Gagal'
-      color = Color.textFailed
-      icon = Images.IconFailed
-      ribbon = Images.RibbonFailed
-      break
-    case 'Menunggu Pembayaran':
+    case 'pending':
       status = 'Waiting for Payment'
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending
       break
     default:
-      status = 'Menunggu Pembayaran'
-      color = Color.textPending
-      icon = Images.IconPending
-      ribbon = Images.RibbonPending
+      status = 'Gagal'
+      color = Color.textFailed
+      icon = Images.IconFailed
+      ribbon = Images.RibbonFailed
       break
     }
     return (
       <View key={index}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => navigation.navigate('TransactionInfo')}
-          disabled={item.status == 'waiting for payment' ? false : true}
+          onPress={() => {
+            console.log(item)
+            const Item = {}
+            Item.Create_Invoice = false
+            Item.Gateway_Type = item.gateway_type
+            Item.Gateway_Price = item.price
+            Item.Created_Date = item.created_date
+            Item.Gateway_Code = item.gateway_code
+            Item.Gateway_Option = item.gateway_option
+            navigation.navigate('TransactionInfo', Item)
+          }}
+          disabled={item.status == 'pending' ? false : true}
         >
           <LinearGradient
             end={{ x: 1, y: 1 }}
@@ -181,7 +183,11 @@ const Transaction = () => {
             </View>
             <Text style={styles.textInvoice}>
             No. Invoice:{' '}
-              <Text style={styles.textBold}>{item.invoice_number}</Text>
+              <Text style={styles.textBold}>{result.length > 0 && (
+                result[index] != undefined && (
+                  result[index].invoice_number
+                )
+              )} </Text>
             </Text>
             <Text style={styles.textDesc}>{item.class_title}</Text>
             <Text style={styles.textDate}>
@@ -194,11 +200,7 @@ const Transaction = () => {
   }
 
   useEffect(() => {
-    // const intervalId = setInterval(() => {
-    //   getAllTransaction()
-    // }, 10000)
-    // return () => clearInterval(intervalId)
-    getTransaction(order_id[1])
+    getAllTransaction()
   }, [])
 
   return (
@@ -224,7 +226,7 @@ const Transaction = () => {
           source={Images.TransactionBGPNG}
           style={styles.imageBackground}
           imageStyle={{ borderRadius: 30 }}>
-          {available ? <NoTransaction /> : <TransactionList />}
+          { result.length > 0 ? <TransactionList /> : <NoTransaction /> }
         </ImageBackground>
       </View>
     </>

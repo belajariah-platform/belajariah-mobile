@@ -44,7 +44,7 @@ const Home = (props) => {
   const [loadingShimmerListCategory, setloadingShimmerListCategory] = useState(true)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
   const [loadingShimmerCardPromotion, setloadingShimmerCardPromotion] = useState(true)
-  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(true)
+  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(false)
   const [loadingShimmerCardInspiratifStory, setloadingShimmerCardInspiratifStory] = useState(true)
   const { height } = Dimensions.get('window')
 
