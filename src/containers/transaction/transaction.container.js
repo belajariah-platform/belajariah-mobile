@@ -1,4 +1,5 @@
 import moment from 'moment'
+import 'moment/locale/id'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -29,9 +30,9 @@ const Transaction = () => {
   const order_id = [
     'BLJ-Tahsin-0326202134928', //alfamart
     'BLJ-Tahsin-0326202132147', //bca
-    'BLJ-Tahsin-0330202120745', //bni
+    'BLJ-Tahsin-0331202115633', //bni
     'BLJ-Tahsin-0326202141543', //bri
-    'BLJ-Tahsin-0326202141630', //indomaret
+    'BLJ-Tahsin-0331202115648', //indomaret
   ]
 
   const [result, setResult] = useState([])
@@ -191,7 +192,7 @@ const Transaction = () => {
             </Text>
             <Text style={styles.textDesc}>{item.class_title}</Text>
             <Text style={styles.textDate}>
-            Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY')}
+            Tanggal Transaksi: {moment(item.created_date).format('DD MMM YYYY HH:mm:ss')}
             </Text>
           </LinearGradient>
         </TouchableOpacity>

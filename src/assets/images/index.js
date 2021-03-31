@@ -77,6 +77,10 @@ export default {
   //Update transaction
   Filter: require('./IconFilter.svg'),
   IconFailed: require('./IconFailed.svg'),
+  IconBankBCA: require('./IconBankBCA.svg'),
+  IconBankBNI: require('./IconBankBNI.svg'),
+  IconBankBSI: require('./IconBankBSI.svg'),
+  IconBankBRI: require('./IconBankBRI.svg'),
   IconPending: require('./IconPending.svg'),
   StarBlack: require('./StarFullBlack.svg'),
   RibbonFailed: require('./RibbonFailed.svg'),
@@ -87,10 +91,11 @@ export default {
   BgClassLearning: require('./BgClassLearning.png'),
   NoTransaction: require('./IconNoTransaction.svg'),
   NoTransactionBG: require('./NoClassBakcground.svg'),
+  IconStoreAlfamart: require('./IconStoreAlfamart.svg'),
   TransactionBG: require('./TransactionBackground.svg'),
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
   IconCompletePurple: require('./IconCompletePurple.svg'),
-  IconBankBNISyariah: require('./IconBankBNISyariah.svg'),
+  IconStoreIndomaret: require('./IconStoreIndomaret.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
   ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
 

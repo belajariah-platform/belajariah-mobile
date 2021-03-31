@@ -79,6 +79,10 @@ const chargeBankTransfer = async (data) => {
   //transfer ke rekening bank, tidak memakai Midtrans
   console.log('hello transfer rekening')
   console.log(data)
+  const response = {
+    status_code : 201
+  }
+  return response
 }
 
 const getTransaction = async (order_id) => {

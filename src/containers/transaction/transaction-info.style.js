@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.transactionBgColor,
   },
   containerScrollView: {
+    flex: 1,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },

@@ -33,9 +33,7 @@ const TransactionMethod = (props) => {
     ustadz: 'Ustadz Maulana Achmad Al-Hafiz, S. Ag',
     ustadzAbout: 'Hafidz Al-Qur\'an 30 Juz dan Guru SIT Al-Azhar Cairo Palembang',
     rating: 4.5,
-    price: 1990000,
-    titleModal: 'Punya kode voucher?',
-    modalDesc: 'Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher',
+    price: Item.Price_Discount
   }
 
   var method = [
@@ -50,7 +48,7 @@ const TransactionMethod = (props) => {
   ]
 
   const paymentDetail = {
-    Gateway_ClassName : 'Kelas Tahsin',
+    Gateway_ClassName : classData.name,
     Gateway_Price : Item.Price_Discount
   }
 
@@ -216,10 +214,10 @@ const TransactionMethod = (props) => {
         }}
         renderItem={
           <View style={styles.containerModal}>
-            <Text style={styles.TitleModal}>{classData.titleModal}</Text>
+            <Text style={styles.TitleModal}>Punya kode voucher?</Text>
             <Image source={Images.IconVoucher} style={styles.ImgVoucher}/>
             <View style={styles.viewModal}>
-              <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
+              <Text style={styles.TxtDescModal}>Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher</Text>
               <View style={styles.viewModalInput}>
                 <TextBox
                   form={FormVoucher}
