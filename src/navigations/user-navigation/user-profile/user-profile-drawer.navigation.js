@@ -71,7 +71,7 @@ const CustomDrawer = ({ navigation }, props) => {
 
         <DrawerItem
           label='Ubah Kata Sandi'
-          onPress={() =>  navigation.navigate('UserVerifyPassword')}
+          onPress={() =>  navigation.navigate('UserEditPassword')}
           labelStyle={styles.label}
         />
 
