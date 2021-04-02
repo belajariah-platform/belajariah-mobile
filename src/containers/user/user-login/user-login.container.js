@@ -14,9 +14,8 @@ import {
 } from 'react-native'
 
 import {
-  GoogleSignin,
-  GoogleSigninButton,
   statusCodes,
+  GoogleSignin,
 } from '@react-native-community/google-signin'
 
 import {
@@ -104,7 +103,7 @@ const Login = (props) => {
       <Topbar title='Masuk' backIcon={false} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Image source={Images.Login} style={styles.image} />
+          <Image source={Images.Login} style={styles.image} resizeMode={'cover'}/>
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
@@ -144,13 +143,6 @@ const Login = (props) => {
             <View>
               <Text style={styles.anotherText}>Atau</Text>
             </View>
-            <View>
-            <GoogleSigninButton
-              style={{ width: 192, height: 48 }}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={signIn} />
-            </View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 style={styles.anotherLogin}
@@ -161,13 +153,16 @@ const Login = (props) => {
                   source={Images.Google}
                   style={styles.ImageIconStyle}
                 />
+                <View>
+                  <Text style={styles.TxtGoogleButton}>Sign in with Google</Text>
+                </View>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.anotherLogin} activeOpacity={0.6}>
+              {/* <TouchableOpacity style={styles.anotherLogin} activeOpacity={0.6}>
                 <Image
                   source={Images.Fb}
                   style={{ ...styles.ImageIconStyle, width: 24, height: 24 }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </ScrollView>
