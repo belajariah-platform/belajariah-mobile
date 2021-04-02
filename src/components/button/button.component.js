@@ -22,7 +22,10 @@ const Buttons = (props) =>  {
 
 Buttons.propTypes = {
   icon : PropTypes.object,
-  style : PropTypes.object,
+  style : PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   title : PropTypes.string,
   textStyle : PropTypes.object,
 }

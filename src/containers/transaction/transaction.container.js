@@ -28,7 +28,7 @@ const Transaction = () => {
   const toggleModal = () => setModalVisible(!modalVisible)
 
   const order_id = [
-    'BLJ-Tahsin-0326202134928', //alfamart
+    'BLJ-Tahsin-0402202164004', //alfamart
     'BLJ-Tahsin-0326202132147', //bca
     'BLJ-Tahsin-0331202115633', //bni
     'BLJ-Tahsin-0326202141543', //bri
