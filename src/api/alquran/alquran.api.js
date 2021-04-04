@@ -15,7 +15,6 @@ const GetDetailQuran = async ({ id })  => {
     const response = await axios.get(`${Config.QURAN_SERVICE_ENDPOINT}/surah/${id}`)
     return response
   } catch (error) {
-    
     return error
   }
 }

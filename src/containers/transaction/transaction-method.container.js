@@ -16,7 +16,7 @@ import styles from './transaction-method.style'
 const TransactionMethod = (props) => {
   const Item = props.route.params
   const navigation = useNavigation()
-  const [gateway, setGateway] = useState('ovo')
+  const [gateway, setGateway] = useState('bca')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -33,20 +33,24 @@ const TransactionMethod = (props) => {
     ustadz: 'Ustadz Maulana Achmad Al-Hafiz, S. Ag',
     ustadzAbout: 'Hafidz Al-Qur\'an 30 Juz dan Guru SIT Al-Azhar Cairo Palembang',
     rating: 4.5,
-    price: 1990000,
-    titleModal: 'Punya kode voucher?',
-    modalDesc: 'Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher',
+    price: Item.Price_Discount
   }
 
   var method = [
-    { id: 0, type : 'virtual_account', value: 'Mandiri' },
-    { id: 1, type : 'virtual_account',  value: 'BNI' },
-    { id: 2, type : 'virtual_account',  value: 'BCA' },
-    { id: 3, type : 'e_wallet', value: 'OVO' },
-    { id: 3, type : 'e_wallet', value: 'GO-PAY' },
-    { id: 3, type : 'mart', value: 'Indomaret' },
-    { id: 3, type : 'mart', value: 'Alfamart' },
+    { id: 0, type : 'bank_transfer', name : 'BCA', value : 'bca' },
+    { id: 1, type : 'bank_transfer',  name : 'BNI', value : 'bni' },
+    { id: 2, type : 'bank_transfer',  name : 'BRI', value : 'bri' },
+    { id: 3, type : 'e_wallet', name : 'GO-PAY', value : 'gopay' },
+    { id: 4, type : 'e_wallet', name : 'Shopeepay', value : 'shopeepay' },
+    { id: 5, type : 'cstore', name : 'Indomaret', value : 'indomaret' },
+    { id: 6, type : 'cstore', name : 'Alfamart', value : 'alfamart' },
+    { id: 7, type : 'manual_transfer', name : 'Bank BSI', value : 'bsi' },
   ]
+
+  const paymentDetail = {
+    Gateway_ClassName : classData.name,
+    Gateway_Price : Item.Price_Discount
+  }
 
   const handleRating = (num) => {
     let rating = []
@@ -116,7 +120,9 @@ const TransactionMethod = (props) => {
       <RadioButton.Group onValueChange={(newGateway) => setGateway(newGateway)} value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
-          <View style={styles.cardMethods}>
+
+          {/* E-wallet untuk sementara ini belum diimplementasikan */}
+          {/* <View style={styles.cardMethods}>
             <Text style={styles.textBold}>E-Wallet</Text>
             <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
             <View style={styles.flexRow}>
@@ -128,31 +134,44 @@ const TransactionMethod = (props) => {
                   </>
                 )})}
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.cardMethods}>
             <Text style={styles.textBold}>Transfer Virtual Account</Text>
-            <Text style={styles.textRegular}>Transfer pembayaran anda dengan mudah dan cepat</Text>
+            <Text style={styles.textRegular}>Lakukan pembayaran anda dengan mudah dan cepat</Text>
             {method.map((item, index) => {
-              return item.type == 'virtual_account' &&  (
+              return item.type == 'bank_transfer' &&  (
                 <View key={index} style={styles.flexRow}>
                   <RadioButton value={item.value} />
-                  <Text style={styles.textGateway}>{item.value}</Text>
+                  <Text style={styles.textGateway}>{item.name}</Text>
+                </View>
+              )})}
+          </View>
+
+          <View style={styles.cardMethods}>
+            <Text style={styles.textBold}>Minimarket</Text>
+            <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
+            {method.map((item, index) => {
+              return item.type == 'cstore' &&  (
+                <View key={index} style={styles.flexRow}>
+                  <RadioButton value={item.value} />
+                  <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
           </View>
 
           <View style={[styles.cardMethods, styles.cardMethodCustom]}>
-            <Text style={styles.textBold}>Minimarket</Text>
-            <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
+            <Text style={styles.textBold}>Transfer ke Rekening Bank</Text>
+            <Text style={styles.textRegular}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
             {method.map((item, index) => {
-              return item.type == 'mart' &&  (
+              return item.type == 'manual_transfer' &&  (
                 <View key={index} style={styles.flexRow}>
                   <RadioButton value={item.value} />
-                  <Text style={styles.textGateway}>{item.value}</Text>
+                  <Text style={styles.textGateway}>{item.name}</Text>
                 </View>
               )})}
           </View>
+
         </View>
       </RadioButton.Group>
     )
@@ -163,13 +182,19 @@ const TransactionMethod = (props) => {
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
           <Text style={styles.textTotalPrice}>Total Harga</Text>
-          <Text style={styles.textPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
+          <Text style={styles.textPrice}>Rp{FormatRupiah(Item.Price_Discount)}</Text>
         </View>
         <ButtonGradient
           title='Checkout Now'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={()=> {navigation.navigate('TransactionInfo')}}
+          onPress={()=> {
+            const selectedGateway = method.findIndex(item => item.value === gateway)
+            paymentDetail.Gateway_Create = true
+            paymentDetail.Gateway_Type = method[selectedGateway].type
+            paymentDetail.Gateway_Option = method[selectedGateway].value
+            navigation.navigate('TransactionInfo', paymentDetail)
+          }}
         />
       </View>
     )
@@ -189,10 +214,10 @@ const TransactionMethod = (props) => {
         }}
         renderItem={
           <View style={styles.containerModal}>
-            <Text style={styles.TitleModal}>{classData.titleModal}</Text>
+            <Text style={styles.TitleModal}>Punya kode voucher?</Text>
             <Image source={Images.IconVoucher} style={styles.ImgVoucher}/>
             <View style={styles.viewModal}>
-              <Text style={styles.TxtDescModal}>{classData.modalDesc}</Text>
+              <Text style={styles.TxtDescModal}>Masukan kode voucher anda dibawah ini jika anda memiliki kode voucher</Text>
               <View style={styles.viewModalInput}>
                 <TextBox
                   form={FormVoucher}

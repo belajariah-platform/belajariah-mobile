@@ -34,7 +34,7 @@ const  ImageView = (props)  => {
   )
 }
 ImageView.propTypes = {
-  source : PropTypes.string,
+  source : PropTypes.number,
   isVisible : PropTypes.bool,
   hideModal : PropTypes.func,
   filepath : PropTypes.string,

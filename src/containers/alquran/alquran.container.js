@@ -19,7 +19,7 @@ import { Images } from '../../assets'
 import { styles } from './alquran.style'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
-import {ModalNoConnection} from '../../components'
+import { ModalNoConnection } from '../../components'
 // import { TabBar, TabView, SceneMap } from 'react-native-tab-view'
 
 const Alquran = (props) => {
@@ -55,7 +55,7 @@ const Alquran = (props) => {
       dispatch({
         type: QURAN_LIST_FAIL,
       })
-  })
+    })
     dispatch({ type: QURAN_LIST_REQ })
     fetchDataQuran()
   }, [])
@@ -182,9 +182,9 @@ const Alquran = (props) => {
         source={Images.AlQuranBG}
         style={styles.containerBackground}
         resizeMode='stretch'>
-          <ModalNoConnection 
+        <ModalNoConnection
           isVisible={!connectStatus}
-          backdropPress={togglemodalNoConnection}/> 
+          backdropPress={togglemodalNoConnection}/>
         <View style={styles.containerHeader}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import {
   View,
@@ -7,8 +7,14 @@ import {
 
 import { Images } from '../../../assets'
 import { styles } from './admin-dashboard.style'
+import { ToastAndroid } from 'react-native'
+import { BackHandler } from 'react-native'
+import { useIsFocused } from '@react-navigation/core'
 
 const AdminDashboard = () => {
+  const isFocused = useIsFocused()
+  const [exitApp, setExitApp] = useState(0)
+
   const AdminCard = () => {
     return (
       <View>
@@ -23,6 +29,32 @@ const AdminDashboard = () => {
       </View>
     )
   }
+
+  useEffect(() => {
+    const backAction = () => {
+      setTimeout(() => {
+        setExitApp(0)
+      }, 2000)
+
+      if(exitApp == 0) {
+        ToastAndroid.showWithGravityAndOffset('Tekan sekali lagi untuk keluar', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 200)
+        setExitApp(1)
+      }
+
+      if(exitApp == 1) {
+        BackHandler.exitApp()
+      }
+      return true
+    }
+
+    if(isFocused) {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      )
+      return () => backHandler.remove()
+    }
+  }, [exitApp])
 
   return (
     <View style={styles.containerMain}>

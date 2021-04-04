@@ -123,8 +123,8 @@ const ClassDetail = (props) => {
 
       <View style={styles.containerPrice}>
         <View style={styles.flexColumn}>
-          <Text style={styles.discountedPrice}>Rp {FormatRupiah(Item.Price_Discount)}</Text>
-          <Text style={styles.price}>Rp {FormatRupiah(Item.Price_Package)}</Text>
+          <Text style={styles.discountedPrice}>Rp{FormatRupiah(Item.Price_Discount)}</Text>
+          <Text style={styles.price}>Rp{FormatRupiah(Item.Price_Package)}</Text>
         </View>
         <ButtonGradient
           title='BELI KELAS'

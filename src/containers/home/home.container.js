@@ -29,11 +29,15 @@ import {
   ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
+import { ToastAndroid } from 'react-native'
+import { useIsFocused } from '@react-navigation/core'
 
 const Home = (props) => {
+  const isFocused = useIsFocused()
   const { isLogin } = useSelector((state) => state.UserReducer)
 
   const [state, setState] = useState('')
+  const [exitApp, setExitApp] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
@@ -211,23 +215,31 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-      console.log('hello ')
       const backAction = () => {
-        if(modalVisible) {
-          setModalVisible(false)
+        setTimeout(() => {
+          setExitApp(0)
+        }, 2000)
+
+        if(exitApp == 0) {
+          ToastAndroid.showWithGravityAndOffset('Tekan sekali lagi untuk keluar', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 200)
+          setExitApp(1)
         }
-        if(!modalVisible) {
-          return false
-        } else {
-          return true
+
+        if(exitApp == 1) {
+          BackHandler.exitApp()
         }
+
+        return true
       }
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        backAction
-      )
-      return () => backHandler.remove()
-    }, [modalVisible])
+
+      if(isFocused) {
+        const backHandler = BackHandler.addEventListener(
+          'hardwareBackPress',
+          backAction
+        )
+        return () => backHandler.remove()
+      }
+    }, [exitApp])
 
     return (
       <View>
