@@ -22,6 +22,7 @@ const SignOut = () => async dispatch => {
 
 const SignUp = async (formData) =>  {
   try {
+    console.log(Config.BELAJARIAH_SERVICE_ENDPOINT)
     const headers = await Header()
     const response = await axios.post(`
     ${Config.BELAJARIAH_SERVICE_ENDPOINT}/register`,
