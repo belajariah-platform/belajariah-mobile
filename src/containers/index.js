@@ -1,7 +1,6 @@
 import Home from './home'
 import Alquran from './alquran'
 import Profile from './profile'
-import Timeline from './timeline'
 import Transaction from './transaction'
 import Notification from './notification'
 
@@ -14,7 +13,6 @@ export {
   Alquran,
   Profile,
   Register,
-  Timeline,
   ClassUser,
   Transaction,
   Introduction,

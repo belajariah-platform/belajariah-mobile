@@ -1,56 +1,53 @@
-import axios from 'axios'
-import { store } from '../redux/store'
+import { Base64 } from 'js-base64'
+import AsyncStorage from '@react-native-community/async-storage'
 
-const API_URL = 'localhost'
+import {
+  GOOGLE_SCOPES,
+  GOOGLE_CLIENT,
+  MAIN_SERVICE_ENDPOINT,
+  QURAN_SERVICE_ENDPOINT,
+  PAYMENT_GATEWAY_ENDPOINT,
+  PAYMENT_GATEWAY_USERNAME,
+  BELAJARIAH_SERVICE_ENDPOINT,
+  ATTACHMENT_SERVICE_ENDPOINT,
+} from '@env'
 
-const getConfig = () => {
-  const config = {}
-  const token = store.getState().userData.token
-  if (token) {
-    config.headers = { Authorization: `Bearer ${token}` }
-  }
-  return config
+const Config = {
+  GOOGLE_SCOPES,
+  GOOGLE_CLIENT,
+  QURAN_SERVICE_ENDPOINT,
+  MAIN_SERVICE_ENDPOINT,
+  PAYMENT_GATEWAY_ENDPOINT,
+  BELAJARIAH_SERVICE_ENDPOINT,
+  ATTACHMENT_SERVICE_ENDPOINT,
 }
 
-export const getData = async (dataUrl) => {
+const Header = async () => {
   try {
-    const url = API_URL + dataUrl
-    const response = await axios.get(url, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
-export const postData = async (dataUrl, formData) => {
-  try {
-    // checkConnection();
-    console.log(dataUrl, formData)
-    const url = API_URL + dataUrl
-    const response = await axios.post(url, formData, getConfig())
-    return response
-  } catch (err) {
-    return err
+    const user = await AsyncStorage.getItem('user_info')
+      ? JSON.parse(await AsyncStorage.getItem('user_info'))
+      : null
+    const token = await AsyncStorage.getItem('token')
+
+    return {
+      headers : {
+        Email: Object.keys(user).length !== 0 ? user.Email : 'belajariah20@gmail.com',
+        User: Object.keys(user).length !== 0 ? JSON.stringify(user) : '',
+        'Token-Auth': token,
+        'by-pass': true,
+      }
+    }
+  } catch (error) {
+    return error
   }
 }
 
-export const putData = async (dataUrl, formData) => {
-  try {
-    // checkConnection();
-    const url = API_URL + dataUrl
-    const response = await axios.patch(url, formData, getConfig())
-    return response
-  } catch (err) {
-    return err
+const HeaderPayment = {
+  headers : {
+    'Authorization' : 'Basic ' + Base64.encode(PAYMENT_GATEWAY_USERNAME + ':'),
+    'Accept' : 'application/json',
+    'Content-Type' : 'application/json'
   }
 }
 
-export const deleteData = async (dataUrl) => {
-  try {
-    // checkConnection();
-    const url = API_URL + dataUrl
-    const response = await axios.delete(url, getConfig())
-    return response
-  } catch (err) {
-    return err
-  }
-}
+export { Config, Header, HeaderPayment }

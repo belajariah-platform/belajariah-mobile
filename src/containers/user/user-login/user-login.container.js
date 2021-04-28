@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Icon, Text } from '@ui-kitten/components'
 
-import { userLogin } from '../../../Redux/Action/userAction'
+import { UserAPI } from '../../../api'
 
 import {
   View,
@@ -42,7 +42,7 @@ const Login = (props) => {
     onSubmit:  (values) => {
       // setLoading(true)
       try {
-        const response =  dispatch(userLogin(values))
+        const response =  dispatch(UserAPI(values))
         if (success === true) {
           return response
         }

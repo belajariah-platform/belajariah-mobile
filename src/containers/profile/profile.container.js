@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { userLogout } from '../../Redux/Action/userAction'
+import { UserAPI } from '../../api'
 
 import {
   View,
@@ -15,7 +15,7 @@ const Profile = () => {
     <View style={{ flex:1 }}>
       <Buttons
         title='Logout'
-        onPress={async () => await dispatch(userLogout())}
+        onPress={async () => await dispatch(UserAPI.SignOut())}
       >
       </Buttons>
     </View>
