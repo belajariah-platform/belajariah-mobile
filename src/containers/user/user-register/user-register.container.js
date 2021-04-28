@@ -3,19 +3,9 @@ import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 
-// import { Images } from '../../../assets'
-import { styles } from './user-register.style'
-import {
-  Loader,
-  Alerts,
-  Topbar,
-  TextBox,
-  Buttons
-} from '../../../components'
-// import { Images } from '../../../assets'
-
 import {
   View,
+  Image,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -26,6 +16,17 @@ import {
   Text,
   CheckBox
 } from '@ui-kitten/components'
+
+import {
+  Loader,
+  Alerts,
+  Topbar,
+  TextBox,
+  Buttons
+} from '../../../components'
+
+import { Images } from '../../../assets'
+import { styles } from './user-register.style'
 
 const Register = (props) => {
   const [success] = useState(true)
@@ -42,8 +43,8 @@ const Register = (props) => {
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
       password: Yup.string()
-        .min(8, 'password minimal 8 karakter')
-        .required('Passoword harus diisi'),
+        .min(8, 'Password minimal 8 karakter')
+        .required('Password harus diisi'),
     }),
     onSubmit: (values, form) => {
       if (checked === true) {
@@ -77,10 +78,10 @@ const Register = (props) => {
   return (
     <>
       {loading && <Loader loading={loading} setLoading={setLoading} />}
-      <Topbar title='Register' backIcon={true} />
+      <Topbar title='Daftar' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          {/* <Images.Login.default style={styles.image}/> */}
+          <Image source={Images.Register} style={styles.image}/>
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Nama Lengkap</Text>
             <TextBox
@@ -93,20 +94,20 @@ const Register = (props) => {
             <TextBox
               form={FormSubmit}
               name='email'
-              placeholder='Enter Your Email'
+              placeholder='Masukan email'
             />
             <Text style={styles.text}>Nomor Telepon</Text>
             <TextBox
               form={FormSubmit}
               name='no_hp'
-              placeholder='Masukan Nomor Teleponmu'
+              placeholder='Masukan Nomor Telepon'
               keyboardType={'numeric'}
             />
             <Text style={styles.text}>Password</Text>
             <TextBox
               form={FormSubmit}
               name='password'
-              placeholder='Masukan Passwordmu'
+              placeholder='Masukan Password'
               accessoryRight={renderIcon}
               secureTextEntry={secureTextEntry}
             />
@@ -129,13 +130,13 @@ const Register = (props) => {
                 </Text>
               }
             </CheckBox>
-            <Buttons onPress={FormSubmit.handleSubmit} title='Register' />
+            <Buttons onPress={FormSubmit.handleSubmit} title='Daftar' />
             <View
               style={styles.footer}>
               <Text style={styles.textBackToLogin}>Sudah punya akun ?</Text>
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('Login')}>
-                <Text style={styles.backToLogin}> Login</Text>
+                <Text style={styles.backToLogin}> Masuk</Text>
               </TouchableOpacity>
             </View>
           </View>

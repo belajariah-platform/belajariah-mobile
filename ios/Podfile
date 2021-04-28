@@ -35,6 +35,10 @@ target 'Belajariah' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'RNAudioRecord', :path => '../node_modules/react-native-audio-record'
+
   target 'BelajariahTests' do
     inherit! :search_paths
     # Pods for testing

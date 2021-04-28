@@ -1,3 +1,3 @@
-import ImageViews from './image-view.component'
+import ImageView from './image-view.component'
 
-export default ImageViews
+export default ImageView

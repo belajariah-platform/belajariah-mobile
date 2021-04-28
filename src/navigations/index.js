@@ -4,13 +4,24 @@ import SplashScreen from 'react-native-splash-screen'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import PublicNavigation from './public.navigation'
-import PrivateNavigation from './private-navigation'
+import UserNavigation from './user-navigation'
+import AdminNavigation from './admin-navigation'
+import PublicNavigation from './public-navigation'
+import InstructorNavigation from './instructor-navigation'
 
 const Render = () => {
-  const { isLogin } = useSelector(state => state.userData)
+  const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   if (isLogin) {
-    return <PrivateNavigation/>
+    switch (userInfo.password) {
+    case 'admin':
+      return  <AdminNavigation/>
+    case 'user':
+      return  <UserNavigation/>
+    case 'instructor':
+      return  <InstructorNavigation/>
+    default :
+      return <PublicNavigation/>
+    }
   } else {
     return <PublicNavigation/>
   }
@@ -22,7 +33,7 @@ const RootNavigation = () => {
     SplashScreen.hide()
   })
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -32,4 +43,33 @@ const RootNavigation = () => {
     </NavigationContainer>
   )
 }
+
+const config = {
+  screens: {
+    MainRoutes : {
+      screens: {
+        InspiratifStoryDetail: {
+          path : 'storydetail/:storyIndex',
+          parse : {
+            storyIndex : (storyIndex) => `${storyIndex}`
+          }
+        },
+        UserVerify: 'verif',
+        PromotionDetail: {
+          path : 'promo/:promo_code',
+          parse : {
+            promo_code : (promo_code) => `${promo_code}`
+          }
+        },
+        TransactionUpload : 'upload',
+      }
+    }
+  }
+}
+
+const linking = {
+  prefixes: ['http://belajariah.com'],
+  config,
+}
+
 export default RootNavigation

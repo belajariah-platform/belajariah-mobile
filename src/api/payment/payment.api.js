@@ -110,14 +110,22 @@ const ChargeBankVA = async (data) => {
   }
 
   try {
+<<<<<<< HEAD
     const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, HeaderPayment)
+=======
+    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, CheckoutConfig)
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
     return response.data
   } catch (error) {
     return error
   }
 }
 
+<<<<<<< HEAD
 const ChargeCStore = async (data) => {
+=======
+const chargeCStore = async (data) => {
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
   const body = {
     'payment_type' : 'cstore',
     'customer_details': {
@@ -150,14 +158,22 @@ const ChargeCStore = async (data) => {
   )
 
   try {
+<<<<<<< HEAD
     const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, HeaderPayment)
+=======
+    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, CheckoutConfig)
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
     return response.data
   } catch (error) {
     return error
   }
 }
 
+<<<<<<< HEAD
 const ChargeBankTransfer = async (data) => {
+=======
+const chargeBankTransfer = async (data) => {
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
   //transfer ke rekening bank, tidak memakai Midtrans
   console.log('hello transfer rekening')
   console.log(data)
@@ -167,15 +183,22 @@ const ChargeBankTransfer = async (data) => {
   return response
 }
 
+<<<<<<< HEAD
 const GetTransaction = async (order_id) => {
   try {
     const response = await axios.get(`${Config.PAYMENT_GATEWAY_ENDPOINT}/${order_id}/status`, HeaderPayment)
+=======
+const getTransaction = async (order_id) => {
+  try {
+    const response = await axios.get(`${Config.PAYMENT_GATEWAY_ENDPOINT}/${order_id}/status`, CheckoutConfig)
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
     return response.data
   } catch (error) {
     return error
   }
 }
 
+<<<<<<< HEAD
 export default {
   InsertPayment,
   UploadPayment,
@@ -189,3 +212,6 @@ export default {
   GetTransaction,
   ChargeBankTransfer,
 }
+=======
+export default { chargeBankVA, chargeCStore, chargeBankTransfer, getTransaction }
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b

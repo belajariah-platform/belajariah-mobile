@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xml:space="preserve"
+   width="50px"
+   height="50px"
+   version="1.1"
+   style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+   viewBox="0 0 73 75"
+   id="svg10"
+   sodipodi:docname="ButtonBack - Copy.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"><metadata
+   id="metadata14"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   id="namedview12"
+   showgrid="false"
+   inkscape:zoom="16.6"
+   inkscape:cx="25"
+   inkscape:cy="22.590361"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg10" />
+ <defs
+   id="defs4">
+  <style
+   type="text/css"
+   id="style2">
+   <![CDATA[
+    .fil0 {fill:#FEFEFE;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g
+   id="Layer_x0020_1"
+   style="fill:#000000;fill-opacity:1">
+  <metadata
+   id="CorelCorpID_0Corel-Layer" />
+  <path
+   class="fil0"
+   d="M28.77 28.79c0.67,-0.67 1.76,-0.67 2.44,0 0.67,0.68 0.67,1.77 0,2.44l-6.54 6.54 6.54 6.54c0.67,0.67 0.67,1.76 0,2.43 -0.68,0.67 -1.77,0.67 -2.44,0l-7.72 -7.72 -0.04 -0.03c-0.67,-0.68 -0.67,-1.77 0,-2.44l7.76 -7.76zm3.81 10.7c-0.96,0 -1.73,-0.77 -1.73,-1.72 0,-0.95 0.77,-1.72 1.73,-1.72l17.23 0c0.95,0 1.72,0.77 1.72,1.72 0,0.95 -0.77,1.72 -1.72,1.72l-17.23 0z"
+   id="path7"
+   style="fill:#000000;fill-opacity:1" />
+ </g>
+</svg>

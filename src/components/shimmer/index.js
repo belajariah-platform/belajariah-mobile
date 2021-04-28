@@ -1,3 +1,17 @@
-import Shimmer from './shimmer.component'
+import {
+    Shimmer,
+    ShimmerListCategory,
+    ShimmerCardPromotion,
+    ShimmerInspiratifStory,
+    ShimmerCardClassPopuler,
+    ShimmerCardInspiratifStory,
+} from './shimmer.component'
 
-export default Shimmer
+export {
+    Shimmer,
+    ShimmerListCategory,
+    ShimmerCardPromotion,
+    ShimmerInspiratifStory,
+    ShimmerCardClassPopuler,
+    ShimmerCardInspiratifStory,
+}

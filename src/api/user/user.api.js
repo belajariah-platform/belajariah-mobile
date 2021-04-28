@@ -20,6 +20,7 @@ const SignOut = () => async dispatch => {
   await dispatch({
     type: SIGN_OUT,
   })
+<<<<<<< HEAD
 }
 
 const SignUp = async (formData) =>  {
@@ -183,3 +184,11 @@ export default {
   ChangePasswordPrivate,
   ResetVerification,
 }
+=======
+  // await dispatch({
+  //   type: CLEAR_HISTORY,
+  // });
+}
+
+export default { SignIn, SignOut }
+>>>>>>> 26567030c434714148fc72eb7092b80646e26f9b

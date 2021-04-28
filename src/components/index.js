@@ -1,27 +1,76 @@
+import Cards from './card'
 import Alerts from './alert'
 import Topbar from './topbar'
-import Buttons from './button'
 import Loader from './loader'
-import Swipeup from './swipeup'
-import Shimmer from './shimmer'
+import Buttons from './button'
+import {
+  Shimmer,
+  ShimmerListCategory,
+  ShimmerCardPromotion,
+  ShimmerInspiratifStory,
+  ShimmerCardClassPopuler,
+  ShimmerCardInspiratifStory,
+} from './shimmer'
 import TextBox from './textbox'
+import Carousel from './carousel'
 import Checkbox from './checkbox'
-import PageView from './page-view'
 import TextView from './text-view'
 import Searchbox from './searchbox'
-import ImageViews from './image-view'
+import ImageView from './image-view'
+import Progressbar from './progressbar'
+import ButtonGradient from './button-gradient'
+
+import VideoPlayer from './video'
+import {
+  ModalDate,
+  ModalInfo,
+  ModalRating,
+  ModalRecord,
+  ModalRepair,
+  ModalConfirm,
+  ModalInfoClass,
+  ModalFilterUser,
+  ModalFilterAdmin,
+  ModalFilterUstadz,
+  ModalNoConnection,
+  ModalFilterAdminPageUser,
+  ModalFilterAdminPageUstadz,
+  ModalFilterUserTransaction,
+} from './modal'
 
 export {
+  Cards,
   Alerts,
   Topbar,
   Buttons,
   Loader,
-  Swipeup,
   Shimmer,
   TextBox,
+  Carousel,
   Checkbox,
-  PageView,
   TextView,
+  ImageView,
+  ModalDate,
   Searchbox,
-  ImageViews,
+  ModalInfo,
+  ModalRating,
+  ModalRecord,
+  ModalRepair,
+  Progressbar,
+  VideoPlayer,
+  ModalConfirm,
+  ModalInfoClass,
+  ButtonGradient,
+  ModalFilterUser,
+  ModalFilterAdmin,
+  ModalNoConnection,
+  ModalFilterUstadz,
+  ShimmerListCategory,
+  ShimmerCardPromotion,
+  ShimmerInspiratifStory,
+  ShimmerCardClassPopuler,
+  ModalFilterAdminPageUser,
+  ShimmerCardInspiratifStory,
+  ModalFilterAdminPageUstadz,
+  ModalFilterUserTransaction,
 }
