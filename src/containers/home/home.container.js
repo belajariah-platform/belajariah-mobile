@@ -1,8 +1,17 @@
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
-import { Avatar, Card } from 'react-native-elements'
+import NetInfo from '@react-native-community/netinfo'
+import { useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useRef, useState } from 'react'
+
+import {
+  EnumAPI,
+  ClassAPI,
+  StoryAPI,
+  PackageAPI,
+  PromotionAPI,
+} from '../../api'
 
 import {
   View,
@@ -11,142 +20,203 @@ import {
   Dimensions,
   ScrollView,
   BackHandler,
+  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+
 import {
   Color,
   Images,
 } from '../../assets'
+
 import {
   Cards,
   Carousel,
   ModalInfo,
   ModalInfoClass,
+  ModalNoConnection,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
-import { ToastAndroid } from 'react-native'
-import { useIsFocused } from '@react-navigation/core'
+import { Response } from '../../utils'
 
 const Home = (props) => {
   const isFocused = useIsFocused()
-  const { isLogin } = useSelector((state) => state.UserReducer)
-
-  const [state, setState] = useState('')
-  const [exitApp, setExitApp] = useState(0)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [categorySelected, setCategorySelected] = useState(0)
-  const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
-  const [loadingShimmerListCategory, setloadingShimmerListCategory] = useState(false)
-  const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
-  const [loadingShimmerCardPromotion, setloadingShimmerCardPromotion] = useState(false)
-  const [loadingShimmerCardClassPopuler, setloadingShimmerCardClassPopuler] = useState(false)
-  const [loadingShimmerCardInspiratifStory, setloadingShimmerCardInspiratifStory] = useState(false)
-  const { height } = Dimensions.get('window')
-
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
-  const toggleModal = () => setModalVisible(!modalVisible)
+  const { height } = Dimensions.get('window')
 
-  const handleModal = (event) => {
-    setModalVisible(true)
-    setState(event)
+  const [exitApp, setExitApp] = useState(0)
+  const [classObj, setClassObj] = useState({})
+  const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [categorySelected, setCategorySelected] = useState(0)
+  const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+
+  const [stateStory, setStateStory] = useState([])
+  const [stateClass, setStateClass] = useState([])
+  const [statePackage, setStatePackage] = useState([])
+  const [stateCategory, setStateCategory] = useState([])
+  const [statePromotion, setStatePromotion] = useState([])
+  const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+
+  const [loadingPromo, setloadingPromo] = useState(true)
+  const [loadingClass, setloadingClass] = useState(true)
+  const [loadingStory, setloadingStory] = useState(true)
+  const [loadingPackage, setloadingPackage] = useState(true)
+  const [loadingCategory, setloadingCategory] = useState(true)
+
+  const toggleModal = () => setModalVisible(!modalVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
+
+
+  const handleCategoryChange = (category) => {
+    setCategorySelected(category.ID)
+    stateClass.forEach((val) => {
+      val.Class_Category == category.Value ?
+        fetchDataClass(dataState) : toggleModal()
+    })
   }
 
-  const classPopular = [
-    {
-      rating: 5,
-      Class_Category : 'Al-Quran',
-      description:
-        'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sitamet, lorem veri seyum not beije veri seyum not ',
-    },
-  ]
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataStory(dataState)
+    fetchDataClass(dataState)
+    fetchDataCategory(dataState)
+    fetchDataPromotion(dataState)
+  }
 
-  const Inspiratif = [
-    {
-      id: 0,
-      description:
-        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
-    },
-    {
-      id: 1,
-      description:
-        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
-    },
-    {
-      id: 2,
-      description:
-        'Tokoh Inspiratif Sandiaga Uno Pengusaha dan politikus Indonesia yang jadi Menteri Pariwisata dan Ekonomi Kreatif',
-    },
-  ]
+  const openModalInfoClass = async (item) => {
+    await setClassObj(item)
+    await setModalInfoClassVisible(!modalInfoClassVisible)
+    await fetchDataPackage(dataState, item.Code)
+  }
 
-  const promotion = [
-    {
-      code_voucher: 'BLJRIAH',
-      title: 'Diskon 30% Pengguna Baru',
-      banner : Images.BannerPromotionsPenggunaBaru,
-      discount: 30,
-      Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromo.png',
-      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
-    },
-    {
-      code_voucher: 'BLJEXPD',
-      title: 'Diskon 20% Pengguna Baru',
-      discount: 20,
-      Banner_Image : 'https://www.belajariah.com/img-assets/banner%20perpanjang%20kelas.png',
-      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
-    },
-  ]
+  const fetchDataClass = async ({ skip, take, filterString }) => {
+    try {
+      setloadingClass(true)
+      const response = await ClassAPI.GetAllClass(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateClass(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingClass(false)
+    } catch (err) {
+      setloadingClass(false)
+      return err
+    }
+  }
 
-  const categories = [
-    { id: 0, Value: 'Al-Quran', Img: Images.ImgModalComingSoon },
-    { id: 1, Value: 'Fiqih' },
-    { id: 2, Value: 'Ekonomi Syariah' },
-    { id: 3, Value: 'Ibadah Kemasyarakatan' },
-    { id: 4, Value: 'Bahasa Arab' },
-  ]
+  const fetchDataPromotion = async ({ skip, take, filterString }) => {
+    try {
+      setloadingPromo(true)
+      const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStatePromotion(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingPromo(false)
+    } catch (err) {
+      setloadingPromo(false)
+      return err
+    }
+  }
 
-  const package_category = [
-    { ID: 0, Type: 'Darussalam', Price_Discount : 399000, Price_Package: 800000, Duration : 1, Consultation: 8, Webinar : 1 },
-    { ID: 1, Type: 'Naim', Price_Discount : 899000,  Price_Package: 1500000,  Duration : 3, Consultation: 24, Webinar : 3 },
-    { ID: 2, Type: 'Firdaus', Price_Discount : 1499000, Price_Package: 2200000,  Duration : 6, Consultation: 32, Webinar : 6 },
-  ]
+  const fetchDataStory = async ({ skip, take, filterString }) => {
+    try {
+      setloadingStory(true)
+      const response = await StoryAPI.GetAllStory(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateStory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingStory(false)
+    } catch (err) {
+      setloadingStory(false)
+      return err
+    }
+  }
 
-  // const SearchHome = () => {
-  //   return (
-  //     <TouchableOpacity
-  //       activeOpacity={0.8}
-  //       style={styles.navigateSearch}
-  //       onPress={() => props.navigation.navigate(isLogin ? 'HomeSearch' : 'Login')}>
-  //       <Searchbox
-  //         disabled
-  //         style={styles.containerSearch}
-  //         accessoryRight={() => (
-  //           <Images.Search.default style={{ marginRight: -12 }} />
-  //         )}
-  //         renderItem={
-  //           <Text style={styles.textSearch}>Cari kelas di belajariah</Text>
-  //         }
-  //       />
-  //     </TouchableOpacity>
-  //   )
-  // }
+  const fetchDataCategory = async ({ skip, take, filterString }) => {
+    try {
+      setloadingCategory(true)
+      filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingCategory(false)
+    } catch (err) {
+      setloadingCategory(false)
+      return err
+    }
+  }
+
+  const fetchDataPackage = async (state, code) => {
+    try {
+      setloadingPackage(true)
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
+      const response = await PackageAPI.GetAllPackage(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStatePackage(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingPackage(false)
+    } catch (err) {
+      setloadingPackage(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataStory(dataState)
+    fetchDataClass(dataState)
+    fetchDataCategory(dataState)
+    fetchDataPromotion(dataState)
+  }, [])
 
   const PromotionHome = ({ index, item }) => {
-    return loadingShimmerCardPromotion ? <ShimmerCardPromotion /> : (
+    return (
       <View style={styles.containerPromo} key={index}>
-        {promotion.length > 0  ? (
+        {statePromotion.length > 0  ? (
           <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => props.navigation.navigate('PromotionDetail', { promoIndex : index })}>
-            <Image style={styles.cardCustom} source={{ uri : item.Banner_Image }} resizeMode='cover'/>
+            activeOpacity={0.5}
+            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
+            <Image
+              style={styles.cardCustom}
+              source={item.Banner_Image == '' ? Images.ImgDefault5 : {
+                uri : item.Banner_Image  }}
+              resizeMode='cover'
+            />
           </TouchableOpacity>
         ) : (
-          <Image style={styles.cardCustom} source={{ uri:'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}/>
+          <Image
+            style={styles.cardCustom}
+            source={{ uri: item.Banner_Image ?
+              item.Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
+          />
         )}
       </View>
     )
@@ -161,18 +231,15 @@ const Home = (props) => {
           <ScrollView
             ref={horizontalScrollRef}
             horizontal={true} showsHorizontalScrollIndicator={false}>
-            {categories.map((category, index) => {
-              return loadingShimmerListCategory ? <ShimmerListCategory /> : (
+            {stateCategory.map((category, index) => {
+              return (
                 <TouchableOpacity
                   key={index}
-                  onPress={  () => {
-                    setCategorySelected(category.id)
-                    handleModal(category.Value)
-                  }}>
+                  onPress={() => handleCategoryChange(category)}>
                   <Text
                     style={[
                       styles.textCategories,
-                      category.id === categorySelected
+                      category.ID === categorySelected
                         ? {
                           color: Color.white,
                           borderColor: Color.transparent,
@@ -245,64 +312,26 @@ const Home = (props) => {
       <View>
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
-        {classPopular.map((item, index) => {
-          return loadingShimmerCardClassPopuler ? <ShimmerCardClassPopuler /> : (
+        {stateClass.map((item, index) => {
+          return (
             <TouchableOpacity
               key={index}
-              activeOpacity={0.6}
-              onPress={toggleModalInfoClass}>
+              activeOpacity={0.5}
+              onPress={() => openModalInfoClass(item)}>
               <Cards
-                filepath={Images.BannerTahsin}
-                rating={handleRating(item.rating)}
+                filepath={item.Class_Image}
+                rating={handleRating(item.Class_Rating)}
                 imageTitle={
                   <Images.JudulTahsin.default style={styles.svgClassTitle} />
                 }
-                description={item.description}
-                // price={
-                //   <View style={styles.containerPriceOptions}>
-                //     <View style={styles.containerPriceFlex}>
-                //       {options.map((option, index) => {
-                //         return (
-                //           <TouchableOpacity
-                //             key={index}
-                //             onPress={() => {
-                //               setOptionSelected(option.id)
-                //             }}>
-                //             <Text
-                //               style={[
-                //                 styles.textPriceOptions,
-                //                 option.id === optionSelected
-                //                   ? {
-                //                     backgroundColor: Color.purpleButton,
-                //                     color: Color.white,
-                //                   }
-                //                   : {
-                //                     backgroundColor: Color.greyHintExt,
-                //                     color: Color.black,
-                //                   },
-                //               ]}>
-                //               {option.name}
-                //             </Text>
-                //           </TouchableOpacity>
-                //         )
-                //       })}
-                // </View>
-                //     <Text style={styles.textPrice}>
-                //       Rp {FormatRupiah(options[optionSelected].price)}
-                //     </Text>
-                //     <Text style={styles.textDiscountedPrice}>
-                //       {' '}
-                //       {FormatRupiah(options[optionSelected].discountedPrice)}
-                //     </Text>
-                //   </View>
-                // }
+                description={item.Class_Description}
               />
             </TouchableOpacity>
           )
         })}
         <View>
           <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.5}
             style={styles.bannerAlquranContainer}
             onPress={() => props.navigation.navigate('Alquran')}>
             <Image source={Images.BannerAlquran} style={styles.cardCustom} />
@@ -313,6 +342,19 @@ const Home = (props) => {
   }
 
   const InspiratifStoryHome = () => {
+    const handleSplitString = (value) => {
+      const stringSplit = value.split('|')
+      return stringSplit.map((val, index) => {
+        if (val.includes('<Img>')) {
+          return  (
+            <Text key={index}/>
+          )
+        } else {
+          return (
+            <Text key={index}>{val}. </Text>
+          )}})
+    }
+
     return (
       <View>
         <Text style={styles.textTitle}>Bacaan Inspiratif</Text>
@@ -328,22 +370,24 @@ const Home = (props) => {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           style={{ height: 238 }}>
-          {Inspiratif.map((item, index) => {
-            return loadingShimmerCardInspiratifStory ? <ShimmerCardInspiratifStory /> : (
-              <Card containerStyle={styles.cardArticle} key={index}>
-                <Images.BlogExample.default
-                  style={styles.svgArticleBackground}
-                />
-                <Text style={styles.textArticleDescription}>
-                  {item.description.substring(0, 120)} ...
-                </Text>
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.btnReadMore}
-                  onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { storyIndex : index })}>
-                  <Images.BtnReadMore.default />
-                </TouchableOpacity>
-              </Card>
+          {stateStory.map((item, index) => {
+            return (
+              <View style={styles.cardArticle} key={index}>
+                <Image source={item.Banner_Image == '' ?
+                  Images.ImgDefault5 : { uri : item.Banner_Image }}
+                style={styles.storyImage}/>
+                <View style={styles.storyView}>
+                  <Text style={styles.textArticleDescription}>
+                    {handleSplitString(item.Content.substring(0, 90))} ...
+                  </Text>
+                  <TouchableOpacity
+                    activeOpacity={0.5}
+                    style={styles.btnReadMore}
+                    onPress={() =>  props.navigation.navigate('InspiratifStoryDetail', { params : item, storyIndex : index })}>
+                    <Images.BtnReadMore.default />
+                  </TouchableOpacity>
+                </View>
+              </View>
             )
           })}
         </ScrollView>
@@ -370,16 +414,13 @@ const Home = (props) => {
                   activeOpacity={0.5}
                   style={{ ...styles.headerAvatar, marginRight: 15 }}
                   onPress={() =>
-                    props.navigation.navigate(isLogin ? 'Profil' : 'Login')
+                    props.navigation.navigate('Profil')
                   }>
-                  {isLogin ? (
-                    <Avatar
-                      style={styles.imageProfile}
-                      source={Images.ImageProfileDefault}
-                    />
-                  ) : (
-                    <Images.LoginDirect.default />
-                  )}
+                  <Avatar
+                    style={styles.imageProfile}
+                    source={Images.ImageProfileDefault}
+                  />
+                  <Images.LoginDirect.default />
                 </TouchableOpacity>
               </View>
             </View>
@@ -402,17 +443,27 @@ const Home = (props) => {
                 style={styles.scrollview}
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
-                  {/* <SearchHome /> */}
                   <View style={styles.carousel}>
+
                     <Carousel
-                      data={promotion}
+                      data={statePromotion}
                       pagination={false}
-                      renderItem={PromotionHome}
+                      renderItem={loadingPromo ? ShimmerCardPromotion : PromotionHome}
                     />
+
                   </View>
-                  <CategoryClassHome />
-                  <PopularClassHome />
-                  <InspiratifStoryHome />
+                  {loadingCategory ?
+                    ShimmerListCategory() :
+                    CategoryClassHome()
+                  }
+                  {loadingClass ?
+                    ShimmerCardClassPopuler() :
+                    <PopularClassHome />
+                  }
+                  {loadingStory ?
+                    ShimmerCardInspiratifStory() :
+                    <InspiratifStoryHome />
+                  }
                 </View>
                 <View>
                   <TouchableOpacity
@@ -435,8 +486,16 @@ const Home = (props) => {
             )}
           />
         </ImageBackground>
+        <ModalNoConnection
+          isVisible={connectStatus}
+          retry={() => retryConnection()}
+          backdropPress={() => togglemodalNoConnection()}
+          backButtonPress={() => togglemodalNoConnection()}
+        />
         <ModalInfoClass
-          state={package_category}
+          class={classObj}
+          state={statePackage}
+          loading={loadingPackage}
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
           backButtonPress={() => toggleModalInfoClass()}
@@ -447,25 +506,13 @@ const Home = (props) => {
           backButtonPress={() => toggleModal()}
           renderItem={
             <View>
-              {classPopular.map((value, index) => {
-                if (value.Class_Category == state) {
-                  return (
-                    <View key={index}>
-                      <Text>{state}</Text>
-                    </View>
-                  )
-                } else {
-                  return (
-                    <View key={index}>
-                      <Image
-                        resizeMode={'cover'}
-                        source={Images.ImgModalComingSoon}
-                        style={styles.BackroundImgModal}
-                      />
-                    </View>
-                  )
-                }
-              })}
+              <View>
+                <Image
+                  resizeMode='cover'
+                  source={Images.ImgModalComingSoon}
+                  style={styles.BackroundImgModal}
+                />
+              </View>
             </View>
           }
         />
