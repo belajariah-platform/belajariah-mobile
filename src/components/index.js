@@ -4,7 +4,6 @@ import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
 import {
-  Shimmer,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
@@ -18,6 +17,7 @@ import TextView from './text-view'
 import Searchbox from './searchbox'
 import ImageView from './image-view'
 import Progressbar from './progressbar'
+import LoadingView from './loading-view'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
@@ -44,7 +44,6 @@ export {
   Topbar,
   Buttons,
   Loader,
-  Shimmer,
   TextBox,
   Carousel,
   Checkbox,
@@ -53,6 +52,7 @@ export {
   ModalDate,
   Searchbox,
   ModalInfo,
+  LoadingView,
   ModalRating,
   ModalRecord,
   ModalRepair,

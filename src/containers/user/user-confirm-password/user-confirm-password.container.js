@@ -2,55 +2,78 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Text, Icon } from '@ui-kitten/components'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
   Image,
+  Alerts,
   ScrollView,
   TouchableWithoutFeedback
 } from 'react-native'
+import {
+  Topbar,
+  Loader,
+  Buttons,
+  TextBox,
+  ModalNoConnection,
+} from '../../../components'
 
+import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
-import { Topbar, Loader, Buttons, TextBox } from '../../../components'
 
 import { styles } from './user-confirm-password.style'
 
 
-const ConfirmPassword = () => {
+const ConfirmPassword = (props) => {
   const navigation = useNavigation()
-  const { isLogin } = useSelector((state) => state.UserReducer)
+  const item = props.route.params
+
+  const [loading, setLoading] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
-  const [loading, setLoading] = useState(false) 
-  const [success] = useState(true)
+  const [secureTextEntryConfirmPassword, setSecureTextEntryConfirmPassword] = useState(true)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
-    initialValues: { password: '', confirm_password: '' },
+    initialValues: { Password: '', Confirm_Password: '', Email : item },
     validationSchema: Yup.object({
-      password: Yup.string()
+      Password: Yup.string()
         .min(8, 'Password minimal 8 karakter')
         .required('Password harus diisi'),
-      confirm_password: Yup.string()
-        .oneOf([Yup.ref('password')], 'Konfirmasi password tidak sama')
+      Confirm_Password: Yup.string()
+        .oneOf([Yup.ref('Password')], 'Konfirmasi password tidak sama')
         .required('Password harus diisi'),
     }),
-    onSubmit: () => {
-      setLoading(true)
+    onSubmit: async (values, form) => {
       try {
-        if (success === true) {
-          navigation.navigate(isLogin ? 'Profile' : 'Login')
+        setLoading(true)
+        const response = await UserAPI.ChangePasswordPublic(values)
+        if (!response.data.result) {
+          Alerts(response.data.result, response.data.error)
+        } else {
+          form.resetForm()
+          navigation.navigate('Login')
         }
+        setLoading(false)
       } catch (err) {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+        setLoading(false)
         return err
       }
-      setLoading(false)
     },
   })
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry)
+  }
+
+  const toggleSecureEntryConfirmPassword = () => {
+    setSecureTextEntryConfirmPassword(!secureTextEntryConfirmPassword)
   }
 
   const renderIcon = props => (
@@ -59,9 +82,21 @@ const ConfirmPassword = () => {
     </TouchableWithoutFeedback>
   )
 
+  const renderIconConfirmPassword = props => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntryConfirmPassword}>
+      <Icon {...props} name={secureTextEntryConfirmPassword ? 'eye-off' : 'eye'} />
+    </TouchableWithoutFeedback>
+  )
+
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => togglemodalNoConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
+      <Loader loading={loading}/>
       <Topbar title='Setel Ulang Kata Sandi' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,7 +107,7 @@ const ConfirmPassword = () => {
             </Text>
             <Text style={styles.text}>Password Baru</Text>
             <TextBox
-              name='password'
+              name='Password'
               form={FormSubmit}
               placeholder='Password Baru'
               accessoryRight={renderIcon}
@@ -80,13 +115,13 @@ const ConfirmPassword = () => {
             />
             <Text style={styles.text}>Konfirmasi Password</Text>
             <TextBox
-              name='confirm_password'
               form={FormSubmit}
+              name='Confirm_Password'
+              accessoryRight={renderIconConfirmPassword}
               placeholder='Konfirmasi Password'
-              accessoryRight={renderIcon}
-              secureTextEntry={secureTextEntry}
+              secureTextEntry={secureTextEntryConfirmPassword}
             />
-            <Buttons title='Ubah'
+            <Buttons title='Ubah Kata Sandi'
               onPress={FormSubmit.handleSubmit}/>
           </View>
         </ScrollView>
@@ -96,6 +131,7 @@ const ConfirmPassword = () => {
 }
 
 ConfirmPassword.propTypes = {
+  route : PropTypes.object,
   navigation : PropTypes.object
 }
 

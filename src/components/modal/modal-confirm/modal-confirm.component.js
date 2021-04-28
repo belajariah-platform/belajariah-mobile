@@ -8,10 +8,10 @@ import { styles } from './modal-confirm.style'
 
 const ModalConfirm = (props) => {
   let action, color
-  props.action == 'approved' ?  (action = 'menerima ini', color = '#6e248d' ) :
-    props.action == 'revised' ?  (action = 'membatalkan ini', color = '#d73c2c') :
-      props.action == 'logout' ?  (action = 'logout dari halaman ini', color = '#6e248d' ) :
-        (action = 'menolak ini', color = '#d73c2c')
+  props.action == 'Approved' ?  (action = 'menerima', color = '#6e248d' ) :
+    props.action == 'Revised' ?  (action = 'membatalkan', color = '#d73c2c') :
+      props.action == 'Rejected' ? (action = 'menolak', color = '#d73c2c') :
+        (action = 'keluar', color = '#6e248d')
 
   return(
     <>
@@ -48,6 +48,7 @@ const ModalConfirm = (props) => {
 
 ModalConfirm.propTypes = {
   submit : PropTypes.func,
+  loading : PropTypes.bool,
   title : PropTypes.string,
   action : PropTypes.string,
   isVisible : PropTypes.bool,

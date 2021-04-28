@@ -1,20 +1,20 @@
 import Login from './user-login'
 import Register from './user-register'
+import CheckEmail from './user-check-email'
 import Introduction from './user-introduction'
-import {ChangePassword, UserEditPassword} from './user-change-password'
-import ConfirmPassword from './user-confirm-password'
-import {UserVerify, UserVerifyPassword } from './user-verify'
+import { ConfirmPassword, EditPassword } from './user-confirm-password'
+import { UserVerify, UserVerifyPassword } from './user-verify'
 import { Consultation, ConsultationDetail } from './user-consultation'
 
 export {
   Login,
   Register,
+  CheckEmail,
   UserVerify,
   Introduction,
   Consultation,
-  ChangePassword,
+  EditPassword,
   ConfirmPassword,
-  UserEditPassword,
   UserVerifyPassword,
   ConsultationDetail,
 }

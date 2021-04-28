@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 
 import {
   View,
@@ -22,44 +23,63 @@ import {
   Alerts,
   Topbar,
   TextBox,
-  Buttons
+  Buttons,
+  ModalNoConnection
 } from '../../../components'
 
+import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { styles } from './user-register.style'
 
 const Register = (props) => {
-  const [success] = useState(true)
   const [loading, setLoading] = useState(false)
   const [checked, setChecked] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
-    initialValues: { name: '', email: '', no_hp: '', password: '' },
+    initialValues: {
+      Email: '', Password: '',
+      Full_Name: '', Phone: '' },
     validationSchema: Yup.object({
-      name: Yup.string().required('nama harus diisi'),
-      no_hp: Yup.string().required('nomor telepon harus diisi'),
-      email: Yup.string()
+      Full_Name: Yup.string().required('nama harus diisi'),
+      Phone: Yup.string().required('nomor telepon harus diisi'),
+      Email: Yup.string()
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
-      password: Yup.string()
+      Password: Yup.string()
         .min(8, 'Password minimal 8 karakter')
         .required('Password harus diisi'),
     }),
-    onSubmit: (values, form) => {
+    onSubmit: async (values, form) => {
       if (checked === true) {
-        try {
-          setLoading(true)
-          if (success === true) {
-            form.resetForm()
-            Alerts('Success', 'Registrasi user berhasil', () =>
-              props.navigation.navigate('Login'),
-            )
+        const value = ({ ...values, Phone : parseInt(values.Phone) })
+        if (values.Phone.toString().charAt(0) == 0) {
+          Alerts(false, 'Format nomor tidak sesuai')
+        } else {
+          try {
+            console.log(value)
+            setLoading(true)
+            const response = await UserAPI.SignUp(value)
+            console.log(response)
+            if (!response.data.result) {
+              Alerts(false, response.data.message)
+            } else {
+              form.resetForm()
+              Alerts(true, 'Pendaftaran berhasil silahkan verifikasi akun kamu', () =>
+                props.navigation.navigate('UserVerify'),
+              )
+            }
+            setLoading(false)
+          } catch (err) {
+            NetInfo.fetch().then(res => {
+              setconnectStatus(!res.isConnected)
+            })
+            setLoading(false)
+            return err
           }
-        } catch (err) {
-          return err
         }
-        setLoading(false)
       }
     },
   })
@@ -77,7 +97,13 @@ const Register = (props) => {
 
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => togglemodalNoConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
+      <Loader loading={loading}/>
       <Topbar title='Daftar' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
@@ -85,36 +111,44 @@ const Register = (props) => {
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Nama Lengkap</Text>
             <TextBox
-              form={FormSubmit}
               error
-              name='name'
+              name='Full_Name'
+              form={FormSubmit}
               placeholder='Nama Lengkap'
             />
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
+              name='Email'
               form={FormSubmit}
-              name='email'
               placeholder='Masukan email'
             />
             <Text style={styles.text}>Nomor Telepon</Text>
-            <TextBox
-              form={FormSubmit}
-              name='no_hp'
-              placeholder='Masukan Nomor Telepon'
-              keyboardType={'numeric'}
-            />
+            <View style={{ flexDirection : 'row' }}>
+              <TextBox
+                disabled={true}
+                placeholder='+62'
+                customStyle={{ width : 70, marginRight : 10 }}
+              />
+              <TextBox
+                name='Phone'
+                form={FormSubmit}
+                keyboardType={'numeric'}
+                customStyle={{ flex : 1 }}
+                placeholder='Masukan Nomor Telepon'
+              />
+            </View>
             <Text style={styles.text}>Password</Text>
             <TextBox
+              name='Password'
               form={FormSubmit}
-              name='password'
               placeholder='Masukan Password'
               accessoryRight={renderIcon}
               secureTextEntry={secureTextEntry}
             />
             <CheckBox
-              style={styles.checkbox}
               status='primary'
               checked={checked}
+              style={styles.checkbox}
               onChange={nextChecked => setChecked(nextChecked)}>
               {
                 <Text style={styles.textCheckbox}>

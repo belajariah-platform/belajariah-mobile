@@ -66,6 +66,9 @@ const Color = {
   textPink : '#ea4c88',
   textGreen : '#1abc9c',
   softGreen : '#e7fcf8',
+
+  //shimmer
+  shimmer : '#ECF0F1',
 }
 
 export { Color }

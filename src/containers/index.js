@@ -1,21 +1,84 @@
-import Home from './home'
-import Alquran from './alquran'
-import Profile from './profile'
-import Transaction from './transaction'
-import Notification from './notification'
+import { Home } from './home'
+import { Profile, ProfileEdit } from './profile'
+import { Alquran, AlquranDetail } from './alquran'
+import { Promotion, PromotionDetail } from './promotion'
 
-import { ClassUser } from './classs'
-import { Login, Register, Introduction, ChangePassword } from './user'
+import {
+  Transaction,
+  TransactionMethod,
+  TransactionInfo,
+  TransactionConfirm,
+  TransactionUpload,
+} from './transaction'
+import {
+  AdminUser,
+  AdminDashboard,
+  AdminInstructor,
+  AdminProfileAll,
+  AdminTransaction,
+  AdminProfileEdit,
+  AdminProfileInstructor,
+} from './admin'
+import {
+  InstructorJob,
+  InstructorTask,
+  InstructorProfile,
+  InstructorDashboard,
+  InstructorTaskDetail,
+  InstructorProfileEdit,
+} from './instructor'
+
+import { InspiratifStory, InspiratifStoryDetail } from './story'
+import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
+import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
+import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
+
 
 export {
   Home,
+  Helps,
   Login,
+  AboutUs,
   Alquran,
   Profile,
   Register,
+  ClassExam,
+  Promotion,
+  AdminUser,
+  ContactUs,
   ClassUser,
+  CheckEmail,
+  UserVerify,
+  ClassDetail,
+  ProfileEdit,
   Transaction,
   Introduction,
-  Notification,
-  ChangePassword,
+  Consultation,
+  EditPassword,
+  InstructorJob,
+  TermCondition,
+  PrivacyPolice,
+  AlquranDetail,
+  ClassLearning,
+  AdminDashboard,
+  InstructorTask,
+  AdminProfileAll,
+  PromotionDetail,
+  InspiratifStory,
+  AdminInstructor,
+  ConfirmPassword,
+  TransactionInfo,
+  AdminTransaction,
+  AdminProfileEdit,
+  TransactionUpload,
+  InstructorProfile,
+  TransactionMethod,
+  ConsultationDetail,
+  UserVerifyPassword,
+  TransactionConfirm,
+  InstructorDashboard,
+  InstructorTaskDetail,
+  InspiratifStoryDetail,
+  InstructorProfileEdit,
+  AdminProfileInstructor,
 }

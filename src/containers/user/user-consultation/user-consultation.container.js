@@ -1,5 +1,6 @@
-import React from 'react'
 import { Text } from '@ui-kitten/components'
+import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -7,22 +8,76 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
+import {
+  UserClassAPI,
+  ConsultationAPI,
+} from '../../../api'
 
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
+
 import styles from './user-consultation.style'
 
 const Consultation = () => {
   const navigation = useNavigation()
 
-  const state = [
-    { category : 'tahsin', new_message : 1 },
-    { category : 'tilawah', new_message : 0 },
-    { category : 'fiqih pernikahan', new_message : 0 },
-    { category : 'fiqih ibadah', new_message : 0 },
-    { category : 'bahasa arab', new_message : 0 },
-    { category : 'fiqih penyelenggara jenazah', new_message : 0 },
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [stateNotif, setStateNotif] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 10, filterString: '[]',  sort : 'ASC' })
 
-  ]
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataUserClass(dataState)
+    setconnectStatus(!connectStatus)
+  }
+
+  const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
+    try {
+      setLoading(true)
+      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  const fetchDataConsultation = async ({ skip, take, filterString, sort }) => {
+    try {
+      setLoading(true)
+      filterString='[{"type": "bool", "field" : "is_read", "value": "false"}]'
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        setStateNotif(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataUserClass(dataState)
+    fetchDataConsultation(dataState)
+  }, [dataState])
 
   const Header = () => {
     return (
@@ -38,42 +93,53 @@ const Consultation = () => {
     )
   }
 
+  const EmptyList = () => {
+    return(
+      <View style={styles.containerNoTask}>
+        <Images.IllustrationNoRecentTask.default style={{ marginTop: 12 }} />
+      </View>
+    )
+  }
+
+
   const Content = (item, index) => {
     let image
-    switch (item.category) {
-    case 'bahasa arab':
+    switch (item.Class_Initial) {
+    case 'Bahasa Arab':
       image = Images.CardMsg1
       break
-    case 'tilawah':
+    case 'Tilawah':
       image = Images.CardMsg2
       break
-    case 'fiqih ibadah':
+    case 'Tahsin':
       image = Images.CardMsg3
       break
-    case 'fiqih penyelenggara jenazah':
+    case 'Fiqih Penyelenggaraan Jenazah':
       image = Images.CardMsg4
       break
-    case 'tahsin':
+    case 'Fiqih Ibadah':
       image = Images.CardMsg5
       break
-    default:
+    case 'Fiqih Pernikahan':
       image = Images.CardMsg6
       break
     }
+
     return(
       <View key={index}>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           style={{ alignItems : 'center' }}
-          onPress={() => navigation.navigate('ConsultationDetail', item)}
+          onPress={() => navigation.navigate('ConsultationDetail',
+            { classes : item, notif : stateNotif.length == 0 ? [] : stateNotif[0] })}
         >
           <Image source={image}
             style={styles.cardCategory}/>
-          {item.new_message > 0 && (
+          {stateNotif.length > 0 && (
             <Images.IconNotifInfo.default style={styles.notif}/>
           )}
           <View style={styles.containerCategory}>
-            <Text style={styles.textCategory}>Kelas {item.category}</Text>
+            <Text style={styles.textCategory}>Kelas {item.Class_Initial}</Text>
           </View>
           <Text style={styles.textSeeMessage}>LIHAT PESAN</Text>
         </TouchableOpacity>
@@ -84,14 +150,25 @@ const Consultation = () => {
   return (
     <View style={styles.containerMain}>
       <Header />
-      <FlatList
-        data={state}
-        numColumns={2}
-        style={{ width:'100%' }}
-        showsVerticalScrollIndicator ={false}
-        contentContainerStyle={{ alignItems : 'center' }}
-        keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => Content(item, index)}
+      {loading ? <LoadingView/> :
+        state.length == 0 ? (
+          <EmptyList/>
+        ) : (
+          <FlatList
+            data={state}
+            numColumns={2}
+            style={{ width:'100%' }}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ alignItems : 'center' }}
+            keyExtractor={(item, index) =>  index.toString()}
+            renderItem={({ item, index }) => Content(item, index)}
+          />
+        )}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
     </View>
   )

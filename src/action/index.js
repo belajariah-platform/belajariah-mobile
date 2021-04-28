@@ -61,7 +61,6 @@ import {
   QURAN_LIST_FAIL,
   QURAN_DETAIL_REQ,
   QURAN_DETAIL_SUCC,
-<<<<<<< HEAD
   QURAN_DETAIL_FAIL,
 } from './alquran'
 // ============================ MENTOR ===========================
@@ -120,27 +119,16 @@ export {
   STORY_LIST_SUCC,
   STORY_LIST_FAIL,
   STORY_LOAD_SCROLL,
-=======
-  QURAN_DETAIL_FAIL  } from './alquran'
-
-export {
-  // ============================ USER ============================
-  SIGN_IN, SIGN_OUT,
->>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
   // ============================ QURAN ===========================
   QURAN_LIST_REQ,
   QURAN_LIST_SUCC,
   QURAN_LIST_FAIL,
   QURAN_DETAIL_REQ,
   QURAN_DETAIL_SUCC,
-<<<<<<< HEAD
   QURAN_DETAIL_FAIL,
   // ============================ MENTOR ===========================
   MENTOR_REQ,
   MENTOR_SUCC,
   MENTOR_FAIL,
   MENTOR_LOAD_SCROLL,
-=======
-  QURAN_DETAIL_FAIL
->>>>>>> 26567030c434714148fc72eb7092b80646e26f9b
 }

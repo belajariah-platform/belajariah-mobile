@@ -8,12 +8,12 @@ import { Images, Color } from '../../../assets'
 import { styles } from './modal-filter-admin.style'
 
 const ModalFilterAdminPageUstadz = (props) => {
-  const [categorySelected, setCategorySelected] = useState(0)
+  const [sort, setSort] = useState(1)
   const horizontalScrollRef = useRef()
 
-  const categoriesKelas = [
-    { id: 1, name: 'A sampai Z' },
-    { id: 2, name: 'Z sampai A' },
+  const sorting = [
+    { ID: 1, Type : 'DESC',  Value: 'Terbaru' },
+    { ID: 2, Type : 'ASC', Value: 'Terlama' },
   ]
 
   return(
@@ -45,21 +45,17 @@ const ModalFilterAdminPageUstadz = (props) => {
               <ScrollView
                 ref={horizontalScrollRef}
                 horizontal={true} showsHorizontalScrollIndicator={false}>
-                {categoriesKelas.map((category, index) => {
+                {sorting.map((item, index) => {
                   return (
                     <TouchableOpacity
                       key={index}
                       onPress={ () => {
-                        setCategorySelected(category.id)
-                        // await horizontalScrollRef.current.scrollTo({
-                        //   x: 4000,
-                        //   animated: true,
-                        // })
+                        setSort(item.ID)
                       }}>
                       <Text
                         style={[
                           styles.textCategories,
-                          category.id === categorySelected
+                          item.ID == sort
                             ? {
                               color: Color.white,
                               borderColor: Color.transparent,
@@ -72,7 +68,7 @@ const ModalFilterAdminPageUstadz = (props) => {
                               backgroundColor: Color.bgColorWhite,
                             },
                         ]}>
-                        {category.name}
+                        {item.Value}
                       </Text>
                     </TouchableOpacity>
                   )
