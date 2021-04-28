@@ -1,5 +1,7 @@
 import axios from 'axios'
-import { Config, Header } from '../config'
+import { Config,
+  // Header
+} from '../config'
 
 const GetAllEnum = async (skip, take, filters) =>  {
   try {
