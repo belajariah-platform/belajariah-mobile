@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 import {
@@ -10,36 +11,93 @@ import {
   FlatList,
   RefreshControl,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 
-import styles from './inspiratif.style'
+import {
+  STORY_LIST_FAIL,
+  STORY_LIST_SUCC,
+  STORY_LOAD_SCROLL,
+} from '../../../action'
+import {
+  Searchbox,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
+
+import { StoryAPI } from '../../../api'
+import { Response } from '../../../utils'
 import { Images, Color } from '../../../assets'
-import { Searchbox, ShimmerInspiratifStory } from '../../../components'
+
+import styles from './inspiratif.style'
 
 const InspiratifStory = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
-  const [loading, setLoading] = useState(false)
-  const [refreshing, setRefreshing] = useState(false)
-  const [loadingShimmerInspiratifStory, setloadingShimmerInspiratifStory] = useState(true)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const { loadingScroll } = useSelector((state) => state.StoryReducer)
 
-  const state = [
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Uno', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Duo', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Trowa', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-    { title : 'Jadi Sukses, Belajar dari Sandiaga Quatre', images: Images.IconTokohInspiratif, description : 'Tokoh Inspiratif "Sandiaga Uno", pengusaha dan politikus Indonesia yang menjadi Menteri' },
-  ]
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState, setDataState] = useState({ skip: 0, take: 6, filter: [], filterString: '[]' })
+
+  const retryConnection = () => {
+    fetchDataStory(dataState)
+    setconnectStatus(!connectStatus)
+  }
+
+  const onDataStateChange = (event) => {
+    setDataState({
+      ...dataState,
+      filterString : `[{"type": "text", "field" : "title", "value": "${event}"}]`
+    })
+  }
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataStory(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: STORY_LOAD_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 6
+      })
     }
   }
+
+  const fetchDataStory = async ({ skip, take, filterString }) => {
+    try {
+      setLoading(true)
+      const response = await StoryAPI.GetAllStory(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+        setCount(response.data.count)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
+      dispatch({ type: STORY_LIST_SUCC })
+    } catch (err) {
+      setLoading(false)
+      dispatch({ type: STORY_LIST_FAIL })
+      return err
+    }
+  }
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      fetchDataStory(dataState)
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [dataState])
 
   const getInitialRouteName = () => {
     const { isLogin } = useSelector(state => state.UserReducer)
@@ -51,9 +109,9 @@ const InspiratifStory = () => {
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           size={30}
           color={Color.purpleMedium}/>
       </View>
@@ -75,65 +133,74 @@ const InspiratifStory = () => {
     )
   }
 
-  const Search = () => {
+  const Inspiratif = (item, index) => {
     return(
-      <View style={styles.containerSearch}>
-        <Searchbox
-          size='medium'
-          style={styles.searchbox}
-          placeholder='Telusuri Bacaan Inpiratif'
-          accessoryRight={() => (
-            <Images.Search.default style={{ marginRight: -12 }} />
-          )}
-        />
-      </View>
+      <TouchableOpacity
+        key={index}
+        activeOpacity={0.5}
+        onPress={() =>  navigation.navigate('InspiratifStoryDetail',
+          { params : item, storyIndex : index })}>
+        <Card
+          containerStyle={styles.cardStyle}>
+          <View style={styles.viewStyle}>
+            <Image source={item.Banner_Image == '' ?
+              Images.ImgDefault4  : { uri : item.Banner_Image }}
+            style={styles.imageStyle}/>
+            <View style={styles.containerDesc}>
+              <Text style={styles.textStyle}>{item.Title}</Text>
+              <Text style={styles.description}>
+                {item.Content.substring(0, 70)} ...
+              </Text>
+            </View>
+          </View>
+        </Card>
+      </TouchableOpacity>
     )
   }
 
-  const Inspiratif = () => {
+  const NoStory = () => {
     return(
-      <View>
-        <FlatList
-          data={state}
-          style={{ width:'100%' }}
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={renderFooter}
-          onEndReached={(e) => onLoadMore(e)}
-          showsVerticalScrollIndicator ={false}
-          contentContainerStyle={{ paddingBottom: 140 }}
-          keyExtractor={(item, index) =>  index.toString()}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
-          renderItem={({ item, index }) => {
-            return loadingShimmerInspiratifStory ? <ShimmerInspiratifStory /> : (
-              <TouchableOpacity
-                key={index}
-                activeOpacity={0.7}
-                onPress={() =>  navigation.navigate('InspiratifStoryDetail', { storyIndex : index })}>
-                <Card
-                  containerStyle={styles.cardStyle}>
-                  <View style={styles.viewStyle}>
-                    <Image source={item.images} style={styles.imageStyle}/>
-                    <View style={styles.containerDesc}>
-                      <Text style={styles.textStyle}>{item.title}</Text>
-                      <Text style={styles.description}>
-                        {item.description.substring(0, 70)} ...
-                      </Text>
-                    </View>
-                  </View>
-                </Card>
-              </TouchableOpacity>
-            )}
-          }
-        />
+      <View style={styles.containerNoStory}>
+        <Images.IconStoryEmpty.default width={250} height={250}/>
       </View>
     )
   }
 
   return (
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Header />
-      <Search />
-      <Inspiratif />
+      <View style={styles.containerSearch}>
+        <Searchbox
+          size='medium'
+          style={styles.searchbox}
+          onChangeText={onDataStateChange}
+          placeholder='Telusuri Bacaan Inpiratif'
+          accessoryRight={() => (
+            <Images.Search.default style={{ marginRight: -12 }} />
+          )}
+        />
+      </View>
+      {loading && !loadingScroll ?
+        <LoadingView /> :
+        state == 0 ? <NoStory/>:
+          <FlatList
+            data={state}
+            style={{ width:'100%' }}
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={renderFooter}
+            onEndReached={(e) => onLoadMore(e)}
+            showsVerticalScrollIndicator ={false}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            keyExtractor={(item, index) =>  index.toString()}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+            renderItem={({ item, index }) => Inspiratif(item, index)}/>
+      }
     </View>
   )
 }

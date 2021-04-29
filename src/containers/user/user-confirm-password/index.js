@@ -1,3 +1,4 @@
-import ConfirmPassword from './user-confirm-password.container'
+import EditPassword from './user-edit-password.comtainer'
+import ConfirmPassword from './user-edit-password.comtainer'
 
-export default ConfirmPassword
+export { EditPassword, ConfirmPassword }

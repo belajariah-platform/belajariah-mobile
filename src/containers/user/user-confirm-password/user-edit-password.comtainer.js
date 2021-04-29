@@ -2,60 +2,67 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import { Text, Icon } from '@ui-kitten/components'
+import { useSelector } from 'react-redux'
+import { Text, Icon, } from '@ui-kitten/components'
 import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
-  Image,
-  Alerts,
   ScrollView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native'
 import {
+  Alerts,
   Topbar,
   Loader,
   Buttons,
   TextBox,
-  ModalNoConnection,
+  ModalNoConnection
 } from '../../../components'
 
 import { UserAPI } from '../../../api'
-import { Images } from '../../../assets'
+import { styles } from './user-edit-password.style'
 
-import { styles } from './user-confirm-password.style'
-
-
-const ConfirmPassword = (props) => {
+const UserEditPassword = () => {
   const navigation = useNavigation()
-  const item = props.route.params
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
   const [loading, setLoading] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+  const [secureTextEntryNewPassword, setSecureTextEntryNewPassword] = useState(true)
   const [secureTextEntryConfirmPassword, setSecureTextEntryConfirmPassword] = useState(true)
+
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
-    initialValues: { Password: '', Confirm_Password: '', Email : item },
+    initialValues: {
+      Old_Password: '',
+      New_Password: '',
+      Confirm_Password: '',
+      Email : userInfo.Email,
+    },
     validationSchema: Yup.object({
-      Password: Yup.string()
-        .min(8, 'Password minimal 8 karakter')
-        .required('Password harus diisi'),
+      Old_Password: Yup.string()
+        .required('Password lama harus diisi'),
+      New_Password: Yup.string()
+        .required('Password baru harus diisi')
+        .min(8, 'Password minimal 8 karakter'),
       Confirm_Password: Yup.string()
-        .oneOf([Yup.ref('Password')], 'Konfirmasi password tidak sama')
-        .required('Password harus diisi'),
+        .oneOf([Yup.ref('New_Password')], 'Konfirmasi password tidak sama')
+        .required('Konfirmasi password harus diisi'),
     }),
     onSubmit: async (values, form) => {
       try {
+        console.log(values)
         setLoading(true)
-        const response = await UserAPI.ChangePasswordPublic(values)
+        const response = await UserAPI.ChangePasswordPrivate(values)
         if (!response.data.result) {
-          Alerts(response.data.result, response.data.error)
+          Alerts(response.data.result, response.data.message)
         } else {
           form.resetForm()
-          navigation.navigate('Login')
+          navigation.navigate('Profil')
         }
         setLoading(false)
       } catch (err) {
@@ -72,6 +79,10 @@ const ConfirmPassword = (props) => {
     setSecureTextEntry(!secureTextEntry)
   }
 
+  const toggleSecureEntryNewPassword = () => {
+    setSecureTextEntryNewPassword(!secureTextEntryNewPassword)
+  }
+
   const toggleSecureEntryConfirmPassword = () => {
     setSecureTextEntryConfirmPassword(!secureTextEntryConfirmPassword)
   }
@@ -82,13 +93,19 @@ const ConfirmPassword = (props) => {
     </TouchableWithoutFeedback>
   )
 
+  const renderIconNewPassword = props => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntryNewPassword}>
+      <Icon {...props} name={secureTextEntryNewPassword ? 'eye-off' : 'eye'} />
+    </TouchableWithoutFeedback>
+  )
+
   const renderIconConfirmPassword = props => (
     <TouchableWithoutFeedback onPress={toggleSecureEntryConfirmPassword}>
       <Icon {...props} name={secureTextEntryConfirmPassword ? 'eye-off' : 'eye'} />
     </TouchableWithoutFeedback>
   )
 
-  return (
+  return(
     <>
       <ModalNoConnection
         isVisible={connectStatus}
@@ -97,28 +114,32 @@ const ConfirmPassword = (props) => {
         backButtonPress={() => togglemodalNoConnection()}
       />
       <Loader loading={loading}/>
-      <Topbar title='Setel Ulang Kata Sandi' backIcon={true} />
+      <Topbar title='Ubah Password' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ marginTop: 30 }}>
-            <Image source={Images.ImgLupaPassword} style={styles.image} />
-            <Text style={styles.content}>
-              Silahkan masukan kata sandi baru anda
-            </Text>
-            <Text style={styles.text}>Password Baru</Text>
+            <Text style={styles.text}>Masukkan password lama</Text>
             <TextBox
-              name='Password'
+              name='Old_Password'
               form={FormSubmit}
-              placeholder='Password Baru'
+              placeholder='Password Lama'
               accessoryRight={renderIcon}
               secureTextEntry={secureTextEntry}
             />
-            <Text style={styles.text}>Konfirmasi Password</Text>
+            <Text style={styles.text}>Masukkan password baru</Text>
             <TextBox
+              name='New_Password'
               form={FormSubmit}
+              placeholder='Password Baru'
+              accessoryRight={renderIconNewPassword}
+              secureTextEntry={secureTextEntryNewPassword}
+            />
+            <Text style={styles.text}>Konfirmasi password baru</Text>
+            <TextBox
               name='Confirm_Password'
+              form={FormSubmit}
+              placeholder='Konfirmasi Password Baru'
               accessoryRight={renderIconConfirmPassword}
-              placeholder='Konfirmasi Password'
               secureTextEntry={secureTextEntryConfirmPassword}
             />
             <Buttons title='Ubah Kata Sandi'
@@ -130,9 +151,8 @@ const ConfirmPassword = (props) => {
   )
 }
 
-ConfirmPassword.propTypes = {
-  route : PropTypes.object,
+UserEditPassword.propTypes = {
   navigation : PropTypes.object
 }
 
-export default ConfirmPassword
+export default UserEditPassword

@@ -3,10 +3,10 @@ import { Config, Header } from '../config'
 
 const GetAllPromotion = async (skip, take, filters) =>  {
   try {
-    // const headers = await Header()
+    const headers = await Header()
     const response = await axios.get(`
     ${Config.BELAJARIAH_SERVICE_ENDPOINT}/promotions?skip=${skip}&take=${take}&filter=${filters}`,
-    // headers
+    headers
     )
     return response
   } catch (error) {

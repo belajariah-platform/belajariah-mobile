@@ -1,8 +1,10 @@
-import { store } from '../store'
 import { Base64 } from 'js-base64'
+import AsyncStorage from '@react-native-community/async-storage'
+
 import {
   GOOGLE_SCOPES,
   GOOGLE_CLIENT,
+  MAIN_SERVICE_ENDPOINT,
   QURAN_SERVICE_ENDPOINT,
   PAYMENT_GATEWAY_ENDPOINT,
   PAYMENT_GATEWAY_USERNAME,
@@ -14,22 +16,33 @@ const Config = {
   GOOGLE_SCOPES,
   GOOGLE_CLIENT,
   QURAN_SERVICE_ENDPOINT,
+  MAIN_SERVICE_ENDPOINT,
   PAYMENT_GATEWAY_ENDPOINT,
-  PAYMENT_GATEWAY_USERNAME,
   BELAJARIAH_SERVICE_ENDPOINT,
   ATTACHMENT_SERVICE_ENDPOINT,
 }
 
-const Header = () => {
-  const config = {}
-  const token = store.getState().userData.token
-  if (token) {
-    config.headers = { Authorization: `Bearer ${token}` }
+const Header = async () => {
+  try {
+    const user = await AsyncStorage.getItem('user_info')
+      ? JSON.parse(await AsyncStorage.getItem('user_info'))
+      : null
+    const token = await AsyncStorage.getItem('token')
+
+    return {
+      headers : {
+        Email: Object.keys(user).length !== 0 ? user.Email : 'belajariah20@gmail.com',
+        User: Object.keys(user).length !== 0 ? JSON.stringify(user) : '',
+        'Token-Auth': token,
+        'by-pass': true,
+      }
+    }
+  } catch (error) {
+    return error
   }
-  return config
 }
 
-const CheckoutConfig = {
+const HeaderPayment = {
   headers : {
     'Authorization' : 'Basic ' + Base64.encode(PAYMENT_GATEWAY_USERNAME + ':'),
     'Accept' : 'application/json',
@@ -37,4 +50,4 @@ const CheckoutConfig = {
   }
 }
 
-export { Config, Header, CheckoutConfig }
+export { Config, Header, HeaderPayment }

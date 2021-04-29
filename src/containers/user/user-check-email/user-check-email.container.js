@@ -4,37 +4,61 @@ import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { View, ScrollView } from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
 
-import { styles } from './user-change-password.style'
-import { Topbar, Loader, Buttons, TextBox } from '../../../components'
+import {
+  Alerts,
+  Topbar,
+  Loader,
+  Buttons,
+  TextBox,
+  ModalNoConnection
+} from '../../../components'
+
+import { UserAPI } from '../../../api'
+import { styles } from './user-check-email.style'
 
 const ChangePassword = (props) => {
   const [loading, setLoading] = useState(false)
-  const [success] = useState(true)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
 
   const FormSubmit = useFormik({
-    initialValues: { email: '' },
+    initialValues: { Email: '' },
     validationSchema: Yup.object({
-      email: Yup.string()
+      Email: Yup.string()
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
     }),
-    onSubmit: () => {
-      setLoading(true)
+    onSubmit: async (values, form) => {
       try {
-        if (success === true) {
+        setLoading(true)
+        const response = await UserAPI.CheckEmail(values.Email)
+        if (response.data.result.ID != 0) {
+          form.resetForm()
           props.navigation.navigate('UserVerifyPassword')
+        } else {
+          Alerts(false, 'Email tidak ditemukan')
         }
+        setLoading(false)
       } catch (err) {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+        setLoading(false)
         return err
       }
-      setLoading(false)
     },
   })
 
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        backdropPress={togglemodalNoConnection}
+      />
+      <Loader loading={loading}/>
       <Topbar title='Lupa Kata Sandi' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -45,8 +69,8 @@ const ChangePassword = (props) => {
             </Text>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
+              name='Email'
               form={FormSubmit}
-              name='email'
               placeholder='Alamat Email'
             />
             <Buttons title='Kirim' onPress={FormSubmit.handleSubmit} />

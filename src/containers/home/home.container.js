@@ -34,12 +34,13 @@ import {
   Cards,
   Carousel,
   ModalInfo,
+  LoadingView,
   ModalInfoClass,
   ModalNoConnection,
-  ShimmerListCategory,
-  ShimmerCardPromotion,
-  ShimmerCardClassPopuler,
-  ShimmerCardInspiratifStory,
+  // ShimmerListCategory,
+  // ShimmerCardPromotion,
+  // ShimmerCardClassPopuler,
+  // ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
 import { Response } from '../../utils'
@@ -420,7 +421,6 @@ const Home = (props) => {
                     style={styles.imageProfile}
                     source={Images.ImageProfileDefault}
                   />
-                  <Images.LoginDirect.default />
                 </TouchableOpacity>
               </View>
             </View>
@@ -437,33 +437,36 @@ const Home = (props) => {
             snapPoints={[height / 2.7, height / 2.6, height - 92]}
             initialSnap={2}
             enabledContentGestureInteraction={false}
-            renderContent={() => (
+            renderContent={() =>  (
               <ScrollView
                 ref={mainScrollViewRef}
                 style={styles.scrollview}
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
-                  <View style={styles.carousel}>
-
-                    <Carousel
-                      data={statePromotion}
-                      pagination={false}
-                      renderItem={loadingPromo ? ShimmerCardPromotion : PromotionHome}
-                    />
-
-                  </View>
-                  {loadingCategory ?
-                    ShimmerListCategory() :
-                    CategoryClassHome()
-                  }
+                  {loadingClass ? <LoadingView/> :
+                    <>
+                      <View style={styles.carousel}>
+                        <Carousel
+                          data={statePromotion}
+                          pagination={false}
+                          renderItem={PromotionHome}
+                        />
+                      </View>
+                      {/* {loadingCategory ? */}
+                      {/* ShimmerListCategory() : */}
+                      {CategoryClassHome()}
+                      {/* }
                   {loadingClass ?
-                    ShimmerCardClassPopuler() :
-                    <PopularClassHome />
-                  }
+                    ShimmerCardClassPopuler() : */}
+                      <PopularClassHome />
+                      {/* }
                   {loadingStory ?
-                    ShimmerCardInspiratifStory() :
-                    <InspiratifStoryHome />
+                    ShimmerCardInspiratifStory() : */}
+                      {InspiratifStoryHome()}
+                      {/* } */}
+                    </>
                   }
+
                 </View>
                 <View>
                   <TouchableOpacity
