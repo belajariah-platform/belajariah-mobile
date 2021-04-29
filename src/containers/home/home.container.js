@@ -386,7 +386,7 @@ const Home = (props) => {
             <View style={styles.textBackContainer}>
               <Text style={styles.textBack}>
               Assalamualaikum Sobat
-                <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
+                <Text style={styles.textBackBold}> Woii</Text> Siap Belum
               Belajar
                 <Text style={styles.textBackBold}> AlQuran ?</Text>
               </Text>
