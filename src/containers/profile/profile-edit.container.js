@@ -71,7 +71,7 @@ const ProfileEdit = () => {
     onSubmit: async (values) => {
       try {
         const response = await UserAPI.UpdateProfile(values)
-        console.log(response)
+        console.log(response.data)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
