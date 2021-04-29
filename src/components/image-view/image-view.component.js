@@ -8,14 +8,14 @@ import ImageViewer from 'react-native-image-zoom-viewer'
 import { styles } from './image-view.style'
 
 const  ImageView = (props)  => {
-  const imagesModal = [{
-    url: props.filepath,
-    // url: 'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png',
-    props: {
-      // headers: ...
-      source : props.source
-    },
-  }]
+  const imagesModal = props.filepath == '' ?
+    [{
+      props: {
+        source : props.source
+      },
+    }] : [{
+      url: props.filepath,
+    }]
 
   return (
     <>
@@ -41,6 +41,5 @@ ImageView.propTypes = {
   setVisible : PropTypes.func,
   backButtonPress : PropTypes.func,
 }
-
 
 export default ImageView

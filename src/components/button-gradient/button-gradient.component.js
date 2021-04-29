@@ -11,7 +11,7 @@ const ButtonGradient = (props) =>  {
   return (
     <TouchableOpacity
       {...props}
-      activeOpacity={0.8}>
+      activeOpacity={0.5}>
       <LinearGradient
         end={props.end || { x: 1, y: 0 }}
         start={props.start || { x: 1, y: 1 }}

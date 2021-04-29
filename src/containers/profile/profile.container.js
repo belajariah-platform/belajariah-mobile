@@ -135,10 +135,12 @@ const Profile = () => {
           <Images.Email.default width={18} style={styles.iconEmail} />
           <Text style={styles.headerEmail}>{userInfo.Email}</Text>
         </View>
-        <View style={styles.containerEmailPhone}>
-          <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
-        </View>
+        {userInfo.Phone != 0 &&(
+          <View style={styles.containerEmailPhone}>
+            <Images.Phone.default width={18} style={styles.iconPhone} />
+            <Text style={styles.headerPhone}>+{userInfo.Phone}</Text>
+          </View>
+        )}
       </View>
       <Card containerStyle={styles.containerCard}>
         <Images.ProfilePurple.default width={36} style={styles.iconProfile} />

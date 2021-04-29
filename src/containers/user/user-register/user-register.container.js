@@ -54,25 +54,29 @@ const Register = (props) => {
     }),
     onSubmit: async (values, form) => {
       if (checked === true) {
-        values.Phone = Number('62' + values.Phone)
-        try {
-          setLoading(true)
-          const response = await UserAPI.SignUp(values)
-          if (!response.data.result) {
+        if (values.Phone.charAt(0) == '0') {
+          Alerts(false, 'Format nomor telepon tidak sesuai')
+        } else {
+          try {
+            setLoading(true)
+            values.Phone = Number('62' + values.Phone)
+            const response = await UserAPI.SignUp(values)
+            if (!response.data.result) {
+              setLoading(false)
+              Alerts(false, response.data.message)
+            } else {
+              form.resetForm()
+              setLoading(false)
+              props.navigation.navigate('UserVerify')
+            }
+          } catch (err) {
             setLoading(false)
-            Alerts(false, response.data.message)
-          } else {
-            form.resetForm()
-            setLoading(false)
-            props.navigation.navigate('UserVerify')
+            NetInfo.fetch().then(res => {
+              setconnectStatus(!res.isConnected)
+            })
+            return err
           }
-        } catch (err) {
-          NetInfo.fetch().then(res => {
-            setconnectStatus(!res.isConnected)
-          })
-          return err
         }
-        setLoading(false)
       }
     },
   })

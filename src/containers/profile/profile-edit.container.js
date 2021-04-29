@@ -56,13 +56,13 @@ const ProfileEdit = () => {
   }
   // const [previewImage, setPreviewImage] = useState(false)
   // const [cameraVisible, setCameraVisible] = useState(false)
-
+  console.log(userInfo)
   const FormPersonal = useFormik({
     initialValues: {
       User_Code : userInfo.ID,
       Full_Name: userInfo.Full_Name,
-      Phone: userInfo.Phone,
       Profesion: userInfo.Profession,
+      Phone: userInfo.Phone == 0 ? '' : userInfo.Phone,
       Gender: userInfo.Gender,
       Birth: userInfo.Birth || new Date(),
       Province: userInfo.Province,
@@ -71,7 +71,10 @@ const ProfileEdit = () => {
     },
     onSubmit: async (values) => {
       try {
+        console.log(values)
+        values.Phone = values.Phone == '' ? 0 : Number('62' + values.Phone)
         const response = await UserAPI.UpdateProfile(values)
+        console.log(response.data)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
@@ -343,14 +346,23 @@ const ProfileEdit = () => {
                     name='Full_Name'
                     form={FormPersonal}
                     placeholder='Nama lengkap'
-                  ></TextBox>
-                  <Text style={styles.containerText}>Nomor Telepon</Text>
-                  <TextBox
-                    name='Phone'
-                    form={FormPersonal}
-                    placeholder='+62'
-                    keyboardType='phone-pad'
                   />
+                  <Text style={styles.containerText}>Nomor Telepon</Text>
+                  <View style={{ flexDirection : 'row' }}>
+                    <TextBox
+                      disabled
+                      placeholder='+62'
+                      keyboardType='phone-pad'
+                      customStyle={styles.phoneOne}
+                    />
+                    <TextBox
+                      name='Phone'
+                      form={FormPersonal}
+                      placeholder='Telepon'
+                      keyboardType='phone-pad'
+                      customStyle={styles.phoneTwo}
+                    />
+                  </View>
                   <Text style={styles.containerText}>Profesi</Text>
                   <TextBox
                     name='Profesion'
