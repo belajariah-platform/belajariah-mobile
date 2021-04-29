@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer'
 
 import {
@@ -20,10 +20,19 @@ const CustomDrawer = ({ navigation }, props) => {
   const dispatch = useDispatch()
   const [action, setAction] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
+  const { loginType } = useSelector((state) => state.UserReducer)
 
   const toggleModal = (e) => {
     setAction(e)
     setModalVisible(!modalVisible)
+  }
+
+  const handleSignOut = async () => {
+    await dispatch(UserAPI.SignOut())
+    switch (loginType) {
+    case 'google':
+      UserAPI.GoogeSignOut()
+    }
   }
 
   return (
@@ -31,7 +40,7 @@ const CustomDrawer = ({ navigation }, props) => {
       <ModalConfirm
         action={action}
         isVisible={modalVisible}
-        submit={async () => await dispatch(UserAPI.SignOut())}
+        submit={() => handleSignOut()}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
       />
