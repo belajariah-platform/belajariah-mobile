@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 
 import {
   View,
@@ -22,7 +23,8 @@ import {
   Alerts,
   Topbar,
   TextBox,
-  Buttons
+  Buttons,
+  ModalNoConnection
 } from '../../../components'
 
 import { UserAPI } from '../../../api'
@@ -32,7 +34,9 @@ import { styles } from './user-register.style'
 const Register = (props) => {
   const [loading, setLoading] = useState(false)
   const [checked, setChecked] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
     initialValues: {
@@ -63,6 +67,9 @@ const Register = (props) => {
             props.navigation.navigate('UserVerify')
           }
         } catch (err) {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
           return err
         }
         setLoading(false)
@@ -84,6 +91,12 @@ const Register = (props) => {
   return (
     <>
       {loading && <Loader loading={loading}/>}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => togglemodalNoConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Topbar title='Daftar' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>

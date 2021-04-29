@@ -38,6 +38,7 @@ const ProfileEdit = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
+
   const [dataCapture, setDataCapture] = useState({})
   const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
@@ -71,7 +72,6 @@ const ProfileEdit = () => {
     onSubmit: async (values) => {
       try {
         const response = await UserAPI.UpdateProfile(values)
-        console.log(response.data)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
