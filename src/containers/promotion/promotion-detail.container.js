@@ -159,7 +159,7 @@ const PromotionDetail = () => {
                 backdropPress={() => togglemodalNoConnection()}
                 backButtonPress={() => togglemodalNoConnection()}
               />
-              <Image source={Images.IconPromoEmpty} style={{ width : 260, height : 200, alignContent : 'center', alignSelf : 'center' }}/>
+              <Image source={Images.IconPromoEmpty} style={styles.promoEmpty}/>
             </ScrollView>
           ) : (
             <ScrollView
