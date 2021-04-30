@@ -1,45 +1,63 @@
-import React from 'react'
+import moment from 'moment'
+import PropTypes from 'prop-types'
 import { Card } from 'react-native-elements'
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 
 import { Images } from '../../../assets'
+import { RatingAPI } from '../../../api'
+import { Response } from '../../../utils'
+import { ModalNoConnection } from '../../../components'
+
 import styles from './class-review.style'
 
-const ClassReview = () => {
-  const classData = {
-    rating: 4.5,
-    totalReview: 1258,
-    reviews: [
-      {
-        id: 1,
-        name: 'Jhon Smith',
-        time: 'Hari ini',
-        review: 'Thank you!.. sangat bermanfaat',
-        rating: 4.5,
-      },
-      {
-        id: 2,
-        name: 'Jhonshon',
-        time: '1 Minggu yang lalu',
-        review: 'Pengajarnya sangat kompeten, materi yang di sampaikan mudah dipahami',
-        rating: 4.5,
-      },
-      {
-        id: 3,
-        name: 'user17',
-        time: '1 Bulan yang lalu',
-        review: 'Very Recomended!!',
-        rating: 4.5,
-      },
-      {
-        id: 4,
-        name: 'Noname',
-        time: '1 Tahun yang lalu',
-        review: 'Sangat cocok untuk kalian yang sibuk bekerja, tapi ingin belajar membaca al-qur\'an... Belajariah solusi buat kamu : ) ',
-        rating: 4.5,
-      },
-    ],
+const ClassReview = ({ params }) => {
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState, setDataState] = useState({ skip: 0, take: 15, filter: [], filterString: '[]' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataRating(dataState, params.Code)
   }
+
+  const fetchDataRating = async (state, code) => {
+    try {
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
+      const response = await RatingAPI.GetAllRating(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+        setCount(response.data.count)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  const handleLoadMore = () => {
+    setDataState({
+      ...dataState,
+      take : dataState.take + 10
+    })
+  }
+
+  useEffect(() => {
+    fetchDataRating(dataState, params.Code)
+  }, [dataState])
 
   const handleRating = (num) => {
     let rating = []
@@ -62,35 +80,49 @@ const ClassReview = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Card containerStyle={styles.card}>
         <View style={styles.header}>
           <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
-            <Text style={styles.rating}>4.5</Text>
-            <Text style={styles.textBold}>{`Dari ${1258} ulasan`}</Text>
+            <Text style={styles.rating}>{params.Class_Rating}</Text>
+            <Text style={styles.textBold}>{`Dari ${params.Total_Review} ulasan`}</Text>
           </View>
         </View>
         <View style={styles.footer}>
-          {classData.reviews.map((review, index) => {
+          {state.map((item, index) => {
             return (
               <View key={index} style={styles.cardReview}>
                 <Text style={styles.textBoldCustom}>
-                  {review.name} | {review.time}
+                  {item.User_Name} | {moment(item.Created_Date).fromNow()}
                 </Text>
-                <Text style={styles.textRegular}>{review.review}</Text>
-                <View>{handleRating(review.rating)}</View>
+                <Text style={styles.textRegular}>{item.Comment}</Text>
+                <View>{handleRating(item.Rating)}</View>
               </View>
             )
           })}
           <View>
-            <TouchableOpacity activeOpacity={0.6}>
-              <Text style={styles.textView}>Lihat lainnya</Text>
+            <TouchableOpacity
+              onPress={handleLoadMore}
+              activeOpacity={0.6}>
+              {dataState.take <= count &&(
+                <Text style={styles.textView}>Lihat lainnya</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
       </Card>
     </ScrollView>
   )
+}
+
+ClassReview.propTypes = {
+  params : PropTypes.object,
 }
 
 export default ClassReview
