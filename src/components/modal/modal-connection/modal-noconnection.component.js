@@ -8,43 +8,48 @@ import { Images } from '../../../assets'
 import { Text } from 'react-native'
 
 const ModalNoConnection = (props) => {
-    return(
-        <>
-        <Modal
-            backdropOpacity={0.25}
-            isVisible={props.isVisible}
-            style={styles.backdropStyle}
-            onBackdropPress={props.backdropPress}
-            >
-            <View style={[styles.modalStyle, props.containerStyle]}>
-            {props.hideButtonClose || (
-                <TouchableOpacity
-                onPress={props.backdropPress}
-                style={styles.closeStyle}>
-                <Images.ButtonClose.default/>
-                </TouchableOpacity>
-            )}
-            <View style={styles.modalContentSyle}>
-                {props.renderItem}
-                <Image source={Images.ImgModalNoConnection} style={{width:280, height: 245,}} resizeMode='contain' />
-                <View>
-                    <TouchableOpacity onPress={props.backdropPress}>
-                        <Text style={styles.TxtButton}>Retry</Text>
-                    </TouchableOpacity>
-                </View>
+  return(
+    <>
+      <Modal
+        backdropOpacity={0.25}
+        isVisible={props.isVisible}
+        style={styles.backdropStyle}
+        onBackdropPress={props.backdropPress}
+        onBackButtonPress={props.backButtonPress}
+      >
+        <View style={[styles.modalStyle, props.containerStyle]}>
+          {props.hideButtonClose || (
+            <TouchableOpacity
+              onPress={props.backdropPress}
+              style={styles.closeStyle}>
+              <Images.ButtonClose.default/>
+            </TouchableOpacity>
+          )}
+          <View style={styles.modalContentSyle}>
+            {props.renderItem}
+            <Image source={Images.ImgModalNoConnection} style={{ width:280, height: 245, }} resizeMode='contain' />
+            <View>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={props.retry}>
+                <Text style={styles.TxtButton}>Retry</Text>
+              </TouchableOpacity>
             </View>
-            </View>
-        </Modal>
-        </>
-    )
+          </View>
+        </View>
+      </Modal>
+    </>
+  )
 }
 
 ModalNoConnection.propTypes = {
-    isVisible : PropTypes.bool,
-    renderItem : PropTypes.object,
-    backdropPress : PropTypes.func,
-    hideButtonClose : PropTypes.bool,
-    containerStyle : PropTypes.object,
+  retry : PropTypes.func,
+  isVisible : PropTypes.bool,
+  renderItem : PropTypes.object,
+  backdropPress : PropTypes.func,
+  backButtonPress : PropTypes.func,
+  hideButtonClose : PropTypes.bool,
+  containerStyle : PropTypes.object,
 }
 
 export default ModalNoConnection

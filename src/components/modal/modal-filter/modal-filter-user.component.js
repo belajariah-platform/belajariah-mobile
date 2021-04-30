@@ -9,19 +9,25 @@ import { styles } from './modal-filter-admin.style'
 
 const ModalFilterUser = (props) => {
   const [categorySelected, setCategorySelected] = useState(0)
-  const [categoryWaktuSelected, setcategoryWaktuSelected] = useState(0)
+  const [filter, setFilter] = useState('[]')
+  const [sort, setSort] = useState('DESC')
   const horizontalScrollRef = useRef()
 
-  const categoriesKelas = [
-    { id: 1, name: 'Tahsin' },
-    { id: 2, name: 'Tilawah' },
+  const sorting = [
+    { ID: 1, Type : 'DESC',  Value: 'Terbaru' },
+    { ID: 2, Type : 'ASC', Value: 'Terlama' },
   ]
 
-  const categoriesWaktu = [
-    { no: 1, Desc: 'Mulai' },
-    { no: 2, Desc: 'Progres' },
-    { no: 3, Desc: 'Selesai' },
-  ]
+  const onResetChange = () => {
+    setFilter('[]')
+    setSort('DESC')
+    setCategorySelected(0)
+  }
+
+  const onFilterChange = (item) => {
+    setCategorySelected(item.ID)
+    setFilter(`[{"type": "text", "field" : "class_category", "value": "${item.Value}"}]`)
+  }
 
   return(
     <>
@@ -44,7 +50,7 @@ const ModalFilterUser = (props) => {
           <View style={styles.modalContentSyle}>
             <View style={styles.viewReset}>
               <Text style={styles.TxtTitleReset}>Kelas</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={onResetChange}>
                 <Text style={styles.TxtButtonReset}>Reset</Text>
               </TouchableOpacity>
             </View>
@@ -52,21 +58,17 @@ const ModalFilterUser = (props) => {
               <ScrollView
                 ref={horizontalScrollRef}
                 horizontal={true} showsHorizontalScrollIndicator={false}>
-                {categoriesKelas.map((category, index) => {
+                {props.state.map((item, index) => {
                   return (
                     <TouchableOpacity
                       key={index}
                       onPress={ () => {
-                        setCategorySelected(category.id)
-                        // await horizontalScrollRef.current.scrollTo({
-                        //   x: 4000,
-                        //   animated: true,
-                        // })
+                        onFilterChange(item)
                       }}>
                       <Text
                         style={[
                           styles.textCategories,
-                          category.id === categorySelected
+                          item.ID === categorySelected
                             ? {
                               color: Color.white,
                               borderColor: Color.transparent,
@@ -79,7 +81,7 @@ const ModalFilterUser = (props) => {
                               backgroundColor: Color.bgColorWhite,
                             },
                         ]}>
-                        {category.name}
+                        {item.Value}
                       </Text>
                     </TouchableOpacity>
                   )
@@ -93,21 +95,17 @@ const ModalFilterUser = (props) => {
               <ScrollView
                 ref={horizontalScrollRef}
                 horizontal={true} showsHorizontalScrollIndicator={false}>
-                {categoriesWaktu.map((categoriesWaktu, index) => {
+                {sorting.map((item, index) => {
                   return (
                     <TouchableOpacity
                       key={index}
                       onPress={ () => {
-                        setcategoryWaktuSelected(categoriesWaktu.no)
-                        // await horizontalScrollRef.current.scrollTo({
-                        //   x: 4000,
-                        //   animated: true,
-                        // })
+                        setSort(item.Type)
                       }}>
                       <Text
                         style={[
                           styles.textCategories,
-                          categoriesWaktu.no === categoryWaktuSelected
+                          item.Type == sort
                             ? {
                               color: Color.white,
                               borderColor: Color.transparent,
@@ -120,7 +118,7 @@ const ModalFilterUser = (props) => {
                               backgroundColor: Color.bgColorWhite,
                             },
                         ]}>
-                        {categoriesWaktu.Desc}
+                        {item.Value}
                       </Text>
                     </TouchableOpacity>
                   )
@@ -128,7 +126,7 @@ const ModalFilterUser = (props) => {
               </ScrollView>
             </View>
             <View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => props.submit(sort, filter)}>
                 <Text style={styles.ButtonFilter}>Terapkan</Text>
               </TouchableOpacity>
             </View>
@@ -140,6 +138,8 @@ const ModalFilterUser = (props) => {
 }
 
 ModalFilterUser.propTypes = {
+  state : PropTypes.array,
+  submit : PropTypes.func,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,

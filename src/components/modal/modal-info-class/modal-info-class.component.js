@@ -102,7 +102,7 @@ const ModalInfoClass = (props) => {
 
     )
   }
-  console.log(props.loading)
+
   return(
     <>
       <Modal
@@ -118,7 +118,9 @@ const ModalInfoClass = (props) => {
               <Text style={styles.TxtJudulModal}>Pilih Paket Belajar</Text>
             </View>
             {props.loading ?
-              <LoadingView/> :
+              <LoadingView
+                loadingStyle={{ flex : 0 }}
+              /> :
               <ViewClass />
             }
           </View>
