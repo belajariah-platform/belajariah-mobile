@@ -1,62 +1,66 @@
 import PropTypes from 'prop-types'
+import { Text } from '@ui-kitten/components'
 import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   View,
   FlatList,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
+
+import { QURAN_LIST_SUCC } from '../../action'
+
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../components'
 
 import { QuranAPI } from '../../api'
 import { Response } from '../../utils'
-import { QURAN_LIST_REQ, QURAN_LIST_SUCC, QURAN_LIST_FAIL } from '../../action'
 
-import NetInfo from '@react-native-community/netinfo'
 import { Images } from '../../assets'
 import { styles } from './alquran.style'
-import { Text } from '@ui-kitten/components'
-import { useNavigation } from '@react-navigation/native'
-import { ModalNoConnection } from '../../components'
 // import { TabBar, TabView, SceneMap } from 'react-native-tab-view'
 
 const Alquran = (props) => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const [loading, setLoading] = useState(true)
   const [connectStatus, setconnectStatus] = useState(false)
-  const { data, loading } = useSelector((state) => state.QuranReducer)
+  const { data } = useSelector((state) => state.QuranReducer)
 
-  // const [index, setIndex] = useState(0)
-  // const initialLayout = { width: Dimensions.get('window').width }
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataQuran()
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataQuran = async () => {
     try {
+      setLoading(true)
       const response = await QuranAPI.GetAllQuran()
       if (response.status === Response.SUCCESS) {
         await dispatch({
           type: QURAN_LIST_SUCC,
           payload: response.data.data,
         })
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
+      setLoading(false)
     } catch (err) {
-      dispatch({
-        type: QURAN_LIST_FAIL,
-      })
+      setLoading(false)
       return err
     }
   }
 
   useEffect(() => {
-    NetInfo.fetch().then(res=>{
-      setconnectStatus(res.isConnected)
-      dispatch({
-        type: QURAN_LIST_FAIL,
-      })
-    })
-    dispatch({ type: QURAN_LIST_REQ })
     fetchDataQuran()
   }, [])
 
@@ -171,31 +175,33 @@ const Alquran = (props) => {
   }
 
 
-  return loading ?
-    (<View style={styles.indicatorContainer}>
-      <ActivityIndicator
-        color='white'
-        size={30} />
+  return loading ? (
+    <View style={styles.indicatorContainer}>
+      <LoadingView color='white'/>
     </View>
-    ) : (
-      <ImageBackground
-        source={Images.AlQuranBG}
-        style={styles.containerBackground}
-        resizeMode='stretch'>
-        <ModalNoConnection
-          isVisible={!connectStatus}
-          backdropPress={togglemodalNoConnection}/>
-        <View style={styles.containerHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Images.ButtonBack.default />
-          </TouchableOpacity>
-          <Text style={styles.textHeader}>{'Al-Qur\'an'}</Text>
-        </View>
-        <View style={styles.containerTemp}>
-          <ListSurah />
-        </View>
-      </ImageBackground>
-    )
+  ) : (
+    <ImageBackground
+      source={Images.AlQuranBG}
+      style={styles.containerBackground}
+      resizeMode='stretch'
+    >
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
+      <View style={styles.containerHeader}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Images.ButtonBack.default />
+        </TouchableOpacity>
+        <Text style={styles.textHeader}>{'Al-Qur\'an'}</Text>
+      </View>
+      <View style={styles.containerTemp}>
+        <ListSurah />
+      </View>
+    </ImageBackground>
+  )
 }
 
 Alquran.propTypes = {

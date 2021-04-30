@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import { View, TouchableOpacity, Text, TextInput } from 'react-native'
-
 import { ButtonGradient } from '../../../components'
+import { View, TouchableOpacity, Text, TextInput } from 'react-native'
 
 import { styles } from './modal-repair.style'
 
@@ -40,6 +39,7 @@ const ModalRepair = (props) => {
               multiline={true}
               numberOfLines={8}
               style={styles.textArea}
+              onChangeText={(e) => props.onChangeText(e)}
             />
             <Button />
           </View>
@@ -51,8 +51,10 @@ const ModalRepair = (props) => {
 
 ModalRepair.propTypes = {
   submit : PropTypes.func,
+  loading : PropTypes.bool,
   title : PropTypes.string,
   isVisible : PropTypes.bool,
+  onChangeText : PropTypes.func,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
   backButtonPress : PropTypes.func,

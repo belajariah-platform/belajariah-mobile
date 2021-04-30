@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Image } from 'react-native'
 
+import { Images } from '../../assets'
 import { styles } from './card.style'
 
 const  Cards = (props)  => {
@@ -10,14 +11,15 @@ const  Cards = (props)  => {
       {props.imageTitle}
       <View >
         <Image
-          source={props.filepath}
+          source={props.filepath == '' ? Images.ImgDefault3 :
+            { uri : props.filepath }}
           style={styles.images}
         />
       </View>
       <View style={styles.content}>
         <Text
           style={styles.description}>
-          {props.description.substring(0, 150)} ...
+          {props.description.substring(0, 120)} ...
         </Text>
         <View style={styles.rating}>
           {props.rating}
@@ -30,7 +32,7 @@ const  Cards = (props)  => {
 Cards.propTypes = {
   price : PropTypes.object,
   rating : PropTypes.object,
-  filepath : PropTypes.number,
+  filepath : PropTypes.string,
   imageTitle : PropTypes.object,
   description : PropTypes.string,
 }

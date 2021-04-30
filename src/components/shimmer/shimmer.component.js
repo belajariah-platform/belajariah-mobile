@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View} from 'react-native'
+import { View } from 'react-native'
 import { Card } from 'react-native-elements'
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
-import {styles} from './shimmer.style'
+import { styles } from './shimmer.style'
 import { Color } from '../../assets'
 
 const Shimmer = (props) => {
@@ -21,16 +21,16 @@ const Shimmer = (props) => {
   )
 }
 
-const ShimmerInspiratifStory = (props) => {
+const ShimmerInspiratifStory = () => {
   return(
     <Card
       containerStyle={{
-      padding: 15,
-      width: 'auto',
-      height: 'auto',
-      borderWidth : 0,
-      borderRadius: 20,}}
-      >
+        padding: 15,
+        width: 'auto',
+        height: 'auto',
+        borderWidth : 0,
+        borderRadius: 20, }}
+    >
       <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={styles.container}>
           <View style={styles.containerImg} />
@@ -46,22 +46,21 @@ const ShimmerInspiratifStory = (props) => {
   )
 }
 
-const ShimmerCardPromotion = (props) => {
+const ShimmerCardPromotion = () => {
   return(
     <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
-        <View style={{
-          height: 100,
-          borderWidth: 0,
-          borderRadius: 20,
-          maxWidth: '100%',
-          borderColor: Color.transparent,
-          backgroundColor: Color.greyMedium,}}>
-        </View>
+      <View style={{
+        height: 100,
+        borderWidth: 0,
+        borderRadius: 20,
+        maxWidth: '100%',
+        borderColor: Color.transparent,
+        backgroundColor: Color.greyMedium, }}/>
     </SkeletonPlaceholder>
   )
 }
 
-const ShimmerListCategory = (props) => {
+const ShimmerListCategory = () => {
   return(
     <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
       <View style={{
@@ -73,14 +72,14 @@ const ShimmerListCategory = (props) => {
         marginHorizontal: 4,
         paddingHorizontal: 18,
         backgroundColor: 'red',
-      }}></View>
+      }}/>
     </SkeletonPlaceholder>
   )
 }
 
-const ShimmerCardClassPopuler = (props) => {
+const ShimmerCardClassPopuler = () => {
   return(
-    <View style={{flex:1,
+    <View style={{ flex:1,
       height: 210,
       // elevation: 2,
       width: '100%',
@@ -90,7 +89,7 @@ const ShimmerCardClassPopuler = (props) => {
       marginVertical :10,
       shadowColor: '#000',
       borderColor: '#dddddd',
-      backgroundColor: Color.white}}>
+      backgroundColor: Color.white }}>
       <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={{
           height: 120,
@@ -99,8 +98,8 @@ const ShimmerCardClassPopuler = (props) => {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           borderColor: Color.transparent,
-          backgroundColor: Color.greyMedium,}}>
-        </View>
+          backgroundColor: Color.greyMedium, }}
+        />
         <View style={{
           height: 10,
           marginTop: 8,
@@ -108,7 +107,7 @@ const ShimmerCardClassPopuler = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           width: '80%',
           height: 10,
@@ -117,7 +116,7 @@ const ShimmerCardClassPopuler = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           width: '40%',
           height: 10,
@@ -126,7 +125,7 @@ const ShimmerCardClassPopuler = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           width: '40%',
           height: 18,
@@ -135,13 +134,13 @@ const ShimmerCardClassPopuler = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
-      </SkeletonPlaceholder>  
+        }}/>
+      </SkeletonPlaceholder>
     </View>
   )
 }
 
-const ShimmerCardInspiratifStory = (props) => {
+const ShimmerCardInspiratifStory = () => {
   return(
     <Card containerStyle={{
       padding:0,
@@ -151,7 +150,7 @@ const ShimmerCardInspiratifStory = (props) => {
       borderWidth: 0,
       borderRadius: 20,
       marginVertical: 8,
-      marginHorizontal: 12,}}>
+      marginHorizontal: 12, }}>
       <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
         <View style={{
           width: '100%',
@@ -162,8 +161,8 @@ const ShimmerCardInspiratifStory = (props) => {
           shadowOpacity: 0.22,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
-          shadowOffset: { width: 0, height: 1 },}}>
-        </View>
+          shadowOffset: { width: 0, height: 1 }, }}
+        />
         <View style={{
           height: 10,
           marginTop: 6,
@@ -171,7 +170,7 @@ const ShimmerCardInspiratifStory = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           height: 10,
           marginTop: 6,
@@ -179,7 +178,7 @@ const ShimmerCardInspiratifStory = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           height: 10,
           marginTop: 6,
@@ -187,7 +186,7 @@ const ShimmerCardInspiratifStory = (props) => {
           borderRadius: 5,
           marginHorizontal: '3%',
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
         <View style={{
           height: 24,
           left: '63%',
@@ -197,7 +196,7 @@ const ShimmerCardInspiratifStory = (props) => {
           borderWidth: 0,
           borderRadius: 5,
           borderColor: Color.transparent,
-          }}></View>
+        }}/>
       </SkeletonPlaceholder>
     </Card>
   )
@@ -209,10 +208,10 @@ Shimmer.propTypes = {
 }
 
 export {
-  Shimmer, 
+  Shimmer,
   ShimmerListCategory,
-  ShimmerCardPromotion, 
-  ShimmerInspiratifStory, 
+  ShimmerCardPromotion,
+  ShimmerInspiratifStory,
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
 }

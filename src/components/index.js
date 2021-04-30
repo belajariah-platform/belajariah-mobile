@@ -3,6 +3,7 @@ import Alerts from './alert'
 import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
+import LoadingView from './loading-view'
 import {
   Shimmer,
   ShimmerListCategory,
@@ -53,6 +54,7 @@ export {
   ModalDate,
   Searchbox,
   ModalInfo,
+  LoadingView,
   ModalRating,
   ModalRecord,
   ModalRepair,

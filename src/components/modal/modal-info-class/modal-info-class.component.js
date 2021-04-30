@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
 import { Text } from '@ui-kitten/components'
 import { View, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
+import { LoadingView } from '../../../components'
 import { FormatRupiah } from '../../../utils'
 import { Images, Color } from '../../../assets'
 import { styles } from './modal-info-class.style'
@@ -48,7 +49,7 @@ const ModalInfoClass = (props) => {
               key={index}
               onPress={() => {
                 props.backdropPress()
-                navigation.navigate('ClassDetail', value)
+                navigation.navigate('ClassDetail', { packages : value, classes : props.class })
               }}>
               <View style={[styles.containerPaket, { backgroundColor: colors }]}>
                 <View style={styles.viewTitlePaket}>
@@ -116,7 +117,12 @@ const ModalInfoClass = (props) => {
             <View style={styles.viewTxtJudulModal}>
               <Text style={styles.TxtJudulModal}>Pilih Paket Belajar</Text>
             </View>
-            <ViewClass />
+            {props.loading ?
+              <LoadingView
+                loadingStyle={{ flex : 0 }}
+              /> :
+              <ViewClass />
+            }
           </View>
         </View>
       </Modal>
@@ -125,7 +131,9 @@ const ModalInfoClass = (props) => {
 }
 
 ModalInfoClass.propTypes = {
+  loading : PropTypes.bool,
   title : PropTypes.string,
+  class : PropTypes.object,
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
