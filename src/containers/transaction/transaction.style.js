@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
     alignItems : 'flex-end',
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
 })
