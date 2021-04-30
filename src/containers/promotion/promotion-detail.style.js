@@ -294,6 +294,12 @@ const styles = StyleSheet.create({
   containerBanner : {
     alignItems: 'center',
     marginHorizontal: 16,
+  },
+  promoEmpty : {
+    width : 260,
+    height : 200,
+    alignSelf : 'center',
+    alignContent : 'center',
   }
 })
 

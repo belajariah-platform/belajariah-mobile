@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     alignSelf : 'center',
     width: 176,
     height: 88,
-    alignSelf: 'center',
   },
   videoFullscreenStyle: {
     width: '100%',

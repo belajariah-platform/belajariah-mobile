@@ -194,7 +194,9 @@ const styles = StyleSheet.create({
     color: Color.purpleButton,
     fontFamily : FontType.regular,
     fontSize : FontSize.smallMedium,
-  }
+  },
+  phoneOne : { width : '29%', marginRight : '2%' },
+  phoneTwo : { width : '69%' }
 })
 
 export { styles }

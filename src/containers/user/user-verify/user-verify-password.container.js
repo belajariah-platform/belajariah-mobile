@@ -3,50 +3,80 @@ import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 
-import { 
-    View, 
-    ScrollView,
-    TouchableOpacity,
-    } 
-from 'react-native'
-import { 
-    Topbar, 
-    Loader, 
-    Buttons, 
-    TextBox,
- } from '../../../components'
+import {
+  View,
+  ScrollView,
+}
+  from 'react-native'
+import {
+  Alerts,
+  Topbar,
+  Loader,
+  Buttons,
+  TextBox,
+  ModalNoConnection
+} from '../../../components'
+
+import { UserAPI } from '../../../api'
 import { styles } from './user-verify.style'
 
 const UserVerifyPassword = () => {
   const navigation = useNavigation()
-
   const [loading, setLoading] = useState(false)
-  const [success] = useState(true)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const FormSubmit = useFormik({
-    initialValues: { verify_code: '' },
+    initialValues: { Verified_Code: '', Email : '' },
     validationSchema: Yup.object({
-      verify_code: Yup.string()
+      Verified_Code: Yup.string()
         .required('Kode verifikasi harus diisi'),
     }),
-    onSubmit: () => {
-      setLoading(true)
+    onSubmit: async (values, form) => {
       try {
-        if (success === true) {
-          navigation.navigate('ConfirmPassword')
+        setLoading(true)
+        const response = await UserAPI.VerifyEmail(values)
+        console.log(response.data)
+        if (response.data.count == 0) {
+          Alerts(response.data.result, 'Kode verifikasi salah')
+        } else {
+          form.resetForm()
+          navigation.navigate('ConfirmPassword', response.data.result)
         }
+        setLoading(false)
       } catch (err) {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+        setLoading(false)
         return err
       }
-      setLoading(false)
     },
   })
 
+  // const resetVerification = async (email) => {
+  //   try {
+  //     const response = await UserAPI.ResetVerification(email)
+  //     if (!response.data.result) {
+  //       //
+  //     }
+  //   } catch (err) {
+  //     return err
+  //   }
+  // }
+
   return (
     <>
-      {loading && <Loader loading={loading} setLoading={setLoading} />}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => togglemodalNoConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
+      <Loader loading={loading}/>
       <Topbar title='Verifikasi Akun' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -57,14 +87,14 @@ const UserVerifyPassword = () => {
             </Text>
             <Text style={styles.text}>Masukkan kode verifikasi</Text>
             <TextBox
-              name='verify_code'
               form={FormSubmit}
+              name='Verified_Code'
               placeholder='Kode Verifikasi'
             />
-            <TouchableOpacity
-              onPress={() => console.log("reset")}>
+            {/* <TouchableOpacity
+              onPress={() => resetVerification()}>
               <Text style={styles.leftText}>Reset kode verifikasi</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Buttons title='Verifikasi'
               onPress={FormSubmit.handleSubmit}/>
           </View>

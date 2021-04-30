@@ -30,17 +30,50 @@ const ContactUs = () => {
       const stringSplit = value.split('|')
       return stringSplit.map((val, index) => {
         if (val.includes('phone:')) {
-          return (<Text key={index} style={styles.textParagraph}>
-            Phone : {val.substring(6)}</Text>)
+          return (
+            <View style={styles.containerContactUs}>
+              <Images.SMFacebook.default width={30} height={30}/>
+              <Text key={index} style={styles.textParagraphContact}>
+                {val.substring(6)}
+              </Text>
+            </View>
+          )
         } else if (val.includes('ig:')) {
-          return (<Text key={index} style={styles.textParagraph}>
-            Instagram : {val.substring(3)}</Text>)
+          return (
+            <View style={styles.containerContactUs}>
+              <Images.SMInstagram.default width={30} height={30}/>
+              <Text key={index} style={styles.textParagraphContact}>
+                {val.substring(3)}
+              </Text>
+            </View>
+          )
         } else if (val.includes('fb:')) {
-          return (<Text key={index} style={styles.textParagraph}>
-            Facebook : {val.substring(3)}</Text>)
+          return (
+            <View style={styles.containerContactUs}>
+              <Images.SMFacebook.default width={30} height={30}/>
+              <Text key={index} style={styles.textParagraphContact}>
+                {val.substring(3)}
+              </Text>
+            </View>
+          )
         } else if (val.includes('web:')) {
-          return (<Text key={index} style={styles.textParagraph}>
-            Website : {val.substring(4)}</Text>)
+          return (
+            <View style={styles.containerContactUs}>
+              <Images.SMWebsite.default width={30} height={30}/>
+              <Text key={index} style={styles.textParagraphContact}>
+                {val.substring(4)}
+              </Text>
+            </View>
+          )
+        } else if (val.includes('yt:')) {
+          return (
+            <View style={styles.containerContactUs}>
+              <Images.SMYoutube.default width={30} height={30}/>
+              <Text key={index} style={styles.textParagraphContact}>
+                {val.substring(3)}
+              </Text>
+            </View>
+          )
         } else {
           return (<Text key={index}
             style={{ ...styles.textSubtitleBold, marginBottom : 20 }}>

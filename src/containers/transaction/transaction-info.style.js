@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   viewIconBank: {
-    paddingVertical: '3%',
-    paddingHorizontal: '3%',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     backgroundColor: Color.mediumPink,

@@ -1,30 +1,83 @@
-import moment from 'moment'
-import { Text } from '@ui-kitten/components'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import DocumentPicker from 'react-native-document-picker'
+import { Text } from '@ui-kitten/components'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
+import DocumentPicker from 'react-native-document-picker'
 
 import {
   View,
   ScrollView,
+  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
 
+import {
+  Loader,
+  TextBox,
+  ModalInfo,
+  ButtonGradient,
+  ModalNoConnection,
+} from '../../components'
+
 import { Images } from '../../assets'
+import { PaymentAPI } from '../../api'
 import { FormatRupiah } from '../../utils'
-import { ButtonGradient, TextBox, ModalInfo } from '../../components'
 
 import styles from './transaction-upload.style'
 
-const TransactionUpload = () => {
+const TransactionUpload = (props) => {
+  const item = props.route.params
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(false)
   const [dataImage, setDataImage] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
 
-  const state = {
-    total_price : 10000000,
-    created_date : new Date(),
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+  }
+
+  const FormUpload = useFormik({
+    initialValues: {
+      ID: item.ID,
+      Payment_Method_Code: item.Payment_Method_Code,
+      Status_Payment_Code : item.Status_Payment_Code,
+      Sender_Bank : '',
+      Sender_Name : '',
+      Image_Code : 0,
+      Total_Transfer : item.Total_Transfer,
+      Action : 'Approved',
+
+    },
+    onSubmit:   (values) => {
+      if (values.Sender_Bank != '' || values.Sender_Name !='') {
+        uploadPayment(values)
+      } else {
+        ToastAndroid.show('Mohon lengkapi semua data',
+          ToastAndroid.SHORT)
+      }
+    },
+  })
+
+  const uploadPayment = async (values) => {
+    try {
+      setLoading(true)
+      const response = await PaymentAPI.UploadPayment(values)
+      if (response.data.result) {
+        toggleModal()
+      }
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
+      return error
+    }
   }
 
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -63,40 +116,18 @@ const TransactionUpload = () => {
     return(
       <View>
         <View style={styles.cardDetail}>
-          <Text style={styles.textTitle}>Nama pengirim di rekening Bank</Text>
-          <TextBox
-            placeholder='NAMA LENGKAP'
-            customStyle={styles.textInput}
-          />
-        </View>
-        <View style={styles.cardDetail}>
-          <Text style={styles.textTitle}>Transfer dari bank</Text>
-          <TextBox
-            placeholder='NAMA BANK'
-            customStyle={styles.textInput}
-          />
-        </View>
-        <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Transfer ke bank</Text>
             <View style={styles.ViewDescBank}>
-              <Text style={styles.Txtright}>BNI Syariah</Text>
-              <Text style={styles.Txtright}>a/n Belajariah</Text>
+              <Text style={styles.Txtright}>{item.Payment_Method}</Text>
+              <Text style={styles.Txtright}>a/n {item.Account_Name}</Text>
             </View>
           </View>
         </View>
         <View style={styles.cardDetail}>
           <View>
             <Text style={styles.textTitle}>Jumlah Transfer</Text>
-            <Text style={styles.Txtright}>Rp {FormatRupiah(state.total_price)}</Text>
-          </View>
-        </View>
-        <View style={styles.cardDetail}>
-          <View>
-            <Text style={styles.textTitle}>Tanggal Transfer</Text>
-            <Text style={styles.Txtright}>
-              {moment(state.created_date).format('DD MMM YYYY h:mm A')}
-            </Text>
+            <Text style={styles.Txtright}>Rp {FormatRupiah(item.Total_Transfer)}</Text>
           </View>
         </View>
       </View>
@@ -110,7 +141,7 @@ const TransactionUpload = () => {
           title='Kirim'
           styles={styles.buttonStyle}
           textStyle={styles.textBuyClass}
-          onPress={toggleModal}
+          onPress={FormUpload.handleSubmit}
         />
       </View>
     )
@@ -188,15 +219,40 @@ const TransactionUpload = () => {
   return (
     <>
       <View style={styles.containerMain}>
+        <Loader loading={loading}/>
         <Header />
         <ScrollView
           style={styles.containerScrollView}
           showsVerticalScrollIndicator={false}>
           <ButtonUpload />
+          <View style={styles.cardDetail}>
+            <Text style={styles.textTitle}>Nama pengirim di rekening Bank</Text>
+            <TextBox
+              form={FormUpload}
+              name='Sender_Name'
+              placeholder='NAMA LENGKAP'
+              customStyle={styles.textInput}
+            />
+          </View>
+          <View style={styles.cardDetail}>
+            <Text style={styles.textTitle}>Transfer dari bank</Text>
+            <TextBox
+              form={FormUpload}
+              name='Sender_Bank'
+              placeholder='NAMA BANK'
+              customStyle={styles.textInput}
+            />
+          </View>
           <DescUpload />
           <ButtonSend />
         </ScrollView>
       </View>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ModalInfo
         isVisible={modalVisible}
         backdropPress={() => navigation.navigate('Pembayaran')}
@@ -205,6 +261,10 @@ const TransactionUpload = () => {
       />
     </>
   )
+}
+
+TransactionUpload.propTypes = {
+  route: PropTypes.object,
 }
 
 export default TransactionUpload

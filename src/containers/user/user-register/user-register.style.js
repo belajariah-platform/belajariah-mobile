@@ -64,7 +64,9 @@ const styles = StyleSheet.create({
   footer : {
     alignSelf: 'center',
     flexDirection: 'row',
-  }
+  },
+  phoneOne : { width : '24%', marginRight : '2%' },
+  phoneTwo : { width : '74%' }
 })
 
 export { styles }

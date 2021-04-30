@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
   ImageClass : {
     width: 80,
     height: 80,
+    borderRadius : 12
   },
   TextClass : {
     width: '64%',
@@ -211,7 +212,8 @@ const styles = StyleSheet.create({
     alignItems : 'flex-end',
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
   imageBackgroundCard : { height: 'auto', marginBottom:-15 },

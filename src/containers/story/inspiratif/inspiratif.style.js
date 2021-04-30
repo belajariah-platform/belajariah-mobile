@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     width: 110,
     height: 102,
     marginRight: 10,
+    borderRadius : 12,
   },
   textStyle: {
     color: Color.black,
@@ -158,33 +159,16 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  containerNoStory: {
+    margin: 12,
+    height: '40%',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
   },
-  title: {
-    fontSize: 22,
-    fontWeight: '300',
-    marginBottom: 20,
-  },
-  loading: {
-    marginVertical: 10,
-  },
-  loadingText: {
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  reactLogo: {
-    width: 150,
-    height: 150,
-  },
-  
 })
 
 export default styles

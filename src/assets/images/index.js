@@ -25,12 +25,9 @@ export default {
   BgClassUser: require('./BgClassUser.png'),
   BtnReadMore: require('./BtnReadMore.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
-  BlogExample: require('./BlogExample.svg'),
-  BannerTahsin: require('./CardTahsin.png'),
   LoginDirect: require('./LoginDirect.svg'),
   IconClassEmpty: require('./IconClass.svg'),
   AvatarBorder: require('./AvatarBorder.png'),
-  BannerTilawah: require('./CardTilawah.svg'),
   BannerAlquran: require('./CardAlquran.png'),
   IconLineHide: require('./IconLineHide.svg'),
   IconDownload: require('./IconDownload.svg'),
@@ -182,10 +179,8 @@ export default {
   //Update Detail Promotion
   VoucherCode: require('./BgVoucher.png'),
   IconVoucher: require('./IconVoucher.png'),
-  BannerPromotionQuotaFull : require('./BannerPromotionQuotaFull.png'),
-  BannerPromotionExtendClass : require('./BannerPromotionExtendClass.png'),
-  BannerPromotionsPenggunaBaru: require('./BannerPromotionsPenggunaBaru.png'),
-  BannerPromotionInvalidVoucher : require('./BannerPromotionInvalidVoucher.png'),
+  IconPromoFull : require('./IllustrationNoPromo2.png'),
+  IconPromoEmpty : require('./IllustrationNoPromo.png'),
 
   //Video
   VideoNext: require('./BtnVideoNext.svg'),
@@ -198,9 +193,6 @@ export default {
 
   //Bacaan Inspiratif
   IconShareBlack: require('./IconShareBlack.svg'),
-  SandiagaUnoImg: require('./SandiagaUnoImg.png'),
-  IconTokohInspiratif: require('./IconTokohInspiratif.png'),
-  ImgHeadingBacaanInspiratif: require('./ImgHeadingBacaanInspiratif.png'),
 
   //ConsultationUser
   CardMsg1 : require('./CardMsg1.png'),
@@ -249,6 +241,32 @@ export default {
   IconRecordStopGradation : require('./IconRecordStopGradation.svg'),
   IconRecordStartGradation : require('./IconRecordStartGradation.svg'),
 
+  //Update Logo Payment
+  LogoOVO : require('./LogoOVO.svg'),
+  LogoGopay : require('./LogoGopay.svg'),
+  LogoBankBSI : require('./LogoBankBSI.svg'),
+  LogoBankBCA : require('./LogoBankBCA.svg'),
+  LogoBankBRI : require('./LogoBankBRI.svg'),
+  LogoAlfamart : require('./LogoAlfamart.svg'),
+  LogoIndomaret : require('./LogoIndomaret.svg'),
+  LogoBankMandiri : require('./LogoBankMandiri.svg'),
+
+  //Image Default
+  ImgDefault1 : require('./ImageDefault1.png'),
+  ImgDefault2 : require('./ImageDefault2.png'),
+  ImgDefault3 : require('./ImageDefault3.png'),
+  ImgDefault4 : require('./ImageDefault4.png'),
+  ImgDefault5 : require('./ImageDefault5.png'),
+
+  //Social Media
+  SMYoutube : require('./SMYoutube.svg'),
+  SMWebsite : require('./SMWebsite.svg'),
+  SMFacebook : require('./SMFacebook.svg'),
+  SMInstagram : require('./SMInstagram.svg'),
+  SMTelephone : require('./SMTelephone.svg'),
+
   //Img Check Connection
   ImgModalNoConnection : require('./ImgModalNoConnection.png'),
+  IconStoryEmpty : require('./IllustrationNoStory.svg'),
 }
+

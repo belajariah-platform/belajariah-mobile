@@ -1,35 +1,47 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import { Text } from '@ui-kitten/components'
+import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import { ArabicNumbers } from 'react-native-arabic-numbers'
+
 import {
   View,
   FlatList,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
 
 import {
   QURAN_DETAIL_REQ,
   QURAN_DETAIL_SUCC,
   QURAN_DETAIL_FAIL,
 } from '../../action'
-import { QuranAPI } from '../../api'
-import { Response } from '../../utils'
 
-import { Text } from '@ui-kitten/components'
-import { styles } from './alquran-detail.style'
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../components'
+
+import { QuranAPI } from '../../api'
 import { Images } from '../../assets'
-import { useNavigation } from '@react-navigation/native'
-import { ArabicNumbers } from 'react-native-arabic-numbers'
+import { Response } from '../../utils'
+import { styles } from './alquran-detail.style'
 
 const AlquranDetail = (props) => {
-  const navigation = useNavigation()
-  const { params } = props.route
   const dispatch = useDispatch()
-  const { dataDetail, loadingDetail } = useSelector(
-    (state) => state.QuranDetailReducer,
-  )
+  const { params } = props.route
+  const navigation = useNavigation()
+  const [state, setState] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const { loadingDetail } = useSelector((state) => state.QuranDetailReducer)
+
+  const retryConnection = () => {
+    fetchDataQuran(params)
+    setconnectStatus(!connectStatus)
+  }
 
   const fetchDataQuran = async (params) => {
     try {
@@ -37,23 +49,27 @@ const AlquranDetail = (props) => {
         id: params.number,
         count: params.numberOfVerses,
       }
+      dispatch({ type: QURAN_DETAIL_REQ })
       const response = await QuranAPI.GetDetailQuran(dataObj)
       if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
         await dispatch({
           type: QURAN_DETAIL_SUCC,
           payload: response.data.data,
         })
+      } else {
+        dispatch({ type: QURAN_DETAIL_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
       }
     } catch (err) {
-      dispatch({
-        type: QURAN_DETAIL_FAIL,
-      })
+      dispatch({ type: QURAN_DETAIL_FAIL })
       return err
     }
   }
 
   useEffect(() => {
-    dispatch({ type: QURAN_DETAIL_REQ })
     fetchDataQuran(params)
   }, [])
 
@@ -85,15 +101,20 @@ const AlquranDetail = (props) => {
     <ImageBackground
       source={Images.AlquranDetailBG}
       style={styles.containerBackground}
-      resizeMode='stretch'>
+      resizeMode='stretch'
+    >
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Header />
       {loadingDetail ? (
-        <ActivityIndicator
-          color='purple'
-          size={30} />
+        <LoadingView color='white'/>
       ) : (
         <FlatList
-          data={dataDetail.verses}
+          data={state.verses}
           style={styles.containerScrollview}
           showsVerticalScrollIndicator ={false}
           contentContainerStyle={{ paddingBottom: 25 }}

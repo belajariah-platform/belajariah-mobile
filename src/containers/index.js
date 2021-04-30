@@ -1,6 +1,3 @@
-import Timeline from './timeline'
-import Notification from './notification'
-
 import { Home, HomeSearch } from './home'
 import { Profile, ProfileEdit } from './profile'
 import { Alquran, AlquranDetail } from './alquran'
@@ -34,7 +31,7 @@ import {
 import { InspiratifStory, InspiratifStoryDetail } from './story'
 import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
-import { Login, Register, Introduction, ChangePassword, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, UserEditPassword } from './user'
+import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
 
 
 export {
@@ -45,26 +42,25 @@ export {
   Alquran,
   Profile,
   Register,
-  Timeline,
   ClassExam,
   Promotion,
   AdminUser,
   ContactUs,
   ClassUser,
   HomeSearch,
+  CheckEmail,
   UserVerify,
   ClassDetail,
   ProfileEdit,
   Transaction,
   Introduction,
   Consultation,
-  Notification,
+  EditPassword,
   InstructorJob,
   TermCondition,
   PrivacyPolice,
   AlquranDetail,
   ClassLearning,
-  ChangePassword,
   AdminDashboard,
   InstructorTask,
   AdminProfileAll,
@@ -73,7 +69,6 @@ export {
   AdminInstructor,
   ConfirmPassword,
   TransactionInfo,
-  UserEditPassword,
   AdminTransaction,
   AdminProfileEdit,
   TransactionUpload,

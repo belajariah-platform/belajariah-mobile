@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.small,
   },
+  textParagraphContact : { marginLeft : 10 },
+  containerContactUs : { flexDirection : 'row', alignItems : 'center', marginVertical : 5 },
 })
 
 export default styles
