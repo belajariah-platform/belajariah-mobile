@@ -4,6 +4,7 @@ import { Color, FontSize, FontType } from '../../../assets'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor : Color.white
   },
   containerFullscreen: {
     width: '100%',
@@ -11,8 +12,8 @@ const styles = StyleSheet.create({
   },
   containerView : {
     flex: 2.4,
-    backgroundColor: '#9956B3',
     fontFamily: FontType.regular,
+    backgroundColor: Color.softPink,
   },
   containerHeader : {
     height: '10%',

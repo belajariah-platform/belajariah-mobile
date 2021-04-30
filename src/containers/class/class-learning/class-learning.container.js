@@ -1,104 +1,161 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { List, RadioButton } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert, Text, View, ScrollView, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
+import {
+  Alert,
+  Text,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native'
+
+import {
+  Buttons,
+  TextView,
+  ModalInfo,
+  ModalRating,
+  LoadingView,
+  ModalRecord,
+  VideoPlayer,
+  ButtonGradient,
+} from '../../../components'
+import {
+  ExerciseAPI,
+  LearningAPI,
+  UserClassAPI,
+} from '../../../api'
+
+import { Response } from '../../../utils'
 import { Color, FontType, Images } from '../../../assets'
 import ClassLearningPDF from './class_learning-pdf.container'
-import { ButtonGradient, TextView, ModalInfo, ModalRating, ModalRecord, VideoPlayer, Buttons } from '../../../components'
 
 import { styles } from '../class-learning/class-learning.style'
 
-const ClassLearning = () => {
-  const route = useRoute()
+const ClassLearning = (props) => {
+  const dispatch = useDispatch()
+  const item = props.route.params
+  // const isExam = props.route.isExam
   const navigation = useNavigation()
+  const { detail } = useSelector((state) => state.UserClassDetailReducer)
+
+  const [counts, setCount] = useState(0)
+  const [record, setRecord] = useState({})
+  const [states, setStates] = useState([])
   const [expand, setExpand] = useState([])
+  const [stateExc, setStateExc] = useState([])
+  const [loading, setLoading] = useState(true)
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [showTask, setShowTask] = useState(false)
+  const [loadingExc, setLoadingExc] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [modalRecordVisible, setModalRecordVisible] = useState(false)
   const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+
+  const obj = {
+    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
+    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
+    posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg',
+  }
+
+  const [progress, setProgress] = useState({
+    playIndex  : 0,
+    playSubIndex : 0,
+    subtitleCode : '',
+    isExercise : false,
+    // passPreExam : 0,
+    // passPostExam : 0,
+    // count : detail.Progress_Count,
+    // percentage : detail.Progress,
+    // currentIndex : detail.Progress_Index,
+    // currentSubIndex : detail.Progress_Subindex,
+  })
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
   const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
-  const toggleModalChecklist = () => setModalChecklistVisible(!modalChecklistVisible)
+
+  const toggleModalChecklist = () => {
+    setModalChecklistVisible(!modalChecklistVisible)
+    fetchDataExercise(dataState, progress.subtitleCode)
+  }
+
+  const fetchDataLearning = async (state, code) => {
+    try {
+      setLoadingExc(true)
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
+      const response = await LearningAPI.GetAllLearning(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+        if(expand.length <= 0) {
+          response.data.data.map(() => {
+            setExpand(expand => [...expand, false])
+          })
+        }
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  const fetchDataExercise = async (state, code) => {
+    try {
+      let { skip, take, filterString } = state
+      filterString=`[{"type": "text", "field" : "subtitle_code", "value": "${code}"}]`
+      const response = await ExerciseAPI.GetAllExercise(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateExc(response.data.data)
+      }
+      setLoadingExc(false)
+    } catch (err) {
+      setLoadingExc(false)
+      return err
+    }
+  }
+
+  const updateProgressClass = async (percentages, count, index, subIndex) => {
+    const values = {
+      ID : detail.ID,
+      Status : 'In Progress',
+      Progress : parseInt(percentages),
+      Progress_Count : count,
+      Progress_Index: index,
+      Progress_Subindex : subIndex,
+      User_Code : detail.User_Code,
+    }
+    try {
+      const response = await UserClassAPI.UpdateProgressUserClass(values)
+      if (response.data.result) {
+        dispatch(UserClassAPI.GetUserClass(item.Class_Code))
+      }
+    } catch (error) {
+      return error
+    }
+  }
+
+  useEffect(() => {
+    dispatch(UserClassAPI.GetUserClass(item.Class_Code))
+    fetchDataLearning(dataState, item.Class_Code)
+  }, [])
+
+  // useEffect(() => {
+  //   fetchDataLearning(dataState, item.Class_Code)
+  // }, [isExam])
+
   const toggleExpand = (index) => {
     let tempExpand = [...expand]
     tempExpand[index] = !tempExpand[index]
     setExpand(tempExpand)
   }
-
-  const state = {
-    isExpired : false,
-    rating : 4.7,
-    total_user : 1500,
-    title : 'Belajar Al-Qur\'an dari dasar dengan metode yang mudah dan menyenangkan',
-    description : 'Belajar Tahsin dengan ustadz dan ustadzah lorem ipsum dolor sit amet, lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit, lorem veriseyum not beijer sit amet tesset lorem ipsum berusit|lorem veriseyum not beijer sit amet tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit tesset lorem ipsum berusit lorem veriseyum not beijer sit amet. tesset lorem ipsum berusit',
-    materialCount : 12,
-    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
-    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    topics: [
-      {
-        title: 'Huruf Hijaiyah, Makhraj dan shifathul huruf',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/X24cBK9/Screenshot-1.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 8, posterLink : 'https://i.ibb.co/Gv3zpmK/Screenshot-2.jpg', taskImages: [Images.ImgDummySoal], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 12, posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2, Images.ImgDummySoal3], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://www.belajariah.com/document-assets/file.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-      {
-        title: 'Harokat',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 4, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 5, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 2, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'قُلْ هُوَ اللّٰهُ اَحَدٌۚ', 'اَللّٰهُ الصَّمَدُۚ', 'لَمْ يَلِدْ وَلَمْ يُوْلَدْۙ', 'وَلَمْ يَكُنْ لَّهٗ كُفُوًا اَحَدٌ ࣖ' ],
-      },
-      {
-        title: 'Tajwid',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 10, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 3, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        document : 'Dasar Hijaiyah',
-        filename : 'http://www.africau.edu/images/default/sample.pdf',
-        path : 'https://stintpdevlintaspsshared.blob.core.windows.net/port-services-static/docpdf_20201207095324.pdf',
-        sound : 'Sound.wav',
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-      {
-        title: 'Mad',
-        materials: [
-          { subtitle : 'Dasar Hijaiyah', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle: 'Dasar Makhraj', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false },
-          { subtitle : 'Shifathul Huruf', video_link : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4', video_duration : 7, posterLink : 'https://i.ibb.co/LJTsYGS/Screenshot-4.jpg', taskImages: [Images.ImgDummySoal, Images.ImgDummySoal2], isDone : false }],
-        ayats: [ 'وَالْعَصْرِۙ', 'اِنَّ الْاِنْسَانَ لَفِيْ خُسْرٍۙ', 'اِلَّا الَّذِيْنَ اٰمَنُوْا وَعَمِلُوا الصّٰلِحٰتِ وَتَوَاصَوْا بِالْحَقِّ ەۙ وَتَوَاصَوْا بِالصَّبْرِ ࣖ' ],
-      },
-    ],
-  }
-
-  const [progress, setProgress] = useState({
-    count : 0,
-    percentage : 0,
-    playIndex  : 0,
-    playSubIndex : 0,
-    currentIndex : 0,
-    currentSubIndex : 0,
-    passPreExam : 0,
-    passPostExam : 0,
-  })
 
   const handleRating = (num) => {
     let rating = []
@@ -123,25 +180,26 @@ const ClassLearning = () => {
 
   const handleModalChecklist = () => {
     setModalChecklistVisible(true)
+    fetchDataExercise(dataState, progress.subtitleCode)
   }
 
   const handleVideoEnd = (index, subIndex) => {
-    state.isExpired ?
-      (
-        (index == progress.currentIndex && subIndex == progress.currentSubIndex) && (
-          Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
-        )
+    detail.Is_Expired ? (
+      (index == detail.Progress_Index && subIndex == detail.Progress_Subindex) && (
+        Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
       )
-      :
-      (
-        state.topics[index].materials[subIndex].isDone || (
-          setShowTask(true),
-          handleModalChecklist()
-        )
+    ) : progress.isExercise ?   (
+      states[index].SubTitles[subIndex].Is_Done || (
+        setShowTask(true),
+        handleModalChecklist()
       )
+    ) : (
+      unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+    )
   }
 
-  const handleModalRecord = () => {
+  const handleModalRecord = (item) => {
+    setRecord(item)
     setModalRecordVisible(true)
   }
 
@@ -158,12 +216,12 @@ const ClassLearning = () => {
             return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
           })}
         </>
-      )
-    }
+      )}
+
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
-          <Text style={[styles.textTitle]}>{state.title}</Text>
+          <Text style={[styles.textTitle]}>{item.Class_Name}</Text>
           {showTask && (
             <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
               <Images.IconChecklistLearning.default />
@@ -174,19 +232,19 @@ const ClassLearning = () => {
         <View style={styles.containerParentReview}>
           <View style={styles.containerReviewUser}>
             <Images.IconUserReview.default/>
-            <Text style={styles.textRating}>{state.total_user/1000} K</Text>
+            <Text style={styles.textRating}>{item.Total_User/1000} K</Text>
           </View>
           <View style={styles.containerReviewUser}>
             <View style={styles.customRatingBarStyle}>
-              {handleRating(state.rating)}
+              {handleRating(item.Class_Rating)}
             </View>
-            <Text style={styles.textStyle}>{state.rating}</Text>
+            <Text style={styles.textStyle}>{item.Class_Rating}</Text>
           </View>
         </View>
         <TextView
           component={
             <Text style={styles.containerTextDesc}>
-              {handleSplitString(state.description)}
+              {handleSplitString(item.Class_Description)}
             </Text>
           }
         />
@@ -206,7 +264,7 @@ const ClassLearning = () => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('Consultation')}
+            onPress={() => navigation.navigate('Consultation', item)}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
@@ -215,15 +273,20 @@ const ClassLearning = () => {
   }
 
   const ContentClass = () => {
-    const playVideo = (index, subIndex) => {
-      if(progress.passPreExam > 0) {
-        if(index > progress.currentIndex) {
+    const playVideo = (index, subIndex, topic) => {
+      if(detail.Pre_Test_Total > 0) {
+        setProgress(s => ({
+          ...s,
+          subtitleCode : topic.Code,
+          isExercise : topic.Is_Exercise,
+        }))
+        if(index > detail.Progress_Index) {
           Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
-        } else if(index < progress.currentIndex) {
+        } else if(index < detail.Progress_Index) {
           setProgress(s => ({ ...s, playIndex : index }))
           setProgress(s => ({ ...s, playSubIndex : subIndex }))
         } else {
-          if(subIndex > progress.currentSubIndex) {
+          if(subIndex > detail.Progress_Subindex) {
             Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
           } else {
             setProgress(s => ({ ...s, playIndex : index }))
@@ -236,15 +299,15 @@ const ClassLearning = () => {
     }
 
     const getLockStatus = (index, subIndex) => {
-      if(progress.passPreExam > 0) {
-        if(index < progress.currentIndex) {
+      if(detail.Pre_Test_Total > 0) {
+        if(index < detail.Progress_Index) {
           return false
-        } else if(index > progress.currentIndex) {
+        } else if(index > detail.Progress_Index) {
           return true
         } else {
-          if(subIndex < progress.currentSubIndex) {
+          if(subIndex < detail.Progress_Subindex) {
             return false
-          } else if(subIndex > progress.currentSubIndex) {
+          } else if(subIndex > detail.Progress_Subindex) {
             return true
           } else {
             return false
@@ -260,46 +323,46 @@ const ClassLearning = () => {
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
         <List.Section>
           <TouchableOpacity
-            activeOpacity={0.6}
+            activeOpacity={0.5}
             onPress={()=> {
-              if(progress.passPreExam > 2) {
+              if(detail.Pre_Test_Total >= 2) {
                 Alert.alert('Pre-exam hanya dapat dilakukan maksimal 2 kali')
               } else {
-                navigation.navigate('ClassExam')
+                navigation.navigate('ClassExam',  { item : item, type : 'Pre-Test' })
               }
             }}
           >
             <List.Item
-              title={'Pre Exam'}
+              title='Pre Exam'
               style={styles.containerExam}
               titleStyle={styles.textRegular}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
-          {state.topics.map((topic, index) => {
+          {states.map((topic, index) => {
             return (
               <List.Accordion
                 key={index}
-                title={topic.title}
+                title={topic.Title}
                 titleStyle={styles.textRegular}
                 style={styles.containerAccordion}
                 onPress={() => toggleExpand(index)}
                 expanded={expand[index]}
               >
-                {topic.materials.map((subtopic, subIndex) => {
+                {topic.SubTitles.map((subtopic, subIndex) => {
                   const isLocked = getLockStatus(index, subIndex)
 
                   return  (
                     <TouchableOpacity
                       key={subIndex}
-                      activeOpacity={0.6}
+                      activeOpacity={0.5}
                       onPress={() => {
-                        playVideo(index, subIndex)
+                        playVideo(index, subIndex, topic)
                       }}>
                       <List.Item
                         key={subIndex}
-                        title={subtopic.subtitle}
-                        style={isLocked ? [styles.containerItem, { backgroundColor: Color.disableGrey }] : styles.containerItem}
+                        title={subtopic.Sub_Title}
+                        style={isLocked ? [styles.containerItem, { backgroundColor: Color.greyExam }] : styles.containerItem}
                         titleStyle={styles.textRegular}
                         left={() =>
                           isLocked ?
@@ -307,22 +370,22 @@ const ClassLearning = () => {
                             :
                             (<Images.IconPlay.default style={styles.iconPlay}/>)
                         }
-                        right={() => <Text style={styles.textDuration}>{subtopic.video_duration} Menit</Text>}
+                        right={() => <Text style={styles.textDuration}>{subtopic.Video_Duration} Menit</Text>}
                       />
                     </TouchableOpacity>
                   )
                 })}
 
-                {topic.document &&(
+                {topic.Document &&(
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      title={topic.document}
+                      title={topic.Document_Name}
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
                       onPress={() => {
                         const obj = {
-                          path : topic.path,
-                          filename : topic.filename,
+                          path : topic.Document_Path,
+                          filename : topic.Document_Name,
                         }
                         setViewPdf(!viewPdf)
                         setSourcePdf(obj)
@@ -333,13 +396,13 @@ const ClassLearning = () => {
                   </TouchableOpacity>
                 )}
 
-                {topic.sound && (
+                {topic.Exercises.ID !== 0 && (
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
-                      title='Dummy - Masuk ke page rekam'
+                      title='Masuk ke page rekam'
                       style={styles.containerItem}
                       titleStyle={styles.textRegular}
-                      onPress={handleModalRecord}
+                      onPress={() => handleModalRecord(topic.Exercises)}
                       left={() => <Images.IconRecordVoice.default style={styles.iconPlay}/>}
                       right={() => <Text style={styles.textDuration}>Rekam Bacaan</Text>}
                     />
@@ -354,10 +417,9 @@ const ClassLearning = () => {
               title={'Post Exam'}
               titleStyle={styles.textRegular}
               onPress={()=> {
-                console.log(progress.percentage)
-                progress.percentage == 100 ? (
-                  progress.passPostExam < 2 ? (
-                    navigation.navigate('ClassExam')
+                detail.Progress == 100 ? (
+                  detail.Pre_Test_Total < 2 ? (
+                    navigation.navigate('ClassExam', { item : item, type : 'Post-Test' })
                   ) : (
                     Alert.alert('Post exam hanya dapat diselesaikan maksimal 2 kali')
                   )
@@ -365,7 +427,10 @@ const ClassLearning = () => {
                   Alert.alert('Silahkan selesaikan seluruh materi terlebih dahulu')
                 )
               }}
-              style={progress.percentage == 100 ? { ...styles.containerExam, borderTopWidth : 0 } : { ...styles.containerExam, borderTopWidth : 0, backgroundColor : Color.disableGrey }}
+              style={detail.Progress == 100 ?
+                { ...styles.containerExam, borderTopWidth : 0 } :
+                { ...styles.containerExam, borderTopWidth : 0,
+                  backgroundColor : Color.disableGrey }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -374,52 +439,40 @@ const ClassLearning = () => {
     )
   }
 
-  const ChecklistClass = () => {
-    const [checkCount, setCheckCount] = useState(0)
-    const totalTask = state.topics[progress.currentIndex].materials[progress.currentSubIndex].taskImages.length
+  const unlockNext = (index, subIndex) => {
+    if(detail.Pre_Test_Total > 0) {
+      if(index == detail.Progress_Index && subIndex == detail.Progress_Subindex) {
+        let nextIndex = states[detail.Progress_Index + 1]
+        let nextSubIndex = states[detail.Progress_Index].SubTitles[detail.Progress_Subindex + 1]
 
-    const unlockNext = (index, subIndex) => {
-      if(progress.passPreExam > 0) {
-        if(index == progress.currentIndex && subIndex == progress.currentSubIndex) {
-          let nextIndex = state.topics[progress.currentIndex + 1]
-          let nextSubIndex = state.topics[progress.currentIndex].materials[progress.currentSubIndex + 1]
+        if(nextSubIndex == undefined) {
+          if(nextIndex == undefined) {
+            //end of array
+            if(detail.Progress < 100) {
+              Alert.alert('Post exam unlocked!')
 
-          if(nextSubIndex == undefined) {
-            if(nextIndex == undefined) {
-              //end of array
-              if(progress.percentage < 100) {
-                Alert.alert('Post exam unlocked!')
-
-                const count = progress.count + 1
-                const percentage = calculatePercentage(count, state.materialCount)
-
-                setProgress(s => ({ ...s, count : count }))
-                setProgress(s => ({ ...s, percentage : percentage }))
-              }
-            } else {
-              //next index
-              const count = progress.count + 1
-              const percentage = calculatePercentage(count, state.materialCount)
-
-              setProgress(s => ({ ...s, count : count }))
-              setProgress(s => ({ ...s, percentage : percentage }))
-
-              setProgress(s => ({ ...s, currentSubIndex : 0 }))
-              setProgress(s => ({ ...s, currentIndex : progress.currentIndex + 1 }))
+              const count = detail.Progress_Count + 1
+              const percentages = calculatePercentage(count, counts)
+              updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex)
             }
           } else {
-            //next subindex
-            const count = progress.count + 1
-            const percentage = calculatePercentage(count, state.materialCount)
-
-            setProgress(s => ({ ...s, count : count }))
-            setProgress(s => ({ ...s, percentage : percentage }))
-
-            setProgress(s => ({ ...s, currentSubIndex : progress.currentSubIndex + 1 }))
+            //next index
+            const count = detail.Progress_Count  + 1
+            const percentages = calculatePercentage(count, counts)
+            updateProgressClass(percentages, count, detail.Progress_Index + 1, 0)
           }
+        } else {
+          //next subindex
+          const count = detail.Progress_Count  + 1
+          const percentages = calculatePercentage(count, counts)
+          updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex + 1)
         }
       }
     }
+  }
+
+  const ChecklistClass = () => {
+    const [checkCount, setCheckCount] = useState(0)
 
     return (
       <View style={styles.containerModalChecklist}>
@@ -432,25 +485,29 @@ const ClassLearning = () => {
         </View>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.containerModalScrollview}>
 
-          {state.topics[progress.currentIndex].materials[progress.currentSubIndex].taskImages.map((taskImage, taskIndex) => {
-            const [checked, setChecked] = useState(false)
-            return(
-              <View key={taskIndex}>
-                <Image source={taskImage} style={styles.imgMaterial}/>
-                <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
-                <View style={styles.containerRadioButton}>
-                  <RadioButton
-                    status={checked ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                      checked ? setCheckCount(checkCount - 1) : setCheckCount(checkCount + 1)
-                      setChecked(!checked)
-                    }}
-                    color={Color.purpleMedium} />
-                  <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
+          {loadingExc ? <LoadingView/> :
+            stateExc.map((item, index) => {
+              const [checked, setChecked] = useState(false)
+              return (
+                <View key={index}>
+                  <Image source={item.Exercise_Image == '' ?
+                    Images.ImgDummySoal : { uri : item.Exercise_Image }}
+                  style={styles.imgMaterial}
+                  />
+                  <Text style={styles.textRegular}>Sudahkah kamu melakukannya? <Text style={styles.textPurpleMedium}>Checklist</Text> jika sudah, dan Ayoo lakukan jika belum</Text>
+                  <View style={styles.containerRadioButton}>
+                    <RadioButton
+                      status={checked ? 'checked' : 'unchecked'}
+                      onPress={() => {
+                        checked ? setCheckCount(checkCount - 1) : setCheckCount(checkCount + 1)
+                        setChecked(!checked)
+                      }}
+                      color={Color.purpleMedium} />
+                    <Text style={{ fontFamily: FontType.bold }}>Sudah</Text>
+                  </View>
                 </View>
-              </View>
-            )
-          })}
+              )
+            })}
 
           <View style={styles.containerCancelSave}>
             <Buttons
@@ -463,13 +520,11 @@ const ClassLearning = () => {
               title='Selesai'
               onPress={ () => {
                 toggleModalChecklist(),
-                checkCount == totalTask && (
+                checkCount == stateExc.length && (
                   setShowTask(false),
-                  state.topics[progress.currentIndex].materials[progress.currentSubIndex].isDone = true,
-                  unlockNext(progress.currentIndex, progress.currentSubIndex)
-                )
-              }
-              }
+                  item.Is_Done = true,
+                  unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+                )}}
               styles={styles.buttonSave}
             />
           </View>
@@ -477,25 +532,6 @@ const ClassLearning = () => {
       </View>
     )
   }
-
-  useEffect(() => {
-    let { passPreExam } = route.params ?? {}
-    let { passPostExam } = route.params ?? {}
-
-    if(passPreExam != undefined) {
-      setProgress(s => ({ ...s, passPreExam : progress.passPreExam + 1 }))
-    }
-
-    if(passPostExam != undefined) {
-      setProgress(s => ({ ...s, passPostExam : progress.passPostExam + 1 }))
-    }
-
-    if(expand.length <= 0) {
-      state.topics.map(() => {
-        setExpand(expand => [...expand, false])
-      })
-    }
-  }, [route.params])
 
   return (
     <>
@@ -522,8 +558,8 @@ const ClassLearning = () => {
             />
             <View style={styles.container}>
               <VideoPlayer
-                posterLink = {progress.passPreExam > 0 ? state.topics[progress.playIndex].materials[progress.playSubIndex].posterLink : state.posterTrailerLink}
-                videoLink = {progress.passPreExam > 0 ? state.topics[progress.playIndex].materials[progress.playSubIndex].video_link : state.videoTrailerLink}
+                posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
+                videoLink = {detail.Pre_Test_Total > 0 ? obj.videoTrailerLink : obj.posterTrailerLink}
                 iconPlaySize = {48}
                 iconSkipSize = {32}
                 showSkipButton={true}
@@ -543,26 +579,33 @@ const ClassLearning = () => {
               <View style={styles.containerParentKelas}>
                 <DescriptionClass/>
                 <ConsultationClass/>
-                <ContentClass/>
+                {loading ?
+                  <LoadingView/> : <ContentClass/>
+                }
               </View>
             </ScrollView>
           </View>
         </>
       )}
       <ModalInfo
-        isVisible={modalChecklistVisible}
         hideButtonClose={true}
+        isVisible={modalChecklistVisible}
         renderItem={ <ChecklistClass /> }
         containerStyle={{ height : '92%' }}
       />
       <ModalRecord
+        data={record}
+        user={detail}
         isVisible={modalRecordVisible}
         backdropPress={() => toggleModalRecord()}
         backButtonPress={() => toggleModalRecord()}
-        ayats={state.topics[progress.currentIndex].ayats}
       />
     </>
   )
+}
+
+ClassLearning.propTypes = {
+  route: PropTypes.object,
 }
 
 export default ClassLearning
