@@ -177,6 +177,7 @@ const Home = (props) => {
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await PackageAPI.GetAllPackage(skip, take, filterString)
+      console.log(response.data.data)
       if (response.status === Response.SUCCESS) {
         setStatePackage(response.data.data)
       } else {

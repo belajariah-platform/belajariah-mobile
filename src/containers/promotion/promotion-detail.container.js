@@ -1,83 +1,64 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import Clipboard from '@react-native-community/clipboard'
-import { View, ScrollView, TouchableOpacity, ToastAndroid, Image } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import {
+  View,
+  Image,
+  ScrollView,
+  ToastAndroid,
+  TouchableOpacity,
+} from 'react-native'
+import {
+  LoadingView,
+  ButtonGradient,
+  ModalNoConnection,
+} from '../../components'
 
 import { Images } from '../../assets'
-import { ButtonGradient } from '../../components'
+import { Response } from '../../utils'
+import { PromotionAPI } from '../../api'
 
 import styles from './promotion-detail.style'
 
 const PromotionDetail = () => {
   const route = useRoute()
   const navigation = useNavigation()
-  let { promoIndex, promo_code } = route.params ?? {}
+  let { promo_code } = route.params ?? {}
 
-  const promotion = [
-    {
-      ID: 1,
-      code: 'PRC00000001',
-      class_Code: 'CLC00000001',
-      title: 'Diskon 30% Pengguna Baru',
-      description: 'Selamat datang di Belajariah Diskon 30% buat kamu pengguna baru, Nikmati kemudahan belajar Al-Quran kapan dan dimana saja dengan ponsel digenggamanmu|Tunggu apalagi? Mari berinvestasi untuk akhiratmu.....',
-      promo_code : 'BLJRIAH',
-      discount: 30,
-      banner_image : Images.BannerPromotionsPenggunaBaru,
-      Header_Image: '',
-      Expired_Date: '',
-      Quota_User: 1000000,
-      Quota_Used: 0,
-      Is_Active: true,
-      Created_By: 'belajariah20@gmail.com',
-      Created_Date: '2021-02-04T11:22:39+07:00',
-      Modified_By: 'belajariah20@gmail.com',
-      Modified_Date: '2021-02-04T11:22:39+07:00',
-      Deleted_By: '',
-      Deleted_Date: '1753-07-01T00:00:00+07:07',
-    },
-    {
-      ID: 2,
-      code: 'PRC00000002',
-      class_Code: 'CLC00000001',
-      code_voucher: 'BLJEXPD',
-      title: 'Diskon 20% Untuk Perpanjangan Kelas',
-      description : 'Khusus buat kamu, perpanjang langganan kelas, diskon 20%',
-      promo_code : 'BLJRIAH',
-      discount: 20,
-      banner_image : Images.BannerPromotionExtendClass,
-      Header_Image: '',
-      Expired_Date: '',
-      Quota_User: 1000000,
-      Quota_Used: 0,
-      Is_Active: true,
-      Created_By: 'belajariah20@gmail.com',
-      Created_Date: '2021-02-04T11:22:39+07:00',
-      Modified_By: 'belajariah20@gmail.com',
-      Modified_Date: '2021-02-04T11:22:39+07:00',
-      Deleted_By: '',
-      Deleted_Date: '1753-07-01T00:00:00+07:07',
-    },
-  ]
+  const [state, setState] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
-  const invalidCode = [
-    {
-      title : 'Halaman Promo',
-      banner_image : Images.BannerPromotionInvalidVoucher,
-      description : 'Kode voucher yang anda masukkan tidak tersedia',
-    },
-    {
-      title : 'Halaman Promo',
-      banner_image : Images.BannerPromotionQuotaFull,
-      description : 'Kuota saat ini sudah terpenuhi',
-    },
-  ]
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataPromotionDetail(promo_code)
+  }
 
-  //jika masuk melalui voucher code, bukan mapping index
-  promoIndex == undefined && (
-    promoIndex = promotion.findIndex(item => item.code_voucher === promo_code)
-  )
+  const fetchDataPromotionDetail = async (code) => {
+    try {
+      const response = await PromotionAPI.GetPromotion(code)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.result)
+        setLoading(false)
+      } else {
+        setLoading(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataPromotionDetail(promo_code)
+  }, [])
 
   const copyToClipboard = async (account) => {
     await Clipboard.setString(account)
@@ -91,7 +72,10 @@ const PromotionDetail = () => {
           <TouchableOpacity onPress={() => navigation.navigate('UserMain')}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{promotion[promoIndex] == undefined ? invalidCode[0].title : promotion[promoIndex].title}</Text>
+          <Text
+            style={styles.textTitleWhite}>
+            { state.ID == 0 || Object.keys(state).length == 0 ?
+              'Halaman Promo' : state.Title}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -114,16 +98,18 @@ const PromotionDetail = () => {
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View>
-            <Text style={styles.TitlePromo}>{promotion[promoIndex].title}</Text>
-            <Text style={styles.DescPromo}>{handleSplitString(promotion[promoIndex].description)}</Text>
+            <Text style={styles.TitlePromo}>{state.Title}</Text>
+            <Text style={styles.DescPromo}>{handleSplitString(state.Description)}</Text>
           </View>
           <View>
-            <Text style={styles.TitlePromo}>Kode Voucher Disc. {promotion[promoIndex].discount}%</Text>
+            <Text style={styles.TitlePromo}>Kode Voucher Disc. {state.Discount}%</Text>
           </View>
           <View style={styles.containerCodePromo}>
             <View>
-              <Image source={Images.VoucherCode} style={{ width : 151, height:37 }}/>
-              <Text style={styles.textCode}>{promotion[promoIndex].code_voucher}</Text>
+              <Image
+                source={Images.VoucherCode}
+                style={{ width : 151, height:37 }}/>
+              <Text style={styles.textCode}>{state.Promo_Code}</Text>
             </View>
           </View>
         </View>
@@ -138,7 +124,7 @@ const PromotionDetail = () => {
           title='Gunakan Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={() => copyToClipboard(promotion[promoIndex].code_voucher)}
+          onPress={() => copyToClipboard(state.Promo_Code)}
         />
       </View>
     )
@@ -146,41 +132,51 @@ const PromotionDetail = () => {
 
   const BannerPromotion = () => {
     return (
-      promotion[promoIndex] == undefined ? (
-        <View style={styles.containerBanner}>
-          <Image source={invalidCode[0].banner_image} style={styles.ImgInvalidBanner} resizeMode='cover'/>
-        </View>
-      ) : (
-        <View style={styles.containerBanner}>
-          <Image source={promotion[promoIndex].banner_image} style={styles.ImgBanner}/>
-        </View>
-      )
+      <View style={styles.containerBanner}>
+        <Image
+          style={styles.ImgBanner}
+          source={state.Header_Image == '' ?
+            Images.ImgDefault1 :
+            { uri :state.Header_Image }}
+        />
+      </View>
     )
   }
 
   return (
-    promotion[promoIndex] == undefined ? (
-      <View style={styles.containerMain}>
-        <Header />
-        <ScrollView style={styles.containerInvalidPromo} showsVerticalScrollIndicator={false}>
-          <BannerPromotion />
-          <View style={styles.containerMethod}>
-            <View style={styles.cardMethods}>
-              <Text style={styles.DescInvalidPromo}>{invalidCode[0].description}</Text>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
-    ) : (
-      <View style={styles.containerMain}>
-        <Header />
-        <ScrollView style={styles.containerScrollView} showsVerticalScrollIndicator={false}>
-          <BannerPromotion />
-          <DescriptionPromotion />
-          <Footer />
-        </ScrollView>
-      </View>
-    )
+    <View style={styles.containerMain}>
+      <Header />
+      {loading ?
+        <LoadingView/> :
+        state.ID == 0 || Object.keys(state).length == 0 ?
+          (
+            <ScrollView
+              style={styles.containerScrollView }
+              showsVerticalScrollIndicator={false}>
+              <ModalNoConnection
+                isVisible={connectStatus}
+                retry={() => retryConnection()}
+                backdropPress={() => togglemodalNoConnection()}
+                backButtonPress={() => togglemodalNoConnection()}
+              />
+              <Image source={Images.IconPromoEmpty} style={{ width : 260, height : 200, alignContent : 'center', alignSelf : 'center' }}/>
+            </ScrollView>
+          ) : (
+            <ScrollView
+              style={styles.containerScrollView}
+              showsVerticalScrollIndicator={false}>
+              <ModalNoConnection
+                isVisible={connectStatus}
+                retry={() => retryConnection()}
+                backdropPress={() => togglemodalNoConnection()}
+                backButtonPress={() => togglemodalNoConnection()}
+              />
+              <BannerPromotion />
+              <DescriptionPromotion />
+              <Footer />
+            </ScrollView>
+          )}
+    </View>
   )
 }
 

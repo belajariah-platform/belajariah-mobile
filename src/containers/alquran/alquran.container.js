@@ -12,11 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import {
-  QURAN_LIST_REQ,
-  QURAN_LIST_SUCC,
-  QURAN_LIST_FAIL,
-} from '../../action'
+import { QURAN_LIST_SUCC } from '../../action'
 
 import {
   LoadingView,
@@ -33,8 +29,9 @@ import { styles } from './alquran.style'
 const Alquran = (props) => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const [loading, setLoading] = useState(true)
   const [connectStatus, setconnectStatus] = useState(false)
-  const { data, loading } = useSelector((state) => state.QuranReducer)
+  const { data } = useSelector((state) => state.QuranReducer)
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
@@ -44,7 +41,7 @@ const Alquran = (props) => {
 
   const fetchDataQuran = async () => {
     try {
-      dispatch({ type: QURAN_LIST_REQ })
+      setLoading(true)
       const response = await QuranAPI.GetAllQuran()
       if (response.status === Response.SUCCESS) {
         await dispatch({
@@ -52,13 +49,13 @@ const Alquran = (props) => {
           payload: response.data.data,
         })
       } else {
-        dispatch({ type: QURAN_LIST_FAIL })
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
         })
       }
+      setLoading(false)
     } catch (err) {
-      dispatch({ type: QURAN_LIST_FAIL })
+      setLoading(false)
       return err
     }
   }

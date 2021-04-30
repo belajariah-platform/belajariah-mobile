@@ -1,6 +1,3 @@
-import Timeline from './timeline'
-import Notification from './notification'
-
 import { Home, HomeSearch } from './home'
 import { Profile, ProfileEdit } from './profile'
 import { Alquran, AlquranDetail } from './alquran'
@@ -45,7 +42,6 @@ export {
   Alquran,
   Profile,
   Register,
-  Timeline,
   ClassExam,
   Promotion,
   AdminUser,
@@ -59,7 +55,6 @@ export {
   Transaction,
   Introduction,
   Consultation,
-  Notification,
   EditPassword,
   InstructorJob,
   TermCondition,
