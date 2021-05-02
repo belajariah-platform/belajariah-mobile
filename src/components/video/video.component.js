@@ -67,7 +67,6 @@ const VideoPlayer = (props) => {
 
   const onSeek = (seekTime) => {
     videoRef.current.seek(seekTime)
-    console.log(seekTime)
     setState({ ...state, currentTime: seekTime })
   }
 

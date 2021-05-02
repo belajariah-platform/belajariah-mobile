@@ -318,6 +318,16 @@ const styles = StyleSheet.create({
     width : '100%',
     marginBottom: 4,
   },
+  textDonwload : {
+    color : Color.white,
+  },
+  customPDF : {
+    paddingTop : 16,
+    paddingHorizontal : 16,
+    borderTopLeftRadius : 16,
+    borderTopRightRadius : 16,
+    backgroundColor : Color.white,
+  }
 })
 
 export { styles }

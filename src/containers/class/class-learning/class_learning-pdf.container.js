@@ -55,8 +55,7 @@ const ClassLearningPDF = (props) => {
           <Text style={styles.textDonwload}>unduh</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ ...styles.containerPDF,
-        borderTopLeftRadius : 16, borderTopRightRadius : 16, paddingHorizontal : 16, backgroundColor : 'white', paddingTop : 16  }}>
+      <View style={[styles.containerPDF, styles.customPDF]}>
         <Pdf
           source={{ uri : props.source.filename }}
           onLoadComplete={(numberOfPages, filePath)=>{

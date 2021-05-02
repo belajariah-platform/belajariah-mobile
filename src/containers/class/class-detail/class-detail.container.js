@@ -70,7 +70,7 @@ const ClassDetail = (props) => {
       <Text style={styles.textDesc}>{classes.Class_Name}</Text>
       <View style={styles.flexRating}>
         <View>{classes.Class_Rating != 0 && handleRating(classes.Class_Rating)}</View>
-        <Text style={styles.textRating}>{classes.Class_Rating != 0 && classes.Class_Rating}</Text>
+        <Text style={styles.textRating}>{classes.Class_Rating != 0 && classes.Class_Rating.toFixed(1)}</Text>
       </View>
 
       <View style={styles.semiBox}/>
