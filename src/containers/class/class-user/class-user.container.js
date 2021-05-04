@@ -360,7 +360,10 @@ const ClassUser = (props) => {
                               style={styles.ImageClass}/>
                             <Text style={styles.TextClass}>{item.Class_Name}</Text>
                           </View>
-                          <Text style={styles.ButtonTextClass}>Nilai Exam : {item.Post_Test_Scores}</Text>
+                          <View style={{ marginTop : -42 }}>
+                            <Text style={styles.testTextClass}>Nilai Ujian Awal : {item.Pre_Test_Scores}</Text>
+                            <Text style={styles.testTextClass}>Nilai Ujian Akhir : {item.Post_Test_Scores}</Text>
+                          </View>
                           <View style={[styles.containerIconProgress, styles.customIconProgress]}>
                             {item.Status  == 'Completed' ? (
                               <ButtonGradient
@@ -372,7 +375,10 @@ const ClassUser = (props) => {
                             ) : (
                               <View style={styles.progressBar}>
                                 <Text style={styles.progressBarText}>Progress kelas</Text>
-                                <Progressbar progress={item.Progress}/>
+                                <View style={{ flexDirection : 'row', alignItems : 'center' }}>
+                                  <Progressbar progress={item.Progress}/>
+                                  <Text style={styles.percentage}>{item.Progress}%</Text>
+                                </View>
                               </View>
                             )}
                             {item.Status  == 'Completed' ? (

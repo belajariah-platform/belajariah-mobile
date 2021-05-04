@@ -60,9 +60,9 @@ const ClassLearning = (props) => {
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
 
   const obj = {
-    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
+    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
     videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg',
+    posterLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
   }
 
   const [progress, setProgress] = useState({
@@ -70,12 +70,6 @@ const ClassLearning = (props) => {
     playSubIndex : 0,
     subtitleCode : '',
     isExercise : false,
-    // passPreExam : 0,
-    // passPostExam : 0,
-    // count : detail.Progress_Count,
-    // percentage : detail.Progress,
-    // currentIndex : detail.Progress_Index,
-    // currentSubIndex : detail.Progress_Subindex,
   })
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
@@ -85,7 +79,7 @@ const ClassLearning = (props) => {
     setModalChecklistVisible(!modalChecklistVisible)
     fetchDataExercise(dataState, progress.subtitleCode)
   }
-
+  console.log(item)
   const fetchDataLearning = async (state, code) => {
     try {
       setLoadingExc(true)
@@ -219,6 +213,11 @@ const ClassLearning = (props) => {
         </>
       )}
 
+    const handleSplitUser = (value) => {
+      return value.toString().length >= 4 ?
+        value/1000 + ' K' : value
+    }
+
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
@@ -231,10 +230,14 @@ const ClassLearning = (props) => {
         </View>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
         <View style={styles.containerParentReview}>
-          <View style={styles.containerReviewUser}>
-            <Images.IconUserReview.default/>
-            <Text style={styles.textRating}>{item.Total_User/1000} K</Text>
-          </View>
+          {item.Total_User >= 100 &&(
+            <View style={styles.containerReviewUser}>
+              <Images.IconUserReview.default/>
+              <Text style={styles.textRating}>
+                {handleSplitUser(item.Total_User)}
+              </Text>
+            </View>
+          )}
           <View style={styles.containerReviewUser}>
             <View style={styles.customRatingBarStyle}>
               {handleRating(item.Class_Rating)}
@@ -265,7 +268,7 @@ const ClassLearning = (props) => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('Consultation', item)}
+            onPress={() => navigation.navigate('ConsultationDetail', item)}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
@@ -377,7 +380,7 @@ const ClassLearning = (props) => {
                       <TouchableOpacity activeOpacity={0.5}>
                         {subtopic.Document &&(
                           <List.Item
-                            title={subtopic.Document}
+                            title='Rangkuman Materi'
                             style={isLocked ? [styles.containerItem, { backgroundColor: Color.greyExam }] : styles.containerItem}
                             titleStyle={styles.textRegular}
                             onPress={() => {
@@ -388,7 +391,7 @@ const ClassLearning = (props) => {
                               setViewPdf(isLocked ? false : true)
                               setSourcePdf(obj)
                             }}
-                            left={() => <Images.IconDocumentVideo.default style={styles.iconPlay}/>}
+                            left={() => <Images.IconDocumentVideo.default style={styles.iconPlaySub}/>}
                             right={() => <Text style={styles.textDuration}>Document</Text>}
                           />
                         )}
@@ -451,7 +454,7 @@ const ClassLearning = (props) => {
               style={detail.Progress == 100 ?
                 { ...styles.containerExam, borderTopWidth : 0 } :
                 { ...styles.containerExam, borderTopWidth : 0,
-                  backgroundColor : Color.disableGrey }}
+                  backgroundColor : Color.greyExam }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -593,13 +596,16 @@ const ClassLearning = (props) => {
                 onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                 controllerFullscreenStyle={styles.controllerFullscreenStyle}
                 onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
+              {/* <Text style={{ position : 'absolute', color : Color.white, alignSelf : 'center',  }}>hello</Text> */}
             </View>
           </View>
           <View style={styles.containerView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.containerParentKelas}>
                 <DescriptionClass/>
-                <ConsultationClass/>
+                {item.Class_Initial == 'Tahsin' && (
+                  <ConsultationClass/>
+                )}
                 {loading ?
                   <LoadingView/> : <ContentClass/>
                 }

@@ -46,6 +46,9 @@ const ProfileEdit = () => {
   const [connectStatus, setconnectStatus] = useState(false)
   const [modalDateVisible, setModalDateVisible] = useState(false)
 
+  // const [previewImage, setPreviewImage] = useState(false)
+  // const [cameraVisible, setCameraVisible] = useState(false)
+
   const toggleModal = () => setModalVisible(!modalVisible)
   const toggleModalDate = () => setModalDateVisible(!modalDateVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
@@ -54,14 +57,12 @@ const ProfileEdit = () => {
     fetchDataUser(userInfo.Email)
     setconnectStatus(!connectStatus)
   }
-  // const [previewImage, setPreviewImage] = useState(false)
-  // const [cameraVisible, setCameraVisible] = useState(false)
-  console.log(userInfo)
+
   const FormPersonal = useFormik({
     initialValues: {
       User_Code : userInfo.ID,
       Full_Name: userInfo.Full_Name,
-      Profesion: userInfo.Profession,
+      Profession: userInfo.Profession,
       Phone: userInfo.Phone == 0 ? '' : userInfo.Phone,
       Gender: userInfo.Gender,
       Birth: userInfo.Birth || new Date(),
@@ -373,7 +374,7 @@ const ProfileEdit = () => {
                   <RadioGroup
                     style={styles.containerRadio}
                     selectedIndex={FormPersonal
-                      .values['Gender'] == 'Laki-laki' ? 0 : 1}
+                      .values['Gender'] != 'Laki-laki' ? 1 : 0}
                     onChange={(e) => FormPersonal
                       .setFieldValue('Gender', e == 0 ?
                         'Laki-laki' : 'Perempuan'

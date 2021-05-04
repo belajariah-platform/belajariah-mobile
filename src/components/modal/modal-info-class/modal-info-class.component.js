@@ -68,7 +68,7 @@ const ModalInfoClass = (props) => {
                     height={20}
                     style={styles.IconBenefit}
                   />
-                  <Text style={styles.TxtDescPaket}>Langganan {value.Duration} bulan</Text>
+                  <Text style={styles.TxtDescPaket}>Akses video selamanya</Text>
                 </View>
                 <View style={styles.flexBenefits}>
                   <iconConsul.default
@@ -76,7 +76,9 @@ const ModalInfoClass = (props) => {
                     height={20}
                     style={styles.IconBenefit}
                   />
-                  <Text style={styles.TxtDescPaket}>Akses Konsultasi {value.Consultation}x</Text>
+                  <Text style={styles.TxtDescPaket}>
+                    Akses Konsultasi {value.Consultation}x ({value.Duration} bulan)
+                  </Text>
                 </View>
                 <View style={styles.flexBenefits}>
                   <iconWebinar.default

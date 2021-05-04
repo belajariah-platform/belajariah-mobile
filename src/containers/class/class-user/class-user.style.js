@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   ImageClass : {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     borderRadius : 12
   },
   TextClass : {
@@ -115,11 +115,21 @@ const styles = StyleSheet.create({
   },
   progressBar : {
     padding: 6,
-    height : 35,
+    height : 43,
     marginTop:5,
+    width : '67%',
+    marginRight : 5,
+    paddingLeft : 20,
     borderRadius: 10,
     paddingHorizontal:10,
     backgroundColor: Color.transparentBg,
+  },
+  percentage : {
+    marginLeft : 5,
+    marginTop : -2,
+    color : Color.white,
+    fontFamily : FontType.bold,
+    fontSize : FontSize.overSmall,
   },
   progressBarText : {
     flex : 1,
@@ -129,12 +139,19 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   ButtonTextClass : {
-    marginLeft: '5%',
+    marginLeft: 10,
     marginTop: '-8%',
     alignSelf: 'center',
     color: Color.white,
     fontSize: FontSize.small,
     fontFamily: FontType.bold,
+  },
+  testTextClass : {
+    marginLeft: 121,
+    marginBottom : 2,
+    color: Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
   },
   buttonClassCustom : {
     width: 130,

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, Text, Image } from 'react-native'
-
-import { Images } from '../../assets'
 import { styles } from './card.style'
+import { Images } from '../../assets'
+import { Avatar, Card } from 'react-native-elements'
+import { View, Text, Image } from 'react-native'
 
 const  Cards = (props)  => {
   return (
@@ -17,24 +17,34 @@ const  Cards = (props)  => {
         />
       </View>
       <View style={styles.content}>
-        <Text
-          style={styles.description}>
-          {props.description.substring(0, 120)} ...
-        </Text>
+        <Text style={styles.text1}>Instruktur :</Text>
+        <View style={styles.instrukturView}>
+          <Avatar
+            containerStyle={styles.avatar}
+            source={props.item.Instructor_Image == '' ?
+              Images.ImageProfileDefault : { uri : props.item.Instructor_Image }}
+          />
+          <View style={styles.bioView}>
+            <Text style={styles.text2}>Ustadz Maulana Achmad</Text>
+            <Text style={styles.text3}>Pengajar Tahsin</Text>
+          </View>
+        </View>
+        <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
+          <Text style={styles.text4}>Rp.600.000 - Rp.1.500.000</Text>
         </View>
-        {props.price}
+        <Text style={styles.text5}>Rp.600.000 - Rp.1.500.000</Text>
       </View>
     </View>
   )
 }
 Cards.propTypes = {
+  item : PropTypes.object,
   price : PropTypes.object,
   rating : PropTypes.object,
   filepath : PropTypes.string,
   imageTitle : PropTypes.object,
-  description : PropTypes.string,
 }
 
 

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   containerMenuDesc : {
     width: '100%',
     paddingTop: 20,
-    paddingBottom: 5,
+    paddingBottom: 20,
     paddingHorizontal: 18,
     backgroundColor: Color.softPink,
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
   },
   containerConsultation: {
-    marginBottom:20
+    marginBottom: 0
   },
 
   //video
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
   },
 
   customRatingBarStyle: {
-    marginLeft: '10%',
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -206,6 +205,7 @@ const styles = StyleSheet.create({
   },
   textRating : {
     marginLeft: 10,
+    marginRight : 20,
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
   },
@@ -271,6 +271,10 @@ const styles = StyleSheet.create({
   },
   iconPlay : {
     marginRight:5,
+    alignSelf:'center',
+  },
+  iconPlaySub : {
+    marginLeft : 25,
     alignSelf:'center',
   },
   buttonBackPDF : {

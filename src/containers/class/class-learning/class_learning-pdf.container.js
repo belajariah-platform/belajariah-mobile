@@ -15,8 +15,6 @@ import { DownloadFile } from '../../../utils'
 import { styles } from '../class-learning/class-learning.style'
 
 const ClassLearningPDF = (props) => {
-  const str = 'Dasar Dasar Harokat Al-Quran'
-
   useEffect(() => {
     const backAction = () => {
       if(props.viewPdf) {
@@ -45,7 +43,10 @@ const ClassLearningPDF = (props) => {
         </TouchableOpacity>
         <View style={styles.containerTextPdf}>
           <Text style={styles.textPdf}>
-            {str.length > 20 ?  `${str.substring(0, 20)}...` : str.substring(0, 20)}
+            Ringkasan Materi
+            {/* {props.source.title.length > 20 ?
+              `${props.source.title.substring(0, 20)}...` :
+              props.source.title.substring(0, 20)} */}
           </Text>
         </View>
         <TouchableOpacity

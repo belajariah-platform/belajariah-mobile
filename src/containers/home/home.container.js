@@ -272,7 +272,7 @@ const Home = (props) => {
             : rating.push(<Images.Star.default />)
       }
       return (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', flex : 1 }}>
           {rating.map((val, index) => {
             return <View key={index}>{val}</View>
           })}
@@ -318,12 +318,9 @@ const Home = (props) => {
               activeOpacity={0.5}
               onPress={() => openModalInfoClass(item)}>
               <Cards
+                item={item}
                 filepath={item.Class_Image}
                 rating={handleRating(item.Class_Rating)}
-                imageTitle={
-                  <Images.JudulTahsin.default style={styles.svgClassTitle} />
-                }
-                description={item.Class_Description}
               />
             </TouchableOpacity>
           )
@@ -425,7 +422,7 @@ const Home = (props) => {
             <View style={styles.textBackContainer}>
               <Text style={styles.textBack}>
               Assalamualaikum Sobat
-                <Text style={styles.textBackBold}> Woii</Text> Siap Belum
+                <Text style={styles.textBackBold}> Belajariah</Text> Sudah Siap
               Belajar
                 <Text style={styles.textBackBold}> AlQuran ?</Text>
               </Text>
