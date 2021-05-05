@@ -6,8 +6,6 @@ import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
 import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 
-const audioRecorderPlayer = new AudioRecorderPlayer()
-
 import {
   View,
   Text,
@@ -24,6 +22,8 @@ import {
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
 import { ExerciseAPI, QuranAPI } from '../../../api'
+
+const audioRecorderPlayer = new AudioRecorderPlayer()
 
 const ModalRecord = (props) => {
   const [state, setState] = useState([])
@@ -44,6 +44,7 @@ const ModalRecord = (props) => {
   const [recordTime, setRecordTime] = useState('00:00')
   const [showPlayTimeAndDuration, setShowPlayTimeAndDuration] = useState(false)
 
+
   const onStartRecord = async () => {
     await audioRecorderPlayer.startRecorder()
     audioRecorderPlayer.addRecordBackListener((e) => {
@@ -52,6 +53,7 @@ const ModalRecord = (props) => {
         .toString()
         .substr(0, 5)
 
+      console.log('1')
       setRecordTime(time)
     })
   }
@@ -67,6 +69,7 @@ const ModalRecord = (props) => {
   }
 
   const onStartPlay = async () => {
+    console.log(audio)
     await audioRecorderPlayer.startPlayer()
     audioRecorderPlayer.addPlayBackListener((e) => {
       const position = audioRecorderPlayer
@@ -185,6 +188,7 @@ const ModalRecord = (props) => {
     setRecordTime('00:00')
     setShowPlayTimeAndDuration(false)
   }
+
 
   useEffect(() => {
     if (playTime == duration) {

@@ -4,6 +4,7 @@ import Filter from './function/filter'
 import DownloadFile from './function/download'
 import FormatRupiah from './function/format-rupiah'
 import { TimeConvert, TimerObj, TimeConvertToHour } from './function/time'
+import { askPermission } from './function/permission'
 
 export {
   Resp,
@@ -13,5 +14,6 @@ export {
   TimeConvert,
   FormatRupiah,
   DownloadFile,
+  askPermission,
   TimeConvertToHour
 }
