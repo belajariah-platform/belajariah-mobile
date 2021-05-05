@@ -37,7 +37,7 @@ const ChangePassword = (props) => {
         const response = await UserAPI.CheckEmail(values.Email)
         if (response.data.result.ID != 0) {
           form.resetForm()
-          props.navigation.navigate('UserVerifyPassword')
+          props.navigation.navigate('ConfirmPassword')
         } else {
           Alerts(false, 'Email tidak ditemukan')
         }

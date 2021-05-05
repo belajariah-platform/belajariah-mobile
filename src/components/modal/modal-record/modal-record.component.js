@@ -53,7 +53,6 @@ const ModalRecord = (props) => {
         .toString()
         .substr(0, 5)
 
-      console.log('1')
       setRecordTime(time)
     })
   }
