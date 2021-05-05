@@ -38,7 +38,6 @@ const ProfileEdit = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
-
   const [dataCapture, setDataCapture] = useState({})
   const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
@@ -63,7 +62,10 @@ const ProfileEdit = () => {
       User_Code : userInfo.ID,
       Full_Name: userInfo.Full_Name,
       Profession: userInfo.Profession,
-      Phone: userInfo.Phone == 0 ? '' : userInfo.Phone,
+      Phone: userInfo.Phone == 0 ? '' :
+        Number(userInfo.Phone
+          .toString()
+          .substring(2, 20)),
       Gender: userInfo.Gender,
       Birth: userInfo.Birth || new Date(),
       Province: userInfo.Province,
@@ -72,10 +74,15 @@ const ProfileEdit = () => {
     },
     onSubmit: async (values) => {
       try {
-        console.log(values)
-        values.Phone = values.Phone == '' ? 0 : Number('62' + values.Phone)
+        console.log('yes', values.Phone)
+        values.Phone = values.Phone == '' ? 0 :
+          userInfo.Phone == 0 ?
+            Number('62' + values.Phone) :
+            Number('62' + values.Phone
+              .toString()
+              .substring(2, 20))
         const response = await UserAPI.UpdateProfile(values)
-        console.log(response.data)
+        console.log('hello', values.Phone)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
@@ -366,7 +373,7 @@ const ProfileEdit = () => {
                   </View>
                   <Text style={styles.containerText}>Profesi</Text>
                   <TextBox
-                    name='Profesion'
+                    name='Profession'
                     form={FormPersonal}
                     placeholder='Profesi'
                   />

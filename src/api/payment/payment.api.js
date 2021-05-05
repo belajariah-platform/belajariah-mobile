@@ -15,7 +15,6 @@ const GetAllPayment = async (skip, take, filters, sort, search) =>  {
 }
 
 const GetAllPaymentReject = async (skip, take, filters, sort, search) =>  {
-  console.log(filters, search)
   try {
     const headers = await Header()
     const response = await axios.get(`
@@ -157,10 +156,8 @@ const ChargeCStore = async (data) => {
   }
 }
 
-const ChargeBankTransfer = async (data) => {
+const ChargeBankTransfer = async () => {
   //transfer ke rekening bank, tidak memakai Midtrans
-  console.log('hello transfer rekening')
-  console.log(data)
   const response = {
     status_code : 201
   }

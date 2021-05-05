@@ -79,7 +79,7 @@ const ClassLearning = (props) => {
     setModalChecklistVisible(!modalChecklistVisible)
     fetchDataExercise(dataState, progress.subtitleCode)
   }
-  console.log(item)
+
   const fetchDataLearning = async (state, code) => {
     try {
       setLoadingExc(true)

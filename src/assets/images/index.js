@@ -235,6 +235,7 @@ export default {
   IconRecordSent : require('./IconRecordSent.svg'),
   IconRecordStop : require('./IconRecordStop.svg'),
   IconRecordStart : require('./IconRecordStart.svg'),
+  IconRecordPause : require('./IconRecordPause.svg'),
   IconRecordReload : require('./IconRecordReload.svg'),
   IconRecordPrevious : require('./IconRecordPrevious.svg'),
   IconRecordSendGradation : require('./IconRecordSendGradation.svg'),
