@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
+import RNFetchBlob from 'rn-fetch-blob'
 import Swiper from 'react-native-swiper'
 import { styles } from './modal-record.style'
 import React, { useState, useEffect } from 'react'
@@ -10,6 +11,7 @@ import {
   View,
   Text,
   Image,
+  Platform,
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
@@ -46,7 +48,12 @@ const ModalRecord = (props) => {
 
 
   const onStartRecord = async () => {
-    await audioRecorderPlayer.startRecorder()
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'hello.m4a',
+      android: `${dirs.CacheDir}/belajariah.mp3`,
+    })
+    await audioRecorderPlayer.startRecorder(path)
     audioRecorderPlayer.addRecordBackListener((e) => {
       const time = audioRecorderPlayer
         .mmssss(Math.floor(e.current_position))
@@ -69,7 +76,12 @@ const ModalRecord = (props) => {
 
   const onStartPlay = async () => {
     console.log(audio)
-    await audioRecorderPlayer.startPlayer()
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'hello.m4a',
+      android: `${dirs.CacheDir}/belajariah.mp3`,
+    })
+    await audioRecorderPlayer.startPlayer(path)
     audioRecorderPlayer.addPlayBackListener((e) => {
       const position = audioRecorderPlayer
         .mmssss(Math.floor(e.current_position))
