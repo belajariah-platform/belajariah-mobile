@@ -268,7 +268,7 @@ const ClassLearning = (props) => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('ConsultationDetail', item)}
+            onPress={() => navigation.navigate('ConsultationDetail', { classes : item })}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
