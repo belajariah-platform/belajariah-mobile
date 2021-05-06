@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
+import RNFetchBlob from 'rn-fetch-blob'
 import Swiper from 'react-native-swiper'
 import { styles } from './modal-record.style'
 import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
+import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 
 import {
   View,
   Text,
   Image,
+  Platform,
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
@@ -22,6 +25,8 @@ import { Images } from '../../../assets'
 import { Response } from '../../../utils'
 import { ExerciseAPI, QuranAPI } from '../../../api'
 
+const audioRecorderPlayer = new AudioRecorderPlayer()
+
 const ModalRecord = (props) => {
   const [state, setState] = useState([])
   const [loading, setLoading] = useState(true)
@@ -33,7 +38,72 @@ const ModalRecord = (props) => {
     send : false,
     sent : false,
   })
-  console.log(props.user.Expired_Date)
+
+  const [audio, setAudio] = useState('')
+  const [playTime, setPlayTime] = useState('')
+  const [duration, setDuration] = useState('0')
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [recordTime, setRecordTime] = useState('00:00')
+  const [showPlayTimeAndDuration, setShowPlayTimeAndDuration] = useState(false)
+
+
+  const onStartRecord = async () => {
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'hello.m4a',
+      android: `${dirs.CacheDir}/belajariah.mp3`,
+    })
+    await audioRecorderPlayer.startRecorder(path)
+    audioRecorderPlayer.addRecordBackListener((e) => {
+      const time = audioRecorderPlayer
+        .mmssss(Math.floor(e.current_position))
+        .toString()
+        .substr(0, 5)
+
+      setRecordTime(time)
+    })
+  }
+
+  const onStopRecord = async () => {
+    await audioRecorderPlayer.addRecordBackListener((e) => {
+      let duration = e.current_position.toString()
+      duration.substr(0, duration.length - 3)
+    })
+    const result = await audioRecorderPlayer.stopRecorder()
+    audioRecorderPlayer.removeRecordBackListener()
+    setAudio(result)
+  }
+
+  const onStartPlay = async () => {
+    console.log(audio)
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'hello.m4a',
+      android: `${dirs.CacheDir}/belajariah.mp3`,
+    })
+    await audioRecorderPlayer.startPlayer(path)
+    audioRecorderPlayer.addPlayBackListener((e) => {
+      const position = audioRecorderPlayer
+        .mmssss(Math.floor(e.current_position))
+        .toString()
+        .substr(0, 5)
+      const duration = audioRecorderPlayer
+        .mmssss(Math.floor(e.duration))
+        .toString()
+        .substr(0, 5)
+
+      setPlayTime(position)
+      setDuration(duration)
+      audioRecorderPlayer.removeRecordBackListener()
+      return
+    })
+  }
+
+  const onPausePlay = async () => {
+    await audioRecorderPlayer.pausePlayer()
+  }
+
+
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
     fetchDataQuran()
@@ -64,10 +134,6 @@ const ModalRecord = (props) => {
     }
   }
 
-  useEffect(() => {
-    fetchDataQuran(props.data)
-  }, [props.data])
-
   const InsertRecord = async () => {
     const values = {
       User_Code              : props.user.User_Code,
@@ -96,12 +162,16 @@ const ModalRecord = (props) => {
   const handleRecord = () => {
     dataState.start ? (
       setDataState(s => ({ ...s, start : false, stop : true })),
-      alert('Recording....')
+      onStartRecord(),
+      setIsPlaying(false),
+      setPlayTime(''),
+      setDuration(''),
+      setShowPlayTimeAndDuration(false)
     )
       : (
         dataState.stop ? (
           setDataState(s => ({ ...s, stop : false, send : true })),
-          alert('Record done.')
+          onStopRecord()
         )
           :
           dataState.send && (
@@ -111,12 +181,41 @@ const ModalRecord = (props) => {
   }
 
   const handlePlayRecord = () => {
-    alert('play record')
+    setIsPlaying(!isPlaying)
+    if (isPlaying) {
+      onPausePlay()
+    } else {
+      onStartPlay()
+      setShowPlayTimeAndDuration(true)
+    }
   }
 
   const handleReload = () => {
     setDataState(s => ({ ...s, send : false, start : true }))
+    setAudio('')
+    setPlayTime('')
+    setDuration('')
+    setIsPlaying(false)
+    setRecordTime('00:00')
+    setShowPlayTimeAndDuration(false)
   }
+
+
+  useEffect(() => {
+    if (playTime == duration) {
+      setIsPlaying(false)
+      audioRecorderPlayer.stopPlayer()
+      audioRecorderPlayer.removePlayBackListener()
+    }
+  }, [playTime, duration])
+
+  useEffect(() => {
+    fetchDataQuran(props.data)
+  }, [props.data])
+
+  let icon
+  isPlaying ? icon = Images.IconRecordPause :
+    icon = Images.IconRecordPlay
 
   return (
     <>
@@ -173,7 +272,9 @@ const ModalRecord = (props) => {
 
               {dataState.start && (
                 <View>
-                  <Text style={styles.textTimer}>00:00:00</Text>
+                  <Text style={styles.textTimer}>
+                    {recordTime}
+                  </Text>
                   <Images.IconRecordStartGradation.default style={styles.iconRecordGradation}/>
                   <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
                     <Images.IconRecordStart.default />
@@ -183,7 +284,9 @@ const ModalRecord = (props) => {
 
               {dataState.stop && (
                 <View>
-                  <Text style={styles.textTimer}>00:00:14</Text>
+                  <Text style={styles.textTimer}>
+                    {recordTime}
+                  </Text>
                   <Images.IconRecordStopGradation.default style={styles.iconRecordGradation}/>
                   <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
                     <Images.IconRecordStop.default />
@@ -193,11 +296,15 @@ const ModalRecord = (props) => {
 
               {dataState.send && (
                 <View>
-                  <Text style={styles.textTimer}>00:00:14</Text>
+                  <Text style={styles.textTimer}>
+                    {showPlayTimeAndDuration
+                      ? playTime
+                      : recordTime}
+                  </Text>
                   <Images.IconRecordSendGradation.default style={styles.iconRecordGradation}/>
                   <View style={styles.containerSend}>
                     <TouchableOpacity onPress={handlePlayRecord} style={styles.iconRecord}>
-                      <Images.IconRecordPlay.default />
+                      <icon.default />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleRecord} style={styles.iconRecord}>
                       <Images.IconRecordSend.default />

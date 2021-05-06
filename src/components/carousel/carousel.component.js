@@ -11,6 +11,7 @@ const Carousels = (props) => {
   return (
     <View>
       <Carousel
+        autoplay={true}
         layout='default'
         ref={isCarousel}
         data={props.data}

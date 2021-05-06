@@ -34,13 +34,11 @@ import {
   Cards,
   Carousel,
   ModalInfo,
-  LoadingView,
   ModalInfoClass,
   ModalNoConnection,
-  // ShimmerListCategory,
-  // ShimmerCardPromotion,
-  // ShimmerCardClassPopuler,
-  // ShimmerCardInspiratifStory,
+  ShimmerListCategory,
+  ShimmerCardClassPopuler,
+  ShimmerCardInspiratifStory,
 } from '../../components'
 import { styles } from './home.style'
 import { Response } from '../../utils'
@@ -85,11 +83,11 @@ const Home = (props) => {
   }
 
   const retryConnection = () => {
-    setconnectStatus(!connectStatus)
     fetchDataStory(dataState)
     fetchDataClass(dataState)
     fetchDataCategory(dataState)
     fetchDataPromotion(dataState)
+    setconnectStatus(!connectStatus)
   }
 
   const openModalInfoClass = async (item) => {
@@ -177,7 +175,6 @@ const Home = (props) => {
       let { skip, take, filterString } = state
       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
       const response = await PackageAPI.GetAllPackage(skip, take, filterString)
-      console.log(response.data.data)
       if (response.status === Response.SUCCESS) {
         setStatePackage(response.data.data)
       } else {
@@ -275,7 +272,7 @@ const Home = (props) => {
             : rating.push(<Images.Star.default />)
       }
       return (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', flex : 1 }}>
           {rating.map((val, index) => {
             return <View key={index}>{val}</View>
           })}
@@ -321,12 +318,9 @@ const Home = (props) => {
               activeOpacity={0.5}
               onPress={() => openModalInfoClass(item)}>
               <Cards
+                item={item}
                 filepath={item.Class_Image}
                 rating={handleRating(item.Class_Rating)}
-                imageTitle={
-                  <Images.JudulTahsin.default style={styles.svgClassTitle} />
-                }
-                description={item.Class_Description}
               />
             </TouchableOpacity>
           )
@@ -444,29 +438,28 @@ const Home = (props) => {
                 style={styles.scrollview}
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
-                  {loadingClass ? <LoadingView/> :
-                    <>
-                      <View style={styles.carousel}>
-                        <Carousel
-                          data={statePromotion}
-                          pagination={false}
-                          renderItem={PromotionHome}
-                        />
-                      </View>
-                      {/* {loadingCategory ? */}
-                      {/* ShimmerListCategory() : */}
-                      {CategoryClassHome()}
-                      {/* }
-                  {loadingClass ?
-                    ShimmerCardClassPopuler() : */}
-                      <PopularClassHome />
-                      {/* }
-                  {loadingStory ?
-                    ShimmerCardInspiratifStory() : */}
-                      {InspiratifStoryHome()}
-                      {/* } */}
-                    </>
+
+                  <View style={styles.carousel}>
+                    <Carousel
+                      data={statePromotion}
+                      pagination={false}
+                      renderItem={PromotionHome}
+                    />
+                  </View>
+                  {loadingCategory ?
+                    ShimmerListCategory() :
+                    CategoryClassHome()
                   }
+                  {loadingClass ?
+                    ShimmerCardClassPopuler() :
+                    <PopularClassHome />
+                  }
+
+                  {loadingStory ?
+                    ShimmerCardInspiratifStory() :
+                    InspiratifStoryHome()
+                  }
+
 
                 </View>
                 <View>

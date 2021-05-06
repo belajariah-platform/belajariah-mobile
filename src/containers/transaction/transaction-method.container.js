@@ -165,7 +165,7 @@ const TransactionMethod = (props) => {
         {rating.map((val, index) => {
           return <View key={index}>{val}</View>
         })}
-        <Text style={styles.textRating}>{num}</Text>
+        <Text style={styles.textRating}>{num.toFixed(1)}</Text>
       </View>
     )
   }

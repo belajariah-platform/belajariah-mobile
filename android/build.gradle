@@ -7,6 +7,9 @@ buildscript {
         compileSdkVersion = 29
         targetSdkVersion = 29
         googlePlayServicesAuthVersion = "18.0.0"
+        androidXAnnotation = "1.1.0"
+        androidXBrowser = "1.0.0"
+    // Put here other AndroidX dependencies
     }
     repositories {
         google()

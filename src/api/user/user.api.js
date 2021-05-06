@@ -38,7 +38,6 @@ const SignUp = async (formData) =>  {
 
 const GoogleSignIn = async (formData) => {
   try {
-    console.log(Config.BELAJARIAH_SERVICE_ENDPOINT)
     const response = await axios.post(
       `${Config.BELAJARIAH_SERVICE_ENDPOINT}/google_login`,
       formData,

@@ -51,6 +51,7 @@ const ClassLearning = (props) => {
   const [viewPdf, setViewPdf] = useState(false)
   const [sourcePdf, setSourcePdf] = useState({})
   const [showTask, setShowTask] = useState(false)
+  const [sourceVideo, setSourceVideo] = useState({})
   const [loadingExc, setLoadingExc] = useState(true)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
@@ -59,9 +60,9 @@ const ClassLearning = (props) => {
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
 
   const obj = {
-    posterTrailerLink : 'https://i.ibb.co/bvtVG7H/Screenshot.jpg',
+    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
     videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    posterLink : 'https://i.ibb.co/vLhnZtM/Screenshot-3.jpg',
+    posterLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
   }
 
   const [progress, setProgress] = useState({
@@ -69,12 +70,6 @@ const ClassLearning = (props) => {
     playSubIndex : 0,
     subtitleCode : '',
     isExercise : false,
-    // passPreExam : 0,
-    // passPostExam : 0,
-    // count : detail.Progress_Count,
-    // percentage : detail.Progress,
-    // currentIndex : detail.Progress_Index,
-    // currentSubIndex : detail.Progress_Subindex,
   })
 
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
@@ -178,9 +173,9 @@ const ClassLearning = (props) => {
     )
   }
 
-  const handleModalChecklist = () => {
+  const handleModalChecklist = (code) => {
     setModalChecklistVisible(true)
-    fetchDataExercise(dataState, progress.subtitleCode)
+    fetchDataExercise(dataState, code)
   }
 
   const handleVideoEnd = (index, subIndex) => {
@@ -191,7 +186,7 @@ const ClassLearning = (props) => {
     ) : progress.isExercise ?   (
       states[index].SubTitles[subIndex].Is_Done || (
         setShowTask(true),
-        handleModalChecklist()
+        handleModalChecklist(sourceVideo.Code)
       )
     ) : (
       unlockNext(detail.Progress_Index, detail.Progress_Subindex)
@@ -218,6 +213,11 @@ const ClassLearning = (props) => {
         </>
       )}
 
+    const handleSplitUser = (value) => {
+      return value.toString().length >= 4 ?
+        value/1000 + ' K' : value
+    }
+
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
@@ -230,15 +230,19 @@ const ClassLearning = (props) => {
         </View>
         <Text style={styles.containerTextCategory}>#Populer Class</Text>
         <View style={styles.containerParentReview}>
-          <View style={styles.containerReviewUser}>
-            <Images.IconUserReview.default/>
-            <Text style={styles.textRating}>{item.Total_User/1000} K</Text>
-          </View>
+          {item.Total_User >= 100 &&(
+            <View style={styles.containerReviewUser}>
+              <Images.IconUserReview.default/>
+              <Text style={styles.textRating}>
+                {handleSplitUser(item.Total_User)}
+              </Text>
+            </View>
+          )}
           <View style={styles.containerReviewUser}>
             <View style={styles.customRatingBarStyle}>
               {handleRating(item.Class_Rating)}
             </View>
-            <Text style={styles.textStyle}>{item.Class_Rating}</Text>
+            <Text style={styles.textStyle}>{item.Class_Rating.toFixed(1)}</Text>
           </View>
         </View>
         <TextView
@@ -264,7 +268,7 @@ const ClassLearning = (props) => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('Consultation', item)}
+            onPress={() => navigation.navigate('ConsultationDetail', item)}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
@@ -273,7 +277,8 @@ const ClassLearning = (props) => {
   }
 
   const ContentClass = () => {
-    const playVideo = (index, subIndex, topic) => {
+    const playVideo = (index, subIndex, topic, subtopic) => {
+      setSourceVideo(subtopic)
       if(detail.Pre_Test_Total > 0) {
         setProgress(s => ({
           ...s,
@@ -351,28 +356,47 @@ const ClassLearning = (props) => {
               >
                 {topic.SubTitles.map((subtopic, subIndex) => {
                   const isLocked = getLockStatus(index, subIndex)
-
                   return  (
-                    <TouchableOpacity
-                      key={subIndex}
-                      activeOpacity={0.5}
-                      onPress={() => {
-                        playVideo(index, subIndex, topic)
-                      }}>
-                      <List.Item
-                        key={subIndex}
-                        title={subtopic.Sub_Title}
-                        style={isLocked ? [styles.containerItem, { backgroundColor: Color.greyExam }] : styles.containerItem}
-                        titleStyle={styles.textRegular}
-                        left={() =>
-                          isLocked ?
-                            (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
-                            :
-                            (<Images.IconPlay.default style={styles.iconPlay}/>)
-                        }
-                        right={() => <Text style={styles.textDuration}>{subtopic.Video_Duration} Menit</Text>}
-                      />
-                    </TouchableOpacity>
+                    <View  key={subIndex}>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => {
+                          playVideo(index, subIndex, topic, subtopic)
+                        }}>
+                        <List.Item
+                          key={subIndex}
+                          title={subtopic.Sub_Title}
+                          style={isLocked ? [styles.containerItem, { backgroundColor: Color.greyExam }] : styles.containerItem}
+                          titleStyle={styles.textRegular}
+                          left={() =>
+                            isLocked ?
+                              (<Images.IconLockedMaterial.default style={styles.iconPlay} />)
+                              :
+                              (<Images.IconPlay.default style={styles.iconPlay}/>)
+                          }
+                          right={() => <Text style={styles.textDuration}>{subtopic.Video_Duration} Menit</Text>}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity activeOpacity={0.5}>
+                        {subtopic.Document &&(
+                          <List.Item
+                            title='Rangkuman Materi'
+                            style={isLocked ? [styles.containerItem, { backgroundColor: Color.greyExam }] : styles.containerItem}
+                            titleStyle={styles.textRegular}
+                            onPress={() => {
+                              const obj = {
+                                path : subtopic.Document,
+                                filename : subtopic.Document,
+                              }
+                              setViewPdf(isLocked ? false : true)
+                              setSourcePdf(obj)
+                            }}
+                            left={() => <Images.IconDocumentVideo.default style={styles.iconPlaySub}/>}
+                            right={() => <Text style={styles.textDuration}>Document</Text>}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </View>
                   )
                 })}
 
@@ -430,7 +454,7 @@ const ClassLearning = (props) => {
               style={detail.Progress == 100 ?
                 { ...styles.containerExam, borderTopWidth : 0 } :
                 { ...styles.containerExam, borderTopWidth : 0,
-                  backgroundColor : Color.disableGrey }}
+                  backgroundColor : Color.greyExam }}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
             />
           </TouchableOpacity>
@@ -559,7 +583,7 @@ const ClassLearning = (props) => {
             <View style={styles.container}>
               <VideoPlayer
                 posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
-                videoLink = {detail.Pre_Test_Total > 0 ? obj.videoTrailerLink : obj.posterTrailerLink}
+                videoLink = {sourceVideo.Video || obj.videoTrailerLink}
                 iconPlaySize = {48}
                 iconSkipSize = {32}
                 showSkipButton={true}
@@ -572,13 +596,16 @@ const ClassLearning = (props) => {
                 onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                 controllerFullscreenStyle={styles.controllerFullscreenStyle}
                 onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
+              {/* <Text style={{ position : 'absolute', color : Color.white, alignSelf : 'center',  }}>hello</Text> */}
             </View>
           </View>
           <View style={styles.containerView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.containerParentKelas}>
                 <DescriptionClass/>
-                <ConsultationClass/>
+                {item.Class_Initial == 'Tahsin' && (
+                  <ConsultationClass/>
+                )}
                 {loading ?
                   <LoadingView/> : <ContentClass/>
                 }

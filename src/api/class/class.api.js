@@ -8,7 +8,6 @@ const GetAllClass = async (skip, take, filters) =>  {
     ${Config.BELAJARIAH_SERVICE_ENDPOINT}/classes?skip=${skip}&take=${take}&filter=${filters}`,
     headers
     )
-    console.log(response)
     return response
   } catch (error) {
     return error

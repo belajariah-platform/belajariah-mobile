@@ -160,7 +160,7 @@ const ClassExam = (props) => {
       .forEach((v) => {
         optionArr.push(questionSelected[v])
       })
-
+    console.log(answerSelected)
     return (
       <View style={{ flex : 1 }}>
         <Text style={styles.textQuestion}>

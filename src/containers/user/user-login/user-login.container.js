@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Icon, Text } from '@ui-kitten/components'
 import React, { useEffect, useState } from 'react'
 import NetInfo from '@react-native-community/netinfo'
+import { GoogleSignin } from '@react-native-community/google-signin'
 
 import {
   View,
@@ -13,10 +14,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback
 } from 'react-native'
-
-import {
-  GoogleSignin,
-} from '@react-native-community/google-signin'
 
 import {
   Alerts,
@@ -30,8 +27,9 @@ import {
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { SIGN_IN } from '../../../action'
-import { Response } from '../../../utils'
 import { Config } from '../../../api/config'
+import { Response, askPermission } from '../../../utils'
+
 import { styles } from './user-login.style'
 
 const Login = (props) => {
@@ -81,6 +79,7 @@ const Login = (props) => {
   })
 
   useEffect(() => {
+    askPermission()
     GoogleSignin.configure({
       offlineAccess: true,
       forceCodeForRefreshToken: true,

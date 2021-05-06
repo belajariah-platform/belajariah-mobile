@@ -1,7 +1,88 @@
 import axios from 'axios'
-import { Config, CheckoutConfig } from '../config'
+import { Config, Header, HeaderPayment } from '../config'
 
-const chargeBankVA = async (data) => {
+const GetAllPayment = async (skip, take, filters, sort, search) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}&search=${search}`,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const GetAllPaymentReject = async (skip, take, filters, sort, search) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments_reject?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}&search=${search}`,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const GetAllPaymentByUserID = async (skip, take, filters, sort) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.get(`
+      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}`,
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const InsertPayment = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+      `${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment`,
+      formData,
+      headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const ConfirmPayment = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.put(
+      `${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment/confirm`,
+      formData,
+      headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const UploadPayment = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.put(
+      `${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment/upload`,
+      formData,
+      headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const ChargeBankVA = async (data) => {
   const body = {
     'payment_type' : 'bank_transfer',
     'customer_details': {
@@ -28,14 +109,14 @@ const chargeBankVA = async (data) => {
   }
 
   try {
-    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, CheckoutConfig)
+    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, HeaderPayment)
     return response.data
   } catch (error) {
     return error
   }
 }
 
-const chargeCStore = async (data) => {
+const ChargeCStore = async (data) => {
   const body = {
     'payment_type' : 'cstore',
     'customer_details': {
@@ -68,30 +149,40 @@ const chargeCStore = async (data) => {
   )
 
   try {
-    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, CheckoutConfig)
+    const response = await axios.post(`${Config.PAYMENT_GATEWAY_ENDPOINT}/charge`, body, HeaderPayment)
     return response.data
   } catch (error) {
     return error
   }
 }
 
-const chargeBankTransfer = async (data) => {
+const ChargeBankTransfer = async () => {
   //transfer ke rekening bank, tidak memakai Midtrans
-  console.log('hello transfer rekening')
-  console.log(data)
   const response = {
     status_code : 201
   }
   return response
 }
 
-const getTransaction = async (order_id) => {
+const GetTransaction = async (order_id) => {
   try {
-    const response = await axios.get(`${Config.PAYMENT_GATEWAY_ENDPOINT}/${order_id}/status`, CheckoutConfig)
+    const response = await axios.get(`${Config.PAYMENT_GATEWAY_ENDPOINT}/${order_id}/status`, HeaderPayment)
     return response.data
   } catch (error) {
     return error
   }
 }
 
-export default { chargeBankVA, chargeCStore, chargeBankTransfer, getTransaction }
+export default {
+  InsertPayment,
+  UploadPayment,
+  ConfirmPayment,
+  GetAllPayment,
+  GetAllPaymentReject,
+  GetAllPaymentByUserID,
+
+  ChargeBankVA,
+  ChargeCStore,
+  GetTransaction,
+  ChargeBankTransfer,
+}

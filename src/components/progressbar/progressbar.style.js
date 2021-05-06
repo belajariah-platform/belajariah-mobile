@@ -4,10 +4,11 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   container : {
     height:8,
+    width: '80%',
     marginBottom: 0,
-    width: '100%',
     borderRadius: 5,
     marginVertical: 2,
+    flexDirection : 'row',
     backgroundColor: '#5b147e',
   },
   progressBar: {

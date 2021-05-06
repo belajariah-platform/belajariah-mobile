@@ -90,7 +90,7 @@ const ClassReview = ({ params }) => {
         <View style={styles.header}>
           <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
-            <Text style={styles.rating}>{params.Class_Rating}</Text>
+            <Text style={styles.rating}>{params.Class_Rating.toFixed(1)}</Text>
             <Text style={styles.textBold}>{`Dari ${params.Total_Review} ulasan`}</Text>
           </View>
         </View>

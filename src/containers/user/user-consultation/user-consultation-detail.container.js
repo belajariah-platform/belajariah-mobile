@@ -23,6 +23,8 @@ const ConsultationDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
 
+  console.log(param)
+
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
@@ -160,7 +162,7 @@ const ConsultationDetail = ({ route }) => {
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
   }, [])
-
+  console.log(param)
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
@@ -168,7 +170,7 @@ const ConsultationDetail = ({ route }) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>{param.category}</Text>
+          <Text style={styles.textTitleWhite}>{param.Class_Initial}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>

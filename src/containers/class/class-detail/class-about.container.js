@@ -53,12 +53,12 @@ const ClassAbout = ({ params }) => {
   }, [])
 
   const BenefitCategory = [
-    { value : 'Akses video|video' },
-    { value : 'Ringkasan materi|document' },
-    { value : 'Akses konsultasi|consultation' },
-    { value : 'Webinar|webinar' },
-    { value : 'Akses grub chat khusus|group' },
-    { value : 'Sertifikat dan hasil evaluasi belajar|sertificate' },
+    { Value : 'Akses video|video' },
+    { Value : 'Ringkasan materi|document' },
+    { Value : 'Akses konsultasi|consultation' },
+    { Value : 'Webinar|webinar' },
+    { Value : 'Akses grub chat khusus|group' },
+    { Value : 'Sertifikat dan hasil evaluasi belajar|sertificate' },
   ]
 
   const Desc = () => {
@@ -124,7 +124,7 @@ const ClassAbout = ({ params }) => {
         <Text style={styles.textRegular}>Benefit apa saja yang akan diperoleh?</Text>
         {BenefitCategory.map((val, index) => {
           let icon, size
-          const stringSplit = val.value.split('|')[1]
+          const stringSplit = val.Value.split('|')[1]
           stringSplit == 'video' ? (icon = Images.AccessVideo, size = 30) :
             stringSplit == 'document' ? (icon = Images.Document, size = 23) :
               stringSplit == 'webinar' ? (icon = Images.Webinar, size = 23) :
@@ -139,9 +139,9 @@ const ClassAbout = ({ params }) => {
                     marginLeft: stringSplit != 'video' ? 5 : 0 }}
                 />
                 <Text style={{ ...styles.textBoldCustom, top :4 }}>
-                  {val.value.split('|')[0]}
+                  {val.Value.split('|')[0]}
                   <Text style={styles.textBoldRed}>
-                    {stringSplit == 'video' ? ' (Unlimited)' :
+                    {stringSplit == 'video' ? ' (Selamanya)' :
                       // stringSplit == 'consultation' || stringSplit == 'webinar' ? ' (Limited)' :
                       ''}
                   </Text>
