@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Color, FontSize, FontType } from '../../../assets'
+import { Color, FontSize, FontType } from '../../assets'
 
 const styles = StyleSheet.create({
   iconBack: {
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
   column : { flexDirection : 'column' }
 })
 
-export default styles
+export { styles }

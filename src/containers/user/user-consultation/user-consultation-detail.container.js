@@ -1,25 +1,25 @@
-import moment from 'moment'
 import PropTypes from 'prop-types'
-import {  useFormik } from 'formik'
+import { useFormik } from 'formik'
 import RNFetchBlob from 'rn-fetch-blob'
 import { Text } from '@ui-kitten/components'
-import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 import {
   View,
-  // Alert,
   FlatList,
   Platform,
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {
+  Chat,
+  ImageView,
+  ModalRating,
+  ButtonGradient,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-// import { TimerObj } from '../../../utils'
-import { ButtonGradient, ImageView, ModalRating } from '../../../components'
-
 import styles from './user-consultation.style'
 
 const audioRecorderPlayer = new AudioRecorderPlayer()
@@ -28,262 +28,21 @@ const ConsultationDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
 
-  // const [play, setPlay] = useState(false)
-  // const [minutes, setMinutes] = useState(0)
-  // const [seconds, setSeconds] =  useState(0)
-  // const [record, setRecord] = useState(false)
-  // const [message, setMessage] = useState(false)
-  // const [msgSelected, setMsgSelected] = useState([])
-  // const [optionSelected, setOptionSelected] = useState({})
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-
-  // const voiceDuration =  (480 - ((minutes*60) + seconds))
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
 
-  // const user_login = 1
   const state = [
     { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
     { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
     { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
     { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
     { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
   ]
 
-  // const handleCancel = () => {
-  //   setPlay(false)
-  //   setMessage(false)
-  //   setMinutes(TimerObj(480-1).minute)
-  //   setSeconds(TimerObj(480-1).second)
-  // }
-
-  // const handlePlay = () => {
-  //   setPlay(!play)
-  //   setMinutes(TimerObj(FormSendMessage
-  //     .values['duration']).minute)
-  //   setSeconds(TimerObj(FormSendMessage
-  //     .values['duration']).second)
-  // }
-
-  // const handlePlayList = (item) => {
-  //   msgSelected.forEach((val, i) => {
-  //     if (val.id == item.id) {
-  //       let isPlay = [...msgSelected]
-  //       isPlay[i] = { ...val, is_play :
-  //       optionSelected.id == val.id &&
-  //       optionSelected.is_play  ? false : true
-  //       }
-  //       setMinutes(TimerObj(val.voice_duration).minute)
-  //       setSeconds(TimerObj(val.voice_duration).second)
-  //       setOptionSelected(isPlay[i])
-  //     }
-  //   })
-  // }
-
-  // const handleRecord = () => {
-  //   setPlay(false)
-  //   setRecord(false)
-  //   setMessage(true)
-  //   setInput('duration', voiceDuration)
-  // }
-
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     if (record) {
-  //       if (seconds > 0) {
-  //         setSeconds(seconds - 1)
-  //       }
-  //       if (seconds === 0) {
-  //         if (minutes === 0) {
-  //           setRecord(!record)
-  //           setMessage(!message)
-  //           clearInterval(intervalId)
-  //         } else {
-  //           setMinutes(minutes - 1)
-  //           setSeconds(59)
-  //         }
-  //       }
-  //     } else if (play) {
-  //       if (seconds > 0) {
-  //         setSeconds(seconds - 1)
-  //       }
-  //       if (seconds === 0) {
-  //         if (minutes === 0) {
-  //           setPlay(!play)
-  //           setMinutes(TimerObj(FormSendMessage.values['duration']).minute)
-  //           setSeconds(TimerObj(FormSendMessage.values['duration']).second)
-  //           clearInterval(intervalId)
-  //         } else {
-  //           setMinutes(minutes - 1)
-  //           setSeconds(59)
-  //         }
-  //       }
-  //     } else if (optionSelected.is_play) {
-  //       if (seconds > 0) {
-  //         setSeconds(seconds - 1)
-  //       }
-  //       if (seconds === 0) {
-  //         if (minutes === 0) {
-  //           setOptionSelected({
-  //             ...optionSelected,
-  //             is_play : false
-  //           })
-  //           clearInterval(intervalId)
-  //         } else {
-  //           setMinutes(minutes - 1)
-  //           setSeconds(59)
-  //         }
-  //       }
-  //     }
-  //   }, 1000)
-  //   return () => clearInterval(intervalId)
-  // }, [seconds, minutes, record, play, optionSelected])
-
-  // useEffect(() => {
-  //   setMsgSelected(state)
-  //   setMinutes(TimerObj(480-1).minute)
-  //   setSeconds(TimerObj(480-1).second)
-  // }, [])
-
-  const Message = (item, index) => {
-    const user_login = 1
-    let flexes, containerSound, grafisVoice, play, avatar
-    user_login == item.user_code ?
-      (
-        flexes = styles.flexEnd,
-        avatar = styles.avatarEnd,
-        play = Images.IconPlayVoiceWhite,
-        grafisVoice = Images.GrafisVoiceWhite,
-        containerSound = styles.containerSoundStart
-      ) : (
-        play = Images.IconPlay,
-        flexes = styles.flexStart,
-        avatar = styles.avatarStart,
-        grafisVoice = Images.GrafisVoice,
-        containerSound = styles.containerSoundEnd
-      )
-    // optionSelected.is_play &&
-    // optionSelected.id == item.id &&
-    // user_login != item.user_code ?
-    //   (icon = Images.IconPause) :
-    //   (icon =  Images.IconPlay)
-
-    // optionSelected.is_play &&
-    // optionSelected.id == item.id &&
-    // user_login == item.user_code ?
-    //   (iconUser =  Images.IconPauseWhite) :
-    //   (iconUser =  Images.IconPlayVoiceWhite)
-
-    return (
-      <View
-        key={index}
-        style={[styles.containerChat, flexes]}>
-        <View style={containerSound}>
-          {user_login == item.user_code ? (
-            <Avatar
-              onPress={toggleModalFoto}
-              containerStyle={styles.avatarStart}
-              source={ Images.ImageProfileDefault}
-              avatarStyle={styles.avatarChatInstructor}
-            />
-          ) : (
-            <Text style={[styles.textDesc, { textAlign : 'right' }]}>
-              {item.username}
-            </Text>
-          )}
-          <View>
-            <TouchableOpacity
-              onPress={() => console.log('ok')}>
-              <play.default
-                width={20}
-                height={20}
-              />
-            </TouchableOpacity>
-            <grafisVoice.default style={styles.horizontal}/>
-          </View>
-          <Text style={[styles.textSoundDuration, styles.textWhite]}>
-            {/* {optionSelected.is_play && optionSelected.id == item.id ? (
-                `${minutes}:${seconds < 10 ?
-                  `0${seconds}` : seconds}`
-              ) : (
-                TimeConvert(item.voice_duration)
-              )} */}
-          </Text>
-          {user_login != item.user_code &&(
-            <Avatar
-              containerStyle={avatar}
-              onPress={toggleModalFoto}
-              source={ Images.ImageProfileDefault}
-              avatarStyle={styles.avatarChatInstructor}
-            />
-          )}
-        </View>
-        {/* // ) : (
-        //   <View style={styles.containerSoundEnd}>
-        //     <View>
-        //       <Text style={[styles.textDesc, { textAlign : 'right' }]}>
-        //         {item.username}
-        //       </Text>
-        //       <View style={styles.flexRow}>
-        //         <TouchableOpacity */}
-        {/* //           onPress={() => console.log(item)}>
-        //           <Images.IconPlay.default */}
-        {/* //             width={20}
-        //             height={20}
-        //           />
-        //         </TouchableOpacity>
-        //         <Images.GrafisVoice.default style={styles.horizontal}/>
-        //         <Text style={styles.textSoundDuration}>
-        //           {/* {optionSelected.is_play && optionSelected.id == item.id ? (
-        //             `${minutes}:${seconds < 10 ?
-        //               `0${seconds}` : seconds}`
-        //           ) : (
-        //             TimeConvert(item.voice_duration)
-        //           )} */}
-        {/* //         </Text> */}
-        {/* //       </View>
-        //     </View>
-        //     <Avatar
-        //       onPress={toggleModalFoto}
-        //       containerStyle={styles.avatarEnd}
-        //       source={ Images.ImageProfileDefault}
-        //       avatarStyle={styles.avatarChatInstructor}
-        //     />
-        //   </View>
-        // )} */}
-
-        <View style={styles.containerUserDesc}>
-          <Text style={[styles.textDesc,
-            user_login == item.user_code && (styles.textPurple)]}>
-            Deskripsi
-          </Text>
-          <Text style={[styles.textUserDesc,
-            user_login == item.user_code && (styles.textWhite)]}>
-            {item.message}
-          </Text>
-          <View style={styles.containerTime}>
-            { user_login != item.user_code &&(
-              <TouchableOpacity
-                activeOpacity={0.2}
-                onPress={() => setModalRatingVisible(!modalRatingVisible)}>
-                <Images.IconGive.default/>
-              </TouchableOpacity>
-            )}
-            <Text style={[styles.textTime,
-              user_login == item.user_code && (styles.textWhite)]}>
-              {moment(item.created_date).format('h:mm A')}
-            </Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  //
   // const [loading, setLoading] = useState(true)
   // const [loadingBtn, setLoadingBtn] = useState(false)
   // const [connectStatus, setconnectStatus] = useState(false)
@@ -309,9 +68,9 @@ const ConsultationDetail = ({ route }) => {
     },
     onSubmit:  (values, form) => {
       console.log(values)
+      handleReload()
       form.resetForm()
       form.setSubmitting(false)
-      handleReload()
     },
   })
 
@@ -445,6 +204,17 @@ const ConsultationDetail = ({ route }) => {
     )
   }
 
+  const Message = (item, index) => {
+    return (
+      <View key={index}>
+        <Chat
+          item={item}
+          openModalPhoto={toggleModalFoto}
+          openModalRating={toggleModalRating}/>
+      </View>
+    )
+  }
+
   const VoiceBar = () => {
     let icon
     isPlaying ? icon = Images.IconRecordPause :
@@ -499,7 +269,7 @@ const ConsultationDetail = ({ route }) => {
 
   return (
     <View style={styles.containerMain}>
-      <Header />
+      {Header()}
       <FlatList
         data={state}
         style={{ width:'100%' }}

@@ -1,3 +1,4 @@
+import Chat from './chat'
 import Cards from './card'
 import Alerts from './alert'
 import Topbar from './topbar'
@@ -40,6 +41,7 @@ import {
 } from './modal'
 
 export {
+  Chat,
   Cards,
   Alerts,
   Topbar,
