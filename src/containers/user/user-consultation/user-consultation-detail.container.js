@@ -162,7 +162,7 @@ const ConsultationDetail = ({ route }) => {
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
   }, [])
-
+  console.log(param)
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
