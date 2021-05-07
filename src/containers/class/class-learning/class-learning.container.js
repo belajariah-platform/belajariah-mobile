@@ -341,7 +341,7 @@ const ClassLearning = (props) => {
             }}
           >
             <List.Item
-              title='Pre Exam'
+              title='Ujian Awal'
               style={styles.containerExam}
               titleStyle={styles.textRegular}
               right={() => <Text style={styles.textExam}>Mulai</Text>}
@@ -441,7 +441,7 @@ const ClassLearning = (props) => {
           })}
           <TouchableOpacity activeOpacity={0.6}>
             <List.Item
-              title={'Post Exam'}
+              title='Ujian Akhir'
               titleStyle={styles.textRegular}
               onPress={()=> {
                 detail.Progress == 100 ? (

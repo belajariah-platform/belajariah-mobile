@@ -143,10 +143,7 @@ const Chat = ({ state }) => {
   useEffect(() => {
     setOptionSelected({})
     setStateMsg(state)
-    ,
-    // if (item.Recording_Name !== '') {
     startPlayer()
-    // }
   }, [])
 
   const ChatList = (item, index) => {
