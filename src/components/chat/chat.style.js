@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   //chat card
   containerChat: {
-    width: '65%',
+    width: '68%',
     paddingTop: 4,
     borderWidth: 0,
     borderRadius: 20,
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     marginRight : 4,
     marginLeft : 20,
     marginBottom : 10,
-    alignItems: 'center',
     flexDirection: 'row',
   },
   textSoundDuration: {
@@ -183,11 +182,17 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
   },
-  avatarChatInstructor: {
+  avatarChatInstructorEnd: {
+    width: 34,
+    height: 34,
+    marginLeft : 2,
+    borderRadius: 34 / 2,
+  },
+  avatarChatInstructorStart: {
     width: 34,
     height: 34,
     borderRadius: 34 / 2,
-    marginLeft : 5,
+    marginLeft : 15,
   },
   containerUserDesc: {
     paddingLeft: 20,
@@ -241,8 +246,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   avatarEnd: {
-    flex: 1,
-    alignItems: 'flex-end',
+    // flex: 1,
+    // alignItems: 'flex-end',
   },
   containerVoice : {
     paddingTop : 15,
@@ -256,11 +261,12 @@ const styles = StyleSheet.create({
     alignItems : 'center',
   },
   cancel : { marginLeft : '20%' },
-  textPurple : { color : '#58006f' },
   textWhite : { color : Color.white },
   flexRow : { flexDirection : 'row' },
+  textRight : { textAlign : 'right' },
   horizontal : { marginHorizontal : 10 },
-  column : { flexDirection : 'column' }
+  textPurple : { color : Color.purpleHint },
+  column : { flexDirection : 'column', flex : 3 }
 })
 
 export { styles }

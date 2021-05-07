@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { List, RadioButton } from 'react-native-paper'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
   Alert,
@@ -11,6 +11,7 @@ import {
   View,
   Image,
   ScrollView,
+  ToastAndroid,
 } from 'react-native'
 
 import {
@@ -223,7 +224,9 @@ const ClassLearning = (props) => {
         <View style={styles.containerTextTitle} >
           <Text style={[styles.textTitle]}>{item.Class_Name}</Text>
           {showTask && (
-            <TouchableOpacity onPress={handleModalChecklist} style={styles.containerIconChecklist}>
+            <TouchableOpacity
+              onPress={() => handleModalChecklist(sourceVideo.Code)}
+              style={styles.containerIconChecklist}>
               <Images.IconChecklistLearning.default />
             </TouchableOpacity>
           )}
@@ -268,7 +271,7 @@ const ClassLearning = (props) => {
             textStyle={styles.textConsultation}
             icon={<Images.IconConsultations.default/>}
             containerStyle={styles.buttonConsultation}
-            onPress={() => navigation.navigate('ConsultationDetail', { classes : item })}
+            onPress={() => navigation.navigate('Consultation', { classes : item })}
             colors={['#7d369a', '#9a42bd', '#9a42bd', '#7d369a']}
           />
         </View>
@@ -497,6 +500,18 @@ const ClassLearning = (props) => {
 
   const ChecklistClass = () => {
     const [checkCount, setCheckCount] = useState(0)
+    const checkChecklist = () => {
+      if (checkCount == stateExc.length) {
+        toggleModalChecklist()
+        checkCount == stateExc.length && (
+          setShowTask(false),
+          item.Is_Done = true,
+          unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+        )
+      } else {
+        ToastAndroid.show('Silahkan kerjakan dulu latihannya', ToastAndroid.SHORT)
+      }
+    }
 
     return (
       <View style={styles.containerModalChecklist}>
@@ -542,13 +557,9 @@ const ClassLearning = (props) => {
             />
             <ButtonGradient
               title='Selesai'
-              onPress={ () => {
-                toggleModalChecklist(),
-                checkCount == stateExc.length && (
-                  setShowTask(false),
-                  item.Is_Done = true,
-                  unlockNext(detail.Progress_Index, detail.Progress_Subindex)
-                )}}
+              onPress={() => {
+                checkChecklist()
+              }}
               styles={styles.buttonSave}
             />
           </View>

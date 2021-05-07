@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native'
 import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 import {
   View,
-  FlatList,
   Platform,
   TextInput,
   TouchableOpacity,
@@ -20,6 +19,7 @@ import {
 } from '../../../components'
 
 import { Images } from '../../../assets'
+import chat from '../../../json/chat.js'
 import styles from './user-consultation.style'
 
 const audioRecorderPlayer = new AudioRecorderPlayer()
@@ -34,14 +34,6 @@ const ConsultationDetail = ({ route }) => {
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
-
-  const state = [
-    { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
-    { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-  ]
 
   // const [loading, setLoading] = useState(true)
   // const [loadingBtn, setLoadingBtn] = useState(false)
@@ -204,17 +196,6 @@ const ConsultationDetail = ({ route }) => {
     )
   }
 
-  const Message = (item, index) => {
-    return (
-      <View key={index}>
-        <Chat
-          item={item}
-          openModalPhoto={toggleModalFoto}
-          openModalRating={toggleModalRating}/>
-      </View>
-    )
-  }
-
   const VoiceBar = () => {
     let icon
     isPlaying ? icon = Images.IconRecordPause :
@@ -270,14 +251,7 @@ const ConsultationDetail = ({ route }) => {
   return (
     <View style={styles.containerMain}>
       {Header()}
-      <FlatList
-        data={state}
-        style={{ width:'100%' }}
-        showsVerticalScrollIndicator ={false}
-        contentContainerStyle={{ paddingBottom : 50 }}
-        keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => Message(item, index)}
-      />
+      <Chat state={chat}/>
       {VoiceBar()}
       {Footer()}
       <ModalRating
