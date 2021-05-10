@@ -1,66 +1,134 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+
 import {
   View,
   FlatList,
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
+import {
+  TRANSACT_ACCEPT_SUCC,
+  TRANSACT_ACCEPT_REQ,
+  TRANSACT_ACCEPT_FAIL,
+  TRANSACT_ACCEPT_SCROLL,
+} from '../../../action'
+import {
+  ImageView,
+  ModalRepair,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-import { FormatRupiah } from '../../../utils'
-import { styles } from './admin-transaction.style'
-import { ButtonGradient, ModalRepair, ImageView } from '../../../components'
+import { PaymentAPI } from '../../../api'
+import { Response, FormatRupiah } from '../../../utils'
 
-const AdminTransactionAccept = () => {
-  const [loading, setLoading] = useState(false)
+import { styles } from './admin-transaction.style'
+
+const AdminTransactionAccept = ({ search }) => {
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+  const { loadingAccept, loadingAcceptScroll } = useSelector((state) => state.TransactionAcceptReducer)
+
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
+  const [imagePath, setImagePath] = useState('')
   const [refreshing, setRefreshing] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRepairVisible, setmodalRepairVisible] = useState(false)
+  const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRepair = () => setmodalRepairVisible(!modalRepairVisible)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
-  const state = [
-    { username : 'Rico Febriansyah', NoInvoice : 'INV/19e451a74e', Status_Class : 'In Progress', created_date : new Date(), ClassTitle : 'Tahsin', ClassDescription : 'Belajar Al-Quran dari dasar dengan metode yang mudah dan menyenangkan', BankName : 'Bank Mandiri', jumlahTransfer : 249000 },
-    { username : 'Riki Jenifer', NoInvoice : 'INV/1ssds223', Status_Class : 'Start', created_date : new Date(), ClassTitle : 'Fiqih Pernikahan', ClassDescription : 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', BankName : 'Bank BCA', jumlahTransfer : 649000 },
-  ]
+  const retryConnection = () => {
+    fetchDataTransaction(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
-  const handleRevised = () => {
-    console.log('Revised')
+  const fetchDataTransaction = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      dispatch({ type: TRANSACT_ACCEPT_REQ })
+      filterString='[{"type": "text", "field" : "status_payment", "value": "Completed"}]'
+      const response = await PaymentAPI.GetAllPayment(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      dispatch({ type: TRANSACT_ACCEPT_SUCC })
+    } catch (err) {
+      dispatch({ type: TRANSACT_ACCEPT_FAIL })
+      return err
+    }
+  }
+
+  const onDataStateChange = (event) => {
+    setDataState({
+      ...dataState,
+      search : event,
+    })
   }
 
   const onRefreshing = () => {
     setRefreshing(true)
+    fetchDataTransaction(dataState)
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: TRANSACT_ACCEPT_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingAcceptScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>
     ) : null
   }
 
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      onDataStateChange(search)
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [search])
+
+  useEffect(() => {
+    fetchDataTransaction(dataState)
+  }, [dataState])
+
   const CardUser = (item, index) => {
     let icon
     item.Status_Class == 'In Progress' ?
       icon = Images.IconTransactProgress :
       icon = Images.IconTransactComplete
+
+    let isDisable, proofName
+    item.Image_Proof == '' ? (isDisable = true, proofName = 'Proof empty ...') :
+      (isDisable = false, proofName = item.Image_Filename)
 
     return(
       <View key={index}>
@@ -69,33 +137,46 @@ const AdminTransactionAccept = () => {
             width={40}
             height={40}
           />
-          <View style={{ ...styles.ViewInstructorInfo, marginTop : 20 }}>
-            <Text style={styles.textUsername}>{item.username}</Text>
+          <View style={{ ...styles.ViewInstructorInfo, marginTop : -1 }}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={()=> navigation.navigate('AdminProfileAll', item)}
+            >
+              <Text style={styles.textUsername}>{item.User_Name}</Text>
+            </TouchableOpacity>
             <View style={styles.ViewTop}>
               <Text style={styles.TxtTimeTitle}>
-                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
-              <Text style={styles.TxtInvoice}>{item.NoInvoice}</Text>
             </View>
+            <Card.Divider style={styles.divider} />
+            <Text style={styles.TxtInvoice}>{item.Invoice_Number}</Text>
           </View>
           <View style={styles.ViewLabel}>
-            <Text style={styles.TxtLabel}>{item.ClassTitle}</Text>
+            <Text style={styles.TxtLabel}>{item.Class_Initial}</Text>
           </View>
           <View style={styles.viewTxtClass}>
-            <Text style={styles.TxtDescKelas}>{item.ClassDescription}</Text>
+            <Text style={styles.TxtDescKelas}>{item.Class_Name}</Text>
           </View>
           <View style={styles.containerButtonAction}>
             <View style={styles.ViewButtonAction}>
-              <TouchableOpacity onPress={toggleModalFoto}>
+              <TouchableOpacity
+                disabled={isDisable}
+                onPress={() => {
+                  toggleModalFoto()
+                  setImagePath(item.Image_Proof)
+                }}
+                style={{ flex : 1 }}>
                 <View style={styles.viewFoto}>
                   <Images.IconGallery.default
                     width={20}
                     height={20}
                     style={{ marginRight: 5 }}/>
-                  <Text>Screen_shoot787878xxx...</Text>
+                  <Text>{proofName}</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                disabled={isDisable}>
                 <Images.IconUnduhanAdmin.default
                   width={30}
                   height={30}
@@ -105,19 +186,19 @@ const AdminTransactionAccept = () => {
           </View>
           <View style={styles.viewPriceTwo}>
             <View>
-              <Text style={styles.TxtBank}>{item.BankName}</Text>
-              <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.jumlahTransfer)}</Text>
+              <Text style={styles.TxtBank}>{item.Payment_Method}</Text>
+              <Text style={styles.TxtHarga}>Rp{FormatRupiah(item.Total_Transfer)}</Text>
             </View>
-            <View>
+            {/* <View>
               {item.Status_Class == 'In Progress' &&(
                 <ButtonGradient
                   title='Perbaiki'
                   styles={styles.ButtonActionReject}
-                  colors={['#0bb091', '#16c4a4', '#0bb091']}
                   onPress = {toggleModalRepair}
+                  colors={['#0bb091', '#16c4a4', '#0bb091']}
                 />
               )}
-            </View>
+            </View> */}
           </View>
         </Card>
       </View>
@@ -136,34 +217,42 @@ const AdminTransactionAccept = () => {
   return (
     <View>
       <ModalRepair
-        submit={() => handleRevised()}
         isVisible={modalRepairVisible}
         backdropPress={() => toggleModalRepair()}
         backButtonPress={() => toggleModalRepair()}
       />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageView
+        filepath={imagePath}
         isVisible={isModalFotoVisible}
+        source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
-        filepath={'https://www.belajariah.com/img-assets/ImgHeadingBacaanInspiratif.png'}
       />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {state == 0 ?
-          <NoTransaction />
-          :
-          <FlatList
-            data={state}
-            style={{ width:'100%' }}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            onEndReached={(e) => onLoadMore(e)}
-            showsVerticalScrollIndicator ={false}
-            contentContainerStyle={{ paddingBottom: 25 }}
-            keyExtractor={(item, index) =>  index.toString()}
-            renderItem={({ item, index }) => CardUser(item, index)}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {loadingAccept && !loadingAcceptScroll ?
+          <LoadingView color='white'/> :
+          states == 0 ?
+            <NoTransaction />
+            :
+            <FlatList
+              data={states}
+              style={{ width:'100%' }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              onEndReached={(e) => onLoadMore(e)}
+              showsVerticalScrollIndicator ={false}
+              contentContainerStyle={{ paddingBottom: 25 }}
+              keyExtractor={(item, index) =>  index.toString()}
+              renderItem={({ item, index }) => CardUser(item, index)}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
 
       </ImageBackground>
@@ -172,7 +261,7 @@ const AdminTransactionAccept = () => {
 }
 
 AdminTransactionAccept.propTypes = {
-  navigation: PropTypes.object,
+  search : PropTypes.string,
 }
 
 export default AdminTransactionAccept
