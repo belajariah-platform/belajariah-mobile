@@ -4,6 +4,8 @@ import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -12,35 +14,82 @@ import {
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
 
+import {
+  CONSUL_ACCEPT_REQ,
+  CONSUL_ACCEPT_SUCC,
+  CONSUL_ACCEPT_FAIL,
+  CONSUL_ACCEPT_SCROLL,
+} from '../../../action'
+
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
+import { ConsultationAPI } from '../../../api'
 import { TimeConvert, TimerObj } from '../../../utils'
+import { LoadingView, ModalNoConnection } from '../../../components'
+
 import { styles } from './admin-user.style'
 
 const AdminUserAccept = ({ search }) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const { loadingAccept, loadingAcceptScroll } = useSelector((state) => state.ConsultationAcceptReducer)
+
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
-  const [loading, setLoading] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
   const [refreshing, setRefreshing] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
 
-  const state = [
-    { id: 1, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 74, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-    { id: 2, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 10, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-    { id: 3, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 60, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-    { id: 4, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 60, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-  ]
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
+  const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataConsultation(dataState)
+    setconnectStatus(!connectStatus)
+  }
+
+  const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      dispatch({ type: CONSUL_ACCEPT_REQ })
+      filterString='[{"type": "text", "field" : "Status", "value": "Approved"}]'
+      const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      dispatch({ type: CONSUL_ACCEPT_SUCC })
+    } catch (err) {
+      dispatch({ type: CONSUL_ACCEPT_FAIL })
+      return err
+    }
+  }
+
+  const onDataStateChange = (event) => {
+    const delay = setTimeout(() => {
+      setDataState({
+        ...dataState,
+        search : event,
+      })
+    }, 500)
+    return () => clearTimeout(delay)
+  }
+
   const handlePlayList = (item) => {
     msgSelected.forEach((val, i) => {
-      if (val.id == item.id) {
+      if (val.ID == item.ID) {
         let isPlay = [...msgSelected]
-        isPlay[i] = { ...val, is_play :
-        optionSelected.id == val.id &&
-        optionSelected.is_play  ? false : true
+        isPlay[i] = { ...val, Is_Play :
+        optionSelected.ID == val.ID &&
+        optionSelected.Is_Play  ? false : true
         }
         setMinutes(TimerObj(val.voice_duration).minute)
         setSeconds(TimerObj(val.voice_duration).second)
@@ -51,20 +100,25 @@ const AdminUserAccept = ({ search }) => {
 
   const onRefreshing = () => {
     setRefreshing(true)
-    setMsgSelected(state)
+    fetchDataConsultation(dataState)
+    setMsgSelected(states)
     setOptionSelected({})
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: CONSUL_ACCEPT_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (optionSelected.is_play) {
+      if (optionSelected.Is_Play) {
         if (seconds > 0) {
           setSeconds(seconds - 1)
         }
@@ -72,7 +126,7 @@ const AdminUserAccept = ({ search }) => {
           if (minutes === 0) {
             setOptionSelected({
               ...optionSelected,
-              is_play : false
+              Is_Play : false
             })
             clearInterval(intervalId)
           } else {
@@ -86,22 +140,25 @@ const AdminUserAccept = ({ search }) => {
   }, [seconds, minutes, optionSelected])
 
   useEffect(() => {
+    onDataStateChange(search)
     if (search.length > 0 ) {
       setOptionSelected({
         ...optionSelected,
-        is_play : false
+        Is_Play : false
       })
     }
   }, [search])
 
   useEffect(() => {
-    setMsgSelected(state)
-  }, [])
+    setOptionSelected({})
+    setMsgSelected(states)
+    fetchDataConsultation(dataState)
+  }, [dataState])
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingAcceptScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>
@@ -110,8 +167,8 @@ const AdminUserAccept = ({ search }) => {
 
   const CardUser = (item, index) => {
     let icon
-    optionSelected.is_play &&
-    optionSelected.id == item.id ?
+    optionSelected.Is_Play &&
+    optionSelected.ID == item.ID ?
       (icon = Images.IconPause) :
       (icon =  Images.IconPlay)
 
@@ -119,15 +176,19 @@ const AdminUserAccept = ({ search }) => {
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <Image source={item.images} style={styles.avatarUser}/>
+            <Image
+              style={styles.avatarUser}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
+            />
             <TouchableOpacity
               style={{ flex : 1 }}
               activeOpacity={0.5}
               onPress={()=> navigation.navigate('AdminProfileAll', item)}
             >
-              <Text style={styles.textUsername}>{item.username}</Text>
+              <Text style={styles.textUsername}>{item.User_Name}</Text>
               <Text style={styles.TxtTimeTitle}>
-                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -151,11 +212,11 @@ const AdminUserAccept = ({ search }) => {
                 height={20}
                 style={{ marginRight: 5 }}/>
               <Text style={styles.textDuration}>
-                {optionSelected.is_play && optionSelected.id == item.id ? (
+                {optionSelected.Is_Play && optionSelected.ID == item.ID ? (
                   `${minutes}:${seconds < 10 ?
                     `0${seconds}` : seconds}`
                 ) : (
-                  TimeConvert(item.voice_duration)
+                  TimeConvert(item.Recording_Duration)
                 )}
               </Text>
             </View>
@@ -166,9 +227,15 @@ const AdminUserAccept = ({ search }) => {
             </TouchableOpacity>
           </View>
           <List.Section>
-            <List.Accordion title='Deskripsi konsultasi' titleStyle={styles.textRegular} style={styles.containerAccordion}>
+            <List.Accordion
+              title='Deskripsi konsultasi'
+              titleStyle={styles.textRegular}
+              style={styles.containerAccordion}>
               <View>
-                <Text style={styles.description}>{item.voice_description}</Text>
+                <Text
+                  style={styles.description}>
+                  {item.Description}
+                </Text>
               </View>
             </List.Accordion>
           </List.Section>
@@ -188,23 +255,31 @@ const AdminUserAccept = ({ search }) => {
 
   return(
     <View style={styles.containerMain}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {state == 0 ?
-          <NoUser/>
-          :
-          <FlatList
-            data={state}
-            style={{ width:'100%' }}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            onEndReached={(e) => onLoadMore(e)}
-            showsVerticalScrollIndicator ={false}
-            contentContainerStyle={{ paddingBottom: 25 }}
-            keyExtractor={(item, index) =>  index.toString()}
-            renderItem={({ item, index }) => CardUser(item, index)}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {loadingAccept && !loadingAcceptScroll ?
+          <LoadingView color = 'white'/> :
+          states == 0 ?
+            <NoUser/>
+            :
+            <FlatList
+              data={states}
+              style={{ width:'100%' }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              onEndReached={(e) => onLoadMore(e)}
+              showsVerticalScrollIndicator ={false}
+              contentContainerStyle={{ paddingBottom: 25 }}
+              keyExtractor={(item, index) =>  index.toString()}
+              renderItem={({ item, index }) => CardUser(item, index)}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
       </ImageBackground>
     </View>

@@ -4,45 +4,130 @@ import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
   Image,
   FlatList,
+  ToastAndroid,
   RefreshControl,
   ImageBackground,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native'
+import {
+  CONSUL_ALL_REQ,
+  CONSUL_ALL_SUCC,
+  CONSUL_ALL_FAIL,
+  CONSUL_ALL_SCROLL,
+} from '../../../action'
+
+import {
+  Loader,
+  LoadingView,
+  ButtonGradient,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-import { ButtonGradient } from '../../../components'
+import { Response } from '../../../utils'
+import { ConsultationAPI } from '../../../api'
 import { TimeConvert, TimerObj } from '../../../utils'
 
 import { styles } from './admin-user.style'
 
 const AdminUserAll = ({ search }) => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const { loadingAll, loadingAllScroll } = useSelector((state) => state.ConsultationAllReducer)
+
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] =  useState(0)
-  const [loading, setLoading] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
+  const [loadingBtn, setLoadingBtn] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
 
-  const state = [
-    { id : 1, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 74, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-    { id : 2, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 60, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-    { id : 3, username : 'Rico Wijaya', images: Images.ImageProfileDefault, created_date : new Date(), voice_status : 'Waiting for Approval', voice_duration : 60, voice_description : 'lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum lorep ipsum' },
-  ]
+  const [count, setCount] = useState(0)
+  const [states, setStates] = useState([])
+  const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataConsultation(dataState)
+    setconnectStatus(!connectStatus)
+  }
+
+  const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      dispatch({ type: CONSUL_ALL_REQ })
+      filterString='[{"type": "text", "field" : "Status", "value": "Waiting for Approval"}]'
+      const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+        setCount(response.data.count)
+        dispatch({ type: CONSUL_ALL_SUCC })
+      } else {
+        dispatch({ type: CONSUL_ALL_FAIL })
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      dispatch({ type: CONSUL_ALL_FAIL })
+      return err
+    }
+  }
+
+  const onDataStateChange = (event) => {
+    const delay = setTimeout(() => {
+      setDataState({
+        ...dataState,
+        search : event,
+      })
+    }, 500)
+    return () => clearTimeout(delay)
+  }
+
+  const handleConfirm = async (action, item) => {
+    const values = {
+      ID : item.ID,
+      Action : action,
+      User_Code : item.User_Code,
+      Class_Code : item.Class_Code,
+      Status_Code : item.Status_Code,
+      Expired_Date : item.Expired_Date,
+    }
+
+    try {
+      setLoadingBtn(true)
+      const response = await ConsultationAPI.ConfirmConsultation(values)
+      if (!response.data.result) {
+        ToastAndroid.show(`Errror ${response.data.error}`,
+          ToastAndroid.SHORT)
+        setLoadingBtn(false)
+      } else {
+        setLoadingBtn(false)
+        fetchDataConsultation(dataState)
+      }
+    } catch (error) {
+      setLoadingBtn(false)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
+      return error
+    }
+  }
 
   const handlePlayList = (item) => {
     msgSelected.forEach((val, i) => {
-      if (val.id == item.id) {
+      if (val.ID == item.ID) {
         let isPlay = [...msgSelected]
-        isPlay[i] = { ...val, is_play :
-        optionSelected.id == val.id &&
-        optionSelected.is_play  ? false : true
+        isPlay[i] = { ...val, Is_Play :
+        optionSelected.ID == val.ID &&
+        optionSelected.Is_Play  ? false : true
         }
         setMinutes(TimerObj(val.voice_duration).minute)
         setSeconds(TimerObj(val.voice_duration).second)
@@ -53,21 +138,26 @@ const AdminUserAll = ({ search }) => {
 
   const onRefreshing = () => {
     setRefreshing(true)
-    setMsgSelected(state)
+    fetchDataConsultation(dataState)
+    setMsgSelected(states)
     setOptionSelected({})
     setRefreshing(false)
   }
 
   const onLoadMore = (e) => {
-    if (e.distanceFromEnd >= 0) {
-      setLoading(true)
+    if (dataState.take < count && e.distanceFromEnd >= 0) {
+      dispatch({ type: CONSUL_ALL_SCROLL })
+      setDataState({
+        ...dataState,
+        take : dataState.take + 5
+      })
     }
   }
 
   const renderFooter = () => {
-    return loading ? (
+    return loadingAllScroll ? (
       <View style={styles.indicatorContainer}>
-        <ActivityIndicator
+        <LoadingView
           color='white'
           size={30} />
       </View>
@@ -76,7 +166,7 @@ const AdminUserAll = ({ search }) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (optionSelected.is_play) {
+      if (optionSelected.Is_Play) {
         if (seconds > 0) {
           setSeconds(seconds - 1)
         }
@@ -84,7 +174,7 @@ const AdminUserAll = ({ search }) => {
           if (minutes === 0) {
             setOptionSelected({
               ...optionSelected,
-              is_play : false
+              Is_Play : false
             })
             clearInterval(intervalId)
           } else {
@@ -98,23 +188,30 @@ const AdminUserAll = ({ search }) => {
   }, [seconds, minutes, optionSelected])
 
   useEffect(() => {
+    onDataStateChange(search)
     if (search.length > 0 ) {
       setOptionSelected({
         ...optionSelected,
-        is_play : false
+        Is_Play : false
       })
     }
   }, [search])
 
   useEffect(() => {
+    fetchDataConsultation(dataState)
     setOptionSelected({})
-    setMsgSelected(state)
-  }, [])
+    setMsgSelected(states)
+  }, [dataState])
+
+  // useEffect(() => {
+  //   setOptionSelected({})
+  //   setMsgSelected(state)
+  // }, [])
 
   const CardUser = (item, index) => {
     let icon
-    optionSelected.is_play &&
-    optionSelected.id == item.id ?
+    optionSelected.Is_Play &&
+    optionSelected.ID == item.ID ?
       (icon = Images.IconPause) :
       (icon =  Images.IconPlay)
 
@@ -122,14 +219,18 @@ const AdminUserAll = ({ search }) => {
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
-            <Image source={item.images} style={styles.avatarUser}/>
+            <Image
+              style={styles.avatarUser}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
+            />
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={()=> {navigation.navigate('AdminProfileAll', item)}}
+              onPress={()=> navigation.navigate('AdminProfileAll', item)}
             >
-              <Text style={styles.textUsername}>{item.username}</Text>
+              <Text style={styles.textUsername}>{item.User_Name}</Text>
               <Text style={styles.TxtTimeTitle}>
-                {moment(new Date()).format('h:mm A')} ({moment(new Date()).format('L')})
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
             </TouchableOpacity>
           </View>
@@ -147,11 +248,11 @@ const AdminUserAll = ({ search }) => {
                 height={20}
                 style={{ marginRight: 5 }}/>
               <Text style={styles.textDuration}>
-                {optionSelected.is_play && optionSelected.id == item.id ? (
+                {optionSelected.Is_Play && optionSelected.ID == item.ID ? (
                   `${minutes}:${seconds < 10 ?
                     `0${seconds}` : seconds}`
                 ) : (
-                  TimeConvert(item.voice_duration)
+                  TimeConvert(item.Recording_Duration)
                 )}
               </Text>
             </View>
@@ -162,9 +263,14 @@ const AdminUserAll = ({ search }) => {
             </TouchableOpacity>
           </View>
           <List.Section>
-            <List.Accordion title='Deskripsi konsultasi' titleStyle={styles.textRegular} style={styles.containerAccordion}>
+            <List.Accordion
+              title='Deskripsi konsultasi'
+              titleStyle={styles.textRegular}
+              style={styles.containerAccordion}>
               <View>
-                <Text style={styles.description}>{item.voice_description}</Text>
+                <Text style={styles.description}>
+                  {item.Description}
+                </Text>
               </View>
             </List.Accordion>
           </List.Section>
@@ -172,11 +278,15 @@ const AdminUserAll = ({ search }) => {
             <ButtonGradient
               title='Tolak'
               styles={styles.ButtonAction}
+              disabled={loadingBtn ? true : false}
               colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+              onPress={() => handleConfirm('Rejected', item)}
             />
             <ButtonGradient
               title='Terima'
               styles={styles.ButtonAction}
+              disabled={loadingBtn ? true : false}
+              onPress={() => handleConfirm('Approved', item)}
             />
           </View>
         </Card>
@@ -195,23 +305,31 @@ const AdminUserAll = ({ search }) => {
 
   return (
     <View>
+      <Loader loading={loadingBtn}/>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
-        {state == 0?
-          <NoUser/>
-          :
-          <FlatList
-            data={state}
-            style={{ width:'100%' }}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={renderFooter}
-            onEndReached={(e) => onLoadMore(e)}
-            showsVerticalScrollIndicator ={false}
-            contentContainerStyle={{ paddingBottom: 25 }}
-            keyExtractor={(item, index) =>  index.toString()}
-            renderItem={({ item, index }) => CardUser(item, index)}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+        {loadingAll && !loadingAllScroll ?
+          <LoadingView color = 'white'/> :
+          states == 0 ?
+            <NoUser/> :
+            <FlatList
+              data={states}
+              style={{ width:'100%' }}
+              onEndReachedThreshold={0.1}
+              ListFooterComponent={renderFooter}
+              onEndReached={(e) => onLoadMore(e)}
+              showsVerticalScrollIndicator ={false}
+              contentContainerStyle={{ paddingBottom: 25 }}
+              keyExtractor={(item, index) =>  index.toString()}
+              renderItem={({ item, index }) => CardUser(item, index)}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
       </ImageBackground>
     </View>

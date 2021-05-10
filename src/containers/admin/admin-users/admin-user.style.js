@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   TxtNoTask: {
     marginTop: 12,
     color: Color.white,
+    textAlign : 'center',
     fontSize: FontSize.medium,
     fontFamily: FontType.regular,
   },
@@ -188,7 +189,8 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   indicatorContainer : {
-    top : 10,
+    top : 12,
+    marginBottom : 7,
     alignItems:'center',
   },
   flexOne : { flex : 1 },
