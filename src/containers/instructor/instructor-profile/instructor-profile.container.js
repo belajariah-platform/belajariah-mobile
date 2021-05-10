@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { ImageBackground } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Card, Avatar } from 'react-native-elements'
+import NetInfo from '@react-native-community/netinfo'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 import {
@@ -10,43 +12,64 @@ import {
   Easing,
   Animated,
   ScrollView,
-  ToastAndroid,
   TouchableOpacity,
 } from 'react-native'
+import {
+  ImageView,
+  ModalNoConnection,
+} from '../../../components'
 
-
+import { MentorAPI } from '../../../api'
+import { Response } from '../../../utils'
 import { Images } from '../../../assets'
+import { USER_INFO } from  '../../../action'
 import { styles } from './instructor-profile.style'
-import { ImageView } from '../../../components'
 
 const InstructorProfile = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-
-  const userData = {
-    name: 'Nama Orang',
-    email: 'email@gmail.com',
-    phone: '+62-1234-5678',
-    rating: 4.5,
-    taskCompleteCount: 3,
-    taskOngoingCount: 3,
-    taskOverdueCount: 0,
-    fullName: 'Nama nama nama',
-    gender: 'Cwk',
-    job: 'Apa aja boleh',
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataMentor(userInfo.Email)
+    setconnectStatus(!connectStatus)
   }
 
   const rotateValue = new Animated.Value(0)
-
   const doRotation = rotateValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0 deg', '-360 deg'], // degree of rotation
+    outputRange: ['0 deg', '-360 deg'],
   })
 
   const transformStyle = { transform: [{ rotate: doRotation }] }
+
+  const fetchDataMentor = async (email) => {
+    try {
+      const response = await MentorAPI.GetMentor(email)
+      if (response.status === Response.SUCCESS) {
+        await dispatch({
+          type: USER_INFO,
+          user: response.data.result,
+        })
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+
+  useEffect(() => {
+    fetchDataMentor(userInfo.Email)
+  }, [])
 
   const handleRating = (num) => {
     let rating = []
@@ -72,11 +95,17 @@ const InstructorProfile = () => {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <ImageView
         isVisible={isModalFotoVisible}
+        filepath={userInfo.Image_Filename}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
       />
-
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <Images.ProfileBackground.default
         width={'100%'}
         style={styles.background}
@@ -113,29 +142,29 @@ const InstructorProfile = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          activeOpacity={0.7}
-          containerStyle={styles.avatar}
+          activeOpacity={0.5}
           onPress={toggleModalFoto}
-          source={Images.ImageProfileDefault}
+          containerStyle={styles.avatar}
           avatarStyle={{ borderRadius : 90 / 2 }}
+          source={userInfo.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
         />
       </ImageBackground>
 
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{userData.name}</Text>
+        <Text style={styles.headerName}>{userInfo.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{userData.email}</Text>
+          <Text style={styles.headerEmail}>{userInfo.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{userData.phone}</Text>
+          <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(userData.rating)}
+          {userInfo.Rating != 0 &&(handleRating(userInfo.Rating))}
         </View>
       </View>
 
@@ -150,7 +179,7 @@ const InstructorProfile = () => {
             style={styles.iconStatus}
           />
           <Text style={styles.textCompleteCount}>
-            {userData.taskCompleteCount}
+            {userInfo.Task_Completed}
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
@@ -161,33 +190,22 @@ const InstructorProfile = () => {
             style={styles.iconStatus}
           />
           <Text style={styles.textOngoingCount}>
-            {userData.taskOngoingCount}
+            {userInfo.Task_Inprogress}
           </Text>
         </Card>
-        {/* <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOverdue}>Overdue</Text>
-          <Images.IconInstructorProfileOverdue.default
-            width={28}
-            height={28}
-            style={styles.iconStatus}
-          />
-          <Text style={styles.textOverdueCount}>
-            {userData.taskOverdueCount}
-          </Text>
-        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{userData.fullName}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{userData.gender}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{userData.job}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>
