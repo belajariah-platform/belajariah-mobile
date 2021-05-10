@@ -43,7 +43,7 @@ const ProfileInstrcutor = ({ route }) => {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <Images.ProfileBackground.default
-        width={'100%'}
+        width='100%'
         style={styles.background}
       />
 
@@ -54,33 +54,34 @@ const ProfileInstrcutor = ({ route }) => {
             height={16}
           />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate('AdminProfileEdit')}>
           <Images.IconEdit.default />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
-          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           containerStyle={styles.avatar}
+          source={item.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : item.Image_Filename }}
+          onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
         />
       </ImageBackground>
 
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{item.fullname}</Text>
+        <Text style={styles.headerName}>{item.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{item.email}</Text>
+          <Text style={styles.headerEmail}>{item.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{'082184783116'}</Text>
+          <Text style={styles.headerPhone}>{item.Phone}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
-          {handleRating(4.5)}
+          {item.Rating != 0 &&(handleRating(item.Rating))}
         </View>
       </View>
 
@@ -95,7 +96,7 @@ const ProfileInstrcutor = ({ route }) => {
             style={styles.iconStatus}
           />
           <Text style={styles.textCompleteCount}>
-            {12}
+            {item.Task_Completed}
           </Text>
         </Card>
         <Card containerStyle={styles.cardStatus}>
@@ -106,33 +107,22 @@ const ProfileInstrcutor = ({ route }) => {
             style={styles.iconStatus}
           />
           <Text style={styles.textOngoingCount}>
-            {3}
+            {item.Task_Inprogress}
           </Text>
         </Card>
-        {/* <Card containerStyle={styles.cardStatus}>
-          <Text style={styles.textStatusOverdue}>Overdue</Text>
-          <Images.IconInstructorProfileOverdue.default
-            width={28}
-            height={28}
-            style={styles.iconStatus}
-          />
-          <Text style={styles.textOverdueCount}>
-            {0}
-          </Text>
-        </Card> */}
       </Card>
 
       <Card containerStyle={styles.containerCardProfile}>
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{item.fullname}</Text>
+        <Text style={styles.dataProfile}>{item.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{'Laki-laki'}</Text>
+        <Text style={styles.dataProfile}>{item.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{'Dosen'}</Text>
+        <Text style={styles.dataProfile}>{item.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>
