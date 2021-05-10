@@ -19,6 +19,7 @@ import {
   View,
   Text,
   FlatList,
+  BackHandler,
   TouchableOpacity,
 } from 'react-native'
 
@@ -144,6 +145,15 @@ const Chat = ({ state }) => {
     setOptionSelected({})
     setStateMsg(state)
     startPlayer()
+  }, [])
+
+  useEffect(() => {
+    const backAction = () => TrackPlayer.stop()
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+    return () => backHandler.remove()
   }, [])
 
   const ChatList = (item, index) => {
