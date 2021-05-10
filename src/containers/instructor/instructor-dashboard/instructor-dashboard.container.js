@@ -1,59 +1,65 @@
+import Swiper from 'react-native-swiper'
+import { Text } from '@ui-kitten/components'
+import { Card } from 'react-native-elements'
 import React, { useEffect, useState } from 'react'
+import { useIsFocused } from '@react-navigation/core'
+import NetInfo from '@react-native-community/netinfo'
+import { useNavigation } from '@react-navigation/native'
 import {
   View,
+  BackHandler,
+  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
+
+import { ClassAPI, } from '../../../api'
 import { Images } from '../../../assets'
-import { Card } from 'react-native-elements'
-import { Text } from '@ui-kitten/components'
+import { Response } from '../../../utils'
 import { styles } from './instructor-dashboard.style'
-import { useNavigation } from '@react-navigation/native'
-import Swiper from 'react-native-swiper'
-import { ToastAndroid } from 'react-native'
-import { BackHandler } from 'react-native'
-import { useIsFocused } from '@react-navigation/core'
 
 const InstructorDashboard = () => {
   const isFocused = useIsFocused()
   const navigation = useNavigation()
+  const [state, setState] = useState([])
   const [exitApp, setExitApp] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
-  const Classes = [
-    {
-      id: 0,
-      name: 'Kelas Tahsin',
-      taskCount: '1200',
-      illustration: Images.InstructorCardTahsin,
-    },
-    {
-      id: 1,
-      name: 'Kelas Tilawah',
-      taskCount: '1200',
-      illustration: Images.InstructorCardTilawah,
-    },
-    {
-      id: 2,
-      name: 'Kelas Dummy 1',
-      taskCount: '7',
-      illustration: Images.InstructorCardTahsin,
-    },
-    {
-      id: 3,
-      name: 'Kelas Dummy 2',
-      taskCount: '84',
-      illustration: Images.InstructorCardTilawah,
-    },
-    {
-      id: 4,
-      name: 'Kelas Dummy 3',
-      taskCount: '196',
-      illustration: Images.InstructorCardTahsin,
-    },
-  ]
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataClass(dataState)
+    setconnectStatus(!connectStatus)
+  }
 
-  //Grouping array menjadi 2 item kelas di setiap index array
-  const ClassesGrouping = Classes.reduce(function (rows, key, index) {
+  const fetchDataClass = async ({ skip, take, filterString }) => {
+    try {
+      setLoading(true)
+      const response = await ClassAPI.GetAllClass(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataClass(dataState)
+  }, [])
+
+  const ClassesGrouping = state.reduce(function (rows, key, index) {
     return (
       (index % 2 == 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) &&
       rows
@@ -69,43 +75,43 @@ const InstructorDashboard = () => {
         <Text style={styles.textSubTitle}>
           ayo bantu mereka koreksi bacaannya
         </Text>
-        <Swiper
-          containerStyle={styles.contentSwiper}
-          activeDotStyle={styles.activeDot}
-          loop={false}>
-          {ClassesGrouping.map((classes, classgroupIndex) => {
-            return (
-              <View key={classgroupIndex} style={styles.containerRowView}>
-                {classes.map((item, classIndex) => {
-                  return (
-                    <Card
-                      key={classIndex}
-                      containerStyle={styles.containerCard}>
-                      <ImageBackground
-                        source={item.illustration}
-                        style={styles.cardBackground}
-                        imageStyle={styles.illustration}>
-                        <Text style={styles.textClassName}>{item.name}</Text>
-                        <Text
-                          style={
-                            styles.textTaskCount
-                          }>{`${item.taskCount} Tugas Tersedia`}</Text>
-                        <TouchableOpacity
-                          onPress={() =>
-                            navigation.navigate('InstructorJob', {
-                              idClass: item.id,
-                            })
-                          }>
-                          <Text style={styles.textBtnViewTask}>Lihat Tugas</Text>
-                        </TouchableOpacity>
-                      </ImageBackground>
-                    </Card>
-                  )
-                })}
-              </View>
-            )
-          })}
-        </Swiper>
+        {loading ? <LoadingView/> : (
+          <Swiper
+            containerStyle={styles.contentSwiper}
+            activeDotStyle={styles.activeDot}
+            loop={false}>
+            {state.map((classes, classgroupIndex) => {
+              return (
+                <View key={classgroupIndex} style={styles.containerRowView}>
+                  {ClassesGrouping[0].map((item, classIndex) => {
+                    return (
+                      <Card
+                        key={classIndex}
+                        containerStyle={styles.containerCard}>
+                        <ImageBackground
+                          source={Images.InstructorCardTahsin}
+                          style={styles.cardBackground}
+                          imageStyle={styles.illustration}>
+                          <Text style={styles.textClassName}>Kelas {item.Class_Initial}</Text>
+                          <Text
+                            style={
+                              styles.textTaskCount
+                            }>{`${100} Tugas Tersedia`}</Text>
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('InstructorJob', item)
+                            }>
+                            <Text style={styles.textBtnViewTask}>Lihat Tugas</Text>
+                          </TouchableOpacity>
+                        </ImageBackground>
+                      </Card>
+                    )
+                  })}
+                </View>
+              )
+            })}
+          </Swiper>
+        )}
       </View>
     )
   }
@@ -138,6 +144,12 @@ const InstructorDashboard = () => {
 
   return (
     <View style={styles.container}>
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <ImageBackground
         source={Images.InstructorDashboardBackground}
         style={styles.containerBackground}>
