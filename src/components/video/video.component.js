@@ -116,17 +116,17 @@ const VideoPlayer = (props) => {
       onPress={showControls}>
       <View>
         <Video
-          source={{ uri: props.videoLink }}
+          onEnd={onEnd}
           ref={videoRef}
           controls={false}
-          style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
-          poster={props.posterLink}
-          resizeMode={'stretch'}
-          posterResizeMode={'stretch'}
           onLoad={onLoadEnd}
-          onProgress={onProgress}
-          onEnd={onEnd}
           paused={!state.play}
+          resizeMode={'cover'}
+          onProgress={onProgress}
+          poster={props.posterLink}
+          posterResizeMode={'cover'}
+          source={{ uri: props.videoLink }}
+          style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
         />
 
         {state.showControls && (
