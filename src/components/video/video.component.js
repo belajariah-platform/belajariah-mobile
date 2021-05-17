@@ -55,6 +55,11 @@ const VideoPlayer = (props) => {
     setState({ ...state, play: true })
   }
 
+  const handleStop = () => {
+    videoRef.current.seek(0)
+    setState({ ...state, play : false, currentTime : 0, showControls : true })
+  }
+
   const skipBackward = () => {
     videoRef.current.seek(state.currentTime - 15)
     setState({ ...state, currentTime: state.currentTime - 15 })

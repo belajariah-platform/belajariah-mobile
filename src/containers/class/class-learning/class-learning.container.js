@@ -7,9 +7,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
   Text,
+  Alert,
   View,
   Image,
-  Alert,
   ScrollView,
   ToastAndroid,
 } from 'react-native'
