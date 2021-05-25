@@ -55,6 +55,11 @@ const VideoPlayer = (props) => {
     setState({ ...state, play: true })
   }
 
+  const handleStop = () => {
+    videoRef.current.seek(0)
+    setState({ ...state, play : false, currentTime : 0, showControls : true })
+  }
+
   const skipBackward = () => {
     videoRef.current.seek(state.currentTime - 15)
     setState({ ...state, currentTime: state.currentTime - 15 })
@@ -116,17 +121,17 @@ const VideoPlayer = (props) => {
       onPress={showControls}>
       <View>
         <Video
-          source={{ uri: props.videoLink }}
+          onEnd={onEnd}
           ref={videoRef}
           controls={false}
-          style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
-          poster={props.posterLink}
-          resizeMode={'stretch'}
-          posterResizeMode={'stretch'}
           onLoad={onLoadEnd}
-          onProgress={onProgress}
-          onEnd={onEnd}
           paused={!state.play}
+          resizeMode={'cover'}
+          onProgress={onProgress}
+          poster={props.posterLink}
+          posterResizeMode={'cover'}
+          source={{ uri: props.videoLink }}
+          style={state.fullscreen? props.videoFullscreenStyle : props.videoStyle}
         />
 
         {state.showControls && (

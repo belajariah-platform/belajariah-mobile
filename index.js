@@ -1,6 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { AppRegistry } from 'react-native'
+import TrackPlayer from 'react-native-track-player'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import RootNavigation from './App'
@@ -16,3 +17,5 @@ const Application = () => (
 )
 
 AppRegistry.registerComponent(appName, () => Application)
+
+TrackPlayer.registerPlaybackService(() => require('./service'))

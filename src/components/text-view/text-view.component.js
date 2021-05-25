@@ -2,35 +2,42 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { styles } from './text-view.style'
 import { Text } from '@ui-kitten/components'
-import ViewMoreText from 'react-native-view-more-text'
-
-const renderViewMore = onPress => {
-  return (
-    <Text style={styles.viewMore} onPress={onPress}>
-      selengkapnya
-    </Text>
-  )
-}
-const renderViewLess = onPress => {
-  return (
-    <Text style={styles.viewMore} onPress={onPress}>
-      lebih sedikit
-    </Text>
-  )
-}
 
 const TextView = (props) => {
+  const ViewMore = () => {
+    return (
+      <Text style={styles.viewMore} onPress={props.onPress}>
+        selengkapnya
+      </Text>
+    )
+  }
+  const ViewLess = () => {
+    return (
+      <Text style={styles.viewMore} onPress={props.onPress}>
+        lebih sedikit
+      </Text>
+    )
+  }
+
   return (
-    <ViewMoreText
-      numberOfLines={3}
-      renderViewMore={renderViewMore}
-      renderViewLess={renderViewLess}>
-      {props.component}
-    </ViewMoreText>
+    <>
+      <Text
+        numberOfLines={props.numberOfLines}>
+        {props.component}
+      </Text>
+      {props.showMore ? (
+        <ViewMore />
+      ) : (
+        <ViewLess />
+      )}
+    </>
   )
 }
 TextView.propTypes = {
+  onPress : PropTypes.func,
+  showMore : PropTypes.bool,
   component : PropTypes.object,
+  numberOfLines : PropTypes.number,
 }
 
 export default TextView

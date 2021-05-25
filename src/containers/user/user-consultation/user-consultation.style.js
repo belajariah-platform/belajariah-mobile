@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
   },
+  containerNoTask : {
+    flex: 1,
+    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
   flexHeader: {
     paddingBottom: 16,
     alignItems: 'center',
@@ -181,6 +187,7 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 34 / 2,
+    marginLeft : 5,
   },
   containerUserDesc: {
     paddingLeft: 20,
@@ -244,13 +251,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal : 20,
   },
-  cancel : {
-    marginLeft : '20%',
+  row : {
+    flexDirection : 'row',
+    alignItems : 'center',
   },
+  cancel : { marginLeft : '20%' },
   textPurple : { color : '#58006f' },
   textWhite : { color : Color.white },
   flexRow : { flexDirection : 'row' },
   horizontal : { marginHorizontal : 10 },
+  column : { flexDirection : 'column' }
 })
 
 export default styles

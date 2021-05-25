@@ -7,13 +7,14 @@ import { styles } from './progressbar.style'
 
 const Progressbar = (props) => {
   const progressBar = props.progress.toString().concat('%')
+
   return (
     <View style={styles.container}>
       <LinearGradient
         end={{ x: 1, y: 1 }}
         start={{ x: 0, y: 1 }}
         colors={['white', 'aqua']}
-        style={{ ...styles.progressBar, maxWidth: progressBar }}/>
+        style={{ ...styles.progressBar, width: progressBar }}/>
     </View>
   )
 }

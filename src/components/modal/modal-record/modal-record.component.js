@@ -150,7 +150,9 @@ const ModalRecord = (props) => {
         setDataState(s => ({ ...s, send : false, sent : true }))
       }
       setLoadingBtn(false)
+      handleReload()
     } catch (error) {
+      handleReload()
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)
       })

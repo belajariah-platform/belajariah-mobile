@@ -63,7 +63,6 @@ const Home = (props) => {
   const [statePromotion, setStatePromotion] = useState([])
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
-  const [loadingPromo, setloadingPromo] = useState(true)
   const [loadingClass, setloadingClass] = useState(true)
   const [loadingStory, setloadingStory] = useState(true)
   const [loadingPackage, setloadingPackage] = useState(true)
@@ -116,7 +115,6 @@ const Home = (props) => {
 
   const fetchDataPromotion = async ({ skip, take, filterString }) => {
     try {
-      setloadingPromo(true)
       const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStatePromotion(response.data.data)
@@ -125,9 +123,7 @@ const Home = (props) => {
           setconnectStatus(!res.isConnected)
         })
       }
-      setloadingPromo(false)
     } catch (err) {
-      setloadingPromo(false)
       return err
     }
   }
