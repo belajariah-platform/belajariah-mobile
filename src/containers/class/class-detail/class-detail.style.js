@@ -4,11 +4,14 @@ import { Color, FontSize, FontType } from '../../../assets'
 const styles = StyleSheet.create({
   flexFull: {
     flex: 1,
+    backgroundColor : Color.softPink
   },
   flexButtonHeader: {
+    top : 0,
     paddingRight: 15,
     alignItems: 'center',
     flexDirection: 'row',
+    position : 'absolute',
     justifyContent: 'space-between',
   },
   flexButtonHeaderFullscreen: {
@@ -59,18 +62,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   videoStyle: {
+    width: '100%',
+    height: 190,
     alignSelf : 'center',
-    width: 176,
-    height: 88,
   },
   videoFullscreenStyle: {
     width: '100%',
     height: '100%',
   },
   controllerStyle: {
-    width: 176,
-    height: 88,
-    marginTop: -88,
+    width: '100%',
+    height: 190,
+    marginTop: -190,
     alignSelf: 'center',
     backgroundColor: '#000000c4',
   },
@@ -124,15 +127,15 @@ const styles = StyleSheet.create({
   },
   semiBox: {
     height: 30,
+    marginTop: 0,
     width: '100%',
-    marginTop: 32,
     marginBottom:-5,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: Color.softPink,
   },
   tabContainerStyle: {
-    marginTop: -48,
+    marginTop: 10,
   },
   labelStyle: {
     width:'100%',
@@ -145,13 +148,13 @@ const styles = StyleSheet.create({
     height: 4,
     left: '6%',
     borderRadius: 2,
-    backgroundColor: Color.bgColor,
+    backgroundColor: Color.purpleHint,
   },
   tabBarStyle: {
     borderRadius: 8,
     paddingVertical: 2,
     marginHorizontal: 16,
-    backgroundColor: Color.white,
+    backgroundColor: Color.bgColorPurple,
   },
   discountedPrice: {
     color: Color.white,

@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   textHeader: {
     color: Color.black,
+    marginRight : '31%',
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },

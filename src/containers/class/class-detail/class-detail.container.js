@@ -42,23 +42,18 @@ const ClassDetail = (props) => {
   }
 
   return (
-    <ImageBackground
-      source={Images.DetailClassHeaderBG}
+    <View
+      // source={Images.DetailClassHeaderBG}
       style={styles.flexFull}
     >
-      <View style={isFullscreen? styles.flexButtonHeaderFullscreen : styles.flexButtonHeader}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Images.ButtonBack.default />
-        </TouchableOpacity>
-      </View>
 
       <VideoPlayer
         useSmallBar={true}
-        iconPlaySize = {20}
-        iconSkipSize = {20}
+        iconPlaySize = {40}
+        iconSkipSize = {40}
         videoStyle={styles.videoStyle}
         videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
-        posterLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
+        posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
         style={styles.videoContainerStyle}
         controllerStyle={styles.controllerStyle}
         videoFullscreenStyle={styles.videoFullscreenStyle}
@@ -67,21 +62,21 @@ const ClassDetail = (props) => {
         controllerFullscreenStyle={styles.controllerFullscreenStyle}
       />
 
-      <Text style={styles.textDesc}>{classes.Class_Name}</Text>
-      <View style={styles.flexRating}>
-        <View>{classes.Class_Rating != 0 && handleRating(classes.Class_Rating)}</View>
-        <Text style={styles.textRating}>{classes.Class_Rating != 0 && classes.Class_Rating.toFixed(1)}</Text>
+      <View style={isFullscreen? styles.flexButtonHeaderFullscreen : styles.flexButtonHeader}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Images.ButtonBack.default />
+        </TouchableOpacity>
       </View>
 
-      <View style={styles.semiBox}/>
+      {/* <View style={styles.semiBox}/> */}
 
       <Tab.Navigator
         style={styles.tabContainerStyle}
         tabBarOptions={{
           style: styles.tabBarStyle,
-          inactiveTintColor: Color.grey,
+          inactiveTintColor: Color.purpleExHint,
           labelStyle: styles.labelStyle,
-          activeTintColor: Color.purpleText,
+          activeTintColor: Color.white,
           indicatorStyle: styles.indicatorStyle,
         }}>
 
@@ -124,7 +119,7 @@ const ClassDetail = (props) => {
           }}
         />
       </View>
-    </ImageBackground>
+    </View>
   )
 }
 

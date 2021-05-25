@@ -43,7 +43,7 @@ const AdminDrawer = ({ navigation }, props) => {
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
-        submit={async () =>handleSignOut()}
+        submit={async () => handleSignOut()}
       />
       <DrawerContentScrollView {...props} contentContainerStyle={styles.flexFull}>
         <View style={styles.drawerBackground}>

@@ -47,9 +47,8 @@ const styles = StyleSheet.create({
     backgroundColor : Color.softPink,
   },
   textHeader: {
-    marginRight:10,
+    marginRight:'31%',
     color: Color.black,
-    textAlign: 'center',
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
