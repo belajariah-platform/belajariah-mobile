@@ -39,8 +39,8 @@ import { styles } from '../class-learning/class-learning.style'
 const ClassLearning = (props) => {
   const dispatch = useDispatch()
   const item = props.route.params
-  // const isExam = props.route.isExam
   const navigation = useNavigation()
+  // const isExam = props.route.isExam
   const { detail } = useSelector((state) => state.UserClassDetailReducer)
 
   const [counts, setCount] = useState(0)
@@ -56,17 +56,12 @@ const ClassLearning = (props) => {
   const [sourceVideo, setSourceVideo] = useState({})
   const [loadingExc, setLoadingExc] = useState(true)
   const [numberOfLines, setNumberOfLines] = useState(3)
+  const [loadingVideo, setLoadingVideo] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [modalRecordVisible, setModalRecordVisible] = useState(false)
   const [modalChecklistVisible, setModalChecklistVisible] = useState(false)
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
-
-  const obj = {
-    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
-    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    posterLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
-  }
 
   const [progress, setProgress] = useState({
     playIndex  : 0,
@@ -75,13 +70,23 @@ const ClassLearning = (props) => {
     isExercise : false,
   })
 
-  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-  const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
+  const obj = {
+    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
+    posterLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
+    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
+  }
 
+  const toggleExpand = (index) => {
+    let tempExpand = [...expand]
+    tempExpand[index] = !tempExpand[index]
+    setExpand(tempExpand)
+  }
   const toggleModalChecklist = () => {
     setModalChecklistVisible(!modalChecklistVisible)
     fetchDataExercise(dataState, progress.subtitleCode)
   }
+  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
+  const toggleModalRecord = () => setModalRecordVisible(!modalRecordVisible)
 
   const fetchDataLearning = async (state, code) => {
     try {
@@ -120,39 +125,38 @@ const ClassLearning = (props) => {
     }
   }
 
-  const updateProgressClass = async (percentages, count, index, subIndex) => {
-    const values = {
-      ID : detail.ID,
-      Status : 'In Progress',
-      Progress : parseInt(percentages),
-      Progress_Count : count,
-      Progress_Index: index,
-      Progress_Subindex : subIndex,
-      User_Code : detail.User_Code,
-    }
-    try {
-      const response = await UserClassAPI.UpdateProgressUserClass(values)
-      if (response.data.result) {
-        dispatch(UserClassAPI.GetUserClass(item.Class_Code))
-      }
-    } catch (error) {
-      return error
-    }
+  const calculatePercentage = (count, totalMaterial) => {
+    return Number(count / totalMaterial * 100).toFixed(1)
   }
 
-  useEffect(() => {
-    dispatch(UserClassAPI.GetUserClass(item.Class_Code))
-    fetchDataLearning(dataState, item.Class_Code)
-  }, [])
+  const handleModalChecklist = (code) => {
+    setModalChecklistVisible(true)
+    fetchDataExercise(dataState, code)
+  }
 
-  // useEffect(() => {
-  //   fetchDataLearning(dataState, item.Class_Code)
-  // }, [isExam])
+  const handleModalRecord = (item) => {
+    setRecord(item)
+    setModalRecordVisible(true)
+  }
 
-  const toggleExpand = (index) => {
-    let tempExpand = [...expand]
-    tempExpand[index] = !tempExpand[index]
-    setExpand(tempExpand)
+  const handleSplitString = (value) => {
+    const stringSplit = value.split('|')
+    return (
+      <>
+        {stringSplit.map((val, index) => {
+          return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
+        })}
+      </>
+    )}
+
+  const handleSplitUser = (value) => {
+    return value.toString().length >= 4 ?
+      value/1000 + ' K' : value
+  }
+
+  const handleShowMore = () => {
+    setShowMore(!showMore)
+    showMore ? setNumberOfLines(0) : setNumberOfLines(3)
   }
 
   const handleRating = (num) => {
@@ -176,9 +180,86 @@ const ClassLearning = (props) => {
     )
   }
 
-  const handleModalChecklist = (code) => {
-    setModalChecklistVisible(true)
-    fetchDataExercise(dataState, code)
+  const handleClassProgress = async (percentages, count, index, subIndex) => {
+    const values = {
+      ID : detail.ID,
+      Status : 'In Progress',
+      Progress : parseInt(percentages),
+      Progress_Count : count,
+      Progress_Index: index,
+      Progress_Subindex : subIndex,
+      User_Code : detail.User_Code,
+    }
+    try {
+      const response = await UserClassAPI.UpdateProgressUserClass(values)
+      if (response.data.result) {
+        dispatch(UserClassAPI.GetUserClass(item.Class_Code))
+      }
+    } catch (error) {
+      return error
+    }
+  }
+
+  const handlePlayVideo = (index, subIndex, topic, subtopic) => {
+    setLoadingVideo(true)
+    setSourceVideo(subtopic)
+    if(detail.Pre_Test_Total > 0) {
+      setProgress(s => ({
+        ...s,
+        subtitleCode : topic.Code,
+        isExercise : topic.Is_Exercise,
+      }))
+      if(index > detail.Progress_Index) {
+        Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
+      } else if(index < detail.Progress_Index) {
+        setProgress(s => ({ ...s, playIndex : index }))
+        setProgress(s => ({ ...s, playSubIndex : subIndex }))
+      } else {
+        if(subIndex > detail.Progress_Subindex) {
+          Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
+        } else {
+          setProgress(s => ({ ...s, playIndex : index }))
+          setProgress(s => ({ ...s, playSubIndex : subIndex }))
+        }
+      }
+    } else {
+      Alert.alert('Silahkan kerjakan pre-exam terlebih dahulu')
+    }
+    setTimeout(() => {
+      setLoadingVideo(false)
+    }, 1000)
+  }
+
+  const handleUnlockVideo = (index, subIndex) => {
+    if(detail.Pre_Test_Total > 0) {
+      if(index == detail.Progress_Index && subIndex == detail.Progress_Subindex) {
+        let nextIndex = states[detail.Progress_Index + 1]
+        let nextSubIndex = states[detail.Progress_Index].SubTitles[detail.Progress_Subindex + 1]
+
+        if(nextSubIndex == undefined) {
+          if(nextIndex == undefined) {
+            //end of array
+            if(detail.Progress < 100) {
+              Alert.alert('Post exam unlocked!')
+
+              const count = detail.Progress_Count + 1
+              const percentages = calculatePercentage(count, counts)
+              handleClassProgress(percentages, count, detail.Progress_Index, detail.Progress_Subindex)
+            }
+          } else {
+            //next index
+            const count = detail.Progress_Count  + 1
+            const percentages = calculatePercentage(count, counts)
+            handleClassProgress(percentages, count, detail.Progress_Index + 1, 0)
+          }
+        } else {
+          //next subindex
+          const count = detail.Progress_Count  + 1
+          const percentages = calculatePercentage(count, counts)
+          handleClassProgress(percentages, count, detail.Progress_Index, detail.Progress_Subindex + 1)
+        }
+      }
+    }
   }
 
   const handleVideoEnd = (index, subIndex) => {
@@ -192,40 +273,31 @@ const ClassLearning = (props) => {
         handleModalChecklist(sourceVideo.Code)
       )
     ) : (
-      unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+      handleUnlockVideo(detail.Progress_Index, detail.Progress_Subindex)
     )
   }
 
-  const handleModalRecord = (item) => {
-    setRecord(item)
-    setModalRecordVisible(true)
-  }
-
-  const calculatePercentage = (count, totalMaterial) => {
-    return Number(count / totalMaterial * 100).toFixed(1)
+  const getLockStatus = (index, subIndex) => {
+    if(detail.Pre_Test_Total > 0) {
+      if(index < detail.Progress_Index) {
+        return false
+      } else if(index > detail.Progress_Index) {
+        return true
+      } else {
+        if(subIndex < detail.Progress_Subindex) {
+          return false
+        } else if(subIndex > detail.Progress_Subindex) {
+          return true
+        } else {
+          return false
+        }
+      }
+    } else {
+      return true
+    }
   }
 
   const DescriptionClass = () => {
-    const handleSplitString = (value) => {
-      const stringSplit = value.split('|')
-      return (
-        <>
-          {stringSplit.map((val, index) => {
-            return <Text key={index}>{val}.{'\n'}{'\n'}</Text>
-          })}
-        </>
-      )}
-
-    const handleSplitUser = (value) => {
-      return value.toString().length >= 4 ?
-        value/1000 + ' K' : value
-    }
-
-    const handleShowMore = () => {
-      setShowMore(!showMore)
-      showMore ? setNumberOfLines(0) : setNumberOfLines(3)
-    }
-
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
@@ -275,7 +347,7 @@ const ClassLearning = (props) => {
         <View style={styles.containerMenuDesc}>
           <ButtonGradient
             end={{ x: 1, y : 1 }}
-            start={{ x:0, y : 1 }}
+            start={{ x : 0, y : 1 }}
             title='Konsultasi Bacaan'
             styles={styles.viewConsultation}
             textStyle={styles.textConsultation}
@@ -290,52 +362,6 @@ const ClassLearning = (props) => {
   }
 
   const ContentClass = () => {
-    const playVideo = (index, subIndex, topic, subtopic) => {
-      setSourceVideo(subtopic)
-      if(detail.Pre_Test_Total > 0) {
-        setProgress(s => ({
-          ...s,
-          subtitleCode : topic.Code,
-          isExercise : topic.Is_Exercise,
-        }))
-        if(index > detail.Progress_Index) {
-          Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
-        } else if(index < detail.Progress_Index) {
-          setProgress(s => ({ ...s, playIndex : index }))
-          setProgress(s => ({ ...s, playSubIndex : subIndex }))
-        } else {
-          if(subIndex > detail.Progress_Subindex) {
-            Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
-          } else {
-            setProgress(s => ({ ...s, playIndex : index }))
-            setProgress(s => ({ ...s, playSubIndex : subIndex }))
-          }
-        }
-      } else {
-        Alert.alert('Silahkan kerjakan pre-exam terlebih dahulu')
-      }
-    }
-
-    const getLockStatus = (index, subIndex) => {
-      if(detail.Pre_Test_Total > 0) {
-        if(index < detail.Progress_Index) {
-          return false
-        } else if(index > detail.Progress_Index) {
-          return true
-        } else {
-          if(subIndex < detail.Progress_Subindex) {
-            return false
-          } else if(subIndex > detail.Progress_Subindex) {
-            return true
-          } else {
-            return false
-          }
-        }
-      } else {
-        return true
-      }
-    }
-
     return (
       <View style={styles.containerMenuDetail}>
         <Text style={styles.containerTitleContent}>Konten Kelas</Text>
@@ -374,7 +400,7 @@ const ClassLearning = (props) => {
                       <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={() => {
-                          playVideo(index, subIndex, topic, subtopic)
+                          handlePlayVideo(index, subIndex, topic, subtopic)
                         }}>
                         <List.Item
                           key={subIndex}
@@ -476,47 +502,16 @@ const ClassLearning = (props) => {
     )
   }
 
-  const unlockNext = (index, subIndex) => {
-    if(detail.Pre_Test_Total > 0) {
-      if(index == detail.Progress_Index && subIndex == detail.Progress_Subindex) {
-        let nextIndex = states[detail.Progress_Index + 1]
-        let nextSubIndex = states[detail.Progress_Index].SubTitles[detail.Progress_Subindex + 1]
-
-        if(nextSubIndex == undefined) {
-          if(nextIndex == undefined) {
-            //end of array
-            if(detail.Progress < 100) {
-              Alert.alert('Post exam unlocked!')
-
-              const count = detail.Progress_Count + 1
-              const percentages = calculatePercentage(count, counts)
-              updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex)
-            }
-          } else {
-            //next index
-            const count = detail.Progress_Count  + 1
-            const percentages = calculatePercentage(count, counts)
-            updateProgressClass(percentages, count, detail.Progress_Index + 1, 0)
-          }
-        } else {
-          //next subindex
-          const count = detail.Progress_Count  + 1
-          const percentages = calculatePercentage(count, counts)
-          updateProgressClass(percentages, count, detail.Progress_Index, detail.Progress_Subindex + 1)
-        }
-      }
-    }
-  }
-
   const ChecklistClass = () => {
     const [checkCount, setCheckCount] = useState(0)
+
     const checkChecklist = () => {
       if (checkCount == stateExc.length) {
         toggleModalChecklist()
         checkCount == stateExc.length && (
           setShowTask(false),
           item.Is_Done = true,
-          unlockNext(detail.Progress_Index, detail.Progress_Subindex)
+          handleUnlockVideo(detail.Progress_Index, detail.Progress_Subindex)
         )
       } else {
         ToastAndroid.show('Silahkan kerjakan dulu latihannya', ToastAndroid.SHORT)
@@ -578,6 +573,15 @@ const ClassLearning = (props) => {
     )
   }
 
+  useEffect(() => {
+    dispatch(UserClassAPI.GetUserClass(item.Class_Code))
+    fetchDataLearning(dataState, item.Class_Code)
+  }, [])
+
+  // useEffect(() => {
+  //   fetchDataLearning(dataState, item.Class_Code)
+  // }, [isExam])
+
   return (
     <>
       {viewPdf ? (
@@ -602,21 +606,25 @@ const ClassLearning = (props) => {
               </Text>}
             />
             <View style={styles.container}>
-              <VideoPlayer
-                posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
-                videoLink = {sourceVideo.Video || obj.videoTrailerLink}
-                iconPlaySize = {48}
-                iconSkipSize = {32}
-                showSkipButton={true}
-                showBackButton={true}
-                videoStyle={styles.videoStyle}
-                style={styles.videoContainerStyle}
-                controllerStyle={styles.controllerStyle}
-                videoFullscreenStyle={styles.videoFullscreenStyle}
-                fullscreenStyle={styles.videoFullscreenContainerStyle}
-                onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
-                controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
+              {loadingVideo ? (
+                <LoadingView />
+              ) : (
+                <VideoPlayer
+                  posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
+                  videoLink = {sourceVideo.Video || obj.videoTrailerLink}
+                  iconPlaySize = {48}
+                  iconSkipSize = {32}
+                  showSkipButton={true}
+                  showBackButton={true}
+                  videoStyle={styles.videoStyle}
+                  style={styles.videoContainerStyle}
+                  controllerStyle={styles.controllerStyle}
+                  videoFullscreenStyle={styles.videoFullscreenStyle}
+                  fullscreenStyle={styles.videoFullscreenContainerStyle}
+                  onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
+                  controllerFullscreenStyle={styles.controllerFullscreenStyle}
+                  onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
+              )}
               {/* <Text style={{ position : 'absolute', color : Color.white, alignSelf : 'center',  }}>hello</Text> */}
             </View>
           </View>
