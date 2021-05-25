@@ -22,6 +22,8 @@ import styles from './class-about.style'
 
 const ClassAbout = ({ params }) => {
   const [state, setState] = useState([])
+  const [showMore, setShowMore] = useState(true)
+  const [numberOfLines, setNumberOfLines] = useState(3)
   const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
 
@@ -106,10 +108,19 @@ const ClassAbout = ({ params }) => {
         </>
       )
     }
+
+    const handleShowMore = () => {
+      setShowMore(!showMore)
+      showMore ? setNumberOfLines(0) : setNumberOfLines(3)
+    }
+
     return (
       <Card containerStyle={styles.containerDesc}>
         <Text style={styles.textBold}>Deskripsi</Text>
         <TextView
+          showMore={showMore}
+          onPress={handleShowMore}
+          numberOfLines={numberOfLines}
           component={
             <Text style={styles.textRegularParaf}>
               {handleSplitString(params.Class_Description)}

@@ -6,8 +6,8 @@ import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
-  Alert,
   Text,
+  Alert,
   View,
   Image,
   ScrollView,
@@ -50,10 +50,12 @@ const ClassLearning = (props) => {
   const [stateExc, setStateExc] = useState([])
   const [loading, setLoading] = useState(true)
   const [viewPdf, setViewPdf] = useState(false)
+  const [showMore, setShowMore] = useState(true)
   const [sourcePdf, setSourcePdf] = useState({})
   const [showTask, setShowTask] = useState(false)
   const [sourceVideo, setSourceVideo] = useState({})
   const [loadingExc, setLoadingExc] = useState(true)
+  const [numberOfLines, setNumberOfLines] = useState(3)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
   const [modalRecordVisible, setModalRecordVisible] = useState(false)
@@ -219,6 +221,11 @@ const ClassLearning = (props) => {
         value/1000 + ' K' : value
     }
 
+    const handleShowMore = () => {
+      setShowMore(!showMore)
+      showMore ? setNumberOfLines(0) : setNumberOfLines(3)
+    }
+
     return (
       <View style={styles.containerMenuDesc}>
         <View style={styles.containerTextTitle} >
@@ -249,6 +256,9 @@ const ClassLearning = (props) => {
           </View>
         </View>
         <TextView
+          showMore={showMore}
+          onPress={handleShowMore}
+          numberOfLines={numberOfLines}
           component={
             <Text style={styles.containerTextDesc}>
               {handleSplitString(item.Class_Description)}
