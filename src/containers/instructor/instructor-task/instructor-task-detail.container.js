@@ -1,9 +1,11 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import {  useFormik } from 'formik'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
@@ -12,16 +14,27 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {
+  Alerts,
+  ImageView,
+  ButtonGradient,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-import { TimeConvert, TimerObj } from '../../../utils'
-import { ButtonGradient, ImageView } from '../../../components'
+import { ConsultationAPI } from '../../../api'
+import { TimeConvert, TimerObj, Response } from '../../../utils'
 
 import { styles } from './instructor-task-detail.style'
 
 const InstructorTaskDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
+  const { userInfo } = useSelector((state) => state.UserReducer)
+
+  const [states, setStates] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [dataState] = useState({ skip: 0, take: 5, filterString: '[]' })
 
   const [play, setPlay] = useState(false)
   const [minutes, setMinutes] = useState(0)
@@ -30,13 +43,35 @@ const InstructorTaskDetail = ({ route }) => {
   const [message, setMessage] = useState(false)
   const [msgSelected, setMsgSelected] = useState([])
   const [optionSelected, setOptionSelected] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
+  const retryConnection = () => setconnectStatus(!connectStatus)
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
+  console.log(loading)
   const voiceDuration =  (480 - ((minutes*60) + seconds))
   const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
 
+  const fetchDataConsultation = async ({ skip, take, filterString  }) => {
+    try {
+      setLoading(true)
+      const response = await ConsultationAPI.GetAllConsultationMentor(skip, take, filterString )
+      if (response.status === Response.SUCCESS) {
+        setStates(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+  console.log(states)
   const user_login = 2
 
   const state = [
@@ -50,17 +85,30 @@ const InstructorTaskDetail = ({ route }) => {
 
   const FormSendMessage = useFormik({
     initialValues: {
-      message: '',
-      voice_note : '',
-      duration : 0,
+      Taken_Code : 0,
+      Description : '',
+      Recording_Code : 0,
+      Action : 'Approved',
+      Recording_Duration : 0,
+      User_Code : userInfo.ID,
+      Status_Code : 'ENC00000020',
+      Class_Code : param.Class_Code,
+      Expired_Date : param.Expired_Date,
     },
-    onSubmit:  (values, form) => {
-      console.log(values)
-      setPlay(false)
-      setRecord(false)
-      setMessage(false)
-      form.resetForm()
-      form.setSubmitting(false)
+    onSubmit: async (values, form) => {
+      const response =  await ConsultationAPI.GetAllConsultationSpamUser(values)
+      if (response.data.count >= 2) {
+        Alerts(false, 'Pesan kamu sudah melebihi batas')
+      } else {
+        const res = await ConsultationAPI.InsertConsultation(values)
+        if (res.data.result) {
+          setPlay(false)
+          setRecord(false)
+          setMessage(false)
+          form.resetForm()
+          form.setSubmitting(false)
+        }
+      }
     },
   })
 
@@ -74,9 +122,9 @@ const InstructorTaskDetail = ({ route }) => {
   const handlePlay = () => {
     setPlay(!play)
     setMinutes(TimerObj(FormSendMessage
-      .values['duration']).minute)
+      .values['Recording_Duration']).minute)
     setSeconds(TimerObj(FormSendMessage
-      .values['duration']).second)
+      .values['Recording_Duration']).second)
   }
 
   const handlePlayList = (item) => {
@@ -98,7 +146,7 @@ const InstructorTaskDetail = ({ route }) => {
     setPlay(false)
     setRecord(false)
     setMessage(true)
-    setInput('duration', voiceDuration)
+    setInput('Recording_Duration', voiceDuration)
   }
 
   useEffect(() => {
@@ -124,8 +172,8 @@ const InstructorTaskDetail = ({ route }) => {
         if (seconds === 0) {
           if (minutes === 0) {
             setPlay(!play)
-            setMinutes(TimerObj(FormSendMessage.values['duration']).minute)
-            setSeconds(TimerObj(FormSendMessage.values['duration']).second)
+            setMinutes(TimerObj(FormSendMessage.values['Recording_Duration']).minute)
+            setSeconds(TimerObj(FormSendMessage.values['Recording_Duration']).second)
             clearInterval(intervalId)
           } else {
             setMinutes(minutes - 1)
@@ -154,6 +202,7 @@ const InstructorTaskDetail = ({ route }) => {
     setMsgSelected(state)
     setMinutes(TimerObj(480-1).minute)
     setSeconds(TimerObj(480-1).second)
+    fetchDataConsultation(dataState)
   }, [])
 
   const Header = () => {
@@ -169,7 +218,7 @@ const InstructorTaskDetail = ({ route }) => {
             source={Images.ImageProfileDefault}
             avatarStyle={{ borderRadius : 36 / 2 }}
           />
-          <Text style={styles.textTitleBold}>{param.name}</Text>
+          <Text style={styles.textTitleBold}>{param.User_Name}</Text>
         </View>
       </View>
     )
@@ -290,7 +339,7 @@ const InstructorTaskDetail = ({ route }) => {
             `${minutes}:${seconds < 10 ?
               `0${seconds}` : seconds}`
           ) : (
-            TimeConvert(FormSendMessage.values['duration'])
+            TimeConvert(FormSendMessage.values['Recording_Duration'])
           )}
         </Text>
         <TouchableOpacity
@@ -304,7 +353,7 @@ const InstructorTaskDetail = ({ route }) => {
 
   const Footer = () => {
     let icons, submit
-    FormSendMessage.values['message'].length > 0 ? (
+    FormSendMessage.values['Description'].length > 0 ? (
       icons = Images.IconSend,
       submit = () => FormSendMessage.handleSubmit()) :
       message ? (icons = Images.IconSend,
@@ -319,7 +368,7 @@ const InstructorTaskDetail = ({ route }) => {
         icon={<icons.default/>}
         styles={styles.containerSend}
         onPress={submit}
-        onLongPress={() =>  FormSendMessage.values['message']
+        onLongPress={() =>  FormSendMessage.values['Description']
           .length == 0 &&(setRecord(true))}
       />
     )
@@ -338,14 +387,14 @@ const InstructorTaskDetail = ({ route }) => {
       />
       <VoiceMessage/>
       <View style={styles.containerTextInput}>
-        {param.status == 'ongoing' &&(
+        {param.Status == 'ongoing' &&(
           <>
             <TextInput
               editable={!record}
               style={styles.textInput}
               placeholder='Ketik pesan ...'
-              value={FormSendMessage.values['message']}
-              onChangeText={(e) => setInput('message', e)}>
+              value={FormSendMessage.values['Description']}
+              onChangeText={(e) => setInput('Description', e)}>
               {record ? (
                 <Text>
                   {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
@@ -361,6 +410,12 @@ const InstructorTaskDetail = ({ route }) => {
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
+      />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
     </View>
   )

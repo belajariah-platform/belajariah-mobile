@@ -1,10 +1,8 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
 import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
 import Slider from '@react-native-community/slider'
-import NetInfo from '@react-native-community/netinfo'
 
 import TrackPlayer, {
   STATE_PLAYING,
@@ -21,70 +19,46 @@ import {
   View,
   Text,
   FlatList,
-  ToastAndroid,
+  BackHandler,
   TouchableOpacity,
 } from 'react-native'
 
 import {
-  Loader,
   ImageView,
   ModalRating,
-  ModalNoConnection,
 } from '../../components'
 
 import { styles } from './chat.style'
-import { RatingAPI } from '../../api'
-import { Images, Color } from '../../assets'
 import { TimerSecondToTime } from '../../utils'
+import { Images, Color } from '../../assets'
 
-const Chat = ({ state, audios }) => {
-  const { userInfo } = useSelector((state) => state.UserReducer)
-
+const ChatAdmin = ({ state }) => {
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
 
-  const [stateMsg] = useState(state)
-  const [mentor, setMentor] = useState(0)
-  const [loading, setLoading] = useState(false)
+  const [stateMsg, setStateMsg] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
   const [sliderValue, setSliderValue] = useState(0)
   const [isSeeking, setIsSeeking] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
-  const [connectStatus, setconnectStatus] = useState(false)
   const { position, duration } = useTrackPlayerProgress(250)
 
-  const retryConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-
-
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
 
-  const giveRatingMentor = async (rating, mentor) => {
-    const values = {
-      Comment : '',
-      Rating : rating,
-      Mentor_Code : mentor,
-      User_Code : userInfo.ID,
-    }
-    try {
-      setLoading(true)
-      const response = await RatingAPI.InsertRatingMentor(values)
-      if (response.data.result) {
-        setModalRatingVisible(false)
-        ToastAndroid.show('Rating berhasil diberikan', ToastAndroid.SHORT)
-      }
-      setLoading(false)
-    } catch (err) {
-      setLoading(false)
-      NetInfo.fetch().then(res => {
-        setconnectStatus(!res.isConnected)
+  let audios = []
+  state.map((a) => {
+    if (a.Recording_Name !== '') {
+      audios.push({
+        id: a.id.toString(),
+        url: a.Recording_Name,
+        type: 'default',
+        title: 'Audio...',
       })
-      return err
     }
-  }
+  })
 
   const trackPlayerInit = async () => {
     await TrackPlayer.setupPlayer()
@@ -107,16 +81,16 @@ const Chat = ({ state, audios }) => {
     setIsTrackPlayerInit(isInit)
   }
 
+
   useEffect(() => {
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration)
-      console.log(Math.floor(( Number(position) % 3600) % 60), optionSelected.Recording_Duration)
-      if (Math.floor(( Number(position) % 3600) % 60) == optionSelected.Recording_Duration) {
+      if (sliderValue.toString().substring(0, 5) == '0.997') {
         TrackPlayer.stop()
         setOptionSelected({})
       }
     }
-  }, [position, duration, isSeeking, optionSelected])
+  }, [position, duration, isSeeking])
 
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
     if (event.state === STATE_PLAYING) {
@@ -132,18 +106,18 @@ const Chat = ({ state, audios }) => {
   const onButtonPressed = async (id) => {
     let options = {}
     stateMsg.forEach((val, i) => {
-      if (val.ID == id) {
+      if (val.id == id) {
         let isPlay = [...stateMsg]
-        isPlay[i] = { ...val, Is_Play :
-        optionSelected.ID == val.ID &&
-        optionSelected.Is_Play  ? false : true
+        isPlay[i] = { ...val, is_play :
+        optionSelected.id == val.id &&
+        optionSelected.is_play  ? false : true
         }
         setOptionSelected(isPlay[i])
         options = isPlay[i]
       }
     })
 
-    if (options.Is_Play &&  options.ID == id) {
+    if (options.is_play &&  options.id == id) {
       TrackPlayer.skip(id.toString())
       TrackPlayer.play()
     } else {
@@ -156,7 +130,7 @@ const Chat = ({ state, audios }) => {
   }
 
   const slidingCompleted = async (value, id) => {
-    if (optionSelected.Is_Play && optionSelected.ID == id) {
+    if (optionSelected.is_play && optionSelected.id == id) {
       await TrackPlayer.seekTo(value * duration)
       setIsSeeking(false)
       setSliderValue(0)
@@ -169,52 +143,44 @@ const Chat = ({ state, audios }) => {
 
   useEffect(() => {
     setOptionSelected({})
+    setStateMsg(state)
     startPlayer()
   }, [])
 
+  useEffect(() => {
+    const backAction = () => TrackPlayer.stop()
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+    return () => backHandler.remove()
+  }, [])
+
   const ChatList = (item, index) => {
-    const user_login = userInfo.ID
-    let flexes, containerSound, grafisVoice, grafisBg, title,
-      play, avatar, textTimer, flexDir, text1, text2, pause, username
-    user_login == item.User_Code ?
+    const user_login = 1
+    let flexes, containerSound, grafisVoice, grafisBg,
+      play, avatar, textTimer, flexDir, text1, text2, pause
+    user_login == item.user_code ?
       (
         flexDir = styles.row,
         grafisBg = Color.white,
         flexes = styles.flexEnd,
-        text2 = styles.textWhite,
         text1 = styles.textPurple,
+        text2 = styles.textWhite,
         avatar = styles.avatarEnd,
-        username = item.User_Name,
         textTimer = styles.textWhite,
         pause = Images.IconPauseWhite,
         play = Images.IconPlayVoiceWhite,
         grafisVoice = Color.purpleExHint,
         containerSound = styles.containerSoundStart
-      ) :
-      user_login != item.User_Code && item.Status == 'Completed' ? (
+      ) : (
         play = Images.IconPlay,
         flexDir = styles.column,
         pause = Images.IconPause,
         flexes = styles.flexStart,
-        username = item.User_Name,
         avatar = styles.avatarStart,
         textTimer = styles.textBlack,
         grafisBg = Color.purpleMedium,
-        title = styles.textRightBlack,
-        grafisVoice = Color.purpleButton,
-        containerSound = styles.containerSoundEnd
-      ) : (
-        play = Images.IconPlay,
-        flexDir = styles.column,
-        text1 = styles.textWhite,
-        text2 = styles.textWhite,
-        pause = Images.IconPause,
-        username = 'Admin Belajariah',
-        avatar = styles.avatarStart,
-        textTimer = styles.textWhite,
-        grafisBg = Color.purpleMedium,
-        flexes = styles.flexStartAdmin,
-        title = styles.textRightWhite,
         grafisVoice = Color.purpleButton,
         containerSound = styles.containerSoundEnd
       )
@@ -225,26 +191,12 @@ const Chat = ({ state, audios }) => {
         style={[styles.containerChat, flexes]}>
         <View style={containerSound}>
           <View style={flexDir}>
-            {user_login == item.User_Code ? (
-              <Avatar
-                onPress={toggleModalFoto}
-                containerStyle={styles.avatarStart}
-                source={ Images.ImageProfileDefault}
-                avatarStyle={styles.avatarChatInstructorEnd}
-              />
-            ) : (
-              <View>
-                <Text style={[styles.textDesc, title]}>
-                  {username}
-                </Text>
-              </View>
-            )}
             {item.Recording_Name != 0 && (
               <View style={styles.flexRow}>
                 <TouchableOpacity
                   disabled={!isTrackPlayerInit}
-                  onPress={() => onButtonPressed(item.ID)}>
-                  {optionSelected.Is_Play && optionSelected.ID == item.ID ?
+                  onPress={() => onButtonPressed(item.id)}>
+                  {optionSelected.is_play && optionSelected.id == item.id ?
                     <pause.default
                       width={23}
                       height={23}
@@ -258,54 +210,41 @@ const Chat = ({ state, audios }) => {
                 <Slider
                   minimumValue={0}
                   maximumValue={1}
-                  value={optionSelected.ID == item.ID ? sliderValue : 0}
-                  disabled={optionSelected.ID == item.ID ? false : true}
+                  value={optionSelected.id == item.id ? sliderValue : 0}
+                  disabled={optionSelected.id == item.id ? false : true}
                   style={{ width: 120 }}
                   thumbTintColor={grafisVoice}
                   maximumTrackTintColor={grafisBg}
                   minimumTrackTintColor={grafisVoice}
                   onSlidingStart={() => slidingStarted()}
-                  onSlidingComplete={(e) => slidingCompleted(e, item.ID)}
+                  onSlidingComplete={(e) => slidingCompleted(e, item.id)}
                 />
                 <Text style={[styles.textSoundDuration, textTimer]}>
-                  {position && optionSelected.ID == item.ID
+                  {position && optionSelected.id == item.id
                     ? TimerSecondToTime(position)
-                    : TimerSecondToTime(item.Recording_Duration)}
+                    : TimerSecondToTime(item.voice_duration)}
                 </Text>
               </View>
             )}
           </View>
-          {user_login != item.User_Code &&(
-            <Avatar
-              containerStyle={avatar}
-              onPress={toggleModalFoto}
-              source={ item.User_Image == '' ?
-                Images.ImageProfileDefault :
-                { uri : item.User_Image }}
-              avatarStyle={styles.avatarChatInstructorStart}
-            />
-          )}
         </View>
         <View style={styles.containerUserDesc}>
           <Text style={[styles.textDesc, text1]}>
               Deskripsi
           </Text>
           <Text style={[styles.textUserDesc, text2]}>
-            {item.Description}
+            {item.message}
           </Text>
           <View style={styles.containerTime}>
-            {user_login != item.User_Code && item.Status == 'Completed' &&(
+            {user_login != item.user_code &&(
               <TouchableOpacity
                 activeOpacity={0.2}
-                onPress={() => {
-                  toggleModalRating(true)
-                  setMentor(item.User_Code)
-                }}>
+                onPress={() => toggleModalRating(true)}>
                 <Images.IconGive.default/>
               </TouchableOpacity>
             )}
             <Text style={[styles.textTime, text2]}>
-              {moment(item.Created_Date).format('h:mm A')}
+              {moment(item.created_date).format('h:mm A')}
             </Text>
           </View>
         </View>
@@ -315,7 +254,6 @@ const Chat = ({ state, audios }) => {
 
   return (
     <>
-      <Loader loading={loading}/>
       <FlatList
         data={state}
         style={{ width:'100%' }}
@@ -327,16 +265,9 @@ const Chat = ({ state, audios }) => {
       <ModalRating
         isVisible={modalRatingVisible}
         backdropPress={() => toggleModalRating()}
-        submit={(e) => giveRatingMentor(e, mentor)}
         backButtonPress={() => toggleModalRating()}
         title='Berikan rating untuk koreksi bacaanmu'
         renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
-      />
-      <ModalNoConnection
-        isVisible={connectStatus}
-        retry={() => retryConnection()}
-        backdropPress={() => togglemodalNoConnection()}
-        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
@@ -348,9 +279,8 @@ const Chat = ({ state, audios }) => {
   )
 }
 
-Chat.propTypes = {
+ChatAdmin.propTypes = {
   state : PropTypes.array,
-  audios : PropTypes.array
 }
 
-export default Chat
+export default ChatAdmin

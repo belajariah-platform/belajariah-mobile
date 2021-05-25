@@ -64,7 +64,7 @@ const CustomDrawer = ({ navigation }, props) => {
           />
           <View>
             <DrawerItem
-              label='Lihat Pesan Suara'
+              label='Konsultasi bacaan'
               onPress={() => {
                 navigation.navigate('Consultation')
               }}

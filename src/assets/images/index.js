@@ -267,7 +267,12 @@ export default {
   SMTelephone : require('./SMTelephone.svg'),
 
   //Img Check Connection
-  ImgModalNoConnection : require('./ImgModalNoConnection.png'),
   IconStoryEmpty : require('./IllustrationNoStory.svg'),
+  ImgModalNoConnection : require('./ImgModalNoConnection.png'),
+
+  //Guide
+  FloatingBtn : require('./floating Button.svg'),
+  IconPendingWhite: require('./IconPendingWhite.svg'),
+  IconCompleteWhite: require('./IconCompleteWhite.svg'),
 }
 

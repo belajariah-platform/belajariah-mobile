@@ -15,6 +15,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  textRating: {
+    marginTop: 4,
+    marginLeft: 8,
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.bold,
+  },
+  flexRating: {
+    marginTop: 0,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   container: {
     flex: 1,
     backgroundColor: Color.softPink,

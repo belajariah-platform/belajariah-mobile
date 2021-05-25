@@ -1,10 +1,10 @@
-import Chat from './chat'
 import Cards from './card'
 import Alerts from './alert'
 import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
 import LoadingView from './loading-view'
+import { Chat, ChatAdmin, ChatMentor } from './chat'
 import {
   Shimmer,
   ShimmerListCategory,
@@ -56,6 +56,8 @@ export {
   ModalDate,
   Searchbox,
   ModalInfo,
+  ChatAdmin,
+  ChatMentor,
   LoadingView,
   ModalRating,
   ModalRecord,

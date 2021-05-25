@@ -1,25 +1,31 @@
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import RNFetchBlob from 'rn-fetch-blob'
+import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import React, { useState, useEffect } from 'react'
+import TrackPlayer from 'react-native-track-player'
 import { useNavigation } from '@react-navigation/native'
 import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 import {
   View,
   Platform,
   TextInput,
+  BackHandler,
   TouchableOpacity,
 } from 'react-native'
 import {
   Chat,
+  Alerts,
   ImageView,
   ModalRating,
+  LoadingView,
   ButtonGradient,
 } from '../../../components'
 
 import { Images } from '../../../assets'
-import chat from '../../../json/chat.js'
+import { Response } from '../../../utils'
+import { ConsultationAPI } from '../../../api'
 import styles from './user-consultation.style'
 
 const audioRecorderPlayer = new AudioRecorderPlayer()
@@ -27,16 +33,22 @@ const audioRecorderPlayer = new AudioRecorderPlayer()
 const ConsultationDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
+  const { userInfo } = useSelector((state) => state.UserReducer)
 
+  const [count, setCount] = useState(0)
+  const [state, setState] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [stateAudio, setStateAudio] = useState([])
+  const [intervals, setIntervals] = useState(true)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
   const [modalRatingVisible, setModalRatingVisible] = useState(false)
+  const [dataStates] = useState({ skip: 0, take: 1000, filterString: '[]', sort : 'ASC'  })
 
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
+  const str = '*Maaf fitur konsultasi anda telah mencapai batas silahkan lakukan perpanjangan Kelas untuk menggunakan fitur konsultasi'
 
-  // const [loading, setLoading] = useState(true)
-  // const [loadingBtn, setLoadingBtn] = useState(false)
   // const [connectStatus, setconnectStatus] = useState(false)
   const [dataState, setDataState] = useState({
     start : true,
@@ -54,21 +66,75 @@ const ConsultationDetail = ({ route }) => {
 
   const FormSendMessage = useFormik({
     initialValues: {
-      message: '',
-      voice_note : '',
-      duration : 0,
+      Taken_Code : 0,
+      Description: '',
+      Recording_Code : '',
+      Action : 'Approved',
+      Recording_Duration : 0,
+      User_Code: userInfo.ID,
+      Status_Code : 'ENC00000019',
+      Class_Code : param.classes.Class_Code,
+      Expired_Date : param.classes.Expired_Date,
     },
     onSubmit:  (values, form) => {
-      console.log(values)
-      handleReload()
-      form.resetForm()
-      form.setSubmitting(false)
+      state[state.length-1].User_Code == userInfo.ID ?
+        Alerts(false, 'Anda bisa berkonsultasi lagi setelah ustad/ustadzah sudah membalas') :
+        sendConsultation(values, form)
     },
   })
 
+  const sendConsultation = async (values, form) => {
+    try {
+      setLoading(true)
+      const response = await ConsultationAPI.InsertConsultation(values)
+      if (response.data.result) {
+        handleReload()
+        form.resetForm()
+        form.setSubmitting(false)
+        fetchDataUserConsultation(dataStates)
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      handleReload()
+      form.resetForm()
+      form.setSubmitting(false)
+      return err
+    }
+  }
+
+  const fetchDataUserConsultation = async ({ skip, take, filterString, sort }) => {
+    try {
+      let counts = 0
+      let audios = []
+      const response = await ConsultationAPI.GetAllConsultationUser(skip, take, filterString, sort)
+      if (response.status === Response.SUCCESS) {
+        response.data.data.map((a) => {
+          if (a.Recording_Path !== '') {
+            audios.push({
+              id: a.ID.toString(),
+              url: a.Recording_Path,
+              type: 'default',
+              title: 'Audio...',
+            })
+          } if (a.User_Code == userInfo.ID && a.Status != 'Revision') {
+            counts += 1
+          }
+        })
+        setCount(counts)
+        setStateAudio(audios)
+        setState(response.data.data)
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      return err
+    }
+  }
+
   const onSetInput = async (v, e) => {
     await FormSendMessage.setFieldValue(v, e)
-    await FormSendMessage.values['message'].length > 0 ?
+    await FormSendMessage.values['Description'].length > 0 ?
       setDataState(s => ({
         ...s, start : false, stop : false,
         send : true, icons : Images.IconSend })) : null
@@ -182,14 +248,40 @@ const ConsultationDetail = ({ route }) => {
     }
   }, [playTime, duration])
 
+  useEffect(() => {
+    if (intervals) {
+      setLoading(true)
+      fetchDataUserConsultation(dataStates)
+      setIntervals(false)
+    } else {
+      const intervalId = setInterval(() => {
+        fetchDataUserConsultation(dataStates)
+      }, 10000)
+      return () => clearInterval(intervalId)
+    }
+  }, [])
+
+  useEffect(() => {
+    const backAction = () => TrackPlayer.stop()
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+    return () => backHandler.remove()
+  }, [])
+
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
         <View style={styles.flexHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => {
+            navigation.goBack()
+            TrackPlayer.stop()
+          }}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>{param.classes.Class_Initial}</Text>
+          <Text style={styles.textRight}>{param.classes.Total_Consultation - count}x</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -231,8 +323,8 @@ const ConsultationDetail = ({ route }) => {
           style={styles.textInput}
           placeholder='Ketik pesan ...'
           editable={dataState.start || dataState.send}
-          value={FormSendMessage.values['message']}
-          onChangeText={(e) => onSetInput('message', e)}>
+          value={FormSendMessage.values['Description']}
+          onChangeText={(e) => onSetInput('Description', e)}>
           {dataState.stop ? (
             <Text>
               {recordTime}
@@ -251,9 +343,26 @@ const ConsultationDetail = ({ route }) => {
   return (
     <View style={styles.containerMain}>
       {Header()}
-      <Chat state={chat}/>
-      {VoiceBar()}
-      {Footer()}
+      {loading ? <LoadingView/> :
+        state.length != 0 ?
+          <Chat state={state} audios={stateAudio}/> :
+          <View style={{ flex : 1 }}/>
+      }
+      {param.classes.Is_Expired ||
+        param.classes.Total_Consultation - count == 0 ?
+        <View style={styles.containerExtend}>
+          <Text style={styles.textExtend}>{str}</Text>
+          <ButtonGradient
+            title='Perpanjang Kelas'
+            onPress={() => navigation.navigate('Home')}
+            styles={styles.btnExtend}
+          />
+        </View> :
+        <>
+          {VoiceBar()}
+          {Footer()}
+        </>
+      }
       <ModalRating
         isVisible={modalRatingVisible}
         backdropPress={() => toggleModalRating()}

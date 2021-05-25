@@ -241,6 +241,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     backgroundColor : '#f3e8f5'
   },
+  flexStartAdmin : {
+    alignSelf : 'flex-start',
+    borderTopRightRadius: 0,
+    backgroundColor: '#F39C12',
+  },
   avatarStart: {
     flex: 1,
     alignItems: 'flex-start',
@@ -260,10 +265,17 @@ const styles = StyleSheet.create({
     flexDirection : 'row',
     alignItems : 'center',
   },
+  textRightBlack : {
+    textAlign : 'right',
+    color:Color.black,
+  },
+  textRightWhite : {
+    textAlign : 'right',
+    color:Color.white,
+  },
   cancel : { marginLeft : '20%' },
   textWhite : { color : Color.white },
   flexRow : { flexDirection : 'row' },
-  textRight : { textAlign : 'right' },
   horizontal : { marginHorizontal : 10 },
   textPurple : { color : Color.purpleHint },
   column : { flexDirection : 'column', flex : 3 }

@@ -63,6 +63,40 @@ const ClassAbout = ({ params }) => {
     { Value : 'Sertifikat dan hasil evaluasi belajar|sertificate' },
   ]
 
+  const Title = () => {
+    const handleRating = (num) => {
+      let rating = []
+      const numRound = Math.round(num)
+      for (let index = 1; index <= numRound; index++) {
+        num - index == 0
+          ? rating.push(<Images.Star.default />)
+          : num - index < 0
+            ? rating.push(<Images.StarHalf.default />)
+            : rating.push(<Images.Star.default />)
+      }
+      return (
+        <View style={styles.flexRating}>
+          {rating.map((val, index) => {
+            return <View key={index}>{val}</View>
+          })}
+        </View>
+      )
+    }
+
+    return (
+      <Card containerStyle={styles.containerDesc}>
+        <Text style={styles.textBold}>Judul</Text>
+        <Text style={styles.textRegularParaf}>
+          {params.Class_Name}
+        </Text>
+        <View style={styles.flexRating}>
+          <View>{params.Class_Rating != 0 && handleRating(params.Class_Rating)}</View>
+          <Text style={styles.textRating}>{params.Class_Rating != 0 && params.Class_Rating.toFixed(1)}</Text>
+        </View>
+      </Card>
+    )
+  }
+
   const Desc = () => {
     const handleSplitString = (value) => {
       const stringSplit = value.split('|')
@@ -176,6 +210,7 @@ const ClassAbout = ({ params }) => {
         backdropPress={() => togglemodalNoConnection()}
         backButtonPress={() => togglemodalNoConnection()}
       />
+      <Title />
       <Desc />
       <Topics />
       <Benefits />

@@ -1,6 +1,4 @@
 import { StyleSheet } from 'react-native'
-
-import { Resp } from '../../../utils'
 import { Color, FontType, FontSize } from '../../../assets'
 
 const styles = StyleSheet.create({
@@ -10,6 +8,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.white,
+  },
+  indicatorContainer : {
+    top : 12,
+    marginBottom : 7,
+    alignItems:'center',
   },
   containerHeader: {
     paddingLeft:5,
@@ -44,25 +47,23 @@ const styles = StyleSheet.create({
     backgroundColor : Color.softPink,
   },
   textHeader: {
-    marginRight:10,
+    marginRight:'31%',
     color: Color.black,
-    textAlign: 'center',
     fontFamily: FontType.bold,
     fontSize: FontSize.mediumLarge,
   },
   textNoTaskTitle : {
     fontSize: 40,
-    marginRight: 10,
     textAlign: 'center',
     color: Color.purpleMedium,
     fontFamily: FontType.bold,
   },
   textNoTask : {
-    marginRight:10,
     color: Color.black,
     textAlign: 'center',
+    paddingHorizontal : 20,
+    fontSize: FontSize.medium,
     fontFamily: FontType.regular,
-    fontSize: FontSize.mediumLarge,
   },
   textUsername: {
     color: Color.black,
