@@ -1,7 +1,13 @@
-import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
+import NetInfo from '@react-native-community/netinfo'
+import { useNavigation } from '@react-navigation/native'
 
+import {
+  Card,
+  Avatar,
+} from 'react-native-elements'
 import {
   View,
   Text,
@@ -10,23 +16,56 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
 
+import { UserAPI } from '../../../api'
+import { Response } from '../../../utils'
 import { Images } from '../../../assets'
 import { styles } from './profile.style'
-import { useNavigation } from '@react-navigation/native'
+import { ModalNoConnection } from '../../../components'
 
 const ProfileAll = ({ route }) => {
   const item = route.params
   const navigation = useNavigation()
+  const [userInfo, setUserInfo] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
+
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const retryConnection = () => {
+    fetchDataUser(item.Created_By)
+    setconnectStatus(!connectStatus)
+  }
+
+  const fetchDataUser = async (email) => {
+    try {
+      const response = await UserAPI.GetUser(email)
+      if (response.status === Response.SUCCESS) {
+        setUserInfo(response.data.result)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  useEffect(() => {
+    fetchDataUser(item.Created_By)
+  }, [])
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <Images.ProfileBackground.default
-        width={'100%'}
+        width='100%'
         style={styles.background}
       />
-
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <View style={{ ...styles.containerDrawerButton, paddingVertical:15 }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Images.BtnClose.default
@@ -37,22 +76,23 @@ const ProfileAll = ({ route }) => {
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
         <Avatar
-          source={Images.ImageProfileDefault}
           size='large'
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           containerStyle={styles.avatar}
+          source={userInfo.Image_Filename == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
           onPress={() => ToastAndroid.show('Avatar', ToastAndroid.SHORT)}
         />
       </ImageBackground>
       <View style={styles.containerProfileHeader}>
-        <Text style={styles.headerName}>{item.username}</Text>
+        <Text style={styles.headerName}>{item.Full_Name}</Text>
         <View style={styles.containerEmailPhone}>
           <Images.Email.default width={18} style={styles.iconEmail} />
-          <Text style={styles.headerEmail}>{'ricowijaya@gmail.com'}</Text>
+          <Text style={styles.headerEmail}>{userInfo.Email}</Text>
         </View>
         <View style={styles.containerEmailPhone}>
           <Images.Phone.default width={18} style={styles.iconPhone} />
-          <Text style={styles.headerPhone}>{'082184783116'}</Text>
+          <Text style={styles.headerPhone}>{userInfo.Phone}</Text>
         </View>
       </View>
 
@@ -60,29 +100,25 @@ const ProfileAll = ({ route }) => {
         <Images.ProfilePurple.default width={36} style={styles.iconProfile} />
 
         <Text style={styles.subHeader}>Nama Lengkap</Text>
-        <Text style={styles.dataProfile}>{item.username}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Full_Name}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Jenis Kelamin</Text>
-        <Text style={styles.dataProfile}>{'Laki-laki'}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Gender}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Tanggal Lahir</Text>
-        <Text style={styles.dataProfile}>{moment(item.created_date).format('DD MMMM YYYY')}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Birth && (moment(userInfo.Birth).format('DD MMMM YYYY'))}</Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Alamat</Text>
         <Text style={styles.dataProfile}>
-          {'Jl.Jalan'}
-          {', '}
-          {'Palembang'}
-          {', '}
-          {'Sumatera Selatan'}
+          { userInfo.Address + userInfo.City + userInfo.Province}
         </Text>
         <Card.Divider style={styles.divider} />
 
         <Text style={styles.subHeader}>Profesi</Text>
-        <Text style={styles.dataProfile}>{'Content Creator'}</Text>
+        <Text style={styles.dataProfile}>{userInfo.Profession}</Text>
         <Card.Divider style={styles.divider} />
       </Card>
     </ScrollView>

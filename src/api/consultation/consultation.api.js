@@ -14,11 +14,11 @@ const GetAllConsultation = async (skip, take, filters, sort, search) =>  {
   }
 }
 
-const GetAllConsultationUser = async (skip, take, filters) =>  {
+const GetAllConsultationUser = async (skip, take, filters, sort) =>  {
   try {
     const headers = await Header()
     const response = await axios.get(`
-    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/consultation/user?skip=${skip}&take=${take}&filter=${filters}`,
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/consultation/user?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}`,
     headers
     )
     return response

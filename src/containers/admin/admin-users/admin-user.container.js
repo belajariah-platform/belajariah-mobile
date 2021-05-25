@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import {  useFormik } from 'formik'
-import { View, TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import AdminUserAll from './admin-user-all.container'
@@ -8,36 +7,34 @@ import AdminUserAccept from './admin-user-accept.container'
 import AdminUserDecline from './admin-user-decline.container'
 
 import { Searchbox, ModalFilterAdminPageUser } from '../../../components'
-import { Images, Color } from '../../../assets'
+import { Color } from '../../../assets'
 
 import { styles } from './admin-user.style'
 
 const AdminUser = () => {
   const Tab = createMaterialTopTabNavigator()
+  const [search, setSearch] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
-  const Search = useFormik({ initialValues: { search: '' } })
-
   return (
     <View style={styles.containerMain}>
       <View style={styles.containerHeader}>
         <View style={styles.flexOne}>
           <Searchbox
             size='medium'
-            name='search'
-            form={Search}
             style={styles.searchbox}
             placeholder='Temukan user'
+            onChangeText={(e) => setSearch(e)}
           />
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress = {toggleModal}
           style={styles.iconFilter}>
           <Images.Filter.default
             width={20}
             height={20}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <Tab.Navigator
@@ -51,19 +48,19 @@ const AdminUser = () => {
         <Tab.Screen
           name='AdminUserAll'
           options={{ title: 'Semua' }}>
-          {() => <AdminUserAll search={Search.values['search']}/>}
+          {() => <AdminUserAll search={search}/>}
         </Tab.Screen>
 
         <Tab.Screen
           name='AdminUserAccept'
           options={{ title: 'Diterima' }}>
-          {() => <AdminUserAccept search={Search.values['search']}/>}
+          {() => <AdminUserAccept search={search}/>}
         </Tab.Screen>
 
         <Tab.Screen
           name='AdminUserDecline'
           options={{ title: 'Ditolak' }}>
-          {() => <AdminUserDecline search={Search.values['search']}/>}
+          {() => <AdminUserDecline search={search}/>}
         </Tab.Screen>
       </Tab.Navigator>
       <ModalFilterAdminPageUser

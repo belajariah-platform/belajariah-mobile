@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, Text, Image } from 'react-native'
 
 import { Images } from '../../../assets'
@@ -11,6 +11,12 @@ import { styles } from './modal-rating.style'
 const ModalRating = (props) => {
   const maxRating = [1, 2, 3, 4, 5]
   const [defaultRating, setDefaultRating] = useState(0)
+
+  useEffect(() => {
+    !props.isVisible ?
+      setDefaultRating(0) : null
+  }, [props.isVisible])
+
 
   const RatingbarClass = () => {
     return (
@@ -70,7 +76,7 @@ const ModalRating = (props) => {
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.modalContentSyle}>
-            <ReviewClass />
+            {ReviewClass()}
           </View>
         </View>
       </Modal>

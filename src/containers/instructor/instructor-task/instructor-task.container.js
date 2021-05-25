@@ -1,7 +1,9 @@
 import moment from 'moment'
-import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Avatar } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view'
 
@@ -9,85 +11,138 @@ import {
   View,
   FlatList,
   Dimensions,
+  RefreshControl,
   TouchableOpacity,
 } from 'react-native'
+import {
+  LoadingView,
+  ModalFilterUstadz,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
-import { ModalFilterUstadz } from '../../../components'
+import { Response } from '../../../utils'
+import { ConsultationAPI, EnumAPI } from '../../../api'
+
 import { styles } from './instructor-task.style'
 
-const InstructorTask = () => {
+const InstructorTask = (props) => {
+  const items = props.route.params
+
   const navigation = useNavigation()
-  const [index, setIndex] = useState(0)
+  const initialLayout = { width: Dimensions.get('window').width }
+
   const [routes] = useState([
     { key: 1, title : 'Recent Task' },
     { key: 2, title : 'Completed Task' }
   ])
+  const [index, setIndex] = useState(0)
+  const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [loadingWaiting, setLoadingWaiting] = useState(true)
+  const [loadingCompleted, setLoadingCompleted] = useState(true)
+
+  const [stateWaiting, setStateWaiting] = useState([])
+  const [stateCategory, setStateCategory] = useState([])
+  const [stateCompleted, setStateCompleted] = useState([])
+
+  const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+  const [dataStateWaiting, setDataStateWaiting] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
+  const [dataStateCompleted, setDataStateCompleted] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
+
   const toggleModal = () => setModalVisible(!modalVisible)
-  const initialLayout = { width: Dimensions.get('window').width }
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
-  const onGoingTask = [
-    {
-      idTask: 4,
-      status: 'ongoing',
-      name: 'Rico',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-    {
-      idTask: 6,
-      status: 'ongoing',
-      name: 'Rika',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-    {
-      idTask: 8,
-      status: 'ongoing',
-      name: 'Yudha',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-    {
-      idTask: 9,
-      status: 'ongoing',
-      name: 'Yudhi',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-  ]
+  const retryConnection = () => {
+    setconnectStatus(!connectStatus)
+    fetchDataClassCategory(dataStateCategory)
+    fetchDataConsultationWaiting(dataStateWaiting)
+    fetchDataConsultationCompleted(dataStateCompleted)
+  }
 
-  const completedTask = [
-    {
-      idTask: 1,
-      status: 'completed',
-      name: 'Saiki',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-    {
-      idTask: 2,
-      status: 'completed',
-      name: 'Saiya',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-    {
-      idTask: 3,
-      status: 'completed',
-      name: 'Hiyahiya',
-      avatar: Images.ImageProfileDefault,
-      date: '17/01/2021',
-      time: '16:02',
-    },
-  ]
+  const fetchDataConsultationWaiting = async ({ skip, take, filterString, sort, search  }) => {
+    try {
+      setLoadingWaiting(true)
+      filterString='[{"type": "text", "field" : "Status", "value": "Waiting for Response"}]'
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort, search )
+      if (response.status === Response.SUCCESS) {
+        setStateWaiting(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoadingWaiting(false)
+    } catch (err) {
+      setLoadingWaiting(false)
+      return err
+    }
+  }
+
+  const fetchDataConsultationCompleted = async ({ skip, take, filterString, sort, search }) => {
+    try {
+      setLoadingCompleted(true)
+      filterString='[{"type": "text", "field" : "Status", "value": "Completed"}]'
+      const response = await ConsultationAPI.GetAllConsultationLimit(skip, take, filterString, sort, search)
+      if (response.status === Response.SUCCESS) {
+        setStateCompleted(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setLoadingCompleted(false)
+    } catch (err) {
+      setLoadingCompleted(false)
+      return err
+    }
+  }
+
+  const fetchDataClassCategory = async ({ skip, take, filterString }) => {
+    try {
+      filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateCategory(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
+
+  const onDataStateChange = (sort, filters) => {
+    setDataStateWaiting({
+      ...dataStateWaiting,
+      sort : sort,
+      filter :filters,
+    })
+    setDataStateCompleted({
+      ...dataStateCompleted,
+      sort : sort,
+      filter :filters,
+    })
+  }
+
+  const onRefreshing = () => {
+    setRefreshing(true)
+    fetchDataConsultationWaiting(dataStateWaiting)
+    fetchDataConsultationCompleted(dataStateCompleted)
+    setRefreshing(false)
+  }
+
+  useEffect(() => {
+    fetchDataConsultationWaiting(dataStateWaiting)
+    fetchDataConsultationCompleted(dataStateCompleted)
+  }, [dataStateWaiting, dataStateCompleted, items])
+
+  useEffect(() => {
+    fetchDataClassCategory(dataStateCategory)
+  }, [])
 
   const Header = () => {
     return (
@@ -96,9 +151,9 @@ const InstructorTask = () => {
           <Images.ButtonBackBlack.default  />
         </TouchableOpacity>
         <Text style={styles.textHeader}>Tugas Saya</Text>
-        <TouchableOpacity onPress = {toggleModal}>
+        {/* <TouchableOpacity onPress = {toggleModal}>
           <Images.IconFilterBlack.default width={20} height={20} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     )
   }
@@ -107,11 +162,12 @@ const InstructorTask = () => {
     return (
       <FlatList
         numColumns={1}
-        data={onGoingTask}
+        data={stateWaiting}
         style={{ marginTop: 8 }}
         showsVerticalScrollIndicator ={false}
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => Content(item, index)}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
       />
     )
   }
@@ -124,7 +180,7 @@ const InstructorTask = () => {
         <Text style={styles.textNoTaskTitle}>Uupss</Text>
         <Text style={styles.textNoTask}>
           Belum ada
-          <Text style={styles.textHeader}>task</Text>
+          <Text style={styles.textHeader}> task </Text>
             yang kamu ambil nih
         </Text>
       </View>
@@ -134,12 +190,13 @@ const InstructorTask = () => {
   const CompletedJobs = () => {
     return (
       <FlatList
-        data={completedTask}
         numColumns={1}
+        data={stateCompleted}
         style={{ marginTop: 8 }}
         showsVerticalScrollIndicator ={false}
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => Content(item, index)}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
       />
     )
   }
@@ -152,7 +209,7 @@ const InstructorTask = () => {
         <Text style={styles.textNoTaskTitle}>Uupss</Text>
         <Text style={styles.textNoTask}>
           Belum ada
-          <Text style={styles.textHeader}>task</Text>
+          <Text style={styles.textHeader}> task </Text>
            yang kamu selesaikan nih
         </Text>
       </View>
@@ -160,10 +217,8 @@ const InstructorTask = () => {
   }
 
   const Content = (item, index) => {
-    const dateTime = item.date
-    const momentTime = moment(dateTime, 'DD/MM/YYYY hh:mm').fromNow()
     let isComplete = false
-    if(item.status === 'completed') isComplete = true
+    if(item.Status === 'Completed') isComplete = true
 
     return(
       <TouchableOpacity
@@ -181,15 +236,15 @@ const InstructorTask = () => {
             <Text style={isComplete ?
               [styles.textUsername, { opacity: 0.5 }] :
               styles.textUsername}>
-              {item.name}
+              {item.User_Name}
             </Text>
             <Text style={isComplete ?
               [styles.textMoment, { opacity: 0.5 }] :
               styles.textMoment}>
-              {`${momentTime} (${dateTime})`}
+              {moment(item.Modified_Date).fromNow()}
             </Text>
           </View>
-          {item.status === 'completed' && (
+          {item.Status === 'Completed' && (
             <Images.IconCompletePurple.default
               width={28}
               height={28}
@@ -201,10 +256,11 @@ const InstructorTask = () => {
     )
   }
 
-  //deklarasi renderScene harus dibawah component yang mau di pakai
   const renderScene = SceneMap({
-    1: onGoingTask == 0 ? NoRecentJobs : RecentJobs,
-    2: completedTask == 0 ? NoCompletedJobs : CompletedJobs,
+    1:loadingWaiting ? LoadingView :
+      stateWaiting.length == 0 ? NoRecentJobs : RecentJobs,
+    2:loadingCompleted ? LoadingView :
+      stateCompleted.length == 0 ?  NoCompletedJobs : CompletedJobs,
   })
 
   const renderTabBar = (props) => (
@@ -218,33 +274,38 @@ const InstructorTask = () => {
     />
   )
 
-  const TabViewTask = () => {
-    return (
-      <TabView
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-        renderTabBar={renderTabBar}
-        initialLayout={initialLayout}
-        navigationState={{ index, routes }}
-        sceneContainerStyle={styles.sceneContainerStyle}
-      />
-    )
-  }
-
   return (
     <>
       <ModalFilterUstadz
+        state={stateCategory}
+        submit={onDataStateChange}
         isVisible={modalVisible}
         backdropPress={() => toggleModal()}
         backButtonPress={() => toggleModal()}
       />
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
+      />
       <View style={styles.containerMain}>
         <Header />
-        <TabViewTask />
+        <TabView
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          initialLayout={initialLayout}
+          navigationState={{ index, routes }}
+          sceneContainerStyle={styles.sceneContainerStyle}
+        />
       </View>
     </>
   )
 }
 
+InstructorTask.propTypes = {
+  route: PropTypes.object,
+}
 
 export default InstructorTask

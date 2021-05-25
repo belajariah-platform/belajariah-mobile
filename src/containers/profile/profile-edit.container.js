@@ -38,6 +38,7 @@ const ProfileEdit = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
+
   const [dataCapture, setDataCapture] = useState({})
   const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)

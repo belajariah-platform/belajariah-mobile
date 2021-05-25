@@ -92,6 +92,7 @@ const Login = (props) => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
+      console.log(userInfo)
       if (Object.keys(userInfo).length != 0 ) {
         const values = {
           Email : userInfo.user.email,
