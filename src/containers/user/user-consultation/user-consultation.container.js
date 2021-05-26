@@ -32,7 +32,7 @@ const Consultation = () => {
   const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 10, filterString: '[]',  sort : 'ASC' })
 
-  const str = 'h1:Apa itu konsultasi bacaan?|p:Konsultasi bacaan adalah fitur yang bisa anda manfaatkan untuk bertanya seputar materi atau anda juga bisa meminta ustadz mengoreksi bacaanmu menggunakan Voice note atau pesan. Anda dapat menggunakan fitur konsultasi sesuai dengan yang telah diberikan, jika tidak digunakan dalam waktu yang telah diberikan maka akses konsultasi akan habis.|h1:Bagaimana cara menggunakan fitur voice note?|arr:img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul1.png~Anda dapat menggunakan voice note, atau pesan atau keduanya secara bersamaan%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul2.png~Anda hanya bisa mengirim satu kali konsultasi sebelum ustadz membalas%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul3.png~Setiap anda mengirim voice note, atau pesan atau keduanya secara bersamaan terhitung satu kali%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul4.png~Apabila kesempatan konsultasi anda sudah habis, maka anda tidak bisa menggunakan fitur konsultasi lagi%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul5.png~Anda bisa menggunakan fitur konsultasi Kembali setelah memperpanjang masa langganan|h1:Video penggunaan konsultasi bacaan?|vid:https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'
+  const str = 'h1:Apa itu konsultasi bacaan?|p:Konsultasi bacaan adalah fitur yang bisa anda manfaatkan untuk bertanya seputar materi atau anda juga bisa meminta ustadz mengoreksi bacaanmu menggunakan Voice note atau pesan. Anda dapat menggunakan fitur konsultasi sesuai dengan yang telah diberikan, jika tidak digunakan dalam waktu yang telah diberikan maka akses konsultasi akan habis.|h1:Bagaimana cara menggunakan fitur voice note?|arr:img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul1.png~Anda dapat menggunakan voice note, atau pesan atau keduanya secara bersamaan%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul2.png~Anda hanya bisa mengirim satu kali konsultasi sebelum ustadz membalas%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul3.png~Setiap anda mengirim voice note, atau pesan atau keduanya secara bersamaan terhitung satu kali%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul4.png~Apabila kesempatan konsultasi anda sudah habis, maka anda tidak bisa menggunakan fitur konsultasi lagi%img:https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/konsul5.png~Anda bisa menggunakan fitur konsultasi Kembali setelah memperpanjang masa langganan'
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
@@ -91,7 +91,6 @@ const Consultation = () => {
           </TouchableOpacity>
           <Text style={styles.textTitleWhite}>Konsultasi Bacaan</Text>
         </View>
-        <View style={styles.semiBox} />
       </View>
     )
   }
@@ -127,7 +126,7 @@ const Consultation = () => {
               <Text key={index} style={styles.textParagraphContact}>
                 {val.substring(2)}{'\n'}
               </Text> :
-              val.includes('arr:') ?
+              val.includes('arr:') &&
                 val.substring(4).split('%').map((vals, indexs) => {
                   return (
                     <View key={indexs} style={{ flexDirection : 'row' }}>
@@ -141,25 +140,6 @@ const Consultation = () => {
                     </View>
                   )
                 })
-                :
-                val.includes('vid:') ?
-                  <VideoPlayer
-                    key={index}
-                    useSmallBar={true}
-                    iconPlaySize = {36}
-                    iconSkipSize = {40}
-                    showBackButton={true}
-                    videoStyle={styles.videoStyle}
-                    videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
-                    posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
-                    style={styles.videoContainerStyle}
-                    controllerStyle={styles.controllerStyle}
-                    videoFullscreenStyle={styles.videoFullscreenStyle}
-                    fullscreenStyle={styles.videoFullscreenContainerStyle}
-                    onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
-                    controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                  />
-                  : <Text>Hello</Text>
         )})
     }
 
@@ -174,25 +154,45 @@ const Consultation = () => {
 
   return (
     <View style={styles.containerMain}>
-      <Header />
+      {isFullscreen ||  <Header />}
       {loading ? <LoadingView/> :
         state.length == 0 ? (
           <EmptyList/>
         ) : (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollGuide}>
-            {Content()}
-          </ScrollView>
+          <>
+            <VideoPlayer
+              iconPlaySize = {36}
+              iconSkipSize = {40}
+              showBackButton={true}
+              videoStyle={styles.videoStyle}
+              videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
+              posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
+              style={styles.videoContainerStyle}
+              controllerStyle={styles.controllerStyle}
+              videoFullscreenStyle={styles.videoFullscreenStyle}
+              fullscreenStyle={styles.videoFullscreenContainerStyle}
+              onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
+              controllerFullscreenStyle={styles.controllerFullscreenStyle}
+            />
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={styles.scrollGuide}>
+              {Content()}
+            </ScrollView>
+          </>
         )}
-      <TouchableOpacity
-        style={styles.floatingChat}
-        onPress={() => navigation.navigate('ConsultationDetail', { classes : state[0] })}
-      >
-        <Images.FloatingBtn.default
-          width={70}
-          height={70}/>
-      </TouchableOpacity>
+      {isFullscreen || (
+        <>
+          <TouchableOpacity
+            style={styles.floatingChat}
+            onPress={() => navigation.navigate('ConsultationDetail', { classes : state[0] })}
+          >
+            <Images.FloatingBtn.default
+              width={70}
+              height={70}/>
+          </TouchableOpacity>
+        </>
+      )}
       <ModalNoConnection
         isVisible={connectStatus}
         retry={() => retryConnection()}
