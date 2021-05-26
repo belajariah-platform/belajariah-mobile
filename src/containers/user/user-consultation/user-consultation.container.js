@@ -146,8 +146,9 @@ const Consultation = () => {
                   <VideoPlayer
                     key={index}
                     useSmallBar={true}
-                    iconPlaySize = {40}
+                    iconPlaySize = {36}
                     iconSkipSize = {40}
+                    showBackButton={true}
                     videoStyle={styles.videoStyle}
                     videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
                     posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
@@ -158,12 +159,12 @@ const Consultation = () => {
                     onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                     controllerFullscreenStyle={styles.controllerFullscreenStyle}
                   />
-                  : null
+                  : <Text>Hello</Text>
         )})
     }
 
     return(
-      <View style={{ marginHorizontal : 20, marginTop : -10 }}>
+      <View style={{ marginHorizontal : 20, marginTop : -10, paddingBottom: 12 }}>
         <Text>
           {handleSplitString(str)}
         </Text>
