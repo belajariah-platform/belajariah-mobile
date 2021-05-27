@@ -10,9 +10,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-  fullscreenButton: {
+  fullscreenButtonNormal: {
     top: '4%',
     paddingRight: '4%',
+    alignItems: 'flex-end',
+  },
+  fullscreenButtonFullscreen: {
+    top: '2%',
+    paddingRight: '2%',
     alignItems: 'flex-end',
   },
   controllerWrapper: {

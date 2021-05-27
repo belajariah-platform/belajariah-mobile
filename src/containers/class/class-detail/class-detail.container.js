@@ -48,9 +48,9 @@ const ClassDetail = (props) => {
     >
 
       <VideoPlayer
-        useSmallBar={true}
         iconPlaySize = {40}
         iconSkipSize = {40}
+        showBackButton = {true}
         videoStyle={styles.videoStyle}
         videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
         posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
@@ -62,13 +62,7 @@ const ClassDetail = (props) => {
         controllerFullscreenStyle={styles.controllerFullscreenStyle}
       />
 
-      <View style={isFullscreen? styles.flexButtonHeaderFullscreen : styles.flexButtonHeader}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Images.ButtonBack.default />
-        </TouchableOpacity>
-      </View>
-
-      {/* <View style={styles.semiBox}/> */}
+      <View style={styles.semiBox}/>
 
       <Tab.Navigator
         style={styles.tabContainerStyle}
