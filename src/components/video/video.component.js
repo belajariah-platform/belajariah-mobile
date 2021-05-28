@@ -100,9 +100,13 @@ const VideoPlayer = (props) => {
 
   const showControls = () => {
     state.showControls
-      ? setState({ ...state, showControls: false })
-      : setState({ ...state, showControls: true })
-    //setTimeout(() => setState(s => ({ ...s, showControls: false })), 5000)
+      ? (
+        setState({ ...state, showControls: false })
+      )
+      : (
+        setState({ ...state, showControls: true }),
+        setTimeout(() => setState(s => ({ ...s, showControls: false })), 5000)
+      )
   }
 
   useEffect(() => {
@@ -156,7 +160,7 @@ const VideoPlayer = (props) => {
               }
               <TouchableOpacity
                 onPress={handleFullscreen}
-                style={styles.fullscreenButton}
+                style={state.fullscreen ? styles.fullscreenButtonFullscreen : styles.fullscreenButtonNormal}
                 hitSlop={{ top: 18, bottom: 18, left: 18, right: 18 }} >
                 <Images.VideoFullscreen.default width={state.fullscreen? 28 : 20} height={state.fullscreen? 28 : 20} />
               </TouchableOpacity>

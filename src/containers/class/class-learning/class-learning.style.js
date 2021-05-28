@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   containerView : {
-    flex: 2.4,
+    flex: 1.9,
     fontFamily: FontType.regular,
     backgroundColor: Color.softPink,
   },

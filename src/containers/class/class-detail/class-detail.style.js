@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     top: -8,
   },
   videoContainerStyle: {
-    width: 176,
-    height: 88,
+    height: 228,
+    width: '100%',
     alignSelf: 'center',
     backgroundColor: Color.softPink,
   },
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   videoStyle: {
+    height: 228,
     width: '100%',
-    height: 190,
     alignSelf : 'center',
   },
   videoFullscreenStyle: {
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   controllerStyle: {
+    height: 228,
     width: '100%',
-    height: 190,
-    marginTop: -190,
+    marginTop: -228,
     alignSelf: 'center',
     backgroundColor: '#000000c4',
   },
@@ -126,10 +126,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.mediumLarge,
   },
   semiBox: {
-    height: 30,
+    height: 16,
     marginTop: 0,
     width: '100%',
-    marginBottom:-5,
+    marginBottom: -6,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: Color.softPink,

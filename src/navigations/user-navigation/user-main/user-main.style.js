@@ -3,8 +3,7 @@ import { FontType, Color } from '../../../assets'
 
 const styles = StyleSheet.create({
   tabBarStyle : {
-    height:55,
-    paddingTop:5,
+    height: 60,
     elevation: 40,
     marginTop:-50,
     borderWidth: 0,
@@ -17,6 +16,7 @@ const styles = StyleSheet.create({
   },
   labelStyle : {
     fontSize: 11,
+    marginTop: -5,
     marginBottom:5,
     fontFamily: FontType.regular
   },

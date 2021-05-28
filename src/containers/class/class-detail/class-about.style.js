@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textRating: {
-    marginTop: 4,
     marginLeft: 8,
     color: Color.black,
     fontSize: FontSize.small,
