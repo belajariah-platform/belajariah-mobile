@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     width : 280,
     marginBottom : 10,
   },
-  scrollGuide : { marginBottom : '10%' },
+  scrollGuide : { marginTop: '2%', marginBottom : '10%' },
   cancel : { marginLeft : '20%' },
   textPurple : { color : '#58006f' },
   textWhite : { color : Color.white },

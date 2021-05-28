@@ -159,11 +159,10 @@ const Consultation = () => {
         state.length == 0 ? (
           <EmptyList/>
         ) : (
-          <>
-            <VideoPlayer
+          <View>
+            {/* <VideoPlayer
               iconPlaySize = {36}
               iconSkipSize = {40}
-              showBackButton={true}
               videoStyle={styles.videoStyle}
               videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
               posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
@@ -173,13 +172,13 @@ const Consultation = () => {
               fullscreenStyle={styles.videoFullscreenContainerStyle}
               onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
               controllerFullscreenStyle={styles.controllerFullscreenStyle}
-            />
+            /> */}
             <ScrollView
               showsVerticalScrollIndicator={false}
               style={styles.scrollGuide}>
-              {Content()}
+              <Content />
             </ScrollView>
-          </>
+          </View>
         )}
       {isFullscreen || (
         <>
