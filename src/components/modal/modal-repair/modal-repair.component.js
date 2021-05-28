@@ -41,7 +41,7 @@ const ModalRepair = (props) => {
               style={styles.textArea}
               onChangeText={(e) => props.onChangeText(e)}
             />
-            <Button />
+            <Button/>
           </View>
         </View>
       </Modal>

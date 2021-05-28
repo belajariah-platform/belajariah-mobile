@@ -22,6 +22,8 @@ import {
   ChatAdmin,
   Searchbox,
   LoadingView,
+  ModalRepair,
+  ModalConfirm,
   ModalNoConnection,
 } from '../../../components'
 
@@ -36,9 +38,14 @@ const AdminUserAll = () => {
   const [search, setSearch] = useState('')
   const { loadingAll, loadingAllScroll } = useSelector((state) => state.ConsultationAllReducer)
 
+  const [action, setAction] = useState('')
+  const [dataObj, setDataObj] = useState({})
+  const [remarks, setRemarks] = useState('')
   const [loadingBtn, setLoadingBtn] = useState(false)
   // const [refreshing, setRefreshing] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
+  const [modalRepairVisible, setmodalRepairVisible] = useState(false)
 
   const [count, setCount] = useState(0)
   const [states, setStates] = useState([])
@@ -47,6 +54,18 @@ const AdminUserAll = () => {
   const [audios, setAudios] = useState([{ 'id': '1.1', 'title': 'Audio...', 'type': 'default', 'url': 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Voice-Note/Perekaman%20baru%201.m4a' }])
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const toggleModal = (action, item) => {
+    setDataObj(item)
+    setAction(action)
+    setModalVisible(!modalVisible)
+  }
+
+  const toggleModalRepair = (item) => {
+    setDataObj(item)
+    setmodalRepairVisible(!modalRepairVisible)
+  }
+
   const retryConnection = () => {
     fetchDataConsultation(dataState)
     setconnectStatus(!connectStatus)
@@ -119,6 +138,7 @@ const AdminUserAll = () => {
     const values = {
       ID : item.ID,
       Action : action,
+      Description : remarks,
       User_Code : item.User_Code,
       Class_Code : item.Class_Code,
       Status_Code : item.Status_Code,
@@ -136,7 +156,9 @@ const AdminUserAll = () => {
         setLoadingBtn(false)
         fetchDataConsultation(dataState)
       }
+      setRemarks('')
     } catch (error) {
+      setRemarks('')
       setLoadingBtn(false)
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)
@@ -288,6 +310,20 @@ const AdminUserAll = () => {
         backdropPress={() => togglemodalNoConnection()}
         backButtonPress={() => togglemodalNoConnection()}
       />
+      <ModalConfirm
+        action={action}
+        isVisible={modalVisible}
+        backdropPress={() => toggleModal()}
+        submit={() => handleConfirm(dataObj)}
+        backButtonPress={() => toggleModal()}
+      />
+      <ModalRepair
+        isVisible={modalRepairVisible}
+        onChangeText={(e) => setRemarks(e)}
+        submit={() => handleConfirm(dataObj)}
+        backdropPress={() => toggleModalRepair()}
+        backButtonPress={() => toggleModalRepair()}
+      />
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
@@ -307,6 +343,7 @@ const AdminUserAll = () => {
             <ChatAdmin
               state={states}
               audios={audios}
+              loading={loadingBtn}
               onLoadMore={onLoadMore}
               renderFooter={renderFooter}
               confirm={(e, v) => handleConfirm(e, v)}
