@@ -17,6 +17,7 @@ import {
 import {
   Loader,
   ImageView,
+  Searchbox,
   LoadingView,
   ModalRepair,
   ModalConfirm,
@@ -36,9 +37,10 @@ import { PaymentAPI } from '../../../api'
 import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
 
-const AdminTransactionAll = ({ search }) => {
+const AdminTransactionAll = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const [search, setSearch] = useState('')
   const { loadingAll, loadingAllScroll } = useSelector((state) => state.TransactionAllReducer)
 
   const [action, setAction] = useState('')
@@ -327,6 +329,15 @@ const AdminTransactionAll = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
+        <View>
+          <Searchbox
+            size='medium'
+            style={styles.searchbox}
+            placeholder={'Temukan user'}
+            onChangeText={(e) => setSearch(e)}
+            onFocus={() => console.log('hello')}
+          />
+        </View>
         {loadingAll && !loadingAllScroll?
           <LoadingView color='white'/>  :
           states.length == 0 ?

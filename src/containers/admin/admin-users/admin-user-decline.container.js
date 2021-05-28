@@ -1,19 +1,11 @@
-import moment from 'moment'
 import PropTypes from 'prop-types'
-import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
-import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  Image,
-  FlatList,
-  RefreshControl,
   ImageBackground,
-  TouchableOpacity,
 } from 'react-native'
 import {
   CONSUL_DECLINE_REQ,
@@ -21,32 +13,31 @@ import {
   CONSUL_DECLINE_FAIL,
   CONSUL_DECLINE_SCROLL,
 } from '../../../action'
+import {
+  ChatAdmin,
+  Searchbox,
+  LoadingView,
+  ModalNoConnection,
+} from '../../../components'
 
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
 import { ConsultationAPI } from '../../../api'
-import { TimeConvert, TimerObj } from '../../../utils'
 
 import { styles } from './admin-user.style'
-import { LoadingView, ModalNoConnection } from '../../../components'
 
-const AdminUserDecline = ({ search }) => {
+const AdminUserDecline = () => {
   const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const { loadingDecline, loadingDeclineScroll } = useSelector((state) => state.ConsultationDeclineReducer)
 
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] =  useState(0)
-  const [msgSelected, setMsgSelected] = useState([])
-  const [refreshing, setRefreshing] = useState(false)
-  const [optionSelected, setOptionSelected] = useState({})
-  const [connectStatus, setconnectStatus] = useState(false)
-
   const [count, setCount] = useState(0)
+  const [search, setSearch] = useState('')
   const [states, setStates] = useState([])
+  const [connectStatus, setconnectStatus] = useState(false)
+  const [audios, setAudios] = useState([{ 'id': '1.1', 'title': 'Audio...', 'type': 'default', 'url': 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Voice-Note/Perekaman%20baru%201.m4a' }])
   const [dataState, setDataState] = useState({ skip: 0, take: 5, filter: [], filterString: '[]',  sort : 'DESC', search : '' })
 
-  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
     fetchDataConsultation(dataState)
     setconnectStatus(!connectStatus)
@@ -54,10 +45,22 @@ const AdminUserDecline = ({ search }) => {
 
   const fetchDataConsultation = async ({ skip, take, filterString, sort, search }) => {
     try {
+      let audio = []
       dispatch({ type: CONSUL_DECLINE_REQ })
       filterString='[{"type": "text", "field" : "Status", "value": "Rejected"}]'
       const response = await ConsultationAPI.GetAllConsultation(skip, take, filterString, sort, search)
       if (response.status === Response.SUCCESS) {
+        response.data.data.map((a) => {
+          if (a.Recording_Path !== '') {
+            audio.push({
+              id: a.ID.toString(),
+              url: a.Recording_Path,
+              type: 'default',
+              title: 'Audio...',
+            })
+          }
+        })
+        setAudios(audio)
         setStates(response.data.data)
         setCount(response.data.count)
         dispatch({ type: CONSUL_DECLINE_SUCC })
@@ -83,28 +86,13 @@ const AdminUserDecline = ({ search }) => {
     return () => clearTimeout(delay)
   }
 
-  const handlePlayList = (item) => {
-    msgSelected.forEach((val, i) => {
-      if (val.ID == item.ID) {
-        let isPlay = [...msgSelected]
-        isPlay[i] = { ...val, Is_Play :
-        optionSelected.ID == val.ID &&
-        optionSelected.Is_Play  ? false : true
-        }
-        setMinutes(TimerObj(val.voice_duration).minute)
-        setSeconds(TimerObj(val.voice_duration).second)
-        setOptionSelected(isPlay[i])
-      }
-    })
-  }
-
-  const onRefreshing = () => {
-    setRefreshing(true)
-    fetchDataConsultation(dataState)
-    setMsgSelected(states)
-    setOptionSelected({})
-    setRefreshing(false)
-  }
+  // const onRefreshing = () => {
+  //   setRefreshing(true)
+  //   fetchDataConsultation(dataState)
+  //   setMsgSelected(states)
+  //   setOptionSelected({})
+  //   setRefreshing(false)
+  // }
 
   const onLoadMore = (e) => {
     if (dataState.take < count && e.distanceFromEnd >= 0) {
@@ -126,130 +114,104 @@ const AdminUserDecline = ({ search }) => {
     ) : null
   }
 
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (optionSelected.Is_Play) {
-        if (seconds > 0) {
-          setSeconds(seconds - 1)
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            setOptionSelected({
-              ...optionSelected,
-              Is_Play : false
-            })
-            clearInterval(intervalId)
-          } else {
-            setMinutes(minutes - 1)
-            setSeconds(59)
-          }
-        }
-      }
-    }, 1000)
-    return () => clearInterval(intervalId)
-  }, [seconds, minutes, optionSelected])
-
   useEffect(() => {
     onDataStateChange(search)
-    if (search.length > 0 ) {
-      setOptionSelected({
-        ...optionSelected,
-        Is_Play : false
-      })
-    }
+    // if (search.length > 0 ) {
+    //   setOptionSelected({
+    //     ...optionSelected,
+    //     Is_Play : false
+    //   })
+    // }
   }, [search])
 
   useEffect(() => {
-    setOptionSelected({})
-    setMsgSelected(states)
     fetchDataConsultation(dataState)
   }, [dataState])
 
-  const CardUser = (item, index) => {
-    let icon
-    optionSelected.Is_Play &&
-    optionSelected.ID == item.ID ?
-      (icon = Images.IconPause) :
-      (icon =  Images.IconPlay)
+  // const CardUser = (item, index) => {
+  //   let icon
+  //   optionSelected.Is_Play &&
+  //   optionSelected.ID == item.ID ?
+  //     (icon = Images.IconPause) :
+  //     (icon =  Images.IconPlay)
 
-    return(
-      <View key={index}>
-        <Card containerStyle={styles.cardUserOpacity}>
-          <View style={styles.ViewInstructorInfo}>
-            <Image
-              source={item.User_Image == '' ?
-                Images.ImageProfileDefault  : { uri :item.User_Image }}
-              style={{ ...styles.avatarUser, opacity : 0.5 }}/>
-            <TouchableOpacity
-              style={{ flex : 1 }}
-              activeOpacity={0.5}
-              onPress={()=> {navigation.navigate('AdminProfileAll', item)}}
-            >
-              <Text
-                style={{ ...styles.textUsername, opacity : 0.5 }}>
-                {item.User_Name}
-              </Text>
-              <Text
-                style={{ ...styles.TxtTimeTitle,  opacity : 0.5 }}>
-                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
-              </Text>
-            </TouchableOpacity>
+  //   return(
+  //     <View key={index}>
+  //       <Card containerStyle={styles.cardUserOpacity}>
+  //         <View style={styles.ViewInstructorInfo}>
+  //           <Image
+  //             source={item.User_Image == '' ?
+  //               Images.ImageProfileDefault  : { uri :item.User_Image }}
+  //             style={{ ...styles.avatarUser, opacity : 0.5 }}/>
+  //           <TouchableOpacity
+  //             style={{ flex : 1 }}
+  //             activeOpacity={0.5}
+  //             onPress={()=> {navigation.navigate('AdminProfileAll', item)}}
+  //           >
+  //             <Text
+  //               style={{ ...styles.textUsername, opacity : 0.5 }}>
+  //               {item.User_Name}
+  //             </Text>
+  //             <Text
+  //               style={{ ...styles.TxtTimeTitle,  opacity : 0.5 }}>
+  //               {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
+  //             </Text>
+  //           </TouchableOpacity>
 
-            <TouchableOpacity
-              activeOpacity={1}
-              style={styles.iconAccept}>
-              <Images.IconRejectStatus.default/>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerButtonAction}>
-            <View style={styles.ViewButtonAction}>
-              <TouchableOpacity
-                onPress={() => handlePlayList(item)}>
-                <icon.default
-                  width={20}
-                  height={20}
-                  style={{ marginRight: 5 }}/>
-              </TouchableOpacity>
-              <Images.GrafisVoice.default
-                width={100}
-                height={20}
-                style={{ marginRight: 5 }}/>
-              <Text style={styles.textDuration}>
-                {optionSelected.Is_Play && optionSelected.ID == item.ID ? (
-                  `${minutes}:${seconds < 10 ?
-                    `0${seconds}` : seconds}`
-                ) : (
-                  TimeConvert(item.Recording_Duration)
-                )}
-              </Text>
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={{ marginRight: 5 }}>
-              <Images.IconDownloadVoice.default/>
-            </TouchableOpacity>
-          </View>
-          <List.Section>
-            <List.Accordion
-              title='Deskripsi konsultasi'
-              titleStyle={{ ...styles.textRegular, opacity : 0.5 }}
-              style={styles.containerAccordion}>
-              <View>
-                <Text
-                  style={{ ...styles.description, opacity : 0.5 }}>
-                  {item.Description}
-                </Text>
-              </View>
-            </List.Accordion>
-          </List.Section>
-          {/* <TouchableOpacity>
-            <Text style={styles.textButtonDelete}>Delete</Text>
-          </TouchableOpacity> */}
-        </Card>
-      </View>
-    )
-  }
+  //           <TouchableOpacity
+  //             activeOpacity={1}
+  //             style={styles.iconAccept}>
+  //             <Images.IconRejectStatus.default/>
+  //           </TouchableOpacity>
+  //         </View>
+  //         <View style={styles.containerButtonAction}>
+  //           <View style={styles.ViewButtonAction}>
+  //             <TouchableOpacity
+  //               onPress={() => handlePlayList(item)}>
+  //               <icon.default
+  //                 width={20}
+  //                 height={20}
+  //                 style={{ marginRight: 5 }}/>
+  //             </TouchableOpacity>
+  //             <Images.GrafisVoice.default
+  //               width={100}
+  //               height={20}
+  //               style={{ marginRight: 5 }}/>
+  //             <Text style={styles.textDuration}>
+  //               {optionSelected.Is_Play && optionSelected.ID == item.ID ? (
+  //                 `${minutes}:${seconds < 10 ?
+  //                   `0${seconds}` : seconds}`
+  //               ) : (
+  //                 TimeConvert(item.Recording_Duration)
+  //               )}
+  //             </Text>
+  //           </View>
+  //           <TouchableOpacity
+  //             activeOpacity={0.5}
+  //             style={{ marginRight: 5 }}>
+  //             <Images.IconDownloadVoice.default/>
+  //           </TouchableOpacity>
+  //         </View>
+  //         <List.Section>
+  //           <List.Accordion
+  //             title='Deskripsi konsultasi'
+  //             titleStyle={{ ...styles.textRegular, opacity : 0.5 }}
+  //             style={styles.containerAccordion}>
+  //             <View>
+  //               <Text
+  //                 style={{ ...styles.description, opacity : 0.5 }}>
+  //                 {item.Description}
+  //               </Text>
+  //             </View>
+  //           </List.Accordion>
+  //         </List.Section>
+  //         {/* <TouchableOpacity>
+  //           <Text style={styles.textButtonDelete}>Delete</Text>
+  //         </TouchableOpacity> */}
+  //       </Card>
+  //     </View>
+  //   )
+  // }
 
   const NoUser = () => {
     return(
@@ -271,21 +233,36 @@ const AdminUserDecline = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
+        <View>
+          <Searchbox
+            size='medium'
+            style={styles.searchbox}
+            placeholder={'Temukan user'}
+            onChangeText={(e) => setSearch(e)}
+            onFocus={() => console.log('hello')}
+          />
+        </View>
         {loadingDecline && !loadingDeclineScroll ?
           <LoadingView color = 'white'/> :
           states == 0 ?
             <NoUser/> :
-            <FlatList
-              data={states}
-              style={{ width:'100%' }}
-              onEndReachedThreshold={0.1}
-              ListFooterComponent={renderFooter}
-              onEndReached={(e) => onLoadMore(e)}
-              showsVerticalScrollIndicator ={false}
-              contentContainerStyle={{ paddingBottom: 25 }}
-              keyExtractor={(item, index) =>  index.toString()}
-              renderItem={({ item, index }) => CardUser(item, index)}
-              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
+            <ChatAdmin
+              state={states}
+              audios={audios}
+              onLoadMore={onLoadMore}
+              renderFooter={renderFooter}
+            />
+            // <FlatList
+            //   data={states}
+            //   style={{ width:'100%' }}
+            //   onEndReachedThreshold={0.1}
+            //   ListFooterComponent={renderFooter}
+            //   onEndReached={(e) => onLoadMore(e)}
+            //   showsVerticalScrollIndicator ={false}
+            //   contentContainerStyle={{ paddingBottom: 25 }}
+            //   keyExtractor={(item, index) =>  index.toString()}
+            //   renderItem={({ item, index }) => CardUser(item, index)}
+            //   refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}/>
         }
       </ImageBackground>
     </View>

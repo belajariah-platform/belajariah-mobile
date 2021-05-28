@@ -16,13 +16,12 @@ import {
 } from 'react-native'
 import {
   LoadingView,
-  ModalFilterUstadz,
   ModalNoConnection,
 } from '../../../components'
 
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
-import { ConsultationAPI, EnumAPI } from '../../../api'
+import { ConsultationAPI } from '../../../api'
 
 import { styles } from './instructor-task.style'
 
@@ -37,26 +36,22 @@ const InstructorTask = (props) => {
     { key: 2, title : 'Completed Task' }
   ])
   const [index, setIndex] = useState(0)
+  const [intervals, setIntervals] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [loadingWaiting, setLoadingWaiting] = useState(true)
   const [loadingCompleted, setLoadingCompleted] = useState(true)
 
   const [stateWaiting, setStateWaiting] = useState([])
-  const [stateCategory, setStateCategory] = useState([])
   const [stateCompleted, setStateCompleted] = useState([])
 
-  const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
-  const [dataStateWaiting, setDataStateWaiting] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
-  const [dataStateCompleted, setDataStateCompleted] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
+  const [dataStateWaiting] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
+  const [dataStateCompleted] = useState({ skip: 0, take: 5, filter: [], filterString: '[]', sort : 'DESC', search : '' })
 
-  const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
   const retryConnection = () => {
     setconnectStatus(!connectStatus)
-    fetchDataClassCategory(dataStateCategory)
     fetchDataConsultationWaiting(dataStateWaiting)
     fetchDataConsultationCompleted(dataStateCompleted)
   }
@@ -99,50 +94,28 @@ const InstructorTask = (props) => {
     }
   }
 
-  const fetchDataClassCategory = async ({ skip, take, filterString }) => {
-    try {
-      filterString='[{"type": "text", "field" : "type", "value": "class_type"}]'
-      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
-      if (response.status === Response.SUCCESS) {
-        setStateCategory(response.data.data)
-      } else {
-        NetInfo.fetch().then(res => {
-          setconnectStatus(!res.isConnected)
-        })
-      }
-    } catch (err) {
-      return err
-    }
-  }
-
-  const onDataStateChange = (sort, filters) => {
-    setDataStateWaiting({
-      ...dataStateWaiting,
-      sort : sort,
-      filter :filters,
-    })
-    setDataStateCompleted({
-      ...dataStateCompleted,
-      sort : sort,
-      filter :filters,
-    })
-  }
-
   const onRefreshing = () => {
     setRefreshing(true)
+    setLoadingWaiting(true)
+    setLoadingCompleted(true)
     fetchDataConsultationWaiting(dataStateWaiting)
     fetchDataConsultationCompleted(dataStateCompleted)
     setRefreshing(false)
   }
 
   useEffect(() => {
-    fetchDataConsultationWaiting(dataStateWaiting)
-    fetchDataConsultationCompleted(dataStateCompleted)
-  }, [dataStateWaiting, dataStateCompleted, items])
-
-  useEffect(() => {
-    fetchDataClassCategory(dataStateCategory)
-  }, [])
+    if (intervals) {
+      fetchDataConsultationWaiting(dataStateWaiting)
+      fetchDataConsultationCompleted(dataStateCompleted)
+      setIntervals(false)
+    } else {
+      const intervalId = setInterval(() => {
+        fetchDataConsultationWaiting(dataStateWaiting)
+        fetchDataConsultationCompleted(dataStateCompleted)
+      }, 5000)
+      return () => clearInterval(intervalId)
+    }
+  }, [dataStateWaiting, dataStateCompleted, items.fetch])
 
   const Header = () => {
     return (
@@ -276,13 +249,6 @@ const InstructorTask = (props) => {
 
   return (
     <>
-      <ModalFilterUstadz
-        state={stateCategory}
-        submit={onDataStateChange}
-        isVisible={modalVisible}
-        backdropPress={() => toggleModal()}
-        backButtonPress={() => toggleModal()}
-      />
       <ModalNoConnection
         isVisible={connectStatus}
         retry={() => retryConnection()}

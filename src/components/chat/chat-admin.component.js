@@ -1,8 +1,10 @@
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { Avatar } from 'react-native-elements'
-import React, { useState, useEffect } from 'react'
+import { List } from 'react-native-paper'
+import { Card } from 'react-native-elements'
 import Slider from '@react-native-community/slider'
+import { useNavigation } from '@react-navigation/native'
+import React, { useState, useEffect, useRef } from 'react'
 
 import TrackPlayer, {
   STATE_PLAYING,
@@ -18,47 +20,41 @@ import {
 import {
   View,
   Text,
+  Image,
   FlatList,
-  BackHandler,
+  RefreshControl,
   TouchableOpacity,
 } from 'react-native'
 
 import {
   ImageView,
-  ModalRating,
+  ButtonGradient,
+  ModalNoConnection,
 } from '../../components'
 
 import { styles } from './chat.style'
-import { TimerSecondToTime } from '../../utils'
 import { Images, Color } from '../../assets'
+import { TimerSecondToTime } from '../../utils'
 
-const ChatAdmin = ({ state }) => {
+const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
+  const flatlistRef = useRef()
+  const navigation = useNavigation()
+
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
-  const [modalRatingVisible, setModalRatingVisible] = useState(false)
 
-  const [stateMsg, setStateMsg] = useState([])
+  const [stateMsg] = useState(state)
   const [isPlaying, setIsPlaying] = useState(false)
   const [sliderValue, setSliderValue] = useState(0)
   const [isSeeking, setIsSeeking] = useState(false)
   const [optionSelected, setOptionSelected] = useState({})
+  const [connectStatus, setconnectStatus] = useState(false)
   const { position, duration } = useTrackPlayerProgress(250)
 
+  const retryConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
-  const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-  const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
-
-  let audios = []
-  state.map((a) => {
-    if (a.Recording_Name !== '') {
-      audios.push({
-        id: a.id.toString(),
-        url: a.Recording_Name,
-        type: 'default',
-        title: 'Audio...',
-      })
-    }
-  })
+  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+  const onScrollToEnd = () => flatlistRef.current.scrollToEnd({ animating: true })
 
   const trackPlayerInit = async () => {
     await TrackPlayer.setupPlayer()
@@ -81,16 +77,16 @@ const ChatAdmin = ({ state }) => {
     setIsTrackPlayerInit(isInit)
   }
 
-
   useEffect(() => {
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration)
-      if (sliderValue.toString().substring(0, 5) == '0.997') {
+      // console.log(TimerSecondToTime(position), optionSelected.Recording_Duration)
+      if (Math.floor(( Number(position) % 3600) % 60) == optionSelected.Recording_Duration) {
         TrackPlayer.stop()
         setOptionSelected({})
       }
     }
-  }, [position, duration, isSeeking])
+  }, [position, duration, isSeeking, optionSelected])
 
   useTrackPlayerEvents([TrackPlayerEvents.PLAYBACK_STATE], (event) => {
     if (event.state === STATE_PLAYING) {
@@ -106,18 +102,18 @@ const ChatAdmin = ({ state }) => {
   const onButtonPressed = async (id) => {
     let options = {}
     stateMsg.forEach((val, i) => {
-      if (val.id == id) {
+      if (val.ID == id) {
         let isPlay = [...stateMsg]
-        isPlay[i] = { ...val, is_play :
-        optionSelected.id == val.id &&
-        optionSelected.is_play  ? false : true
+        isPlay[i] = { ...val, Is_Play :
+        optionSelected.ID == val.ID &&
+        optionSelected.Is_Play  ? false : true
         }
         setOptionSelected(isPlay[i])
         options = isPlay[i]
       }
     })
 
-    if (options.is_play &&  options.id == id) {
+    if (options.Is_Play &&  options.ID == id) {
       TrackPlayer.skip(id.toString())
       TrackPlayer.play()
     } else {
@@ -130,7 +126,7 @@ const ChatAdmin = ({ state }) => {
   }
 
   const slidingCompleted = async (value, id) => {
-    if (optionSelected.is_play && optionSelected.id == id) {
+    if (optionSelected.Is_Play && optionSelected.ID == id) {
       await TrackPlayer.seekTo(value * duration)
       setIsSeeking(false)
       setSliderValue(0)
@@ -143,65 +139,43 @@ const ChatAdmin = ({ state }) => {
 
   useEffect(() => {
     setOptionSelected({})
-    setStateMsg(state)
+    onScrollToEnd()
     startPlayer()
   }, [])
 
-  useEffect(() => {
-    const backAction = () => TrackPlayer.stop()
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    )
-    return () => backHandler.remove()
-  }, [])
-
   const ChatList = (item, index) => {
-    const user_login = 1
-    let flexes, containerSound, grafisVoice, grafisBg,
-      play, avatar, textTimer, flexDir, text1, text2, pause
-    user_login == item.user_code ?
-      (
-        flexDir = styles.row,
-        grafisBg = Color.white,
-        flexes = styles.flexEnd,
-        text1 = styles.textPurple,
-        text2 = styles.textWhite,
-        avatar = styles.avatarEnd,
-        textTimer = styles.textWhite,
-        pause = Images.IconPauseWhite,
-        play = Images.IconPlayVoiceWhite,
-        grafisVoice = Color.purpleExHint,
-        containerSound = styles.containerSoundStart
-      ) : (
-        play = Images.IconPlay,
-        flexDir = styles.column,
-        pause = Images.IconPause,
-        flexes = styles.flexStart,
-        avatar = styles.avatarStart,
-        textTimer = styles.textBlack,
-        grafisBg = Color.purpleMedium,
-        grafisVoice = Color.purpleButton,
-        containerSound = styles.containerSoundEnd
-      )
-
     return (
-      <View
-        key={index}
-        style={[styles.containerChat, flexes]}>
-        <View style={containerSound}>
-          <View style={flexDir}>
-            {item.Recording_Name != 0 && (
-              <View style={styles.flexRow}>
+      <View key={index}>
+        <Card containerStyle={styles.cardUser}>
+          <View style={styles.ViewInstructorInfo}>
+            <Image
+              style={styles.avatarUser}
+              source={item.User_Image == '' ?
+                Images.ImageProfileDefault  : { uri :item.User_Image }}
+            />
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={()=> navigation.navigate('AdminProfileAll', item)}
+            >
+              <Text style={styles.textUsername}>{item.User_Name}</Text>
+              <Text style={styles.TxtTimeTitle}>
+                {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {item.Recording_Path != '' ? (
+            <View style={styles.containerButtonAction}>
+              <View style={styles.ViewButtonAction}>
                 <TouchableOpacity
                   disabled={!isTrackPlayerInit}
-                  onPress={() => onButtonPressed(item.id)}>
-                  {optionSelected.is_play && optionSelected.id == item.id ?
-                    <pause.default
+                  onPress={() => onButtonPressed(item.ID)}
+                >
+                  {optionSelected.Is_Play && optionSelected.ID == item.ID ?
+                    <Images.IconPause.default
                       width={23}
                       height={23}
                     /> :
-                    <play.default
+                    <Images.IconPlay.default
                       width={23}
                       height={23}
                     />
@@ -210,44 +184,56 @@ const ChatAdmin = ({ state }) => {
                 <Slider
                   minimumValue={0}
                   maximumValue={1}
-                  value={optionSelected.id == item.id ? sliderValue : 0}
-                  disabled={optionSelected.id == item.id ? false : true}
                   style={{ width: 120 }}
-                  thumbTintColor={grafisVoice}
-                  maximumTrackTintColor={grafisBg}
-                  minimumTrackTintColor={grafisVoice}
+                  value={optionSelected.ID == item.ID ? sliderValue : 0}
+                  disabled={optionSelected.ID == item.ID ? false : true}
+                  thumbTintColor={Color.purpleButton}
+                  maximumTrackTintColor={Color.purpleExHint}
+                  minimumTrackTintColor={Color.purpleButton}
                   onSlidingStart={() => slidingStarted()}
-                  onSlidingComplete={(e) => slidingCompleted(e, item.id)}
+                  onSlidingComplete={(e) => slidingCompleted(e, item.ID)}
                 />
-                <Text style={[styles.textSoundDuration, textTimer]}>
-                  {position && optionSelected.id == item.id
+                <Text style={styles.textDuration}>
+                  {position && optionSelected.ID == item.ID
                     ? TimerSecondToTime(position)
-                    : TimerSecondToTime(item.voice_duration)}
+                    : TimerSecondToTime(item.Recording_Duration)}
                 </Text>
               </View>
-            )}
-          </View>
-        </View>
-        <View style={styles.containerUserDesc}>
-          <Text style={[styles.textDesc, text1]}>
-              Deskripsi
-          </Text>
-          <Text style={[styles.textUserDesc, text2]}>
-            {item.message}
-          </Text>
-          <View style={styles.containerTime}>
-            {user_login != item.user_code &&(
               <TouchableOpacity
-                activeOpacity={0.2}
-                onPress={() => toggleModalRating(true)}>
-                <Images.IconGive.default/>
+                activeOpacity={0.5}
+                style={{ marginRight: 5 }}>
+                <Images.IconDownloadVoice.default/>
               </TouchableOpacity>
-            )}
-            <Text style={[styles.textTime, text2]}>
-              {moment(item.created_date).format('h:mm A')}
-            </Text>
+            </View>
+          ) : null}
+          <List.Section>
+            <List.Accordion
+              title='Deskripsi konsultasi'
+              titleStyle={styles.textRegular}
+              style={styles.containerAccordion}>
+              <View>
+                <Text style={styles.description}>
+                  {item.Description}
+                </Text>
+              </View>
+            </List.Accordion>
+          </List.Section>
+          <View style={styles.ViewButtonActionVoice}>
+            <ButtonGradient
+              title='Tolak'
+              styles={styles.ButtonAction}
+              // disabled={loadingBtn ? true : false}
+              colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+              onPress={() => confirm('Rejected', item)}
+            />
+            <ButtonGradient
+              title='Terima'
+              styles={styles.ButtonAction}
+              // disabled={loadingBtn ? true : false}
+              onPress={() => confirm('Approved', item)}
+            />
           </View>
-        </View>
+        </Card>
       </View>
     )
   }
@@ -256,18 +242,24 @@ const ChatAdmin = ({ state }) => {
     <>
       <FlatList
         data={state}
+        ref={flatlistRef}
         style={{ width:'100%' }}
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={renderFooter}
+        onEndReached={(e) => onLoadMore(e)}
         showsVerticalScrollIndicator ={false}
         contentContainerStyle={{ paddingBottom : 0 }}
         keyExtractor={(item, index) =>  index.toString()}
         renderItem={({ item, index }) => ChatList(item, index)}
+        refreshControl={<RefreshControl
+          // onRefresh={onRefreshing}
+        />}
       />
-      <ModalRating
-        isVisible={modalRatingVisible}
-        backdropPress={() => toggleModalRating()}
-        backButtonPress={() => toggleModalRating()}
-        title='Berikan rating untuk koreksi bacaanmu'
-        renderItem={<Text style={styles.textModal}>{modalStr}</Text>}
+      <ModalNoConnection
+        isVisible={connectStatus}
+        retry={() => retryConnection()}
+        backdropPress={() => togglemodalNoConnection()}
+        backButtonPress={() => togglemodalNoConnection()}
       />
       <ImageView
         isVisible={isModalFotoVisible}
@@ -281,6 +273,11 @@ const ChatAdmin = ({ state }) => {
 
 ChatAdmin.propTypes = {
   state : PropTypes.array,
+  audios : PropTypes.array,
+  confirm : PropTypes.func,
+  onLoadMore : PropTypes.func,
+  renderFooter : PropTypes.func,
+
 }
 
 export default ChatAdmin
