@@ -8,14 +8,13 @@ import AdminTransactionAccept from './admin-transaction-accept.container'
 import AdminTransactionDecline from './admin-transaction-decline.container'
 
 import { Color } from '../../../assets'
-import { Searchbox, ModalFilterAdminPageUser } from '../../../components'
+import { ModalFilterAdminPageUser } from '../../../components'
 
 import { styles } from './admin-transaction.style'
 
 const AdminTransaction = () => {
   const Tab = createMaterialTopTabNavigator()
   const [sort, setSort] = useState('')
-  const [search, setSearch] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const toggleModal = () => setModalVisible(!modalVisible)
 
@@ -29,7 +28,7 @@ const AdminTransaction = () => {
       />
       <View style={styles.containerMain}>
         <View style={styles.containerHeader}>
-          <View
+          {/* <View
             style={{ flex : 1 }}>
             <Searchbox
               size='medium'
@@ -38,7 +37,7 @@ const AdminTransaction = () => {
               onChangeText={(e) => setSearch(e)}
               onFocus={() => console.log('hello')}
             />
-          </View>
+          </View> */}
           {/* <TouchableOpacity
             style={styles.iconFilter}
             onPress = {toggleModal}>
@@ -61,17 +60,17 @@ const AdminTransaction = () => {
           <Tab.Screen
             name='AdminTransactionAll'
             options={{ title: 'Semua' }}>
-            {() => <AdminTransactionAll search={search} sort={sort}/>}
+            {() => <AdminTransactionAll sort={sort}/>}
           </Tab.Screen>
           <Tab.Screen
             name='AdminTransactionAccept'
             options={{ title: 'Diterima' }}>
-            {() => <AdminTransactionAccept search={search} sort={sort}/>}
+            {() => <AdminTransactionAccept sort={sort}/>}
           </Tab.Screen>
           <Tab.Screen
             name='AdminTransactionDecline'
             options={{ title: 'Ditolak' }}>
-            {() => <AdminTransactionDecline search={search} sort={sort}/>}
+            {() => <AdminTransactionDecline sort={sort}/>}
           </Tab.Screen>
         </Tab.Navigator>
       </View>

@@ -16,7 +16,6 @@ import { styles } from './user-profile.style'
 import { ModalConfirm } from '../../../components'
 
 const CustomDrawer = ({ navigation }, props) => {
-  const count = 1
   const dispatch = useDispatch()
   const [action, setAction] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
@@ -70,12 +69,12 @@ const CustomDrawer = ({ navigation }, props) => {
               }}
               labelStyle={styles.label}
             />
-            {count > 0 && (
+            {/* {count > 0 && (
               <Images.IconNotifInfo.default
                 width={12}
                 height={12}
                 style={styles.info}/>
-            )}
+            )} */}
           </View>
 
           <DrawerItem

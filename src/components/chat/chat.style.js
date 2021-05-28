@@ -273,6 +273,74 @@ const styles = StyleSheet.create({
     textAlign : 'right',
     color:Color.white,
   },
+  cardUser: {
+    width: 'auto',
+    height: 'auto',
+    borderWidth : 0,
+    borderRadius: 20,
+  },
+  ViewInstructorInfo: {
+    paddingBottom: 10,
+    flexDirection: 'row',
+    alignItems : 'center',
+  },
+  avatarUser: {
+    width: 44,
+    height: 44,
+    marginRight: 10,
+  },
+  textUsername: {
+    marginBottom : 2,
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.bold,
+  },
+  TxtTimeTitle: {
+    color: Color.black,
+    fontSize: FontSize.overSmall,
+    fontFamily: FontType.regular,
+  },
+  containerButtonAction: {
+    justifyContent : 'space-between',
+    flexDirection: 'row',
+  },
+  ViewButtonAction: {
+    flexDirection: 'row',
+  },
+  ViewButtonActionVoice: {
+    flexDirection: 'row',
+    justifyContent : 'flex-end'
+  },
+  btnApply: {
+    width: 100,
+    borderRadius: 12,
+    alignSelf: 'flex-end',
+  },
+  ButtonAction: {
+    width: 70,
+    height : 32,
+    marginTop : 0,
+    marginRight: 10,
+    marginBottom : 0,
+    borderRadius : 10,
+  },
+  description : {
+    bottom : 5,
+    paddingHorizontal: 17,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
+  },
+  containerAccordion: {
+    width: '85%',
+    marginTop : -7,
+    paddingVertical: 0,
+    paddingHorizontal: 10,
+  },
+  textRegular: {
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
+  },
   cancel : { marginLeft : '20%' },
   textWhite : { color : Color.white },
   flexRow : { flexDirection : 'row' },

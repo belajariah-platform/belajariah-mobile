@@ -2,13 +2,13 @@ import Swiper from 'react-native-swiper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useEffect, useState } from 'react'
-// import { useIsFocused } from '@react-navigation/core'
+import { useIsFocused } from '@react-navigation/core'
 import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
 import {
   View,
-  // BackHandler,
-  // ToastAndroid,
+  BackHandler,
+  ToastAndroid,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native'
@@ -23,10 +23,10 @@ import { Response } from '../../../utils'
 import { styles } from './instructor-dashboard.style'
 
 const InstructorDashboard = () => {
-  // const isFocused = useIsFocused()
+  const isFocused = useIsFocused()
   const navigation = useNavigation()
   const [state, setState] = useState([])
-  // const [exitApp, setExitApp] = useState(0)
+  const [exitApp, setExitApp] = useState(0)
   const [loading, setLoading] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
@@ -59,13 +59,6 @@ const InstructorDashboard = () => {
     fetchDataClass(dataState)
   }, [])
 
-  // const ClassesGrouping = state.reduce(function (rows, key, index) {
-  //   return (
-  //     (index % 2 == 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) &&
-  //     rows
-  //   )
-  // }, [])
-
   const Footer = () => {
     return (
       <View style={styles.containerFooter}>
@@ -77,15 +70,14 @@ const InstructorDashboard = () => {
         </Text>
         {loading ? <LoadingView/> : (
           <Swiper
+            dot={false}
+            loop={false}
             containerStyle={styles.contentSwiper}
             activeDotStyle={styles.activeDot}
-            dot={false}
-            loop={false}>
+          >
             {state.map((item, classgroupIndex) => {
               return item.Class_Initial && (
                 <View key={classgroupIndex} style={styles.containerRowView}>
-                  {/* {ClassesGrouping[0].map((item, classIndex) => {
-                    return ( */}
                   <Card
                     key={classgroupIndex}
                     containerStyle={styles.containerCard}>
@@ -114,31 +106,30 @@ const InstructorDashboard = () => {
     )
   }
 
-  // useEffect(() => {
-  //   const backAction = () => {
-  //     setTimeout(() => {
-  //       setExitApp(0)
-  //     }, 2000)
+  useEffect(() => {
+    const backAction = () => {
+      setTimeout(() => {
+        setExitApp(0)
+      }, 2000)
 
-  //     if(exitApp == 0) {
-  //       ToastAndroid.showWithGravityAndOffset('Tekan sekali lagi untuk keluar', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 200)
-  //       setExitApp(1)
-  //     }
+      if(exitApp == 0) {
+        ToastAndroid.showWithGravityAndOffset('Tekan sekali lagi untuk keluar', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 0, 200)
+        setExitApp(1)
+      }
+      if(exitApp == 1) {
+        BackHandler.exitApp()
+      }
+      return true
+    }
 
-  //     if(exitApp == 1) {
-  //       BackHandler.exitApp()
-  //     }
-  //     return true
-  //   }
-
-  //   if(isFocused) {
-  //     const backHandler = BackHandler.addEventListener(
-  //       'hardwareBackPress',
-  //       backAction
-  //     )
-  //     return () => backHandler.remove()
-  //   }
-  // }, [exitApp])
+    if(isFocused) {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction
+      )
+      return () => backHandler.remove()
+    }
+  }, [exitApp])
 
   return (
     <View style={styles.container}>

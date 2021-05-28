@@ -64,39 +64,12 @@ const styles = StyleSheet.create({
     marginLeft : 16,
     alignSelf : 'center',
   },
-  cardUser: {
-    width: 'auto',
-    height: 'auto',
-    borderWidth : 0,
-    borderRadius: 20,
-  },
   cardUserOpacity: {
     opacity: 0.9,
     width: 'auto',
     height: 'auto',
     borderWidth : 0,
     borderRadius: 20,
-  },
-  ViewInstructorInfo: {
-    paddingBottom: 10,
-    flexDirection: 'row',
-    alignItems : 'center',
-  },
-  avatarUser: {
-    width: 44,
-    height: 44,
-    marginRight: 10,
-  },
-  textUsername: {
-    marginBottom : 2,
-    color: Color.black,
-    fontSize: FontSize.small,
-    fontFamily: FontType.bold,
-  },
-  TxtTimeTitle: {
-    color: Color.black,
-    fontSize: FontSize.overSmall,
-    fontFamily: FontType.regular,
   },
   TxtTitleDesc: {
     margin: 0,
@@ -110,13 +83,6 @@ const styles = StyleSheet.create({
     color: Color.purpleText,
     fontFamily: FontType.regular,
     fontSize: FontSize.smallMedium,
-  },
-  containerButtonAction: {
-    justifyContent : 'space-between',
-    flexDirection: 'row',
-  },
-  ViewButtonAction: {
-    flexDirection: 'row',
   },
   containerDescUser: {
     backgroundColor : 'yellow'
@@ -163,8 +129,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   searchbox : {
+    marginTop : 5,
     borderWidth : 0,
     borderRadius : 20,
+    marginHorizontal : 15,
     backgroundColor : Color.white,
     borderColor : Color.transparent,
   },
