@@ -2,9 +2,9 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { Avatar } from 'react-native-elements'
-import React, { useState, useEffect } from 'react'
 import Slider from '@react-native-community/slider'
 import NetInfo from '@react-native-community/netinfo'
+import React, { useState, useEffect, useRef } from 'react'
 
 import TrackPlayer, {
   STATE_PLAYING,
@@ -38,6 +38,7 @@ import { Images, Color } from '../../assets'
 import { TimerSecondToTime } from '../../utils'
 
 const Chat = ({ state, audios }) => {
+  const flatlistRef = useRef()
   const { userInfo } = useSelector((state) => state.UserReducer)
 
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
@@ -58,7 +59,7 @@ const Chat = ({ state, audios }) => {
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalRating = () => setModalRatingVisible(!modalRatingVisible)
-
+  const onScrollToEnd = () => flatlistRef.current.scrollToEnd({ animating: true })
 
   const modalStr = 'Bagaimana penilaian terkait koreksi bacaan oleh ustadz atau ustdzah ini ?'
 
@@ -110,7 +111,7 @@ const Chat = ({ state, audios }) => {
   useEffect(() => {
     if (!isSeeking && position && duration) {
       setSliderValue(position / duration)
-      console.log(Math.floor(( Number(position) % 3600) % 60), optionSelected.Recording_Duration)
+      // console.log(TimerSecondToTime(position), optionSelected.Recording_Duration)
       if (Math.floor(( Number(position) % 3600) % 60) == optionSelected.Recording_Duration) {
         TrackPlayer.stop()
         setOptionSelected({})
@@ -169,6 +170,7 @@ const Chat = ({ state, audios }) => {
 
   useEffect(() => {
     setOptionSelected({})
+    onScrollToEnd()
     startPlayer()
   }, [])
 
@@ -294,7 +296,8 @@ const Chat = ({ state, audios }) => {
             {item.Description}
           </Text>
           <View style={styles.containerTime}>
-            {user_login != item.User_Code && item.Status == 'Completed' &&(
+            {user_login != item.User_Code && item.Status == 'Completed' &&
+            userInfo.Role == 'User' &&(
               <TouchableOpacity
                 activeOpacity={0.2}
                 onPress={() => {
@@ -318,6 +321,7 @@ const Chat = ({ state, audios }) => {
       <Loader loading={loading}/>
       <FlatList
         data={state}
+        ref={flatlistRef}
         style={{ width:'100%' }}
         showsVerticalScrollIndicator ={false}
         contentContainerStyle={{ paddingBottom : 0 }}

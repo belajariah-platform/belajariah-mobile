@@ -173,8 +173,10 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallMedium,
   },
   searchbox : {
+    marginTop : 5,
     borderWidth : 0,
     borderRadius : 20,
+    marginHorizontal : 15,
     backgroundColor : Color.white,
     borderColor : Color.transparent,
   },

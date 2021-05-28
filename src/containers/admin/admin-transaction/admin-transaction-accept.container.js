@@ -22,6 +22,7 @@ import {
 } from '../../../action'
 import {
   ImageView,
+  Searchbox,
   ModalRepair,
   LoadingView,
   ModalNoConnection,
@@ -33,9 +34,10 @@ import { Response, FormatRupiah } from '../../../utils'
 
 import { styles } from './admin-transaction.style'
 
-const AdminTransactionAccept = ({ search }) => {
+const AdminTransactionAccept = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const [search, setSearch] = useState('')
   const { loadingAccept, loadingAcceptScroll } = useSelector((state) => state.TransactionAcceptReducer)
 
   const [count, setCount] = useState(0)
@@ -237,6 +239,15 @@ const AdminTransactionAccept = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
+        <View>
+          <Searchbox
+            size='medium'
+            style={styles.searchbox}
+            placeholder={'Temukan user'}
+            onChangeText={(e) => setSearch(e)}
+            onFocus={() => console.log('hello')}
+          />
+        </View>
         {loadingAccept && !loadingAcceptScroll ?
           <LoadingView color='white'/> :
           states == 0 ?

@@ -17,6 +17,7 @@ import {
 
 import {
   Loader,
+  Searchbox,
   ImageView,
   ModalRepair,
   LoadingView,
@@ -37,9 +38,10 @@ import { Images } from '../../../assets'
 import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
 
-const AdminTransactionDecline = ({ search }) => {
+const AdminTransactionDecline = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
+  const [search, setSearch] = useState('')
   const { loadingDecline, loadingDeclineScroll } = useSelector((state) => state.TransactionDeclineReducer)
 
   const [action, setAction] = useState('')
@@ -296,6 +298,15 @@ const AdminTransactionDecline = ({ search }) => {
       <ImageBackground
         source={Images.AdminBackground}
         style={styles.containerBackground}>
+        <View>
+          <Searchbox
+            size='medium'
+            style={styles.searchbox}
+            placeholder={'Temukan user'}
+            onChangeText={(e) => setSearch(e)}
+            onFocus={() => console.log('hello')}
+          />
+        </View>
         {loadingDecline && !loadingDeclineScroll ?
           <LoadingView color='white'/> :
           states == 0 ?

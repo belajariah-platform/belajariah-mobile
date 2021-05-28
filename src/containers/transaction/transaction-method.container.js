@@ -112,7 +112,6 @@ const TransactionMethod = (props) => {
       Payment_Method_Code : '',
       Status_Payment_Code : 'ENC00000025',
       Total_Transfer : parseInt(packages.Price_Discount),
-
     },
     onSubmit:  (values) => {
       if (values.Payment_Method_Code != '') {

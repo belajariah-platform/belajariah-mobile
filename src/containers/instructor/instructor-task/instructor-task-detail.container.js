@@ -1,69 +1,121 @@
-import moment from 'moment'
 import PropTypes from 'prop-types'
-import {  useFormik } from 'formik'
+import { useFormik } from 'formik'
+import RNFetchBlob from 'rn-fetch-blob'
 import { useSelector } from 'react-redux'
 import { Text } from '@ui-kitten/components'
-import { Avatar } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
-import NetInfo from '@react-native-community/netinfo'
+import TrackPlayer from 'react-native-track-player'
 import { useNavigation } from '@react-navigation/native'
+import AudioRecorderPlayer from 'react-native-audio-recorder-player'
 import {
   View,
-  Alert,
-  FlatList,
+  Platform,
   TextInput,
+  BackHandler,
   TouchableOpacity,
 } from 'react-native'
 import {
+  Chat,
   Alerts,
   ImageView,
+  LoadingView,
   ButtonGradient,
-  ModalNoConnection,
 } from '../../../components'
 
 import { Images } from '../../../assets'
+import { Response } from '../../../utils'
 import { ConsultationAPI } from '../../../api'
-import { TimeConvert, TimerObj, Response } from '../../../utils'
-
 import { styles } from './instructor-task-detail.style'
+
+const audioRecorderPlayer = new AudioRecorderPlayer()
 
 const InstructorTaskDetail = ({ route }) => {
   const param = route.params
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
 
-  const [states, setStates] = useState([])
+  const [state, setState] = useState([])
   const [loading, setLoading] = useState(true)
-  const [dataState] = useState({ skip: 0, take: 5, filterString: '[]' })
-
-  const [play, setPlay] = useState(false)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] =  useState(0)
-  const [record, setRecord] = useState(false)
-  const [message, setMessage] = useState(false)
-  const [msgSelected, setMsgSelected] = useState([])
-  const [optionSelected, setOptionSelected] = useState({})
-  const [connectStatus, setconnectStatus] = useState(false)
+  const [stateAudio, setStateAudio] = useState([])
+  const [intervals, setIntervals] = useState(true)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const [dataStates] = useState({ skip: 0, take: 1000, filterString: '[]', sort : 'ASC'  })
 
-  const retryConnection = () => setconnectStatus(!connectStatus)
-  const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
 
-  console.log(loading)
-  const voiceDuration =  (480 - ((minutes*60) + seconds))
-  const setInput = (v, e) => FormSendMessage.setFieldValue(v, e)
+  // const [connectStatus, setconnectStatus] = useState(false)
+  const [dataState, setDataState] = useState({
+    start : true,
+    stop : false,
+    send : false,
+    icons : Images.IconVoiceRecord
+  })
 
-  const fetchDataConsultation = async ({ skip, take, filterString  }) => {
+  const [audio, setAudio] = useState('')
+  const [playTime, setPlayTime] = useState('')
+  const [duration, setDuration] = useState('0')
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [recordTime, setRecordTime] = useState('00:00')
+  const [showPlayTimeAndDuration, setShowPlayTimeAndDuration] = useState(false)
+
+  const FormSendMessage = useFormik({
+    initialValues: {
+      Taken_Code : 0,
+      Description: '',
+      Recording_Code : '',
+      Action : 'Approved',
+      Recording_Duration : 0,
+      User_Code: userInfo.ID,
+      Status_Code : 'ENC00000019',
+      Class_Code : param.Class_Code,
+      Expired_Date : param.Expired_Date,
+    },
+    onSubmit:  (values, form) => {
+      state.length == 0 || state[state.length-1].User_Code == userInfo.ID ?
+        Alerts(false, 'Anda bisa mengirim/menjawab pesan setelah santri berkonsultasi') :
+        sendConsultation(values, form)
+    },
+  })
+
+  const sendConsultation = async (values, form) => {
     try {
       setLoading(true)
-      const response = await ConsultationAPI.GetAllConsultationMentor(skip, take, filterString )
+      const response = await ConsultationAPI.InsertConsultation(values)
+      if (response.data.result) {
+        handleReload()
+        form.resetForm()
+        form.setSubmitting(false)
+        fetchDataUserConsultation(dataStates)
+        setDataState(s => ({
+          ...s, start : true, send : false, icons : Images.IconVoiceRecord }))
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      handleReload()
+      form.resetForm()
+      form.setSubmitting(false)
+      return err
+    }
+  }
+
+  const fetchDataUserConsultation = async ({ skip, take, filterString, sort }) => {
+    try {
+      let audios = []
+      const response = await ConsultationAPI.GetAllConsultationMentor(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
-        setStates(response.data.data)
-      } else {
-        NetInfo.fetch().then(res => {
-          setconnectStatus(!res.isConnected)
+        response.data.data.map((a) => {
+          if (a.Recording_Path !== '') {
+            audios.push({
+              id: a.ID.toString(),
+              url: a.Recording_Path,
+              type: 'default',
+              title: 'Audio...',
+            })
+          }
         })
+        setStateAudio(audios)
+        setState(response.data.data)
       }
       setLoading(false)
     } catch (err) {
@@ -71,280 +123,191 @@ const InstructorTaskDetail = ({ route }) => {
       return err
     }
   }
-  console.log(states)
-  const user_login = 2
 
-  const state = [
-    { id : 1, user_code : 1, username : 'Rico Wijaya', voice_code : 1, voice_duration : 122, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 2, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 2, voice_duration : 60, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 3, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 146, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid  ' },
-    { id : 4, user_code : 2, username : 'Ust. Riki Jenifer', voice_code : 4, voice_duration : 80, taken_id : 1, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Completed', is_play : false, is_read : true, is_action_taken : true, message : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat' },
-    { id : 5, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 152, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-    { id : 6, user_code : 1, username : 'Rico Wijaya', voice_code : 3, voice_duration : 189, taken_id : 2, taken_by : 'Ust. Riki Jenifer', class_catgory : 'Tahsin', status : 'Waiting for Response', is_play : false, is_read : false, is_action_taken : false, created_date: new Date(), message : 'ustadz mau tanya dong seputar tajwid' },
-  ]
-
-  const FormSendMessage = useFormik({
-    initialValues: {
-      Taken_Code : 0,
-      Description : '',
-      Recording_Code : 0,
-      Action : 'Approved',
-      Recording_Duration : 0,
-      User_Code : userInfo.ID,
-      Status_Code : 'ENC00000020',
-      Class_Code : param.Class_Code,
-      Expired_Date : param.Expired_Date,
-    },
-    onSubmit: async (values, form) => {
-      const response =  await ConsultationAPI.GetAllConsultationSpamUser(values)
-      if (response.data.count >= 2) {
-        Alerts(false, 'Pesan kamu sudah melebihi batas')
-      } else {
-        const res = await ConsultationAPI.InsertConsultation(values)
-        if (res.data.result) {
-          setPlay(false)
-          setRecord(false)
-          setMessage(false)
-          form.resetForm()
-          form.setSubmitting(false)
-        }
-      }
-    },
-  })
-
-  const handleCancel = () => {
-    setPlay(false)
-    setMessage(false)
-    setMinutes(TimerObj(480-1).minute)
-    setSeconds(TimerObj(480-1).second)
+  const onSetInput =  (v, e) => {
+    FormSendMessage.setFieldValue(v, e)
   }
 
-  const handlePlay = () => {
-    setPlay(!play)
-    setMinutes(TimerObj(FormSendMessage
-      .values['Recording_Duration']).minute)
-    setSeconds(TimerObj(FormSendMessage
-      .values['Recording_Duration']).second)
-  }
+  const onStartRecord = async () => {
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'consultation.m4a',
+      android: `${dirs.CacheDir}/consultation.mp3`,
+    })
+    await audioRecorderPlayer.startRecorder(path)
+    audioRecorderPlayer.addRecordBackListener((e) => {
+      const time = audioRecorderPlayer
+        .mmssss(Math.floor(e.current_position))
+        .toString()
+        .substr(0, 5)
 
-  const handlePlayList = (item) => {
-    msgSelected.forEach((val, i) => {
-      if (val.id == item.id) {
-        let isPlay = [...msgSelected]
-        isPlay[i] = { ...val, is_play :
-        optionSelected.id == val.id &&
-        optionSelected.is_play  ? false : true
-        }
-        setMinutes(TimerObj(val.voice_duration).minute)
-        setSeconds(TimerObj(val.voice_duration).second)
-        setOptionSelected(isPlay[i])
-      }
+      setRecordTime(time)
     })
   }
 
-  const handleRecord = () => {
-    setPlay(false)
-    setRecord(false)
-    setMessage(true)
-    setInput('Recording_Duration', voiceDuration)
+  const onStopRecord = async () => {
+    await audioRecorderPlayer.addRecordBackListener((e) => {
+      let duration = e.current_position.toString()
+      duration.substr(0, duration.length - 3)
+    })
+    const result = await audioRecorderPlayer.stopRecorder()
+    audioRecorderPlayer.removeRecordBackListener()
+    setAudio(result)
+  }
+
+  const onStartPlay = async () => {
+    console.log(audio)
+    const dirs = RNFetchBlob.fs.dirs
+    const path = Platform.select({
+      ios: 'consultation.m4a',
+      android: `${dirs.CacheDir}/consultation.mp3`,
+    })
+    await audioRecorderPlayer.startPlayer(path)
+    audioRecorderPlayer.addPlayBackListener((e) => {
+      const position = audioRecorderPlayer
+        .mmssss(Math.floor(e.current_position))
+        .toString()
+        .substr(0, 5)
+      const duration = audioRecorderPlayer
+        .mmssss(Math.floor(e.duration))
+        .toString()
+        .substr(0, 5)
+
+      setPlayTime(position)
+      setDuration(duration)
+      audioRecorderPlayer.removeRecordBackListener()
+      return
+    })
+  }
+
+  const onPausePlay = async () => {
+    await audioRecorderPlayer.pausePlayer()
+  }
+
+  const onRecord = () => {
+    dataState.start ? (
+      setDataState(s => ({
+        ...s, start : false, stop : true, icons : Images.IconChecklist })),
+      onStartRecord(),
+      setIsPlaying(false),
+      setPlayTime(''),
+      setDuration(''),
+      setShowPlayTimeAndDuration(false)
+    ) : (
+      dataState.stop ? (
+        setDataState(s => ({
+          ...s, stop : false, send : true, icons : Images.IconSend })),
+        onStopRecord()
+      ) :
+        dataState.send && (
+          FormSendMessage.handleSubmit()
+        )
+    )
+  }
+
+  const handlePlayRecord = () => {
+    setIsPlaying(!isPlaying)
+    if (isPlaying) {
+      onPausePlay()
+    } else {
+      onStartPlay()
+      setShowPlayTimeAndDuration(true)
+    }
+  }
+
+  const handleReload = () => {
+    setDataState(s => ({
+      ...s, start : true, send : false, icons : Images.IconVoiceRecord }))
+    setAudio('')
+    setPlayTime('')
+    setDuration('')
+    setIsPlaying(false)
+    setRecordTime('00:00')
+    setShowPlayTimeAndDuration(false)
   }
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (record) {
-        if (seconds > 0) {
-          setSeconds(seconds - 1)
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            setRecord(!record)
-            setMessage(!message)
-            clearInterval(intervalId)
-          } else {
-            setMinutes(minutes - 1)
-            setSeconds(59)
-          }
-        }
-      } else if (play) {
-        if (seconds > 0) {
-          setSeconds(seconds - 1)
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            setPlay(!play)
-            setMinutes(TimerObj(FormSendMessage.values['Recording_Duration']).minute)
-            setSeconds(TimerObj(FormSendMessage.values['Recording_Duration']).second)
-            clearInterval(intervalId)
-          } else {
-            setMinutes(minutes - 1)
-            setSeconds(59)
-          }
-        }
-      } else if (optionSelected.is_play) {
-        if (seconds > 0) {
-          setSeconds(seconds - 1)
-        }
-        if (seconds === 0) {
-          if (minutes === 0) {
-            setMsgSelected({ ...msgSelected, is_play : false })
-            clearInterval(intervalId)
-          } else {
-            setMinutes(minutes - 1)
-            setSeconds(59)
-          }
-        }
-      }
-    }, 1000)
-    return () => clearInterval(intervalId)
-  }, [seconds, minutes, record, play, optionSelected])
+    if (playTime == duration) {
+      setIsPlaying(false)
+      audioRecorderPlayer.stopPlayer()
+      audioRecorderPlayer.removePlayBackListener()
+    }
+  }, [playTime, duration])
 
   useEffect(() => {
-    setMsgSelected(state)
-    setMinutes(TimerObj(480-1).minute)
-    setSeconds(TimerObj(480-1).second)
-    fetchDataConsultation(dataState)
+    const delay = setTimeout(() => {
+      FormSendMessage.values['Description'].length > 0 ?
+        setDataState(s => ({
+          ...s, start : false, stop : false,
+          send : true, icons : Images.IconSend })) :
+        setDataState(s => ({
+          ...s, start : true, stop : false,
+          send : false, icons : Images.IconVoiceRecord }))
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [FormSendMessage.values['Description']])
+
+  useEffect(() => {
+    if (intervals) {
+      setLoading(true)
+      fetchDataUserConsultation(dataStates)
+      setIntervals(false)
+    } else {
+      const intervalId = setInterval(() => {
+        fetchDataUserConsultation(dataStates)
+      }, 10000)
+      return () => clearInterval(intervalId)
+    }
+  }, [])
+
+  useEffect(() => {
+    const backAction = () => TrackPlayer.stop()
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+    return () => backHandler.remove()
   }, [])
 
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
         <View style={styles.flexHeader}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Images.ButtonBackBlack.default style={styles.iconBack} />
+          <TouchableOpacity onPress={() => {
+            navigation.goBack()
+            TrackPlayer.stop()
+          }}>
+            <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Avatar
-            onPress={toggleModalFoto}
-            containerStyle={styles.avatarUser}
-            source={Images.ImageProfileDefault}
-            avatarStyle={{ borderRadius : 36 / 2 }}
-          />
-          <Text style={styles.textTitleBold}>{param.User_Name}</Text>
+          <Text style={styles.textTitleWhite}>{param.User_Name}</Text>
         </View>
+        <View style={styles.semiBox} />
       </View>
     )
   }
 
-  const Message = (item, index) => {
-    let icon, iconUser
-    optionSelected.is_play &&
-    optionSelected.id == item.id &&
-    user_login != item.user_code ?
-      (icon = Images.IconPause) :
-      (icon =  Images.IconPlay)
-
-    optionSelected.is_play &&
-    optionSelected.id == item.id &&
-    user_login == item.user_code ?
-      (iconUser =  Images.IconPauseWhite) :
-      (iconUser =  Images.IconPlayVoiceWhite)
-
-    return (
-      <View
-        key={index}
-        style={[styles.containerChat,
-          user_login == item.user_code ?
-            styles.flexEnd : styles.flexStart]}>
-
-        {user_login == item.user_code ? (
-          <View style={styles.containerSoundStart}>
-            <Avatar
-              onPress={toggleModalFoto}
-              containerStyle={styles.avatarStart}
-              source={ Images.ImageProfileDefault}
-              avatarStyle={styles.avatarChatInstructor}
-            />
-            <View>
-              <Text style={[styles.textDesc, styles.textWhite]}>{item.username}</Text>
-              <View style={styles.flexRow}>
-                <TouchableOpacity
-                  onPress={() => handlePlayList(item)}>
-                  <iconUser.default
-                    width={20}
-                    height={20}
-                  />
-                </TouchableOpacity>
-                <Images.GrafisVoiceWhite.default style={styles.horizontal}/>
-                <Text style={[styles.textSoundDuration, styles.textWhite]}>
-                  {optionSelected.is_play && optionSelected.id == item.id ? (
-                    `${minutes}:${seconds < 10 ?
-                      `0${seconds}` : seconds}`
-                  ) : (
-                    TimeConvert(item.voice_duration)
-                  )}
-                </Text>
-              </View>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.containerSoundEnd}>
-            <TouchableOpacity
-              onPress={() => handlePlayList(item)}>
-              <icon.default
-                width={20}
-                height={20}
-              />
-            </TouchableOpacity>
-            <Images.GrafisVoice.default style={styles.horizontal}/>
-            <Text style={styles.textSoundDuration}>
-              {optionSelected.is_play && optionSelected.id == item.id ? (
-                `${minutes}:${seconds < 10 ?
-                  `0${seconds}` : seconds}`
-              ) : (
-                TimeConvert(item.voice_duration)
-              )}
-            </Text>
-            <Avatar
-              onPress={toggleModalFoto}
-              containerStyle={styles.avatarEnd}
-              source={ Images.ImageProfileDefault}
-              avatarStyle={styles.avatarChatInstructor}
-            />
-          </View>
-        )}
-        <View style={styles.containerUserDesc}>
-          <Text style={[styles.textDesc,
-            user_login == item.user_code && (styles.textPurple)]}>
-            Deskripsi
-          </Text>
-          <Text style={[styles.textUserDesc,
-            user_login == item.user_code && (styles.textWhite)]}>
-            {item.message}
-          </Text>
-          <View style={styles.containerTime}>
-            <Text style={[styles.textTime,
-              user_login == item.user_code && (styles.textWhite)]}>
-              {moment(item.created_date).format('h:mm A')}
-            </Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  const VoiceMessage = () => {
+  const VoiceBar = () => {
     let icon
-    play ? (icon = Images.IconPause):(icon =  Images.IconPlay)
-    return message &&(
+    isPlaying ? icon = Images.IconRecordPause :
+      icon = Images.IconRecordPlay
+    return dataState.send && audio != '' &&(
       <View style={styles.containerVoice}>
         <TouchableOpacity
-          onPress={() => handlePlay()}>
+          onPress={handlePlayRecord}>
           <icon.default
-            width={20}
-            height={20}
+            width={23}
+            height={23}
           />
         </TouchableOpacity>
         <Images.GrafisVoice.default style={styles.horizontal}/>
         <Text style={styles.textSoundDuration}>
-          {play ? (
-            `${minutes}:${seconds < 10 ?
-              `0${seconds}` : seconds}`
-          ) : (
-            TimeConvert(FormSendMessage.values['Recording_Duration'])
-          )}
+          {showPlayTimeAndDuration
+            ? playTime
+            : recordTime}
         </Text>
         <TouchableOpacity
           style={styles.cancel}
-          onPress={() => handleCancel()}>
+          onPress={handleReload}>
           <Images.IconCancel.default/>
         </TouchableOpacity>
       </View>
@@ -352,78 +315,55 @@ const InstructorTaskDetail = ({ route }) => {
   }
 
   const Footer = () => {
-    let icons, submit
-    FormSendMessage.values['Description'].length > 0 ? (
-      icons = Images.IconSend,
-      submit = () => FormSendMessage.handleSubmit()) :
-      message ? (icons = Images.IconSend,
-      submit = () => FormSendMessage.handleSubmit()) :
-        record ? (icons = Images.IconChecklist,
-        submit = () => handleRecord()) :
-          (icons = Images.IconVoiceRecord,
-          submit = () => Alert.alert('Tahan untuk rekam'))
-
     return (
-      <ButtonGradient
-        icon={<icons.default/>}
-        styles={styles.containerSend}
-        onPress={submit}
-        onLongPress={() =>  FormSendMessage.values['Description']
-          .length == 0 &&(setRecord(true))}
-      />
+      <View style={styles.containerTextInput}>
+        <TextInput
+          style={styles.textInput}
+          placeholder='Ketik pesan ...'
+          editable={dataState.start || dataState.send}
+          value={FormSendMessage.values['Description']}
+          onChangeText={(e) => onSetInput('Description', e)}>
+          {dataState.stop ? (
+            <Text>
+              {recordTime}
+            </Text>
+          ) : null }
+        </TextInput>
+        <ButtonGradient
+          onPress={onRecord}
+          styles={styles.containerSend}
+          icon={<dataState.icons.default/>}
+        />
+      </View>
     )
   }
 
   return (
     <View style={styles.containerMain}>
-      <Header />
-      <FlatList
-        data={state}
-        style={{ width:'100%' }}
-        showsVerticalScrollIndicator ={false}
-        contentContainerStyle={{ paddingBottom : 50 }}
-        keyExtractor={(item, index) =>  index.toString()}
-        renderItem={({ item, index }) => Message(item, index)}
-      />
-      <VoiceMessage/>
-      <View style={styles.containerTextInput}>
-        {param.Status == 'ongoing' &&(
-          <>
-            <TextInput
-              editable={!record}
-              style={styles.textInput}
-              placeholder='Ketik pesan ...'
-              value={FormSendMessage.values['Description']}
-              onChangeText={(e) => setInput('Description', e)}>
-              {record ? (
-                <Text>
-                  {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-                </Text>
-              ): null}
-            </TextInput>
-            <Footer/>
-          </>
-        )}
-      </View>
+      {Header()}
+      {loading ? <LoadingView/> :
+        state.length != 0 ?
+          <Chat state={state} audios={stateAudio}/> :
+          <View style={{ flex : 1 }}/>
+      }
+      {param.Status == 'Waiting for Response' &&
+        <>
+          {VoiceBar()}
+          {Footer()}
+        </>
+      }
       <ImageView
         isVisible={isModalFotoVisible}
         source={Images.ImageProfileDefault}
         setVisible={() => toggleModalFoto()}
         backButtonPress={() => toggleModalFoto()}
       />
-      <ModalNoConnection
-        isVisible={connectStatus}
-        retry={() => retryConnection()}
-        backdropPress={() => togglemodalNoConnection()}
-        backButtonPress={() => togglemodalNoConnection()}
-      />
     </View>
   )
 }
 
-
 InstructorTaskDetail.propTypes = {
-  route : PropTypes.object,
+  route : PropTypes.object
 }
 
 export default InstructorTaskDetail

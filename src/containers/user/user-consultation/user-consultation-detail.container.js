@@ -11,7 +11,7 @@ import {
   View,
   Platform,
   TextInput,
-  BackHandler,
+  // BackHandler,
   TouchableOpacity,
 } from 'react-native'
 import {
@@ -92,6 +92,8 @@ const ConsultationDetail = ({ route }) => {
         form.resetForm()
         form.setSubmitting(false)
         fetchDataUserConsultation(dataStates)
+        setDataState(s => ({
+          ...s, start : true, send : false, icons : Images.IconVoiceRecord }))
       }
       setLoading(false)
     } catch (err) {
@@ -132,12 +134,8 @@ const ConsultationDetail = ({ route }) => {
     }
   }
 
-  const onSetInput = async (v, e) => {
-    await FormSendMessage.setFieldValue(v, e)
-    await FormSendMessage.values['Description'].length > 0 ?
-      setDataState(s => ({
-        ...s, start : false, stop : false,
-        send : true, icons : Images.IconSend })) : null
+  const onSetInput =  (v, e) => {
+    FormSendMessage.setFieldValue(v, e)
   }
 
   const onStartRecord = async () => {
@@ -212,8 +210,6 @@ const ConsultationDetail = ({ route }) => {
         onStopRecord()
       ) :
         dataState.send && (
-          setDataState(s => ({
-            ...s, start : true, send : false, icons : Images.IconVoiceRecord })),
           FormSendMessage.handleSubmit()
         )
     )
@@ -230,6 +226,7 @@ const ConsultationDetail = ({ route }) => {
   }
 
   const handleReload = () => {
+    console.log('ok')
     setDataState(s => ({
       ...s, start : true, send : false, icons : Images.IconVoiceRecord }))
     setAudio('')
@@ -249,6 +246,19 @@ const ConsultationDetail = ({ route }) => {
   }, [playTime, duration])
 
   useEffect(() => {
+    const delay = setTimeout(() => {
+      FormSendMessage.values['Description'].length > 0 ?
+        setDataState(s => ({
+          ...s, start : false, stop : false,
+          send : true, icons : Images.IconSend })) :
+        setDataState(s => ({
+          ...s, start : true, stop : false,
+          send : false, icons : Images.IconVoiceRecord }))
+    }, 500)
+    return () => clearTimeout(delay)
+  }, [FormSendMessage.values['Description']])
+
+  useEffect(() => {
     if (intervals) {
       setLoading(true)
       fetchDataUserConsultation(dataStates)
@@ -261,14 +271,14 @@ const ConsultationDetail = ({ route }) => {
     }
   }, [])
 
-  useEffect(() => {
-    const backAction = () => TrackPlayer.stop()
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    )
-    return () => backHandler.remove()
-  }, [])
+  // useEffect(() => {
+  //   const backAction = () => TrackPlayer.stop()
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction
+  //   )
+  //   return () => backHandler.remove()
+  // }, [])
 
   const Header = () => {
     return (
