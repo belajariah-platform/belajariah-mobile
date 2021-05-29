@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   semiBox: {
     height: 16,
     width: '100%',
-    marginTop: -16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: Color.softPink,

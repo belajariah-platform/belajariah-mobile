@@ -152,6 +152,19 @@ const Consultation = () => {
     )
   }
 
+  const ContentTemp = () => {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Images.IconComingSoon.default
+          height={148}
+          width={148}
+          style={{ marginTop: '25%', marginBottom: 20 }}/>
+        <Text style={[styles.textHeadline, { marginBottom: 6 }]}>Fitur konsultasi akan segera hadir!</Text>
+        <Text style={styles.textParagraph}>Mohon ditunggu ya</Text>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.containerMain}>
       {isFullscreen ||  <Header />}
@@ -173,14 +186,15 @@ const Consultation = () => {
               onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
               controllerFullscreenStyle={styles.controllerFullscreenStyle}
             /> */}
-            <ScrollView
+            {/* <ScrollView
               showsVerticalScrollIndicator={false}
               style={styles.scrollGuide}>
               <Content />
-            </ScrollView>
+            </ScrollView> */}
+            <ContentTemp />
           </View>
         )}
-      {isFullscreen || (
+      {/* {isFullscreen || (
         <>
           <TouchableOpacity
             style={styles.floatingChat}
@@ -191,7 +205,7 @@ const Consultation = () => {
               height={70}/>
           </TouchableOpacity>
         </>
-      )}
+      )} */}
       <ModalNoConnection
         isVisible={connectStatus}
         retry={() => retryConnection()}

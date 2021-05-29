@@ -30,6 +30,8 @@ import {
 import { UserAPI } from '../../../api'
 import { Images } from '../../../assets'
 import { styles } from './user-register.style'
+import { Config } from '../../../api/config'
+import { Linking } from 'react-native'
 
 const Register = (props) => {
   const [loading, setLoading] = useState(false)
@@ -83,6 +85,28 @@ const Register = (props) => {
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry)
+  }
+
+  const handleOpenWeb = async (type) => {
+    let url
+    switch(type) {
+    case 'termsconditions':
+      url = Config.TERMS_CONDITIONS_URL
+      break
+    case 'privacypolicy':
+      url = Config.PRIVACY_POLICY_URL
+      break
+    default:
+      alert('null')
+    }
+
+    const supported = await Linking.canOpenURL(url)
+
+    if(supported) {
+      await Linking.openURL(url)
+    } else {
+      alert('Maaf, halaman tidak dapat dibuka')
+    }
   }
 
   const renderIcon = props => (
@@ -151,11 +175,11 @@ const Register = (props) => {
               {
                 <Text style={styles.textCheckbox}>
                   Saya menyetujui
-                  <TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={() => handleOpenWeb('privacypolicy')}>
                     <Text style={styles.textCheckBox2}> Kebijakan Pribadi </Text>
                   </TouchableWithoutFeedback>
                   <Text>dan</Text>
-                  <TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={() => handleOpenWeb('termsconditions')}>
                     <Text style={styles.textCheckBox2}> Syarat Ketentuan </Text>
                   </TouchableWithoutFeedback>
                   oleh Tim Belajariah
