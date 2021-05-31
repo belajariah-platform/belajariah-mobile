@@ -30,18 +30,11 @@ const InspiratifStoryDetail = () => {
     const handleSplitString = (value) => {
       const stringSplit = value.split('|')
       return stringSplit.map((val, index) => {
-        if (val.includes('<Img>')) {
-          return (
-            <Image key={index}
-              style={styles.ImgBody}
-              source={Images.SandiagaUnoImg}/>
-          )
-        } else {
-          return (
-            <Text key={index} style={styles.Txtbacaan}>
-              {val}.
-            </Text>
-          )}})
+        return (
+          <Text key={index} style={styles.Txtbacaan}>
+            {val}.
+          </Text>
+        )})
     }
     return  (
       <View style={styles.containerInspiratif}>
@@ -55,8 +48,8 @@ const InspiratifStoryDetail = () => {
         </View>
         <View>
           <Image
-            source={params.Header_Image == '' ?
-              Images.ImgDefault2 : params.Header_Image}
+            source={params.Banner_Image == '' ?
+              Images.ImgDefault2 : { uri : params.Banner_Image }}
             style={styles.ImgHeading}/>
           <TouchableOpacity
             activeOpacity={0.5}

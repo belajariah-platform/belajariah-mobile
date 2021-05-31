@@ -610,8 +610,6 @@ const ClassLearning = (props) => {
                 <LoadingView />
               ) : (
                 <VideoPlayer
-                  posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
-                  videoLink = {sourceVideo.Video || obj.videoTrailerLink}
                   iconPlaySize = {48}
                   iconSkipSize = {32}
                   showSkipButton={true}
@@ -621,9 +619,12 @@ const ClassLearning = (props) => {
                   controllerStyle={styles.controllerStyle}
                   videoFullscreenStyle={styles.videoFullscreenStyle}
                   fullscreenStyle={styles.videoFullscreenContainerStyle}
+                  videoLink = {sourceVideo.Video || obj.videoTrailerLink}
                   onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                   controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                  onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)} />
+                  onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)}
+                  posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
+                />
               )}
               {/* <Text style={{ position : 'absolute', color : Color.white, alignSelf : 'center',  }}>hello</Text> */}
             </View>
@@ -632,7 +633,7 @@ const ClassLearning = (props) => {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.containerParentKelas}>
                 <DescriptionClass/>
-                {item.Class_Initial == 'Tahsin' && (
+                {item.Class_Initial == 'Tahsinn' && (
                   <ConsultationClass/>
                 )}
                 {loading ?

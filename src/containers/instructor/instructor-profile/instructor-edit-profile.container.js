@@ -48,7 +48,8 @@ const InstructorEditProfile = () => {
   const FormPersonal = useFormik({
     initialValues: {
       Full_Name: userInfo.Full_Name,
-      Phone: userInfo.Phone,
+      Phone: userInfo.Phone == 0 ? '' :
+        userInfo.Phone,
       Profesion: userInfo.Profession,
       Gender: userInfo.Gender,
       Birth: userInfo.Birth || new Date(),
@@ -58,6 +59,12 @@ const InstructorEditProfile = () => {
     },
     onSubmit: async (values) => {
       try {
+        values.Phone = values.Phone == '' ? 0 :
+          userInfo.Phone == 0 ?
+            Number('62' + values.Phone) :
+            Number('62' + values.Phone
+              .toString()
+              .substring(2, 20))
         const response = await UserAPI.UpdateProfile(values)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')

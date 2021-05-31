@@ -4,6 +4,7 @@ import { styles } from './textbox.style'
 import { Input, Text } from '@ui-kitten/components'
 
 const Textbox = (props) => {
+  // console.log(props.form.values[props.name])
   return (
     <Input
       value={props.form && props.name && `${props.form.values[props.name]}`}

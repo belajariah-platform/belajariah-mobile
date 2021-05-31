@@ -134,6 +134,7 @@ const InspiratifStory = () => {
   }
 
   const Inspiratif = (item, index) => {
+    console.log(item.Header_Image)
     return(
       <TouchableOpacity
         key={index}
@@ -143,8 +144,8 @@ const InspiratifStory = () => {
         <Card
           containerStyle={styles.cardStyle}>
           <View style={styles.viewStyle}>
-            <Image source={item.Banner_Image == '' ?
-              Images.ImgDefault4  : { uri : item.Banner_Image }}
+            <Image source={item.Header_Image == '' ?
+              Images.ImgDefault4  : { uri : item.Header_Image }}
             style={styles.imageStyle}/>
             <View style={styles.containerDesc}>
               <Text style={styles.textStyle}>{item.Title}</Text>

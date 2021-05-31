@@ -42,6 +42,7 @@ const ClassUser = (props) => {
   const [comment, setComment] = useState('')
   const [dataObj, setDataObj] = useState({})
   const [loading, setLoading] = useState(true)
+  const [intervals, setIntervals] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
@@ -65,6 +66,7 @@ const ClassUser = (props) => {
   }
 
   const retryConnection = () => {
+    setLoading(true)
     fetchDataUserClass(dataState)
     fetchDataClassCategory(dataStateCategory)
     setconnectStatus(!connectStatus)
@@ -72,7 +74,6 @@ const ClassUser = (props) => {
 
   const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
     try {
-      setLoading(true)
       const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
@@ -149,6 +150,7 @@ const ClassUser = (props) => {
     try {
       const response = await UserClassAPI.UpdateProgressUserClass(values)
       if (response.data.result) {
+        setLoading(true)
         await fetchDataUserClass(dataState)
       }
     } catch (err) {
@@ -160,7 +162,16 @@ const ClassUser = (props) => {
   }
 
   useEffect(() => {
-    fetchDataUserClass(dataState)
+    if (intervals) {
+      setLoading(true)
+      fetchDataUserClass(dataState)
+      setIntervals(false)
+    } else {
+      const intervalId = setInterval(() => {
+        fetchDataUserClass(dataState)
+      }, 5000)
+      return () => clearInterval(intervalId)
+    }
   }, [dataState])
 
   useEffect(() => {
@@ -205,6 +216,7 @@ const ClassUser = (props) => {
   }
 
   const onRefreshing = () => {
+    setLoading(true)
     setRefreshing(true)
     fetchDataUserClass(dataState)
     setRefreshing(false)

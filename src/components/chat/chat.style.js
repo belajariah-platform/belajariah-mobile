@@ -289,13 +289,32 @@ const styles = StyleSheet.create({
     height: 44,
     marginRight: 10,
   },
+  avatarUserDeclined: {
+    width: 44,
+    height: 44,
+    opacity : 0.5,
+    marginRight: 10,
+  },
   textUsername: {
     marginBottom : 2,
     color: Color.black,
     fontSize: FontSize.small,
     fontFamily: FontType.bold,
   },
+  textUsernameDeclined: {
+    opacity : 0.5,
+    marginBottom : 2,
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.bold,
+  },
   TxtTimeTitle: {
+    color: Color.black,
+    fontSize: FontSize.overSmall,
+    fontFamily: FontType.regular,
+  },
+  TxtTimeTitleDeclined: {
+    opacity : 0.5,
     color: Color.black,
     fontSize: FontSize.overSmall,
     fontFamily: FontType.regular,
@@ -330,6 +349,12 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
   },
+  descriptionDeclined : {
+    bottom : 5,
+    paddingHorizontal: 17,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
+  },
   containerAccordion: {
     width: '85%',
     marginTop : -7,
@@ -337,6 +362,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   textRegular: {
+    color: Color.black,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
+  },
+  textRegularDeclined: {
     color: Color.black,
     fontFamily: FontType.bold,
     fontSize: FontSize.extraSmall,

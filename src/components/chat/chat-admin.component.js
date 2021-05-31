@@ -36,12 +36,18 @@ import { styles } from './chat.style'
 import { Images, Color } from '../../assets'
 import { TimerSecondToTime } from '../../utils'
 
-const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
+const ChatAdmin = (props) => {
   const flatlistRef = useRef()
   const navigation = useNavigation()
-
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
-  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
+  const {
+    state,
+    audios,
+    loading,
+    onLoadMore,
+    toggleModal,
+    renderFooter,
+    toggleModalRepair,
+  } = props
 
   const [stateMsg] = useState(state)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -50,6 +56,9 @@ const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
   const [optionSelected, setOptionSelected] = useState({})
   const [connectStatus, setconnectStatus] = useState(false)
   const { position, duration } = useTrackPlayerProgress(250)
+
+  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false)
+  const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
   const retryConnection = () => setconnectStatus(!connectStatus)
   const toggleModalFoto = () => setModalFotoVisible(!isModalFotoVisible)
@@ -138,18 +147,33 @@ const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
   }
 
   useEffect(() => {
+    console.log(isPlaying)
     setOptionSelected({})
     onScrollToEnd()
     startPlayer()
   }, [])
 
   const ChatList = (item, index) => {
+    let avatar, text1, text2, text3, text4
+    item.Status == 'Rejected' ? (
+      avatar = styles.avatarUserDeclined,
+      text1 = styles.textUsername,
+      text2 = styles.TxtTimeTitle,
+      text3 = styles.textRegular,
+      text4 = styles.description
+    ) : (
+      avatar = styles.avatarUser,
+      text1 = styles.text1,
+      text2 = styles.TxtTimeTitleDeclined,
+      text3 = styles.textRegularDeclined,
+      text4 = styles.descriptionDeclined
+    )
     return (
       <View key={index}>
         <Card containerStyle={styles.cardUser}>
           <View style={styles.ViewInstructorInfo}>
             <Image
-              style={styles.avatarUser}
+              style={avatar}
               source={item.User_Image == '' ?
                 Images.ImageProfileDefault  : { uri :item.User_Image }}
             />
@@ -157,8 +181,8 @@ const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
               activeOpacity={0.5}
               onPress={()=> navigation.navigate('AdminProfileAll', item)}
             >
-              <Text style={styles.textUsername}>{item.User_Name}</Text>
-              <Text style={styles.TxtTimeTitle}>
+              <Text style={text1}>{item.User_Name}</Text>
+              <Text style={text2}>
                 {moment(item.Created_Date).format('h:mm A')} ({moment(item.Created_Date).format('L')})
               </Text>
             </TouchableOpacity>
@@ -209,30 +233,39 @@ const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
           <List.Section>
             <List.Accordion
               title='Deskripsi konsultasi'
-              titleStyle={styles.textRegular}
+              titleStyle={text3}
               style={styles.containerAccordion}>
               <View>
-                <Text style={styles.description}>
+                <Text style={text4}>
                   {item.Description}
                 </Text>
               </View>
             </List.Accordion>
           </List.Section>
-          <View style={styles.ViewButtonActionVoice}>
-            <ButtonGradient
-              title='Tolak'
-              styles={styles.ButtonAction}
-              // disabled={loadingBtn ? true : false}
-              colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
-              onPress={() => confirm('Rejected', item)}
-            />
-            <ButtonGradient
-              title='Terima'
-              styles={styles.ButtonAction}
-              // disabled={loadingBtn ? true : false}
-              onPress={() => confirm('Approved', item)}
-            />
-          </View>
+          {item.Status == 'Waiting Approved' &&(
+            <View style={styles.ViewButtonActionVoice}>
+              <ButtonGradient
+                title='Tolak'
+                styles={styles.ButtonAction}
+                disabled={loading ? true : false}
+                colors={['#d73c2c', '#ff6c5c', '#d73c2c']}
+                onPress={() => toggleModal('Rejected', item)}
+              />
+              <ButtonGradient
+                title='Terima'
+                styles={styles.ButtonAction}
+                disabled={loading ? true : false}
+                onPress={() => toggleModal('Approved', item)}
+              />
+              <ButtonGradient
+                title='Perbaiki'
+                styles={styles.ButtonAction}
+                disabled={loading ? true : false}
+                colors={['#0bb091', '#16c4a4', '#0bb091']}
+                onPress={() => toggleModalRepair('Revised', item)}
+              />
+            </View>
+          )}
         </Card>
       </View>
     )
@@ -273,10 +306,13 @@ const ChatAdmin = ({ state, audios, confirm, renderFooter, onLoadMore }) => {
 
 ChatAdmin.propTypes = {
   state : PropTypes.array,
+  loading : PropTypes.bool,
   audios : PropTypes.array,
   confirm : PropTypes.func,
   onLoadMore : PropTypes.func,
+  toggleModal : PropTypes.func,
   renderFooter : PropTypes.func,
+  toggleModalRepair : PropTypes.func,
 
 }
 
