@@ -25,16 +25,16 @@ const  Cards = (props)  => {
               Images.ImageProfileDefault : { uri : props.item.Instructor_Image }}
           />
           <View style={styles.bioView}>
-            <Text style={styles.text2}>Ustadz Maulana Achmad</Text>
+            <Text style={styles.text2}>{props.item.Instructor_Name}</Text>
             <Text style={styles.text3}>Pengajar Tahsin</Text>
           </View>
         </View>
         <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
-          <Text style={styles.text4}>Rp.600.000 - Rp.1.500.000</Text>
+          <Text style={styles.text4}>Rp.600.000 - Rp.1.900.000</Text>
         </View>
-        <Text style={styles.text5}>Rp.600.000 - Rp.1.500.000</Text>
+        <Text style={styles.text5}>Rp.399.000 - Rp.1.499.000</Text>
       </View>
     </View>
   )

@@ -71,9 +71,8 @@ const ClassLearning = (props) => {
   })
 
   const obj = {
-    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4',
-    posterLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
-    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png',
+    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/Belajar%20Al-Qur\'an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20!%20Di%20Belajariah%20!.mp4',
+    posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/cover%20thriller%20apps.png',
   }
 
   const toggleExpand = (index) => {
@@ -161,15 +160,13 @@ const ClassLearning = (props) => {
 
   const handleRating = (num) => {
     let rating = []
-    const numRound = Math.round(num)
-    for (let index = 1; index <= numRound; index++) {
-      num - index == 0
+    for (let index = 1; index <= 5; index++) {
+      num - index >= 0
         ? rating.push(<Images.StarFullClass.default
           style={styles.star}/>)
-        : num - index < 0
+        : num - index < 0 && num - index > -1
           ? rating.push(<Images.StarHalfClass.default/>)
-          : rating.push(<Images.StarFullClass.default
-            style={styles.star} />)
+          : rating.push(<Images.StarEmptyClass.default/>)
     }
     return (
       <View style={{ flexDirection: 'row' }}>
@@ -227,7 +224,7 @@ const ClassLearning = (props) => {
     }
     setTimeout(() => {
       setLoadingVideo(false)
-    }, 1000)
+    }, 1500)
   }
 
   const handleUnlockVideo = (index, subIndex) => {
@@ -623,7 +620,7 @@ const ClassLearning = (props) => {
                   onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                   controllerFullscreenStyle={styles.controllerFullscreenStyle}
                   onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)}
-                  posterLink = {detail.Pre_Test_Total > 0 ? obj.posterLink : obj.posterTrailerLink}
+                  posterLink = {sourceVideo.Poster || obj.posterTrailerLink}
                 />
               )}
               {/* <Text style={{ position : 'absolute', color : Color.white, alignSelf : 'center',  }}>hello</Text> */}
