@@ -164,7 +164,7 @@ const ClassLearning = (props) => {
     const numRound = Math.round(num)
     for (let index = 1; index <= numRound; index++) {
       num - index == 0
-        ? rating.push(<Images.Star.default
+        ? rating.push(<Images.StarFullClass.default
           style={styles.star}/>)
         : num - index < 0
           ? rating.push(<Images.StarHalfClass.default/>)
@@ -650,13 +650,15 @@ const ClassLearning = (props) => {
         renderItem={ <ChecklistClass /> }
         containerStyle={{ height : '92%' }}
       />
-      <ModalRecord
-        data={record}
-        user={detail}
-        isVisible={modalRecordVisible}
-        backdropPress={() => toggleModalRecord()}
-        backButtonPress={() => toggleModalRecord()}
-      />
+      {modalRecordVisible && (
+        <ModalRecord
+          data={record}
+          user={detail}
+          isVisible={modalRecordVisible}
+          backdropPress={() => toggleModalRecord()}
+          backButtonPress={() => toggleModalRecord()}
+        />
+      )}
     </>
   )
 }

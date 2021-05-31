@@ -154,7 +154,7 @@ const TransactionMethod = (props) => {
     const numRound = Math.round(num)
     for (let index = 1; index <= numRound; index++) {
       num - index == 0
-        ? rating.push(<Images.Star.default />)
+        ? rating.push(<Images.StarBlack.default />)
         : num - index < 0
           ? rating.push(<Images.StarHalfBlack.default />)
           : rating.push(<Images.StarBlack.default />)

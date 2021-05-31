@@ -50,7 +50,10 @@ const styles = StyleSheet.create({
   semiBox: {
     height: 16,
     width: '100%',
+<<<<<<< HEAD
     marginTop: -6,
+=======
+>>>>>>> e652262f76b24b16c169e35c497482a4872f2760
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: Color.softPink,
@@ -346,7 +349,7 @@ const styles = StyleSheet.create({
     width : 280,
     marginBottom : 10,
   },
-  scrollGuide : { marginBottom : '10%' },
+  scrollGuide : { marginTop: '2%', marginBottom : '10%' },
   cancel : { marginLeft : '20%' },
   textPurple : { color : '#58006f' },
   textWhite : { color : Color.white },

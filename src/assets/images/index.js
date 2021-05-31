@@ -272,6 +272,7 @@ export default {
 
   //Guide
   FloatingBtn : require('./floating Button.svg'),
+  IconComingSoon: require('./IconComingSoon.svg'),
   IconPendingWhite: require('./IconPendingWhite.svg'),
   IconCompleteWhite: require('./IconCompleteWhite.svg'),
 }
