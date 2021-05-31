@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     fontSize : FontSize.smallMedium,
   },
   phoneOne : { width : '29%', marginRight : '2%' },
-  phoneTwo : { width : '69%' }
+  phoneTwo : { width : '100%' }
 })
 
 export { styles }

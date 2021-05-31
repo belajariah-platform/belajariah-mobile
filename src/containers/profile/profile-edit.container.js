@@ -64,9 +64,7 @@ const ProfileEdit = () => {
       Full_Name: userInfo.Full_Name,
       Profession: userInfo.Profession,
       Phone: userInfo.Phone == 0 ? '' :
-        Number(userInfo.Phone
-          .toString()
-          .substring(2, 20)),
+        userInfo.Phone,
       Gender: userInfo.Gender,
       Birth: userInfo.Birth || new Date(),
       Province: userInfo.Province,
@@ -75,7 +73,6 @@ const ProfileEdit = () => {
     },
     onSubmit: async (values) => {
       try {
-        console.log('yes', values.Phone)
         values.Phone = values.Phone == '' ? 0 :
           userInfo.Phone == 0 ?
             Number('62' + values.Phone) :
@@ -83,7 +80,6 @@ const ProfileEdit = () => {
               .toString()
               .substring(2, 20))
         const response = await UserAPI.UpdateProfile(values)
-        console.log('hello', values.Phone)
         if (response.data.result) {
           Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
@@ -326,9 +322,9 @@ const ProfileEdit = () => {
                 <View style={styles.containerAvatar}>
                   <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
                     <Avatar
-                      activeOpacity={0.5}
-                      onPress={() =>  setModalVisible(true)}
+                      activeOpacity={1}
                       style={styles.avatar}
+                      onPress={() =>  setModalVisible(false)}
                       source={userInfo.Image_Filename == '' ?
                         Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
                     />
@@ -358,12 +354,6 @@ const ProfileEdit = () => {
                   />
                   <Text style={styles.containerText}>Nomor Telepon</Text>
                   <View style={{ flexDirection : 'row' }}>
-                    <TextBox
-                      disabled
-                      placeholder='+62'
-                      keyboardType='phone-pad'
-                      customStyle={styles.phoneOne}
-                    />
                     <TextBox
                       name='Phone'
                       form={FormPersonal}
