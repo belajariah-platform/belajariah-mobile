@@ -115,7 +115,7 @@ const VideoPlayer = (props) => {
 
     return () => {
       Orientation.removeOrientationListener(handleOrientation)
-      BackHandler.removeEventListener('hardwareBackPress', handleBackButton)
+      BackHandler.removeEventListener(handleBackButton)
     }
   }, [handleBackButton])
 
