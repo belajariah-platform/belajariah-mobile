@@ -151,13 +151,12 @@ const TransactionMethod = (props) => {
 
   const handleRating = (num) => {
     let rating = []
-    const numRound = Math.round(num)
-    for (let index = 1; index <= numRound; index++) {
-      num - index == 0
+    for (let index = 1; index <= 5; index++) {
+      num - index >= 0
         ? rating.push(<Images.StarBlack.default />)
-        : num - index < 0
+        : num - index < 0 && num - index > -1
           ? rating.push(<Images.StarHalfBlack.default />)
-          : rating.push(<Images.StarBlack.default />)
+          : rating.push(<Images.StarEmptyBlack.default />)
     }
     return (
       <View style={styles.flexRating}>
@@ -223,58 +222,66 @@ const TransactionMethod = (props) => {
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
 
-          <View style={styles.cardMethods}>
-            <Text style={styles.textBold}>E-Wallet</Text>
-            <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
-            <View style={styles.flexRow}>
+          {state.some((item) => item.Type == 'e-wallet') && (
+            <View style={styles.cardMethods}>
+              <Text style={styles.textBold}>E-Wallet</Text>
+              <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
+              <View style={styles.flexRow}>
+                {state.map((item, index) => {
+                  return item.Type == 'e_wallet' &&  (
+                    <View key={index} style={{ flexDirection : 'row' }}>
+                      <RadioButton key={index} value={item.Code} />
+                      <Text style={[styles.textGateway,
+                        { textTransform: 'uppercase' }]}>
+                        {item.Value}
+                      </Text>
+                    </View>
+                  )})}
+              </View>
+            </View>
+          )}
+
+          {state.some(item => item.Type == 'bank_transfer') && (
+            <View style={styles.cardMethods}>
+              <Text style={styles.textBold}>Transfer Virtual Account</Text>
+              <Text style={styles.textRegular}>Transfer pembayaran anda dengan mudah dan cepat</Text>
               {state.map((item, index) => {
-                return item.Type == 'e_wallet' &&  (
-                  <View key={index} style={{ flexDirection : 'row' }}>
-                    <RadioButton key={index} value={item.Code} />
-                    <Text style={[styles.textGateway,
-                      { textTransform: 'uppercase' }]}>
-                      {item.Value}
-                    </Text>
+                return item.Type == 'bank_transfer' &&  (
+                  <View key={index} style={styles.flexRow}>
+                    <RadioButton value={item.Code}/>
+                    <Text style={styles.textGateway}>{item.Value}</Text>
                   </View>
                 )})}
             </View>
-          </View>
+          )}
 
-          <View style={styles.cardMethods}>
-            <Text style={styles.textBold}>Transfer Virtual Account</Text>
-            <Text style={styles.textRegular}>Transfer pembayaran anda dengan mudah dan cepat</Text>
-            {state.map((item, index) => {
-              return item.Type == 'bank_transfer' &&  (
-                <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.Code}/>
-                  <Text style={styles.textGateway}>{item.Value}</Text>
-                </View>
-              )})}
-          </View>
+          {state.some(item => item.Type == 'cstore') && (
+            <View style={styles.cardMethods}>
+              <Text style={styles.textBold}>Minimarket</Text>
+              <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
+              {state.map((item, index) => {
+                return item.Type == 'cstore' &&  (
+                  <View key={index} style={styles.flexRow}>
+                    <RadioButton value={item.Code} />
+                    <Text style={styles.textGateway}>{item.Value}</Text>
+                  </View>
+                )})}
+            </View>
+          )}
 
-          <View style={styles.cardMethods}>
-            <Text style={styles.textBold}>Minimarket</Text>
-            <Text style={styles.textRegular}>Selesaikan pembayaran anda melalui minimarket terdekat</Text>
-            {state.map((item, index) => {
-              return item.Type == 'cstore' &&  (
-                <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.Code} />
-                  <Text style={styles.textGateway}>{item.Value}</Text>
-                </View>
-              )})}
-          </View>
-
-          <View style={[styles.cardMethods, styles.cardMethodCustom]}>
-            <Text style={styles.textBold}>Transfer ke Rekening Bank</Text>
-            <Text style={styles.textRegular}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
-            {state.map((item, index) => {
-              return item.Type == 'manual_transfer' &&  (
-                <View key={index} style={styles.flexRow}>
-                  <RadioButton value={item.Code} />
-                  <Text style={styles.textGateway}>{item.Value}</Text>
-                </View>
-              )})}
-          </View>
+          {state.some(item => item.Type == 'manual_transfer') && (
+            <View style={[styles.cardMethods, styles.cardMethodCustom]}>
+              <Text style={styles.textBold}>Transfer ke Rekening Bank</Text>
+              <Text style={styles.textRegular}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
+              {state.map((item, index) => {
+                return item.Type == 'manual_transfer' &&  (
+                  <View key={index} style={styles.flexRow}>
+                    <RadioButton value={item.Code} />
+                    <Text style={styles.textGateway}>{item.Value}</Text>
+                  </View>
+                )})}
+            </View>
+          )}
 
         </View>
       </RadioButton.Group>

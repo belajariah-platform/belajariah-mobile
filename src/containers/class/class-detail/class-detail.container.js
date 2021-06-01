@@ -52,8 +52,8 @@ const ClassDetail = (props) => {
         iconSkipSize = {40}
         showBackButton = {true}
         videoStyle={styles.videoStyle}
-        videoLink={'https://www.belajariah.com/video_pembelajaran/TrailerMini.mp4'}
-        posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/banner-rvideos%282%29.png'}
+        videoLink={'https://www.belajariah.com/video_pembelajaran/Belajar%20Al-Qur\'an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20!%20Di%20Belajariah%20!.mp4'}
+        posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/cover%20thriller%20apps.png'}
         style={styles.videoContainerStyle}
         controllerStyle={styles.controllerStyle}
         videoFullscreenStyle={styles.videoFullscreenStyle}

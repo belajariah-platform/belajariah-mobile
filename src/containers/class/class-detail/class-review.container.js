@@ -61,13 +61,12 @@ const ClassReview = ({ params }) => {
 
   const handleRating = (num) => {
     let rating = []
-    const numRound = Math.round(num)
-    for (let index = 1; index <= numRound; index++) {
-      num - index == 0
+    for (let index = 1; index <= 5; index++) {
+      num - index >= 0
         ? rating.push(<Images.Star.default />)
-        : num - index < 0
+        : num - index < 0 && num - index > -1
           ? rating.push(<Images.StarHalf.default />)
-          : rating.push(<Images.Star.default />)
+          : rating.push(<Images.StarEmpty.default />)
     }
     return (
       <View style={styles.flexRating}>
