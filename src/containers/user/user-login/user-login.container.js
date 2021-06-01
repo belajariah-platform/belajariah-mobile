@@ -178,12 +178,10 @@ const Login = (props) => {
                 <Text style={styles.backToRegister}> Daftar</Text>
               </TouchableOpacity>
             </View>
-            <View>
+            {/* <View>
               <Text style={styles.anotherText}>Atau</Text>
-            </View>
-            <View>
-            </View>
-            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+            </View> */}
+            {/* <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 style={styles.anotherLogin}
                 activeOpacity={0.6}
@@ -197,7 +195,7 @@ const Login = (props) => {
                   <Text style={styles.TxtGoogleButton}>Sign in with Google</Text>
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>
