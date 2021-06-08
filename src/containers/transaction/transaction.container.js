@@ -61,6 +61,7 @@ const Transaction = () => {
       const response = await PaymentAPI.GetAllPaymentByUserID(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
+        console.log(state)
         setCount(response.data.count)
       } else {
         NetInfo.fetch().then(res => {
@@ -206,7 +207,7 @@ const Transaction = () => {
       ribbon = Images.RibbonFailed
       break
     case 'WaitingForPayment':
-      status = item.Payment_Type.split('|')[2]
+      status = item.Status_Payment == 'Waiting for Payment' ? 'Menunggu Upload Bukti' : 'Sedang Diverifikasi'
       color = Color.textPending
       icon = Images.IconPending
       ribbon = Images.RibbonPending

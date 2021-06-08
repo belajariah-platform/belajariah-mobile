@@ -1,3 +1,4 @@
 import ClassDetail from './class-detail.container'
+import ClassTrial from './class-trial.container'
 
-export default ClassDetail
+export { ClassTrial, ClassDetail }

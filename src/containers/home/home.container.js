@@ -307,7 +307,7 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          console.log(item)
+          // console.log(item)
           return (
             <TouchableOpacity
               key={index}

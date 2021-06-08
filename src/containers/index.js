@@ -29,7 +29,7 @@ import {
 } from './instructor'
 
 import { InspiratifStory, InspiratifStoryDetail } from './story'
-import { ClassUser, ClassLearning, ClassDetail, ClassExam } from './class'
+import { ClassUser, ClassLearning, ClassDetail, ClassExam, ClassTrial } from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
 import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
 
@@ -47,6 +47,7 @@ export {
   AdminUser,
   ContactUs,
   ClassUser,
+  ClassTrial,
   HomeSearch,
   CheckEmail,
   UserVerify,

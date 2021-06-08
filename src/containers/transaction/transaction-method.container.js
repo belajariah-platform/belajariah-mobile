@@ -296,7 +296,7 @@ const TransactionMethod = (props) => {
           <Text style={styles.textPrice}>Rp {FormatRupiah(FormCheckout.values['Total_Transfer'])}</Text>
         </View>
         <ButtonGradient
-          title='Checkout Now'
+          title='Bayar Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
           disabled={loadingBtn ? true : false}

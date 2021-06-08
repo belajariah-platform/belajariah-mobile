@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white,
   },
   containerItem: {
-    paddingVertical: 2,
     marginLeft: 5,
+    paddingVertical: 2,
     borderBottomWidth: 1,
     paddingHorizontal: 4,
     borderColor: Color.lightGrey,
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
   },
   textRegularParaf: {
     lineHeight : 15,
-    color: Color.black,
     marginBottom : 10,
+    color: Color.black,
     flexDirection:'row',
     textAlign: 'justify',
     fontFamily: FontType.regular,
@@ -99,14 +99,24 @@ const styles = StyleSheet.create({
   textBoldCustom: {
     marginBottom: 7,
     textAlign: 'left',
-    alignSelf : 'center',
     color: Color.black,
+    alignSelf : 'center',
     fontFamily: FontType.bold,
     fontSize: FontSize.extraSmall,
   },
   textBoldRed: {
     color: Color.textRed,
     fontFamily: FontType.bold,
+    fontSize: FontSize.extraSmall,
+  },
+  textFree: {
+    marginLeft: 8,
+    borderRadius: 12,
+    color: Color.white,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    fontFamily: FontType.bold,
+    backgroundColor: Color.red,
     fontSize: FontSize.extraSmall,
   },
   iconVideo: {

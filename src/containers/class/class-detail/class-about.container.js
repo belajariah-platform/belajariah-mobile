@@ -19,8 +19,11 @@ import { LearningAPI } from '../../../api'
 import { TimeConvertToHour } from '../../../utils'
 
 import styles from './class-about.style'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/core'
 
-const ClassAbout = ({ params }) => {
+const ClassAbout = ({ params, packages }) => {
+  const navigation = useNavigation()
   const [state, setState] = useState([])
   const [showMore, setShowMore] = useState(true)
   const [numberOfLines, setNumberOfLines] = useState(3)
@@ -132,6 +135,17 @@ const ClassAbout = ({ params }) => {
   }
 
   const Topics = () => {
+    // const TextFree = ({ index }) => {
+    //   return (
+    //     index == 0 && (
+    //       <Text style={styles.textFree}>Gratis</Text>
+    //     )
+    //   )
+    // }
+    // TextFree.propTypes = {
+    //   index : PropTypes.number,
+    // }
+
     return (
       <Card containerStyle={styles.containerTopics}>
         <View style={styles.containerTopicsTitle}>
@@ -149,10 +163,23 @@ const ClassAbout = ({ params }) => {
           {state.map((topic, index) => {
             return (
               <List.Accordion key={index} title={topic.Title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                {topic.SubTitles.map((item, index) => {
-                  const no = index + 1
+                {topic.SubTitles.map((item, subindex) => {
+                  const no = subindex + 1
                   const name = no + '. ' + item.Sub_Title
-                  return <List.Item key={index} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
+                  // return (
+                  //   index == 0 ? (
+                  //     <TouchableOpacity
+                  //       key={subindex}
+                  //       onPress={() =>
+                  //         navigation.navigate('ClassTrial', { item : item, classes : params, packages : packages })
+                  //       }>
+                  //       <List.Item title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
+                  //     </TouchableOpacity>
+                  //   ) : (
+                  //     <List.Item key={subindex} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
+                  //   )
+                  // )
+                  return <List.Item key={subindex} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
                 })}
               </List.Accordion>
             )
@@ -220,6 +247,7 @@ const ClassAbout = ({ params }) => {
 
 ClassAbout.propTypes = {
   params : PropTypes.object,
+  packages : PropTypes.object,
 }
 
 export default ClassAbout

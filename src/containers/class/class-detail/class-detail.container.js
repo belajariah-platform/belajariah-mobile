@@ -52,7 +52,7 @@ const ClassDetail = (props) => {
         iconSkipSize = {40}
         showBackButton = {true}
         videoStyle={styles.videoStyle}
-        videoLink={'https://www.belajariah.com/video_pembelajaran/Belajar%20Al-Qur\'an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20!%20Di%20Belajariah%20!.mp4'}
+        videoLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Belajar%20Al-Qur%27an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20%21%20Di%20Belajariah%20%21.mp4'}
         posterLink={'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/cover%20thriller%20apps.png'}
         style={styles.videoContainerStyle}
         controllerStyle={styles.controllerStyle}
@@ -77,7 +77,7 @@ const ClassDetail = (props) => {
         <Tab.Screen
           name='ClassAbout'
           options={{ title: 'Tentang Kelas' }}>
-          {() => <ClassAbout params={classes}/>}
+          {() => <ClassAbout params={classes} packages={packages}/>}
         </Tab.Screen>
 
         <Tab.Screen

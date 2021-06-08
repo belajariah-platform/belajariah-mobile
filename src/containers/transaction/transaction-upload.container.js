@@ -27,6 +27,7 @@ import { PaymentAPI } from '../../api'
 import { FormatRupiah } from '../../utils'
 
 import styles from './transaction-upload.style'
+import { Linking } from 'react-native'
 
 const TransactionUpload = (props) => {
   const item = props.route.params
@@ -35,6 +36,7 @@ const TransactionUpload = (props) => {
   const [dataImage, setDataImage] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
+  const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29'
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
@@ -68,7 +70,14 @@ const TransactionUpload = (props) => {
       setLoading(true)
       const response = await PaymentAPI.UploadPayment(values)
       if (response.data.result) {
-        toggleModal()
+        // toggleModal()
+        const supported = await Linking.canOpenURL(url)
+
+        if(supported) {
+          await Linking.openURL(url)
+        } else {
+          alert('')
+        }
       }
       setLoading(false)
     } catch (error) {
@@ -92,6 +101,14 @@ const TransactionUpload = (props) => {
           <Text style={styles.textTitleWhite}>Konfirmasi</Text>
         </View>
         <View style={styles.semiBox} />
+      </View>
+    )
+  }
+
+  const Notice = () => {
+    return (
+      <View style={{ marginBottom: 16, backgroundColor: 'white', borderRadius: 20, padding: 20 }}>
+        <Text style={{ textAlign: 'center', fontSize: 24, color: '#6e248b', fontWeight: '700' }}>Harap kirim bukti pembayaran anda melalui Whatsapp Admin Belajariah :)</Text>
       </View>
     )
   }
@@ -138,7 +155,7 @@ const TransactionUpload = (props) => {
     return (
       <View style={styles.viewButtonFinish}>
         <ButtonGradient
-          title='Kirim'
+          title='Kirim Bukti Bayar'
           styles={styles.buttonStyle}
           textStyle={styles.textBuyClass}
           onPress={FormUpload.handleSubmit}
@@ -224,7 +241,8 @@ const TransactionUpload = (props) => {
         <ScrollView
           style={styles.containerScrollView}
           showsVerticalScrollIndicator={false}>
-          <ButtonUpload />
+          {/* <ButtonUpload /> */}
+          <Notice />
           <View style={styles.cardDetail}>
             <Text style={styles.textTitle}>Nama pengirim di rekening Bank</Text>
             <TextBox
