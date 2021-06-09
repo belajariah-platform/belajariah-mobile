@@ -71,7 +71,7 @@ const ClassLearning = (props) => {
   })
 
   const obj = {
-    videoTrailerLink : 'https://www.belajariah.com/video_pembelajaran/Belajar%20Al-Qur\'an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20!%20Di%20Belajariah%20!.mp4',
+    videoTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Belajar%20Al-Qur%27an%20dari%20dasar%20dengan%20MUDAH%20dan%20MENYENANGKAN%20%21%20Di%20Belajariah%20%21.mp4',
     posterTrailerLink : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Master-Image/cover%20thriller%20apps.png',
   }
 
@@ -199,28 +199,29 @@ const ClassLearning = (props) => {
 
   const handlePlayVideo = (index, subIndex, topic, subtopic) => {
     setLoadingVideo(true)
-    setSourceVideo(subtopic)
     if(detail.Pre_Test_Total > 0) {
       setProgress(s => ({
         ...s,
-        subtitleCode : topic.Code,
-        isExercise : topic.Is_Exercise,
+        subtitleCode : subtopic.Code,
+        isExercise : subtopic.Is_Exercise,
       }))
       if(index > detail.Progress_Index) {
-        Alert.alert('Materi belum dibuka, silahkan tonton materi pada topik sebelumnya dulu ya')
+        Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
       } else if(index < detail.Progress_Index) {
+        setSourceVideo(subtopic)
         setProgress(s => ({ ...s, playIndex : index }))
         setProgress(s => ({ ...s, playSubIndex : subIndex }))
       } else {
         if(subIndex > detail.Progress_Subindex) {
           Alert.alert('Materi belum dibuka, silahkan tonton materi sebelumnya dulu ya')
         } else {
+          setSourceVideo(subtopic)
           setProgress(s => ({ ...s, playIndex : index }))
           setProgress(s => ({ ...s, playSubIndex : subIndex }))
         }
       }
     } else {
-      Alert.alert('Silahkan kerjakan pre-exam terlebih dahulu')
+      Alert.alert('Silahkan kerjakan Ujian Awal terlebih dahulu')
     }
     setTimeout(() => {
       setLoadingVideo(false)
@@ -259,16 +260,10 @@ const ClassLearning = (props) => {
     }
   }
 
-  const handleVideoEnd = (index, subIndex) => {
-    detail.Is_Expired ? (
-      (index == detail.Progress_Index && subIndex == detail.Progress_Subindex) && (
-        Alert.alert('Jika ingin membuka kelas selanjutnya, harap lakukan perpanjangan kelas ya')
-      )
-    ) : progress.isExercise ?   (
-      states[index].SubTitles[subIndex].Is_Done || (
-        setShowTask(true),
-        handleModalChecklist(sourceVideo.Code)
-      )
+  const handleVideoEnd = () => {
+    progress.isExercise ?   (
+      setShowTask(true),
+      handleModalChecklist(sourceVideo.Code)
     ) : (
       handleUnlockVideo(detail.Progress_Index, detail.Progress_Subindex)
     )
@@ -367,7 +362,7 @@ const ClassLearning = (props) => {
             activeOpacity={0.5}
             onPress={()=> {
               if(detail.Pre_Test_Total >= 2) {
-                Alert.alert('Pre-exam hanya dapat dilakukan maksimal 2 kali')
+                Alert.alert('Ujian Awal hanya dapat dilakukan maksimal 2 kali')
               } else {
                 navigation.navigate('ClassExam',  { item : item, type : 'Pre-Test' })
               }
@@ -507,7 +502,6 @@ const ClassLearning = (props) => {
         toggleModalChecklist()
         checkCount == stateExc.length && (
           setShowTask(false),
-          item.Is_Done = true,
           handleUnlockVideo(detail.Progress_Index, detail.Progress_Subindex)
         )
       } else {
@@ -619,7 +613,7 @@ const ClassLearning = (props) => {
                   videoLink = {sourceVideo.Video || obj.videoTrailerLink}
                   onFullScreenPress={() => setIsFullscreen(!isFullscreen)}
                   controllerFullscreenStyle={styles.controllerFullscreenStyle}
-                  onVideoEnd = { () => handleVideoEnd(progress.playIndex, progress.playSubIndex)}
+                  onVideoEnd = {handleVideoEnd}
                   posterLink = {sourceVideo.Poster || obj.posterTrailerLink}
                 />
               )}

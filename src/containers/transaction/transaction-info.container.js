@@ -19,6 +19,7 @@ import { FormatRupiah } from '../../utils'
 import { ButtonGradient } from '../../components'
 
 import styles from './transaction-info.style'
+import { Image } from 'react-native'
 
 const TransactionInfo = (props) => {
   const navigation = useNavigation()
@@ -28,7 +29,7 @@ const TransactionInfo = (props) => {
     firstNote: 'Dicek dalam 24 jam setelah bukti pembayaran telah diupload. diwajibkan untuk membayar sesuai total pembayaran (termasuk kode unik) sebelum batas waktu berakhir yang telah ditentukan.',
     secondNote: 'Gunakan ATM / iBanking / mBanking setor tunai untuk transfer ke rekening di bawah :',
     thirdNote: 'Silahkan upload bukti transfer sebelum ',
-    fourthNote: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun',
+    fourthNote: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun, kecuali Contact Person Belajariah',
   }
 
   // const descriptions = {
@@ -173,22 +174,19 @@ const TransactionInfo = (props) => {
   }
 
   const PaymentMethod = () => {
-    let icon, title
-    item.Payment_Method == 'Ovo' ? (icon = Images.LogoOVO, title = 'No. Rekening') :
-      item.Payment_Method == 'Go-pay' ? (icon = Images.LogoGopay, title = 'No. Rekening') :
-        item.Payment_Method == 'BSI' ? (icon = Images.LogoBankBSI, title = 'No. Rekening') :
-          item.Payment_Method == 'BCA' ? (icon = Images.LogoBankBCA, title = 'No. Virtual Account') :
-            item.Payment_Method == 'BRI' ? (icon = Images.LogoBankBRI, title = 'No. Virtual Account') :
-              item.Payment_Method == 'Mandiri' ? (icon = Images.LogoBankMandiri, title = 'No. Virtual Account') :
-                item.Payment_Method == 'Indomaret' ? (icon = Images.LogoIndomaret, title = 'Kode Pembayaran') :
-                  item.Payment_Method == 'Alfamart' ? (icon = Images.LogoAlfamart, title = 'Kode Pembayaran') :
-                    (icon = Images.LogoBankBSI, title = 'No. Rekening')
+    console.log(item)
+    let title
+    item.Payment_Method_Type == 'cstore' ? title = 'Kode Pembayaran' :
+      item.Payment_Method_Type == 'e_wallet' ? title = 'Kode Pembayaran' :
+        item.Payment_Method_Type == 'manual_transfer' ? title = 'No. Rekening' :
+          item.Payment_Method_Type == 'bank_transfer' ? title = 'No. Virtual Account' :
+            title = 'No. Rekening'
 
     return (
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View style={styles.viewIconBank}>
-            <icon.default width={50} height={35}/>
+            <Image source={{ uri : item.Payment_Method_Image }} style={{ resizeMode: 'contain', width: 96, height: 40 }} />
           </View>
           <View style={styles.viewDetailBank}>
             <View>
@@ -204,7 +202,10 @@ const TransactionInfo = (props) => {
           <View style={styles.viewMethod}>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>2</Text>
-              <Text style={styles.textSmall}>{classData.thirdNote}<Text style={styles.textSmall}>{moment(item.Expired_Date).format('dddd, DD MMMM YYYY')}</Text></Text>
+              <View>
+                <Text style={styles.textSmall}>{classData.thirdNote}</Text>
+                <Text style={styles.textSmall}>{moment(item.Expired_Date).format('dddd, DD MMMM YYYY HH:mm')}</Text>
+              </View>
             </View>
             <View style={styles.viewNoteTwo}>
               <Text style={styles.txtViewNoteOne}>3</Text>

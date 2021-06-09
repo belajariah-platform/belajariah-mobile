@@ -6,6 +6,7 @@ import {
   ClassExam,
   HomeSearch,
   UserVerify,
+  ClassTrial,
   ClassDetail,
   ProfileEdit,
   Consultation,
@@ -35,14 +36,15 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='UserMain' component={UserMain} />
       <Stack.Screen name='Alquran' component={Alquran} />
       <Stack.Screen name='ClassExam' component={ClassExam} />
+      <Stack.Screen name='ClassTrial' component={ClassTrial} />
       <Stack.Screen name='HomeSearch' component={HomeSearch} />
       <Stack.Screen name='UserVerify' component={UserVerify} />
       <Stack.Screen name='ClassDetail' component={ClassDetail} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='Consultation' component={Consultation} />
+      <Stack.Screen name='ClassLearning' component={ClassLearning} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
-      <Stack.Screen name='ClassLearning' component={ClassLearning}/>
-      <Stack.Screen name='PromotionDetail' component={PromotionDetail}/>
+      <Stack.Screen name='PromotionDetail' component={PromotionDetail} />
       <Stack.Screen name='TransactionInfo' component={TransactionInfo} />
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
@@ -51,7 +53,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionConfirm' component={TransactionConfirm} />
       <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
       <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
-      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail}/>
+      <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
     </Stack.Navigator>
   )
 }

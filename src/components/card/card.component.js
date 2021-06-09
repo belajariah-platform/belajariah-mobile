@@ -4,8 +4,10 @@ import { styles } from './card.style'
 import { Images } from '../../assets'
 import { Avatar, Card } from 'react-native-elements'
 import { View, Text, Image } from 'react-native'
+import { FormatRupiah } from '../../utils'
 
 const  Cards = (props)  => {
+  console.log(props.item)
   return (
     <View style={styles.container}>
       {props.imageTitle}
@@ -32,9 +34,9 @@ const  Cards = (props)  => {
         <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
-          <Text style={styles.text4}>Rp.600.000 - Rp.1.900.000</Text>
+          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - Rp{FormatRupiah(props.item.Price_End)}</Text>
         </View>
-        <Text style={styles.text5}>Rp.399.000 - Rp.1.499.000</Text>
+        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
       </View>
     </View>
   )

@@ -111,7 +111,11 @@ const ClassExam = (props) => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Images.ButtonBack.default style={styles.iconBack} />
           </TouchableOpacity>
-          <Text style={styles.textTitleWhite}>Pre-Test</Text>
+          {type == 'Pre-Test' ? (
+            <Text style={styles.textTitleWhite}>Ujian Awal</Text>
+          ) : (
+            <Text style={styles.textTitleWhite}>Ujian Akhir</Text>
+          )}
           {/* <Text style={styles.textTimer}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text> */}
         </View>
       </View>

@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   ImgHeading: {
+    height: 176,
     width: '100%',
-    height: 205,
     alignSelf : 'center',
   },
   TxtSourceImg: {
