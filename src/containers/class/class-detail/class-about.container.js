@@ -60,7 +60,7 @@ const ClassAbout = ({ params, packages }) => {
   const BenefitCategory = [
     { Value : 'Akses video|video' },
     { Value : 'Ringkasan materi|document' },
-    { Value : 'Akses konsultasi|consultation' },
+    // { Value : 'Akses konsultasi|consultation' },
     { Value : 'Webinar|webinar' },
     { Value : 'Akses grub chat khusus|group' },
     { Value : 'Sertifikat dan hasil evaluasi belajar|sertificate' },
@@ -201,7 +201,7 @@ const ClassAbout = ({ params, packages }) => {
             stringSplit == 'document' ? (icon = Images.Document, size = 23) :
               stringSplit == 'webinar' ? (icon = Images.Webinar, size = 23) :
                 stringSplit == 'group' ? (icon = Images.AccessGroupChat, size = 21) :
-                  stringSplit == 'consultation' ? (icon = Images.Consultation, size = 21) :
+                  // stringSplit == 'consultation' ? (icon = Images.Consultation, size = 21) :
                     (icon = Images.Certificate, size = 23)
           return (
             <View key={index} >

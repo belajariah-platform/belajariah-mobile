@@ -7,7 +7,7 @@ import { View, Text, Image } from 'react-native'
 import { FormatRupiah } from '../../utils'
 
 const  Cards = (props)  => {
-  console.log(props.item)
+  // console.log(props.item)
   return (
     <View style={styles.container}>
       {props.imageTitle}
