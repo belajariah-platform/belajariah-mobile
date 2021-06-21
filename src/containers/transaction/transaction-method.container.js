@@ -222,7 +222,7 @@ const TransactionMethod = (props) => {
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
 
-          {state.some((item) => item.Type == 'e-wallet') && (
+          {/* {state.some((item) => item.Type == 'e-wallet') && (
             <View style={styles.cardMethods}>
               <Text style={styles.textBold}>E-Wallet</Text>
               <Text style={styles.textRegular}>Lakukan pembayaran langsung melalui akun e-wallet anda</Text>
@@ -267,7 +267,7 @@ const TransactionMethod = (props) => {
                   </View>
                 )})}
             </View>
-          )}
+          )} */}
 
           {state.some(item => item.Type == 'manual_transfer') && (
             <View style={[styles.cardMethods, styles.cardMethodCustom]}>

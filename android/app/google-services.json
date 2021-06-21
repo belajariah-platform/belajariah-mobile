@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "534998452385-qa4g76t18ngjha9f0aj6gnh7eotj766p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.belajariah",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "534998452385-r9vbukjk0t6j2gnp1rt0mjciti7mvhuk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.belajariah",
+            "certificate_hash": "7626831ee458228cfc0084cf505f6ff0432ef05f"
+          }
+        },
+        {
           "client_id": "534998452385-ipfkf6enogkk6j3c69dj35qjf2q9n29l.apps.googleusercontent.com",
           "client_type": 3
         }

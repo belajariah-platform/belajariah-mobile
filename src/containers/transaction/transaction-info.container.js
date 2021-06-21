@@ -190,8 +190,8 @@ const TransactionInfo = (props) => {
           </View>
           <View style={styles.viewDetailBank}>
             <View>
-              <Text style={styles.textSmall}>{title} : {item.Account_Name}</Text>
-              <Text style={styles.textSmall}>Nama Rekening : {item.Account_Number}</Text>
+              <Text style={styles.textSmall}>Nama Rekening : {item.Account_Name}</Text>
+              <Text style={styles.textSmall}>{title} : {item.Account_Number}</Text>
             </View>
             <View>
               <TouchableOpacity onPress={() => copyToClipboard(item.Account_Number, title)}>

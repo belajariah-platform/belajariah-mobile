@@ -70,7 +70,7 @@ const ModalInfoClass = (props) => {
                   />
                   <Text style={styles.TxtDescPaket}>Akses video selamanya</Text>
                 </View>
-                <View style={styles.flexBenefits}>
+                {/* <View style={styles.flexBenefits}>
                   <iconConsul.default
                     width={20}
                     height={20}
@@ -79,7 +79,7 @@ const ModalInfoClass = (props) => {
                   <Text style={styles.TxtDescPaket}>
                     Akses Konsultasi {value.Consultation}x ({value.Duration} bulan)
                   </Text>
-                </View>
+                </View> */}
                 <View style={styles.flexBenefits}>
                   <iconWebinar.default
                     width={20}
@@ -116,9 +116,9 @@ const ModalInfoClass = (props) => {
       >
         <View style={[styles.modalStyle, props.containerStyle]}>
           <View style={styles.modalContentSyle}>
-            <View style={styles.viewTxtJudulModal}>
+            {/* <View style={styles.viewTxtJudulModal}>
               <Text style={styles.TxtJudulModal}>Pilih Paket Belajar</Text>
-            </View>
+            </View> */}
             {props.loading ?
               <LoadingView
                 loadingStyle={{ flex : 0 }}

@@ -130,7 +130,7 @@ const CustomDrawer = ({ navigation }, props) => {
 
           <View style={styles.versionContainer}>
             <Images.LogoBelajariahProfile.default width={24} height={24} />
-            <Text style={styles.version}>Version: v1.0-21</Text>
+            <Text style={styles.version}>Version: v1.2.1</Text>
           </View>
         </ImageBackground>
       </DrawerContentScrollView>
