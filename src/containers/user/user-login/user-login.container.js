@@ -141,7 +141,7 @@ const Login = (props) => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Image source={Images.Login} style={styles.image} resizeMode={'cover'}/>
+          <Image source={Images.Login} style={styles.image} resizeMode={'contain'}/>
           <View style={{ marginTop: 30 }}>
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
@@ -178,7 +178,7 @@ const Login = (props) => {
                 <Text style={styles.backToRegister}> Daftar</Text>
               </TouchableOpacity>
             </View>
-            <View>
+            {/* <View>
               <Text style={styles.anotherText}>Atau</Text>
             </View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
@@ -195,7 +195,7 @@ const Login = (props) => {
                   <Text style={styles.TxtGoogleButton}>Sign in with Google</Text>
                 </View>
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>

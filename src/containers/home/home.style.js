@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.extraLarge,
   },
   textBackContainer: {
-    marginTop: 20,
+    marginTop: 35,
     alignSelf: 'center',
     width: Resp.TextBannerMainWP,
     height: Resp.TextBannerMainHP,

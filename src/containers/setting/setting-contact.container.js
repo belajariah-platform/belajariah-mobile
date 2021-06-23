@@ -32,7 +32,7 @@ const ContactUs = () => {
         if (val.includes('phone:')) {
           return (
             <View style={styles.containerContactUs}>
-              <Images.SMFacebook.default width={30} height={30}/>
+              <Images.SMTelephone.default width={30} height={30}/>
               <Text key={index} style={styles.textParagraphContact}>
                 {val.substring(6)}
               </Text>
