@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     marginTop: 22,
+    display: 'none',
     color: Color.purpleText,
     fontSize: FontSize.small,
   },
