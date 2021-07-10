@@ -1,6 +1,32 @@
-import ClassUser from './class-user'
-import ClassExam from './class-exam'
-import ClassLearning from './class-learning'
-import { ClassDetail, ClassTrial } from './class-detail'
+import {
+    ClassExamDirect, 
+    ClassUserDirect,
+    ClassListMentor,
+    ClassTrialDirect, 
+    ClassDetailDirect, 
+    ClassLearningDirect, 
+    ClassInstructorProfile,
+} from './direct'
 
-export { ClassDetail, ClassTrial, ClassLearning, ClassUser, ClassExam }
+import {
+    ClassExam, 
+    ClassUser,
+    ClassTrial, 
+    ClassDetail, 
+    ClassLearning, 
+} from './indirect'
+
+export {
+    ClassExam, 
+    ClassUser,
+    ClassTrial, 
+    ClassDetail, 
+    ClassLearning,
+    ClassListMentor, 
+    ClassExamDirect, 
+    ClassUserDirect,
+    ClassTrialDirect, 
+    ClassDetailDirect, 
+    ClassLearningDirect, 
+    ClassInstructorProfile,
+}

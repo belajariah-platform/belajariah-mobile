@@ -54,6 +54,7 @@ const config = {
             storyIndex : (storyIndex) => `${storyIndex}`
           }
         },
+        Register: 'regis',
         UserVerify: 'verif',
         PromotionDetail: {
           path : 'promo/:promo_code',
@@ -68,7 +69,7 @@ const config = {
 }
 
 const linking = {
-  prefixes: ['http://belajariah.com'],
+  prefixes: ["demo://app"],
   config,
 }
 

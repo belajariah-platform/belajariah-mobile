@@ -263,8 +263,8 @@ const Home = (props) => {
         num - index >= 0
           ? rating.push(<Images.Star.default />)
           : num - index < 0 && num - index > -1
-            ? rating.push(<Images.StarHalf.default />)
-            : rating.push(<Images.StarEmpty.default />)
+            ? rating.push(<Images.StarHalf.default width={16} height={16} />)
+            : rating.push(<Images.StarEmpty.default width={16} height={16} />)
       }
       return (
         <View style={{ flexDirection: 'row', flex : 1 }}>

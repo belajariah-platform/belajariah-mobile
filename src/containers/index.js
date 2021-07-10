@@ -29,7 +29,20 @@ import {
 } from './instructor'
 
 import { InspiratifStory, InspiratifStoryDetail } from './story'
-import { ClassUser, ClassLearning, ClassDetail, ClassExam, ClassTrial } from './class'
+import { 
+  ClassExam, 
+  ClassUser,
+  ClassTrial, 
+  ClassDetail, 
+  ClassLearning, 
+  ClassListMentor,
+  ClassExamDirect, 
+  ClassUserDirect,
+  ClassTrialDirect, 
+  ClassDetailDirect, 
+  ClassLearningDirect, 
+  ClassInstructorProfile, 
+} from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
 import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
 
@@ -66,21 +79,28 @@ export {
   InstructorTask,
   AdminProfileAll,
   PromotionDetail,
+  ClassListMentor,
   InspiratifStory,
   AdminInstructor,
   ConfirmPassword,
   TransactionInfo,
+  ClassExamDirect, 
+  ClassUserDirect,
   AdminTransaction,
   AdminProfileEdit,
+  ClassTrialDirect, 
+  ClassDetailDirect, 
   TransactionUpload,
   InstructorProfile,
   TransactionMethod,
   ConsultationDetail,
   UserVerifyPassword,
   TransactionConfirm,
+  ClassLearningDirect,  
   InstructorDashboard,
   InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,
+  ClassInstructorProfile,
   AdminProfileInstructor,
 }

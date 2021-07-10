@@ -5,6 +5,7 @@ import ModalRating from './modal-rating'
 import ModalRecord from './modal-record'
 import ModalConfirm from './modal-confirm'
 import ModalInfoClass from './modal-info-class'
+import ModalPreference from './modal-preference'
 import ModalNoConnection from './modal-connection'
 import {
   ModalFilterUser,
@@ -24,6 +25,7 @@ export {
   ModalConfirm,
   ModalInfoClass,
   ModalFilterUser,
+  ModalPreference,
   ModalFilterAdmin,
   ModalFilterUstadz,
   ModalNoConnection,

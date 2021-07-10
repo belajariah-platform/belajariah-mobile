@@ -57,10 +57,10 @@ export default {
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
   //Camera
-  IconCancelCamera: require('./IconCancelCamera.svg'),
-  IconOpenGallery: require('./IconOpenGallery.svg'),
   IconFlipCamera: require('./IconFlipCamera.svg'),
   IconTakeCamera: require('./IconTakeCamera.svg'),
+  IconOpenGallery: require('./IconOpenGallery.svg'),
+  IconCancelCamera: require('./IconCancelCamera.svg'),
 
   //update profile
   Email: require('./profileEmailIcon.svg'),
@@ -100,13 +100,13 @@ export default {
   BtnBuyClass: require('./BtnBuyClass.svg'),
   BtnCheckout: require('./BtnCheckout.svg'),
   TahsinImage: require('./TahsinImage.png'),
+  BintangFull: require('./BintangFull.png'),
   TilawahImage: require('./TilawahImage.png'),
   AccessGroupChat: require('./IconGroup.svg'),
   AccessVideo: require('./IconVideoAccess.svg'),
   Certificate: require('./IconCertificate.svg'),
-  IconUserReview: require('./IconUserReview.svg'),
   BintangBorder: require('./BintangBorder.png'),
-  BintangFull: require('./BintangFull.png'),
+  IconUserReview: require('./IconUserReview.svg'),
   Consultation: require('./IconConsultation.svg'),
   IconConsultations: require('./IconConsultations.svg'),
   DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
@@ -117,14 +117,14 @@ export default {
   SidenavUser : require('./SidenavUser.svg'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
-  IconTransactProgress: require('./IconMiniProgress.svg'),
-  IconTransactComplete: require('./IconMiniComplete.svg'),
   GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconUnduhanAdmin: require('./IconUnduhanAdmin.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
   SidenavInstrcutor: require('./SidenavInstructor.svg'),
   IconDownloadVoice: require('./IconDownloadVoice.svg'),
+  IconTransactProgress: require('./IconMiniProgress.svg'),
+  IconTransactComplete: require('./IconMiniComplete.svg'),
   IconTransactionAdmin: require('./IconTransactionAdmin.svg'),
   WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
   IllustrationNoConsulAll : require('./IllustrationNoConsulAll.svg'),
@@ -262,5 +262,30 @@ export default {
   IconComingSoon: require('./IconComingSoon.svg'),
   IconPendingWhite: require('./IconPendingWhite.svg'),
   IconCompleteWhite: require('./IconCompleteWhite.svg'),
+
+  //Class Detail Direct
+  IconSearchWhite : require('./IconSearchWhite.svg'),
+  HeaderClassDirect : require('./HeaderClassDirect.png'),
+  IconDownloadDirosa : require('./IconDownloadDirosa.svg'),
+
+  //Class About Dirosa
+  IconBookGreen : require('./IconBookGreen.svg'),
+  IconTimesGreen : require('./IconTimesGreen.svg'),
+  IconRangeGreen : require('./IconRangeGreen.svg'),
+  IconVideoGreen : require('./IconVideoGreen.svg'),
+  IconMethodGreen : require('./IconMethodGreen.svg'),
+  IconUstadzGreen : require('./IconUstadzGreen.svg'),
+  IconLearningGreen : require('./IconLearningGreen.svg'),
+
+  //List Mentor
+  IconTimeGreen : require('./IconTimeGreen.svg'),
+  IconDescGreen : require('./IconDescGreen.svg'),
+  IconStudyGreen : require('./IconStudyGreen.svg'),
+  IconReviewGreen : require('./IconReviewGreen.svg'),
+  IconScheduleBlack : require('./IconScheduleBlack.svg'),
+
+  //Class Profile Mentor
+  ImgProfileMentor : require('./ImgProfileMentor.png'),
+  BackgroundMentor : require('./BackgroundMentor.png'),
 }
 

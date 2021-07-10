@@ -49,7 +49,7 @@ const ModalInfoClass = (props) => {
               key={index}
               onPress={() => {
                 props.backdropPress()
-                navigation.navigate('ClassDetail', { packages : value, classes : props.class })
+                navigation.navigate('ClassDetailDirect', { packages : value, classes : props.class })
               }}>
               <View style={[styles.containerPaket, { backgroundColor: colors }]}>
                 <View style={styles.viewTitlePaket}>
