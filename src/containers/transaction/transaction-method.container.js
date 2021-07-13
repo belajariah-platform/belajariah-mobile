@@ -45,6 +45,7 @@ const TransactionMethod = (props) => {
 
   const [state, setState] = useState([])
   const [gateway, setGateway] = useState('')
+  const [isClaim, setIsClaim] = useState(false)
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
@@ -92,6 +93,7 @@ const TransactionMethod = (props) => {
           setModalVisible(false)
           FormCheckout.setFieldValue('Total_Transfer',
             value - (value * response.data.data.Discount/100))
+            setIsClaim(true)
         }
       } else {
         NetInfo.fetch().then(res => {
@@ -199,15 +201,21 @@ const TransactionMethod = (props) => {
               </View>
             </>
           )}
-          <Card.Divider style={styles.divider} />
-          <TouchableOpacity onPress={toggleModal}>
-            <View style={styles.flexVoucher}>
-              <Text style={styles.textRegularPurple}>
-              Saya memiliki <Text style={styles.textBoldPurple}>kode Voucher</Text>
-              </Text>
-              <Icon name='chevron-right-outline' style={styles.iconChevronRight} />
+          {isClaim ? (null) : (
+            <View>
+              <Card.Divider style={styles.divider} />
+              <TouchableOpacity onPress={toggleModal}>
+                <View style={styles.flexVoucher}>
+                  <Text style={styles.textRegularPurple}>
+                  Saya memiliki <Text style={styles.textBoldPurple}>kode Voucher</Text>
+                  </Text>
+                  <Icon name='chevron-right-outline' style={styles.iconChevronRight} />
+                </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+            ) 
+          }
+          
         </View>
       </View>
     )

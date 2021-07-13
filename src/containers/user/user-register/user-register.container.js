@@ -140,6 +140,7 @@ const Register = (props) => {
             <Text style={styles.text}>Alamat Email</Text>
             <TextBox
               form={FormSubmit}
+              AutoCapital='none'
               name='Email'
               placeholder='Masukan email'
             />

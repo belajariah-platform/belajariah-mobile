@@ -68,7 +68,7 @@ const config = {
 }
 
 const linking = {
-  prefixes: ['http://belajariah.com'],
+  prefixes: ["belajariah://app"],
   config,
 }
 

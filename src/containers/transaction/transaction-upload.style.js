@@ -115,6 +115,23 @@ const styles = StyleSheet.create({
   iconComplete: {
     marginVertical: '4%',
   },
+  ViewNotice: {
+    padding: 20,
+    marginBottom: 16, 
+    borderRadius: 20, 
+    alignItems: 'center',
+    backgroundColor: 'white', 
+  },
+  IconNotice: {
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  TxtNotice: {
+    color: '#1a1a1a', 
+    fontWeight: '700',
+    textAlign: 'center', 
+    fontSize: FontSize.smallMedium, 
+  }
 })
 
 export default styles
