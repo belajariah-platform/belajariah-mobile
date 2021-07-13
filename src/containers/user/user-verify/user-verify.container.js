@@ -88,7 +88,7 @@ const UserVerify = () => {
             <TextBox
               name='Verified_Code'
               form={FormSubmit}
-              placeholder='Kode Verifikasi'
+              placeholder='RKBL-VM1K'
             />
             {/* <TouchableOpacity
               onPress={() => resetVerification(item.Email)}>
