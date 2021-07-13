@@ -61,7 +61,7 @@ const Transaction = () => {
       const response = await PaymentAPI.GetAllPaymentByUserID(skip, take, filterString, sort)
       if (response.status === Response.SUCCESS) {
         setState(response.data.data)
-        console.log(state)
+        // console.log(state)
         setCount(response.data.count)
       } else {
         NetInfo.fetch().then(res => {
