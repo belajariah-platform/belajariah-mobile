@@ -71,10 +71,10 @@ const ClassAbout = ({ params, packages }) => {
       let rating = []
       for (let index = 1; index <= 5; index++) {
         num - index >= 0
-          ? rating.push(<Images.Star.default />)
+          ? rating.push(<Images.Star.default width={16} height={16} />)
           : num - index < 0 && num - index > -1
-            ? rating.push(<Images.StarHalf.default />)
-            : rating.push(<Images.StarEmpty.default />)
+            ? rating.push(<Images.StarHalf.default width={16} height={16} />)
+            : rating.push(<Images.StarEmpty.default width={16} height={16} />)
       }
 
       return (

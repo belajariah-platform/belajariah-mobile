@@ -162,11 +162,11 @@ const ClassLearning = (props) => {
     let rating = []
     for (let index = 1; index <= 5; index++) {
       num - index >= 0
-        ? rating.push(<Images.StarFullClass.default
+        ? rating.push(<Images.StarFullClass.default width={16} height={16}
           style={styles.star}/>)
         : num - index < 0 && num - index > -1
-          ? rating.push(<Images.StarHalfClass.default/>)
-          : rating.push(<Images.StarEmptyClass.default/>)
+          ? rating.push(<Images.StarHalfClass.default width={16} height={16}/>)
+          : rating.push(<Images.StarEmptyClass.default width={16} height={16}/>)
     }
     return (
       <View style={{ flexDirection: 'row' }}>
