@@ -92,7 +92,8 @@ export default {
   IconCompletePurple: require('./IconCompletePurple.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
   ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
-
+  IconConfirmTransaction: require('./IconConfirmTransaction.svg'),
+  
   //Update Detail Class
   Share: require('./IconShare.svg'),
   Webinar: require('./IconWebinar.svg'),
