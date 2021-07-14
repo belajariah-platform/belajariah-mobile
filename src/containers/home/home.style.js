@@ -141,15 +141,16 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   textCategories: {
-    marginTop: 4,
-    borderWidth: 1,
-    borderRadius: 14,
+    marginTop: 8,
+    // borderWidth: 1,
+    // borderRadius: 14,
     paddingVertical: 4,
+    textAlign: 'center',
     marginHorizontal: 4,
     paddingHorizontal: 8,
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
-    borderColor: Color.greyMedium,
+    // borderColor: Color.greyMedium,
   },
   textClassDescription: {
     top: -92,
@@ -276,6 +277,26 @@ const styles = StyleSheet.create({
     height: height / 2.2,
     borderTopLeftRadius: 22,
     borderTopRightRadius: 22,
+  },
+  ViewCategory: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  Category: {
+    height: 100,
+    marginBottom:1,
+    alignItems: 'center',
+    justifyContent: 'center', 
+    width: Dimensions.get('window').width * 0.3, 
+  },
+  CardCategory: {
+    width: 30,
+    height: 30,
+    padding: 10,
+    elevation: 2,
+    borderRadius: 10,
+    backgroundColor: Color.white,
   }
 })
 

@@ -66,7 +66,6 @@ const ShimmerListCategory = () => {
       <View style={{
         width: 70,
         marginTop: 4,
-        borderWidth: 1,
         borderRadius: 14,
         paddingVertical: 13,
         marginHorizontal: 4,

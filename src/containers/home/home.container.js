@@ -223,34 +223,39 @@ const Home = (props) => {
         <View style={{ marginBottom: 30 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          <ScrollView
-            ref={horizontalScrollRef}
-            horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.ViewCategory}>
             {stateCategory.map((category, index) => {
+              let icon, size
+              const ValueIcon = category.Value
+              ValueIcon == 'Al-Quran' ? (icon = Images.IconBenefit1Naim) :
+                ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconBenefit1Darussalam) :
+                  ValueIcon == 'Bahasa' ? (icon = Images.IconBenefit1Firdaus) :
+                    ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconBenefit3Firdaus) :
+                      (icon = Images.IconBenefit3Naim)
               return (
                 <TouchableOpacity
                   key={index}
+                  style={styles.Category}
                   onPress={() => handleCategoryChange(category)}>
-                  <Text
-                    style={[
-                      styles.textCategories,
-                      category.ID === categorySelected
-                        ? {
-                          color: Color.white,
-                          borderColor: Color.transparent,
-                          backgroundColor: Color.purpleButton,
-                        }
-                        : {
-                          color: Color.greyHeadInput,
-                          backgroundColor: Color.bgColorWhite,
-                        },
+                  <View style={[styles.CardCategory,
+                        // category.ID === categorySelected
+                        //   ? {
+                        //     backgroundColor: Color.purpleButton,
+                        //   }
+                        //   : {
+                        //     backgroundColor: Color.white,
+                        //   },   
                     ]}>
+                    <icon.default />
+                  </View>
+                  <Text
+                    style={styles.textCategories}>
                     {category.Value}
                   </Text>
                 </TouchableOpacity>
               )
             })}
-          </ScrollView>
+         </View>
         </View>
       </>
     )
