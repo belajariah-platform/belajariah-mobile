@@ -220,18 +220,18 @@ const Home = (props) => {
   const CategoryClassHome = () => {
     return (
       <>
-        <View style={{ marginBottom: 30 }}>
+        <View style={{ marginBottom: 6 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
           <View style={styles.ViewCategory}>
             {stateCategory.map((category, index) => {
               let icon, size
               const ValueIcon = category.Value
-              ValueIcon == 'Al-Quran' ? (icon = Images.IconBenefit1Naim) :
-                ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconBenefit1Darussalam) :
-                  ValueIcon == 'Bahasa' ? (icon = Images.IconBenefit1Firdaus) :
-                    ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconBenefit3Firdaus) :
-                      (icon = Images.IconBenefit3Naim)
+              ValueIcon == 'Al-Quran' ? (icon = Images.IconCategoryAlquran, size = 30) :
+                ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconCategoryKemasyarakatan, size = 30) :
+                  ValueIcon == 'Bahasa' ? (icon = Images.IconCategoryLanguage, size = 30) :
+                    ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconCategorySyaria, size = 30) :
+                      (icon = Images.IconCategoryFiqh, size = 30)
               return (
                 <TouchableOpacity
                   key={index}

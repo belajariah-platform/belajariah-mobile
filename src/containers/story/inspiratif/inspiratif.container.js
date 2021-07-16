@@ -134,7 +134,7 @@ const InspiratifStory = () => {
   }
 
   const Inspiratif = (item, index) => {
-    console.log(item.Header_Image)
+    // console.log(item.Header_Image)
     return(
       <TouchableOpacity
         key={index}

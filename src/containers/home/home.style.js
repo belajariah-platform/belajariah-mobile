@@ -285,16 +285,15 @@ const styles = StyleSheet.create({
   },
   Category: {
     height: 100,
-    marginBottom:1,
     alignItems: 'center',
     justifyContent: 'center', 
     width: Dimensions.get('window').width * 0.3, 
   },
   CardCategory: {
-    width: 30,
-    height: 30,
     padding: 10,
     elevation: 2,
+    width: 'auto',
+    height: 'auto',
     borderRadius: 10,
     backgroundColor: Color.white,
   }

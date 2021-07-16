@@ -77,6 +77,10 @@ export default {
   //Update transaction
   Filter: require('./IconFilter.svg'),
   IconFailed: require('./IconFailed.svg'),
+  IconBankBSI: require('./IconBankBSI.svg'),
+  IconBankBRI: require('./IconBankBRI.svg'),
+  IconBankBCA: require('./IconBankBCA.svg'),
+  IconBankBNI: require('./IconBankBNI.svg'),
   IconPending: require('./IconPending.svg'),
   StarBlack: require('./StarFullBlack.svg'),
   RibbonFailed: require('./RibbonFailed.svg'),
@@ -88,7 +92,9 @@ export default {
   NoTransaction: require('./IconNoTransaction.svg'),
   NoTransactionBG: require('./NoClassBakcground.svg'),
   TransactionBG: require('./TransactionBackground.svg'),
+  IconStoreAlfamart: require('./IconStoreAlfamart.svg'),
   NoTransactionBGPNG: require('./NoClassBakcground.png'),
+  IconStoreIndomaret: require('./IconStoreIndomaret.svg'),
   IconCompletePurple: require('./IconCompletePurple.svg'),
   TransactionBGPNG: require('./TransactionBackground.png'),
   ButtonUploadPembayaran: require('./ButtonUploadPembayaran.svg'),
@@ -263,5 +269,13 @@ export default {
   IconComingSoon: require('./IconComingSoon.svg'),
   IconPendingWhite: require('./IconPendingWhite.svg'),
   IconCompleteWhite: require('./IconCompleteWhite.svg'),
+
+  //New Category Icon
+  IconCategoryFiqh : require('./IconCategoryFiqh.svg'),
+  IconCategoryDakwah : require('./IconCategoryDakwah.svg'),
+  IconCategorySyaria : require('./IconCategorySyaria.svg'),
+  IconCategoryAlquran : require('./IconCategoryAlquran.svg'),
+  IconCategoryLanguage : require('./IconCategoryLanguage.svg'),
+  IconCategoryKemasyarakatan : require('./IconCategoryKemasyarakatan.svg'),
 }
 
