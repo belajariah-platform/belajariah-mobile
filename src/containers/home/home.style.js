@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import { Color, FontSize, FontType, FontWeight } from '../../assets'
+
 import { Resp } from '../../utils'
+import { Color, FontSize, FontType, FontWeight } from '../../assets'
 
 const { width, height }  = Dimensions.get('window')
 
@@ -141,10 +142,10 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   textCategories: {
-    marginTop: 8,
+    marginTop: 2,
     // borderWidth: 1,
     // borderRadius: 14,
-    paddingVertical: 4,
+    // paddingVertical: 4,
     textAlign: 'center',
     marginHorizontal: 4,
     paddingHorizontal: 8,
@@ -279,6 +280,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 22,
   },
   ViewCategory: {
+    marginTop: 24,
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -286,17 +288,20 @@ const styles = StyleSheet.create({
   Category: {
     height: 100,
     alignItems: 'center',
-    justifyContent: 'center', 
+    // justifyContent: 'center', 
     width: Dimensions.get('window').width * 0.3, 
   },
   CardCategory: {
     padding: 10,
-    elevation: 2,
     width: 'auto',
     height: 'auto',
-    borderRadius: 10,
-    backgroundColor: Color.white,
-  }
+    borderRadius: 30,
+  },
+  linearGradient: {
+    width: 'auto',
+    height: 'auto',
+    borderRadius: 30,
+  },
 })
 
 export { styles }

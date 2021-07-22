@@ -3,6 +3,7 @@ import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
 import NetInfo from '@react-native-community/netinfo'
 import { useIsFocused } from '@react-navigation/core'
+import LinearGradient from 'react-native-linear-gradient'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
@@ -237,17 +238,21 @@ const Home = (props) => {
                   key={index}
                   style={styles.Category}
                   onPress={() => handleCategoryChange(category)}>
-                  <View style={[styles.CardCategory,
-                        // category.ID === categorySelected
-                        //   ? {
-                        //     backgroundColor: Color.purpleButton,
-                        //   }
-                        //   : {
-                        //     backgroundColor: Color.white,
-                        //   },   
-                    ]}>
-                    <icon.default />
-                  </View>
+                  <LinearGradient
+                    colors={['#F2DCFB', '#fff']}
+                    style={styles.linearGradient}>
+                    <View style={[styles.CardCategory,
+                          // category.ID === categorySelected
+                          //   ? {
+                          //     backgroundColor: Color.purpleButton,
+                          //   }
+                          //   : {
+                          //     backgroundColor: Color.white,
+                          //   },   
+                      ]}>
+                      <icon.default />
+                    </View>
+                  </LinearGradient>
                   <Text
                     style={styles.textCategories}>
                     {category.Value}
