@@ -236,9 +236,9 @@ const styles = StyleSheet.create({
     //   backgroundColor: '#1DB597',
     },
     imageStyleInstructor: {
-      width: 140,
-      height: 140,
-      marginTop: '20%',
+      width: 170,
+      height: 170,
+      marginTop: '14%',
       marginBottom: '2%',
     },
     BackgroundImg: {

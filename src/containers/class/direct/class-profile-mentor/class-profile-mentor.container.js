@@ -67,7 +67,8 @@ const ClassInstructorProfile = (props) => {
                             height={22}
                         />
                         <View style={styles.ViewTxt}>
-                            <Text style={styles.TxttitleCard}>Deskripsi</Text>
+                            <Text style={styles.TxttitleCard}>Deskripsi & Pengalaman
+Mengajar Dirosa</Text>
                             <Text style={styles.TxtDescCard}>Seorang Ustadz yang menempuh pendidikan di Sekolah tinggi Ilmu islam dan Bahasa Arab Makasar, telah berpengalaman mengajar menggunakan metode Dirosa untuk mengajar dari tingkat pelajar sampai orang tua. Alhamdulillah setelah santri belajar Al-Qur’an menggunakan metode Dirosa hasilnya mereka mulai mengingat kembali huruf-huruf hijaiyah yang sempat lupa karena tidak pernah belajar dan membaca Al-Qur’an lagi dan setelah mengikuti program 20x pertemuan dikelas Dirosa, bacaan Al-Qur’an mereka jauh lebih baik dan lancar.</Text>
                         </View>
                     </View>
@@ -118,19 +119,18 @@ const ClassInstructorProfile = (props) => {
         )
     }
 
-    const ReviewInstructor = () => {
+    const SystemInstructor = () => {
         return (
             <View>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
-                        <Images.IconReviewGreen.default  
+                        <Images.IconSystemGreen.default  
                             width={24}
                             height={22}
                         />
                         <View style={styles.ViewTxt}>
-                            <Text style={styles.TxttitleCard}>Ulasan</Text>
-                            <Text style={styles.TxtDescCard}>Jhon Smith</Text>
-                            <Text style={styles.TxtDescCard}>Belajar ngaji lebih mudah dengan metode ini lohh</Text>
+                            <Text style={styles.TxttitleCard}>Sistem Belajar</Text>
+                            <Text style={styles.TxtDescCard}>Bisa Online dan Offline</Text>
                         </View>
                     </View>
                 </Card>
@@ -160,7 +160,7 @@ const ClassInstructorProfile = (props) => {
                 <DescInstructor />
                 <StudyInstructor />
                 <ScheduleInstructor />
-                <ReviewInstructor />
+                <SystemInstructor />
             </ScrollView>
             <BtnInstructor />
         </View> 

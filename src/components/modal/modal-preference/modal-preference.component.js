@@ -11,6 +11,7 @@ import { styles } from './modal-preference.style'
 const ModalPreference = (props) => {
     const [toggleCheckBoxChild, setToggleCheckBoxChild] = useState(false)
     const [toggleCheckBoxAdult, setToggleCheckBoxAdult] = useState(false)
+    const [toggleCheckBoxSystem, setToggleCheckBoxSystem] = useState(false)
     const [toggleCheckBoxTeenager, setToggleCheckBoxTeenager] = useState(false)
     
     return (
@@ -57,6 +58,30 @@ const ModalPreference = (props) => {
                                     onChange={nexttoggleCheckBoxAdult => setToggleCheckBoxAdult(nexttoggleCheckBoxAdult)}
                                 />
                                 <Text style={styles.TxtCheck}>Dewasa</Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.ViewTitle}>
+                            <Text style={styles.TxtTitle}>Sistem Belajar</Text>
+                            <Text style={styles.TxtTitleDesc}>Sistem belajar yang anda pilih</Text>
+                        </View>
+
+                        <View style={styles.ContainerCheck}>
+                            <View style={styles.ViewCheck}>
+                                <CheckBox
+                                    status='success'
+                                    checked={toggleCheckBoxSystem}
+                                    onChange={nexttoggleCheckBoxSystem => setToggleCheckBoxSystem(nexttoggleCheckBoxSystem)}
+                                />
+                                <Text style={styles.TxtCheck}>Offline</Text>
+                            </View>
+                            <View style={styles.ViewCheck}>
+                                <CheckBox
+                                    status='success'
+                                    checked={toggleCheckBoxSystem}
+                                    onChange={nexttoggleCheckBoxSystem => setToggleCheckBoxSystem(nexttoggleCheckBoxSystem)}
+                                />
+                                <Text style={styles.TxtCheck}>Online</Text>
                             </View>
                         </View>
 

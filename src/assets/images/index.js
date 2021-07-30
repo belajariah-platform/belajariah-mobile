@@ -282,6 +282,7 @@ export default {
   IconDescGreen : require('./IconDescGreen.svg'),
   IconStudyGreen : require('./IconStudyGreen.svg'),
   IconReviewGreen : require('./IconReviewGreen.svg'),
+  IconSystemGreen : require('./IconSystemGreen.svg'),
   IconScheduleBlack : require('./IconScheduleBlack.svg'),
 
   //Class Profile Mentor

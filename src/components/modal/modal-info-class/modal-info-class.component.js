@@ -5,9 +5,9 @@ import { Text } from '@ui-kitten/components'
 import { View, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import { LoadingView } from '../../../components'
 import { FormatRupiah } from '../../../utils'
 import { Images, Color } from '../../../assets'
+import { LoadingView } from '../../../components'
 import { styles } from './modal-info-class.style'
 
 const ModalInfoClass = (props) => {
