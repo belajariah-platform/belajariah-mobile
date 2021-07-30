@@ -248,7 +248,6 @@ const TransactionMethod = (props) => {
               </View>
             </View>
           )}
-
           {state.some(item => item.Type == 'bank_transfer') && (
             <View style={styles.cardMethods}>
               <Text style={styles.textBold}>Transfer Virtual Account</Text>
@@ -262,7 +261,6 @@ const TransactionMethod = (props) => {
                 )})}
             </View>
           )}
-
           {state.some(item => item.Type == 'cstore') && (
             <View style={styles.cardMethods}>
               <Text style={styles.textBold}>Minimarket</Text>

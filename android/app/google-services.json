@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "534998452385-hg9r5sm54m15cblvfr8m83g5kptn6uia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.belajariah",
+            "certificate_hash": "a91aae90be740b938c5ce4e9b56a93c0b8f0e100"
+          }
+        },
+        {
           "client_id": "534998452385-qa4g76t18ngjha9f0aj6gnh7eotj766p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
