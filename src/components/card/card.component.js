@@ -20,10 +20,10 @@ const  Cards = (props)  => {
         <View style={styles.content}>
           <View style={styles.rating}>
             {props.rating}
-            <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - Rp{FormatRupiah(props.item.Price_End)}</Text>
+            <Text style={styles.text4}>Rp.1.400.000 - Rp.2.220.000</Text>
           </View>
           <Text style={styles.TxtPriceDirosa}>(Hemat Rp.620.000)</Text>
-          <Text style={styles.TxtPriceDiscountDirosa}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
+          <Text style={styles.TxtPriceDiscountDirosa}>Rp.780.000 - Rp.1.600.000</Text>
         </View>
       </View>
     )
@@ -56,9 +56,9 @@ const  Cards = (props)  => {
         <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
-          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - Rp{FormatRupiah(props.item.Price_End)}</Text>
+          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)}</Text>
         </View>
-        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
+        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
       </View>
     </View>
     <CardDirosa />
