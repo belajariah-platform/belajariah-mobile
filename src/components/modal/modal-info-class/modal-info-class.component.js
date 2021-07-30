@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
 import { Text } from '@ui-kitten/components'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import { FormatRupiah } from '../../../utils'
@@ -12,6 +12,41 @@ import { styles } from './modal-info-class.style'
 
 const ModalInfoClass = (props) => {
   const navigation = useNavigation()
+
+  const DataDirosa = [
+    { id: 1, name: 'Paket Private', DescPackage: 'Paket belajar sendiri adalah paket privat antara 1 orang ustadz/Ustadzah dengan1 orang santri.', IconPackage: Images.IconPrivate, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
+    { id: 2, name: 'Paket Double', DescPackage: 'Paket belajar Double adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 2 orang santri sekaligus.', IconPackage: Images.IconDouple, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
+    { id: 3, name: 'Paket Family', DescPackage: 'Paket belajar Family adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 4 orang santri.', IconPackage: Images.IconFamily, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
+  ]
+
+  const DirectPackage = () => {
+    return(
+      <View>
+        {DataDirosa.map((item, index) => {
+          return(
+            <TouchableOpacity key={index} onPress={() => {
+              props.backdropPress()
+              navigation.navigate('ClassDetailDirect', { packages : item, classes : props.class })
+            }}>
+              <View style={[styles.containerPaket]}>
+                <View style={styles.viewTitlePaket}>
+                  <Image source={item.IconPackage} style={{width:80, height:80}} />
+                  <View style={styles.viewTxtTitlePaket}>
+                    <Text style={styles.TxtTitlePackage}>{item.name}</Text>
+                    <Text style={styles.textDescPackage}>{item.DescPackage}</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Text style={styles.TxtPrice}>{item.PricePackage}</Text>
+                      <Text style={styles.TxtMeet}>{item.MeetPackage}</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+    )
+  }
 
   const ViewClass = () => {
     return(
@@ -49,7 +84,7 @@ const ModalInfoClass = (props) => {
               key={index}
               onPress={() => {
                 props.backdropPress()
-                navigation.navigate('ClassDetailDirect', { packages : value, classes : props.class })
+                navigation.navigate('ClassDetail', { packages : value, classes : props.class })
               }}>
               <View style={[styles.containerPaket, { backgroundColor: colors }]}>
                 <View style={styles.viewTitlePaket}>
@@ -123,7 +158,8 @@ const ModalInfoClass = (props) => {
               <LoadingView
                 loadingStyle={{ flex : 0 }}
               /> :
-              <ViewClass />
+              // <ViewClass />
+              <DirectPackage />
             }
           </View>
         </View>

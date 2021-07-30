@@ -20,6 +20,7 @@ export default {
   BotHomeHint: require('./HomeHint.svg'),
   BotTransact: require('./Transact.svg'),
   ButtonBack: require('./ButtonBack.svg'),
+  CardDirosa : require('./CardDirosa.png'),
   HomeBG: require('./HomeBackground.png'),
   BtnArrowUp: require('./BtnArrowUp.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
@@ -303,5 +304,10 @@ export default {
   //Class Profile Mentor
   ImgProfileMentor : require('./ImgProfileMentor.png'),
   BackgroundMentor : require('./BackgroundMentor.png'),
+
+  //Modal Package Dirosa
+  IconDouple : require('./IconDouple.png'),
+  IconFamily : require('./IconFamily.png'),
+  IconPrivate : require('./IconPrivate.png'),
 }
 

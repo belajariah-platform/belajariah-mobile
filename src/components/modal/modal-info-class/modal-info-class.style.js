@@ -28,14 +28,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   viewTitlePaket : {
+    width: '70%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   viewTxtTitlePaket : {
-    marginLeft: 10,
+    width: '100%',
+    marginLeft: 2,
+    marginRight: 2,
   },
   TxtTitlePaket : {
     color: Color.purpleText,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  TxtTitlePackage : {
+    color: '#4D4D4D',
     fontFamily: FontType.bold,
     fontSize: FontSize.medium,
   },
@@ -53,6 +61,19 @@ const styles = StyleSheet.create({
     color: Color.black,
     fontFamily: FontType.bold,
     fontSize: FontSize.smallMedium,
+  },
+  TxtPrice : {
+    marginRight: 5,
+    color: Color.purpleText,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.bold,
+    textDecorationStyle: 'solid',
+    textDecorationLine: 'line-through',
+  },
+  TxtMeet : {
+    color: Color.purpleText,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallPoint,
   },
   viewDescPaket : {
     marginBottom: 5,
@@ -77,6 +98,14 @@ const styles = StyleSheet.create({
   textRegular: {
     marginBottom: 7,
     color: Color.black,
+    textAlign: 'justify',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  textDescPackage: {
+    marginVertical: 4,
+    color: Color.black,
+    textAlign: 'justify',
     fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
   },

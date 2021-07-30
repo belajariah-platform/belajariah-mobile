@@ -4,7 +4,7 @@ import { FontType, Color, FontSize } from '../../assets'
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    height: 290,
+    height: 'auto',
     elevation: 2,
     width: '100%',
     borderWidth: 0,
@@ -20,6 +20,14 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft : -3,
     resizeMode: 'cover',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  images2: {
+    height: 160,
+    width: '100%',
+    marginLeft : -3,
+    resizeMode: 'stretch',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -84,6 +92,19 @@ const styles = StyleSheet.create({
   divider : {
     marginTop : 5,
   },
+  TxtPriceDirosa : {
+    marginRight : 12,
+    color : '#1DB597',
+    textAlign : 'right',
+    fontFamily : FontType.bold,
+    fontSize : FontSize.smallMedium,
+  },
+  TxtPriceDiscountDirosa : {
+    marginRight : 12,
+    textAlign : 'right',
+    fontSize : FontSize.medium,
+    fontFamily : FontType.regular,
+  }
 })
 
 export { styles }

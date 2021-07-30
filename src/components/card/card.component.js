@@ -8,8 +8,30 @@ import { FormatRupiah } from '../../utils'
 
 const  Cards = (props)  => {
   // console.log(props.item)
+  const CardDirosa = () => {
+    return (
+      <View style={styles.container}>
+        <View >
+          <Image
+            source={Images.CardDirosa}
+            style={styles.images2}
+          />
+        </View>
+        <View style={styles.content}>
+          <View style={styles.rating}>
+            {props.rating}
+            <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - Rp{FormatRupiah(props.item.Price_End)}</Text>
+          </View>
+          <Text style={styles.TxtPriceDirosa}>(Hemat Rp.620.000)</Text>
+          <Text style={styles.TxtPriceDiscountDirosa}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
-    <View style={styles.container}>
+    <View>
+      <View style={styles.container}>
       {props.imageTitle}
       <View >
         <Image
@@ -34,10 +56,12 @@ const  Cards = (props)  => {
         <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
-          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)}</Text>
+          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - Rp{FormatRupiah(props.item.Price_End)}</Text>
         </View>
-        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
+        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
       </View>
+    </View>
+    <CardDirosa />
     </View>
   )
 }
