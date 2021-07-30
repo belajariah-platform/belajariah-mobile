@@ -283,6 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     flexWrap: 'wrap',
     flexDirection: 'row',
+    marginHorizontal: -16,
     justifyContent: 'space-between',
   },
   Category: {

@@ -77,7 +77,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
           <View style={{
@@ -85,7 +85,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
           <View style={{
@@ -93,7 +93,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
       </View>
@@ -110,7 +110,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
           <View style={{
@@ -118,7 +118,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
           <View style={{
@@ -126,7 +126,7 @@ const ShimmerListCategory = () => {
             height: 50,
             padding: 10,
             elevation: 2,
-            borderRadius: 10,
+            borderRadius: 30,
             backgroundColor: Color.white,
           }}/>
       </View>

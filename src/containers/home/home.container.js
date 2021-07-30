@@ -232,6 +232,7 @@ const Home = (props) => {
                 ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconCategoryKemasyarakatan, size = 30) :
                   ValueIcon == 'Bahasa' ? (icon = Images.IconCategoryLanguage, size = 30) :
                     ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconCategorySyaria, size = 30) :
+                      ValueIcon == 'Dakwah' ? (icon = Images.IconCategoryDakwah, size = 30) :
                       (icon = Images.IconCategoryFiqh, size = 30)
               return (
                 <TouchableOpacity
