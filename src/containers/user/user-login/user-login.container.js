@@ -147,6 +147,7 @@ const Login = (props) => {
             <TextBox
               name='Email'
               form={FormSubmit}
+              AutoCapital='none'
               placeholder='Alamat Email'
             />
             <Text style={styles.text}>Kata Sandi</Text>

@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import { Color, FontSize, FontType, FontWeight } from '../../assets'
+
 import { Resp } from '../../utils'
+import { Color, FontSize, FontType, FontWeight } from '../../assets'
 
 const { width, height }  = Dimensions.get('window')
 
@@ -141,15 +142,16 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   textCategories: {
-    marginTop: 4,
-    borderWidth: 1,
-    borderRadius: 14,
-    paddingVertical: 4,
+    marginTop: 2,
+    // borderWidth: 1,
+    // borderRadius: 14,
+    // paddingVertical: 4,
+    textAlign: 'center',
     marginHorizontal: 4,
     paddingHorizontal: 8,
     fontFamily: FontType.regular,
     fontSize: FontSize.extraSmall,
-    borderColor: Color.greyMedium,
+    // borderColor: Color.greyMedium,
   },
   textClassDescription: {
     top: -92,
@@ -276,7 +278,31 @@ const styles = StyleSheet.create({
     height: height / 2.2,
     borderTopLeftRadius: 22,
     borderTopRightRadius: 22,
-  }
+  },
+  ViewCategory: {
+    marginTop: 24,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginHorizontal: -16,
+    justifyContent: 'space-between',
+  },
+  Category: {
+    height: 100,
+    alignItems: 'center',
+    // justifyContent: 'center', 
+    width: Dimensions.get('window').width * 0.3, 
+  },
+  CardCategory: {
+    padding: 10,
+    width: 'auto',
+    height: 'auto',
+    borderRadius: 30,
+  },
+  linearGradient: {
+    width: 'auto',
+    height: 'auto',
+    borderRadius: 30,
+  },
 })
 
 export { styles }

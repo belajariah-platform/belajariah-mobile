@@ -24,6 +24,7 @@ const Textbox = (props) => {
       {...props}
       style={[styles.input, props.customStyle]}
       size='medium'
+      autoCapitalize={props.AutoCapital}
       status={
         props.form &&
         props.name &&
@@ -39,6 +40,7 @@ const Textbox = (props) => {
 Textbox.propTypes = {
   form : PropTypes.object,
   name : PropTypes.string,
+  AutoCapital : PropTypes.string,
   customStyle : PropTypes.object,
 }
 

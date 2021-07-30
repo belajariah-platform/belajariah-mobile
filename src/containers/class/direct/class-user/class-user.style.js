@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     borderRadius : 12
   },
   TextClass : {
-    width: '64%',
+    width: '70%',
+    maxWidth: '100%',
     color: Color.white,
     fontSize: FontSize.small,
     fontFamily: FontType.regular,
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
   },
   testTextClass : {
-    marginLeft: 121,
+    // marginLeft: 121,
     marginBottom : 2,
     color: Color.white,
     fontFamily: FontType.bold,

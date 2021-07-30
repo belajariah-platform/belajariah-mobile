@@ -107,8 +107,11 @@ const TransactionUpload = (props) => {
 
   const Notice = () => {
     return (
-      <View style={{ marginBottom: 16, backgroundColor: 'white', borderRadius: 20, padding: 20 }}>
-        <Text style={{ textAlign: 'center', fontSize: 24, color: '#6e248b', fontWeight: '700' }}>Harap kirim bukti pembayaran anda melalui Whatsapp Admin Belajariah :)</Text>
+      <View style={styles.ViewNotice}>
+        <Images.IconConfirmTransaction.default style={styles.IconNotice}
+          />
+        <Text style={styles.TxtNotice}>Harap kirim bukti pembayaran anda melalui 
+Whatsapp Admin Belajariah : )</Text>
       </View>
     )
   }

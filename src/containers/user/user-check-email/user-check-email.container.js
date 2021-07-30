@@ -71,6 +71,7 @@ const ChangePassword = (props) => {
             <TextBox
               name='Email'
               form={FormSubmit}
+              AutoCapital='none'
               placeholder='Alamat Email'
             />
             <Buttons title='Kirim' onPress={FormSubmit.handleSubmit} />

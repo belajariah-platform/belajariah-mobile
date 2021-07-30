@@ -34,7 +34,7 @@
 
         <data
           android:host="app"
-          android:scheme="demo" />
+          android:scheme="belajariah" />
         </intent-filter>
 
       </activity>

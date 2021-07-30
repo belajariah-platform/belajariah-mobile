@@ -174,7 +174,7 @@ const TransactionInfo = (props) => {
   }
 
   const PaymentMethod = () => {
-    console.log(item)
+    // console.log(item)
     let title
     item.Payment_Method_Type == 'cstore' ? title = 'Kode Pembayaran' :
       item.Payment_Method_Type == 'e_wallet' ? title = 'Kode Pembayaran' :

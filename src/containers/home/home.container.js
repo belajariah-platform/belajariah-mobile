@@ -3,6 +3,7 @@ import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
 import NetInfo from '@react-native-community/netinfo'
 import { useIsFocused } from '@react-navigation/core'
+import LinearGradient from 'react-native-linear-gradient'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
@@ -220,37 +221,47 @@ const Home = (props) => {
   const CategoryClassHome = () => {
     return (
       <>
-        <View style={{ marginBottom: 30 }}>
+        <View style={{ marginBottom: 6 }}>
           <Text style={styles.textTitle}>Kategori Kelas</Text>
           <Text style={styles.textSubtitle}>Temukan kelas lewat kategori!</Text>
-          <ScrollView
-            ref={horizontalScrollRef}
-            horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.ViewCategory}>
             {stateCategory.map((category, index) => {
+              let icon, size
+              const ValueIcon = category.Value
+              ValueIcon == 'Al-Quran' ? (icon = Images.IconCategoryAlquran, size = 30) :
+                ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconCategoryKemasyarakatan, size = 30) :
+                  ValueIcon == 'Bahasa' ? (icon = Images.IconCategoryLanguage, size = 30) :
+                    ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconCategorySyaria, size = 30) :
+                      ValueIcon == 'Dakwah' ? (icon = Images.IconCategoryDakwah, size = 30) :
+                      (icon = Images.IconCategoryFiqh, size = 30)
               return (
                 <TouchableOpacity
                   key={index}
+                  style={styles.Category}
                   onPress={() => handleCategoryChange(category)}>
+                  <LinearGradient
+                    colors={['#F2DCFB', '#fff']}
+                    style={styles.linearGradient}>
+                    <View style={[styles.CardCategory,
+                          // category.ID === categorySelected
+                          //   ? {
+                          //     backgroundColor: Color.purpleButton,
+                          //   }
+                          //   : {
+                          //     backgroundColor: Color.white,
+                          //   },   
+                      ]}>
+                      <icon.default />
+                    </View>
+                  </LinearGradient>
                   <Text
-                    style={[
-                      styles.textCategories,
-                      category.ID === categorySelected
-                        ? {
-                          color: Color.white,
-                          borderColor: Color.transparent,
-                          backgroundColor: Color.purpleButton,
-                        }
-                        : {
-                          color: Color.greyHeadInput,
-                          backgroundColor: Color.bgColorWhite,
-                        },
-                    ]}>
+                    style={styles.textCategories}>
                     {category.Value}
                   </Text>
                 </TouchableOpacity>
               )
             })}
-          </ScrollView>
+         </View>
         </View>
       </>
     )
@@ -261,7 +272,7 @@ const Home = (props) => {
       let rating = []
       for (let index = 1; index <= 5; index++) {
         num - index >= 0
-          ? rating.push(<Images.Star.default />)
+          ? rating.push(<Images.Star.default width={16} height={16} />)
           : num - index < 0 && num - index > -1
             ? rating.push(<Images.StarHalf.default width={16} height={16} />)
             : rating.push(<Images.StarEmpty.default width={16} height={16} />)

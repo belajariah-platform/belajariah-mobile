@@ -5,8 +5,8 @@ import { Card } from 'react-native-elements'
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
-import { styles } from './shimmer.style'
 import { Color } from '../../assets'
+import { styles } from './shimmer.style'
 
 const Shimmer = (props) => {
   return (
@@ -64,15 +64,72 @@ const ShimmerListCategory = () => {
   return(
     <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
       <View style={{
-        width: 70,
-        marginTop: 4,
-        borderWidth: 1,
-        borderRadius: 14,
-        paddingVertical: 13,
-        marginHorizontal: 4,
-        paddingHorizontal: 18,
-        backgroundColor: 'red',
-      }}/>
+        height: 100,
+        marginTop: '20%',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: '8%',
+        justifyContent: 'space-between',
+      }}>
+         <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+          <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+          <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+      </View>
+      <View style={{
+        height: 100,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: '8%',
+        justifyContent: 'space-between',
+      }}>
+         <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+          <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+          <View style={{
+            width: 50,
+            height: 50,
+            padding: 10,
+            elevation: 2,
+            borderRadius: 30,
+            backgroundColor: Color.white,
+          }}/>
+      </View>
     </SkeletonPlaceholder>
   )
 }

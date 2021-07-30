@@ -37,7 +37,7 @@ import { UserClassAPI, EnumAPI, RatingAPI } from '../../../../api'
 import { styles } from '../class-user/class-user.style'
 
 
-const ClassUserDirect = (props) => {
+const ClassUser = (props) => {
   const dispatch = useDispatch()
   const [comment, setComment] = useState('')
   const [dataObj, setDataObj] = useState({})
@@ -370,12 +370,19 @@ const ClassUserDirect = (props) => {
                               source={item.Class_Image == '' ?
                                 Images.ImgDefault5  : { uri : item.Class_Image }}
                               style={styles.ImageClass}/>
-                            <Text style={styles.TextClass}>{item.Class_Name}</Text>
+                              <View style={{ marginLeft: 10, }}>
+                                <Text style={styles.TextClass}>{item.Class_Name}</Text>
+                                <View style={{marginTop: 10,}}>
+                                  <Text style={styles.testTextClass}>Nilai Ujian Awal : {item.Pre_Test_Scores}</Text>
+                                  <Text style={styles.testTextClass}>Nilai Ujian Akhir : {item.Post_Test_Scores}</Text>
+                                </View>
+                              </View>
+                            
                           </View>
-                          <View style={{ marginTop : -42 }}>
+                          {/* <View style={{ marginTop : -42 }}>
                             <Text style={styles.testTextClass}>Nilai Ujian Awal : {item.Pre_Test_Scores}</Text>
                             <Text style={styles.testTextClass}>Nilai Ujian Akhir : {item.Post_Test_Scores}</Text>
-                          </View>
+                          </View> */}
                           <View style={[styles.containerIconProgress, styles.customIconProgress]}>
                             {item.Status  == 'Completed' ? (
                               <ButtonGradient
@@ -428,9 +435,9 @@ const ClassUserDirect = (props) => {
   )
 }
 
-ClassUserDirect.propTypes = {
+ClassUser.propTypes = {
   navigation: PropTypes.object,
 }
 
 
-export default ClassUserDirect
+export default ClassUser
