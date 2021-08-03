@@ -115,6 +115,7 @@ const Login = (props) => {
       }
       setLoading(false)
     } catch (error) {
+      console.log(error)
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)
       })
@@ -179,7 +180,7 @@ const Login = (props) => {
                 <Text style={styles.backToRegister}> Daftar</Text>
               </TouchableOpacity>
             </View>
-            {/* <View>
+            <View>
               <Text style={styles.anotherText}>Atau</Text>
             </View>
             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
@@ -196,7 +197,7 @@ const Login = (props) => {
                   <Text style={styles.TxtGoogleButton}>Sign in with Google</Text>
                 </View>
               </TouchableOpacity>
-            </View> */}
+            </View>
           </View>
         </ScrollView>
       </View>
