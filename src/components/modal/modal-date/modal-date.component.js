@@ -63,8 +63,8 @@ const ModalDate = (props) => {
 ModalDate.propTypes = {
   mode : PropTypes.string,
   date : PropTypes.object,
-  styleBtn : PropTypes.array,
   isVisible : PropTypes.bool,
+  styleBtn : PropTypes.object,
   titleBtn : PropTypes.string,
   dateChange : PropTypes.func,
   backdropPress : PropTypes.func,

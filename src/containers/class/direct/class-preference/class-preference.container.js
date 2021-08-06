@@ -75,10 +75,12 @@ const ClassPreference = () => {
                         onPress={() => setModalDateVisibleStart(true)}>
                         <Datepicker
                             disabled
+                            placeholder='Pilih Jadwal'
                             accessoryRight={CalendarIcon}
                             style={styles.datePickerInput}
                             controlStyle={styles.datePickerControl}
-                            date={new Date}/>
+                            // date={new Date}
+                        />
                     </TouchableOpacity>
                     <Text style={styles.TxtMeet}>Pertemuan 2</Text>
                     <TouchableOpacity
@@ -86,10 +88,12 @@ const ClassPreference = () => {
                         onPress={() => setModalDateVisibleEnd(true)}>
                         <Datepicker
                             disabled
+                            placeholder='Pilih Jadwal'
                             accessoryRight={CalendarIcon}
                             style={styles.datePickerInput}
                             controlStyle={styles.datePickerControl}
-                            date={new Date}/>
+                            // date={new Date}
+                        />
                     </TouchableOpacity>
 
                     <View style={styles.ViewTitle}>

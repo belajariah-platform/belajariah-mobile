@@ -274,6 +274,7 @@ const styles = StyleSheet.create({
     },
     TxttitleCard : {
       marginBottom: 6,
+      maxWidth: '96%',
       color: '#1DB597',
       fontFamily: FontType.bold,
       fontSize: FontSize.medium,

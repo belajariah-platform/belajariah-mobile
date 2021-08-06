@@ -67,8 +67,7 @@ const ClassInstructorProfile = (props) => {
                             height={22}
                         />
                         <View style={styles.ViewTxt}>
-                            <Text style={styles.TxttitleCard}>Deskripsi & Pengalaman
-Mengajar Dirosa</Text>
+                            <Text style={styles.TxttitleCard}>Deskripsi & Pengalaman Mengajar Dirosa</Text>
                             <Text style={styles.TxtDescCard}>Seorang Ustadz yang menempuh pendidikan di Sekolah tinggi Ilmu islam dan Bahasa Arab Makasar, telah berpengalaman mengajar menggunakan metode Dirosa untuk mengajar dari tingkat pelajar sampai orang tua. Alhamdulillah setelah santri belajar Al-Qur’an menggunakan metode Dirosa hasilnya mereka mulai mengingat kembali huruf-huruf hijaiyah yang sempat lupa karena tidak pernah belajar dan membaca Al-Qur’an lagi dan setelah mengikuti program 20x pertemuan dikelas Dirosa, bacaan Al-Qur’an mereka jauh lebih baik dan lancar.</Text>
                         </View>
                     </View>
