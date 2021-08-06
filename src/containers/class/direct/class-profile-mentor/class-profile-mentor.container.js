@@ -145,7 +145,7 @@ Mengajar Dirosa</Text>
                         title='Pilih Pengajar'
                         style={styles.BtnPengajar}
                         textStyle={styles.TxtButton}
-                        onPress = {toggleModalPreference}
+                        onPress={() => navigation.navigate('ClassPreference')}
                     />
             </View>
         )

@@ -15,6 +15,7 @@ import {
   ClassListMentor,
   ConfirmPassword,
   PromotionDetail,
+  ClassPreference,
   ClassExamDirect, 
   ClassUserDirect,
   InspiratifStory,
@@ -50,6 +51,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='Consultation' component={Consultation} />
       <Stack.Screen name='ClassLearning' component={ClassLearning} />
+      <Stack.Screen name='ClassPreference' component={ClassPreference} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
       <Stack.Screen name='ClassUserDirect' component={ClassUserDirect} />
       <Stack.Screen name='PromotionDetail' component={PromotionDetail} />

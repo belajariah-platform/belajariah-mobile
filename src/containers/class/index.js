@@ -1,6 +1,7 @@
 import {
     ClassExamDirect, 
     ClassUserDirect,
+    ClassPreference,
     ClassListMentor,
     ClassTrialDirect, 
     ClassDetailDirect, 
@@ -22,6 +23,7 @@ export {
     ClassTrial, 
     ClassDetail, 
     ClassLearning,
+    ClassPreference,
     ClassListMentor, 
     ClassExamDirect, 
     ClassUserDirect,

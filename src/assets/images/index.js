@@ -309,5 +309,8 @@ export default {
   IconDouple : require('./IconDouple.png'),
   IconFamily : require('./IconFamily.png'),
   IconPrivate : require('./IconPrivate.png'),
+
+  //Class Preference
+  IconPreference : require('./IconPreference.png'),
 }
 

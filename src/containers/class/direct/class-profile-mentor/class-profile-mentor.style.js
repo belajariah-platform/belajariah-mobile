@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
     },
     TxtDescCard : {
       lineHeight: 18,
-      maxWidth: '95%',
+      maxWidth: '93%',
       textAlign: 'justify',
     }, 
     ViewTxt : {
