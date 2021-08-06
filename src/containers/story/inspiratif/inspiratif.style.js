@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   containerNoStory: {
-    margin: 12,
+    marginTop: 25,
+    position: 'relative',
     height: '40%',
     alignItems: 'center',
     justifyContent: 'center',
