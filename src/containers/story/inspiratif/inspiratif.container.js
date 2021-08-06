@@ -162,7 +162,7 @@ const InspiratifStory = () => {
   const NoStory = () => {
     return(
       <View style={styles.containerNoStory}>
-        <Images.IconStoryEmpty.default width={250} height={250}/>
+        <Images.IconStoryEmpty.default width={200} height={200}/>
       </View>
     )
   }
