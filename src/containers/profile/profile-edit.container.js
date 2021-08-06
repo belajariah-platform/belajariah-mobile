@@ -428,6 +428,7 @@ const ProfileEdit = () => {
       />
       <ModalDate
         mode='date'
+        titleBtn='Atur Tanggal'
         isVisible={modalDateVisible}
         date={new Date(userInfo.Birth)}
         backdropPress={() => toggleModalDate()}

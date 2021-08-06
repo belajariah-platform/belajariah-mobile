@@ -159,12 +159,16 @@ const ClassPreference = () => {
         </View> 
         <ModalDate
             mode='date'
+            titleBtn='Pilih Jadwal'
+            styleBtn={styles.StyleB}
             isVisible={modalDateVisibleStart}
             date={new Date}
             backdropPress={() => toggleModalDateStart()}
         />
         <ModalDate
             mode='date'
+            titleBtn='Pilih Jadwal'
+            styleBtn={styles.StyleB}
             isVisible={modalDateVisibleEnd}
             date={new Date}
             backdropPress={() => toggleModalDateEnd()}

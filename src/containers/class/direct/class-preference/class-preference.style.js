@@ -170,6 +170,9 @@ const styles = StyleSheet.create({
       fontSize: FontSize.medium,
       fontFamily: FontType.regular,
     },
+    StyleB : {
+      backgroundColor: '#1DB597',
+    }
   })
   
   export default styles
