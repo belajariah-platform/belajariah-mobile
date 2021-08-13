@@ -1,4 +1,5 @@
 import {
+    ClassMeeting,
     ClassExamDirect, 
     ClassUserDirect,
     ClassPreference,
@@ -22,6 +23,7 @@ export {
     ClassUser,
     ClassTrial, 
     ClassDetail, 
+    ClassMeeting,
     ClassLearning,
     ClassPreference,
     ClassListMentor, 

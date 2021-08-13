@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
   },
   TxtPrice : {
     marginRight: 5,
-    color: Color.purpleText,
+    color: '#13A98B',
     fontSize: FontSize.medium,
     fontFamily: FontType.bold,
     textDecorationStyle: 'solid',
     textDecorationLine: 'line-through',
   },
   TxtMeet : {
-    color: Color.purpleText,
+    color: '#13A98B',
     fontFamily: FontType.bold,
     fontSize: FontSize.smallPoint,
   },

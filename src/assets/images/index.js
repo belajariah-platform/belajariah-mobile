@@ -312,5 +312,10 @@ export default {
 
   //Class Preference
   IconPreference : require('./IconPreference.png'),
+
+  //Class Meet
+  IllustrationMeet : require('./IllustrationMeet.png'),
+  IconChecklistMeet : require('./IconChecklistMeet.svg'),
+
 }
 

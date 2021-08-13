@@ -146,7 +146,7 @@ const ClassPreference = () => {
                         title='Selanjutnya'
                         style={styles.BtnPengajar}
                         textStyle={styles.TxtButton}
-                        // onPress={() => navigation.navigate('ClassPreference')}
+                        onPress={() => navigation.navigate('ClassMeeting')}
                     />
                 </Card>
             </View>

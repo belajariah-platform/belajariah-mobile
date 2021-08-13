@@ -20,10 +20,10 @@ const  Cards = (props)  => {
         <View style={styles.content}>
           <View style={styles.rating}>
             {props.rating}
-            <Text style={styles.text4}>Rp.1.400.000 - Rp.2.220.000</Text>
+            <Text style={styles.text4}>Rp.600.000 - Rp.1.100.000</Text>
           </View>
-          <Text style={styles.TxtPriceDirosa}>(Hemat Rp.620.000)</Text>
-          <Text style={styles.TxtPriceDiscountDirosa}>Rp.780.000 - Rp.1.600.000</Text>
+          <Text style={styles.TxtPriceDirosa}>(Hemat Rp.400.000)</Text>
+          <Text style={styles.TxtPriceDiscountDirosa}>Rp.315.000 - Rp.700.000</Text>
         </View>
       </View>
     )

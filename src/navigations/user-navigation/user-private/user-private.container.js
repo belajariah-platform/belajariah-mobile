@@ -10,6 +10,7 @@ import {
   ClassDetail,
   ProfileEdit,
   Consultation,
+  ClassMeeting,
   AlquranDetail,
   ClassLearning,
   ClassListMentor,
@@ -47,6 +48,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ClassTrial' component={ClassTrial} />
       <Stack.Screen name='HomeSearch' component={HomeSearch} />
       <Stack.Screen name='UserVerify' component={UserVerify} />
+      <Stack.Screen name='ClassMeeting' component={ClassMeeting} />
       <Stack.Screen name='ClassDetail' component={ClassDetail} />
       <Stack.Screen name='ProfileEdit' component={ProfileEdit} />
       <Stack.Screen name='Consultation' component={Consultation} />

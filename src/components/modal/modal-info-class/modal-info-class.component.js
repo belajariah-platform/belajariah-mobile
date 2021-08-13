@@ -14,9 +14,9 @@ const ModalInfoClass = (props) => {
   const navigation = useNavigation()
 
   const DataDirosa = [
-    { id: 1, name: 'Paket Private', DescPackage: 'Paket belajar sendiri adalah paket privat antara 1 orang ustadz/Ustadzah dengan1 orang santri.', IconPackage: Images.IconPrivate, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
-    { id: 2, name: 'Paket Double', DescPackage: 'Paket belajar Double adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 2 orang santri sekaligus.', IconPackage: Images.IconDouple, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
-    { id: 3, name: 'Paket Family', DescPackage: 'Paket belajar Family adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 4 orang santri.', IconPackage: Images.IconFamily, PricePackage: 'Rp.780.000', MeetPackage: '/20x Pertemuan'},
+    { id: 1, name: 'Paket Private', DescPackage: 'Paket belajar sendiri adalah paket privat antara 1 orang ustadz/Ustadzah dengan1 orang santri.', IconPackage: Images.IconPrivate, PricePackage: 'Rp.315.000', MeetPackage: '/Bln'},
+    { id: 2, name: 'Paket Double', DescPackage: 'Paket belajar Double adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 2 orang santri sekaligus.', IconPackage: Images.IconDouple, PricePackage: 'Rp.500.000', MeetPackage: '/Bln'},
+    { id: 3, name: 'Paket Family', DescPackage: 'Paket belajar Family adalah paket privat antara 1 orang ustadz/Ustadzah yang mengajar 4 orang santri.', IconPackage: Images.IconFamily, PricePackage: 'Rp.700.000', MeetPackage: '/Bln'},
   ]
 
   const DirectPackage = () => {
