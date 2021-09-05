@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import { Text, Datepicker,  Icon,  } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import { Text, Datepicker,  Icon,  } from '@ui-kitten/components'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import {
     View,
     Image,
     FlatList,
+    TextInput,
     ScrollView,
     TouchableOpacity,
   } from 'react-native'
@@ -14,7 +15,7 @@ import {
 import {
     Buttons,
     ModalDate,
-    LoadingView,
+    ModalRatingDirect,
 } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
@@ -24,10 +25,19 @@ const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
 const ClassMeeting = () => {
     const navigation = useNavigation()
+    const [dataObj, setDataObj] = useState({})
+    const [isComplete, setIsComplete] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
     const [modalDateVisibleEnd, setModalDateVisibleEnd] = useState(false)
     const [modalDateVisibleStart, setModalDateVisibleStart] = useState(false)
     const toggleModalDateEnd = () => setModalDateVisibleEnd(!modalDateVisibleEnd)
     const toggleModalDateStart = () => setModalDateVisibleStart(!modalDateVisibleStart)
+
+    const toggleModal = (item) => {
+      setDataObj(item)
+      setModalVisible(!modalVisible)
+    }
+
     const Header = () => {
         return (
           <View style={styles.containerHeaderProfile}>
@@ -44,7 +54,7 @@ const ClassMeeting = () => {
               <Image source={Images.IllustrationMeet} style={styles.StyleIllust} />
               <Text style={styles.TxtHeader}>
                 <Text style={styles.TxtHeaderBold}>Yuk,</Text> Selesaikan Pertemuan Kelas 
-                <Text style={styles.TxtHeaderBold}>Dirosa</Text> anda dengan Pengajar anda
+                <Text style={styles.TxtHeaderBold}> Dirosa</Text> anda dengan Pengajar anda
               </Text>
             </View>
             <View style={styles.semiBoxProfile} />
@@ -58,18 +68,28 @@ const ClassMeeting = () => {
           <Card containerStyle={styles.cardStyleInstructor}>
             <View>
               <Text style={styles.TxtMeet}>Pertemuan 1</Text>
-              <TouchableOpacity
-                  activeOpacity={0.5}
-                  onPress={() => setModalDateVisibleStart(true)}>
-                    <Datepicker
-                        // disabled
-                        placeholder='Pilih Jadwal'
-                        accessoryRight={CalendarIcon}
-                        style={styles.datePickerInput}
-                        controlStyle={styles.datePickerControl}
-                        date={new Date}
+              <View style={styles.ViewInput}>
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => setModalDateVisibleStart(true)}>
+                      <Datepicker
+                          // disabled
+                          placeholder='Pilih Jadwal'
+                          accessoryRight={CalendarIcon}
+                          style={styles.datePickerInput}
+                          controlStyle={styles.datePickerControl}
+                          date={new Date}
+                      />
+                </TouchableOpacity>
+                { isComplete ? (<Images.IconCompleteDirect.default style={styles.StyleImgComplete} />) 
+                  : (
+                    <Buttons title='Selesai' 
+                      style={styles.StyleBtn} 
+                      textStyle={styles.StyleTxt} 
+                      onPress = {() => toggleModal() & setIsComplete(true)}
                     />
-              </TouchableOpacity>
+                )}
+              </View>
             </View>
           </Card>
         </View>
@@ -90,6 +110,18 @@ const ClassMeeting = () => {
             isVisible={modalDateVisibleStart}
             date={new Date}
             backdropPress={() => toggleModalDateStart()}
+        />
+        <ModalRatingDirect
+          isVisible={modalVisible}
+          backdropPress={() => toggleModal()}
+          backButtonPress={() => toggleModal()}
+          // title='Beri Penilaian, Hasil belajarmu'
+          renderItem={  <TextInput
+            multiline={true}
+            numberOfLines={8}
+            // onChangeText={(e) => setComment(e)}
+            style={styles.textArea}
+            />}
         />
       </>
     )

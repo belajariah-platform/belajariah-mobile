@@ -40,20 +40,6 @@ const styles = StyleSheet.create({
       fontFamily: FontType.bold,
       fontSize: FontSize.mediumLarge,
     },
-    txtNotes: {
-      paddingVertical: '2%',
-      fontSize : FontSize.small,
-    },
-    viewNoteOne: {
-      width: '90%',
-      opacity: 0.5,
-      flexDirection: 'row',
-      paddingHorizontal : 16,
-    },
-    viewMethod : {
-      marginTop: '2%',
-      marginBottom: '2%',
-    },
     viewNotifClass : {
       height: 20,
       paddingTop: 2,
@@ -64,69 +50,6 @@ const styles = StyleSheet.create({
     textNotifClass : {
       color: Color.white,
       fontSize : FontSize.smallest,
-    },
-    textSmall : {
-      fontSize : FontSize.smallPoint,
-    },
-    margins : {
-      marginHorizontal : 16
-    },
-    ImgBanner: {
-      height: 310,
-      width: '100%',
-    },
-    TitlePromo: {
-      marginVertical: 5,
-      color: Color.black,
-      fontFamily: FontType.bold,
-      fontSize: FontSize.mediumLarge,
-    },
-    DescPromo: {
-      marginVertical: 5,
-      color: Color.black,
-      textAlign: 'justify',
-      fontSize: FontSize.small,
-      fontFamily: FontType.regular,
-    },
-    DescOtherPromo: {
-      marginVertical: 5,
-      color: Color.black,
-      fontSize: FontSize.small,
-      fontFamily: FontType.regular,
-    },
-    containerCodePromo: {
-      marginVertical: 10,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    TitleBacaan: {
-      color: Color.black,
-      fontSize: FontSize.large,
-      fontFamily: FontType.bold,
-    },
-    TxtTime: {
-      color: Color.black,
-      fontSize: FontSize.small,
-      fontFamily: FontType.regular,
-    },
-    containerHeading: {
-      margin: 0,
-    },
-    ImgHeading: {
-      width: '100%',
-      height: 240,
-    },
-    TxtSourceImg: {
-      top: '-10%',
-      color: Color.black,
-      textAlign: 'center',
-      fontSize: FontSize.smallest,
-      fontFamily: FontType.regular,
-    },
-    TxtWriter: {
-      color: Color.black,
-      fontSize: FontSize.small,
-      fontFamily: FontType.bold,
     },
     searchbox : {
       borderWidth : 0,
@@ -160,13 +83,6 @@ const styles = StyleSheet.create({
       fontFamily: FontType.bold,
       fontSize: FontSize.smallMedium,
     },
-    description : {
-      width: 250,
-      marginTop: 5,
-      color: Color.black,
-      fontFamily: FontType.regular,
-      fontSize: FontSize.smallPoint,
-    },
     iconFilter: {
       marginRight : 16,
       alignSelf : 'center',
@@ -180,23 +96,6 @@ const styles = StyleSheet.create({
     containerDesc : {
       flex : 1,
       marginLeft : 5,
-    },
-    TxtButtonDetail: {
-      textAlign: 'right',
-      color: Color.purpleText,
-      fontSize: FontSize.small,
-      fontFamily: FontType.regular,
-    },
-    indicatorContainer : {
-      top : 12,
-      marginBottom : 7,
-      alignItems:'center',
-    },
-    containerNoStory: {
-      margin: 12,
-      height: '40%',
-      alignItems: 'center',
-      justifyContent: 'center',
     },
     textRegular: {
       lineHeight : 15,
@@ -218,10 +117,6 @@ const styles = StyleSheet.create({
     },
     IconStyle: {
       marginTop: '-2%',
-    },
-    ViewDown: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
     },
     ViewRating: {
       marginTop: 8,

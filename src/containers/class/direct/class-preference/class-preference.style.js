@@ -2,34 +2,6 @@ import { StyleSheet } from 'react-native'
 import { Color, FontSize, FontType } from '../../../../assets'
 
 const styles = StyleSheet.create({
-    iconBack: {
-      marginTop: 0,
-    },
-    containerMain: {
-      flex: 1,
-      backgroundColor: '#B66DD3',
-    },
-    containerHeader: {
-      backgroundColor: '#13A98B',
-    },
-    flexHeaderIn: {
-      paddingBottom: 16,
-      alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    flexHeader: {
-      paddingBottom: 1,
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    semiBox: {
-      height: 16,
-      width: '100%',
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
-      backgroundColor: '#B66DD3',
-    },
     containerHeaderProfile : {
       backgroundColor: '#13A98B',
     },
@@ -85,11 +57,6 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
       backgroundColor: Color.softPink,
     },
-    TxtDescCard : {
-      lineHeight: 18,
-      maxWidth: '95%',
-      textAlign: 'justify',
-    }, 
     BtnPengajar : {
       height: 50,
       elevation: 5,
@@ -121,9 +88,9 @@ const styles = StyleSheet.create({
     },
     datePickerInput: {
       height: 40,
-      marginBottom: 6,
       width: '100%',
       borderWidth: 1,
+      marginBottom: 6,
       borderRadius: 8,
       paddingHorizontal: 8,
       borderColor: '#BDBDBD33',

@@ -37,27 +37,6 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: Color.softPink,
     },
-    TxtDescCard : {
-      lineHeight: 18,
-      maxWidth: '95%',
-      textAlign: 'justify',
-    }, 
-    BtnPengajar : {
-      height: 50,
-      elevation: 5,
-      shadowRadius: 1,  
-      marginBottom: 20,
-      borderRadius: 30,
-      shadowOpacity: 0.8,
-      shadowColor: '#752796',
-      backgroundColor: '#1DB597',
-      shadowOffset: { width: 0, height: 1 },
-    },
-    TxtButton : {
-      color: Color.white,
-      fontFamily: FontType.bold,
-      fontSize: FontSize.mediumLarge,
-    },
     StyleIcon : {
       top: -20,
       marginLeft: '40%',
@@ -78,9 +57,9 @@ const styles = StyleSheet.create({
     },
     datePickerInput: {
       height: 40,
-      marginBottom: 6,
-      width: '100%',
+      width: 214,
       borderWidth: 1,
+      // marginBottom: 6,
       borderRadius: 8,
       paddingHorizontal: 8,
       borderColor: '#BDBDBD33',
@@ -89,38 +68,6 @@ const styles = StyleSheet.create({
     datePickerControl: {
       borderWidth: 0,
       backgroundColor: Color.transparent,
-    },
-    ViewTitle : {
-      marginTop: '5%',
-      marginBottom: '3%',
-    },
-    TxtTitleList : {
-      marginBottom: 4,
-      color: Color.black,
-      fontFamily: FontType.bold,
-      fontSize: FontSize.medium,
-    },
-    TxtTitleDesc : {
-      color: Color.grey,
-      fontSize: FontSize.small,
-      fontFamily: FontType.semiBold,
-    },
-    ContainerCheck: {
-      marginBottom: '1%',
-    },
-    ViewCheck: {
-      marginVertical: 10,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    TxtCheck: {
-      marginLeft: 10,
-      color: Color.black,
-      fontSize: FontSize.medium,
-      fontFamily: FontType.regular,
-    },
-    containerRadio: {
-      marginBottom: 1,
     },
     TxtHeader: {
       maxWidth: '56%',
@@ -151,11 +98,36 @@ const styles = StyleSheet.create({
       backgroundColor: Color.softPink,
     },
     TxtMeet : {
-      marginTop: 4,
-      marginBottom: 8,
+      marginTop: 6,
       color: Color.black,
       fontSize: FontSize.medium,
       fontFamily: FontType.regular,
+    },
+    ViewInput : {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      
+    },
+    StyleBtn : {
+      width: 86,
+      backgroundColor: '#1DB597',
+    },
+    StyleTxt : {
+      color: Color.white,
+      fontSize: FontSize.medium,
+      fontFamily: FontType.regular,
+    },
+    StyleImgComplete : {
+      marginRight: 20,
+    },
+    textArea: {
+      height: 100,
+      elevation : 1,
+      borderRadius: 20,
+      paddingHorizontal: 10,
+      marginHorizontal: '6%',
+      backgroundColor: '#f1f3f4',
     },
   })
   

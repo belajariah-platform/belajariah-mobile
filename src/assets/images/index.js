@@ -316,6 +316,10 @@ export default {
   //Class Meet
   IllustrationMeet : require('./IllustrationMeet.png'),
   IconChecklistMeet : require('./IconChecklistMeet.svg'),
+  IconCompleteDirect : require('./IconCompleteDirect.svg'),
+
+  //Modal Rating Direct
+  IconCheckLisDirect : require('./IconCheckLisDirect.svg'),
 
 }
 
