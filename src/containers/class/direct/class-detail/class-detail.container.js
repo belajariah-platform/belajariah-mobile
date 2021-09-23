@@ -82,11 +82,17 @@ const ClassDetailDirect = (props) => {
       </Tab.Navigator>
       
       <View style={styles.ViewButton}>
+        <Text style={styles.price}>
+            Rp {FormatRupiah(packages.Price_Package)}
+          </Text>
         <Buttons title='Temukan Guru Ngaji' 
           style={styles.StyleBtn} 
           textStyle={styles.StyleTxtBtn}
           icon={<Images.IconSearchWhite.default/>}
-          onPress={() => {navigation.navigate('ClassListMentor')}}
+          onPress={() => {
+            navigation.navigate('ClassListMentor',
+              { classes : classes, packages : packages } )
+          }}
         />
       </View>
     </View>

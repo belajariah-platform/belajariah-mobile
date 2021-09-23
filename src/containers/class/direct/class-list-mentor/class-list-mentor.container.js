@@ -24,8 +24,9 @@ import { Images, Color } from '../../../../assets'
 import styles from './class-list-mentor.style'
 import images from '../../../../assets/images'
 
-const ClassListMentor = () => {
+const ClassListMentor = (props) => {
     const navigation = useNavigation()
+    const { classes, packages, instructor } = props.route.params
     const Header = () => {
         return (
           <View style={styles.containerHeader}>
@@ -52,12 +53,15 @@ const ClassListMentor = () => {
         return (
             <Card
                 containerStyle={styles.cardStyle}>
-                <TouchableOpacity onPress={() => navigation.navigate('ClassInstructorProfile')}>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('ClassInstructorProfile',
+                    { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' } )
+                }}>
                     <View style={styles.viewStyle}>
                         <Image source={Images.ImgProfileMentor} style={styles.imageStyle}/>
                         <View style={styles.containerDesc}>
                             <Text style={styles.textStyle}>Ust. Hamdan Ngaja</Text>
-                            <Text style={styles.City}>Kota Sulawesi Selatan</Text>
+                            <Text style={styles.City}>{packages.Price_Package}</Text>
                             <View style={styles.ViewRating}>
                                 <Text style={styles.TxtRating}>5.0</Text>
                                 <Images.Star.default />
@@ -104,6 +108,11 @@ const ClassListMentor = () => {
             </ScrollView>
         </View> 
     )
+}
+
+ClassListMentor.propTypes = {
+    route: PropTypes.object,
+    instructor: PropTypes.object,
 }
 
 export default ClassListMentor

@@ -74,9 +74,10 @@ const styles = StyleSheet.create({
     borderColor: Color.lightGrey,
   },
   ViewItem: {
-    marginLeft: 5,
-    paddingVertical: 2,
+    marginLeft: 8,
     paddingHorizontal: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: Color.white,
   },
   textRegular: {
@@ -173,6 +174,27 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#13A98B',
   },
+  TxtListMateriId: {
+    marginVertical: '4%',
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
+  },
+  TxtListMateri: {
+    maxWidth: '90%',
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.regular,
+  },
+  TxtListMateriArab: {
+    maxWidth: '65%',
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.arabBold,
+  },
+  TxtBoldDesc : {
+    color: '#13A98B',
+  }
 })
 
 export default styles

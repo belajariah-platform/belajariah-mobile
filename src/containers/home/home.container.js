@@ -36,6 +36,7 @@ import {
   Carousel,
   ModalInfo,
   ModalInfoClass,
+  ModalClassDirect,
   ModalNoConnection,
   ShimmerListCategory,
   ShimmerCardClassPopuler,
@@ -56,6 +57,7 @@ const Home = (props) => {
   const [connectStatus, setconnectStatus] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+  const [modalClassDirectVisible, setModalClassDirectVisible] = useState(false)
 
   const [stateStory, setStateStory] = useState([])
   const [stateClass, setStateClass] = useState([])
@@ -72,6 +74,7 @@ const Home = (props) => {
   const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
+  const toggleModalClassDirect = () => setModalClassDirectVisible(!modalClassDirectVisible)
 
 
   const handleCategoryChange = (category) => {
@@ -93,6 +96,12 @@ const Home = (props) => {
   const openModalInfoClass = async (item) => {
     await setClassObj(item)
     await setModalInfoClassVisible(!modalInfoClassVisible)
+    await fetchDataPackage(dataState, item.Code)
+  }
+
+  const openModalClassDirect = async (item) => {
+    await setClassObj(item)
+    await setModalClassDirectVisible(!modalClassDirectVisible)
     await fetchDataPackage(dataState, item.Code)
   }
 
@@ -323,7 +332,7 @@ const Home = (props) => {
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
-              onPress={() => openModalInfoClass(item)}>
+              onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}>
               <Cards
                 item={item}
                 filepath={item.Class_Image}
@@ -503,6 +512,14 @@ const Home = (props) => {
           isVisible={modalInfoClassVisible}
           backdropPress={() => toggleModalInfoClass()}
           backButtonPress={() => toggleModalInfoClass()}
+        />
+        <ModalClassDirect
+          class={classObj}
+          state={statePackage}
+          loading={loadingPackage}
+          isVisible={modalClassDirectVisible}
+          backdropPress={() => toggleModalClassDirect()}
+          backButtonPress={() => toggleModalClassDirect()}
         />
         <ModalInfo
           isVisible={modalVisible}

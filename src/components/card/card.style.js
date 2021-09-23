@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     flexDirection : 'row',
     marginHorizontal : 12,
   },
+  PriceR : {
+    alignSelf: 'flex-end',
+    flexDirection : 'row',
+    marginHorizontal : 12,
+  },
   lined : {
     height : 2,
     width : '100%',
@@ -78,9 +83,22 @@ const styles = StyleSheet.create({
     fontSize : FontSize.extraSmall,
     textDecorationLine: 'line-through',
   },
+  textPriceR : {
+    textAlign : 'right',
+    fontFamily : FontType.regular,
+    fontSize : FontSize.extraSmall,
+    textDecorationLine: 'line-through',
+  },
   text5 : {
     marginRight : 12,
     color : '#52BBE4',
+    textAlign : 'right',
+    fontSize : FontSize.small,
+    fontFamily : FontType.bold,
+  },
+  textPriceBld : {
+    marginRight : 12,
+    color : '#1DB597',
     textAlign : 'right',
     fontSize : FontSize.small,
     fontFamily : FontType.bold,

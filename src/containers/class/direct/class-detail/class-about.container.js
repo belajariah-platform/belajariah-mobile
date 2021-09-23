@@ -58,6 +58,29 @@ const ClassAboutDirect = ({ params, packages }) => {
     fetchDataLearning(dataState, params.Code)
   }, [])
 
+  const ListMateri = [
+    { id: '1. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'خَ - أَ'},
+    { id: '2. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'صَ - دَ'},
+    { id: '3. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'كَ - طَ'},
+    { id: '4. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'يَ - لَ'},
+    { id: '5. ', TxtMeet: 'Pertemuan: Huruf Hijaiyyah Asli'},
+    { id: '6. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'سَ سِ سُ - أَ أِ اُ'},
+    { id: '7. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'مَ مِ مُ - شَ شِ شُ'},
+    { id: '8. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'يَ يِ يُ - نَ نِ نُ'},
+    { id: '9. ', TxtMeet: 'Pertemuan: Tanwin'},
+    { id: '10. ', TxtMeet: 'Pertemuan: Bacaan Mad Thobi i dan Mad Wajib'},
+    { id: '11. ', TxtMeet: 'Pertemuan: Bacaan Mad Iwadh dan Mad Badal'},
+    { id: '12. ', TxtMeet: 'Pertemuan: Tasydid'},
+    { id: '13. ', TxtMeet: 'Pertemuan: Sukun'},
+    { id: '14. ', TxtMeet: 'Pertemuan: Bacaan ', TxtMateri: 'بَؤ نَ - بَيْنَ'},
+    { id: '15. ', TxtMeet: 'Pertemuan: Bacaan ', TxtMateri: 'تَقْ-تَكْ - تَعْ-تأْ'},
+    { id: '16. ', TxtMeet: 'Pertemuan: Lam Qomariyah, Lam Syamsiyah dan Ghunnah'},
+    { id: '17. ', TxtMeet: 'Pertemuan: Cara mewakofkan dan Bacaan Idghom'},
+    { id: '18. ', TxtMeet: 'Pertemuan: Bacaan Iqlab dan Idghom mimi/ Syafawi'},
+    { id: '19. ', TxtMeet: 'Pertemuan: Bacaan Ikhfa dan Idzhar'},
+    { id: '20. ', TxtMeet: 'Pertemuan: Huruf awal Surah, Lam Jalalah dan Bacaan Ghorib Musykilat'},
+  ]
+
   const BenefitCategory = [
     { Value : 'Diajar oleh ustadz/ustadzah berkompeten & berpengalaman|ustadz' },
     { Value : 'Waktu belajar yang sesuai dengan waktu senggang anda|time' },
@@ -67,6 +90,7 @@ const ClassAboutDirect = ({ params, packages }) => {
     { Value : 'Bisa belajar meski memiliki jarak yang Jauh dengan ustadz/ustadzah|range' },
     { Value : 'Free buku Dirosa sebagai panduan belajar|ebook' },
     { Value : 'Metode belajar yang menyenangkan dan mudah dipahami|metode' },
+    { Value : 'Terdapat Pembinaan Berkelanjutan|union' },
   ]
 
   // const Title = () => {
@@ -122,7 +146,7 @@ const ClassAboutDirect = ({ params, packages }) => {
 
     return (
       <Card containerStyle={styles.containerDesc}>
-        <Text style={styles.textBold}>Deskripsi</Text>
+        <Text style={styles.textBold}>Deskripsi<Text style={styles.TxtBoldDesc}> ({packages.Type})</Text></Text>
         <TextView
           showMore={showMore}
           onPress={handleShowMore}
@@ -155,7 +179,7 @@ const ClassAboutDirect = ({ params, packages }) => {
           <Text style={styles.textBold}>Materi yang akan dipelajari</Text>
           <View style={styles.flexTopicInfo}>
             <Text style={styles.textRegular}>
-              <Text style={styles.textRegular}>20 Materi, 20x Pertemuan</Text>
+              <Text style={styles.textRegular}>20 Materi, 20x Pertemuan Efektif</Text>
             </Text>
             {/* <Text style={styles.textRegular}>
               {TimeConvertToHour(params.Total_Video_Duration)}
@@ -163,7 +187,7 @@ const ClassAboutDirect = ({ params, packages }) => {
           </View>
         </View>
         <View style={styles.containerList}>
-          {state.map((topic, index) => {
+          {ListMateri.map((item, index) => {
             return (
               // <List.Accordion key={index} title={topic.Title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
               //   {topic.SubTitles.map((item, subindex) => {
@@ -186,7 +210,9 @@ const ClassAboutDirect = ({ params, packages }) => {
               //   })}
               // </List.Accordion>
               <View key={index} style={styles.ViewItem}>
-                <Text>1. Pertemuan : سَ سِ سُ-أَ أِ اُ</Text>
+                <Text style={styles.TxtListMateriId}>{item.id}</Text>
+                <Text style={styles.TxtListMateri}>{item.TxtMeet}</Text>
+                <Text style={styles.TxtListMateriArab}>{item.TxtMateri}</Text>
               </View>
             )
           })}
@@ -209,8 +235,8 @@ const ClassAboutDirect = ({ params, packages }) => {
                 stringSplit == 'praktek' ? (icon = Images.IconLearningGreen, size = 22) :
                   stringSplit == 'range' ? (icon = Images.IconRangeGreen, size = 22) :
                     stringSplit == 'ebook' ? (icon = Images.IconBookGreen, size = 22) :
-                  // stringSplit == 'consultation' ? (icon = Images.Consultation, size = 21) :
-                    (icon = Images.IconMethodGreen, size = 22)
+                      stringSplit == 'union' ? (icon = Images.IconUnionGreen, size = 22) :
+                        (icon = Images.IconMethodGreen, size = 22)
           return (
             <View key={index} >
               <View style={styles.flexBenefits}>

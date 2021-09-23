@@ -8,38 +8,8 @@ import { FormatRupiah } from '../../utils'
 
 const  Cards = (props)  => {
   // console.log(props.item)
-  const CardDirosa = () => {
+  const TxtCardInDirect = () => {
     return (
-      <View style={styles.container}>
-        <View >
-          <Image
-            source={Images.CardDirosa}
-            style={styles.images2}
-          />
-        </View>
-        <View style={styles.content}>
-          <View style={styles.rating}>
-            {props.rating}
-            <Text style={styles.text4}>Rp.600.000 - Rp.1.100.000</Text>
-          </View>
-          <Text style={styles.TxtPriceDirosa}>(Hemat Rp.400.000)</Text>
-          <Text style={styles.TxtPriceDiscountDirosa}>Rp.315.000 - Rp.700.000</Text>
-        </View>
-      </View>
-    )
-  }
-
-  return (
-    <View>
-      <View style={styles.container}>
-      {props.imageTitle}
-      <View >
-        <Image
-          source={props.filepath == '' ? Images.ImgDefault3 :
-            { uri : props.filepath }}
-          style={styles.images}
-        />
-      </View>
       <View style={styles.content}>
         <Text style={styles.text1}>Instruktur :</Text>
         <View style={styles.instrukturView}>
@@ -60,8 +30,37 @@ const  Cards = (props)  => {
         </View>
         <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
       </View>
-    </View>
-    <CardDirosa />
+    )
+  }
+
+  const TxtCardDirect = () => {
+    return (
+      <View style={styles.content}>
+        <View style={styles.rating}>
+          {props.rating}
+          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - </Text>
+          <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_End)}</Text>
+        </View>
+        <Text style={styles.textPriceBld}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
+        <View style={styles.PriceR}>
+          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_Start)} - </Text>
+          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_End)}</Text>
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      {props.imageTitle}
+      <View >
+        <Image
+          source={props.filepath == '' ? Images.ImgDefault3 :
+            { uri : props.filepath }}
+          style={styles.images}
+        />
+      </View>
+      {props.item.Is_Direct == true ? <TxtCardDirect /> : <TxtCardInDirect />}
     </View>
   )
 }

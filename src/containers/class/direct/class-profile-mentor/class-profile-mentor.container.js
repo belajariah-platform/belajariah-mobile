@@ -26,6 +26,7 @@ import images from '../../../../assets/images'
 
 const ClassInstructorProfile = (props) => {
     const navigation = useNavigation()
+    const { classes, packages, instructor } = props.route.params
     const [modalPreferenceVisible, setmodalPreferenceVisible] = useState(false)
     const toggleModalPreference = () => setmodalPreferenceVisible(!modalPreferenceVisible)
     
@@ -52,6 +53,8 @@ const ClassInstructorProfile = (props) => {
                     <Image source={Images.ImgProfileMentor} style={styles.imageStyleInstructor}/>
                 </ImageBackground>
                 <Text style={styles.TxtTitleInstructor}>Ust. Hamdan Ngaja</Text>
+                <Text>{instructor}</Text>
+                <Text>{packages.Price_Package}</Text>
                 <Text style={styles.TxtFromInstructor}>Asal Sulawesi Selatan</Text>
             </View>
         )
@@ -144,7 +147,10 @@ const ClassInstructorProfile = (props) => {
                         title='Pilih Pengajar'
                         style={styles.BtnPengajar}
                         textStyle={styles.TxtButton}
-                        onPress={() => navigation.navigate('ClassPreference')}
+                        onPress={() => {
+                            navigation.navigate('ClassPreference',
+                            { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' } )
+                        }}
                     />
             </View>
         )
@@ -173,6 +179,7 @@ const ClassInstructorProfile = (props) => {
 }
 
 ClassInstructorProfile.propTypes = {
+    route: PropTypes.object,
     navigation: PropTypes.object,
   }
 

@@ -218,7 +218,9 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     backgroundColor: '#cbcbcb',
   },
-
+  ViewSchedule: {
+    marginTop: 10,
+  }
 })
 
 export default styles

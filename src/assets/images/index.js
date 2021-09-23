@@ -286,6 +286,7 @@ export default {
 
   //Class About Dirosa
   IconBookGreen : require('./IconBookGreen.svg'),
+  IconUnionGreen : require('./IconUnionGreen.svg'),
   IconTimesGreen : require('./IconTimesGreen.svg'),
   IconRangeGreen : require('./IconRangeGreen.svg'),
   IconVideoGreen : require('./IconVideoGreen.svg'),

@@ -1,3 +1,5 @@
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { List } from 'react-native-paper'
@@ -18,12 +20,12 @@ import {
     ScrollView,
     RefreshControl,
     TouchableOpacity,
-    ImageBackground,
   } from 'react-native'
 
 import {
+    Alerts,
+    TextBox,
     Buttons,
-    Searchbox,
     ModalDate,
     LoadingView,
 } from '../../../../components'
@@ -33,8 +35,9 @@ import styles from './class-preference.style'
 
 const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
-const ClassPreference = () => {
+const ClassPreference = (props) => {
     const navigation = useNavigation()
+    const { classes, packages, instructor } = props.route.params
     const [modalDateVisibleEnd, setModalDateVisibleEnd] = useState(false)
     const [modalDateVisibleStart, setModalDateVisibleStart] = useState(false)
     const toggleModalDateEnd = () => setModalDateVisibleEnd(!modalDateVisibleEnd)
@@ -46,6 +49,29 @@ const ClassPreference = () => {
     const [toggleCheckBoxTeenager, setToggleCheckBoxTeenager] = useState(false)
     
     const [selectedIndex, setSelectedIndex] = useState(0)
+
+    const FormSubmit = useFormik({
+        initialValues: { Meet1: '', Meet2: '', Umur: '', System: '' },
+        validationSchema: Yup.object({
+        //   Meet1: Yup.string()
+        //     .required('Jadwal Pertemuan 1 harus diisi'),
+        //   Meet2: Yup.string()
+        //     .required('Jadwal Pertemuan 2 harus diisi'),
+        //   Umur: Yup.string()
+        //     .required('Untuk Siapa'),
+        //   System: Yup.string()
+        //     .required('Sistem belajar harus diisi'),
+        }),
+        onSubmit: async () => {
+            try {
+                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' })
+            } catch (err) {
+                // console.log('woy')
+                return err
+            }
+        },
+    })
+
     const Header = () => {
         return (
           <View style={styles.containerHeaderProfile}>
@@ -68,6 +94,8 @@ const ClassPreference = () => {
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <Image source={Images.IconPreference} style={styles.StyleIcon} />
                     <Text style={styles.TxtTitle}>Tentukan Jadwal</Text>
+                <Text>{instructor}</Text>
+                <Text>{packages.Price_Package}</Text>
                     <Text style={styles.TxtChildTitle}>2x Pertemuan Perminggu</Text>
                     <Text style={styles.TxtMeet}>Pertemuan 1</Text>
                     <TouchableOpacity
@@ -135,6 +163,8 @@ const ClassPreference = () => {
 
                     <View style={styles.ViewCheck}>
                         <RadioGroup
+                            // name='System'
+                            // form={FormSubmit}
                             selectedIndex={selectedIndex}
                             onChange={index => setSelectedIndex(index)}>
                             <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
@@ -146,7 +176,7 @@ const ClassPreference = () => {
                         title='Selanjutnya'
                         style={styles.BtnPengajar}
                         textStyle={styles.TxtButton}
-                        onPress={() => navigation.navigate('ClassMeeting')}
+                        onPress={FormSubmit.handleSubmit}
                     />
                 </Card>
             </View>
@@ -179,6 +209,11 @@ const ClassPreference = () => {
         />
         </>
     )
+}
+
+ClassPreference.propTypes = {
+    route: PropTypes.object,
+    navigation : PropTypes.object
 }
 
 export default ClassPreference
