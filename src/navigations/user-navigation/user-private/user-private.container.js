@@ -21,6 +21,7 @@ import {
   ClassUserDirect,
   InspiratifStory,
   TransactionInfo,
+  UserNotification,
   ClassTrialDirect, 
   TransactionUpload,
   TransactionMethod,
@@ -62,6 +63,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='InspiratifStory' component={InspiratifStory} />
       <Stack.Screen name='ClassListMentor' component={ClassListMentor} />
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
+      <Stack.Screen name='UserNotification' component={UserNotification} />
       <Stack.Screen name='ClassTrialDirect' component={ClassTrialDirect} />
       <Stack.Screen name='ClassDetailDirect' component={ClassDetailDirect} />
       <Stack.Screen name='TransactionMethod' component={TransactionMethod} />

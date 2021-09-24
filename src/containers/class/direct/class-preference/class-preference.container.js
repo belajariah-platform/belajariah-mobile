@@ -20,7 +20,7 @@ import {
     ScrollView,
     RefreshControl,
     TouchableOpacity,
-  } from 'react-native'
+} from 'react-native'
 
 import {
     Alerts,

@@ -46,7 +46,19 @@ import {
   ClassInstructorProfile, 
 } from './class'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
-import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
+import { 
+  Login, 
+  Register, 
+  CheckEmail, 
+  UserVerify, 
+  Introduction, 
+  Consultation, 
+  EditPassword,
+  ConfirmPassword, 
+  UserNotification, 
+  ConsultationDetail, 
+  UserVerifyPassword, 
+} from './user'
 
 
 export {
@@ -92,6 +104,7 @@ export {
   ClassUserDirect,
   AdminTransaction,
   AdminProfileEdit,
+  UserNotification,
   ClassTrialDirect, 
   ClassDetailDirect, 
   TransactionUpload,

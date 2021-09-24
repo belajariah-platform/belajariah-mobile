@@ -47,6 +47,7 @@ export default {
   StarEmptyClass: require('./StarEmptyClass.svg'),
   ImgLupaPassword: require('./ImgLupaPassword.png'),
   IconRecordVoice : require('./IconRecordVoice.svg'),
+  IconNotification: require('./IconNotification.svg'),
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
@@ -321,6 +322,11 @@ export default {
 
   //Modal Rating Direct
   IconCheckLisDirect : require('./IconCheckLisDirect.svg'),
+
+  //Notification User
+  IconMessageNo : require('./IconMessageNo.svg'),
+  IconMessageYes : require('./IconMessageYes.svg'),
+  IconNotificationEmpty : require('./IconNotificationEmpty.svg'),
 
 }
 

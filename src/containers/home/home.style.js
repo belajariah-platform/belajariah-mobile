@@ -231,6 +231,10 @@ const styles = StyleSheet.create({
     width: Resp.TextBannerMainWP,
     height: Resp.TextBannerMainHP,
   },
+  ViewHeaderProf: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   headerContainer: {
     marginTop: 12,
     flexDirection: 'row',

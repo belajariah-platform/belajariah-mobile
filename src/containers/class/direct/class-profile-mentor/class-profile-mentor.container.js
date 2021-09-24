@@ -22,7 +22,6 @@ import {
 import { Images, Color } from '../../../../assets'
 
 import styles from './class-profile-mentor.style'
-import images from '../../../../assets/images'
 
 const ClassInstructorProfile = (props) => {
     const navigation = useNavigation()
@@ -191,6 +190,6 @@ const ClassInstructorProfile = (props) => {
 ClassInstructorProfile.propTypes = {
     route: PropTypes.object,
     navigation: PropTypes.object,
-  }
+}
 
 export default ClassInstructorProfile
