@@ -58,29 +58,6 @@ const ClassAboutDirect = ({ params, packages }) => {
     fetchDataLearning(dataState, params.Code)
   }, [])
 
-  const ListMateri = [
-    { id: '1. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'خَ - أَ'},
-    { id: '2. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'صَ - دَ'},
-    { id: '3. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'كَ - طَ'},
-    { id: '4. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'يَ - لَ'},
-    { id: '5. ', TxtMeet: 'Pertemuan: Huruf Hijaiyyah Asli'},
-    { id: '6. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'سَ سِ سُ - أَ أِ اُ'},
-    { id: '7. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'مَ مِ مُ - شَ شِ شُ'},
-    { id: '8. ', TxtMeet: 'Pertemuan: Huruf ', TxtMateri: 'يَ يِ يُ - نَ نِ نُ'},
-    { id: '9. ', TxtMeet: 'Pertemuan: Tanwin'},
-    { id: '10. ', TxtMeet: 'Pertemuan: Bacaan Mad Thobi i dan Mad Wajib'},
-    { id: '11. ', TxtMeet: 'Pertemuan: Bacaan Mad Iwadh dan Mad Badal'},
-    { id: '12. ', TxtMeet: 'Pertemuan: Tasydid'},
-    { id: '13. ', TxtMeet: 'Pertemuan: Sukun'},
-    { id: '14. ', TxtMeet: 'Pertemuan: Bacaan ', TxtMateri: 'بَؤ نَ - بَيْنَ'},
-    { id: '15. ', TxtMeet: 'Pertemuan: Bacaan ', TxtMateri: 'تَقْ-تَكْ - تَعْ-تأْ'},
-    { id: '16. ', TxtMeet: 'Pertemuan: Lam Qomariyah, Lam Syamsiyah dan Ghunnah'},
-    { id: '17. ', TxtMeet: 'Pertemuan: Cara mewakofkan dan Bacaan Idghom'},
-    { id: '18. ', TxtMeet: 'Pertemuan: Bacaan Iqlab dan Idghom mimi/ Syafawi'},
-    { id: '19. ', TxtMeet: 'Pertemuan: Bacaan Ikhfa dan Idzhar'},
-    { id: '20. ', TxtMeet: 'Pertemuan: Huruf awal Surah, Lam Jalalah dan Bacaan Ghorib Musykilat'},
-  ]
-
   const BenefitCategory = [
     { Value : 'Diajar oleh ustadz/ustadzah berkompeten & berpengalaman|ustadz' },
     { Value : 'Waktu belajar yang sesuai dengan waktu senggang anda|time' },
@@ -187,32 +164,13 @@ const ClassAboutDirect = ({ params, packages }) => {
           </View>
         </View>
         <View style={styles.containerList}>
-          {ListMateri.map((item, index) => {
+          {state.map((topic, index) => {
+            const no = 1
+            const name = no + index + '. '
             return (
-              // <List.Accordion key={index} title={topic.Title} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-              //   {topic.SubTitles.map((item, subindex) => {
-              //     const no = subindex + 1
-              //     const name = no + '. ' + item.Sub_Title
-              //     // return (
-              //     //   index == 0 ? (
-              //     //     <TouchableOpacity
-              //     //       key={subindex}
-              //     //       onPress={() =>
-              //     //         navigation.navigate('ClassTrial', { item : item, classes : params, packages : packages })
-              //     //       }>
-              //     //       <List.Item title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
-              //     //     </TouchableOpacity>
-              //     //   ) : (
-              //     //     <List.Item key={subindex} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
-              //     //   )
-              //     // )
-              //     return <List.Item key={subindex} title={name} titleStyle={styles.textRegular} style={styles.containerItem} />
-              //   })}
-              // </List.Accordion>
               <View key={index} style={styles.ViewItem}>
-                <Text style={styles.TxtListMateriId}>{item.id}</Text>
-                <Text style={styles.TxtListMateri}>{item.TxtMeet}</Text>
-                <Text style={styles.TxtListMateriArab}>{item.TxtMateri}</Text>
+                <Text>{name}</Text>
+                <Text style={styles.TxtListMateri}>{topic.Title}</Text>
               </View>
             )
           })}

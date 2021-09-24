@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef, } from 'react'
 import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
@@ -11,22 +11,44 @@ import {
     ScrollView,
     RefreshControl,
     TouchableOpacity,
-    ImageBackground,
   } from 'react-native'
 
 import {
     Searchbox,
     LoadingView,
-    Buttons,
 } from '../../../../components'
+import { MentorAPI } from '../../../../api'
+import { Response } from '../../../../utils'
 import { Images, Color } from '../../../../assets'
 
 import styles from './class-list-mentor.style'
-import images from '../../../../assets/images'
 
 const ClassListMentor = (props) => {
     const navigation = useNavigation()
     const { classes, packages, instructor } = props.route.params
+
+    const [stateMentor, setStateMentor] = useState([])
+    const [loadingMentor, setloadingMentor] = useState(true)
+    const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+
+    const fetchDataMentor = async ({ skip, take, filterString }) => {
+        try {
+          setloadingMentor(true)
+          const response = await MentorAPI.GetAllMentor(skip, take, filterString)
+          if (response.status === Response.SUCCESS) {
+            setStateMentor(response.data.data)
+          } 
+          setloadingMentor(false)
+        } catch (err) {
+          setloadingMentor(false)
+          return err
+        }
+    }
+
+    useEffect(() => {
+        fetchDataMentor(dataState)
+      }, [])
+
     const Header = () => {
         return (
           <View style={styles.containerHeader}>
@@ -49,37 +71,71 @@ const ClassListMentor = (props) => {
         )
     }
 
-    const CardList = (item, index) => {
+    const CardList = () => {
+        const handleSplitString = (value) => {
+            const stringSplit = value.split('|')
+            return stringSplit.map((val, index) => {
+              if (val.includes('<Img>')) {
+                return  (
+                  <Text key={index}/>
+                )
+              } else {
+                return (
+                  <Text key={index}>{val}. </Text>
+                )}})
+        }
         return (
-            <Card
-                containerStyle={styles.cardStyle}>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate('ClassInstructorProfile',
-                    { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' } )
-                }}>
-                    <View style={styles.viewStyle}>
-                        <Image source={Images.ImgProfileMentor} style={styles.imageStyle}/>
-                        <View style={styles.containerDesc}>
-                            <Text style={styles.textStyle}>Ust. Hamdan Ngaja</Text>
-                            <Text style={styles.City}>{packages.Price_Package}</Text>
-                            <View style={styles.ViewRating}>
-                                <Text style={styles.TxtRating}>5.0</Text>
-                                <Images.Star.default />
+            <View>
+                {stateMentor.map((item, index) => {
+                    return (
+                        <Card
+                            key={index}
+                            containerStyle={styles.cardStyle}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('ClassInstructorProfile',
+                                { classes : classes, packages : packages, instructor : item } )
+                            }}>
+                                <View style={styles.viewStyle}>
+                                    <Image source={item.Image_Filepath == '' ? 
+                                        Images.ImageProfileDefault : { uri : props.item.Image_Filepath }}
+                                        style={styles.imageStyle}
+                                    />
+                                    <View style={styles.containerDesc}>
+                                        <View style={styles.ViewTop}>
+                                            <View style={styles.ViewTxtMentor}>
+                                                <Text style={styles.textStyle}>{item.Full_Name}</Text>
+                                                <Text style={styles.textStyleCity}>Asal {item.City}</Text>
+                                            </View>
+                                            <View style={styles.viewNotifClass}>
+                                                <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.ViewRating}>
+                                            <Text style={styles.TxtRating}>{item.Rating}</Text>
+                                            <Images.Star.default />
+                                        </View>
+                                        <Text style={styles.TxtDesc}>{handleSplitString(item.Description.substring(0, 100))}...</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <View>
+                                <List.Accordion title='Jadwal Pengajar' left={() => <Images.IconScheduleBlack.default style={styles.IconStyle} />} titleStyle={styles.textRegular} style={styles.containerAccordion}>
+                                {item.Schedule && item.Schedule.map((shift, index) => {
+                                    return (
+                                        <View key={index} style={styles.ViewSchedules}>
+                                            <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
+                                            <View style={styles.ViewSchedule}>
+                                                <Text style={styles.textRegular}>({shift.Start_At} - </Text><Text style={styles.textRegular}>{shift.End_At})</Text>
+                                            </View>
+                                        </View>
+                                    )
+                                })}
+                                </List.Accordion>
                             </View>
-                        </View>
-                        <View style={styles.viewNotifClass}>
-                            <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-                
-                <View>
-                    <List.Accordion title='Jadwal Pengajar' left={() => <Images.IconScheduleBlack.default style={styles.IconStyle} />} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                        <List.Item title='Senin (09:00 - 12:00 WIB)' titleStyle={styles.textRegular} style={styles.containerItem} />
-                    </List.Accordion>
-                </View>
-
-            </Card>
+                        </Card>
+                    )
+                })}
+            </View>
         )
     }
 
@@ -100,10 +156,6 @@ const ClassListMentor = (props) => {
                         )}
                         />
                 </View>
-                <CardList />
-                <CardList />
-                <CardList />
-                <CardList />
                 <CardList />
             </ScrollView>
         </View> 

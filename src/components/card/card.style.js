@@ -86,8 +86,7 @@ const styles = StyleSheet.create({
   textPriceR : {
     textAlign : 'right',
     fontFamily : FontType.regular,
-    fontSize : FontSize.extraSmall,
-    textDecorationLine: 'line-through',
+    fontSize : FontSize.smallMedium,
   },
   text5 : {
     marginRight : 12,
@@ -100,8 +99,8 @@ const styles = StyleSheet.create({
     marginRight : 12,
     color : '#1DB597',
     textAlign : 'right',
-    fontSize : FontSize.small,
     fontFamily : FontType.bold,
+    fontSize : FontSize.smallMedium,
   },
   avatar : {
     width : 40,

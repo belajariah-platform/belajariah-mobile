@@ -64,7 +64,7 @@ const ClassPreference = (props) => {
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' })
+                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor })
             } catch (err) {
                 // console.log('woy')
                 return err
@@ -94,8 +94,6 @@ const ClassPreference = (props) => {
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <Image source={Images.IconPreference} style={styles.StyleIcon} />
                     <Text style={styles.TxtTitle}>Tentukan Jadwal</Text>
-                <Text>{instructor}</Text>
-                <Text>{packages.Price_Package}</Text>
                     <Text style={styles.TxtChildTitle}>2x Pertemuan Perminggu</Text>
                     <Text style={styles.TxtMeet}>Pertemuan 1</Text>
                     <TouchableOpacity

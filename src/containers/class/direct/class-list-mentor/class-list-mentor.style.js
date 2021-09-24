@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     },
     viewNotifClass : {
       height: 20,
+      // textAlign: 'right',
       paddingTop: 2,
       borderRadius: 15,
       paddingHorizontal: 8,
@@ -78,9 +79,21 @@ const styles = StyleSheet.create({
       marginRight: 10,
       borderRadius : 12,
     },
+    ViewTxtMentor : {
+      width: '60%'
+    },
     textStyle: {
+      marginRight: 4,
+      maxWidth: '100%',
       color: Color.black,
       fontFamily: FontType.bold,
+      fontSize: FontSize.smallMedium,
+    },
+    textStyleCity: {
+      marginRight: 4,
+      maxWidth: '100%',
+      color: '#13A98B',
+      fontFamily: FontType.regular,
       fontSize: FontSize.smallMedium,
     },
     iconFilter: {
@@ -94,8 +107,13 @@ const styles = StyleSheet.create({
       fontSize: FontSize.smallPoint,
     },
     containerDesc : {
-      flex : 1,
+      width: '74%',
       marginLeft : 5,
+      marginRight: 10,
+    },
+    ViewTop : {
+      justifyContent: 'space-between',
+      flexDirection: 'row',
     },
     textRegular: {
       lineHeight : 15,
@@ -119,13 +137,26 @@ const styles = StyleSheet.create({
       marginTop: '-2%',
     },
     ViewRating: {
-      marginTop: 8,
+      marginVertical: 6,
       flexDirection: 'row',
     },
     TxtRating: {
       marginRight: 6,
+    },
+    TxtDesc: {
+      width: '100%',
+    },
+    ViewSchedules : {
+      width: '100%',
+      flexDirection: 'row',
+      marginLeft: '-10%',
+    },
+    ViewSchedule : {
+      flexDirection: 'row',
+    },
+    TxtSchedule : {
+      marginRight: 1,
     }
-
   })
   
   export default styles

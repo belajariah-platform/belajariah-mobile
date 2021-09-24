@@ -35,7 +35,7 @@ const ModalClassDirect = (props) => {
                     <Text style={styles.TxtTitlePackage}>{item.Type}</Text>
                     <Text style={styles.textDescPackage}>{item.Description}</Text>
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text style={styles.TxtPrice}>Rp{FormatRupiah(item.Price_Package)}</Text>
+                      <Text style={styles.TxtPrice}>Rp{FormatRupiah(item.Price_Discount)}</Text>
                       <Text style={styles.TxtMeet}>/Bln</Text>
                     </View>
                   </View>

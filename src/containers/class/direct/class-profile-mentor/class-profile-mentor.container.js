@@ -50,12 +50,13 @@ const ClassInstructorProfile = (props) => {
         return (
             <View style={styles.ViewTitle}>
                 <ImageBackground source={Images.BackgroundMentor} style={styles.BackgroundImg}>
-                    <Image source={Images.ImgProfileMentor} style={styles.imageStyleInstructor}/>
+                    <Image source={instructor.Image_Filepath == '' ? 
+                        Images.ImageProfileDefault : { uri : instructor.Image_Filepath }} 
+                        style={styles.imageStyleInstructor}
+                    />
                 </ImageBackground>
-                <Text style={styles.TxtTitleInstructor}>Ust. Hamdan Ngaja</Text>
-                <Text>{instructor}</Text>
-                <Text>{packages.Price_Package}</Text>
-                <Text style={styles.TxtFromInstructor}>Asal Sulawesi Selatan</Text>
+                <Text style={styles.TxtTitleInstructor}>{instructor.Full_Name}</Text>
+                <Text style={styles.TxtFromInstructor}>Asal {instructor.City}</Text>
             </View>
         )
     }
@@ -71,7 +72,7 @@ const ClassInstructorProfile = (props) => {
                         />
                         <View style={styles.ViewTxt}>
                             <Text style={styles.TxttitleCard}>Deskripsi & Pengalaman Mengajar Dirosa</Text>
-                            <Text style={styles.TxtDescCard}>Seorang Ustadz yang menempuh pendidikan di Sekolah tinggi Ilmu islam dan Bahasa Arab Makasar, telah berpengalaman mengajar menggunakan metode Dirosa untuk mengajar dari tingkat pelajar sampai orang tua. Alhamdulillah setelah santri belajar Al-Qur’an menggunakan metode Dirosa hasilnya mereka mulai mengingat kembali huruf-huruf hijaiyah yang sempat lupa karena tidak pernah belajar dan membaca Al-Qur’an lagi dan setelah mengikuti program 20x pertemuan dikelas Dirosa, bacaan Al-Qur’an mereka jauh lebih baik dan lancar.</Text>
+                            <Text style={styles.TxtDescCard}>{instructor.Description}</Text>
                         </View>
                     </View>
                 </Card>
@@ -110,9 +111,18 @@ const ClassInstructorProfile = (props) => {
                         />
                         <View style={styles.ViewTxt}>
                             <Text style={styles.TxttitleCard}>Jadwal Pengajar</Text>
-                            <View style={styles.ViewSchedule}>
-                                <Text style={styles.TxtSchedule}>Sabtu (08.00 - 09.30)</Text>
-                                <Text style={styles.TxtSchedule}>Ahad (08.00 - 09.30)</Text>
+                            <View>
+                            {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
+                                return (
+                                    <View key={subindex} style={styles.ViewSchedules}>
+                                        <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
+                                        <View style={styles.ViewSchedule}>
+                                            <Text>({item.Start_At} - </Text>
+                                            <Text>{item.End_At})</Text>
+                                        </View>
+                                    </View>                            
+                                )
+                            })}
                             </View>
                         </View>
                     </View>
@@ -123,7 +133,7 @@ const ClassInstructorProfile = (props) => {
 
     const SystemInstructor = () => {
         return (
-            <View>
+            <View style={{marginBottom: 10,}}>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
                         <Images.IconSystemGreen.default  
@@ -132,7 +142,7 @@ const ClassInstructorProfile = (props) => {
                         />
                         <View style={styles.ViewTxt}>
                             <Text style={styles.TxttitleCard}>Sistem Belajar</Text>
-                            <Text style={styles.TxtDescCard}>Bisa Online dan Offline</Text>
+                            <Text style={styles.TxtDescSystem}>{instructor.Learning_Method_Text}</Text>
                         </View>
                     </View>
                 </Card>
@@ -149,7 +159,7 @@ const ClassInstructorProfile = (props) => {
                         textStyle={styles.TxtButton}
                         onPress={() => {
                             navigation.navigate('ClassPreference',
-                            { classes : classes, packages : packages, instructor : 'Ust. Hamdan Ngaja' } )
+                            { classes : classes, packages : packages, instructor : instructor } )
                         }}
                     />
             </View>

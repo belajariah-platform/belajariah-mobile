@@ -34,6 +34,7 @@ const  Cards = (props)  => {
   }
 
   const TxtCardDirect = () => {
+    const Discount_Price = props.item.Price_Start - props.item.Price_Start_Discount
     return (
       <View style={styles.content}>
         <View style={styles.rating}>
@@ -41,10 +42,10 @@ const  Cards = (props)  => {
           <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - </Text>
           <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_End)}</Text>
         </View>
-        <Text style={styles.textPriceBld}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
+        <Text style={styles.textPriceBld}>(Hemat Rp{FormatRupiah(Discount_Price)})</Text>
         <View style={styles.PriceR}>
-          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_Start)} - </Text>
-          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_End)}</Text>
+          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - </Text>
+          <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
         </View>
       </View>
     )

@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
   TxtListMateri: {
     maxWidth: '90%',
     color: Color.black,
-    fontSize: FontSize.medium,
     fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
   },
   TxtListMateriArab: {
     maxWidth: '65%',

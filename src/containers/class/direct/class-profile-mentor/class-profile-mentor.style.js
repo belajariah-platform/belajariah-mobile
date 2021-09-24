@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
     },
     TxtTitleInstructor : {
       marginTop: '8%',
+      maxWidth: '90%',
       color: '#1DB597',
+      textAlign: 'center',
       fontFamily: FontType.bold,
       fontSize: FontSize.largeMiddle,
     },
@@ -86,7 +88,11 @@ const styles = StyleSheet.create({
     },
     TxtDescCard : {
       lineHeight: 18,
-      maxWidth: '93%',
+      maxWidth: '96%',
+      textAlign: 'justify',
+    }, 
+    TxtDescSystem : {
+      lineHeight: 18,
       textAlign: 'justify',
     }, 
     ViewTxt : {
@@ -111,12 +117,14 @@ const styles = StyleSheet.create({
       fontFamily: FontType.bold,
       fontSize: FontSize.mediumLarge,
     },
+    ViewSchedules : {
+      flexDirection: 'row',
+    },
     ViewSchedule : {
-      // flexDirection: 'row',
-      // justifyContent: 'space-between',
+      flexDirection: 'row',
     },
     TxtSchedule : {
-      marginRight: 1,
+      marginRight: 0,
     }
   })
   

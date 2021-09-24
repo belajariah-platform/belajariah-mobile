@@ -37,7 +37,7 @@ import { Images, Color } from '../../assets'
 import styles from './transaction-method.style'
 
 const TransactionMethod = (props) => {
-  const { classes, packages } = props.route.params
+  const { classes, packages, instructor } = props.route.params
 
   const navigation = useNavigation()
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -192,7 +192,9 @@ const TransactionMethod = (props) => {
           <Text style={styles.textBold}>Judul Kelas:</Text>
           <Text style={styles.textRegular}>{classes.Class_Name}</Text>
           <Text style={styles.textBold}>Instruktur</Text>
-          <Text style={styles.textRegular}>{`${classes.Instructor_Name}, ${classes.Instructor_Biografi}`}</Text>
+          {classes.Is_Direct == true ? 
+          (<Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>)
+          : <Text style={styles.textRegular}>{`${classes.Instructor_Name}, ${classes.Instructor_Biografi}`}</Text>}
           {classes.Class_Rating != 0 && (
             <>
               <Text style={styles.textBold}>Rating</Text>
