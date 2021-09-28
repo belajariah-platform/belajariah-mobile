@@ -37,7 +37,7 @@ const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 
 const ClassPreference = (props) => {
     const navigation = useNavigation()
-    const { classes, packages, instructor } = props.route.params
+    const { classes, packages, instructor, item } = props.route.params
     const [modalDateVisibleEnd, setModalDateVisibleEnd] = useState(false)
     const [modalDateVisibleStart, setModalDateVisibleStart] = useState(false)
     const toggleModalDateEnd = () => setModalDateVisibleEnd(!modalDateVisibleEnd)
@@ -64,13 +64,26 @@ const ClassPreference = (props) => {
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor })
+                navigation.navigate('ClassMeeting', { classes : classes, packages : packages, instructor : instructor })
             } catch (err) {
                 // console.log('woy')
                 return err
             }
         },
     })
+
+    const RadioFull = () => {
+        return (
+            <RadioGroup
+                // name='System'
+                // form={FormSubmit}
+                selectedIndex={selectedIndex}
+                onChange={index => setSelectedIndex(index)}>
+                <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
+                <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
+            </RadioGroup>
+        )
+    }
 
     const Header = () => {
         return (
@@ -165,8 +178,12 @@ const ClassPreference = (props) => {
                             // form={FormSubmit}
                             selectedIndex={selectedIndex}
                             onChange={index => setSelectedIndex(index)}>
-                            <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
-                            <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
+                            {instructor.Learning_Method_Text == 'Online dan Offline' ? 
+                                <RadioFull />
+                                    : instructor.Learning_Method_Text == 'Online' ? 
+                                        <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
+                                            : <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
+                            }
                         </RadioGroup>
                     </View>
 

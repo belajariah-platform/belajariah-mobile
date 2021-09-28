@@ -112,6 +112,8 @@ const styles = StyleSheet.create({
   },
   TopHeader : {
     paddingVertical: 20,
+    width: '100%',
+    paddingHorizontal: '6%',
     flexDirection: 'row',
     alignItems: 'center',
     borderTopLeftRadius: 20,
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.purpleButton,
   },
   TxtHeader : {
-    maxWidth: '60%',
+    maxWidth: '80%',
     lineHeight: 20,
     color: Color.white,
     fontSize: FontSize.medium,
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
   },
   IconHeader : {
     marginRight: 16,
-    marginLeft: '16%',
+    marginLeft: '1%',
   },
   TxtHeaderBld : {
     color: Color.white,

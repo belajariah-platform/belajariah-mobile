@@ -206,7 +206,19 @@ const TransactionMethod = (props) => {
           {classes.Is_Direct == true ? (
             <View style={styles.ViewSchedule}>
               <Text style={styles.textBold}>Jadwal Ngaji</Text>
-              <Text style={styles.textRegular}>Sabtu (08.00 - 09.30) dan Ahad (08.00 - 09.30)</Text>
+              <View>
+                {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
+                  return (
+                    <View key={subindex} style={styles.ViewSchedules}>
+                        <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
+                        <View style={styles.ViewScheduleR}>
+                            <Text style={styles.TxtSchedule}>({item.Start_At} - </Text>
+                            <Text style={styles.TxtSchedule}>{item.End_At})</Text>
+                        </View>
+                    </View>                            
+                  )
+                })}
+              </View>
             </View>
           ) : null}
           {isClaim ? (null) : (

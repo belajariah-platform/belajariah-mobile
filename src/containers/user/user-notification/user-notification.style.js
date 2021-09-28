@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
       width: '100%',
       borderTopLeftRadius: 26,
       borderTopRightRadius: 26,
-      backgroundColor: Color.white,
+      backgroundColor: Color.purpleMedium,
     },
     textTitleHeader: {
       color: Color.white,
@@ -44,6 +44,16 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       paddingHorizontal: 10,
       backgroundColor: Color.white,
+    },
+    cardStyleFilter: {
+      padding: 0,
+      elevation: 0,
+      width: 'auto',
+      height: 'auto',
+      borderWidth : 0,
+      borderRadius: 10,
+      paddingHorizontal: 10,
+      backgroundColor: Color.purpleMedium,
     },
     ContainerNo : {
       marginTop: '30%',
@@ -95,6 +105,7 @@ const styles = StyleSheet.create({
     },
     ContainerListFilter : {
       marginBottom: 20,
+      backgroundColor: Color.purpleMedium,
     },
     // ViewBtnList : {
     //   paddingVertical: 20,
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
       marginTop: 4,
       borderWidth: 1,
       borderRadius: 20,
-      paddingVertical: 6,
+      paddingVertical: 10,
       marginHorizontal: 4,
       paddingHorizontal: 24,
       borderColor: Color.white,

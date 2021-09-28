@@ -19,16 +19,22 @@ const  Cards = (props)  => {
               Images.ImageProfileDefault : { uri : props.item.Instructor_Image }}
           />
           <View style={styles.bioView}>
-            <Text style={styles.text2}>{props.item.Instructor_Name}</Text>
-            <Text style={styles.text3}>Pengajar Tahsin</Text>
+            <Text style={styles.text2}>{props.item.Instructor_Name} Al-Hafidz</Text>
+            <Text style={styles.text3}>- Mudir Rumah Tahfidz Al-Firdaus</Text>
+            <Text style={styles.text3}>- Pengajar SIT Al-Azhar Cairo Palembang</Text>
           </View>
         </View>
-        <Card.Divider style={styles.divider} />
+        <View style={styles.rating}>
+          {props.rating}
+          <Images.IconVideoTahsin.default />
+          <Text style={styles.TxtMeetJml}><Text style={styles.TxtMeetJmlBld}>{props.item.Total_Video}</Text> Video Materi</Text>
+        </View>
+        {/* <Card.Divider style={styles.divider} />
         <View style={styles.rating}>
           {props.rating}
           <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)}</Text>
         </View>
-        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text>
+        <Text style={styles.text5}>Rp{FormatRupiah(props.item.Price_Start_Discount)}</Text> */}
       </View>
     )
   }
@@ -39,6 +45,11 @@ const  Cards = (props)  => {
       <View style={styles.content}>
         <View style={styles.rating}>
           {props.rating}
+          <Images.IconPertemuanDirosa.default />
+          <Text style={styles.TxtMeetJml}><Text style={styles.TxtMeetJmlBld}>20</Text> Pertemuan</Text>
+        </View>
+        {/* <View style={styles.rating}>
+          {props.rating}
           <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_Start)} - </Text>
           <Text style={styles.text4}>Rp{FormatRupiah(props.item.Price_End)}</Text>
         </View>
@@ -46,7 +57,7 @@ const  Cards = (props)  => {
         <View style={styles.PriceR}>
           <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_Start_Discount)} - </Text>
           <Text style={styles.textPriceR}>Rp{FormatRupiah(props.item.Price_End_Discount)}</Text>
-        </View>
+        </View> */}
       </View>
     )
   }

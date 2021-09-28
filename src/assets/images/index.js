@@ -20,7 +20,6 @@ export default {
   BotHomeHint: require('./HomeHint.svg'),
   BotTransact: require('./Transact.svg'),
   ButtonBack: require('./ButtonBack.svg'),
-  CardDirosa : require('./CardDirosa.png'),
   HomeBG: require('./HomeBackground.png'),
   BtnArrowUp: require('./BtnArrowUp.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
@@ -45,6 +44,7 @@ export default {
   JudulTilawah: require('./CardJudulTilawah.svg'),
   StarEmptyBlack: require('./StarEmptyBlack.svg'),
   StarEmptyClass: require('./StarEmptyClass.svg'),
+  IconVideoTahsin: require('./IconVideoTahsin.svg'),
   ImgLupaPassword: require('./ImgLupaPassword.png'),
   IconRecordVoice : require('./IconRecordVoice.svg'),
   IconNotification: require('./IconNotification.svg'),
@@ -56,6 +56,7 @@ export default {
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
+  IconPertemuanDirosa: require('./IconPertemuanDirosa.svg'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
   //Camera
@@ -324,9 +325,14 @@ export default {
   IconCheckLisDirect : require('./IconCheckLisDirect.svg'),
 
   //Notification User
-  IconMessageNo : require('./IconMessageNo.svg'),
-  IconMessageYes : require('./IconMessageYes.svg'),
   IconNotificationEmpty : require('./IconNotificationEmpty.svg'),
+
+  //Emoji Icon 
+  IconEmotOne : require('./EmotOne.svg'),
+  IconEmotTwo : require('./EmotTwo.svg'),
+  IconEmotThree : require('./EmotThree.svg'),
+  IconEmotFour : require('./EmotFour.svg'),
+  IconEmotFive : require('./EmotFive.svg'),
 
 }
 

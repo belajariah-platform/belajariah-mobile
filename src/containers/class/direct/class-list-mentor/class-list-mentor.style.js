@@ -156,7 +156,10 @@ const styles = StyleSheet.create({
     },
     TxtSchedule : {
       marginRight: 1,
-    }
+    }, 
+    LoadingStyle : {
+      marginTop: '50%',
+    },
   })
   
   export default styles

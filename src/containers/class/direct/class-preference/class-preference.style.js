@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     StyleB : {
       backgroundColor: '#1DB597',
-    }
+    },
   })
   
   export default styles

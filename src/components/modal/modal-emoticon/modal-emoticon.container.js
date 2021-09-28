@@ -7,40 +7,35 @@ import Slider from '@react-native-community/slider'
 import { Images } from '../../../assets'
 import { Buttons } from '../../../components'
 
-import { styles } from './modal-rating-direct.style'
+import { styles } from './modal-emoticon.style'
 
-const ModalRatingDirect = (props) => {
+const ModalEmoticon = (props) => {
     const maxRating = [1, 2, 3, 4, 5]
     const [defaultRating, setDefaultRating] = useState(0)
+   
+    const getEmoji = () => {
+      if (defaultRating >= 0 && defaultRating <= 2) {
+        return <Images.IconEmotOne.default />
+      }
+      else if (defaultRating >= 2 && defaultRating <= 4) {
+        return <Images.IconEmotTwo.default />
+      }
+      else if (defaultRating >= 5 && defaultRating <= 6) {
+        return <Images.IconEmotThree.default />
+      }
+      else if (defaultRating >= 7 && defaultRating <= 8) {
+        return <Images.IconEmotFour.default />
+      }
+      else if (defaultRating <= 10) {
+        return <Images.IconEmotFive.default />
+      }
+    
+    }
 
     useEffect(() => {
         !props.isVisible ?
         setDefaultRating(0) : null
     }, [props.isVisible])
-
-    const RatingbarClass = () => {
-        return (
-          <View style={styles.customRatingBarStyle}>
-            {maxRating.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  activeOpacity={0.5}
-                  key={index}
-                  onPress={() => setDefaultRating(item)}>
-                  <Image
-                    style={styles.starImageStyle}
-                    source={
-                      item <= defaultRating
-                        ? Images.BintangFull
-                        : Images.BintangBorder
-                    }
-                  />
-                </TouchableOpacity>
-              )
-            })}
-          </View>
-        )
-    }
     
     const ReviewClass = () => {
         return (
@@ -48,17 +43,16 @@ const ModalRatingDirect = (props) => {
             <View style={styles.TopHeader}>
                 <Images.IconCheckLisDirect.default style={styles.IconHeader} />
                 <Text style={styles.TxtHeader}>
-                  <Text style={styles.TxtHeaderBld}>Hore!, </Text>anda telah menyelesaikan pertemuan bulan ini.
+                  <Text style={styles.TxtHeaderBld}>Beri Penilaian, </Text>Hasil pertemuan anda hari ini
                 </Text>
               </View>
-            <View style={styles.ViewTxtMdl}>
-              <Text style={styles.TextTitleRating}>
-                <Text style={styles.TextTitleRatingBld}>Beri</Text>
-                <Text style={styles.TextTitleRatingBldYellow}> Penilaian</Text>
-                , Hasil belajarmu
-              </Text>
+            <View style={styles.ViewSlider}>
+              <Text style={styles.TxtRatingVal}>{defaultRating}</Text>
+              <Slider style={{height: 40}} thumbTintColor='#6E248D' minimumValue={1} maximumValue={10} step={1} onValueChange={setDefaultRating}  minimumTrackTintColor='#6E248D' maximumTrackTintColor='#6E248D' />
+              <View style={{alignItems: 'center'}}>
+                {getEmoji()}
+              </View>
             </View>
-            <RatingbarClass />
             <View style={styles.containerTextArea}>
               {props.renderItem}
             </View>
@@ -96,7 +90,7 @@ const ModalRatingDirect = (props) => {
     )
 }
 
-ModalRatingDirect.propTypes = {
+ModalEmoticon.propTypes = {
     submit : PropTypes.func,
     title : PropTypes.string,
     isVisible : PropTypes.bool,
@@ -106,4 +100,4 @@ ModalRatingDirect.propTypes = {
     containerStyle : PropTypes.object,
 }
 
-export default ModalRatingDirect
+export default ModalEmoticon

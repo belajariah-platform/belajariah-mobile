@@ -63,11 +63,11 @@ const UserNotification = (props) => {
     const FilterNotification = () => {
         return (
             <View style={styles.ContainerListFilter}>
-                <Card containerStyle={styles.cardStyle}>
+                <Card containerStyle={styles.cardStyleFilter}>
                     <View style={styles.ViewListFilter}>
                         {ListFilter.map((list, index) => {
                             return (
-                                <View key={index} style={styles.ViewBtnList}>
+                                <View key={index}>
                                     <TouchableOpacity
                                         onPress={() => {setFilterSelected(list.id)}}>
                                         <Text style={[
@@ -105,7 +105,6 @@ const UserNotification = (props) => {
                                         <Text style={styles.TxtListMentorMeet}>Pertemuan {item.id}</Text>
                                         <View style={styles.ViewListBody}>
                                             <Text style={styles.TxtListMentor}>From ; {item.TxtMentor}</Text>
-                                            <Images.IconMessageNo.default />
                                         </View>
                                         <Text style={styles.TxtDateNotif}>{item.TxtDate}</Text>
                                         <Text style={styles.TxtListSt}>{item.TxtStNotif}</Text>

@@ -86,6 +86,12 @@ const styles = StyleSheet.create({
       fontFamily: FontType.bold,
       fontSize: FontSize.medium,
     },
+    TxttitleCardOther : {
+      marginBottom: 6,
+      color: '#1DB597',
+      fontFamily: FontType.bold,
+      fontSize: FontSize.medium,
+    },
     TxtDescCard : {
       lineHeight: 18,
       maxWidth: '96%',
@@ -125,6 +131,7 @@ const styles = StyleSheet.create({
     },
     TxtSchedule : {
       marginRight: 0,
+      // fontFamily: FontType.bold,
     }
   })
   

@@ -220,6 +220,17 @@ const styles = StyleSheet.create({
   },
   ViewSchedule: {
     marginTop: 10,
+  },
+  ViewSchedules : {
+    flexDirection: 'row',
+  },
+  ViewScheduleR : {
+    flexDirection: 'row',
+  },
+  TxtSchedule : {
+    marginRight: 0,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
   }
 })
 

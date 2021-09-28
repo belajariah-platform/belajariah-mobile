@@ -17,7 +17,6 @@ import {
     Buttons,
     Searchbox,
     LoadingView,
-    ModalPreference,
 } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
@@ -26,8 +25,6 @@ import styles from './class-profile-mentor.style'
 const ClassInstructorProfile = (props) => {
     const navigation = useNavigation()
     const { classes, packages, instructor } = props.route.params
-    const [modalPreferenceVisible, setmodalPreferenceVisible] = useState(false)
-    const toggleModalPreference = () => setmodalPreferenceVisible(!modalPreferenceVisible)
     
     const Header = () => {
         return (
@@ -140,7 +137,7 @@ const ClassInstructorProfile = (props) => {
                             height={22}
                         />
                         <View style={styles.ViewTxt}>
-                            <Text style={styles.TxttitleCard}>Sistem Belajar</Text>
+                            <Text style={styles.TxttitleCardOther}>Sistem Belajar</Text>
                             <Text style={styles.TxtDescSystem}>{instructor.Learning_Method_Text}</Text>
                         </View>
                     </View>
@@ -178,11 +175,6 @@ const ClassInstructorProfile = (props) => {
             </ScrollView>
             <BtnInstructor />
         </View> 
-        <ModalPreference
-            isVisible={modalPreferenceVisible}
-            backdropPress={() => toggleModalPreference()}
-            backButtonPress={() => togglemodalPreference()}
-        />
         </>
     )
 }

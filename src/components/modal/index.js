@@ -4,8 +4,8 @@ import ModalRepair from './modal-repair'
 import ModalRating from './modal-rating'
 import ModalRecord from './modal-record'
 import ModalConfirm from './modal-confirm'
+import ModalEmoticon from './modal-emoticon'
 import ModalInfoClass from './modal-info-class'
-import ModalPreference from './modal-preference'
 import ModalNoConnection from './modal-connection'
 import ModalClassDirect from './modal-class-direct'
 import ModalRatingDirect from './modal-rating-direct'
@@ -25,9 +25,9 @@ export {
   ModalRecord,
   ModalRepair,
   ModalConfirm,
+  ModalEmoticon,
   ModalInfoClass,
   ModalFilterUser,
-  ModalPreference,
   ModalFilterAdmin,
   ModalClassDirect,
   ModalRatingDirect,

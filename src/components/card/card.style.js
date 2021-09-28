@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor : 'white',
   },
   rating : {
+    marginTop: 10,
     flexDirection : 'row',
     marginHorizontal : 12,
   },
@@ -82,6 +83,14 @@ const styles = StyleSheet.create({
     fontFamily : FontType.regular,
     fontSize : FontSize.extraSmall,
     textDecorationLine: 'line-through',
+  },
+  TxtMeetJml : {
+    fontFamily : FontType.regular,
+    fontSize : FontSize.extraSmall,
+  },
+  TxtMeetJmlBld : {
+    fontFamily : FontType.bold,
+    fontSize : FontSize.extraSmall,
   },
   textPriceR : {
     textAlign : 'right',

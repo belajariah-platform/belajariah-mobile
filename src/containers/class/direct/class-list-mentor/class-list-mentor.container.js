@@ -29,7 +29,7 @@ const ClassListMentor = (props) => {
 
     const [stateMentor, setStateMentor] = useState([])
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
+    const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "CLC00000003"}]' })
 
     const fetchDataMentor = async ({ skip, take, filterString }) => {
         try {
@@ -106,9 +106,9 @@ const ClassListMentor = (props) => {
                                                 <Text style={styles.textStyle}>{item.Full_Name}</Text>
                                                 <Text style={styles.textStyleCity}>Asal {item.City}</Text>
                                             </View>
-                                            <View style={styles.viewNotifClass}>
+                                            {/* <View style={styles.viewNotifClass}>
                                                 <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
-                                            </View>
+                                            </View> */}
                                         </View>
                                         <View style={styles.ViewRating}>
                                             <Text style={styles.TxtRating}>{item.Rating}</Text>
@@ -156,7 +156,10 @@ const ClassListMentor = (props) => {
                         )}
                         />
                 </View>
-                <CardList />
+                {loadingMentor ? 
+                <View style={styles.LoadingStyle}>
+                    <LoadingView color='#fff' />
+                </View> : <CardList />}
             </ScrollView>
         </View> 
     )
