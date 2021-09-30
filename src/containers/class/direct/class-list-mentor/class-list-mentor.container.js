@@ -1,3 +1,4 @@
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState, useEffect, useRef, } from 'react'
 import { List } from 'react-native-paper'
@@ -28,8 +29,22 @@ const ClassListMentor = (props) => {
     const { classes, packages, instructor } = props.route.params
 
     const [stateMentor, setStateMentor] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "CLC00000003"}]' })
+    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "CLC00000003"}]' })
+
+    const onDataStateChange = (event) => {
+        setDataState({
+          ...dataState,
+          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "class_code", "value": "CLC00000003"}]`
+        })
+    }
+
+    const onRefreshing = () => {
+        setRefreshing(true)
+        fetchDataMentor(dataState)
+        setRefreshing(false)
+    }
 
     const fetchDataMentor = async ({ skip, take, filterString }) => {
         try {
@@ -46,8 +61,21 @@ const ClassListMentor = (props) => {
     }
 
     useEffect(() => {
-        fetchDataMentor(dataState)
-      }, [])
+        const delay = setTimeout(() => {
+            fetchDataMentor(dataState)
+        }, 500)
+        return () => clearTimeout(delay)
+    }, [dataState])
+
+    const renderFooter = () => {
+        return loadingMentor ? (
+          <View style={styles.indicatorContainer}>
+            <LoadingView
+              size={30}
+              color='#fff'/>
+          </View>
+        ) : null
+    }
 
     const Header = () => {
         return (
@@ -71,7 +99,7 @@ const ClassListMentor = (props) => {
         )
     }
 
-    const CardList = () => {
+    const CardList = (item, index) => {
         const handleSplitString = (value) => {
             const stringSplit = value.split('|')
             return stringSplit.map((val, index) => {
@@ -85,82 +113,86 @@ const ClassListMentor = (props) => {
                 )}})
         }
         return (
-            <View>
-                {stateMentor.map((item, index) => {
-                    return (
-                        <Card
-                            key={index}
-                            containerStyle={styles.cardStyle}>
-                            <TouchableOpacity onPress={() => {
-                                navigation.navigate('ClassInstructorProfile',
-                                { classes : classes, packages : packages, instructor : item } )
-                            }}>
-                                <View style={styles.viewStyle}>
-                                    <Image source={item.Image_Filepath == '' ? 
-                                        Images.ImageProfileDefault : { uri : props.item.Image_Filepath }}
-                                        style={styles.imageStyle}
-                                    />
-                                    <View style={styles.containerDesc}>
-                                        <View style={styles.ViewTop}>
-                                            <View style={styles.ViewTxtMentor}>
-                                                <Text style={styles.textStyle}>{item.Full_Name}</Text>
-                                                <Text style={styles.textStyleCity}>Asal {item.City}</Text>
-                                            </View>
-                                            {/* <View style={styles.viewNotifClass}>
-                                                <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
-                                            </View> */}
-                                        </View>
-                                        <View style={styles.ViewRating}>
-                                            <Text style={styles.TxtRating}>{item.Rating}</Text>
-                                            <Images.Star.default />
-                                        </View>
-                                        <Text style={styles.TxtDesc}>{handleSplitString(item.Description.substring(0, 100))}...</Text>
+            <View key={index}>
+                <Card containerStyle={styles.cardStyle}>
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('ClassInstructorProfile',
+                        { classes : classes, packages : packages, instructor : item } )
+                    }}>
+                        <View style={styles.viewStyle}>
+                            <Image source={item.Image_Filepath == '' ? 
+                                Images.ImageProfileDefault : { uri : props.item.Image_Filepath }}
+                                style={styles.imageStyle}
+                            />
+                            <View style={styles.containerDesc}>
+                                <View style={styles.ViewTop}>
+                                    <View style={styles.ViewTxtMentor}>
+                                        <Text style={styles.textStyle}>{item.Full_Name}</Text>
+                                        <Text style={styles.textStyleCity}>Asal {item.City}</Text>
                                     </View>
+                                    {/* <View style={styles.viewNotifClass}>
+                                        <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
+                                    </View> */}
                                 </View>
-                            </TouchableOpacity>
-                            <View>
-                                <List.Accordion title='Jadwal Pengajar' left={() => <Images.IconScheduleBlack.default style={styles.IconStyle} />} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                                {item.Schedule && item.Schedule.map((shift, index) => {
-                                    return (
-                                        <View key={index} style={styles.ViewSchedules}>
-                                            <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
-                                            <View style={styles.ViewSchedule}>
-                                                <Text style={styles.textRegular}>({shift.Start_At} - </Text><Text style={styles.textRegular}>{shift.End_At})</Text>
-                                            </View>
-                                        </View>
-                                    )
-                                })}
-                                </List.Accordion>
+                                <View style={styles.ViewRating}>
+                                    <Text style={styles.TxtRating}>{item.Rating}</Text>
+                                    <Images.Star.default />
+                                </View>
+                                <Text style={styles.TxtDesc}>{handleSplitString(item.Description.substring(0, 100))}...</Text>
                             </View>
-                        </Card>
-                    )
-                })}
+                        </View>
+                    </TouchableOpacity>
+                    <View>
+                        <List.Accordion title='Jadwal Pengajar' left={() => <Images.IconScheduleBlack.default style={styles.IconStyle} />} titleStyle={styles.textRegular} style={styles.containerAccordion}>
+                            {item.Schedule && item.Schedule.map((shift, index) => {
+                                return (
+                                    <View key={index} style={styles.ViewSchedules}>
+                                        <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
+                                        <View style={styles.ViewSchedule}>
+                                            <Text style={styles.textRegular}>{moment(shift.Start_At).format('h:mm A')} ({moment(shift.Start_At).format('llll')}) - </Text>
+                                            <Text style={styles.textRegular}>{shift.End_At})</Text>
+                                        </View>
+                                    </View>
+                                )
+                            })}
+                        </List.Accordion>
+                    </View>
+                </Card>
             </View>
         )
     }
 
-    
-
     return (
         <View style={styles.containerMain}>
             <Header />
-            <ScrollView>
-                <View style={styles.containerSearch}>
-                    <Searchbox
-                        size='medium'
-                        style={styles.searchbox}
-                        // onChangeText={onDataStateChange}
-                        placeholder='Masukkan Nama Guru Ngaji'
-                        accessoryRight={() => (
-                            <Images.Search.default style={{ marginRight: -12 }} />
-                        )}
-                        />
-                </View>
-                {loadingMentor ? 
-                <View style={styles.LoadingStyle}>
-                    <LoadingView color='#fff' />
-                </View> : <CardList />}
-            </ScrollView>
+            <View style={styles.containerSearch}>
+                <Searchbox
+                    size='medium'
+                    style={styles.searchbox}
+                    onChangeText={onDataStateChange}
+                    placeholder='Masukkan Nama Guru Ngaji'
+                    accessoryRight={() => (
+                        <Images.Search.default style={{ marginRight: -12 }} />
+                    )}
+                />
+            </View>
+            {loadingMentor ? 
+            <View style={styles.LoadingStyle}>
+                <LoadingView color='#fff' />
+            </View> : 
+            stateMentor == 0 ? (<Text>Nggak Ada Lur</Text>) :
+            <FlatList
+                data={stateMentor}
+                style={{ width:'100%' }}
+                onEndReachedThreshold={0.1}
+                ListFooterComponent={renderFooter}
+                // onEndReached={(e) => onLoadMore(e)}
+                showsVerticalScrollIndicator ={false}
+                contentContainerStyle={{ paddingBottom: 20 }}
+                keyExtractor={(item, index) =>  index.toString()}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+                renderItem={({ item, index }) => CardList(item, index)}/>
+            }
         </View> 
     )
 }

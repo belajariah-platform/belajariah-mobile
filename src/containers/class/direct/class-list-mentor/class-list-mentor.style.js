@@ -160,6 +160,11 @@ const styles = StyleSheet.create({
     LoadingStyle : {
       marginTop: '50%',
     },
+    indicatorContainer : {
+      top : 12,
+      marginBottom : 7,
+      alignItems:'center',
+    },
   })
   
   export default styles

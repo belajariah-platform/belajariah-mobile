@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import { List } from 'react-native-paper'
 import { Card } from 'react-native-elements'
+// import { WebView} from 'react-native-webview'
 import React, { useEffect, useState } from 'react'
 import NetInfo from '@react-native-community/netinfo'
 import {
@@ -65,7 +65,7 @@ const ClassAboutDirect = ({ params, packages }) => {
     { Value : 'Belajar yang tidak terhalang jarak dan tempat karena belajar secara online melalui video call|online' },
     { Value : 'Proses belajar yang full praktek|praktek' },
     { Value : 'Bisa belajar meski memiliki jarak yang Jauh dengan ustadz/ustadzah|range' },
-    { Value : 'Free buku Dirosa sebagai panduan belajar|ebook' },
+    { Value : 'Free E-Book Dirosa sebagai panduan belajar|ebook' },
     { Value : 'Metode belajar yang menyenangkan dan mudah dipahami|metode' },
     { Value : 'Terdapat Pembinaan Berkelanjutan|union' },
   ]
@@ -131,6 +131,7 @@ const ClassAboutDirect = ({ params, packages }) => {
           component={
             <Text style={styles.textRegularParaf}>
               {handleSplitString(params.Class_Description)}
+              <Text style={styles.textRegularParaf}>{packages.Description}</Text>
             </Text>
           }
         />
@@ -227,7 +228,7 @@ const ClassAboutDirect = ({ params, packages }) => {
             width={26}
             height={26}
           />
-          <Text style={styles.TxtEbook}>Unduh Ebook Dirosa</Text>
+          <Text style={styles.TxtEbook}>Unduh E-book Dirosa</Text>
         </TouchableOpacity>
       </Card>
     )

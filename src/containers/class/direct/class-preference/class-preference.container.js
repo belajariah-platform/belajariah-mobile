@@ -64,7 +64,7 @@ const ClassPreference = (props) => {
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('ClassMeeting', { classes : classes, packages : packages, instructor : instructor })
+                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor })
             } catch (err) {
                 // console.log('woy')
                 return err
