@@ -140,6 +140,14 @@ const styles = StyleSheet.create({
     StyleB : {
       backgroundColor: '#1DB597',
     },
+    ViewSchedules : {
+      marginVertical: 4,
+      flexDirection: 'row',
+    },
+    ViewSchedule : {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
   })
   
   export default styles

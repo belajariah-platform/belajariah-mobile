@@ -15,6 +15,7 @@ import {
 import {
     Buttons,
     ModalDate,
+    ModalEmoticon,
     ModalRatingDirect,
 } from '../../../../components'
 import { Images, Color } from '../../../../assets'
@@ -105,23 +106,25 @@ const ClassMeeting = () => {
         </View> 
         <ModalDate
             mode='date'
+            date={new Date}
             titleBtn='Pilih Jadwal'
             styleBtn={styles.StyleB}
             isVisible={modalDateVisibleStart}
-            date={new Date}
             backdropPress={() => toggleModalDateStart()}
         />
-        <ModalRatingDirect
+        <ModalEmoticon
           isVisible={modalVisible}
           backdropPress={() => toggleModal()}
           backButtonPress={() => toggleModal()}
           // title='Beri Penilaian, Hasil belajarmu'
-          renderItem={  <TextInput
+          renderItem={  
+          <TextInput
             multiline={true}
-            numberOfLines={8}
+            numberOfLines={5}
             // onChangeText={(e) => setComment(e)}
             style={styles.textArea}
-            />}
+            placeholder='Catatan untuk Ustadz/Ustadzah'
+          />}
         />
       </>
     )

@@ -48,14 +48,14 @@ const ModalRatingDirect = (props) => {
             <View style={styles.TopHeader}>
                 <Images.IconCheckLisDirect.default style={styles.IconHeader} />
                 <Text style={styles.TxtHeader}>
-                  <Text style={styles.TxtHeaderBld}>Hore!, </Text>anda telah menyelesaikan pertemuan bulan ini.
+                  <Text style={styles.TxtHeaderBld}>Alhamdulillah!, </Text>anda telah menyelesaikan pertemuan bulan ini.
                 </Text>
               </View>
             <View style={styles.ViewTxtMdl}>
               <Text style={styles.TextTitleRating}>
                 <Text style={styles.TextTitleRatingBld}>Beri</Text>
                 <Text style={styles.TextTitleRatingBldYellow}> Penilaian</Text>
-                , Hasil belajarmu
+                , untuk Ustadz/Ustadzahmu
               </Text>
             </View>
             <RatingbarClass />

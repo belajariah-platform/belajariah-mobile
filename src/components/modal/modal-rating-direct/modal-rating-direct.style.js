@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   modalStyle : {
     zIndex: 1,
     width: '100%',
-    height: height/1.75,
+    height: height/1.74,
     alignSelf: 'center',
     // paddingHorizontal:25,
     // paddingTop: 20,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   ViewTxtMdl : {
-    marginVertical: 16,
+    marginVertical: 14,
   },
   containerTextArea : {
     marginTop: 20,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     color: Color.purpleButton,
   },
   TopHeader : {
-    paddingVertical: 20,
+    paddingVertical: 16,
     flexDirection: 'row',
     alignItems: 'center',
     borderTopLeftRadius: 20,

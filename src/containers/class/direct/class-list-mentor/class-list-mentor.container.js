@@ -149,8 +149,7 @@ const ClassListMentor = (props) => {
                                     <View key={index} style={styles.ViewSchedules}>
                                         <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text style={styles.textRegular}>{moment(shift.Start_At).format('h:mm A')} ({moment(shift.Start_At).format('llll')}) - </Text>
-                                            <Text style={styles.textRegular}>{shift.End_At})</Text>
+                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('h:mm A')} - {moment(shift.End_At).format('h:mm A')})</Text>
                                         </View>
                                     </View>
                                 )

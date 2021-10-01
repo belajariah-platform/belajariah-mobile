@@ -78,7 +78,12 @@ const TransactionMethod = (props) => {
       Class_Code : classes.Code,
     },
     onSubmit:  (values) => {
-      claimVoucherCode(values)
+      if (classes.Is_Direct == true) {
+        ToastAndroid.show('Mohon Maaf, Voucher Tidak Bisa digunakan untuk Pembelian Kelas ini',
+          ToastAndroid.SHORT)
+      } else {
+        claimVoucherCode(values)
+      }
     },
   })
 

@@ -219,11 +219,15 @@ const ClassAboutDirect = ({ params, packages }) => {
     )
   }
 
+  
   const EbookDownload = () => {
+    const UrlEbook = { 
+      path : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Ebook%20Dirosa.pdf'
+    }
     return (
       <Card containerStyle={styles.ViewCardEbook}>
         <TouchableOpacity style={styles.ViewTouch}
-          onPress={() =>  DownloadFile()}>
+          onPress={() =>  DownloadFile(UrlEbook)}>
           <Images.IconDownloadDirosa.default 
             width={26}
             height={26}

@@ -1,8 +1,7 @@
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
-import { List } from 'react-native-paper'
+import React, { useState, useEffect } from 'react'
 import { 
     Text, 
     Icon, 
@@ -16,7 +15,6 @@ import { useNavigation } from '@react-navigation/native'
 import {
     View,
     Image,
-    FlatList,
     ScrollView,
     RefreshControl,
     TouchableOpacity,
@@ -27,8 +25,11 @@ import {
     TextBox,
     Buttons,
     ModalDate,
+    ModalInfo,
     LoadingView,
 } from '../../../../components'
+import { EnumAPI} from '../../../../api'
+import { Response } from '../../../../utils'
 import { Images, Color } from '../../../../assets'
 
 import styles from './class-preference.style'
@@ -38,35 +39,47 @@ const CalendarIcon = (props) => <Icon {...props} name='calendar' />
 const ClassPreference = (props) => {
     const navigation = useNavigation()
     const { classes, packages, instructor, item } = props.route.params
-    const [modalDateVisibleEnd, setModalDateVisibleEnd] = useState(false)
     const [modalDateVisibleStart, setModalDateVisibleStart] = useState(false)
-    const toggleModalDateEnd = () => setModalDateVisibleEnd(!modalDateVisibleEnd)
     const toggleModalDateStart = () => setModalDateVisibleStart(!modalDateVisibleStart)
 
-    const [toggleCheckBoxChild, setToggleCheckBoxChild] = useState(false)
-    const [toggleCheckBoxAdult, setToggleCheckBoxAdult] = useState(false)
-    const [toggleCheckBoxSystem, setToggleCheckBoxSystem] = useState(false)
-    const [toggleCheckBoxTeenager, setToggleCheckBoxTeenager] = useState(false)
-    
     const [selectedIndex, setSelectedIndex] = useState(0)
+    const [selectedSchedule, setSelectedSchedule] = useState('')
+    const [stateCategory, setStateCategory] = useState([])
+    const [dataStateCategory] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+
+    const fetchDataClassCategory = async ({ skip, take, filterString }) => {
+        try {
+          filterString='[{"type": "text", "field" : "type", "value": "age_category"}]'
+          const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+          if (response.status === Response.SUCCESS) {
+            setStateCategory(response.data.data)
+            FormSubmit.setFieldValue('System', response.data.data.filter((e) => e.Value == 'Anak').Code)
+          } 
+        } catch (err) {
+          return err
+        }
+    }
+
+    useEffect(() => {
+        fetchDataClassCategory(dataStateCategory)
+      }, [])
 
     const FormSubmit = useFormik({
-        initialValues: { Meet1: '', Meet2: '', Umur: '', System: '' },
+        initialValues: { Meet1: '', Meet2: '', Umur: '', System: 'Online' },
         validationSchema: Yup.object({
-        //   Meet1: Yup.string()
-        //     .required('Jadwal Pertemuan 1 harus diisi'),
-        //   Meet2: Yup.string()
-        //     .required('Jadwal Pertemuan 2 harus diisi'),
-        //   Umur: Yup.string()
-        //     .required('Untuk Siapa'),
-        //   System: Yup.string()
-        //     .required('Sistem belajar harus diisi'),
+          Meet1: Yup.number()
+            .required('Jadwal Pertemuan 1 harus diisi'),
+          Meet2: Yup.number()
+            .required('Jadwal Pertemuan 2 harus diisi'),
+          Umur: Yup.string()
+            .required('Untuk Siapa'),
+          System: Yup.string()
+            .required('Sistem belajar harus diisi'),
         }),
         onSubmit: async () => {
             try {
                 navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor })
             } catch (err) {
-                // console.log('woy')
                 return err
             }
         },
@@ -74,11 +87,13 @@ const ClassPreference = (props) => {
 
     const RadioFull = () => {
         return (
-            <RadioGroup
-                // name='System'
-                // form={FormSubmit}
+            <RadioGroup     
                 selectedIndex={selectedIndex}
-                onChange={index => setSelectedIndex(index)}>
+                onChange={index => {
+                    setSelectedIndex(index)
+                    FormSubmit.setFieldValue('System', 
+                    index == 0 ? 'Online' : 'Offline')
+            }}>
                 <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
                 <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
             </RadioGroup>
@@ -111,7 +126,10 @@ const ClassPreference = (props) => {
                     <Text style={styles.TxtMeet}>Pertemuan 1</Text>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        onPress={() => setModalDateVisibleStart(true)}>
+                        onPress={() => {
+                            setSelectedSchedule('Meet1')
+                            setModalDateVisibleStart(true)
+                        }}>
                         <Datepicker
                             disabled
                             placeholder='Pilih Jadwal'
@@ -120,11 +138,19 @@ const ClassPreference = (props) => {
                             controlStyle={styles.datePickerControl}
                             // date={new Date}
                         />
+                        {/* <TextBox
+                    name='Meet1'
+                    form={FormSubmit}
+                    placeholder='Profesi'
+                  /> */}
                     </TouchableOpacity>
                     <Text style={styles.TxtMeet}>Pertemuan 2</Text>
                     <TouchableOpacity
                         activeOpacity={0.5}
-                        onPress={() => setModalDateVisibleEnd(true)}>
+                        onPress={() => {
+                            setSelectedSchedule('Meet2')
+                            setModalDateVisibleStart(true)
+                        }}>
                         <Datepicker
                             disabled
                             placeholder='Pilih Jadwal'
@@ -141,30 +167,20 @@ const ClassPreference = (props) => {
                     </View>
 
                     <View style={styles.ContainerCheck}>
-                        <View style={styles.ViewCheck}>
-                            <CheckBox
-                                status='success'
-                                checked={toggleCheckBoxChild}
-                                onChange={nexttoggleCheckBoxChild => setToggleCheckBoxChild(nexttoggleCheckBoxChild)}
-                            />
-                            <Text style={styles.TxtCheck}>Anak</Text>
-                        </View>
-                        <View style={styles.ViewCheck}>
-                            <CheckBox
-                                status='success'
-                                checked={toggleCheckBoxTeenager}
-                                onChange={nexttoggleCheckBoxTeenager => setToggleCheckBoxTeenager(nexttoggleCheckBoxTeenager)}
-                            />
-                            <Text style={styles.TxtCheck}>Remaja</Text>
-                        </View>
-                        <View style={styles.ViewCheck}>
-                            <CheckBox
-                                status='success'
-                                checked={toggleCheckBoxAdult}
-                                onChange={nexttoggleCheckBoxAdult => setToggleCheckBoxAdult(nexttoggleCheckBoxAdult)}
-                            />
-                            <Text style={styles.TxtCheck}>Dewasa</Text>
-                        </View>
+                        {stateCategory.map((item, index) => {
+                            return (
+                                <View style={styles.ViewCheck} key={index}>
+                                    <CheckBox
+                                        status='success'
+                                        checked={FormSubmit.values['Umur'] == item.Code}
+                                        onChange={() => {
+                                            FormSubmit.setFieldValue('Umur', item.Code)
+                                        }}
+                                    />
+                                    <Text style={styles.TxtCheck}>{item.Value}</Text>
+                                </View>
+                            )
+                        })}
                     </View>
 
                     <View style={styles.ViewTitle}>
@@ -173,11 +189,13 @@ const ClassPreference = (props) => {
                     </View>
 
                     <View style={styles.ViewCheck}>
-                        <RadioGroup
-                            // name='System'
-                            // form={FormSubmit}
+                        <RadioGroup 
                             selectedIndex={selectedIndex}
-                            onChange={index => setSelectedIndex(index)}>
+                            onChange={index => {
+                                setSelectedIndex(index)
+                                FormSubmit.setFieldValue('System', 
+                                index == 0 ? 'Online' : 'Offline')
+                            }}>
                             {instructor.Learning_Method_Text == 'Online dan Offline' ? 
                                 <RadioFull />
                                     : instructor.Learning_Method_Text == 'Online' ? 
@@ -197,7 +215,8 @@ const ClassPreference = (props) => {
             </View>
         )
     }
-
+    // {console.log( FormSubmit.values['Meet1'])}
+    // console.log('HELLO', FormSubmit.values)
     return (
         <>
         <View style={styles.containerMainProfile}>
@@ -206,21 +225,47 @@ const ClassPreference = (props) => {
                 <PreferenceBody />
             </ScrollView>
         </View> 
-        <ModalDate
-            mode='date'
+        <ModalInfo
             titleBtn='Pilih Jadwal'
             styleBtn={styles.StyleB}
             isVisible={modalDateVisibleStart}
-            date={new Date}
             backdropPress={() => toggleModalDateStart()}
-        />
-        <ModalDate
-            mode='date'
-            titleBtn='Pilih Jadwal'
-            styleBtn={styles.StyleB}
-            isVisible={modalDateVisibleEnd}
-            date={new Date}
-            backdropPress={() => toggleModalDateEnd()}
+            renderItem={
+                <View>
+                    {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
+                        return (
+                            <TouchableOpacity key={subindex} onPress={() => {
+                                if (
+                                    FormSubmit.values['Meet1'] !== item.ID && 
+                                    FormSubmit.values['Meet2'] !== item.ID
+                                    )
+                               if (selectedSchedule === 'Meet1') {
+                                   FormSubmit.setFieldValue('Meet1', item.ID)
+                               } else {
+                                   FormSubmit.setFieldValue('Meet2', item.ID)
+                               }
+                            }}>
+                                <View style={{
+                                    ...styles.ViewSchedules, 
+                                    backgroundColor : selectedSchedule === 'Meet1' 
+                                    && item.ID == FormSubmit.values['Meet1'] 
+                                    || selectedSchedule === 'Meet2' 
+                                    && item.ID == FormSubmit.values['Meet2'] 
+                                    ? '#13A98B' : '#fff'
+                                    }}>
+                                    <Text>{item.Shift_Name} </Text>
+                                    <View style={styles.ViewSchedule}>
+                                        <Text>({item.Start_At} - </Text>
+                                        <Text>{item.End_At})</Text>
+                                    </View>
+                                </View>    
+                            </TouchableOpacity>                        
+                        )
+                    })}
+                    <Buttons 
+                        title='Pilih'
+                        onPress={toggleModalDateStart} />
+                </View>}
         />
         </>
     )

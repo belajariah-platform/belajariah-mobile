@@ -48,7 +48,16 @@ const ModalEmoticon = (props) => {
               </View>
             <View style={styles.ViewSlider}>
               <Text style={styles.TxtRatingVal}>{defaultRating}</Text>
-              <Slider style={{height: 40}} thumbTintColor='#6E248D' minimumValue={1} maximumValue={10} step={1} onValueChange={setDefaultRating}  minimumTrackTintColor='#6E248D' maximumTrackTintColor='#6E248D' />
+              <Slider 
+                step={1} 
+                minimumValue={1} 
+                maximumValue={10} 
+                style={{height: 40}} 
+                thumbTintColor='#6E248D' 
+                onValueChange={setDefaultRating}  
+                minimumTrackTintColor='#6E248D' 
+                maximumTrackTintColor='#6E248D' 
+              />
               <View style={{alignItems: 'center'}}>
                 {getEmoji()}
               </View>

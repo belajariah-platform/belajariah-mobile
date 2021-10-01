@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
       height: 100,
       elevation : 1,
       borderRadius: 20,
+      textAlign: 'center',
       paddingHorizontal: 10,
       marginHorizontal: '6%',
       backgroundColor: '#f1f3f4',
