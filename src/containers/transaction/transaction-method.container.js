@@ -1,3 +1,4 @@
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
@@ -37,7 +38,7 @@ import { Images, Color } from '../../assets'
 import styles from './transaction-method.style'
 
 const TransactionMethod = (props) => {
-  const { classes, packages, instructor } = props.route.params
+  const { classes, packages, instructor, FormSchedule } = props.route.params
 
   const navigation = useNavigation()
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -217,8 +218,7 @@ const TransactionMethod = (props) => {
                     <View key={subindex} style={styles.ViewSchedules}>
                         <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
                         <View style={styles.ViewScheduleR}>
-                            <Text style={styles.TxtSchedule}>({item.Start_At} - </Text>
-                            <Text style={styles.TxtSchedule}>{item.End_At})</Text>
+                            <Text style={styles.TxtSchedule}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
                         </View>
                     </View>                            
                   )

@@ -87,12 +87,12 @@ const ClassListMentor = (props) => {
                 </TouchableOpacity>
                 <Text style={styles.textTitleWhite}>Daftar Guru Ngaji</Text>
               </View>
-              <TouchableOpacity style={styles.iconFilter}>
+              {/* <TouchableOpacity style={styles.iconFilter}>
                 <Images.Filter.default
                     width={20}
                     height={20}
                 />
-               </TouchableOpacity>
+               </TouchableOpacity> */}
             </View>
             <View style={styles.semiBox} />
           </View>
@@ -149,7 +149,7 @@ const ClassListMentor = (props) => {
                                     <View key={index} style={styles.ViewSchedules}>
                                         <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('h:mm A')} - {moment(shift.End_At).format('h:mm A')})</Text>
+                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('LT')} - {moment(shift.End_At).format('LT')})</Text>
                                         </View>
                                     </View>
                                 )
@@ -179,7 +179,7 @@ const ClassListMentor = (props) => {
             <View style={styles.LoadingStyle}>
                 <LoadingView color='#fff' />
             </View> : 
-            stateMentor == 0 ? (<Text>Nggak Ada Lur</Text>) :
+            stateMentor == 0 ? (<Text>Ustadz/Ustadzah yang kamu cari tidak ada</Text>) :
             <FlatList
                 data={stateMentor}
                 style={{ width:'100%' }}

@@ -148,6 +148,15 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
     },
+    NewStyleInputSch : {
+      height: 40,
+      width: '100%',
+      marginBottom: 6,
+      borderRadius: 8,
+      // paddingHorizontal: 8,
+      borderColor: '#BDBDBD33',
+      backgroundColor: '#BDBDBD33',
+    }
   })
   
   export default styles

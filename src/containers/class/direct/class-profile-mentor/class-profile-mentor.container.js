@@ -1,3 +1,4 @@
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
@@ -113,8 +114,7 @@ const ClassInstructorProfile = (props) => {
                                     <View key={subindex} style={styles.ViewSchedules}>
                                         <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text>({item.Start_At} - </Text>
-                                            <Text>{item.End_At})</Text>
+                                            <Text>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
                                         </View>
                                     </View>                            
                                 )

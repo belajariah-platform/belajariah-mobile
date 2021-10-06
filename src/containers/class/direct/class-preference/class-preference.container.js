@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+import moment from 'moment'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState, useEffect } from 'react'
@@ -78,7 +79,7 @@ const ClassPreference = (props) => {
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor })
+                navigation.navigate('TransactionMethod', { classes : classes, packages : packages, instructor : instructor, FormSchedule : FormSubmit.values })
             } catch (err) {
                 return err
             }
@@ -116,6 +117,17 @@ const ClassPreference = (props) => {
         )
     }
 
+    const FormattingSchedule = (code) => {
+        // console.log(code)
+        if (code > 0) {
+            const formatObj = instructor.Schedule.filter((e) => e.ID == code)
+            // console.log(formatObj[0].Shift_Name)
+            return formatObj[0].Shift_Name + ' ' + moment(formatObj[0].Start_At).format('LT') + ' - ' +   moment(formatObj[0].End_At).format('LT')
+        } else { 
+            return ''
+        }
+    } 
+
     const PreferenceBody = () => {
         return (
             <View>
@@ -130,19 +142,22 @@ const ClassPreference = (props) => {
                             setSelectedSchedule('Meet1')
                             setModalDateVisibleStart(true)
                         }}>
-                        <Datepicker
+                        {/* <Datepicker
                             disabled
                             placeholder='Pilih Jadwal'
                             accessoryRight={CalendarIcon}
                             style={styles.datePickerInput}
                             controlStyle={styles.datePickerControl}
                             // date={new Date}
+                        /> */}
+                        <TextBox
+                            disabled
+                            value={FormattingSchedule(FormSubmit.values['Meet1'])}
+                            placeholder='Pilih Jadwal'
+                            accessoryRight={CalendarIcon}
+                            style={styles.datePickerInput}
+                            customStyle={styles.NewStyleInputSch}
                         />
-                        {/* <TextBox
-                    name='Meet1'
-                    form={FormSubmit}
-                    placeholder='Profesi'
-                  /> */}
                     </TouchableOpacity>
                     <Text style={styles.TxtMeet}>Pertemuan 2</Text>
                     <TouchableOpacity
@@ -151,13 +166,21 @@ const ClassPreference = (props) => {
                             setSelectedSchedule('Meet2')
                             setModalDateVisibleStart(true)
                         }}>
-                        <Datepicker
+                        {/* <Datepicker
                             disabled
                             placeholder='Pilih Jadwal'
                             accessoryRight={CalendarIcon}
                             style={styles.datePickerInput}
                             controlStyle={styles.datePickerControl}
                             // date={new Date}
+                        /> */}
+                        <TextBox
+                            disabled
+                            value={FormattingSchedule(FormSubmit.values['Meet2'])}
+                            placeholder='Pilih Jadwal'
+                            accessoryRight={CalendarIcon}
+                            style={styles.datePickerInput}
+                            customStyle={styles.NewStyleInputSch}
                         />
                     </TouchableOpacity>
 
@@ -215,8 +238,8 @@ const ClassPreference = (props) => {
             </View>
         )
     }
-    // {console.log( FormSubmit.values['Meet1'])}
-    // console.log('HELLO', FormSubmit.values)
+    // console.log('HELLO 1', FormSubmit.values)
+    // console.log('HELLO 2', instructor.Schedule)
     return (
         <>
         <View style={styles.containerMainProfile}>
@@ -226,7 +249,8 @@ const ClassPreference = (props) => {
             </ScrollView>
         </View> 
         <ModalInfo
-            titleBtn='Pilih Jadwal'
+            // titleBtn='Pilih Jadwal'
+            hideButtonClose={true}
             styleBtn={styles.StyleB}
             isVisible={modalDateVisibleStart}
             backdropPress={() => toggleModalDateStart()}
@@ -255,8 +279,7 @@ const ClassPreference = (props) => {
                                     }}>
                                     <Text>{item.Shift_Name} </Text>
                                     <View style={styles.ViewSchedule}>
-                                        <Text>({item.Start_At} - </Text>
-                                        <Text>{item.End_At})</Text>
+                                        <Text>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
                                     </View>
                                 </View>    
                             </TouchableOpacity>                        
