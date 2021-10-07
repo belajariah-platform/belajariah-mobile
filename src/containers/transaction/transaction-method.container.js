@@ -176,6 +176,17 @@ const TransactionMethod = (props) => {
     )
   }
 
+  const FormattingSchedule = (code) => {
+    // console.log(code)
+    if (code > 0) {
+        const formatObj = instructor.Schedule.filter((e) => e.ID == code)
+        // console.log(formatObj[0].Shift_Name)
+        return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_At).format('LT') + ' - ' +   moment(formatObj[0].End_At).format('LT') + ')'
+    } else { 
+        return ''
+    }
+  } 
+
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
@@ -212,17 +223,9 @@ const TransactionMethod = (props) => {
           {classes.Is_Direct == true ? (
             <View style={styles.ViewSchedule}>
               <Text style={styles.textBold}>Jadwal Ngaji</Text>
-              <View>
-                {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
-                  return (
-                    <View key={subindex} style={styles.ViewSchedules}>
-                        <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
-                        <View style={styles.ViewScheduleR}>
-                            <Text style={styles.TxtSchedule}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
-                        </View>
-                    </View>                            
-                  )
-                })}
+              <View style={styles.ViewSchedules}>
+                <Text style={styles.TxtSchedule}>Pertemuan 1 : {FormattingSchedule(FormSchedule['Meet1'])}</Text>
+                <Text style={styles.TxtSchedule}>Pertemuan 2 : {FormattingSchedule(FormSchedule['Meet2'])}</Text>
               </View>
             </View>
           ) : null}
@@ -240,7 +243,6 @@ const TransactionMethod = (props) => {
             </View>
             ) 
           }
-          
         </View>
       </View>
     )
@@ -251,7 +253,7 @@ const TransactionMethod = (props) => {
       <RadioButton.Group onValueChange={(newGateway) => {
         FormCheckout.setFieldValue('Payment_Method_Code', newGateway)
         setGateway(newGateway)}}
-      value={gateway}>
+        value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
 

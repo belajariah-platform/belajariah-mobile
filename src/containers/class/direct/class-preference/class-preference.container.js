@@ -238,7 +238,7 @@ const ClassPreference = (props) => {
             </View>
         )
     }
-    // console.log('HELLO 1', FormSubmit.values)
+    console.log('HELLO 1', FormSubmit.values)
     // console.log('HELLO 2', instructor.Schedule)
     return (
         <>
