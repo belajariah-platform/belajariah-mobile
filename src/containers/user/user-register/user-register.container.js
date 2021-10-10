@@ -1,8 +1,10 @@
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
+import { GoogleSignin } from '@react-native-community/google-signin'
 
 import {
   View,
@@ -32,13 +34,62 @@ import { Images } from '../../../assets'
 import { styles } from './user-register.style'
 import { Config } from '../../../api/config'
 import { Linking } from 'react-native'
+import { SIGN_IN } from '../../../action'
+import { Response, askPermission } from '../../../utils'
 
 const Register = (props) => {
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [checked, setChecked] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  useEffect(() => {
+    askPermission()
+    GoogleSignin.configure({
+      offlineAccess: true,
+      forceCodeForRefreshToken: true,
+      scopes: [`${Config.GOOGLE_SCOPES}`],
+      webClientId: `${Config.GOOGLE_CLIENT}`,
+    })
+  }, [])
+
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices()
+      const userInfo = await GoogleSignin.signIn()
+      console.log(userInfo)
+      if (Object.keys(userInfo).length != 0 ) {
+        const values = {
+          Email : userInfo.user.email,
+          Password : userInfo.user.id,
+          Full_Name : userInfo.user.name,
+        }
+        setLoading(true)
+        const response = await UserAPI.GoogleSignIn(values)
+        console.log(response.data)
+        if (response.data.result) {
+          await dispatch({
+            type: SIGN_IN,
+            token : response.data.token,
+            user: response.data.data,
+            loginType : 'google'
+          })
+        } else {
+          UserAPI.GoogeSignOut()
+        }
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
+      setLoading(false)
+      return error
+    }
+  }
 
   const FormSubmit = useFormik({
     initialValues: {
@@ -129,7 +180,25 @@ const Register = (props) => {
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
           <Image source={Images.Register} style={styles.image}/>
-          <View style={{ marginTop: 30 }}>
+          <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity
+                style={styles.anotherLogin}
+                activeOpacity={0.6}
+                onPress={googleSignIn}
+              >
+                <Image
+                  source={Images.Google}
+                  style={styles.ImageIconStyle}
+                />
+                <View>
+                  <Text style={styles.TxtGoogleButton}>Sign up with Google</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={styles.anotherText}>Atau</Text>
+            </View>
+          <View>
             <Text style={styles.text}>Nama Lengkap</Text>
             <TextBox
               error

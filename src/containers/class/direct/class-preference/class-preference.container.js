@@ -54,16 +54,12 @@ const ClassPreference = (props) => {
           const response = await EnumAPI.GetAllEnum(skip, take, filterString)
           if (response.status === Response.SUCCESS) {
             setStateCategory(response.data.data)
-            FormSubmit.setFieldValue('System', response.data.data.filter((e) => e.Value == 'Anak').Code)
+            FormSubmit.setFieldValue('Umur', response.data.data.filter((e) => e.Value == 'Anak').Code)
           } 
         } catch (err) {
           return err
         }
     }
-
-    useEffect(() => {
-        fetchDataClassCategory(dataStateCategory)
-      }, [])
 
     const FormSubmit = useFormik({
         initialValues: { Meet1: '', Meet2: '', Umur: '', System: 'Online' },
@@ -86,18 +82,44 @@ const ClassPreference = (props) => {
         },
     })
 
-    const RadioFull = () => {
+
+    useEffect(() => {
+        fetchDataClassCategory(dataStateCategory)
+      }, [])
+
+    const RadioInput = () => {
         return (
-            <RadioGroup     
+            <>
+            {instructor.Learning_Method_Text == 'Online dan Offline' ? 
+            (<RadioGroup 
                 selectedIndex={selectedIndex}
                 onChange={index => {
-                    setSelectedIndex(index)
-                    FormSubmit.setFieldValue('System', 
-                    index == 0 ? 'Online' : 'Offline')
-            }}>
+                setSelectedIndex(index)
+                FormSubmit.setFieldValue('System', 
+                index == 0 ? 'Online' : 'Offline')
+                }}>
                 <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
                 <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
-            </RadioGroup>
+            </RadioGroup>) : instructor.Learning_Method_Text == 'Online' ? 
+            (<RadioGroup 
+                selectedIndex={selectedIndex}
+                onChange={index => {
+                setSelectedIndex(index)
+                FormSubmit.setFieldValue('System', 
+                index == 0 ? 'Online' : null)
+                }}>
+                <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
+            </RadioGroup>) : 
+            (<RadioGroup 
+                selectedIndex={selectedIndex}
+                onChange={index => {
+                setSelectedIndex(index)
+                FormSubmit.setFieldValue('System', 
+                index == 0 ? 'Offline' : null)
+                }}>
+                <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
+            </RadioGroup>)}
+            </>
         )
     }
 
@@ -212,20 +234,7 @@ const ClassPreference = (props) => {
                     </View>
 
                     <View style={styles.ViewCheck}>
-                        <RadioGroup 
-                            selectedIndex={selectedIndex}
-                            onChange={index => {
-                                setSelectedIndex(index)
-                                FormSubmit.setFieldValue('System', 
-                                index == 0 ? 'Online' : 'Offline')
-                            }}>
-                            {instructor.Learning_Method_Text == 'Online dan Offline' ? 
-                                <RadioFull />
-                                    : instructor.Learning_Method_Text == 'Online' ? 
-                                        <Radio status='success'><Text style={styles.TxtInputRadio}>Online</Text></Radio>
-                                            : <Radio status='success'><Text style={styles.TxtInputRadio}>Offline</Text></Radio>
-                            }
-                        </RadioGroup>
+                        <RadioInput />
                     </View>
 
                     <Buttons 
@@ -238,7 +247,7 @@ const ClassPreference = (props) => {
             </View>
         )
     }
-    console.log('HELLO 1', FormSubmit.values)
+    // console.log('HELLO 1', FormSubmit.values)
     // console.log('HELLO 2', instructor.Schedule)
     return (
         <>

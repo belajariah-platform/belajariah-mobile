@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
       height: 200,
     },
     TxtMeet : {
-      marginTop: 16,
-      marginBottom: 8,
+      // marginTop: 16,
+      // marginBottom: 8,
       color: Color.black,
       fontSize: FontSize.medium,
       fontFamily: FontType.regular,
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
       height: 'auto',
       borderWidth : 0,
       borderRadius: 0,
+      paddingBottom: 30,
       paddingHorizontal: 10,
       backgroundColor: Color.softPink,
     },
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     },
     StyleImgComplete : {
       marginRight: 20,
+      marginVertical: 10,
     },
     textArea: {
       height: 100,

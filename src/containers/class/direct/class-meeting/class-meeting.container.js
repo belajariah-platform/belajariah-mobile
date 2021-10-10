@@ -34,8 +34,7 @@ const ClassMeeting = () => {
     const toggleModalDateEnd = () => setModalDateVisibleEnd(!modalDateVisibleEnd)
     const toggleModalDateStart = () => setModalDateVisibleStart(!modalDateVisibleStart)
 
-    const toggleModal = (item) => {
-      setDataObj(item)
+    const toggleModal = () => {
       setModalVisible(!modalVisible)
     }
 
@@ -63,18 +62,17 @@ const ClassMeeting = () => {
         )
     }
 
-    const ListMeet = () => {
-      return (
-        <View>
-          <Card containerStyle={styles.cardStyleInstructor}>
-            <View>
-              <Text style={styles.TxtMeet}>Pertemuan 1</Text>
-              <View style={styles.ViewInput}>
+    const DataModal = () => {
+      let Modal = []
+      for(let listModal = 1; listModal <= 20; listModal++) {
+        Modal.push(
+          <View>
+            <Text style={styles.TxtMeet}>Pertemuan {listModal}</Text>
+            <View style={styles.ViewInput}>
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => setModalDateVisibleStart(true)}>
                       <Datepicker
-                          // disabled
                           placeholder='Pilih Jadwal'
                           accessoryRight={CalendarIcon}
                           style={styles.datePickerInput}
@@ -90,8 +88,24 @@ const ClassMeeting = () => {
                       onPress = {() => toggleModal() & setIsComplete(true)}
                     />
                 )}
-              </View>
             </View>
+          </View>
+        )
+      } 
+      return (
+        <View>
+          {Modal.map((item, index) => {
+            return <View key={index}>{item}</View>
+          })}
+        </View>
+      )
+    }
+
+    const ListMeet = () => {
+      return (
+        <View>
+          <Card containerStyle={styles.cardStyleInstructor}>
+            <DataModal />
           </Card>
         </View>
       )

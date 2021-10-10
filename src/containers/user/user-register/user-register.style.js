@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: 30,
+    marginBottom: 16,
     height: hp('23'),
     width: wp('57.5'),
     alignSelf: 'center',
@@ -66,7 +67,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   phoneOne : { width : '24%', marginRight : '2%' },
-  phoneTwo : { width : '74%' }
+  phoneTwo : { width : '74%' },
+  anotherLogin: {
+    height: 50,
+    padding: 9,
+    elevation: 1,
+    width: '100%',
+    marginTop: 15,
+    borderWidth: 0,
+    marginBottom: 24,
+    borderRadius: 30,
+    borderColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 27,
+    backgroundColor: Color.greyHintBG,
+  },
+  ImageIconStyle: {
+    width: 22,
+    height: 22,
+    marginLeft: '25%',
+    resizeMode: 'stretch',
+  },
+  TxtGoogleButton: {
+    marginRight: 5,
+    marginLeft: 15,
+    fontSize: FontSize.medium,
+  },
+  anotherText: {
+    marginTop: 0,
+    marginBottom: 24,
+    textAlign: 'center',
+    fontSize: FontSize.small,
+    color: Color.greyHintText,
+  },
 })
 
 export { styles }
