@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
   anotherLogin: {
     height: 50,
     padding: 9,
-    elevation: 1,
     width: '100%',
+    elevation: 1,
     marginTop: 15,
     borderWidth: 0,
     marginBottom: 24,
@@ -81,18 +81,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 27,
+    justifyContent: 'center',
     backgroundColor: Color.greyHintBG,
   },
   ImageIconStyle: {
-    width: 22,
-    height: 22,
-    marginLeft: '25%',
+    width: 32,
+    height: 32,
     resizeMode: 'stretch',
   },
   TxtGoogleButton: {
     marginRight: 5,
     marginLeft: 15,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.mediumLarge,
   },
   anotherText: {
     marginTop: 0,

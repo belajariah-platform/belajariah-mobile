@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { Color, FontSize, FontType } from '../../../../assets'
+
+const { height }  = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     containerHeaderProfile : {
@@ -118,6 +120,10 @@ const styles = StyleSheet.create({
     ContainerCheck: {
       marginBottom: '1%',
     },
+    TxtSchedule : {
+      fontSize: FontSize.medium,
+      fontFamily: FontType.semiBold,
+    },
     ViewCheck: {
       marginVertical: 10,
       flexDirection: 'row',
@@ -141,8 +147,12 @@ const styles = StyleSheet.create({
       backgroundColor: '#1DB597',
     },
     ViewSchedules : {
-      marginVertical: 4,
+      width: '100%',
+      marginVertical: 2,
+      paddingVertical: 10,
       flexDirection: 'row',
+      paddingHorizontal: 10,
+      justifyContent: 'center',
     },
     ViewSchedule : {
       flexDirection: 'row',
@@ -156,7 +166,33 @@ const styles = StyleSheet.create({
       // paddingHorizontal: 8,
       borderColor: '#BDBDBD33',
       backgroundColor: '#BDBDBD33',
-    }
+    },
+    Content : {
+      alignSelf: 'auto',
+      paddingHorizontal: 20,
+    },
+    ModalContainer : {
+      width: '100%',
+      height:height/1.8,
+    },
+    StyleIconModal : {
+      width: 280,
+      height: 142,
+      marginBottom: 18,
+    },
+    StyleChoose : {
+      paddingVertical: 6,
+      paddingHorizontal: 10,
+      backgroundColor: '#CBFFF5',
+    },
+    BtnModal : {
+      height: 52,
+      marginTop: 30,
+      width : '100%',
+      marginBottom: 24,
+      borderRadius: 30,
+      backgroundColor: '#1DB597',
+    },
   })
   
   export default styles

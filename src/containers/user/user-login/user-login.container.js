@@ -92,7 +92,7 @@ const Login = (props) => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-      console.log(userInfo)
+      // console.log(userInfo)
       if (Object.keys(userInfo).length != 0 ) {
         const values = {
           Email : userInfo.user.email,
@@ -101,7 +101,7 @@ const Login = (props) => {
         }
         setLoading(true)
         const response = await UserAPI.GoogleSignIn(values)
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.result) {
           await dispatch({
             type: SIGN_IN,
@@ -115,7 +115,7 @@ const Login = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)
       })

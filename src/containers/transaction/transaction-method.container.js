@@ -180,7 +180,6 @@ const TransactionMethod = (props) => {
     // console.log(code)
     if (code > 0) {
         const formatObj = instructor.Schedule.filter((e) => e.ID == code)
-        // console.log(formatObj[0].Shift_Name)
         return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_At).format('LT') + ' - ' +   moment(formatObj[0].End_At).format('LT') + ')'
     } else { 
         return ''

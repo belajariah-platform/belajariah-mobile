@@ -99,6 +99,14 @@ const ClassListMentor = (props) => {
         )
     }
 
+    const NoList = () => {
+        return (
+            <View style={styles.ViewNoList}>
+                <Text style={styles.TxtNoList}>Ustadz/Ustadzah yang kamu cari tidak ada</Text>
+            </View>
+        )
+    }
+
     const CardList = (item, index) => {
         const handleSplitString = (value) => {
             const stringSplit = value.split('|')
@@ -119,21 +127,23 @@ const ClassListMentor = (props) => {
                         navigation.navigate('ClassInstructorProfile',
                         { classes : classes, packages : packages, instructor : item } )
                     }}>
+                        {/* {console.log(item)} */}
                         <View style={styles.viewStyle}>
-                            <Image source={item.Image_Filepath == '' ? 
-                                Images.ImageProfileDefault : { uri : props.item.Image_Filepath }}
+                            <Image source={item.Gender == 'Perempuan' ? 
+                                Images.IllustrasiProfileUstadzah : item.Image_Filepath == '' ?
+                                Images.ImageProfileDefault : { uri : item.Image_Filepath } }
                                 style={styles.imageStyle}
                             />
                             <View style={styles.containerDesc}>
                                 <View style={styles.ViewTop}>
                                     <View style={styles.ViewTxtMentor}>
                                         <Text style={styles.textStyle}>{item.Full_Name}</Text>
-                                        <Text style={styles.textStyleCity}>Asal {item.City}</Text>
                                     </View>
                                     {/* <View style={styles.viewNotifClass}>
                                         <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
                                     </View> */}
                                 </View>
+                                <Text style={styles.textStyleCity}>Asal {item.City}</Text>
                                 <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>
                                     <Images.Star.default />
@@ -179,7 +189,7 @@ const ClassListMentor = (props) => {
             <View style={styles.LoadingStyle}>
                 <LoadingView color='#fff' />
             </View> : 
-            stateMentor == 0 ? (<Text>Ustadz/Ustadzah yang kamu cari tidak ada</Text>) :
+            stateMentor == 0 ? (<NoList />) :
             <FlatList
                 data={stateMentor}
                 style={{ width:'100%' }}

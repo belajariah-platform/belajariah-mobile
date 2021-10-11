@@ -59,7 +59,7 @@ const Register = (props) => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-      console.log(userInfo)
+      // console.log(userInfo)
       if (Object.keys(userInfo).length != 0 ) {
         const values = {
           Email : userInfo.user.email,
@@ -68,7 +68,7 @@ const Register = (props) => {
         }
         setLoading(true)
         const response = await UserAPI.GoogleSignIn(values)
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.result) {
           await dispatch({
             type: SIGN_IN,
@@ -82,7 +82,7 @@ const Register = (props) => {
       }
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)
       })
@@ -179,7 +179,7 @@ const Register = (props) => {
       <Topbar title='Daftar' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Image source={Images.Register} style={styles.image}/>
+          <Image source={Images.Register} style={styles.image} resizeMode={'contain'}/>
           <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
               <TouchableOpacity
                 style={styles.anotherLogin}

@@ -303,6 +303,7 @@ export default {
   IconReviewGreen : require('./IconReviewGreen.svg'),
   IconSystemGreen : require('./IconSystemGreen.svg'),
   IconScheduleBlack : require('./IconScheduleBlack.svg'),
+  IllustrasiProfileUstadzah : require('./IllustrasiProfileUstadzah.png'),
 
   //Class Profile Mentor
   ImgProfileMentor : require('./ImgProfileMentor.png'),
@@ -315,6 +316,7 @@ export default {
 
   //Class Preference
   IconPreference : require('./IconPreference.png'),
+  IconSelectSchedule : require('./IconSelectSchedule.png'),
 
   //Class Meet
   IllustrationMeet : require('./IllustrationMeet.png'),

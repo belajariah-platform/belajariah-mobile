@@ -42,10 +42,11 @@ const styles = StyleSheet.create({
     },
     viewNotifClass : {
       height: 20,
+      // maxWidth: '50%',
       // textAlign: 'right',
       paddingTop: 2,
       borderRadius: 15,
-      paddingHorizontal: 8,
+      paddingHorizontal: 6,
       backgroundColor: '#13A98B',
     },
     textNotifClass : {
@@ -74,23 +75,22 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
     },
     imageStyle: {
-      width: 80,
-      height: 80,
-      marginRight: 10,
+      width: 76,
+      height: 76,
+      marginRight: 8,
       borderRadius : 12,
     },
     ViewTxtMentor : {
-      width: '60%'
+      maxWidth: '95%',
+      // backgroundColor: '#000',
     },
     textStyle: {
-      marginRight: 4,
       maxWidth: '100%',
       color: Color.black,
       fontFamily: FontType.bold,
       fontSize: FontSize.smallMedium,
     },
     textStyleCity: {
-      marginRight: 4,
       maxWidth: '100%',
       color: '#13A98B',
       fontFamily: FontType.regular,
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
       marginRight: 6,
     },
     TxtDesc: {
-      width: '100%',
+      maxWidth: '96%',
+   
     },
     ViewSchedules : {
       width: '100%',
@@ -165,6 +166,17 @@ const styles = StyleSheet.create({
       marginBottom : 7,
       alignItems:'center',
     },
+    ViewNoList : {
+      marginTop: '50%',
+      marginHorizontal: '10%',
+    },
+    TxtNoList : {
+      lineHeight: 24,
+      color: Color.white,
+      textAlign: 'center',
+      fontSize: FontSize.large,
+      fontFamily: FontType.semiBold,
+    }
   })
   
   export default styles

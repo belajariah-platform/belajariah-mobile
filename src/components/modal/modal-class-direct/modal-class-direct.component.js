@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import _ from 'lodash'
 import PropTypes from 'prop-types'
 import Modal from 'react-native-modal'
+import React, { useState } from 'react'
 import { Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 import { View, TouchableOpacity, Image } from 'react-native'
@@ -13,10 +14,12 @@ import { styles } from './modal-class-direct.style'
 const ModalClassDirect = (props) => {
   const navigation = useNavigation()
 
+  const ListPackage = _.orderBy(props.state, ['ID'],['asc'])
+
   const DirectPackage = () => {
     return(
       <View>
-        {props.state && props.state.map((item, index) => {
+        {ListPackage && ListPackage.map((item, index) => {
           let iconDirect
           item.Type == 'Paket Private' ? 
             (iconDirect = Images.IconPrivate) : 

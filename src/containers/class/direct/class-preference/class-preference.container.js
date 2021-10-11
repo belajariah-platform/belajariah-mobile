@@ -261,42 +261,64 @@ const ClassPreference = (props) => {
             // titleBtn='Pilih Jadwal'
             hideButtonClose={true}
             styleBtn={styles.StyleB}
+            ModalContent={styles.Content}
+            containerStyle={styles.ModalContainer}
             isVisible={modalDateVisibleStart}
             backdropPress={() => toggleModalDateStart()}
             renderItem={
-                <View>
-                    {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
-                        return (
-                            <TouchableOpacity key={subindex} onPress={() => {
-                                if (
-                                    FormSubmit.values['Meet1'] !== item.ID && 
-                                    FormSubmit.values['Meet2'] !== item.ID
-                                    )
-                               if (selectedSchedule === 'Meet1') {
-                                   FormSubmit.setFieldValue('Meet1', item.ID)
-                               } else {
-                                   FormSubmit.setFieldValue('Meet2', item.ID)
-                               }
-                            }}>
-                                <View style={{
-                                    ...styles.ViewSchedules, 
-                                    backgroundColor : selectedSchedule === 'Meet1' 
-                                    && item.ID == FormSubmit.values['Meet1'] 
-                                    || selectedSchedule === 'Meet2' 
-                                    && item.ID == FormSubmit.values['Meet2'] 
-                                    ? '#13A98B' : '#fff'
-                                    }}>
-                                    <Text>{item.Shift_Name} </Text>
-                                    <View style={styles.ViewSchedule}>
-                                        <Text>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
-                                    </View>
-                                </View>    
-                            </TouchableOpacity>                        
-                        )
-                    })}
-                    <Buttons 
-                        title='Pilih'
-                        onPress={toggleModalDateStart} />
+                <View style={{width: '100%',}}>
+                    <ScrollView style={{marginTop: 40}}>
+                        <Image source={Images.IconSelectSchedule} style={styles.StyleIconModal} />
+                        {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
+                            return (
+                                <TouchableOpacity key={subindex} onPress={() => {
+                                    if (
+                                        FormSubmit.values['Meet1'] !== item.ID && 
+                                        FormSubmit.values['Meet2'] !== item.ID
+                                        )
+                                    if (selectedSchedule === 'Meet1') {
+                                        FormSubmit.setFieldValue('Meet1', item.ID)
+                                    } else {
+                                        FormSubmit.setFieldValue('Meet2', item.ID)
+                                    }
+                                }}>
+                                    <View style={{
+                                        ...styles.ViewSchedules, 
+                                        backgroundColor : selectedSchedule === 'Meet1' 
+                                        && item.ID == FormSubmit.values['Meet1'] 
+                                        || selectedSchedule === 'Meet2' 
+                                        && item.ID == FormSubmit.values['Meet2'] 
+                                        ? '#CBFFF5' : '#fff'
+                                        }}>
+                                        <Text style={{
+                                            ...styles.TxtSchedule,
+                                            color : selectedSchedule === 'Meet1' 
+                                            && item.ID == FormSubmit.values['Meet1'] 
+                                            || selectedSchedule === 'Meet2' 
+                                            && item.ID == FormSubmit.values['Meet2'] 
+                                            ? '#1DB597' : Color.grey
+                                        }}>{item.Shift_Name} </Text>
+                                        <View style={styles.ViewSchedule}>
+                                            <Text style={{
+                                                ...styles.TxtSchedule,
+                                                color : selectedSchedule === 'Meet1' 
+                                                && item.ID == FormSubmit.values['Meet1'] 
+                                                || selectedSchedule === 'Meet2' 
+                                                && item.ID == FormSubmit.values['Meet2'] 
+                                                ? '#1DB597' : Color.grey
+                                            }}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
+                                        </View>
+                                    </View>    
+                                </TouchableOpacity>                        
+                            )
+                        })}
+                        <Buttons 
+                            title='Pilih Jadwal'
+                            style={styles.BtnModal}
+                            textStyle={styles.TxtButton}
+                            onPress={toggleModalDateStart} 
+                        />
+                    </ScrollView>
                 </View>}
         />
         </>

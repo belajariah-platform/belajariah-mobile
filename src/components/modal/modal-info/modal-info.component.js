@@ -24,7 +24,7 @@ const ModalInfo = (props) => {
               <Images.ButtonClose.default/>
             </TouchableOpacity>
           )}
-          <View style={styles.modalContentSyle}>
+          <View style={[styles.modalContentSyle, props.ModalContent]}>
             {props.renderItem}
           </View>
         </View>
@@ -37,6 +37,7 @@ ModalInfo.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  ModalContent : PropTypes.object,
   backButtonPress : PropTypes.func,
   hideButtonClose : PropTypes.bool,
   containerStyle : PropTypes.object,

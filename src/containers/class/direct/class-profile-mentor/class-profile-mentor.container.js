@@ -47,8 +47,9 @@ const ClassInstructorProfile = (props) => {
         return (
             <View style={styles.ViewTitle}>
                 <ImageBackground source={Images.BackgroundMentor} style={styles.BackgroundImg}>
-                    <Image source={instructor.Image_Filepath == '' ? 
-                        Images.ImageProfileDefault : { uri : instructor.Image_Filepath }} 
+                    <Image source={instructor.Gender == 'Perempuan' ? 
+                        Images.IllustrasiProfileUstadzah : instructor.Image_Filepath == '' ?
+                        Images.ImageProfileDefault : { uri : instructor.Image_Filepath } } 
                         style={styles.imageStyleInstructor}
                     />
                 </ImageBackground>

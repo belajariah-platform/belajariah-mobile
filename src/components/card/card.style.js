@@ -19,14 +19,6 @@ const styles = StyleSheet.create({
     height: 160,
     width: '100%',
     marginLeft : -3,
-    resizeMode: 'cover',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  images2: {
-    height: 160,
-    width: '100%',
-    marginLeft : -3,
     resizeMode: 'stretch',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -72,6 +64,8 @@ const styles = StyleSheet.create({
     fontFamily : FontType.regular,
   },
   text2 : {
+    maxWidth: '98%',
+    marginBottom: 6,
     fontFamily : FontType.bold,
     fontSize : FontSize.extraSmall,
   },
