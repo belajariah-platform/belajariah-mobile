@@ -3,6 +3,7 @@ import RNPrint from 'react-native-print'
 import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import {
   Text,
@@ -38,6 +39,7 @@ import { styles } from '../class-user/class-user.style'
 
 
 const ClassUser = (props) => {
+  const navigation = useNavigation()
   const dispatch = useDispatch()
   const [comment, setComment] = useState('')
   const [dataObj, setDataObj] = useState({})
@@ -269,6 +271,47 @@ const ClassUser = (props) => {
     )
   }
 
+  const CardUserDirosa = () => {
+    return (
+      <View>
+        <View style={styles.containerClassProgress}>
+          <Images.IconStepStart.default />
+          <Images.IconLineHide.default style={styles.iconTop}/>
+          <Images.IconStepProgressHide.default />
+          <Images.IconLineHide.default style={styles.iconTop}/>
+          <Images.IconStepFinishHide.default />
+        </View>
+        <View style={{ bottom: 20 }}>
+          <ImageBackground
+            source={Images.BgClassLearning}
+            imageStyle={{ borderRadius: 20 }}
+            style={styles.imageBackgroundCard}
+          >
+              <View style={styles.containerIconDirect}>
+                <Image
+                  source={Images.IconClassDirosa}
+                  style={styles.ImageClass}/>
+                  <View style={{ marginLeft: 10, }}>
+                    <Text style={styles.TextClass}>Belajar Ngaji online untuk dewasa metode Dirosa</Text>
+                  </View>
+              </View>
+                         
+              <View style={styles.ViewBtn}>
+                <ButtonGradient
+                  title='Lihat Pertemuan'
+                  textStyle={styles.textButton}
+                  styles={styles.buttonClassCustom}
+                  // icon={<Images.IconVideo.default style={styles.iconClassCustomLeft}/>}
+                  onPress={() => {
+                    navigation.navigate('ClassMeeting')
+                }}/>
+              </View>
+          </ImageBackground>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <>
       <ModalRating
@@ -338,6 +381,7 @@ const ClassUser = (props) => {
                   refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
                   renderItem={({ item, index }) => (
                     <View key={index}>
+                      <CardUserDirosa />
                       <View style={styles.containerClassProgress}>
                         <Images.IconStepStart.default />
                         {item.Status == 'In Progress' ||

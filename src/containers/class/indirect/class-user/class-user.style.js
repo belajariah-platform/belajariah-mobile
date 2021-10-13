@@ -236,7 +236,20 @@ const styles = StyleSheet.create({
   },
   imageBackgroundCard : { height: 'auto', marginBottom:-15 },
   containerTextArea : { marginTop: 20 },
-  iconTop : { top:-4 }
+  iconTop : { top:-4 },
+
+  //New
+  containerIconDirect : {
+    paddingTop: '4%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: '7%',
+    justifyContent: 'space-between',
+  },
+  ViewBtn : {
+    marginRight: '7%',
+    alignItems: 'flex-end',
+  },
 })
 
 export { styles }

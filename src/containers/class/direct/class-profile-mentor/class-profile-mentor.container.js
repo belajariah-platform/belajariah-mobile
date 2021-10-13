@@ -7,17 +7,13 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import {
     View,
     Image,
-    FlatList,
     ScrollView,
-    RefreshControl,
     ImageBackground,
     TouchableOpacity,
-  } from 'react-native'
+} from 'react-native'
 
 import {
     Buttons,
-    Searchbox,
-    LoadingView,
 } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
@@ -55,6 +51,15 @@ const ClassInstructorProfile = (props) => {
                 </ImageBackground>
                 <Text style={styles.TxtTitleInstructor}>{instructor.Full_Name}</Text>
                 <Text style={styles.TxtFromInstructor}>Asal {instructor.City}</Text>
+                <View style={styles.ViewRating}>
+                    <Text style={styles.TxtRating}>{instructor.Rating}</Text>
+                    <Images.Star.default />
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('ClassReviewMentor')
+                    }}>
+                        <Text style={styles.TxtAllReview}>(2 Ulasan)</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

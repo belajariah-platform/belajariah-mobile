@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
       width: '100%',
       borderTopLeftRadius: 26,
       borderTopRightRadius: 26,
-      backgroundColor: '#1DB597',
+      backgroundColor: Color.softPink,
     },
     textTitleHeader: {
       color: Color.white,
@@ -149,7 +149,51 @@ const styles = StyleSheet.create({
       color: '#1DB597',
       fontFamily: FontType.regular,
       fontSize: FontSize.smallMedium,
-    }
+    },
+    card: {
+      elevation: 0,
+      borderWidth: 0,
+      borderRadius: 16,
+      paddingBottom: 16,
+      paddingHorizontal: 0,
+      backgroundColor: Color.softPink,
+    },
+    footer: {
+      marginTop: 0,
+    },
+    cardReview: {
+      borderWidth: 0,
+      marginHorizontal: 0,
+      paddingHorizontal : 15,
+    },
+    textBoldCustom: {
+      marginBottom: 4,
+      textAlign: 'left',
+      color: Color.black,
+      fontFamily: FontType.bold,
+      fontSize: FontSize.extraSmall,
+    },
+    textRegular: {
+      marginBottom: 8,
+      fontFamily: FontType.regular,
+      fontSize: FontSize.extraSmall,
+    },
+    textView: {
+      top : 2,
+      marginBottom: 10,
+      textAlign: 'left',
+      color: Color.black,
+      paddingHorizontal: 15,
+      fontFamily: FontType.bold,
+      fontSize: FontSize.smallest,
+    },
+    flexRating: {
+      marginLeft: -1,
+      flexDirection: 'row',
+    },
+    divider : {
+      marginTop : 15,
+    },
   })
   
   export default styles

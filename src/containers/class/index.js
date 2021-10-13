@@ -5,6 +5,7 @@ import {
     ClassPreference,
     ClassListMentor,
     ClassTrialDirect, 
+    ClassReviewMentor,
     ClassDetailDirect, 
     ClassLearningDirect, 
     ClassInstructorProfile,
@@ -31,6 +32,7 @@ export {
     ClassUserDirect,
     ClassTrialDirect, 
     ClassDetailDirect, 
+    ClassReviewMentor,
     ClassLearningDirect, 
     ClassInstructorProfile,
 }

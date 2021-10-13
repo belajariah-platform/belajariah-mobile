@@ -24,6 +24,7 @@ import {
   UserNotification,
   ClassTrialDirect, 
   TransactionUpload,
+  ClassReviewMentor,
   TransactionMethod,
   ClassDetailDirect, 
   UserVerifyPassword,
@@ -65,6 +66,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
       <Stack.Screen name='UserNotification' component={UserNotification} />
       <Stack.Screen name='ClassTrialDirect' component={ClassTrialDirect} />
+      <Stack.Screen name='ClassReviewMentor' component={ClassReviewMentor} />
       <Stack.Screen name='ClassDetailDirect' component={ClassDetailDirect} />
       <Stack.Screen name='TransactionMethod' component={TransactionMethod} />
       <Stack.Screen name='TransactionUpload' component={TransactionUpload} />

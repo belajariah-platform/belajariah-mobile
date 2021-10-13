@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
     },
     textList: {
-      marginTop: 4,
+      textAlign: 'center',
       borderWidth: 1,
       borderRadius: 20,
       paddingVertical: 10,

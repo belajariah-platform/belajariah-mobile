@@ -20,8 +20,8 @@ import styles from './user-notification.style'
 
 const UserNotification = (props) => {
     const navigation = useNavigation()
-    const IsNotificationEmpty = false
     const [filterSelected, setFilterSelected] = useState(0)
+    const [isNotificationEmpty, setIsNotificationEmpty]  = useState(true)
 
     const ListNotif = [
         {id: 1, TxtMentor: 'Ustadz Hamdan Ngaja', TxtDate: '21 Sep  2021, 10:09 WIB', TxtStNotif: 'Masyaallah akhi, Makhorijul hurufnya udah bener... jumpa lagi dipertemuan berikutnya y'},
@@ -32,7 +32,6 @@ const UserNotification = (props) => {
     const ListFilter = [
         { id: 0, name: 'Terbaru' },
         { id: 1, name: 'Semua' },
-        { id: 2, name: 'Favorit' },
       ]
 
     const Header = () => {
@@ -67,7 +66,7 @@ const UserNotification = (props) => {
                     <View style={styles.ViewListFilter}>
                         {ListFilter.map((list, index) => {
                             return (
-                                <View key={index}>
+                                <View key={index} style={{marginBottom: 10, width: '40%'}}>
                                     <TouchableOpacity
                                         onPress={() => {setFilterSelected(list.id)}}>
                                         <Text style={[
@@ -123,7 +122,7 @@ const UserNotification = (props) => {
             <Header />
             <FilterNotification />
             <ScrollView>
-                {IsNotificationEmpty ? <NotificationEmpty /> : <NotificationBody /> }
+                {isNotificationEmpty ? <NotificationEmpty /> : <NotificationBody /> }
             </ScrollView>
         </View> 
     )

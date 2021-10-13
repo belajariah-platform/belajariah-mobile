@@ -4,8 +4,8 @@ import ClassMeeting from './class-meeting'
 import ClassPreference from './class-preference'
 import ClassListMentor from './class-list-mentor'
 import ClassLearningDirect from './class-learning'
-import ClassInstructorProfile from './class-profile-mentor'
 import { ClassDetailDirect, ClassTrialDirect } from './class-detail'
+import { ClassInstructorProfile, ClassReviewMentor} from './class-profile-mentor'
 
 export { 
     ClassMeeting,
@@ -15,6 +15,7 @@ export {
     ClassPreference,
     ClassTrialDirect, 
     ClassDetailDirect, 
+    ClassReviewMentor,
     ClassLearningDirect, 
     ClassInstructorProfile,
 }

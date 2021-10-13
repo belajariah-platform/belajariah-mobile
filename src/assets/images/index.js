@@ -336,5 +336,8 @@ export default {
   IconEmotFour : require('./EmotFour.svg'),
   IconEmotFive : require('./EmotFive.svg'),
 
+  //Card Class User Dirosa
+  IconClassDirosa : require('./IconClassDirosa.png'),
+
 }
 

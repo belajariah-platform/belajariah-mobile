@@ -422,10 +422,10 @@ const Home = (props) => {
                 <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
               <View style={styles.ViewHeaderProf}>
-                {/* <TouchableOpacity style={{marginRight: 16,}}
+                <TouchableOpacity style={{marginRight: 16,}}
                   onPress={() => props.navigation.navigate('UserNotification')}>
                   <Images.IconNotification.default />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   style={{ ...styles.headerAvatar, marginRight: 15 }}
