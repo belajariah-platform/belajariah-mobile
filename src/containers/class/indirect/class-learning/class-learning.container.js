@@ -451,7 +451,7 @@ const ClassLearning = (props) => {
                   </TouchableOpacity>
                 )}
 
-                {topic.Exercises.ID !== 0 && (
+                {/* {topic.Exercises.ID !== 0 && (
                   <TouchableOpacity activeOpacity={0.5}>
                     <List.Item
                       title='Masuk ke page rekam'
@@ -462,7 +462,7 @@ const ClassLearning = (props) => {
                       right={() => <Text style={styles.textDuration}>Rekam Bacaan</Text>}
                     />
                   </TouchableOpacity>
-                )}
+                )} */}
 
               </List.Accordion>
             )
@@ -624,9 +624,9 @@ const ClassLearning = (props) => {
             <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.containerParentKelas}>
                 <DescriptionClass/>
-                {item.Class_Initial == 'Tahsinn' && (
+                {/* {item.Class_Initial == 'Tahsinn' && (
                   <ConsultationClass/>
-                )}
+                )} */}
                 {loading ?
                   <LoadingView/> : <ContentClass/>
                 }

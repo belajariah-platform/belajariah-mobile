@@ -61,21 +61,21 @@ const CustomDrawer = ({ navigation }, props) => {
             }}
             labelStyle={styles.label}
           />
-          <View>
+          {/* <View>
             <DrawerItem
               label='Konsultasi bacaan'
               onPress={() => {
                 navigation.navigate('Consultation')
               }}
               labelStyle={styles.label}
-            />
+            /> */}
             {/* {count > 0 && (
               <Images.IconNotifInfo.default
                 width={12}
                 height={12}
                 style={styles.info}/>
             )} */}
-          </View>
+          {/* </View> */}
 
           <DrawerItem
             label='Ubah Kata Sandi'

@@ -9,6 +9,7 @@ export default {
   Intro4: require('./Intro4.png'),
   Google: require('./Google.png'),
   BotClass: require('./Class.svg'),
+  CardACC: require('./CardACC.png'),
   ButtonClose: require('./BtnClose'),
   Register: require('./Register.png'),
   Search: require('./IconSearch.svg'),
@@ -24,6 +25,7 @@ export default {
   BtnArrowUp: require('./BtnArrowUp.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
   BotClassHint: require('./ClassHint.svg'),
+  IconFreeACC: require('./IconFreeACC.svg'),
   BgClassUser: require('./BgClassUser.png'),
   BtnReadMore: require('./BtnReadMore.svg'),
   LoginDirect: require('./LoginDirect.svg'),
@@ -327,6 +329,7 @@ export default {
   IconCheckLisDirect : require('./IconCheckLisDirect.svg'),
 
   //Notification User
+  IconValSantri : require('./IconValSantri.svg'),
   IconNotificationEmpty : require('./IconNotificationEmpty.svg'),
 
   //Emoji Icon 
@@ -338,6 +341,9 @@ export default {
 
   //Card Class User Dirosa
   IconClassDirosa : require('./IconClassDirosa.png'),
+
+  //Class Detail ACC
+  HeaderClassACC : require('./HeaderClassACC.png'),
 
 }
 

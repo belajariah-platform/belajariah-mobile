@@ -13,66 +13,65 @@ const ModalEmoticon = (props) => {
     const maxRating = [1, 2, 3, 4, 5]
     const [defaultRating, setDefaultRating] = useState(0)
    
-    const getEmoji = () => {
-      if (defaultRating >= 0 && defaultRating <= 2) {
-        return <Images.IconEmotOne.default />
-      }
-      else if (defaultRating >= 2 && defaultRating <= 4) {
-        return <Images.IconEmotTwo.default />
-      }
-      else if (defaultRating >= 5 && defaultRating <= 6) {
-        return <Images.IconEmotThree.default />
-      }
-      else if (defaultRating >= 7 && defaultRating <= 8) {
-        return <Images.IconEmotFour.default />
-      }
-      else if (defaultRating <= 10) {
-        return <Images.IconEmotFive.default />
-      }
-    
-    }
+    // const getEmoji = () => {
+    //   if (defaultRating >= 0 && defaultRating <= 2) {
+    //     return <Images.IconEmotOne.default />
+    //   }
+    //   else if (defaultRating >= 2 && defaultRating <= 4) {
+    //     return <Images.IconEmotTwo.default />
+    //   }
+    //   else if (defaultRating >= 5 && defaultRating <= 6) {
+    //     return <Images.IconEmotThree.default />
+    //   }
+    //   else if (defaultRating >= 7 && defaultRating <= 8) {
+    //     return <Images.IconEmotFour.default />
+    //   }
+    //   else if (defaultRating <= 10) {
+    //     return <Images.IconEmotFive.default />
+    //   }
+    // }
 
     useEffect(() => {
         !props.isVisible ?
         setDefaultRating(0) : null
     }, [props.isVisible])
     
-    const ReviewClass = () => {
-        return (
-          <View style={styles.containerReview}>
-            <View style={styles.TopHeader}>
-                <Images.IconCheckLisDirect.default style={styles.IconHeader} />
-                <Text style={styles.TxtHeader}>
-                  <Text style={styles.TxtHeaderBld}>Beri Penilaian, </Text>Hasil pertemuan anda hari ini
-                </Text>
-              </View>
-            <View style={styles.ViewSlider}>
-              <Text style={styles.TxtRatingVal}>{defaultRating}</Text>
-              <Slider 
-                step={1} 
-                minimumValue={1} 
-                maximumValue={10} 
-                style={{height: 40}} 
-                thumbTintColor='#6E248D' 
-                onValueChange={setDefaultRating}  
-                minimumTrackTintColor='#6E248D' 
-                maximumTrackTintColor='#6E248D' 
-              />
-              <View style={{alignItems: 'center'}}>
-                {getEmoji()}
-              </View>
-            </View>
-            <View style={styles.containerTextArea}>
-              {props.renderItem}
-            </View>
-            <View style={styles.containerRating}>
-              <Buttons title='Kirim'
-                style={styles.StyleBtn2} 
-                textStyle={styles.StyleTxt2}/>
-            </View>
-          </View>
-        )
-    }
+    // const ReviewClass = () => {
+    //     return (
+    //       <View style={styles.containerReview}>
+    //         <View style={styles.TopHeader}>
+    //             <Images.IconCheckLisDirect.default style={styles.IconHeader} />
+    //             <Text style={styles.TxtHeader}>
+    //               <Text style={styles.TxtHeaderBld}>Beri Penilaian, </Text>Hasil pertemuan anda hari ini
+    //             </Text>
+    //           </View>
+    //         <View style={styles.ViewSlider}>
+    //           <Text style={styles.TxtRatingVal}>{defaultRating}</Text>
+    //           <Slider 
+    //             step={1} 
+    //             minimumValue={1} 
+    //             maximumValue={10} 
+    //             style={{height: 40}} 
+    //             thumbTintColor='#6E248D' 
+    //             onValueChange={setDefaultRating}  
+    //             minimumTrackTintColor='#6E248D' 
+    //             maximumTrackTintColor='#6E248D' 
+    //           />
+    //           <View style={{alignItems: 'center'}}>
+    //             {getEmoji()}
+    //           </View>
+    //         </View>
+    //         <View style={styles.containerTextArea}>
+    //           {props.renderItem}
+    //         </View>
+    //         <View style={styles.containerRating}>
+    //           <Buttons title='Kirim'
+    //             style={styles.StyleBtn2} 
+    //             textStyle={styles.StyleTxt2}/>
+    //         </View>
+    //       </View>
+    //     )
+    // }
 
     return (
         <>
@@ -91,7 +90,9 @@ const ModalEmoticon = (props) => {
               /> */}
               
               <View style={styles.modalContentSyle}>
-                  {ReviewClass()}
+                <View>
+                  {props.renderItem}
+                </View>
               </View>
             </View>
         </Modal>

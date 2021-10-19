@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     cardStyleFilter: {
       padding: 0,
       elevation: 0,
+      marginTop: 0,
       width: 'auto',
       height: 'auto',
       borderWidth : 0,
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
     TxtDateNotif : {
       marginVertical: 2,
       color: Color.grey,
-      fontSize: FontSize.medium,
       fontFamily: FontType.regular,
+      fontSize: FontSize.smallMedium,
     },
     ViewListBody : {
       flexDirection: 'row',
@@ -97,14 +98,14 @@ const styles = StyleSheet.create({
     },
     TxtListSt : {
       color: Color.black,
-      fontSize: FontSize.medium,
       fontFamily: FontType.regular,
+      fontSize: FontSize.smallMedium,
     },
     divider : {
       marginTop : 15,
     },
     ContainerListFilter : {
-      marginBottom: 20,
+      marginBottom: 14,
       backgroundColor: Color.purpleMedium,
     },
     // ViewBtnList : {
@@ -127,6 +128,21 @@ const styles = StyleSheet.create({
       borderColor: Color.white,
       fontSize: FontSize.medium,
       fontFamily: FontType.regular,
+    },
+    ViewTitleMeet: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    ViewContentRight: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    TxtContentRight : {
+      marginLeft: 4,
+      color: Color.black,
+      fontSize: FontSize.small,
+      fontFamily: FontType.bold,
     },
   })
   

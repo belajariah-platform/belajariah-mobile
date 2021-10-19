@@ -131,6 +131,68 @@ const styles = StyleSheet.create({
       marginHorizontal: '6%',
       backgroundColor: '#f1f3f4',
     },
+    TopHeader : {
+      paddingVertical: 20,
+      width: '100%',
+      paddingHorizontal: '6%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      backgroundColor: Color.purpleButton,
+    },
+    TxtHeader : {
+      maxWidth: '80%',
+      lineHeight: 20,
+      color: Color.white,
+      fontSize: FontSize.medium,
+      fontFamily: FontType.regular,
+    },
+    IconHeader : {
+      marginRight: 16,
+      marginLeft: '1%',
+    },
+    TxtHeaderBld : {
+      color: Color.white,
+      fontSize: FontSize.medium,
+      fontFamily: FontType.bold,
+    },
+    ViewSlider : {
+      marginTop: '4%',
+      marginHorizontal: '5%',
+    },
+    StyleSlider : {
+      width: 100,
+      height: 100,
+    },
+    TxtRatingVal : {
+      textAlign: 'center',
+      color: Color.black,
+      fontSize: FontSize.mediumLarge,
+      fontFamily: FontType.bold,
+    },
+    containerTextArea : {
+      marginTop: 20,
+    },
+    containerRating : {
+      marginTop: 4,
+      alignItems:'center',
+      marginHorizontal: '6%',
+    },
+    StyleBtn2 : {
+      width: '100%',
+      height: 44,
+      borderRadius: 60,
+      backgroundColor: '#BDBDBD',
+    },
+    StyleTxt2 : {
+      color: Color.white,
+      fontSize: FontSize.medium,
+      fontFamily: FontType.bold,
+    },
+    ViewSch : {
+      flexDirection: 'row',
+    }
   })
   
   export default styles

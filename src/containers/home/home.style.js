@@ -307,6 +307,36 @@ const styles = StyleSheet.create({
     height: 'auto',
     borderRadius: 30,
   },
+  ViewTitleAcc: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  StyleIconFreeAcc: {
+    marginTop: 6,
+    marginLeft: 6,
+  },
+  cardAC: {
+    width: '100%',
+    height: 140,
+    elevation: 3,
+    borderWidth: 0,
+    borderRadius: 20,
+    marginVertical: 8,
+    shadowRadius: 2.22,
+    shadowColor: '#000',
+    shadowOpacity: 0.22,
+    backgroundColor : Color.white,
+    shadowOffset: { width: 0, height: 1 },
+  },
+  ImgCustomAC: {
+    height: 130,
+    width: '100%',
+    maxWidth: '100%',
+    resizeMode: 'stretch',
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // borderBottomLeftRadius: 20,
+  },
 })
 
 export { styles }

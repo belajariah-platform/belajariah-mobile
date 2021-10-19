@@ -7,13 +7,9 @@ import {
     View,
     Image,
     ScrollView,
-    ImageBackground,
     TouchableOpacity,
 } from 'react-native'
 
-import {
-    Buttons,
-} from '../../../../components'
 import { Images, Color } from '../../../../assets'
 import styles from './class-review-mentor.style'
 

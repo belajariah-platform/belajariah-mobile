@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
+import { Avatar, Card } from 'react-native-elements'
 import NetInfo from '@react-native-community/netinfo'
 import { useIsFocused } from '@react-navigation/core'
 import LinearGradient from 'react-native-linear-gradient'
@@ -276,6 +276,25 @@ const Home = (props) => {
     )
   }
 
+  const ACCHome = () => {
+    return (
+      <View>
+        <View style={styles.ViewTitleAcc}>
+          <Text style={styles.textTitle}>Program ACC</Text>
+          <Images.IconFreeACC.default style={styles.StyleIconFreeAcc} />
+        </View>
+        <Text style={styles.textSubtitle}>Al-Fatihah Coaching Clinic</Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('ClassDetailACC')}>
+          <View style={styles.cardAC}>
+            <Image source={Images.CardACC} style={styles.ImgCustomAC} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   const PopularClassHome = () => {
     const handleRating = (num) => {
       let rating = []
@@ -470,6 +489,7 @@ const Home = (props) => {
                     ShimmerListCategory() :
                     CategoryClassHome()
                   }
+                  <ACCHome />
                   {loadingClass ?
                     ShimmerCardClassPopuler() :
                     <PopularClassHome />

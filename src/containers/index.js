@@ -28,6 +28,13 @@ import {
   InstructorProfileEdit,
 } from './instructor'
 
+import {
+  ClassDetailACC,
+  ClassFormOtherACC, 
+  ClassFormConfirmACC,
+  ClassFormPersonalACC,
+} from './acc'
+
 import { InspiratifStory, InspiratifStoryDetail } from './story'
 import { 
   ClassExam, 
@@ -91,6 +98,7 @@ export {
   PrivacyPolice,
   AlquranDetail,
   ClassLearning,
+  ClassDetailACC,
   AdminDashboard,
   InstructorTask,
   ClassPreference,
@@ -108,6 +116,7 @@ export {
   UserNotification,
   ClassTrialDirect, 
   ClassDetailDirect, 
+  ClassFormOtherACC,
   ClassReviewMentor,
   TransactionUpload,
   InstructorProfile,
@@ -115,8 +124,10 @@ export {
   ConsultationDetail,
   UserVerifyPassword,
   TransactionConfirm,
+  ClassFormConfirmACC,
   ClassLearningDirect,  
   InstructorDashboard,
+  ClassFormPersonalACC,
   InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,

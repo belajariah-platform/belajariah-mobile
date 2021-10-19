@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { 
     Text, 
-    Icon, 
 } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
@@ -21,7 +20,7 @@ import styles from './user-notification.style'
 const UserNotification = (props) => {
     const navigation = useNavigation()
     const [filterSelected, setFilterSelected] = useState(0)
-    const [isNotificationEmpty, setIsNotificationEmpty]  = useState(true)
+    const [isNotificationEmpty, setIsNotificationEmpty]  = useState(false)
 
     const ListNotif = [
         {id: 1, TxtMentor: 'Ustadz Hamdan Ngaja', TxtDate: '21 Sep  2021, 10:09 WIB', TxtStNotif: 'Masyaallah akhi, Makhorijul hurufnya udah bener... jumpa lagi dipertemuan berikutnya y'},
@@ -32,7 +31,7 @@ const UserNotification = (props) => {
     const ListFilter = [
         { id: 0, name: 'Terbaru' },
         { id: 1, name: 'Semua' },
-      ]
+    ]
 
     const Header = () => {
         return (
@@ -101,7 +100,13 @@ const UserNotification = (props) => {
                             <View key={index}>
                                 <TouchableOpacity>
                                     <View style={styles.ViewListNotif}>
-                                        <Text style={styles.TxtListMentorMeet}>Pertemuan {item.id}</Text>
+                                        <View style={styles.ViewTitleMeet}>
+                                            <Text style={styles.TxtListMentorMeet}>Pertemuan {item.id}</Text>
+                                            <View style={styles.ViewContentRight}>
+                                                <Images.IconValSantri.default />
+                                                <Text style={styles.TxtContentRight}>Nilai : 8</Text>
+                                            </View>
+                                        </View>
                                         <View style={styles.ViewListBody}>
                                             <Text style={styles.TxtListMentor}>From ; {item.TxtMentor}</Text>
                                         </View>
