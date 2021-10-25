@@ -306,7 +306,7 @@ const ClassPreference = (props) => {
                                                 || selectedSchedule === 'Meet2' 
                                                 && item.ID == FormSubmit.values['Meet2'] 
                                                 ? '#1DB597' : Color.grey
-                                            }}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
+                                            }}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')} {item.Time_Zone})</Text>
                                         </View>
                                     </View>    
                                 </TouchableOpacity>                        

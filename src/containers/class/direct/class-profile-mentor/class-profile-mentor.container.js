@@ -44,8 +44,8 @@ const ClassInstructorProfile = (props) => {
             <View style={styles.ViewTitle}>
                 <ImageBackground source={Images.BackgroundMentor} style={styles.BackgroundImg}>
                     <Image source={instructor.Gender == 'Perempuan' ? 
-                        Images.IllustrasiProfileUstadzah : instructor.Image_Filepath == '' ?
-                        Images.ImageProfileDefault : { uri : instructor.Image_Filepath } } 
+                        Images.IllustrasiProfileUstadzah : instructor.ImageProfile == '' ?
+                        Images.ImageProfileDefault : { uri : instructor.ImageProfile } } 
                         style={styles.imageStyleInstructor}
                     />
                 </ImageBackground>
@@ -94,8 +94,13 @@ const ClassInstructorProfile = (props) => {
                         />
                         <View style={styles.ViewTxt}>
                             <Text style={styles.TxttitleCard}>Pendidikan</Text>
-                            <Text style={styles.TxtDescCard}>Sekolah Tinggi Ilmu Islam dan Bahasa Arab Makasar.</Text>
-                            <Text style={styles.TxtDescCard}>PUSDIKLAT Da’i wahdah islamiyah Makasar.</Text>
+                            {instructor.Mentor_Experience && instructor.Mentor_Experience.map((item, index) => {
+                                return (
+                                    <View key={index}>
+                                        <Text style={styles.TxtDescCard}>{item.Experience}</Text>
+                                    </View>
+                                )
+                            })}
                         </View>
                     </View>
                 </Card>
@@ -120,7 +125,7 @@ const ClassInstructorProfile = (props) => {
                                     <View key={subindex} style={styles.ViewSchedules}>
                                         <Text style={styles.TxtSchedule}>{item.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')})</Text>
+                                            <Text>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')} {item.Time_Zone})</Text>
                                         </View>
                                     </View>                            
                                 )

@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useState, useEffect, useRef, } from 'react'
@@ -77,6 +78,8 @@ const ClassListMentor = (props) => {
         ) : null
     }
 
+    const SortMentor = _.orderBy(stateMentor, ['Rating'],['desc'])
+
     const Header = () => {
         return (
           <View style={styles.containerHeader}>
@@ -130,8 +133,8 @@ const ClassListMentor = (props) => {
                         {/* {console.log(item)} */}
                         <View style={styles.viewStyle}>
                             <Image source={item.Gender == 'Perempuan' ? 
-                                Images.IllustrasiProfileUstadzah : item.Image_Filepath == '' ?
-                                Images.ImageProfileDefault : { uri : item.Image_Filepath } }
+                                Images.IllustrasiProfileUstadzah : item.ImageProfile == '' ?
+                                Images.ImageProfileDefault : { uri : item.ImageProfile } }
                                 style={styles.imageStyle}
                             />
                             <View style={styles.containerDesc}>
@@ -159,7 +162,7 @@ const ClassListMentor = (props) => {
                                     <View key={index} style={styles.ViewSchedules}>
                                         <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('LT')} - {moment(shift.End_At).format('LT')})</Text>
+                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('LT')} - {moment(shift.End_At).format('LT')} {shift.Time_Zone})</Text>
                                         </View>
                                     </View>
                                 )
@@ -179,7 +182,7 @@ const ClassListMentor = (props) => {
                     size='medium'
                     style={styles.searchbox}
                     onChangeText={onDataStateChange}
-                    placeholder='Masukkan Nama Guru Ngaji'
+                    placeholder='Cari Nama Pengajar'
                     accessoryRight={() => (
                         <Images.Search.default style={{ marginRight: -12 }} />
                     )}
@@ -189,9 +192,9 @@ const ClassListMentor = (props) => {
             <View style={styles.LoadingStyle}>
                 <LoadingView color='#fff' />
             </View> : 
-            stateMentor == 0 ? (<NoList />) :
+            SortMentor == 0 ? (<NoList />) :
             <FlatList
-                data={stateMentor}
+                data={SortMentor}
                 style={{ width:'100%' }}
                 onEndReachedThreshold={0.1}
                 ListFooterComponent={renderFooter}

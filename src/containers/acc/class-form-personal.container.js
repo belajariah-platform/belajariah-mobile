@@ -19,20 +19,20 @@ const ClassFormPersonalACC = () => {
     const FormPersonal = useFormik({
         initialValues: { Full_Name: '', Gender: '', Email: '', Phone: '', Age: '', Place: '', Profession: '' },
         validationSchema: Yup.object({
-            // Full_Name: Yup.string()
-            // .required('Nama anda harus diisi'),
-            // Gender: Yup.string()
-            // .required('Jenis kelamin harus diisi'),
-            // Email: Yup.string()
-            // .required('Email harus diisi'),
-            // Phone: Yup.number()
-            // .required('Nomor WA harus diisi'),
-            // Age: Yup.number()
-            // .required('Umur harus diisi'),
-            // Place: Yup.string()
-            // .required('Domisili harus diisi'),
-            // Profession: Yup.string()
-            // .required('Pekerjaan harus diisi'), 
+            Full_Name: Yup.string()
+            .required('Nama anda harus diisi'),
+            Gender: Yup.string()
+            .required('Jenis kelamin harus diisi'),
+            Email: Yup.string()
+            .required('Email harus diisi'),
+            Phone: Yup.number()
+            .required('Nomor WA harus diisi'),
+            Age: Yup.number()
+            .required('Umur harus diisi'),
+            Place: Yup.string()
+            .required('Domisili harus diisi'),
+            Profession: Yup.string()
+            .required('Pekerjaan harus diisi'), 
         }),
         onSubmit: async () => {
             try {

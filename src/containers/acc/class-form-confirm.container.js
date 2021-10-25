@@ -2,18 +2,19 @@ import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
+import { Text} from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
-import { ImageBackground, View, ScrollView, TouchableOpacity, Linking} from 'react-native'
-import { Text, Radio, RadioGroup, CheckBox } from '@ui-kitten/components'
+import { View, TouchableOpacity, Linking} from 'react-native'
 
-import { Color, Images } from '../../assets'
-import { ButtonGradient, Buttons, Alerts, TextBox, ModalInfo } from '../../components'
+import { Images } from '../../assets'
+import { Buttons, ModalInfo } from '../../components'
 
 import styles from './class-form-confirm.style'
 
-const ClassFormConfirmACC = () => {
+const ClassFormConfirmACC = (props) => {
     const navigation = useNavigation()
+    const { HopeACC } = props.route.params
     const [modalVisibleEnd, setModalVisibleEnd] = useState(true)
     const toggleModalEnd = () => setModalVisibleEnd(!modalVisibleEnd)
     const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20Admin%20Belajariah%2C%20Saya%20ingin%20bergabung%20di%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)'
@@ -83,6 +84,11 @@ const ClassFormConfirmACC = () => {
         />
         </>
     )
+}
+
+ClassFormConfirmACC.propTypes = {
+    route: PropTypes.object,
+    instructor: PropTypes.object,
 }
 
 export default ClassFormConfirmACC

@@ -40,7 +40,7 @@ const ClassFormOtherACC = (props) => {
     ]
     
     const FormPersonalOther = useFormik({
-        initialValues: { Last_Ngaji: '', Until_Ngaji: '', Last_Quran: '', Know_ACC: '', Reason_ACC: '', Hope_ACC: ''},
+        initialValues: { Last_Ngaji: '', Until_Ngaji: '', Last_Quran: '', Know_ACC: '', Reason_ACC: ''},
         validationSchema: Yup.object({
             Last_Ngaji: Yup.string()
             .required('Pertanyaan ini harus diisi'),
@@ -52,12 +52,10 @@ const ClassFormOtherACC = (props) => {
             .required('Pertanyaan ini harus diisi'),
             Reason_ACC: Yup.string()
             .required('Pertanyaan ini harus diisi'),
-            Hope_ACC: Yup.string()
-            .required('Pertanyaan ini harus diisi'),
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('ClassFormConfirmACC', { FormPerson : FormPerson})
+                navigation.navigate('ClassFormConfirmACC', { FormPerson : FormPerson, HopeACC : comment})
             } catch (err) {
                 return err
             }
@@ -156,13 +154,9 @@ const ClassFormOtherACC = (props) => {
                         <Text style={styles.containerText}>Apa harapan anda setelah ikut program <Text style={styles.containerTextBld}>Al-Fatihah Coaching Clinic (ACC)</Text></Text>
                         <TextInput
                             multiline={true}
+                            value={comment}
                             numberOfLines={5}
-                            // onChange={() => {
-                            //     FormPersonalOther.setFieldValue('Hope_ACC')
-                            // }}
-                            onChangeText={() => {
-                                FormPersonalOther.setFieldValue('Hope_ACC')
-                            }}
+                            onChangeText={(e) => setComment(e)}
                             style={styles.textArea}
                         />
                         <CheckBox
@@ -191,7 +185,8 @@ const ClassFormOtherACC = (props) => {
         )
     }
 
-    console.log(FormPersonalOther.values)
+    // console.log(FormPersonalOther.values)
+    // console.log(comment)
 
     return (
         <View style={styles.flexFull}>
