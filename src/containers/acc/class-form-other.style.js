@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
     fontFamily: FontType.regular,
   },
   textArea: {
+    paddingVertical: 10,
     height: 100,
     width: '100%',
     borderRadius: 5,

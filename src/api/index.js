@@ -14,6 +14,7 @@ import PromotionAPI from './promotion'
 import UserClassAPI from './user-class'
 import ConsultationAPI from './consultation'
 import PaymentMethodAPI from './payment-method'
+import CoachingProgramAPI from './coaching-program'
 
 export {
   UserAPI,
@@ -32,4 +33,5 @@ export {
   UserClassAPI,
   ConsultationAPI,
   PaymentMethodAPI,
+  CoachingProgramAPI,
 }

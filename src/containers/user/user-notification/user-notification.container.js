@@ -127,7 +127,7 @@ const UserNotification = (props) => {
             <Header />
             <FilterNotification />
             <ScrollView>
-                {isNotificationEmpty ? <NotificationEmpty /> : <NotificationBody /> }
+                {isNotificationEmpty ? <NotificationBody /> : <NotificationEmpty /> }
             </ScrollView>
         </View> 
     )

@@ -113,13 +113,15 @@ const TransactionMethod = (props) => {
 
   const FormCheckout = useFormik({
     initialValues: {
-      User_Code: userInfo.ID,
+      User_Code: userInfo.Code,
       Class_Code: classes.Code,
       Promo_Code : '',
       Package_Code : packages.Code,
       Payment_Method_Code : '',
       Status_Payment_Code : 'ENC00000025',
       Total_Transfer : parseInt(packages.Price_Discount),
+      Schedule_Code_1 : classes.Is_Direct == true ? (FormSchedule.Meet1) : (null),
+      Schedule_Code_2 : classes.Is_Direct == true ? (FormSchedule.Meet2) : (null),
     },
     onSubmit:  (values) => {
       if (values.Payment_Method_Code != '') {
@@ -179,8 +181,8 @@ const TransactionMethod = (props) => {
   const FormattingSchedule = (code) => {
     // console.log(code)
     if (code > 0) {
-        const formatObj = instructor.Schedule.filter((e) => e.ID == code)
-        return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_At).format('LT') + ' - ' +   moment(formatObj[0].End_At).format('LT') + formatObj[0].Time_Zone + ')'
+        const formatObj = instructor.Mentor_Schedule.filter((e) => e.ID == code)
+        return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_Date).format('LT') + ' - ' +   moment(formatObj[0].End_Date).format('LT') + formatObj[0].Time_Zone + ')'
     } else { 
         return ''
     }

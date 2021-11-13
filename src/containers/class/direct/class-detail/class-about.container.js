@@ -222,7 +222,7 @@ const ClassAboutDirect = ({ params, packages }) => {
   
   const EbookDownload = () => {
     const UrlEbook = { 
-      path : 'https://belajariah-dev.sgp1.digitaloceanspaces.com/Ebook%20Dirosa.pdf'
+      path : params.Class_Document
     }
     return (
       <Card containerStyle={styles.ViewCardEbook}>

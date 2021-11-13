@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Card } from 'react-native-elements'
 import { View, ScrollView} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
@@ -13,35 +14,46 @@ import { Buttons, Alerts, TextBox } from '../../components'
 
 import styles from './class-form-personal.style'
 
-const ClassFormPersonalACC = () => {
+const ClassFormPersonalACC = (props) => {
     const navigation = useNavigation()
+    const { detailACC } = props.route.params
+    const { userInfo } = useSelector((state) => state.UserReducer)
+
     const [selectedIndex, setSelectedIndex] = useState(0)
     const FormPersonal = useFormik({
-        initialValues: { Full_Name: '', Gender: '', Email: '', Phone: '', Age: '', Place: '', Profession: '' },
+        initialValues: { 
+            user_code: userInfo.Code,
+            cp_code: detailACC.code,
+            fullname: '', gender: '', email: '', 
+            wa_no: '', age: '', address: '', profession: ''},
         validationSchema: Yup.object({
-            Full_Name: Yup.string()
+            fullname: Yup.string()
             .required('Nama anda harus diisi'),
-            Gender: Yup.string()
+            gender: Yup.string()
             .required('Jenis kelamin harus diisi'),
-            Email: Yup.string()
+            email: Yup.string()
             .required('Email harus diisi'),
-            Phone: Yup.number()
+            wa_no: Yup.number()
             .required('Nomor WA harus diisi'),
-            Age: Yup.number()
+            age: Yup.number()
             .required('Umur harus diisi'),
-            Place: Yup.string()
+            address: Yup.string()
             .required('Domisili harus diisi'),
-            Profession: Yup.string()
+            profession: Yup.string()
             .required('Pekerjaan harus diisi'), 
         }),
         onSubmit: async () => {
             try {
-                navigation.navigate('ClassFormOtherACC', { FormPerson : FormPersonal.values })
+                const Age = Number(FormPersonal.values['age'])
+                const Wa_Number = Number(FormPersonal.values['wa_no'])
+                navigation.navigate('ClassFormOtherACC', { FormPerson : FormPersonal.values, detailACC : detailACC, Age, Wa_Number})
             } catch (err) {
                 return err
             }
         },
     })
+
+    // console.log(detailACC)
     
     const Header = () => {
         return (
@@ -66,7 +78,7 @@ const ClassFormPersonalACC = () => {
                     <View>
                         <Text style={styles.containerText}>Nama Anda</Text>
                         <TextBox
-                            name='Full_Name'
+                            name='fullname'
                             form={FormPersonal}
                             placeholder='Nama lengkap'
                             customStyle={styles.StyleInputB}
@@ -75,9 +87,9 @@ const ClassFormPersonalACC = () => {
                         <RadioGroup
                             style={styles.containerRadio}
                             selectedIndex={FormPersonal
-                            .values['Gender'] != 'Laki-laki' ? 1 : 0}
+                            .values['gender'] != 'Laki-laki' ? 1 : 0}
                             onChange={(e) => FormPersonal
-                            .setFieldValue('Gender', e == 0 ?
+                            .setFieldValue('gender', e == 0 ?
                                 'Laki-laki' : 'Perempuan'
                             )}
                             >
@@ -86,7 +98,7 @@ const ClassFormPersonalACC = () => {
                         </RadioGroup>
                         <Text style={styles.containerText}>Email</Text>
                         <TextBox
-                            name='Email'
+                            name='email'
                             form={FormPersonal}
                             placeholder='Email'
                             customStyle={styles.StyleInputB}
@@ -94,7 +106,7 @@ const ClassFormPersonalACC = () => {
                         <Text style={styles.containerText}>Nomor WhatsApp</Text>
                         <View style={{ flexDirection : 'row' }}>
                             <TextBox
-                                name='Phone'
+                                name='wa_no'
                                 form={FormPersonal}
                                 placeholder='Telepon'
                                 keyboardType='phone-pad'
@@ -103,21 +115,22 @@ const ClassFormPersonalACC = () => {
                         </View>
                         <Text style={styles.containerText}>Usia</Text>
                         <TextBox
-                            name='Age'
+                            name='age'
+                        
                             placeholder='Usia'
                             form={FormPersonal}
                             customStyle={styles.StyleInputB}
                         />
                         <Text style={styles.containerText}>Domisili</Text>
                         <TextBox
-                            name='Place'
+                            name='address'
                             form={FormPersonal}
                             placeholder='Domisili'
                             customStyle={styles.StyleInputB}
                         />
                         <Text style={styles.containerText}>Pekerjaan</Text>
                         <TextBox
-                            name='Profession'
+                            name='profession'
                             form={FormPersonal}
                             placeholder='Pekerjaan'
                             customStyle={styles.StyleInputB}
@@ -148,7 +161,7 @@ const ClassFormPersonalACC = () => {
 
 ClassFormPersonalACC.propTypes = {
     route: PropTypes.object,
-    instructor: PropTypes.object,
+    navigation: PropTypes.object,
 }
 
 export default ClassFormPersonalACC

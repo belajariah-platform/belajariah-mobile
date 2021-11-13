@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
       width: 76,
       height: 76,
       marginRight: 8,
-      borderRadius : 12,
+      borderRadius : 100,
     },
     ViewTxtMentor : {
       maxWidth: '95%',

@@ -142,9 +142,9 @@ const ClassPreference = (props) => {
     const FormattingSchedule = (code) => {
         // console.log(code)
         if (code > 0) {
-            const formatObj = instructor.Schedule.filter((e) => e.ID == code)
+            const formatObj = instructor.Mentor_Schedule.filter((e) => e.ID == code)
             // console.log(formatObj[0].Shift_Name)
-            return formatObj[0].Shift_Name + ' ' + moment(formatObj[0].Start_At).format('LT') + ' - ' +   moment(formatObj[0].End_At).format('LT')
+            return formatObj[0].Shift_Name + ' ' + moment(formatObj[0].Start_Date).format('LT') + ' - ' +   moment(formatObj[0].End_Date).format('LT')
         } else { 
             return ''
         }
@@ -269,7 +269,7 @@ const ClassPreference = (props) => {
                 <View style={{width: '100%',}}>
                     <ScrollView style={{marginTop: 40}}>
                         <Image source={Images.IconSelectSchedule} style={styles.StyleIconModal} />
-                        {instructor.Schedule && instructor.Schedule.map((item, subindex) => {
+                        {instructor.Mentor_Schedule && instructor.Mentor_Schedule.map((item, subindex) => {
                             return (
                                 <TouchableOpacity key={subindex} onPress={() => {
                                     if (
@@ -306,7 +306,7 @@ const ClassPreference = (props) => {
                                                 || selectedSchedule === 'Meet2' 
                                                 && item.ID == FormSubmit.values['Meet2'] 
                                                 ? '#1DB597' : Color.grey
-                                            }}>({moment(item.Start_At).format('LT')} - {moment(item.End_At).format('LT')} {item.Time_Zone})</Text>
+                                            }}>({moment(item.Start_Date).format('LT')} - {moment(item.End_Date).format('LT')} {item.Time_Zone})</Text>
                                         </View>
                                     </View>    
                                 </TouchableOpacity>                        

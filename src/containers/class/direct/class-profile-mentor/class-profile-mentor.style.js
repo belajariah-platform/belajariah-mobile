@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
       width: 170,
       height: 170,
       marginTop: '14%',
+      borderRadius: 100,
       marginBottom: '2%',
     },
     BackgroundImg: {
@@ -95,7 +96,12 @@ const styles = StyleSheet.create({
     },
     TxtDescCard : {
       lineHeight: 18,
-      maxWidth: '96%',
+      maxWidth: '94%',
+      textAlign: 'justify',
+    },
+    TxtDescStudy : {
+      lineHeight: 18,
+      maxWidth: '90%',
       textAlign: 'justify',
     }, 
     TxtDescSystem : {

@@ -236,6 +236,14 @@ export default {
   IconBenefit2Darussalam : require('./IconBenefit2Darussalam.svg'),
   IconBenefit3Darussalam : require('./IconBenefit3Darussalam.svg'),
 
+  //New Icon Modal Paket Tahsin
+  IconPackageTahsin1 : require('./IconPackageTahsin1.svg'),
+  IconPackageTahsin2 : require('./IconPackageTahsin2.svg'),
+  IconPackageTahsin3 : require('./IconPackageTahsin3.svg'),
+  IconPackageTahsin4 : require('./IconPackageTahsin4.svg'),
+  IconPackageTahsin5 : require('./IconPackageTahsin5.svg'),
+  IllustrationPackageTahsin : require('./IllustrationPackageTahsin.svg'),
+
   //Modal Record
   ModalRecordBG : require('./BgModalRecord.png'),
   IconRecordNext : require('./IconRecordNext.svg'),
@@ -305,6 +313,7 @@ export default {
   IconReviewGreen : require('./IconReviewGreen.svg'),
   IconSystemGreen : require('./IconSystemGreen.svg'),
   IconScheduleBlack : require('./IconScheduleBlack.svg'),
+  IllustrasiProfileUstadz : require('./IllustrasiProfileUstadz.png'),
   IllustrasiProfileUstadzah : require('./IllustrasiProfileUstadzah.png'),
 
   //Class Profile Mentor

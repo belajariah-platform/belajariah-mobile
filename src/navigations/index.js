@@ -15,7 +15,7 @@ const Render = () => {
     switch (userInfo.Role) {
     case 'Admin':
       return  <AdminNavigation/>
-    case 'Users':
+    case 'User':
       return  <UserNavigation/>
     case 'Mentor':
       return  <InstructorNavigation/>

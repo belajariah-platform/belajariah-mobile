@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import { Card } from 'react-native-elements'
 import { Text } from '@ui-kitten/components'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { ImageBackground, View, ScrollView } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -11,9 +11,9 @@ import { Buttons } from '../../components'
 
 import styles from './class-detail-acc.style'
 
-const ClassDetailACC = () => {
+const ClassDetailACC = (props) => {
     const navigation = useNavigation()
-
+    const { detailACC } = props.route.params
     const DataReg = [
         { value: 'Peserta mendaftar di halaman Al-Fatihah Coaching Clinic melalui Aplikasi Belajariah.'},
         { value: 'Peserta diwajibkan mengisi formulir pendaftaran.'},
@@ -29,6 +29,8 @@ const ClassDetailACC = () => {
         { val: 'Terjalin silaturahmi dengan peserta dan ustadz/ustadzah yang berasal dari berbagai wilayah di Indonesia'},
         { val: 'Pada saat peserta sudah mendapatkan kelompok, maka kelompok tersebut mendapatkan voucer 50.000 yang dapat di gunakan untuk mengakses kelas Dirosa paket Famili (4 Peserta).'},
     ]
+
+    // console.log(detailACC)
 
     const Header = () => {
         return (
@@ -111,11 +113,16 @@ const ClassDetailACC = () => {
                     style={styles.StyleBtn} 
                     textStyle={styles.StyleTxtBtn}
                     onPress={() => {
-                        navigation.navigate('ClassFormPersonalACC')}}
+                        navigation.navigate('ClassFormPersonalACC', {detailACC : detailACC})}}
                 />
             </View>
         </View>
     )
+}
+
+ClassDetailACC.propTypes = {
+    route: PropTypes.object,
+    navigation: PropTypes.object,
 }
 
 export default ClassDetailACC

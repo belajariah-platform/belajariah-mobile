@@ -8,24 +8,52 @@ import { useNavigation } from '@react-navigation/native'
 import { View, TouchableOpacity, Linking} from 'react-native'
 
 import { Images } from '../../assets'
+import { CoachingProgramAPI } from '../../api'
 import { Buttons, ModalInfo } from '../../components'
 
 import styles from './class-form-confirm.style'
 
 const ClassFormConfirmACC = (props) => {
     const navigation = useNavigation()
-    const { HopeACC } = props.route.params
+    const { FormPerson, FormPersonalOther, modified } = props.route.params
+    const [loading, setLoading] = useState(false)
     const [modalVisibleEnd, setModalVisibleEnd] = useState(true)
     const toggleModalEnd = () => setModalVisibleEnd(!modalVisibleEnd)
-    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20Admin%20Belajariah%2C%20Saya%20ingin%20bergabung%20di%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)'
+    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20Admin%20Belajariah.%0ASaya%20telah%20mendaftar%20pada%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)'
 
     const FormWA = useFormik({
         initialValues: {
+            user_code : FormPerson.user_code,
+            email : FormPerson.email,
+            modified_date : modified
         },
-        onSubmit:   (values) => {
-            DirectWA(values)
+        onSubmit: async  (values, form) => {
+            try {
+                setLoading(true)
+                const data = {
+                    "user_code" : FormWA.values['user_code'],
+                    "email" : FormWA.values['email'],
+                    "modified_date" : modified
+                }
+                console.log(data)
+                const response = await CoachingProgramAPI.ConfirmFormACC(data)
+                if (response && response.data && response.data.message.result) {
+                    setLoading(false)
+                    DirectWA(values)
+                    navigation.navigate('Home')
+                } else {
+                    form.resetForm()
+                    setLoading(false)
+                }
+            }
+            catch (err) {
+                setLoading(false)
+                return err
+            }
         },
       })
+      console.log(FormWA.values)
+    //   console.log(FormPersonalOther)
     
       const DirectWA = async (values) => {
         try {
@@ -77,7 +105,7 @@ const ClassFormConfirmACC = (props) => {
                         title='Konfirmasi' 
                         style={styles.StyleBtn} 
                         textStyle={styles.StyleTxtBtn}
-                        onPress={() => navigation.goBack()}
+                        onPress={FormWA.handleSubmit}
                     />
                 </View>
             }

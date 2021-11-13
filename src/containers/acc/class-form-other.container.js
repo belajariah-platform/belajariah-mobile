@@ -1,4 +1,5 @@
 import * as Yup from 'yup'
+import moment from 'moment'
 import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -8,16 +9,19 @@ import { View, ScrollView, TextInput} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Text, Radio, RadioGroup, CheckBox } from '@ui-kitten/components'
 
+import { Response} from '../../utils'
 import { Images } from '../../assets'
+import { CoachingProgramAPI } from '../../api'
 import { Buttons, Alerts, TextBox } from '../../components'
 
 import styles from './class-form-other.style'
 
 const ClassFormOtherACC = (props) => {
     const navigation = useNavigation()
-    const { FormPerson } = props.route.params
+    const { FormPerson, detailACC, Age, Wa_Number } = props.route.params
     const [checked, setChecked] = useState(false)
-    const [comment, setComment] = useState('')
+    const [loading, setLoading] = useState(false)
+    // const [question_6, setquestion_6] = useState('')
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [selectedIndexRadio, setSelectedIndexRadio] = useState(0)
     const [selectedIndexRadioTW, setSelectedIndexRadioTW] = useState(0)
@@ -40,24 +44,68 @@ const ClassFormOtherACC = (props) => {
     ]
     
     const FormPersonalOther = useFormik({
-        initialValues: { Last_Ngaji: '', Until_Ngaji: '', Last_Quran: '', Know_ACC: '', Reason_ACC: ''},
+        initialValues: { 
+            user_code: FormPerson.user_code,
+            cp_code: detailACC.code,
+            fullname: FormPerson.fullname, gender: FormPerson.gender, 
+            email: FormPerson.email, wa_no: FormPerson.wa_no, age: FormPerson.age,
+            address: FormPerson.address, profession: FormPerson.profession,
+            question_1: '', question_2: '', question_3: '', 
+            question_4: '', question_5: '', question_6: '', modified_date: new Date()},
         validationSchema: Yup.object({
-            Last_Ngaji: Yup.string()
+            question_1: Yup.string()
             .required('Pertanyaan ini harus diisi'),
-            Until_Ngaji: Yup.string()
+            question_2: Yup.string()
             .required('Pertanyaan ini harus diisi'),
-            Last_Quran: Yup.string()
+            question_3: Yup.string()
             .required('Pertanyaan ini harus diisi'),
-            Know_ACC: Yup.string()
+            question_4: Yup.string()
             .required('Pertanyaan ini harus diisi'),
-            Reason_ACC: Yup.string()
+            question_5: Yup.string()
+            .required('Pertanyaan ini harus diisi'),
+            question_6: Yup.string()
             .required('Pertanyaan ini harus diisi'),
         }),
-        onSubmit: async () => {
-            try {
-                navigation.navigate('ClassFormConfirmACC', { FormPerson : FormPerson, HopeACC : comment})
-            } catch (err) {
-                return err
+        onSubmit: async (values, form) => {
+            if (checked !== true) {
+                Alerts(false, 'Centang pertanyaan dibawah')
+            } else {
+                try {
+                    setLoading(true)
+                    const modified = moment(FormPersonalOther.values['modified_date']).format('YYYY-MM-DD[T]HH:mm:[00].[000Z]')
+                    console.log(modified)
+                    const data = {
+                        "user_code" : FormPersonalOther.values['user_code'],
+                        "cp_code" : FormPersonalOther.values['cp_code'],
+                        "fullname" : FormPersonalOther.values['fullname'],
+                        "gender" : FormPersonalOther.values['gender'],
+                        "email" : FormPersonalOther.values['email'],
+                        "wa_no" : Wa_Number,
+                        "age" : Age,
+                        "address" : FormPersonalOther.values['address'],
+                        "profession" : FormPersonalOther.values['profession'],
+                        "question_1" : FormPersonalOther.values['question_1'],
+                        "question_2" : FormPersonalOther.values['question_2'],
+                        "question_3" : FormPersonalOther.values['question_3'],
+                        "question_4" : FormPersonalOther.values['question_4'],
+                        "question_5" : FormPersonalOther.values['question_5'],
+                        "question_6" : FormPersonalOther.values['question_6'],
+                        "modified_date" : modified
+                    }
+                    const response = await CoachingProgramAPI.InsertFormACC(data)
+                    if (response && response.data && response.data.message.result) {
+                        setLoading(false)
+                        navigation.navigate('ClassFormConfirmACC', { FormPerson : FormPerson, FormPersonalOther : FormPersonalOther, modified})
+                    } else {
+                        form.resetForm()
+                        setLoading(false)
+                    }
+                }
+                catch (err) {
+                    // console.log(err)
+                    setLoading(false)
+                    return err
+                }
             }
         },
     })
@@ -85,7 +133,7 @@ const ClassFormOtherACC = (props) => {
                     <View>
                         <Text style={styles.containerText}>Kapan terakhir belajar ngaji?</Text>
                         <TextBox
-                            name='Last_Ngaji'
+                            name='question_1'
                             form={FormPersonalOther}
                             customStyle={styles.StyleInputB}
                             placeholder='Kapan terakhir belajar ngaji?'
@@ -96,7 +144,7 @@ const ClassFormOtherACC = (props) => {
                             selectedIndex={selectedIndexRadio}
                             onChange={index => {
                                 setSelectedIndexRadio(index)
-                                FormPersonalOther.setFieldValue('Until_Ngaji', 
+                                FormPersonalOther.setFieldValue('question_2', 
                                     index == 0 ? 'Iqra 1 - 3' : 
                                         index == 1 ? 'Iqra 4 - 6' :
                                             index == 2 ? 'Al-Qur’an' : 'Lainnya')
@@ -110,7 +158,7 @@ const ClassFormOtherACC = (props) => {
                         </RadioGroup>
                         <Text style={styles.containerText}>Kapan terakhir membaca Al-Qur’an?</Text>
                         <TextBox
-                            name='Last_Quran'
+                            name='question_3'
                             form={FormPersonalOther}
                             customStyle={styles.StyleInputB}
                             placeholder='Kapan terakhir membaca Al-Qur’an?'
@@ -121,7 +169,7 @@ const ClassFormOtherACC = (props) => {
                             selectedIndex={selectedIndexRadioTW}
                             onChange={index => {
                                 setSelectedIndexRadioTW(index)
-                                FormPersonalOther.setFieldValue('Know_ACC', 
+                                FormPersonalOther.setFieldValue('question_4', 
                                     index == 0 ? 'Brosur' : 
                                         index == 1 ? 'Social Media' :
                                             index == 2 ? 'Teman' : 'Lainnya')
@@ -140,9 +188,9 @@ const ClassFormOtherACC = (props) => {
                                     <View key={index} style={{flexDirection: 'row', marginBottom: 10}}>
                                         <CheckBox
                                             status='primary'
-                                            checked={FormPersonalOther.values['Reason_ACC'] == item.value}
+                                            checked={FormPersonalOther.values['question_5'] == item.value}
                                             onChange={() => {
-                                                FormPersonalOther.setFieldValue('Reason_ACC', item.value)
+                                                FormPersonalOther.setFieldValue('question_5', item.value)
                                             }}
                                             style={styles.checkboxOther}
                                         />
@@ -152,12 +200,11 @@ const ClassFormOtherACC = (props) => {
                             })}
                         </View>
                         <Text style={styles.containerText}>Apa harapan anda setelah ikut program <Text style={styles.containerTextBld}>Al-Fatihah Coaching Clinic (ACC)</Text></Text>
-                        <TextInput
-                            multiline={true}
-                            value={comment}
-                            numberOfLines={5}
-                            onChangeText={(e) => setComment(e)}
-                            style={styles.textArea}
+                        <TextBox
+                            name='question_6'
+                            form={FormPersonalOther}
+                            customStyle={styles.StyleInputB}
+                            placeholder='Apa harapan anda setelah ikut program Al-Fatihah Coaching Clinic (ACC)'
                         />
                         <CheckBox
                             status='primary'
@@ -184,9 +231,6 @@ const ClassFormOtherACC = (props) => {
             </View>
         )
     }
-
-    // console.log(FormPersonalOther.values)
-    // console.log(comment)
 
     return (
         <View style={styles.flexFull}>

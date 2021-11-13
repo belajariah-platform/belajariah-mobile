@@ -32,12 +32,12 @@ const ClassListMentor = (props) => {
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "CLC00000003"}]' })
+    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "Role_Code", "value": "ARL3"}]' })
 
     const onDataStateChange = (event) => {
         setDataState({
           ...dataState,
-          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "class_code", "value": "CLC00000003"}]`
+          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "Role_Code", "value": "ARL3"}]`
         })
     }
 
@@ -105,7 +105,7 @@ const ClassListMentor = (props) => {
     const NoList = () => {
         return (
             <View style={styles.ViewNoList}>
-                <Text style={styles.TxtNoList}>Ustadz/Ustadzah yang kamu cari tidak ada</Text>
+                <Text style={styles.TxtNoList}>Ustadz/Ustadzah tidak ada</Text>
             </View>
         )
     }
@@ -134,7 +134,7 @@ const ClassListMentor = (props) => {
                         <View style={styles.viewStyle}>
                             <Image source={item.Gender == 'Perempuan' ? 
                                 Images.IllustrasiProfileUstadzah : item.ImageProfile == '' ?
-                                Images.ImageProfileDefault : { uri : item.ImageProfile } }
+                                Images.IllustrasiProfileUstadz : { uri : item.ImageProfile } }
                                 style={styles.imageStyle}
                             />
                             <View style={styles.containerDesc}>
@@ -157,12 +157,12 @@ const ClassListMentor = (props) => {
                     </TouchableOpacity>
                     <View>
                         <List.Accordion title='Jadwal Pengajar' left={() => <Images.IconScheduleBlack.default style={styles.IconStyle} />} titleStyle={styles.textRegular} style={styles.containerAccordion}>
-                            {item.Schedule && item.Schedule.map((shift, index) => {
+                            {item.Mentor_Schedule && item.Mentor_Schedule.map((shift, index) => {
                                 return (
                                     <View key={index} style={styles.ViewSchedules}>
                                         <Text style={styles.textRegular}>{shift.Shift_Name} </Text>
                                         <View style={styles.ViewSchedule}>
-                                            <Text style={styles.textRegular}>({moment(shift.Start_At).format('LT')} - {moment(shift.End_At).format('LT')} {shift.Time_Zone})</Text>
+                                            <Text style={styles.textRegular}>({moment(shift.Start_Date).format('LT')} - {moment(shift.End_Date).format('LT')} {shift.Time_Zone})</Text>
                                         </View>
                                     </View>
                                 )

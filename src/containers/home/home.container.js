@@ -12,6 +12,7 @@ import {
   StoryAPI,
   PackageAPI,
   PromotionAPI,
+  CoachingProgramAPI,
 } from '../../api'
 
 import {
@@ -35,6 +36,7 @@ import {
   Cards,
   Carousel,
   ModalInfo,
+  ShimmerACC,
   ModalInfoClass,
   ModalClassDirect,
   ModalNoConnection,
@@ -59,6 +61,7 @@ const Home = (props) => {
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
   const [modalClassDirectVisible, setModalClassDirectVisible] = useState(false)
 
+  const [stateACC, setStateACC] = useState([])
   const [stateStory, setStateStory] = useState([])
   const [stateClass, setStateClass] = useState([])
   const [statePackage, setStatePackage] = useState([])
@@ -66,6 +69,7 @@ const Home = (props) => {
   const [statePromotion, setStatePromotion] = useState([])
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
+  const [loadingACC, setloadingACC] = useState(true)
   const [loadingClass, setloadingClass] = useState(true)
   const [loadingStory, setloadingStory] = useState(true)
   const [loadingPackage, setloadingPackage] = useState(true)
@@ -103,6 +107,21 @@ const Home = (props) => {
     await setClassObj(item)
     await setModalClassDirectVisible(!modalClassDirectVisible)
     await fetchDataPackage(dataState, item.Code)
+  }
+
+  const fetchDataACC = async ({ skip, take, filterString }) => {
+    try {
+      setloadingACC(true)
+      const response = await CoachingProgramAPI.GetACCDetail(skip, take, filterString)
+      // console.log(response.data.message.data)
+      if (response.status === Response.SUCCESS) {
+          setStateACC(response.data.message.data[0])
+      } 
+      setloadingACC(false)
+    } catch (err) {
+      setloadingACC(false)
+      return err
+    }
   }
 
   const fetchDataClass = async ({ skip, take, filterString }) => {
@@ -196,6 +215,7 @@ const Home = (props) => {
   }
 
   useEffect(() => {
+    fetchDataACC(dataState)
     fetchDataStory(dataState)
     fetchDataClass(dataState)
     fetchDataCategory(dataState)
@@ -286,9 +306,9 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Al-Fatihah Coaching Clinic</Text>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => props.navigation.navigate('ClassDetailACC')}>
+          onPress={() => props.navigation.navigate('ClassDetailACC', {detailACC : stateACC})}>
           <View style={styles.cardAC}>
-            <Image source={Images.CardACC} style={styles.ImgCustomAC} />
+            <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateACC.image_banner}} style={styles.ImgCustomAC} />
           </View>
         </TouchableOpacity>
       </View>
@@ -404,8 +424,8 @@ const Home = (props) => {
           {stateStory.map((item, index) => {
             return (
               <View style={styles.cardArticle} key={index}>
-                <Image source={item.Banner_Image == '' ?
-                  Images.ImgDefault5 : { uri : item.Banner_Image }}
+                <Image source={item.Image_Banner_Story == '' ?
+                  Images.ImgDefault5 : { uri : item.Image_Banner_Story }}
                 style={styles.storyImage}/>
                 <View style={styles.storyView}>
                   <Text style={styles.textArticleDescription}>
@@ -489,7 +509,10 @@ const Home = (props) => {
                     ShimmerListCategory() :
                     CategoryClassHome()
                   }
-                  <ACCHome />
+                  {loadingACC ?
+                    ShimmerACC() :
+                    ACCHome() 
+                  }
                   {loadingClass ?
                     ShimmerCardClassPopuler() :
                     <PopularClassHome />

@@ -48,8 +48,8 @@ const InspiratifStoryDetail = () => {
         </View>
         <View>
           <Image
-            source={params.Banner_Image == '' ?
-              Images.ImgDefault2 : { uri : params.Banner_Image }}
+            source={params.Image_Header_Story == '' ?
+              Images.ImgDefault2 : { uri : params.Image_Header_Story }}
             style={styles.ImgHeading}/>
           <TouchableOpacity
             activeOpacity={0.5}

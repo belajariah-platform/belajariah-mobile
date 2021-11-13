@@ -144,8 +144,8 @@ const InspiratifStory = () => {
         <Card
           containerStyle={styles.cardStyle}>
           <View style={styles.viewStyle}>
-            <Image source={item.Header_Image == '' ?
-              Images.ImgDefault4  : { uri : item.Header_Image }}
+            <Image source={item.Image_Banner_Story == '' ?
+              Images.ImgDefault4  : { uri : item.Image_Banner_Story }}
             style={styles.imageStyle}/>
             <View style={styles.containerDesc}>
               <Text style={styles.textStyle}>{item.Title}</Text>

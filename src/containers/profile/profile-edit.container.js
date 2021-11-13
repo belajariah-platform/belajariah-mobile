@@ -60,7 +60,7 @@ const ProfileEdit = () => {
 
   const FormPersonal = useFormik({
     initialValues: {
-      User_Code : userInfo.ID,
+      User_Code : userInfo.Code,
       Full_Name: userInfo.Full_Name,
       Profession: userInfo.Profession,
       Phone: userInfo.Phone == 0 ? '' :

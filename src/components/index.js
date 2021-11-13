@@ -7,6 +7,7 @@ import LoadingView from './loading-view'
 import { Chat, ChatAdmin, ChatMentor } from './chat'
 import {
   Shimmer,
+  ShimmerACC,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
@@ -61,6 +62,7 @@ export {
   ModalInfo,
   ChatAdmin,
   ChatMentor,
+  ShimmerACC,
   LoadingView,
   ModalRating,
   ModalRecord,
