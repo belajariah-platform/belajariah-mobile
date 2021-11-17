@@ -214,12 +214,16 @@ const Home = (props) => {
     }
   }
 
+  const _getData = async () => {
+    await fetchDataPromotion(dataState)
+    await fetchDataCategory(dataState)
+    await fetchDataACC(dataState)
+    await fetchDataClass(dataState)
+    await fetchDataStory(dataState)
+  }
+
   useEffect(() => {
-    fetchDataACC(dataState)
-    fetchDataStory(dataState)
-    fetchDataClass(dataState)
-    fetchDataCategory(dataState)
-    fetchDataPromotion(dataState)
+    _getData()
   }, [])
 
   const PromotionHome = ({ index, item }) => {
