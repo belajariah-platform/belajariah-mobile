@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import {
     View,
     Image,
+    Linking,
     FlatList,
     ScrollView,
     RefreshControl,
@@ -33,6 +34,8 @@ const ClassListMentor = (props) => {
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
     const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "Role_Code", "value": "ARL3"}]' })
+
+    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F'
 
     const onDataStateChange = (event) => {
         setDataState({
@@ -67,6 +70,19 @@ const ClassListMentor = (props) => {
         }, 500)
         return () => clearTimeout(delay)
     }, [dataState])
+
+    const DirectWA = async () => {
+        try {
+            const supported = await Linking.canOpenURL(url)
+            if(supported) {
+              await Linking.openURL(url)
+            } else {
+              alert('')
+            }
+        } catch (error) {
+          return error
+        }
+    }
 
     const renderFooter = () => {
         return loadingMentor ? (
@@ -175,6 +191,7 @@ const ClassListMentor = (props) => {
     }
 
     return (
+        <>
         <View style={styles.containerMain}>
             <Header />
             <View style={styles.containerSearch}>
@@ -187,6 +204,11 @@ const ClassListMentor = (props) => {
                         <Images.Search.default style={{ marginRight: -12 }} />
                     )}
                 />
+            </View>
+            <View style={styles.containerHelp}>
+                <TouchableOpacity onPress={DirectWA}>
+                    <Text>Tolong Min</Text>
+                </TouchableOpacity>
             </View>
             {loadingMentor ? 
             <View style={styles.LoadingStyle}>
@@ -205,7 +227,8 @@ const ClassListMentor = (props) => {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
                 renderItem={({ item, index }) => CardList(item, index)}/>
             }
-        </View> 
+        </View>
+        </> 
     )
 }
 

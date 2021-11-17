@@ -73,15 +73,15 @@ const ClassFormOtherACC = (props) => {
                 try {
                     setLoading(true)
                     const modified = moment(FormPersonalOther.values['modified_date']).format('YYYY-MM-DD[T]HH:mm:[00].[000Z]')
-                    console.log(modified)
+                    // console.log(modified)
                     const data = {
                         "user_code" : FormPersonalOther.values['user_code'],
                         "cp_code" : FormPersonalOther.values['cp_code'],
                         "fullname" : FormPersonalOther.values['fullname'],
                         "gender" : FormPersonalOther.values['gender'],
                         "email" : FormPersonalOther.values['email'],
-                        "wa_no" : Wa_Number,
-                        "age" : Age,
+                        "wa_no" : FormPerson.wa_no,
+                        "age" : FormPerson.age,
                         "address" : FormPersonalOther.values['address'],
                         "profession" : FormPersonalOther.values['profession'],
                         "question_1" : FormPersonalOther.values['question_1'],

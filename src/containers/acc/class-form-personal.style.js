@@ -130,11 +130,18 @@ const styles = StyleSheet.create({
     marginLeft: 1,
     marginRight: 15,
   },
-  phoneOne : { width : '29%', marginRight : '2%' },
-  phoneTwo : { 
-    width : '100%',
-    borderRadius: 5,
+  phoneOne : { 
+    width : '28%', 
     borderWidth: 0,
+    borderRadius: 5,
+    marginRight : '2%',
+    borderColor: '#BDBDBD33',
+    backgroundColor: '#BDBDBD60',
+  },
+  phoneTwo : { 
+    width : '70%',
+    borderWidth: 0,
+    borderRadius: 5,
     borderColor: '#BDBDBD33',
     backgroundColor: '#BDBDBD60',
   },

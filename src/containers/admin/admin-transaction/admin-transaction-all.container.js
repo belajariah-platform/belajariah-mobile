@@ -113,10 +113,13 @@ const AdminTransactionAll = () => {
       Class_Code : item.Class_Code,
       Package_Code : item.Package_Code,
       Status_Payment_Code : item.Status_Payment_Code,
+      // Total_Transfer : item.Total_Transfer,
+      // Payment_Method_Code : item.Payment_Method_Code,
     }
     try {
       setLoadingBtn(true)
       const response = await PaymentAPI.ConfirmPayment(values)
+      // console.log(values)
       if (!response.data.result) {
         ToastAndroid.show(`Errror ${response.data.error}`,
           ToastAndroid.SHORT)
@@ -126,6 +129,7 @@ const AdminTransactionAll = () => {
       }
       setLoadingBtn(false)
     } catch (error) {
+      // console.log(error)
       setLoadingBtn(false)
       NetInfo.fetch().then(res => {
         setconnectStatus(!res.isConnected)

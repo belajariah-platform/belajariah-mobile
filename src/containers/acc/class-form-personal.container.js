@@ -42,13 +42,17 @@ const ClassFormPersonalACC = (props) => {
             profession: Yup.string()
             .required('Pekerjaan harus diisi'), 
         }),
-        onSubmit: async () => {
-            try {
-                const Age = Number(FormPersonal.values['age'])
-                const Wa_Number = Number(FormPersonal.values['wa_no'])
-                navigation.navigate('ClassFormOtherACC', { FormPerson : FormPersonal.values, detailACC : detailACC, Age, Wa_Number})
-            } catch (err) {
-                return err
+        onSubmit: async (values, form) => {
+            if (values.wa_no.charAt(0) == '0') {
+                Alerts(false, 'Format nomor WA tidak sesuai')
+            } else {
+                try {
+                    values.wa_no = Number('62' + values.wa_no)
+                    values.age = Number(values.age)
+                    navigation.navigate('ClassFormOtherACC', { FormPerson : FormPersonal.values, detailACC : detailACC})
+                } catch (err) {
+                    return err
+                }
             }
         },
     })
@@ -106,9 +110,15 @@ const ClassFormPersonalACC = (props) => {
                         <Text style={styles.containerText}>Nomor WhatsApp</Text>
                         <View style={{ flexDirection : 'row' }}>
                             <TextBox
+                                disabled
+                                placeholder='+62'
+                                customStyle={styles.phoneOne}
+                                keyboardType={'numeric'}
+                            />
+                            <TextBox
                                 name='wa_no'
                                 form={FormPersonal}
-                                placeholder='Telepon'
+                                placeholder='81312370123'
                                 keyboardType='phone-pad'
                                 customStyle={styles.phoneTwo}
                             />

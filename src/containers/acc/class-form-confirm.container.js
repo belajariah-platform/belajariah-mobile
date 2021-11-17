@@ -35,12 +35,12 @@ const ClassFormConfirmACC = (props) => {
                     "email" : FormWA.values['email'],
                     "modified_date" : modified
                 }
-                console.log(data)
+                // console.log(data)
                 const response = await CoachingProgramAPI.ConfirmFormACC(data)
                 if (response && response.data && response.data.message.result) {
                     setLoading(false)
                     DirectWA(values)
-                    navigation.navigate('Home')
+                    navigation.navigate('UserMain')
                 } else {
                     form.resetForm()
                     setLoading(false)
@@ -51,11 +51,9 @@ const ClassFormConfirmACC = (props) => {
                 return err
             }
         },
-      })
-      console.log(FormWA.values)
-    //   console.log(FormPersonalOther)
+    })
     
-      const DirectWA = async (values) => {
+    const DirectWA = async (values) => {
         try {
             const supported = await Linking.canOpenURL(url)
             if(supported) {
