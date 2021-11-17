@@ -135,9 +135,9 @@ const PromotionDetail = () => {
       <View style={styles.containerBanner}>
         <Image
           style={styles.ImgBanner}
-          source={state.Header_Image == '' ?
+          source={state.Image_Header == '' ?
             Images.ImgDefault1 :
-            { uri :state.Header_Image }}
+            { uri :state.Image_Header }}
         />
       </View>
     )

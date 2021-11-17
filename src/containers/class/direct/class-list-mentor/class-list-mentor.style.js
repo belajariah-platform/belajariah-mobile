@@ -58,6 +58,12 @@ const styles = StyleSheet.create({
       borderRadius : 20,
       borderColor: '#fff',
     },
+    containerHelp : {
+      right: 0,
+      top: '90%',
+      zIndex: 1000,
+      position: 'absolute',
+    },
     containerSearch : {
       paddingBottom:10,
       marginHorizontal :20,

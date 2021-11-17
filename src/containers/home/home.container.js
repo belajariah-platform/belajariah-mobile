@@ -231,15 +231,15 @@ const Home = (props) => {
             onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
             <Image
               style={styles.cardCustom}
-              source={item.Banner_Image == '' ? Images.ImgDefault5 : {
-                uri : item.Banner_Image  }}
+              source={item.Image_Banner == '' ? Images.ImgDefault5 : {
+                uri : item.Image_Banner  }}
               resizeMode='cover'
             />
           </TouchableOpacity>
         ) : (
           <Image
             style={styles.cardCustom}
-            source={{ uri: item.Banner_Image ?
+            source={{ uri: item.Image_Banner ?
               item.Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
           />
         )}
