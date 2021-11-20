@@ -13,6 +13,7 @@ import {
   ClassMeeting,
   AlquranDetail,
   ClassLearning,
+  ClassListQuran,
   ClassDetailACC,
   ClassListMentor,
   ConfirmPassword,
@@ -22,6 +23,7 @@ import {
   ClassUserDirect,
   InspiratifStory,
   TransactionInfo,
+  ClassDetailQuran,
   UserNotification,
   ClassTrialDirect, 
   ClassFormOtherACC,
@@ -34,9 +36,11 @@ import {
   TransactionConfirm,
   ClassFormConfirmACC,
   ClassLearningDirect, 
+  ClassListMentorQuran,
   ClassFormPersonalACC,
   InspiratifStoryDetail,
   ClassInstructorProfile,
+  ClassProfileMentorQuran,
 } from '../../../containers'
 import UserMain from '../user-main'
 
@@ -60,6 +64,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='Consultation' component={Consultation} />
       <Stack.Screen name='ClassLearning' component={ClassLearning} />
       <Stack.Screen name='AlquranDetail' component={AlquranDetail} />
+      <Stack.Screen name='ClassListQuran' component={ClassListQuran} />
       <Stack.Screen name='ClassDetailACC' component={ClassDetailACC} />
       <Stack.Screen name='ClassPreference' component={ClassPreference} />
       <Stack.Screen name='ClassUserDirect' component={ClassUserDirect} />
@@ -71,6 +76,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ConfirmPassword' component={ConfirmPassword} />
       <Stack.Screen name='UserNotification' component={UserNotification} />
       <Stack.Screen name='ClassTrialDirect' component={ClassTrialDirect} />
+      <Stack.Screen name='ClassDetailQuran' component={ClassDetailQuran} />
       <Stack.Screen name='ClassFormOtherACC' component={ClassFormOtherACC} />
       <Stack.Screen name='ClassReviewMentor' component={ClassReviewMentor} />
       <Stack.Screen name='ClassDetailDirect' component={ClassDetailDirect} />
@@ -80,10 +86,12 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
       <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
       <Stack.Screen name='ClassFormConfirmACC' component={ClassFormConfirmACC} />
+      <Stack.Screen name='ClassListMentorQuran' component={ClassListMentorQuran} />
       <Stack.Screen name='ClassFormPersonalACC' component={ClassFormPersonalACC} />
       <Stack.Screen name='ClassLearningDirect, ' component={ClassLearningDirect} />
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
       <Stack.Screen name='ClassInstructorProfile' component={ClassInstructorProfile} />
+      <Stack.Screen name='ClassProfileMentorQuran' component={ClassProfileMentorQuran} />
     </Stack.Navigator>
   )
 }

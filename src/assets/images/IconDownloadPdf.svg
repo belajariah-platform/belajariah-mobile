@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Creator: CorelDRAW X7 -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="2.7938mm" height="3.6406mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 279 364"
- xmlns:xlink="http://www.w3.org/1999/xlink">
- <defs>
-  <style type="text/css">
-   <![CDATA[
-    .fil0 {fill:white;fill-rule:nonzero}
-   ]]>
-  </style>
- </defs>
- <g id="Layer_x0020_1">
-  <metadata id="CorelCorpID_0Corel-Layer"/>
-  <path class="fil0" d="M47 -1l132 0 102 102 0 186c0,26 -22,48 -48,48l-43 0 16 -19 27 0c16,0 29,-13 29,-29l0 -179 -91 -91 -124 0c-17,0 -30,13 -30,29l0 241c0,16 13,29 30,29l27 0 15 19 -42 0c-27,0 -48,-22 -48,-48l0 -241c0,-26 21,-47 48,-47zm52 135c0,-16 -11,-22 -27,-22l-25 0 0 69 17 0 0 -26 8 0c14,0 27,-5 27,-21zm-16 0c0,6 -6,8 -12,8l-7 0 0 -16 7 0c6,0 12,1 12,8zm91 13c0,-26 -20,-35 -40,-35l-25 0 0 69 26 0c19,0 39,-10 39,-34zm-17 0c0,15 -11,20 -23,20l-8 0 0 -40 8 0c12,0 23,4 23,20zm73 -20l0 -15 -45 0 0 69 16 0 0 -26 27 0 0 -14 -27 0 0 -14 29 0zm-136 190c-3,-4 -3,-9 1,-13 4,-3 10,-2 13,1l32 37 31 -37c4,-3 9,-4 13,-1 4,4 4,9 1,13l-38 45c-1,1 -1,1 -1,1 -4,4 -10,3 -13,-1l-39 -45zm37 -101c0,-4 4,-8 9,-8 5,0 9,4 9,8l0 93c0,5 -4,9 -9,9 -5,0 -9,-4 -9,-9l0 -93z"/>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="10.559" height="13.76" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd" viewBox="0 0 279 364"><path d="M47-1h132l102 102v186c0 26-22 48-48 48h-43l16-19h27c16 0 29-13 29-29V108l-91-91H47c-17 0-30 13-30 29v241c0 16 13 29 30 29h27l15 19H47c-27 0-48-22-48-48V46C-1 20 20-1 47-1zm52 135c0-16-11-22-27-22H47v69h17v-26h8c14 0 27-5 27-21zm-16 0c0 6-6 8-12 8h-7v-16h7c6 0 12 1 12 8zm91 13c0-26-20-35-40-35h-25v69h26c19 0 39-10 39-34zm-17 0c0 15-11 20-23 20h-8v-40h8c12 0 23 4 23 20zm73-20v-15h-45v69h16v-26h27v-14h-27v-14h29zM94 317c-3-4-3-9 1-13 4-3 10-2 13 1l32 37 31-37c4-3 9-4 13-1 4 4 4 9 1 13l-38 45-1 1c-4 4-10 3-13-1l-39-45zm37-101c0-4 4-8 9-8s9 4 9 8v93c0 5-4 9-9 9s-9-4-9-9v-93z" style="fill:#fff;fill-rule:nonzero"/></svg>
