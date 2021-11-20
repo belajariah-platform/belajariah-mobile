@@ -49,6 +49,7 @@ const ClassFormPersonalACC = (props) => {
                 try {
                     values.wa_no = Number('62' + values.wa_no)
                     values.age = Number(values.age)
+                    form.resetForm()
                     navigation.navigate('ClassFormOtherACC', { FormPerson : FormPersonal.values, detailACC : detailACC})
                 } catch (err) {
                     return err
