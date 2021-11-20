@@ -18,10 +18,11 @@ const Tab = createMaterialTopTabNavigator()
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
     const { DetailClass } = props.route.params
+    
     const Header = () => {
         return (
             <View style={styles.containerHeaderProfile}>
-                <ImageBackground source={{uri : DetailClass.header_image}} style={styles.HeaderClass}>
+                <ImageBackground source={{uri : DetailClass.class_image_header}} style={styles.HeaderClass}>
                     <View style={styles.flexHeader}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Images.ButtonBack.default style={styles.iconBack} />

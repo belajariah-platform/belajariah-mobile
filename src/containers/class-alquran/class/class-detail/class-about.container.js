@@ -23,51 +23,39 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/core'
 
 const ClassAbout = ({ params }) => {
+  console.log(params.code, params)
   const navigation = useNavigation()
   const [state, setState] = useState([])
   const [showMore, setShowMore] = useState(true)
   const [numberOfLines, setNumberOfLines] = useState(3)
   const [connectStatus, setconnectStatus] = useState(false)
-  const [dataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[]' })
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
   const retryConnection = () => {
     setconnectStatus(!connectStatus)
-    // fetchDataLearning(dataState, params.Code)
+    fetchDataLearning(params.code)
   }
 
-//   const fetchDataLearning = async (state, code) => {
-//     try {
-//       let { skip, take, filterString } = state
-//       filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
-//       const response = await LearningAPI.GetAllLearning(skip, take, filterString)
-//       if (response.status === Response.SUCCESS) {
-//         setState(response.data.data)
-//       } else {
-//         NetInfo.fetch().then(res => {
-//           setconnectStatus(!res.isConnected)
-//         })
-//       }
-//     } catch (err) {
-//       return err
-//     }
-//   }
+  const fetchDataLearning = async (code) => {
+    try {
+      const response = await LearningAPI.GetAllLearningQuran(code)
+      if (response.status === Response.SUCCESS) {
+        setState(response.data.message.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+    } catch (err) {
+      return err
+    }
+  }
 
-//   useEffect(() => {
-//     fetchDataLearning(dataState, params.Code)
-//   }, [])
+  useEffect(() => {
+    fetchDataLearning(params.code)
+  }, [params])
 
-  const BenefitCategory = [
-    { Value : 'Diajar oleh ustadz/ustadzah berkompeten & berpengalaman|ustadz' },
-    { Value : 'Waktu belajar yang sesuai dengan waktu senggang anda|time' },
-    // { Value : 'Akses konsultasi|consultation' },
-    { Value : 'Belajar yang tidak terhalang jarak dan tempat karena belajar secara online melalui video call|online' },
-    { Value : 'Proses belajar yang full praktek|praktek' },
-    { Value : 'Bisa belajar meski memiliki jarak yang Jauh dengan ustadz/ustadzah|range' },
-    { Value : 'Free E-Book Dirosa sebagai panduan belajar|ebook' },
-    { Value : 'Metode belajar yang menyenangkan dan mudah dipahami|metode' },
-    { Value : 'Terdapat Pembinaan Berkelanjutan|union' },
-  ]
 
   // const Title = () => {
   //   const handleRating = (num) => {
@@ -138,17 +126,6 @@ const ClassAbout = ({ params }) => {
   }
 
   const Topics = () => {
-    // const TextFree = ({ index }) => {
-    //   return (
-    //     index == 0 && (
-    //       <Text style={styles.textFree}>Gratis</Text>
-    //     )
-    //   )
-    // }
-    // TextFree.propTypes = {
-    //   index : PropTypes.number,
-    // }
-
     return (
       <Card containerStyle={styles.containerTopics}>
         <View style={styles.containerTopicsTitle}>
@@ -157,19 +134,16 @@ const ClassAbout = ({ params }) => {
             <Text style={styles.textRegular}>
               <Text style={styles.textRegular}>20 Materi, 20x Pertemuan Efektif</Text>
             </Text>
-            {/* <Text style={styles.textRegular}>
-              {TimeConvertToHour(params.Total_Video_Duration)}
-            </Text> */}
           </View>
         </View>
         <View style={styles.containerList}>
-          {state.map((topic, index) => {
+          {state.length > 0 && state.map((topic, index) => {
             const no = 1
             const name = no + index + '. '
             return (
               <View key={index} style={styles.ViewItem}>
                 <Text>{name}</Text>
-                <Text style={styles.TxtListMateri}>{topic.Title}</Text>
+                <Text style={styles.TxtListMateri}>{topic.title}</Text>
               </View>
             )
           })}
@@ -237,7 +211,7 @@ const ClassAbout = ({ params }) => {
       />
       {/* <Title /> */}
       <Desc />
-      <Topics />
+      {state && state.length > 0 && <Topics />}
       <Benefits />
       {params.class_document && <EbookDownload />}
     </ScrollView>

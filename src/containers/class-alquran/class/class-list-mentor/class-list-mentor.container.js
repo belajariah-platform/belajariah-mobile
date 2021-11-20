@@ -76,8 +76,13 @@ const ClassListMentorQuran = (props) => {
 
     const Header = () => {
         return (
-          <View style={{...styles.containerHeader, 
-            backgroundColor : DetailClass.class_initial == 'Iqra' ? '#fa7faf' : '#ffaa24' }}>
+          <View style={{...styles.containerHeader, backgroundColor : 
+            DetailClass.class_initial == 'Iqra' 
+            ? '#b961d0' : DetailClass.class_initial == 'Dirosa' 
+            ? '#2ac8aa' : DetailClass.class_initial == 'Tahsin' 
+            ? '#67b8e3' : DetailClass.class_initial == 'Tilawah' 
+            ? '#ffaa24' : '#f97bac' }}
+            >
             <View style={styles.flexHeaderIn}>
               <View style={styles.flexHeader}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>

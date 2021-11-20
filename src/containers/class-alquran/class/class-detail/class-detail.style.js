@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   semiBox: {
     height: 16,
-    marginTop: 0,
+    marginTop: -10,
     width: '100%',
     marginBottom: -6,
     borderTopLeftRadius: 20,
