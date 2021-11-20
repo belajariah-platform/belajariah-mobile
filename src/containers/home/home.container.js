@@ -396,9 +396,7 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassListQuran')}>
-          <View style={styles.CardClassQuran}>
-            <Text>Kelas Al - Qur'an</Text>
-          </View>
+          <View style={styles.CardClassQuran}/>
         </TouchableOpacity>
       </View>
     )
@@ -486,10 +484,10 @@ const Home = (props) => {
                 <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
               <View style={styles.ViewHeaderProf}>
-                <TouchableOpacity style={{marginRight: 16,}}
+                {/* <TouchableOpacity style={{marginRight: 16,}}
                   onPress={() => props.navigation.navigate('UserNotification')}>
                   <Images.IconNotification.default />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   activeOpacity={0.5}
                   style={{ ...styles.headerAvatar, marginRight: 15 }}

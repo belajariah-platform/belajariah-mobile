@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.softPink,
   },
   containerHeader: {
-    backgroundColor: '#FF66A1',
+    backgroundColor: Color.transactionBgColor,
   },
   containerScrollView: {
     borderTopLeftRadius: 16,
