@@ -127,6 +127,7 @@ const Home = (props) => {
   const fetchDataClass = async ({ skip, take, filterString }) => {
     try {
       setloadingClass(true)
+      filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
       const response = await ClassAPI.GetAllClass(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
         setStateClass(response.data.data)
@@ -384,7 +385,28 @@ const Home = (props) => {
             </TouchableOpacity>
           )
         })}
-        <View>
+      </View>
+    )
+  }
+
+  const ClassQuranHome = () => {
+    return (
+      <View>
+        <Text style={styles.textTitle}>Kelas Al-Qur'an</Text>
+        <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
+        <TouchableOpacity activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('ClassListQuran')}>
+          <View style={styles.CardClassQuran}>
+            <Text>Kelas Al - Qur'an</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  const AlquranHome = () => {
+    return (
+      <View>
           <TouchableOpacity
             activeOpacity={0.5}
             style={styles.bannerAlquranContainer}
@@ -392,7 +414,6 @@ const Home = (props) => {
             <Image source={Images.BannerAlquran} style={styles.cardCustom} />
           </TouchableOpacity>
         </View>
-      </View>
     )
   }
 
@@ -521,6 +542,10 @@ const Home = (props) => {
                     ShimmerCardClassPopuler() :
                     <PopularClassHome />
                   }
+                  
+                  <ClassQuranHome />
+
+                  <AlquranHome />
 
                   {loadingStory ?
                     ShimmerCardInspiratifStory() :

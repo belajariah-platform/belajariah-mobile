@@ -9,7 +9,6 @@ export default {
   Intro4: require('./Intro4.png'),
   Google: require('./Google.png'),
   BotClass: require('./Class.svg'),
-  CardACC: require('./CardACC.png'),
   ButtonClose: require('./BtnClose'),
   Register: require('./Register.png'),
   Search: require('./IconSearch.svg'),
@@ -317,7 +316,6 @@ export default {
   IllustrasiProfileUstadzah : require('./IllustrasiProfileUstadzah.png'),
 
   //Class Profile Mentor
-  ImgProfileMentor : require('./ImgProfileMentor.png'),
   BackgroundMentor : require('./BackgroundMentor.png'),
 
   //Modal Package Dirosa
@@ -332,7 +330,7 @@ export default {
   //Class Meet
   IllustrationMeet : require('./IllustrationMeet.png'),
   IconChecklistMeet : require('./IconChecklistMeet.svg'),
-  IconCompleteDirect : require('./IconCompleteDirect.svg'),
+  // IconCompleteDirect : require('./IconCompleteDirect.svg'),
 
   //Modal Rating Direct
   IconCheckLisDirect : require('./IconCheckLisDirect.svg'),

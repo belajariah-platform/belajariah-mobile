@@ -53,6 +53,12 @@ import {
   ClassLearningDirect, 
   ClassInstructorProfile, 
 } from './class'
+import {
+  ClassListQuran,
+  ClassDetailQuran,
+  ClassListMentorQuran,
+  ClassProfileMentorQuran,
+} from './class-alquran'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
 import { 
   Login, 
@@ -99,6 +105,7 @@ export {
   AlquranDetail,
   ClassLearning,
   ClassDetailACC,
+  ClassListQuran,
   AdminDashboard,
   InstructorTask,
   ClassPreference,
@@ -113,6 +120,7 @@ export {
   ClassUserDirect,
   AdminTransaction,
   AdminProfileEdit,
+  ClassDetailQuran,
   UserNotification,
   ClassTrialDirect, 
   ClassDetailDirect, 
@@ -128,9 +136,11 @@ export {
   ClassLearningDirect,  
   InstructorDashboard,
   ClassFormPersonalACC,
+  ClassListMentorQuran,
   InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,
   ClassInstructorProfile,
   AdminProfileInstructor,
+  ClassProfileMentorQuran,
 }

@@ -13,6 +13,7 @@ import ExerciseAPI from './exercise'
 import LearningAPI from './learning'
 import PromotionAPI from './promotion'
 import UserClassAPI from './user-class'
+import ClassQuranAPI from './class-quran'
 import ConsultationAPI from './consultation'
 import PaymentMethodAPI from './payment-method'
 import CoachingProgramAPI from './coaching-program'
@@ -33,6 +34,7 @@ export {
   LearningAPI,
   PromotionAPI,
   UserClassAPI,
+  ClassQuranAPI,
   ConsultationAPI,
   PaymentMethodAPI,
   CoachingProgramAPI,
