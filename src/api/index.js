@@ -6,6 +6,7 @@ import ClassAPI from './class'
 import QuranAPI from './alquran'
 import RatingAPI from './rating'
 import MentorAPI from './mentor'
+import UploaderAPI from './upload'
 import PackageAPI from './package'
 import PaymentAPI from './payment'
 import ExerciseAPI from './exercise'
@@ -27,6 +28,7 @@ export {
   MentorAPI,
   PackageAPI,
   PaymentAPI,
+  UploaderAPI,
   ExerciseAPI,
   LearningAPI,
   PromotionAPI,
