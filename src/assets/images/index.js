@@ -281,6 +281,7 @@ export default {
   IconComingSoon: require('./IconComingSoon.svg'),
   IconPendingWhite: require('./IconPendingWhite.svg'),
   IconCompleteWhite: require('./IconCompleteWhite.svg'),
+  FloatingBtnDirosa : require('./FloatingBtnDirosa.svg'),
 
   //New Category Icon
   IconCategoryFiqh : require('./IconCategoryFiqh.svg'),

@@ -39,7 +39,56 @@ const GetAllMentor = async (skip, take, filters) =>  {
     }
 }
 
+const InsertPaymentQuran = async (formData) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments`,
+    {
+      "Action":"INSERT_PAYMENT_QURAN",
+      "data": formData
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const UploadPaymentQuran = async (formData) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments`,
+    {
+      "Action":"UPLOAD_PAYMENT_QURAN",
+      "data": formData
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const ConfirmPaymentQuran = async (formData) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments`,
+    {
+      "Action":"CONFIRM_PAYMENT_QURAN",
+      "data": formData
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export default {
     GetAllClass,
     GetAllMentor,
+    UploadPaymentQuran,
+    InsertPaymentQuran,
+    ConfirmPaymentQuran,
+    
 }

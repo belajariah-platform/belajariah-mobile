@@ -36,10 +36,14 @@ import {
   TransactionConfirm,
   ClassFormConfirmACC,
   ClassLearningDirect, 
+  TransactionInfoQuran,
   ClassListMentorQuran,
   ClassFormPersonalACC,
   InspiratifStoryDetail,
   ClassInstructorProfile,
+  TransactionMethodQuran,
+  TransactionUploadQuran,
+  TransactionConfirmQuran,
   ClassProfileMentorQuran,
 } from '../../../containers'
 import UserMain from '../user-main'
@@ -88,9 +92,13 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ClassFormConfirmACC' component={ClassFormConfirmACC} />
       <Stack.Screen name='ClassListMentorQuran' component={ClassListMentorQuran} />
       <Stack.Screen name='ClassFormPersonalACC' component={ClassFormPersonalACC} />
+      <Stack.Screen name='TransactionInfoQuran' component={TransactionInfoQuran} />
       <Stack.Screen name='ClassLearningDirect, ' component={ClassLearningDirect} />
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
+      <Stack.Screen name='TransactionMethodQuran' component={TransactionMethodQuran} />
       <Stack.Screen name='ClassInstructorProfile' component={ClassInstructorProfile} />
+      <Stack.Screen name='TransactionUploadQuran' component={TransactionUploadQuran} />
+      <Stack.Screen name='TransactionConfirmQuran' component={TransactionConfirmQuran} />
       <Stack.Screen name='ClassProfileMentorQuran' component={ClassProfileMentorQuran} />
     </Stack.Navigator>
   )

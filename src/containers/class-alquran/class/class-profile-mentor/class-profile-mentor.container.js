@@ -113,7 +113,7 @@ const ClassProfileMentorQuran = (props) => {
                         />
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>
-                                Deskripsi & Pengalaman Mengajar Dirosa
+                                Deskripsi dan Pengalaman Mengajar Dirosa
                             </Text>
                             <Text style={styles.TxtDescCard}>{instructor.Description}</Text>
                         </View>
@@ -179,8 +179,8 @@ const ClassProfileMentorQuran = (props) => {
                         onPress={() => {
                             state && state.length > 0 
                             ? DirectWA()
-                            : navigation.navigate('ClassPreference',
-                             { instructor : instructor } )
+                            : navigation.navigate('TransactionMethodQuran',
+                             { DetailClass : DetailClass, instructor : instructor } )
                         }}
                     />
             </View>

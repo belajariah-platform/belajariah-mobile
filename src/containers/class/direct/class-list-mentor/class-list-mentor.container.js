@@ -209,8 +209,12 @@ const ClassListMentor = (props) => {
                 />
             </View>
             <View style={styles.containerHelp}>
-                <TouchableOpacity onPress={DirectWA}>
-                    <Text>Tolong Min</Text>
+                <TouchableOpacity onPress={DirectWA} activeOpacity={0.5}>
+                    <Images.FloatingBtnDirosa.default style={styles.ImgHelp} />
+                    <View style={styles.ViewHelp}>
+                        {/* <Text style={styles.TxtHelp}>Halo, Sobat Belajariah</Text> */}
+                        <Text style={styles.TxtHelp}>Butuh Bantuan?</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
             {loadingMentor ? 

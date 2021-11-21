@@ -60,9 +60,25 @@ const styles = StyleSheet.create({
     },
     containerHelp : {
       right: 0,
-      top: '90%',
+      top: '88%',
       zIndex: 1000,
       position: 'absolute',
+    },
+    ViewHelp : {
+      marginTop: 2,
+      borderRadius: 10,
+      paddingVertical: 4,
+      paddingHorizontal: 6,
+      backgroundColor: Color.white,
+    },
+    ImgHelp : {
+      alignSelf: 'center',
+    },
+    TxtHelp : {
+      color: Color.black,
+      textAlign: 'center',
+      fontFamily: FontType.bold,
+      fontSize: FontSize.smallest,
     },
     containerSearch : {
       paddingBottom:10,
