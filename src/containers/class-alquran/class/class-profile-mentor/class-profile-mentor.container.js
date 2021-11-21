@@ -179,8 +179,8 @@ const ClassProfileMentorQuran = (props) => {
                         onPress={() => {
                             state && state.length > 0 
                             ? DirectWA()
-                            : navigation.navigate('ClassPreference',
-                             { instructor : instructor } )
+                            : navigation.navigate('TransactionMethodQuran',
+                             { DetailClass : DetailClass, instructor : instructor } )
                         }}
                     />
             </View>

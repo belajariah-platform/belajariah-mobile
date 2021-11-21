@@ -8,6 +8,8 @@ import {
 import {
     TransactionInfoQuran,
     TransactionMethodQuran,
+    TransactionUploadQuran,
+    TransactionConfirmQuran,
 } from './transaction'
 
 export {
@@ -16,5 +18,7 @@ export {
     ClassListMentorQuran,
     TransactionInfoQuran,
     TransactionMethodQuran,
+    TransactionUploadQuran,
     ClassProfileMentorQuran,
+    TransactionConfirmQuran,
 }

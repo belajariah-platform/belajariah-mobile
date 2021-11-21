@@ -19,6 +19,7 @@ import {
 import {
     PaymentAPI,
     PromotionAPI,
+    ClassQuranAPI,
     PaymentMethodAPI,
 } from '../../../api'
   
@@ -35,6 +36,7 @@ import { Images, Color } from '../../../assets'
 import { Response, FormatRupiah } from '../../../utils'
   
 import styles from './transaction-method.style'
+import { values } from 'lodash-es'
 
 const TransactionMethodQuran = (props) => {
     const { DetailClass, instructor} = props.route.params
@@ -107,9 +109,9 @@ const TransactionMethodQuran = (props) => {
     const FormCheckout = useFormik({
         initialValues: {
           User_Code: userInfo.Code,
-          Class_Code: DetailClass.Code,
+          Class_Code: DetailClass.code,
           Promo_Code : '',
-          Package_Code : DetailClass.Code,
+          Package_Code : DetailClass.package_code,
           Payment_Method_Code : '',
           Status_Payment_Code : 'ENC00000025',
           Total_Transfer : parseInt(DetailClass.package_price),
@@ -129,9 +131,19 @@ const TransactionMethodQuran = (props) => {
     const checkoutPayment = async (values) => {
         try {
           setLoadingBtn(true)
-          const response =   await PaymentAPI.InsertPayment(values)
-          if (response.data.result) {
-            navigation.navigate('TransactionInfo', response.data.data)
+          const data = {
+            "User_Code" : FormCheckout.values['User_Code'],
+            "Class_Code" : FormCheckout.values['Class_Code'],
+            "Promo_Code" : FormCheckout.values['Promo_Code'],
+            "Package_Code" : FormCheckout.values['Package_Code'],
+            "Payment_Method_Code" : FormCheckout.values['Payment_Method_Code'],
+            "Total_Transfer" : FormCheckout.values['Total_Transfer']
+          }
+          const response =   await ClassQuranAPI.InsertPaymentQuran(data)
+          // console.log(data)
+          // console.log(response)
+          if (response && response.data && response.data.message.result) {
+            navigation.navigate('TransactionInfoQuran', (data, response.data.message.data))
           }
           setLoadingBtn(false)
         } catch (error) {

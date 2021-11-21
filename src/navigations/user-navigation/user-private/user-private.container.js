@@ -42,6 +42,8 @@ import {
   InspiratifStoryDetail,
   ClassInstructorProfile,
   TransactionMethodQuran,
+  TransactionUploadQuran,
+  TransactionConfirmQuran,
   ClassProfileMentorQuran,
 } from '../../../containers'
 import UserMain from '../user-main'
@@ -95,6 +97,8 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='InspiratifStoryDetail' component={InspiratifStoryDetail} />
       <Stack.Screen name='TransactionMethodQuran' component={TransactionMethodQuran} />
       <Stack.Screen name='ClassInstructorProfile' component={ClassInstructorProfile} />
+      <Stack.Screen name='TransactionUploadQuran' component={TransactionUploadQuran} />
+      <Stack.Screen name='TransactionConfirmQuran' component={TransactionConfirmQuran} />
       <Stack.Screen name='ClassProfileMentorQuran' component={ClassProfileMentorQuran} />
     </Stack.Navigator>
   )
