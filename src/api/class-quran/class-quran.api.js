@@ -8,7 +8,7 @@ const GetAllClass = async (skip, take, filters) =>  {
       {
         "Action":"GET_ALL_CLASS_QURAN",
           "query": {
-              "filters": [],
+              "filters": filters,
               "skip": 0,
               "orders": [
                       {

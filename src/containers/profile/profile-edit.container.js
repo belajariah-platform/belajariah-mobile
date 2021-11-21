@@ -22,10 +22,10 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import { UserAPI } from '../../api'
 import { Images } from '../../assets'
 import { Response } from '../../utils'
 import { USER_INFO } from  '../../action'
+import { UserAPI, UploaderAPI } from '../../api'
 import { Alerts, ModalNoConnection } from '../../components'
 import { Buttons, TextBox, ModalInfo, ModalDate } from '../../components'
 
@@ -217,8 +217,10 @@ const ProfileEdit = () => {
         // type: [type === 'file' ? DocumentPicker.types.allFiles : DocumentPicker.types.images],
       })
       const formData = new FormData()
-      formData.append('file', res)
-      // ServiceRequestAPI.UploadAttachments(formData)
+      formData.append('file', '')
+      formData.append('action', 'SINGLE_UPLOADER')
+      const response = UploaderAPI.UploaderFile(formData)
+      console.log('HELLO', response)
       // .then(async (res) => {
       //   // const { Company, UserName, AgentName } = usersProfileReducer
       //   const data = res.data.data
@@ -324,7 +326,7 @@ const ProfileEdit = () => {
                     <Avatar
                       activeOpacity={1}
                       style={styles.avatar}
-                      onPress={() =>  setModalVisible(false)}
+                      onPress={() =>  setModalVisible(true)}
                       source={userInfo.Image_Filename == '' ?
                         Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
                     />

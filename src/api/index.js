@@ -4,8 +4,10 @@ import UserAPI from './user'
 import StoryAPI from './story'
 import ClassAPI from './class'
 import QuranAPI from './alquran'
+import { Config } from './config'
 import RatingAPI from './rating'
 import MentorAPI from './mentor'
+import UploaderAPI from './upload'
 import PackageAPI from './package'
 import PaymentAPI from './payment'
 import ExerciseAPI from './exercise'
@@ -18,6 +20,7 @@ import PaymentMethodAPI from './payment-method'
 import CoachingProgramAPI from './coaching-program'
 
 export {
+  Config,
   UserAPI,
   TestAPI,
   EnumAPI,
@@ -28,6 +31,7 @@ export {
   MentorAPI,
   PackageAPI,
   PaymentAPI,
+  UploaderAPI,
   ExerciseAPI,
   LearningAPI,
   PromotionAPI,

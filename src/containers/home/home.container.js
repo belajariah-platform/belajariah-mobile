@@ -3,6 +3,7 @@ import BottomSheet from 'reanimated-bottom-sheet'
 import { Avatar, Card } from 'react-native-elements'
 import NetInfo from '@react-native-community/netinfo'
 import { useIsFocused } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 import React, { useEffect, useRef, useState } from 'react'
 
@@ -12,6 +13,7 @@ import {
   StoryAPI,
   PackageAPI,
   PromotionAPI,
+  ClassQuranAPI,
   CoachingProgramAPI,
 } from '../../api'
 
@@ -27,10 +29,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import {
-  Color,
-  Images,
-} from '../../assets'
+import { Images } from '../../assets'
 
 import {
   Cards,
@@ -44,11 +43,13 @@ import {
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
 } from '../../components'
+
 import { styles } from './home.style'
 import { Response } from '../../utils'
 
 const Home = (props) => {
   const isFocused = useIsFocused()
+  const navigation = useNavigation()
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
   const { height } = Dimensions.get('window')
@@ -113,7 +114,6 @@ const Home = (props) => {
     try {
       setloadingACC(true)
       const response = await CoachingProgramAPI.GetACCDetail(skip, take, filterString)
-      // console.log(response.data.message.data)
       if (response.status === Response.SUCCESS) {
           setStateACC(response.data.message.data[0])
       } 
@@ -124,23 +124,42 @@ const Home = (props) => {
     }
   }
 
-  const fetchDataClass = async ({ skip, take, filterString }) => {
-    try {
-      setloadingClass(true)
-      filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
-      const response = await ClassAPI.GetAllClass(skip, take, filterString)
-      if (response.status === Response.SUCCESS) {
-        setStateClass(response.data.data)
-      } else {
-        NetInfo.fetch().then(res => {
-          setconnectStatus(!res.isConnected)
-        })
+  // const fetchDataClass = async ({ skip, take, filterString }) => {
+  //   try {
+  //     setloadingClass(true)
+  //     filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
+  //     const response = await ClassAPI.GetAllClass(skip, take, filterString)
+  //     if (response.status === Response.SUCCESS) {
+  //       setStateClass(response.data.data)
+  //     } else {
+  //       NetInfo.fetch().then(res => {
+  //         setconnectStatus(!res.isConnected)
+  //       })
+  //     }
+  //     setloadingClass(false)
+  //   } catch (err) {
+  //     setloadingClass(false)
+  //     return err
+  //   }
+  // }
+
+    const fetchDataClass = async ({ skip, take, filterString }) => {
+      try {
+        setloadingClass(true)
+        filterString=[{"type": "text", "field" : "class_initial", "value": "Dirosa"}]
+        const response = await ClassQuranAPI.GetAllClass(skip, take, filterString)
+        if (response.status === Response.SUCCESS) {
+          setStateClass(response.data.message.data)
+        } else {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
+        }
+        setloadingClass(false)
+      } catch (err) {
+        setloadingClass(false)
+        return err
       }
-      setloadingClass(false)
-    } catch (err) {
-      setloadingClass(false)
-      return err
-    }
   }
 
   const fetchDataPromotion = async ({ skip, take, filterString }) => {
@@ -215,12 +234,16 @@ const Home = (props) => {
     }
   }
 
+  const _getData = async () => {
+    await fetchDataPromotion(dataState)
+    await fetchDataCategory(dataState)
+    await fetchDataACC(dataState)
+    await fetchDataClass(dataState)
+    await fetchDataStory(dataState)
+  }
+
   useEffect(() => {
-    fetchDataACC(dataState)
-    fetchDataStory(dataState)
-    fetchDataClass(dataState)
-    fetchDataCategory(dataState)
-    fetchDataPromotion(dataState)
+    _getData()
   }, [])
 
   const PromotionHome = ({ index, item }) => {
@@ -367,16 +390,16 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          // console.log(item)
           return (
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
-              onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}>
+              onPress={() => navigation.navigate('ClassDetailQuran', {DetailClass : item})}>
+              {/* // onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}> */}
               <Cards
                 item={item}
-                filepath={item.Class_Image}
-                rating={handleRating(item.Class_Rating)}
+                filepath={item.class_image}
+                // rating={handleRating(item.Class_Rating)}
               />
             </TouchableOpacity>
           )
@@ -392,9 +415,7 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassListQuran')}>
-          <View style={styles.CardClassQuran}>
-            <Text>Kelas Al - Qur'an</Text>
-          </View>
+          <View style={styles.CardClassQuran}/>
         </TouchableOpacity>
       </View>
     )
@@ -482,10 +503,6 @@ const Home = (props) => {
                 <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
               <View style={styles.ViewHeaderProf}>
-                <TouchableOpacity style={{marginRight: 16,}}
-                  onPress={() => props.navigation.navigate('UserNotification')}>
-                  <Images.IconNotification.default />
-                </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   style={{ ...styles.headerAvatar, marginRight: 15 }}

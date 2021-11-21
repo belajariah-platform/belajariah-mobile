@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   semiBox: {
     height: 16,
-    marginTop: 0,
+    marginTop: -10,
     width: '100%',
     marginBottom: -6,
     borderTopLeftRadius: 20,
@@ -90,27 +90,23 @@ const styles = StyleSheet.create({
     backgroundColor: Color.purpleButton,
   },
   cardStyle: {
-    elevation: 0,
-    marginTop: 0,
-    width: 'auto',
-    height: 'auto',
-    borderWidth : 0,
-    marginBottom: 0,
-    backgroundColor: Color.softPink,
+    height:'auto',
+    borderWidth: 0,
+    borderRadius: 12,
+    marginVertical: 16,
   },
   TxtTitleDesc: {
-    marginBottom: 20,
+    marginBottom: 12,
     color: Color.black,
     fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
+    fontSize: FontSize.smallPoint,
   },
   TxtDesc: {
-    lineHeight: 18,
-    // marginBottom: 16,
+    lineHeight: 15,
     color: Color.black,
     textAlign: 'justify',
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
+    fontSize: FontSize.smallPoint,
   },
   ViewBenefits: {
     alignItems: 'center',
@@ -120,8 +116,30 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     color: Color.black,
     fontFamily: FontType.regular,
-    fontSize: FontSize.smallMedium,
-  }
+    fontSize: FontSize.smallPoint,
+  },
+  tabContainerStyle: {
+    marginTop: 10,
+  },
+  tabBarStyle: {
+    borderRadius: 8,
+    paddingVertical: 2,
+    marginHorizontal: 16,
+    backgroundColor: '#1DB597',
+  },
+  labelStyle: {
+    width:'100%',
+    textTransform: 'none',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallest,
+  },
+  indicatorStyle: {
+    width: 86,
+    height: 4,
+    left: '13.6%',
+    borderRadius: 2,
+    backgroundColor: Color.white,
+  },
 })
 
 export default styles

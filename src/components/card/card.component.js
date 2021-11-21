@@ -72,7 +72,7 @@ const  Cards = (props)  => {
           style={styles.images}
         />
       </View>
-      {props.item.Is_Direct == true ? <TxtCardDirect /> : <TxtCardInDirect />}
+      {(props.item.Is_Direct || props.item.is_direct) ? <TxtCardDirect /> : <TxtCardInDirect />}
     </View>
   )
 }

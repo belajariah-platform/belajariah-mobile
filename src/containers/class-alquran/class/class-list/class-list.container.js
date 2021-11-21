@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
@@ -52,6 +51,7 @@ const ClassListQuran = (props) => {
 
     const fetchDataClassQuran = async ({ skip, take, filterString }) => {
         try {
+          filterString = []
           setloadingQuran(true)
           const response = await ClassQuranAPI.GetAllClass(skip, take, filterString)
           if (response.status === Response.SUCCESS) {

@@ -1,17 +1,17 @@
 import _ from 'lodash'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState, useEffect, useRef, } from 'react'
 import { List } from 'react-native-paper'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
+
 import {
     View,
     Image,
     Linking,
     FlatList,
-    ScrollView,
     RefreshControl,
     TouchableOpacity,
   } from 'react-native'
@@ -20,9 +20,10 @@ import {
     Searchbox,
     LoadingView,
 } from '../../../../components'
-import { MentorAPI } from '../../../../api'
+
 import { Response } from '../../../../utils'
 import { Images, Color } from '../../../../assets'
+import { MentorAPI, Config } from '../../../../api'
 
 import styles from './class-list-mentor.style'
 
@@ -33,14 +34,15 @@ const ClassListMentor = (props) => {
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "MCQ1"}]' })
+    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${classes.Code}"}]` })
 
-    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F'
+    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F`
 
     const onDataStateChange = (event) => {
         setDataState({
           ...dataState,
-          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "class_code", "value": "MCQ1"}]`
+          filterString : `[{"type": "text", "field" : "Fullname", "value": "${event}"}, 
+            {"type": "text", "field" : "class_code", "value": "${classes.Code}"}]`
         })
     }
 
@@ -53,6 +55,7 @@ const ClassListMentor = (props) => {
     const fetchDataMentor = async ({ skip, take, filterString }) => {
         try {
           setloadingMentor(true)
+          console.log(filterString)
           const response = await MentorAPI.GetAllMentor(skip, take, filterString)
           if (response.status === Response.SUCCESS) {
             setStateMentor(response.data.data)

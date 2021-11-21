@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { ImageBackground, View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -7,21 +7,17 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import ClassAboutDirect from './class-about.container'
 import ClassReviewDirect from './class-review.container'
-import ClassInstructorDirect from './class-instructor.container'
 
-import { FormatRupiah } from '../../../../utils'
 import { Color, Images } from '../../../../assets'
-import { ButtonGradient, VideoPlayer, Buttons } from '../../../../components'
+import { Buttons } from '../../../../components'
 
 import styles from './class-detail.style'
-import icon from '../../../../assets/icon'
 
 const Tab = createMaterialTopTabNavigator()
 
 const ClassDetailDirect = (props) => {
   const navigation = useNavigation()
   const { classes, packages } = props.route.params
-  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handleRating = (num) => {
     let rating = []

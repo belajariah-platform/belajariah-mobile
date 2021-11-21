@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _, { flatMap } from 'lodash'
 import PropTypes from 'prop-types'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
@@ -14,7 +14,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-import {LoadingView,Searchbox,} from '../../../../components'
+import {LoadingView,Searchbox} from '../../../../components'
 import {MentorAPI} from '../../../../api'
 import {Response} from '../../../../utils'
 import { Images, Color } from '../../../../assets'
@@ -23,18 +23,20 @@ import styles from './class-list-mentor.style'
 const ClassListMentorQuran = (props) => {
     const navigation = useNavigation()
     const { DetailClass } = props.route.params
+
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "MCQ1"}]' })
-    
+    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${DetailClass.code}"}]` })
+
     const onDataStateChange = (event) => {
         setDataState({
           ...dataState,
-          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "Role_Code", "value": "ARL3"}]`
+          filterString : `[{"type": "text", "field" : "Fullname", "value": "${event}"},  
+            {"type": "text", "field" : "class_code", "value": "${DetailClass.code}"}]`
         })
     }
-
+        
     const onRefreshing = () => {
         setRefreshing(true)
         fetchDataMentor(dataState)
@@ -74,7 +76,13 @@ const ClassListMentorQuran = (props) => {
 
     const Header = () => {
         return (
-          <View style={styles.containerHeader}>
+          <View style={{...styles.containerHeader, backgroundColor : 
+            DetailClass.class_initial == 'Iqra' 
+            ? '#b961d0' : DetailClass.class_initial == 'Dirosa' 
+            ? '#2ac8aa' : DetailClass.class_initial == 'Tahsin' 
+            ? '#67b8e3' : DetailClass.class_initial == 'Tilawah' 
+            ? '#ffaa24' : '#f97bac' }}
+            >
             <View style={styles.flexHeaderIn}>
               <View style={styles.flexHeader}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -82,14 +90,8 @@ const ClassListMentorQuran = (props) => {
                 </TouchableOpacity>
                 <Text style={styles.textTitleWhite}>Daftar Guru Ngaji</Text>
               </View>
-              {/* <TouchableOpacity style={styles.iconFilter}>
-                <Images.Filter.default
-                    width={20}
-                    height={20}
-                />
-               </TouchableOpacity> */}
             </View>
-            <View style={styles.semiBox} />
+            <View style={{...styles.semiBox, backgroundColor : DetailClass.color_path}} />
           </View>
         )
     }
@@ -117,13 +119,13 @@ const ClassListMentorQuran = (props) => {
                   <Text key={index}>{val}. </Text>
                 )}})
         }
+
         return (
             <View key={index}>
                 <Card containerStyle={styles.cardStyle}>
                     <TouchableOpacity onPress={() => {
                         navigation.navigate('ClassProfileMentorQuran', { DetailClass : DetailClass, instructor : item})
                     }}>
-                        {/* {console.log(item)} */}
                         <View style={styles.viewStyle}>
                             <Image source={item.Gender == 'Perempuan' ? 
                                 Images.IllustrasiProfileUstadzah : item.ImageProfile == '' ?
@@ -139,11 +141,13 @@ const ClassListMentorQuran = (props) => {
                                         <Text style={styles.textNotifClass}>Kelas Tersedia</Text>
                                     </View> */}
                                 </View>
-                                <Text style={styles.textStyleCity}>Asal {item.City}</Text>
-                                <View style={styles.ViewRating}>
+                                <Text style={{...styles.textStyleCity, color: DetailClass.color_path}}>
+                                    Asal {item.City}
+                                </Text>
+                                {/* <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>
                                     <Images.Star.default />
-                                </View>
+                                </View> */}
                                 <Text style={styles.TxtDesc}>{handleSplitString(item.Description.substring(0, 100))}...</Text>
                             </View>
                         </View>
@@ -155,7 +159,7 @@ const ClassListMentorQuran = (props) => {
     
     return (
         <>
-        <View style={styles.containerMain}>
+        <View style={{...styles.containerMain, backgroundColor : DetailClass.color_path}}>
             <Header />
             <View style={styles.containerSearch}>
                 <Searchbox
