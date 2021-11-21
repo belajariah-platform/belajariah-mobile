@@ -24,32 +24,30 @@ import {
   } from '../../../components'
   
 import { Images } from '../../../assets'
-import { ClassQuranAPI } from '../../../api'
 import { FormatRupiah } from '../../../utils'
+import { ClassQuranAPI, Config } from '../../../api'
   
 import styles from './transaction-upload.style'
 
 const TransactionUploadQuran = (props) => {
-    const item = props.route.params
-    const DataTransaction = props.route.params
+    const item = props.route.params.DataTransaction
     const navigation = useNavigation()
     const [loading, setLoading] = useState(false)
     const [dataImage, setDataImage] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
     const [connectStatus, setconnectStatus] = useState(false)
-    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29'
+    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29`
     const toggleModal = () => setModalVisible(!modalVisible)
     const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
     const retryConnection = () => {
         setconnectStatus(!connectStatus)
     }
 
-    console.log(DataTransaction, 'hai')
-
     const FormUpload = useFormik({
         initialValues: {
           ID: item.ID,
-          User_Code: DataTransaction.User_Code,
+          Code: item.Code,
+          User_Code: item.User_Code,
           Payment_Method_Code: item.Payment_Method_Code,
           Status_Payment_Code : item.Status_Payment_Code,
           Sender_Bank : '',
@@ -73,23 +71,22 @@ const TransactionUploadQuran = (props) => {
         try {
           setLoading(true)
           const data = {
-            "ID"                     : FormUpload.values['ID'],
-            "Code"                   : FormUpload.values['Code'],
-            "User_Code"              : FormUpload.values['User_Code'],
-            "Payment_Method_Code"    : FormUpload.values['Payment_Method_Code'],
-            "Status_Payment_Code"    : FormUpload.values['Status_Payment_Code'],  
-            "Sender_Bank"            : FormUpload.values['Sender_Bank'],
-            "Sender_Name"            : FormUpload.values['Sender_Name'],
+            "ID"                     : values.ID,
+            "Code"                   : values.Code,
+            "User_Code"              : values.User_Code,
+            "Payment_Method_Code"    : values.Payment_Method_Code,
+            "Status_Payment_Code"    : values.Status_Payment_Code,  
+            "Sender_Bank"            : values.Sender_Bank,
+            "Sender_Name"            : values.Sender_Name,
             "Image_Proof"            : "",
-            "Total_Transfer"         : FormUpload.values['Total_Transfer'],
-            "Action"                 : FormUpload.values['Action']
+            "Total_Transfer"         : values.Total_Transfer,
+            "Action"                 : values.Action
           }
+      
           const response = await ClassQuranAPI.UploadPaymentQuran(data)
-          console.log(response)
-          if (response.data.message.result) {
-            // toggleModal()
+          if (response && response.data && response.data.message.result) {
+            await navigation.navigate('Pembayaran')
             const supported = await Linking.canOpenURL(url)
-    
             if(supported) {
               await Linking.openURL(url)
             } else {
@@ -98,7 +95,6 @@ const TransactionUploadQuran = (props) => {
           }
           setLoading(false)
         } catch (error) {
-            console.log(error)
           setLoading(false)
           NetInfo.fetch().then(res => {
             setconnectStatus(!res.isConnected)

@@ -31,7 +31,7 @@ const GetAllPaymentByUserID = async (skip, take, filters, sort) =>  {
   try {
     const headers = await Header()
     const response = await axios.get(`
-      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}`,
+      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment?skip=${skip}&take=${take}&filter=${filters}&order=modified_date|${sort}`,
     headers
     )
     return response

@@ -36,7 +36,6 @@ import { Images, Color } from '../../../assets'
 import { Response, FormatRupiah } from '../../../utils'
   
 import styles from './transaction-method.style'
-import { values } from 'lodash-es'
 
 const TransactionMethodQuran = (props) => {
     const { DetailClass, instructor} = props.route.params
@@ -158,35 +157,6 @@ const TransactionMethodQuran = (props) => {
     useEffect(() => {
         fetchDataPaymentMethod(dataState)
     }, [])
-
-    // const handleRating = (num) => {
-    //     let rating = []
-    //     for (let index = 1; index <= 5; index++) {
-    //       num - index >= 0
-    //         ? rating.push(<Images.StarBlack.default />)
-    //         : num - index < 0 && num - index > -1
-    //           ? rating.push(<Images.StarHalfBlack.default />)
-    //           : rating.push(<Images.StarEmptyBlack.default />)
-    //     }
-    //     return (
-    //       <View style={styles.flexRating}>
-    //         {rating.map((val, index) => {
-    //           return <View key={index}>{val}</View>
-    //         })}
-    //         <Text style={styles.textRating}>{num.toFixed(1)}</Text>
-    //       </View>
-    //     )
-    // }
-
-    // const FormattingSchedule = (code) => {
-    //     // console.log(code)
-    //     if (code > 0) {
-    //         const formatObj = instructor.Mentor_Schedule.filter((e) => e.ID == code)
-    //         return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_Date).format('LT') + ' - ' +   moment(formatObj[0].End_Date).format('LT') + formatObj[0].Time_Zone + ')'
-    //     } else { 
-    //         return ''
-    //     }
-    // }
     
     const Header = () => {
         return (
@@ -209,8 +179,8 @@ const TransactionMethodQuran = (props) => {
             <View style={styles.cardDetail}>
               <Text style={styles.textBold}>Judul Kelas:</Text>
               <Text style={styles.textRegular}>{DetailClass.class_name}</Text>
-              <Text style={styles.textBold}>Instruktur</Text>
-              <Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>
+              {/* <Text style={styles.textBold}>Instruktur</Text>
+              <Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text> */}
               {/* {DetailClass.Is_Direct == true ? 
               (<Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>)
               : <Text style={styles.textRegular}>{`${DetailClass.Instructor_Name}, ${DetailClass.Instructor_Biografi}`}</Text>} */}

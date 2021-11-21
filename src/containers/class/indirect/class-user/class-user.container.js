@@ -341,12 +341,12 @@ const ClassUser = (props) => {
       <View style={styles.containerView}>
         <View style={styles.containerHeader}>
           <Text style={styles.containerTextHeader}>Kelas Saya</Text>
-          <TouchableOpacity onPress = {toggleModalFilter}>
+          {/* <TouchableOpacity onPress = {toggleModalFilter}>
             <Images.Filter.default
               width={20}
               height={20}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <ImageBackground
           source={Images.BgClassUser}
