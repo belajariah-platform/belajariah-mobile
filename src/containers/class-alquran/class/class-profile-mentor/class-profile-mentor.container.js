@@ -136,8 +136,8 @@ const ClassProfileMentorQuran = (props) => {
                         style={styles.BtnPengajar}
                         textStyle={styles.TxtButton}
                         onPress={() => {
-                            navigation.navigate('ClassPreference',
-                            { instructor : instructor } )
+                            navigation.navigate('TransactionMethodQuran',
+                            { DetailClass : DetailClass, instructor : instructor } )
                         }}
                     />
             </View>

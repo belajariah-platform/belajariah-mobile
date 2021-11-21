@@ -57,6 +57,8 @@ import {
   ClassListQuran,
   ClassDetailQuran,
   ClassListMentorQuran,
+  TransactionInfoQuran,
+  TransactionMethodQuran,
   ClassProfileMentorQuran,
 } from './class-alquran'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
@@ -135,12 +137,14 @@ export {
   ClassFormConfirmACC,
   ClassLearningDirect,  
   InstructorDashboard,
+  TransactionInfoQuran,
   ClassFormPersonalACC,
   ClassListMentorQuran,
   InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,
   ClassInstructorProfile,
+  TransactionMethodQuran,
   AdminProfileInstructor,
   ClassProfileMentorQuran,
 }

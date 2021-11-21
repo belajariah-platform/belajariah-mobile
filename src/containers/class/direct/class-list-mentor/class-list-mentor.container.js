@@ -33,14 +33,14 @@ const ClassListMentor = (props) => {
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "Role_Code", "value": "ARL3"}]' })
+    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: '[{"type": "text", "field" : "class_code", "value": "MCQ1"}]' })
 
     const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F'
 
     const onDataStateChange = (event) => {
         setDataState({
           ...dataState,
-          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "Role_Code", "value": "ARL3"}]`
+          filterString : `[{"type": "text", "field" : "Full_Name", "value": "${event}"},{"type": "text", "field" : "class_code", "value": "MCQ1"}]`
         })
     }
 
@@ -206,8 +206,12 @@ const ClassListMentor = (props) => {
                 />
             </View>
             <View style={styles.containerHelp}>
-                <TouchableOpacity onPress={DirectWA}>
-                    <Text>Tolong Min</Text>
+                <TouchableOpacity onPress={DirectWA} activeOpacity={0.5}>
+                    <Images.FloatingBtnDirosa.default style={styles.ImgHelp} />
+                    <View style={styles.ViewHelp}>
+                        {/* <Text style={styles.TxtHelp}>Halo, Sobat Belajariah</Text> */}
+                        <Text style={styles.TxtHelp}>Butuh Bantuan?</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
             {loadingMentor ? 
