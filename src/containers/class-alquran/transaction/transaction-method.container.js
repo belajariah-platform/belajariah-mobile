@@ -139,8 +139,6 @@ const TransactionMethodQuran = (props) => {
             "Total_Transfer" : FormCheckout.values['Total_Transfer']
           }
           const response =   await ClassQuranAPI.InsertPaymentQuran(data)
-          // console.log(data)
-          // console.log(response)
           if (response && response.data && response.data.message.result) {
             navigation.navigate('TransactionInfoQuran', (data, response.data.message.data))
           }
