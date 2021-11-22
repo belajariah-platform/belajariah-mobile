@@ -338,9 +338,9 @@ const styles = StyleSheet.create({
     // borderBottomLeftRadius: 20,
   },
   CardClassQuran: {
+    height: 160,
+    elevation: 2,
     width: '100%',
-    height: 140,
-    elevation: 3,
     borderWidth: 0,
     borderRadius: 20,
     marginVertical: 8,

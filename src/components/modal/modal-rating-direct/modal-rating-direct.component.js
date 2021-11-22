@@ -45,8 +45,9 @@ const ModalRatingDirect = (props) => {
     const ReviewClass = () => {
         return (
           <View style={styles.containerReview}>
-            <View style={styles.TopHeader}>
-                <Images.IconCheckLisDirect.default style={styles.IconHeader} />
+            <View style={{...
+                styles.TopHeader, backgroundColor: props.styleBackground}}>
+                  <View style={styles.IconHeader}>{props.HeaderBanner}</View>
                 <Text style={styles.TxtHeader}>
                   <Text style={styles.TxtHeaderBld}>Alhamdulillah!, </Text>anda telah menyelesaikan pertemuan bulan ini.
                 </Text>
@@ -102,8 +103,10 @@ ModalRatingDirect.propTypes = {
     isVisible : PropTypes.bool,
     renderItem : PropTypes.object,
     backdropPress : PropTypes.func,
+    HeaderBanner : PropTypes.object,
     backButtonPress : PropTypes.func,
     containerStyle : PropTypes.object,
+    styleBackground : PropTypes.object,
 }
 
 export default ModalRatingDirect

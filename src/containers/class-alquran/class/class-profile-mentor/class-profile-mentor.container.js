@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
-import React, { useState, useEffect } from 'react'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import {
     View,
@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 
 import {
+    SVGIcon,
     Buttons,
 } from '../../../../components'
 import { Response } from '../../../../utils'
@@ -107,10 +108,7 @@ const ClassProfileMentorQuran = (props) => {
             <View>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
-                        <Images.IconDescGreen.default  
-                            width={24}
-                            height={22}
-                        />
+                        <View style={{marginRight: 6}}><SVGIcon.IconDescMentor ColorBg={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>
                                 Deskripsi dan Pengalaman Mengajar Dirosa
@@ -128,10 +126,7 @@ const ClassProfileMentorQuran = (props) => {
             <View>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
-                        <Images.IconStudyGreen.default  
-                            width={24}
-                            height={22}
-                        />
+                        <View style={{marginRight: 16}}><SVGIcon.IconStudyMentor ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>Pendidikan</Text>
                             {instructor.Mentor_Experience && instructor.Mentor_Experience.map((item, index) => {
@@ -154,10 +149,7 @@ const ClassProfileMentorQuran = (props) => {
             <View style={{marginBottom: 10,}}>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
-                        <Images.IconSystemGreen.default  
-                            width={24}
-                            height={22}
-                        />
+                    <View style={{marginRight: 10}}><SVGIcon.IconSystemMentor ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Sistem Belajar</Text>
                             <Text style={styles.TxtDescSystem}>{instructor.Learning_Method_Text}</Text>
