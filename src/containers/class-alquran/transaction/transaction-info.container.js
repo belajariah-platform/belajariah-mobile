@@ -33,8 +33,6 @@ const TransactionInfoQuran = (props) => {
         fourthNote: 'Demi Keamanan Transaksi, Mohon untuk tidak membagikan bukti ataupun konfirmasi pembayaran anda kepada siapapun, kecuali Contact Person Belajariah',
     }
 
-    console.log(data, 'hai data')
-
     const Header = () => {
         return (
           <View style={styles.containerHeader}>

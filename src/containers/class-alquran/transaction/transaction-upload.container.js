@@ -152,7 +152,7 @@ const TransactionUploadQuran = (props) => {
           const formData = new FormData()
           formData.append('file', res)
           setDataImage(formData._parts[0][1])
-          console.log(formData._parts[0][1].uri)
+          // console.log(formData._parts[0][1].uri)
           // ServiceRequestAPI.UploadAttachments(formData)
           // .then(async (res) => {
           //   // const { Company, UserName, AgentName } = usersProfileReducer

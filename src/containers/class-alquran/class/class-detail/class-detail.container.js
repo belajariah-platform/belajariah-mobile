@@ -11,6 +11,7 @@ import { Buttons } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
 import ClassAbout from './class-about.container'
+import ClassReviewQuran from './class-review.container'
 import styles from './class-detail.style'
 
 const Tab = createMaterialTopTabNavigator()
@@ -54,9 +55,9 @@ const ClassDetailQuran = (props) => {
                     {() => <ClassAbout params={DetailClass}/>}
                 </Tab.Screen>
                 <Tab.Screen
-                    name='ClassReview'
+                    name='ClassReviewQuran'
                     options={{ title: 'Ulasan' }}>
-                    {() => <ClassAbout params={DetailClass}/>}
+                    {() => <ClassReviewQuran params={DetailClass}/>}
                 </Tab.Screen>
 
             </Tab.Navigator>

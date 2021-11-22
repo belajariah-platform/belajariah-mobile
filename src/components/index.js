@@ -1,5 +1,6 @@
 import Cards from './card'
 import Alerts from './alert'
+import SVGIcon from './svg'
 import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
@@ -45,6 +46,7 @@ import {
 } from './modal'
 
 export {
+  SVGIcon,
   Chat,
   Cards,
   Alerts,

@@ -23,7 +23,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/core'
 
 const ClassAbout = ({ params }) => {
-  console.log(params.code, params)
+  // console.log(params.code, params)
   const navigation = useNavigation()
   const [state, setState] = useState([])
   const [showMore, setShowMore] = useState(true)
