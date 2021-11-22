@@ -31,7 +31,7 @@ const ClassProfileMentorQuran = (props) => {
     const DirectWA = async () => {
         try {
             const supported = await Linking.canOpenURL(url)
-            console.log(supported)
+            // console.log(supported)
             if(supported) {
               await Linking.openURL(url)
             } else {
