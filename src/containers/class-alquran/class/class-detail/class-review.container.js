@@ -1,5 +1,8 @@
+import * as Yup from 'yup'
 import moment from 'moment'
+import { useFormik } from 'formik'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { Card } from 'react-native-elements'
 import React, { useEffect, useState } from 'react'
 import NetInfo from '@react-native-community/netinfo'
@@ -7,6 +10,7 @@ import NetInfo from '@react-native-community/netinfo'
 import {
   View,
   Text,
+  Image,
   TextInput,
   ScrollView,
   TouchableOpacity,
@@ -15,16 +19,27 @@ import {
 import { Images } from '../../../../assets'
 import { RatingAPI } from '../../../../api'
 import { Response } from '../../../../utils'
-import { ModalNoConnection, ModalRatingDirect, SVGIcon } from '../../../../components'
+import { 
+  Alerts, 
+  SVGIcon, 
+  Buttons,
+  ModalNoConnection, 
+  ModalRatingDirect, 
+} from '../../../../components'
 
 import styles from './class-review.style'
 
 const ClassReviewQuran = ({ params }) => {
-  const [count, setCount] = useState(0)
+  const maxRating = [1, 2, 3, 4, 5]
   const [rate, setRate] = useState(0)
+  const [count, setCount] = useState(0)
   const [state, setState] = useState([])
+  const [comment, setComment] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [valueRating, setValuetRating] = useState(0)
   const [connectStatus, setconnectStatus] = useState(false)
   const [modalVisibleEnd, setModalVisibleEnd] = useState(false)
+  const { userInfo } = useSelector((state) => state.UserReducer)
   const toggleModalEnd = () => setModalVisibleEnd(!modalVisibleEnd)
   const [dataState, setDataState] = useState({ skip: 0, take: 15, filter: [], filterString: '[]' })
 
@@ -33,6 +48,42 @@ const ClassReviewQuran = ({ params }) => {
     setconnectStatus(!connectStatus)
     fetchDataRating(dataState, params.Code)
   }
+
+  const FormRating = useFormik({
+    initialValues: { 
+        user_code: userInfo.Code,
+        Class_Code: params.code,
+        Rating: valueRating,
+        Comment: comment,
+    },
+    onSubmit: async (form) => {
+      try {
+        setLoading(true)
+        const values = {
+          Rating : valueRating,
+          Comment : comment,
+          Class_Code : params.code,
+          User_Code : userInfo.Code,
+        }
+        const response = await RatingAPI.InsertRatingClass(values)
+        // console.log(response, "Hai Re")
+        // console.log(values)
+        if (response.data.result) {
+            Alerts(true, 'Terima kasih telah memberikan rating dan ulasan')
+            setModalVisibleEnd(false)
+        } else {
+            setLoading(false)
+        }
+      }
+      catch (err) {
+          // console.log(err, 'Hai error')
+          setLoading(false)
+          return err
+      }
+    },
+  })
+
+  // console.log(FormRating.values)
 
   const fetchDataRating = async (state, code) => {
     try {
@@ -65,8 +116,34 @@ const ClassReviewQuran = ({ params }) => {
   }
 
   useEffect(() => {
+    modalVisibleEnd ?
+    setValuetRating(0) : null
     fetchDataRating(dataState, params.code)
-  }, [dataState])
+  }, [dataState, modalVisibleEnd])
+
+  const Ratingbar = () => {
+    return (
+      <View style={styles.customRatingBarStyle}>
+        {maxRating.map((item, index) => {
+          return (
+            <TouchableOpacity
+              activeOpacity={0.5}
+              key={index}
+              onPress={() => setValuetRating(item)}>
+              <Image
+                style={styles.starImageStyle}
+                source={
+                  item <= valueRating
+                    ? Images.BintangFull
+                    : Images.BintangBorder
+                }
+              />
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+    )
+  }
 
   const handleRating = (num) => {
     let rating = []
@@ -109,20 +186,31 @@ const ClassReviewQuran = ({ params }) => {
       />
       <ModalRatingDirect
         isVisible={modalVisibleEnd}
+        TitleRating='Rating dan ulasan'
+        DescRating='untuk kelas ini'
         HeaderBanner={<SVGIcon.IconCheckListModal ColorBg={params.color_path} />}
         backdropPress={() => toggleModalEnd()}
         backButtonPress={() => toggleModalEnd()}
         styleBackground={params.color_path}
+        RatingBar={<Ratingbar />}
         renderItem={
+          <>
           <View style={styles.containerTextArea}>
             <TextInput
               multiline={true}
               numberOfLines={5}
-              // onChangeText={(e) => setComment(e)}
               style={styles.textArea}
-              placeholder='Catatan untuk Ustadz/Ustadzah'
+              onChangeText={(e) => setComment(e)}
+              placeholder='Catatan untuk kelas ini'
             />
           </View>
+          <View style={styles.containerRating}>
+              <Buttons title='Kirim'
+                style={styles.StyleBtn2} 
+                textStyle={styles.StyleTxt2}
+                onPress={FormRating.handleSubmit}/>
+            </View>
+          </>
         }
       />
 
