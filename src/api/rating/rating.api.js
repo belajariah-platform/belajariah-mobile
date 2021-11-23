@@ -42,8 +42,50 @@ const InsertRatingMentor = async (formData) => {
   }
 }
 
+const GetAllRatingQuran = async (skip, take, filters) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/rating`,
+    {
+      Action:"GET_ALL_RATING_CLASS_QURAN",
+        query: {
+          filters: filters,
+          orders: [
+            {
+              "field": "id",
+              "dir": "desc"
+            }
+          ],
+          skip: skip,
+          take: take
+        }
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const InsertRatingQuran = async (formData) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/rating `,
+    {
+      "Action":"GIVE_RATING_CLASS_QURAN",
+      "data": formData
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export default {
   GetAllRating,
   InsertRatingClass,
   InsertRatingMentor,
+  GetAllRatingQuran,
+  InsertRatingQuran,
 }

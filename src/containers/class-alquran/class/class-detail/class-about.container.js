@@ -11,6 +11,7 @@ import {
 import {
   TextView,
   Buttons,
+  SVGIcon,
   ModalNoConnection,
 } from '../../../../components'
 
@@ -21,9 +22,9 @@ import { LearningAPI } from '../../../../api'
 import styles from './class-about.style'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/core'
+import Svg from 'react-native-svg'
 
 const ClassAbout = ({ params }) => {
-  // console.log(params.code, params)
   const navigation = useNavigation()
   const [state, setState] = useState([])
   const [showMore, setShowMore] = useState(true)
@@ -152,6 +153,29 @@ const ClassAbout = ({ params }) => {
     )
   }
 
+  const TermsCondition = () => {
+    return (
+      <Card containerStyle={styles.containerDesc}>
+        <Text style={styles.textBold}>Syarat dan Ketentuan</Text>
+        {params.term_condition.length > 0 && params.term_condition.map((val, index) => {
+          let icon = Images.IconPackageTahsin3
+          return (
+            <View key={index} >
+              <View style={styles.flexBenefits}>
+                <View style={{marginHorizontal: 8}}>
+              <SVGIcon.IconTerms color={params.color_path} />
+                </View>
+                <Text style={{ ...styles.textRegular, top :2 }}>
+                  {val.description.split('|')[0]}
+                </Text>
+              </View>
+            </View>
+          )
+        } )}
+      </Card>
+    )
+  }
+
   const Benefits = () => {
     return (
       <Card containerStyle={styles.containerBenefits}>
@@ -161,11 +185,11 @@ const ClassAbout = ({ params }) => {
         </Text>
        
         {params.class_benefit.length > 0 && params.class_benefit.map((val, index) => {
-          let icon = Images.IconUstadzGreen
+          let icon = Images.IconChecklistMeet
           return (
             <View key={index} >
               <View style={styles.flexBenefits}>
-                <icon.default width={22} height={22}
+                <icon.default width={18} height={18}
                   style={{ ...styles.iconDocs, marginLeft: 5 }}
                 />
                 <Text style={{ ...styles.textBoldCustom, top :4 }}>
@@ -212,6 +236,7 @@ const ClassAbout = ({ params }) => {
       {/* <Title /> */}
       <Desc />
       {state && state.length > 0 && <Topics />}
+      {params.term_condition && params.term_condition.length > 0 && <TermsCondition/>}
       <Benefits />
       {params.class_document && <EbookDownload />}
     </ScrollView>

@@ -21,6 +21,7 @@ import styles from './class-review.style'
 
 const ClassReviewQuran = ({ params }) => {
   const [count, setCount] = useState(0)
+  const [rate, setRate] = useState(0)
   const [state, setState] = useState([])
   const [connectStatus, setconnectStatus] = useState(false)
   const [modalVisibleEnd, setModalVisibleEnd] = useState(false)
@@ -35,12 +36,17 @@ const ClassReviewQuran = ({ params }) => {
 
   const fetchDataRating = async (state, code) => {
     try {
+      let rates = 0
       let { skip, take, filterString } = state
-      filterString=`[{"type": "text", "field" : "class_code", "value": "${code}"}]`
-      const response = await RatingAPI.GetAllRating(skip, take, filterString)
+      filterString= [{"type": "text", "field" : "class_code", "value": `${code}`}]
+      const response = await RatingAPI.GetAllRatingQuran(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
-        setState(response.data.data)
-        setCount(response.data.count)
+        setState(response.data.message.data)
+        setCount(response.data.message.count)
+        if (response.data.message.count > 0) {
+          response.data.message.data.map((e) => rates += e.rating)
+          setRate(rates)
+        }
       } else {
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
@@ -59,7 +65,7 @@ const ClassReviewQuran = ({ params }) => {
   }
 
   useEffect(() => {
-    fetchDataRating(dataState, params.Code)
+    fetchDataRating(dataState, params.code)
   }, [dataState])
 
   const handleRating = (num) => {
@@ -121,13 +127,14 @@ const ClassReviewQuran = ({ params }) => {
           </View>
         }
       />
+
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Card containerStyle={styles.card}>
         <View style={styles.header}>
           <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
-            {/* <Text style={styles.rating}>{params.Class_Rating.toFixed(1)}</Text> */}
-            <Text style={styles.textBold}>{`Dari ${params.Total_Review} ulasan`}</Text>
+            <Text style={styles.rating}>{rate > 0 ? rate/state.length : 0}</Text>
+            <Text style={styles.textBold}>{`Dari ${state.length} ulasan`}</Text>
           </View>
         </View>
         <View style={styles.footer}>
@@ -135,10 +142,10 @@ const ClassReviewQuran = ({ params }) => {
             return (
               <View key={index} style={styles.cardReview}>
                 <Text style={styles.textBoldCustom}>
-                  {item.User_Name} | {moment(item.Created_Date).fromNow()}
+                  {item.user_name} | {moment(item.created_date).fromNow()}
                 </Text>
-                <Text style={styles.textRegular}>{item.Comment}</Text>
-                <View>{handleRating(item.Rating)}</View>
+                <Text style={styles.textRegular}>{item.comment}</Text>
+                <View>{handleRating(item.rating)}</View>
               </View>
             )
           })}

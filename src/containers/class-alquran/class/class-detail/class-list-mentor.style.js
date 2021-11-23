@@ -96,13 +96,13 @@ const styles = StyleSheet.create({
       maxWidth: '100%',
       color: Color.black,
       fontFamily: FontType.bold,
-      fontSize: FontSize.smallMedium,
+      fontSize: FontSize.smallPoint,
     },
     textStyleCity: {
       maxWidth: '100%',
       color: '#13A98B',
       fontFamily: FontType.regular,
-      fontSize: FontSize.smallMedium,
+      fontSize: FontSize.smallPoint,
     },
     iconFilter: {
       marginRight : 16,
@@ -152,7 +152,9 @@ const styles = StyleSheet.create({
       marginRight: 6,
     },
     TxtDesc: {
+      marginTop : 3,
       maxWidth: '96%',
+      fontSize: FontSize.smallPoint,
    
     },
     ViewSchedules : {

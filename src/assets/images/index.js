@@ -353,5 +353,8 @@ export default {
   //Class Detail ACC
   HeaderClassACC : require('./HeaderClassACC.png'),
 
+  //
+  IconCheckout : require('./IconShop.svg')
+
 }
 
