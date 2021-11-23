@@ -41,6 +41,8 @@ const ModalRatingDirect = (props) => {
           </View>
         )
     }
+
+    // console.log(defaultRating)
     
     const ReviewClass = () => {
         return (
@@ -48,26 +50,27 @@ const ModalRatingDirect = (props) => {
             <View style={{...
                 styles.TopHeader, backgroundColor: props.styleBackground}}>
                   <View style={styles.IconHeader}>{props.HeaderBanner}</View>
-                <Text style={styles.TxtHeader}>
-                  <Text style={styles.TxtHeaderBld}>Alhamdulillah!, </Text>anda telah menyelesaikan pertemuan bulan ini.
+                <Text style={styles.TxtHeader}>{props.TitleRating}
+                  {/* <Text style={styles.TxtHeaderBld}>Alhamdulillah!, </Text>anda telah menyelesaikan pertemuan bulan ini. */}
                 </Text>
               </View>
             <View style={styles.ViewTxtMdl}>
               <Text style={styles.TextTitleRating}>
                 <Text style={styles.TextTitleRatingBld}>Beri</Text>
                 <Text style={styles.TextTitleRatingBldYellow}> Penilaian</Text>
-                , untuk Ustadz/Ustadzahmu
+                , {props.DescRating}
               </Text>
             </View>
-            <RatingbarClass />
+            {/* <RatingbarClass /> */}
+            {props.RatingBar}
             <View style={styles.containerTextArea}>
               {props.renderItem}
             </View>
-            <View style={styles.containerRating}>
+            {/* <View style={styles.containerRating}>
               <Buttons title='Kirim'
                 style={styles.StyleBtn2} 
                 textStyle={styles.StyleTxt2}/>
-            </View>
+            </View> */}
           </View>
         )
     }
@@ -101,7 +104,10 @@ ModalRatingDirect.propTypes = {
     submit : PropTypes.func,
     title : PropTypes.string,
     isVisible : PropTypes.bool,
+    RatingBar : PropTypes.object,
     renderItem : PropTypes.object,
+    DescRating : PropTypes.string,
+    TitleRating : PropTypes.string,
     backdropPress : PropTypes.func,
     HeaderBanner : PropTypes.object,
     backButtonPress : PropTypes.func,

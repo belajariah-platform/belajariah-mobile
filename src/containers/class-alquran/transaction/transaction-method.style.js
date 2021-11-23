@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.mediumLarge,
   },
   textRegular: {
-    marginBottom: 8,
+    // marginBottom: 8,
     color: Color.black,
     fontSize: FontSize.small,
     fontFamily: FontType.regular,

@@ -275,7 +275,7 @@ const TransactionMethodQuran = (props) => {
               {state.some(item => item.Type == 'manual_transfer') && (
                 <View style={[styles.cardMethods, styles.cardMethodCustom]}>
                   <Text style={styles.textBold}>Transfer ke Rekening Bank</Text>
-                  <Text style={styles.textRegular}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
+                  <Text style={{...styles.textRegular, marginBottom: 8,}}>Lakukan pembayaran secara fleksibel ke rekening bank yang telah disediakan</Text>
                   {state.map((item, index) => {
                     return item.Type == 'manual_transfer' &&  (
                       <View key={index} style={styles.flexRow}>

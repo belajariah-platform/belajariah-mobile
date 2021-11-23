@@ -96,7 +96,34 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontType.bold,
     fontSize: FontSize.medium,
-  }
+  },
+  customRatingBarStyle: {
+    // marginTop: 15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  starImageStyle: {
+    width: 40,
+    height: 40,
+    marginRight:8,
+    marginVertical: 4,
+  },
+  containerRating : {
+    marginTop: 4,
+    alignItems:'center',
+    marginHorizontal: '6%',
+  },
+  StyleBtn2 : {
+    width: '100%',
+    height: 44,
+    borderRadius: 60,
+    backgroundColor: '#BDBDBD',
+  },
+  StyleTxt2 : {
+    color: Color.white,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.bold,
+  },
 })
 
 export default styles

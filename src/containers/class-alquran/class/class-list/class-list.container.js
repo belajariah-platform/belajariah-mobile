@@ -116,7 +116,10 @@ const ClassListQuran = () => {
                 {DetailClass : item})} >
                 <Card
                     containerStyle={styles.cardStyle}>
-                    <View style={styles.viewStyle}>
+                    <Image source={item.class_image == '' ?
+                        Images.ImgDefault4  : { uri : item.class_image }}
+                        style={styles.imageStyle} />
+                    {/* <View style={styles.viewStyle}>
                         <Image source={item.class_image == '' ?
                         Images.ImgDefault4  : { uri : item.class_image }}
                         style={styles.imageStyle}/>
@@ -126,7 +129,7 @@ const ClassListQuran = () => {
                                 {item.class_description.substring(0, 70)} ...
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
                 </Card>
             </TouchableOpacity>
         )
