@@ -16,9 +16,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white
   },
   images: {
-    height: 160,
+    height: 150,
     width: '100%',
-    marginLeft : -3,
     resizeMode: 'stretch',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -29,8 +28,11 @@ const styles = StyleSheet.create({
     fontSize: FontSize.extraSmall,
   },
   content : {
-    top : -20,
-    paddingTop : 10,
+    top : 0,
+    borderBottomLeftRadius : 12,
+    borderBottomRightRadius: 12,
+    paddingTop : 4,
+    marginBottom:15,
     paddingHorizontal : 12,
     backgroundColor : 'white',
   },

@@ -415,7 +415,9 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassListQuran')}>
-          <Image source={Images.BannerClassQuran} style={{...styles.cardCustom, height: 120}} />
+          <View style={styles.cardAC}>
+            <Image source={Images.BannerClassQuran} style={styles.ImgCustomAC} />
+          </View>
         </TouchableOpacity>
       </View>
     )

@@ -33,7 +33,7 @@ const ClassListQuran = () => {
     const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
     const retryConnection = () => {
-        fetchDataStory(dataState)
+      fetchDataClassQuran(dataState)
         setconnectStatus(!connectStatus)
     }
 
@@ -46,7 +46,7 @@ const ClassListQuran = () => {
 
     const onRefreshing = () => {
         setRefreshing(true)
-        fetchDataStory(dataState)
+        fetchDataClassQuran(dataState)
         setRefreshing(false)
     }
 
