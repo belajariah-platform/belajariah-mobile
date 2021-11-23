@@ -103,6 +103,8 @@ const ClassReviewQuran = ({ params }) => {
       />
       <ModalRatingDirect
         isVisible={modalVisibleEnd}
+        TitleRating='Rating dan ulasan'
+        DescRating='untuk kelas ini'
         HeaderBanner={<SVGIcon.IconCheckListModal ColorBg={params.color_path} />}
         backdropPress={() => toggleModalEnd()}
         backButtonPress={() => toggleModalEnd()}
@@ -114,7 +116,7 @@ const ClassReviewQuran = ({ params }) => {
               numberOfLines={5}
               // onChangeText={(e) => setComment(e)}
               style={styles.textArea}
-              placeholder='Catatan untuk Ustadz/Ustadzah'
+              placeholder='Catatan untuk kelas ini'
             />
           </View>
         }

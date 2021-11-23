@@ -7,8 +7,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ImageBackground, View, ScrollView} from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-import {Response} from '../../../../utils'
-import {UserClassAPI} from '../../../../api'
 import { Buttons } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
@@ -21,7 +19,6 @@ const Tab = createMaterialTopTabNavigator()
 
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
-    const [state, setState] = useState([])
     const { DetailClass } = props.route.params
     
     const Header = () => {
