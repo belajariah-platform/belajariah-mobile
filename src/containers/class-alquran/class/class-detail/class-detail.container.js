@@ -7,8 +7,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ImageBackground, View, ScrollView} from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-import { Buttons } from '../../../../components'
+import {Response} from '../../../../utils'
+import {UserClassAPI} from '../../../../api'
 import { Images, Color } from '../../../../assets'
+import { Buttons, LoadingView } from '../../../../components'
 
 import ClassListMentorQuran from './class-list-mentor.container'
 import ClassAbout from './class-about.container'
@@ -20,10 +22,13 @@ const Tab = createMaterialTopTabNavigator()
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
     const [state, setState] = useState([])
+    const [loading, setLoading] = useState(true)
+
     const { DetailClass } = props.route.params
     
     const fetchDataUserClass = async () => {
         try {
+            setLoading(true)
           const response = await UserClassAPI.GetAllUserClassQuran(DetailClass.code)
           if (response.status === Response.SUCCESS) {
             setState(response.data.message.data)
@@ -35,6 +40,7 @@ const ClassDetailQuran = (props) => {
         } catch (err) {
           return err
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -61,46 +67,52 @@ const ClassDetailQuran = (props) => {
         <View style={styles.flexFull}>
             <Header />
 
-            <Tab.Navigator
-                style={styles.tabContainerStyle}
-                tabBarOptions={{
-                    inactiveTintColor: Color.white,
-                    labelStyle: styles.labelStyle,
-                    activeTintColor: Color.white,
-                    indicatorStyle: {...styles.indicatorStyle, 
-                        left : state && state.length == 0 ? '8.6%' : '14.6%'},
-                    style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
-                }}>
-                <Tab.Screen
-                    name='ClassAbout'
-                    options={{ title: 'Tentang Kelas' }}>
-                    {() => <ClassAbout params={DetailClass}/>}
-                </Tab.Screen>
-              {state && state.length == 0 &&  <Tab.Screen
-                    name='ClassListMentorQuran'
-                    options={{ title: 'Pengajar' }}>
-                    {() => <ClassListMentorQuran params={DetailClass}/>}
-                </Tab.Screen>}
-                <Tab.Screen
-                    name='ClassReviewQuran'
-                    options={{ title: 'Ulasan' }}>
-                    {() => <ClassReviewQuran params={DetailClass}/>}
-                </Tab.Screen>
+            {loading ? <LoadingView color='#FF66A1'/> 
+            : (
+                <>
+                    <Tab.Navigator
+                        style={styles.tabContainerStyle}
+                        tabBarOptions={{
+                            inactiveTintColor: Color.white,
+                            labelStyle: styles.labelStyle,
+                            activeTintColor: Color.white,
+                            indicatorStyle: {...styles.indicatorStyle, 
+                                left : state && state.length == 0 ? '8.6%' : '14.6%'},
+                            style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
+                    }}>
+                        <Tab.Screen
+                            name='ClassAbout'
+                            options={{ title: 'Tentang Kelas' }}>
+                            {() => <ClassAbout params={DetailClass}/>}
+                        </Tab.Screen>
+                        {state && state.length == 0 &&  <Tab.Screen
+                            name='ClassListMentorQuran'
+                            options={{ title: 'Pengajar' }}>
+                            {() => <ClassListMentorQuran params={DetailClass}/>}
+                        </Tab.Screen>}
+                        <Tab.Screen
+                            name='ClassReviewQuran'
+                            options={{ title: 'Ulasan' }}>
+                            {() => <ClassReviewQuran params={DetailClass}/>}
+                        </Tab.Screen>
 
-            </Tab.Navigator>
-            <View style={styles.ViewButton}>
-            <Buttons title={state && state.length == 0 ? 'Berlangganan Sekarang' : 'Temukan Guru Ngaji'} 
-                style={{...
-                    styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
-                textStyle={{...styles.StyleTxtBtn, marginTop : state && state.length == 0 ?  5 : null}}
-                icon={ state && state.length == 0 ? <Images.IconCheckout.default/> : <Images.IconSearchWhite.default/>}
-                onPress={() => {
-                    state && state.length == 0 
-                    ? navigation.navigate('TransactionMethodQuran', {DetailClass : DetailClass})
-                    : navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
-                }}
-                />
-            </View>
+                    </Tab.Navigator>
+                    <View style={styles.ViewButton}>
+                        <Buttons 
+                            title={state && state.length == 0 ? 'Berlangganan Sekarang' : 'Temukan Guru Ngaji'} 
+                            style={{...
+                                styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
+                            textStyle={{...styles.StyleTxtBtn, marginTop : state && state.length == 0 ?  5 : null}}
+                            icon={ state && state.length == 0 ? <Images.IconCheckout.default/> : <Images.IconSearchWhite.default/>}
+                            onPress={() => {
+                                state && state.length == 0 
+                                ? navigation.navigate('TransactionMethodQuran', {DetailClass : DetailClass})
+                                : navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
+                            }}
+                        />
+                    </View>
+                </>
+            )}
         </View>
     )
 }

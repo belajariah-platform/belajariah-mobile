@@ -19,12 +19,12 @@ const ClassFormPersonalACC = (props) => {
     const { detailACC } = props.route.params
     const { userInfo } = useSelector((state) => state.UserReducer)
 
-    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [selectedIndex, setSelectedIndex] = useState(1)
     const FormPersonal = useFormik({
         initialValues: { 
             user_code: userInfo.Code,
             cp_code: detailACC.code,
-            fullname: '', gender: '', email: '', 
+            fullname: '', gender: 'Laki-laki', email: '', 
             wa_no: '', age: '', address: '', profession: ''},
         validationSchema: Yup.object({
             fullname: Yup.string()
@@ -127,7 +127,6 @@ const ClassFormPersonalACC = (props) => {
                         <Text style={styles.containerText}>Usia</Text>
                         <TextBox
                             name='age'
-                        
                             placeholder='Usia'
                             form={FormPersonal}
                             customStyle={styles.StyleInputB}
@@ -164,7 +163,7 @@ const ClassFormPersonalACC = (props) => {
         <View style={styles.flexFull}>
             <Header />
             <ScrollView>
-                <FormBody />
+                {FormBody()}
             </ScrollView>
         </View>
     )
