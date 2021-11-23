@@ -98,15 +98,18 @@ const styles = StyleSheet.create({
       lineHeight: 18,
       maxWidth: '94%',
       textAlign: 'justify',
+      fontSize: FontSize.smallPoint,
     },
     TxtDescStudy : {
       lineHeight: 18,
       maxWidth: '90%',
       textAlign: 'justify',
+      fontSize: FontSize.smallPoint,
     }, 
     TxtDescSystem : {
       lineHeight: 18,
       textAlign: 'justify',
+      fontSize: FontSize.smallPoint,
     }, 
     ViewTxt : {
       marginLeft: 4,

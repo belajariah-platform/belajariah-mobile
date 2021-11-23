@@ -21,15 +21,16 @@ import { Images, Color } from '../../../../assets'
 import { Response } from '../../../../utils'
 import { ClassQuranAPI } from '../../../../api'
 
-const ClassListQuran = (props) => {
+const ClassListQuran = () => {
     const navigation = useNavigation()
-    const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
     const [state, setState] = useState([])
     const [loading, setLoading] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
     const [loadingQuran, setloadingQuran] = useState(true)
     const [connectStatus, setconnectStatus] = useState(false)
     const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
+    
+    const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
     const retryConnection = () => {
         fetchDataStory(dataState)
@@ -110,7 +111,9 @@ const ClassListQuran = (props) => {
     const ClassList = (item, index) => {
         return (
             <TouchableOpacity key={index} 
-                activeOpacity={0.5} onPress={() => navigation.navigate('ClassDetailQuran', {DetailClass : item})} >
+                activeOpacity={0.5} 
+                onPress={() => navigation.navigate('ClassDetailQuran', 
+                {DetailClass : item})} >
                 <Card
                     containerStyle={styles.cardStyle}>
                     <View style={styles.viewStyle}>

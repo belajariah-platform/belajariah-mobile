@@ -22,7 +22,7 @@ import styles from './class-list-mentor.style'
 
 const ClassListMentorQuran = (props) => {
     const navigation = useNavigation()
-    const { DetailClass } = props.route.params
+    const { DetailClass, UserClass } = props.route.params
 
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
@@ -116,7 +116,7 @@ const ClassListMentorQuran = (props) => {
                 )
               } else {
                 return (
-                  <Text key={index}>{val}. </Text>
+                  <Text style={styles.TxtDesc} key={index}>{val}. </Text>
                 )}})
         }
 
@@ -124,7 +124,7 @@ const ClassListMentorQuran = (props) => {
             <View key={index}>
                 <Card containerStyle={styles.cardStyle}>
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('ClassProfileMentorQuran', { DetailClass : DetailClass, instructor : item})
+                        navigation.navigate('ClassProfileMentorQuran', { DetailClass : DetailClass, instructor : item, UserClass : UserClass})
                     }}>
                         <View style={styles.viewStyle}>
                             <Image source={item.Gender == 'Perempuan' ? 

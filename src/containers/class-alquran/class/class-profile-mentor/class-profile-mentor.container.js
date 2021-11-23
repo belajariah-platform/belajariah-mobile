@@ -16,9 +16,7 @@ import {
     SVGIcon,
     Buttons,
 } from '../../../../components'
-import { Response } from '../../../../utils'
-import { UserClassAPI } from '../../../../api'
-import { Images, Color } from '../../../../assets'
+import { Images } from '../../../../assets'
 
 import styles from './class-profile-mentor.style'
 
@@ -42,25 +40,6 @@ const ClassProfileMentorQuran = (props) => {
           return error
         }
     }
-
-    const fetchDataUserClass = async () => {
-        try {
-          const response = await UserClassAPI.GetAllUserClassQuran(DetailClass.code)
-          if (response.status === Response.SUCCESS) {
-            setState(response.data.message.data)
-          } else {
-            NetInfo.fetch().then(res => {
-              setconnectStatus(!res.isConnected)
-            })
-          }
-        } catch (err) {
-          return err
-        }
-    }
-
-    useEffect(() => {
-        fetchDataUserClass()
-    }, [])
 
     const Header = () => {
         return (
@@ -165,14 +144,11 @@ const ClassProfileMentorQuran = (props) => {
             <View style={styles.ViewBtn}>
                     <Buttons 
                         style={{...styles.BtnPengajar, backgroundColor: DetailClass.color_path}}
-                        icon={state && state.length > 0 ? <Images.IconConsultations.default/> : null}
-                        title={state && state.length > 0 ? 'Chat Pengajar' : 'Berlangganan Sekarang'}
-                        textStyle={[styles.TxtButton, state && state.length > 0 ? { marginLeft: 10, marginTop: 5 } : {}]}
+                        icon={<Images.IconConsultations.default/>}
+                        title={'Chat Pengajar'}
+                        textStyle={[styles.TxtButton, { marginLeft: 10, marginTop: 5 }]}
                         onPress={() => {
-                            state && state.length > 0 
-                            ? DirectWA()
-                            : navigation.navigate('TransactionMethodQuran',
-                             { DetailClass : DetailClass, instructor : instructor } )
+                             DirectWA()
                         }}
                     />
             </View>

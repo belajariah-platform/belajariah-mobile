@@ -116,7 +116,7 @@ const ClassListMentorQuran = ({params}) => {
                 )
               } else {
                 return (
-                  <Text key={index}>{val}. </Text>
+                  <Text style={styles.TxtDesc} key={index}>{val}. </Text>
                 )}})
         }
 

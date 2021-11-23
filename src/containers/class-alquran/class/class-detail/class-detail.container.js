@@ -24,6 +24,25 @@ const ClassDetailQuran = (props) => {
     const [state, setState] = useState([])
     const { DetailClass } = props.route.params
     
+    const fetchDataUserClass = async () => {
+        try {
+          const response = await UserClassAPI.GetAllUserClassQuran(DetailClass.code)
+          if (response.status === Response.SUCCESS) {
+            setState(response.data.message.data)
+          } else {
+            NetInfo.fetch().then(res => {
+              setconnectStatus(!res.isConnected)
+            })
+          }
+        } catch (err) {
+          return err
+        }
+    }
+
+    useEffect(() => {
+        fetchDataUserClass()
+    }, [])
+
     const Header = () => {
         return (
             <View style={styles.containerHeaderProfile}>
@@ -50,7 +69,8 @@ const ClassDetailQuran = (props) => {
                     inactiveTintColor: Color.white,
                     labelStyle: styles.labelStyle,
                     activeTintColor: Color.white,
-                    indicatorStyle: styles.indicatorStyle,
+                    indicatorStyle: {...styles.indicatorStyle, 
+                        left : state && state.length == 0 ? '8.6%' : '14.6%'},
                     style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
                 }}>
                 <Tab.Screen
@@ -58,11 +78,11 @@ const ClassDetailQuran = (props) => {
                     options={{ title: 'Tentang Kelas' }}>
                     {() => <ClassAbout params={DetailClass}/>}
                 </Tab.Screen>
-                <Tab.Screen
+              {state && state.length == 0 &&  <Tab.Screen
                     name='ClassListMentorQuran'
                     options={{ title: 'Pengajar' }}>
                     {() => <ClassListMentorQuran params={DetailClass}/>}
-                </Tab.Screen>
+                </Tab.Screen>}
                 <Tab.Screen
                     name='ClassReviewQuran'
                     options={{ title: 'Ulasan' }}>
@@ -70,15 +90,17 @@ const ClassDetailQuran = (props) => {
                 </Tab.Screen>
 
             </Tab.Navigator>
-            
             <View style={styles.ViewButton}>
-            <Buttons title='Temukan Guru Ngaji' 
+            <Buttons title={state && state.length == 0 ? 'Berlangganan Sekarang' : 'Temukan Guru Ngaji'} 
                 style={{...
                     styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
-                textStyle={styles.StyleTxtBtn}
-                icon={<Images.IconSearchWhite.default/>}
+                textStyle={{...styles.StyleTxtBtn, marginTop : state && state.length == 0 ?  5 : null}}
+                icon={ state && state.length == 0 ? <Images.IconCheckout.default/> : <Images.IconSearchWhite.default/>}
                 onPress={() => {
-                    navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass})}}
+                    state && state.length == 0 
+                    ? navigation.navigate('TransactionMethodQuran', {DetailClass : DetailClass})
+                    : navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
+                }}
                 />
             </View>
         </View>
