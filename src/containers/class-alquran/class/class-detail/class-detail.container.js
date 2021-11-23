@@ -7,9 +7,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { ImageBackground, View, ScrollView} from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
+import {Response} from '../../../../utils'
+import {UserClassAPI} from '../../../../api'
 import { Buttons } from '../../../../components'
 import { Images, Color } from '../../../../assets'
 
+import ClassListMentorQuran from './class-list-mentor.container'
 import ClassAbout from './class-about.container'
 import ClassReviewQuran from './class-review.container'
 import styles from './class-detail.style'
@@ -18,6 +21,7 @@ const Tab = createMaterialTopTabNavigator()
 
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
+    const [state, setState] = useState([])
     const { DetailClass } = props.route.params
     
     const Header = () => {
@@ -53,6 +57,11 @@ const ClassDetailQuran = (props) => {
                     name='ClassAbout'
                     options={{ title: 'Tentang Kelas' }}>
                     {() => <ClassAbout params={DetailClass}/>}
+                </Tab.Screen>
+                <Tab.Screen
+                    name='ClassListMentorQuran'
+                    options={{ title: 'Pengajar' }}>
+                    {() => <ClassListMentorQuran params={DetailClass}/>}
                 </Tab.Screen>
                 <Tab.Screen
                     name='ClassReviewQuran'

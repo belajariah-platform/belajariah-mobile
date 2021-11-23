@@ -134,9 +134,9 @@ const styles = StyleSheet.create({
     fontSize: FontSize.smallest,
   },
   indicatorStyle: {
-    width: 86,
+    width: 70,
     height: 4,
-    left: '13.6%',
+    left: '8.6%',
     borderRadius: 2,
     backgroundColor: Color.white,
   },

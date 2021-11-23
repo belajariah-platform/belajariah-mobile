@@ -90,7 +90,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='ConsultationDetail' component={ConsultationDetail} />
       <Stack.Screen name='UserVerifyPassword' component={UserVerifyPassword} />
       <Stack.Screen name='ClassFormConfirmACC' component={ClassFormConfirmACC} />
-      <Stack.Screen name='ClassListMentorQuran' component={ClassListMentorQuran} />
+      {/* <Stack.Screen name='ClassListMentorQuran' component={ClassListMentorQuran} /> */}
       <Stack.Screen name='ClassFormPersonalACC' component={ClassFormPersonalACC} />
       <Stack.Screen name='TransactionInfoQuran' component={TransactionInfoQuran} />
       <Stack.Screen name='ClassLearningDirect, ' component={ClassLearningDirect} />
