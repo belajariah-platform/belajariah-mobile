@@ -85,8 +85,8 @@ const Home = (props) => {
   const handleCategoryChange = (category) => {
     setCategorySelected(category.ID)
     stateClass.forEach((val) => {
-      val.Class_Category == category.Value ?
-        fetchDataClass(dataState) : toggleModal()
+      val.class_category == category.Value ?
+      props.navigation.navigate('ClassListQuran') : toggleModal()
     })
   }
 
@@ -415,12 +415,12 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassListQuran')}>
-          <View style={styles.CardClassQuran}/>
+          <Image source={Images.BannerClassQuran} style={{...styles.cardCustom, height: 120}} />
         </TouchableOpacity>
       </View>
     )
   }
-
+  
   const AlquranHome = () => {
     return (
       <View>

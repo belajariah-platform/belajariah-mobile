@@ -354,7 +354,8 @@ export default {
   HeaderClassACC : require('./HeaderClassACC.png'),
 
   //
-  IconCheckout : require('./IconShop.svg')
+  IconCheckout : require('./IconShop.svg'),
+  BannerClassQuran : require('./BannerKelasAlquran.png')
 
 }
 
