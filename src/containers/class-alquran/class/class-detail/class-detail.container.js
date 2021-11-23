@@ -19,6 +19,7 @@ const Tab = createMaterialTopTabNavigator()
 
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
+    const [state, setState] = useState([])
     const { DetailClass } = props.route.params
     
     const fetchDataUserClass = async () => {

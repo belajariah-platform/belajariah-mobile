@@ -61,15 +61,16 @@ const ModalRatingDirect = (props) => {
                 , {props.DescRating}
               </Text>
             </View>
-            <RatingbarClass />
+            {/* <RatingbarClass /> */}
+            {props.RatingBar}
             <View style={styles.containerTextArea}>
               {props.renderItem}
             </View>
-            <View style={styles.containerRating}>
+            {/* <View style={styles.containerRating}>
               <Buttons title='Kirim'
                 style={styles.StyleBtn2} 
                 textStyle={styles.StyleTxt2}/>
-            </View>
+            </View> */}
           </View>
         )
     }
@@ -103,6 +104,7 @@ ModalRatingDirect.propTypes = {
     submit : PropTypes.func,
     title : PropTypes.string,
     isVisible : PropTypes.bool,
+    RatingBar : PropTypes.object,
     renderItem : PropTypes.object,
     DescRating : PropTypes.string,
     TitleRating : PropTypes.string,
