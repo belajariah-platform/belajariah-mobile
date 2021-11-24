@@ -147,7 +147,7 @@ const ClassListQuran = () => {
                 />
             </View>
             {loadingQuran ?
-                <LoadingView color='#FF66A1' /> :
+                <LoadingView /> :
                 state == 0 ? <NoStory/>:
                 <FlatList
                     data={state}

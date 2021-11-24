@@ -67,7 +67,7 @@ const ClassDetailQuran = (props) => {
         <View style={styles.flexFull}>
             <Header />
 
-            {loading ? <LoadingView color='#FF66A1'/> 
+            {loading ? <LoadingView color={DetailClass.color_path} /> 
             : (
                 <>
                     <Tab.Navigator

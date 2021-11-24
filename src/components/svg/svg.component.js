@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Svg, {Path} from 'react-native-svg'
+import Svg, {Path, Defs, RadialGradient, Circle, Stop} from 'react-native-svg'
 
 const IconCheckListModal = (props) => {
     return (
@@ -73,10 +73,57 @@ const IconTerms = (props) => {
     )
 }
 
+const IconChekListAbout = (props) => {
+    return (
+        <Svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            imageRendering="optimizeQuality"
+            shapeRendering="geometricPrecision"
+            textRendering="geometricPrecision"
+            version="1"
+            viewBox="0 0 6316 6316"
+            >
+            <Defs>
+                <RadialGradient
+                id="a"
+                cx="5305.82"
+                cy="947.12"
+                r="558.8"
+                fx="5305.82"
+                fy="947.12"
+                gradientTransform="translate(-3537 -631) scale(1.66666)"
+                gradientUnits="userSpaceOnUse"
+                >
+                <Stop offset="0" stopColor="#6ff7a8"></Stop>
+                <Stop offset="0.439" stopColor="#4bd284"></Stop>
+                <Stop offset="1" stopColor="#27ae60"></Stop>
+                </RadialGradient>
+            </Defs>
+            <Circle cx="3158" cy="3158" r="3158" fill={props.ColorBg}></Circle>
+            <Path
+                fill="#2980b9"
+                fillOpacity="0.4"
+                fillRule="nonzero"
+                d="M1172 3129c311 69 583 205 822 393 115 89 221 190 321 301 1003-1699 2005-2282 2645-2272-756 460-1721 1794-2338 2958l-238 448c-374-765-669-927-1494-1110l282-718z"
+            ></Path>
+            <Path
+                fill="#fff"
+                fillRule="nonzero"
+                d="M1156 3027c291 65 545 191 769 367 107 84 206 179 300 282 1025-1589 2554-2138 2534-2126-706 430-1670 1680-2247 2768l-223 419-264-394c-134-201-282-372-449-502-160-126-454-231-658-276l238-538z"
+            ></Path>
+        </Svg>
+    )
+}
+
 export default {
     IconTerms,
     IconDescMentor,
     IconStudyMentor,
     IconSystemMentor,
+    IconChekListAbout,
     IconCheckListModal,
 }
