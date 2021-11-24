@@ -332,7 +332,7 @@ const Home = (props) => {
           activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassDetailACC', {detailACC : stateACC})}>
           <View style={styles.cardAC}>
-            <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateACC.image_banner}} style={styles.ImgCustomAC} />
+            <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateACC.image_banner}} style={styles.ImgCustomACC} />
           </View>
         </TouchableOpacity>
       </View>
@@ -415,8 +415,8 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('ClassListQuran')}>
-          <View style={styles.cardAC}>
-            <Image source={Images.BannerClassQuran} style={styles.ImgCustomAC} />
+          <View style={styles.cardClassQuran}>
+            <Image source={Images.BannerClassQuran} style={styles.ImgCustomQuran} />
           </View>
         </TouchableOpacity>
       </View>

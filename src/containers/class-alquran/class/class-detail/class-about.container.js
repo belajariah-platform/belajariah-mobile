@@ -9,9 +9,9 @@ import {
   ScrollView,
 } from 'react-native'
 import {
-  TextView,
   Buttons,
   SVGIcon,
+  TextView,
   ModalNoConnection,
 } from '../../../../components'
 
@@ -22,7 +22,6 @@ import { LearningAPI } from '../../../../api'
 import styles from './class-about.style'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/core'
-import Svg from 'react-native-svg'
 
 const ClassAbout = ({ params }) => {
   const navigation = useNavigation()
@@ -185,13 +184,10 @@ const ClassAbout = ({ params }) => {
         </Text>
        
         {params.class_benefit.length > 0 && params.class_benefit.map((val, index) => {
-          let icon = Images.IconChecklistMeet
           return (
             <View key={index} >
               <View style={styles.flexBenefits}>
-                <icon.default width={18} height={18}
-                  style={{ ...styles.iconDocs, marginLeft: 5 }}
-                />
+                <View style={{ ...styles.iconDocs, marginLeft: 5 }}><SVGIcon.IconChekListAbout ColorBg={params.color_path} /></View>
                 <Text style={{ ...styles.textBoldCustom, top :4 }}>
                   {val.description.split('|')[0]}
                 </Text>

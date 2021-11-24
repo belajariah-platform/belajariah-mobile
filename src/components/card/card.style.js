@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.white
   },
   images: {
-    height: 150,
+    height: 170,
     width: '100%',
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
