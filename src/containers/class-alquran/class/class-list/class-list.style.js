@@ -124,8 +124,10 @@ const styles = StyleSheet.create({
     marginHorizontal :20,
   },
   cardStyle: {
-    // padding: 15,
     padding: 0,
+    height: 160,
+    elevation: 4,
+    marginBottom: 5,
     borderWidth : 0,
     borderRadius: 20,
   },
@@ -135,10 +137,10 @@ const styles = StyleSheet.create({
   imageStyle: {
     height: 160,
     width: '100%',
-    marginLeft : -3,
+    borderRadius: 20,
     resizeMode: 'stretch',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
   },
   textStyle: {
     color: Color.black,

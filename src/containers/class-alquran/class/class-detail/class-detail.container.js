@@ -88,7 +88,7 @@ const ClassDetailQuran = (props) => {
                         {state && state.length == 0 &&  <Tab.Screen
                             name='ClassListMentorQuran'
                             options={{ title: 'Pengajar' }}>
-                            {() => <ClassListMentorQuran params={DetailClass}/>}
+                            {() => <ClassListMentorQuran params={DetailClass} userClass={state}/>}
                         </Tab.Screen>}
                         <Tab.Screen
                             name='ClassReviewQuran'

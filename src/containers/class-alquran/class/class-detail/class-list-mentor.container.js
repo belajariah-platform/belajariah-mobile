@@ -20,7 +20,7 @@ import {Response} from '../../../../utils'
 import { Images, Color } from '../../../../assets'
 import styles from './class-list-mentor.style'
 
-const ClassListMentorQuran = ({params}) => {
+const ClassListMentorQuran = ({params, userClass}) => {
     const navigation = useNavigation()
     // const { DetailClass } = props.route.params
 
@@ -124,7 +124,7 @@ const ClassListMentorQuran = ({params}) => {
             <View key={index}>
                 <Card containerStyle={styles.cardStyle}>
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('ClassProfileMentorQuran', { DetailClass : params, instructor : item})
+                        navigation.navigate('ClassProfileMentorQuran', { DetailClass : params, instructor : item, UserClass : userClass})
                     }}>
                         <View style={styles.viewStyle}>
                             <Image source={item.Gender == 'Perempuan' ? 

@@ -22,7 +22,7 @@ import styles from './class-profile-mentor.style'
 
 const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
-    const { DetailClass, instructor } = props.route.params
+    const { DetailClass, instructor, UserClass } = props.route.params
    
     const [state, setState] = useState([])
     const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F`
@@ -165,7 +165,7 @@ const ClassProfileMentorQuran = (props) => {
                 <StudyInstructor />
                 <SystemInstructor />
             </ScrollView>
-            <BtnInstructor />
+          {UserClass && UserClass.length > 0 && <BtnInstructor />}
         </View> 
         </>
     )

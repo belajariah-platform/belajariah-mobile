@@ -33,7 +33,7 @@ const ClassListQuran = () => {
     const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
 
     const retryConnection = () => {
-      fetchDataClassQuran(dataState)
+        fetchDataClassQuran(dataState)
         setconnectStatus(!connectStatus)
     }
 
@@ -44,9 +44,9 @@ const ClassListQuran = () => {
         })
     }
 
-    const onRefreshing = () => {
-        setRefreshing(true)
-        fetchDataClassQuran(dataState)
+    const onRefreshing = async () => {
+        await setRefreshing(true)
+        await fetchDataClassQuran(dataState)
         setRefreshing(false)
     }
 
@@ -116,20 +116,17 @@ const ClassListQuran = () => {
                 {DetailClass : item})} >
                 <Card
                     containerStyle={styles.cardStyle}>
-                    <Image source={item.class_image == '' ?
-                        Images.ImgDefault4  : { uri : item.class_image }}
-                        style={styles.imageStyle} />
-                    {/* <View style={styles.viewStyle}>
+                    <View style={styles.viewStyle}>
                         <Image source={item.class_image == '' ?
                         Images.ImgDefault4  : { uri : item.class_image }}
                         style={styles.imageStyle}/>
-                        <View style={styles.containerDesc}>
+                        {/* <View style={styles.containerDesc}>
                             <Text style={styles.textStyle}>{item.class_name}</Text>
                             <Text style={styles.description}>
                                 {item.class_description.substring(0, 70)} ...
                             </Text>
-                        </View>
-                    </View> */}
+                        </View> */}
+                    </View>
                 </Card>
             </TouchableOpacity>
         )

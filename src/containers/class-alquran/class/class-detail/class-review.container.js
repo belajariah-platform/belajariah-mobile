@@ -34,7 +34,6 @@ const ClassReviewQuran = ({ params }) => {
   const [rate, setRate] = useState(0)
   const [count, setCount] = useState(0)
   const [state, setState] = useState([])
-  const [comment, setComment] = useState('')
   const [loading, setLoading] = useState(false)
   const [valueRating, setValuetRating] = useState(0)
   const [connectStatus, setconnectStatus] = useState(false)
@@ -46,29 +45,29 @@ const ClassReviewQuran = ({ params }) => {
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {
     setconnectStatus(!connectStatus)
-    fetchDataRating(dataState, params.Code)
+    fetchDataRating(dataState, params.code)
   }
 
   const FormRating = useFormik({
     initialValues: { 
+        rating: 0,
+        comment: '',
         user_code: userInfo.Code,
-        Class_Code: params.code,
-        Rating: valueRating,
-        Comment: comment,
+        class_code: params.code,
     },
-    onSubmit: async (form) => {
+    onSubmit: async (values) => {
       try {
         setLoading(true)
-        const values = {
-          Rating : valueRating,
-          Comment : comment,
-          Class_Code : params.code,
-          User_Code : userInfo.Code,
+        const data = {
+          rating : values.rating,
+          comment : values.comment,
+          class_code : values.class_code,
+          user_code : values.user_code,
+          modified_date: moment(new Date()).format('YYYY-MM-DD[T]HH:mm:[00].[000Z]')
         }
-        const response = await RatingAPI.InsertRatingClass(values)
-        // console.log(response, "Hai Re")
-        // console.log(values)
-        if (response.data.result) {
+
+        const response = await RatingAPI.InsertRatingQuran(data)
+        if (response && response.data.message.result) {
             Alerts(true, 'Terima kasih telah memberikan rating dan ulasan')
             setModalVisibleEnd(false)
         } else {
@@ -76,14 +75,11 @@ const ClassReviewQuran = ({ params }) => {
         }
       }
       catch (err) {
-          // console.log(err, 'Hai error')
           setLoading(false)
           return err
       }
     },
   })
-
-  // console.log(FormRating.values)
 
   const fetchDataRating = async (state, code) => {
     try {
@@ -129,11 +125,11 @@ const ClassReviewQuran = ({ params }) => {
             <TouchableOpacity
               activeOpacity={0.5}
               key={index}
-              onPress={() => setValuetRating(item)}>
+              onPress={() => FormRating.setFieldValue('rating', item)}>
               <Image
                 style={styles.starImageStyle}
                 source={
-                  item <= valueRating
+                  item <= FormRating.values['rating']
                     ? Images.BintangFull
                     : Images.BintangBorder
                 }
@@ -200,13 +196,13 @@ const ClassReviewQuran = ({ params }) => {
               multiline={true}
               numberOfLines={5}
               style={styles.textArea}
-              onChangeText={(e) => setComment(e)}
               placeholder='Catatan untuk kelas ini'
+              onChangeText={(e) => FormRating.setFieldValue('comment', e)}
             />
           </View>
           <View style={styles.containerRating}>
               <Buttons title='Kirim'
-                style={styles.StyleBtn2} 
+                style={{...styles.StyleBtn2, backgroundColor:  params.color_path}} 
                 textStyle={styles.StyleTxt2}
                 onPress={FormRating.handleSubmit}/>
             </View>
@@ -219,7 +215,7 @@ const ClassReviewQuran = ({ params }) => {
         <View style={styles.header}>
           <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
-            <Text style={styles.rating}>{rate > 0 ? rate/state.length : 0}</Text>
+            <Text style={{...styles.rating, backgroundColor :  params.color_path}}>{rate > 0 ? rate/state.length : 0}</Text>
             <Text style={styles.textBold}>{`Dari ${state.length} ulasan`}</Text>
           </View>
         </View>

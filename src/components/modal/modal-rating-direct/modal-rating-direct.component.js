@@ -85,12 +85,7 @@ const ModalRatingDirect = (props) => {
             onBackButtonPress={props.backButtonPress}
         >
             <View style={styles.modalStyle}>
-              {/* <Image
-                resizeMode='cover'
-                source={Images.HeaderModalDirect}
-                style={styles.BackroundImgModal}
-              /> */}
-              
+
               <View style={styles.modalContentSyle}>
                   {ReviewClass()}
               </View>
