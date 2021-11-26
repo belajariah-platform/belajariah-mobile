@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import {
+    Alerts,
     SVGIcon,
     Buttons,
 } from '../../../../components'
@@ -150,8 +151,8 @@ const ClassProfileMentorQuran = (props) => {
                         textStyle={[styles.TxtButton, { marginLeft: 10, marginTop: 5 }]}
                         onPress={() => {
                             userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
-                            : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar')
-                                : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar')
+                            : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
+                                : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
                                     : DirectWA()
                         }}
                     />
