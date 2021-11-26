@@ -83,7 +83,7 @@ const Login = (props) => {
     GoogleSignin.configure({
       offlineAccess: true,
       forceCodeForRefreshToken: true,
-      scopes: [`${Config.GOOGLE_SCOPES}`],
+      // scopes: [`${Config.GOOGLE_SCOPES}`],
       webClientId: `${Config.GOOGLE_CLIENT}`,
     })
   }, [])
@@ -101,7 +101,7 @@ const Login = (props) => {
         }
         setLoading(true)
         const response = await UserAPI.GoogleSignIn(values)
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.result) {
           await dispatch({
             type: SIGN_IN,
