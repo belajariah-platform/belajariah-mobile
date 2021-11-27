@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useSelector} from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
@@ -13,6 +14,7 @@ import {
 } from 'react-native'
 
 import {
+    Alerts,
     SVGIcon,
     Buttons,
 } from '../../../../components'
@@ -22,8 +24,8 @@ import styles from './class-profile-mentor.style'
 
 const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
+    const { userInfo } = useSelector((state) => state.UserReducer)
     const { DetailClass, instructor, UserClass } = props.route.params
-   
     const [state, setState] = useState([])
     const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F`
 
@@ -148,7 +150,10 @@ const ClassProfileMentorQuran = (props) => {
                         title={'Chat Pengajar'}
                         textStyle={[styles.TxtButton, { marginLeft: 10, marginTop: 5 }]}
                         onPress={() => {
-                             DirectWA()
+                            userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
+                            : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
+                                : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
+                                    : DirectWA()
                         }}
                     />
             </View>
