@@ -291,7 +291,6 @@ const ProfileEdit = () => {
     )
   }
 
-
   useEffect(() => {
     const backAction = () => {
       if(openCamera && !pictureTaken) {
@@ -306,6 +305,7 @@ const ProfileEdit = () => {
         return true
       }
     }
+
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction
@@ -326,9 +326,9 @@ const ProfileEdit = () => {
                     <Avatar
                       activeOpacity={1}
                       style={styles.avatar}
-                      onPress={() =>  setModalVisible(true)}
-                      source={userInfo.Image_Filename == '' ?
-                        Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
+                      // onPress={() =>  setModalVisible(true)}
+                      source={userInfo.Image_Profile == '' ?
+                        Images.ImageProfileDefault : { uri : userInfo.Image_Profile }}
                     />
                   </ImageBackground>
                   <Text style={styles.containerTitleAvatar}>

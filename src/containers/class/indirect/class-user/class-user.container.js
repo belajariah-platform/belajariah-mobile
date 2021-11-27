@@ -74,12 +74,12 @@ const ClassUser = (props) => {
     setconnectStatus(!connectStatus)
   }
 
-  const fetchDataUserClass = async ({ skip, take, filterString, sort }) => {
+  const fetchDataUserClass = async () => {
     try {
-      const response = await UserClassAPI.GetAllUserClass(skip, take, filterString, sort)
+      const response = await UserClassAPI.GetAllUserClassQuran([])
       if (response.status === Response.SUCCESS) {
-        setState(response.data.data)
-        setCount(response.data.count)
+        setState(response.data.message.data)
+        setCount(response.data.message.count)
       } else {
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
@@ -376,14 +376,14 @@ const ClassUser = (props) => {
                   ListFooterComponent={renderFooter}
                   onEndReached={(e) => onLoadMore(e)}
                   showsVerticalScrollIndicator ={false}
-                  contentContainerStyle={{ paddingBottom: 122 }}
+                  contentContainerStyle={{ paddingBottom: 122, marginTop: 15 }}
                   keyExtractor={(item, index) =>  index.toString()}
                   refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
                   renderItem={({ item, index }) => (
                     <View key={index}>
-                      <CardUserDirosa />
+                      {/* <CardUserDirosa /> */}
                       <View style={styles.containerClassProgress}>
-                        <Images.IconStepStart.default />
+                        {/* <Images.IconStepStart.default />
                         {item.Status == 'In Progress' ||
                         item.Status == 'Completed' ? (
                             <Images.IconLine.default style={styles.iconTop}/> ) : (
@@ -401,7 +401,7 @@ const ClassUser = (props) => {
                         {item.Status == 'Completed' ? (
                           <Images.IconStepFinish.default /> ) : (
                           <Images.IconStepFinishHide.default />
-                        )}
+                        )} */}
                       </View>
                       <View style={{ bottom: 20 }}>
                         <ImageBackground
@@ -412,23 +412,34 @@ const ClassUser = (props) => {
                           <View style={styles.containerIconProgress}>
                             <Image
                               source={item.Class_Image == '' ?
-                                Images.ImgDefault5  : { uri : item.Class_Image }}
+                                Images.ImgDefault5  : { uri : item.class_image }}
                               style={styles.ImageClass}/>
                               <View style={{ marginLeft: 10, }}>
-                                <Text style={styles.TextClass}>{item.Class_Name}</Text>
-                                <View style={{marginTop: 10,}}>
+                                <Text style={styles.TextClass}>{item.class_name}</Text>
+                                {/* <View style={{marginTop: 10,}}>
                                   <Text style={styles.testTextClass}>Nilai Ujian Awal : {item.Pre_Test_Scores}</Text>
                                   <Text style={styles.testTextClass}>Nilai Ujian Akhir : {item.Post_Test_Scores}</Text>
-                                </View>
+                                </View> */}
+
+                                <ButtonGradient
+                                  styles={styles.ButtonClass}
+                                  textStyle={styles.textButton}
+                                  title={'Lihat Pengajar'}
+                                  onPress = {
+                                     () => {
+                                        let codes = item.class_code
+                                        props.navigation.navigate('ClassListMentorQuran', 
+                                      { DetailClass : { ...item, code : codes}, UserClass : state})}
+                                  }
+                                />
                               </View>
-                            
                           </View>
                           {/* <View style={{ marginTop : -42, marginLeft: 3, }}>
                             <Text style={styles.testTextClass}>Nilai Ujian Awal : {item.Pre_Test_Scores}</Text>
                             <Text style={styles.testTextClass}>Nilai Ujian Akhir : {item.Post_Test_Scores}</Text>
                           </View> */}
                           <View style={[styles.containerIconProgress, styles.customIconProgress]}>
-                            {item.Status  == 'Completed' ? (
+                            {/* {item.Status  == 'Completed' ? (
                               <ButtonGradient
                                 title='Akses Video'
                                 textStyle={styles.textButton}
@@ -452,8 +463,8 @@ const ClassUser = (props) => {
                                 icon={<Images.IconDownload.default
                                   style={styles.iconClassCustomRight}/>}
                                 onPress = {() => printHTML(item)}/>
-                            ) : (
-                              <ButtonGradient
+                            ) : ( */}
+                              {/* <ButtonGradient
                                 styles={styles.ButtonClass}
                                 textStyle={styles.textButton}
                                 title={
@@ -463,8 +474,8 @@ const ClassUser = (props) => {
                               item.Status == 'In Progress' && item.progress != 100  ?
                                   () => props.navigation.navigate('ClassLearning', item) :
                                   item.Status == 'In Progress' && item.progress == 100 ?
-                                    () => updateProgressClass(item) : null}/>
-                            )}
+                                    () => updateProgressClass(item) : null}/> */}
+                            {/* )} */}
                           </View>
                         </ImageBackground>
                       </View>

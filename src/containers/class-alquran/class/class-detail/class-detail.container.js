@@ -28,8 +28,9 @@ const ClassDetailQuran = (props) => {
     
     const fetchDataUserClass = async () => {
         try {
-            setLoading(true)
-          const response = await UserClassAPI.GetAllUserClassQuran(DetailClass.code)
+          setLoading(true)
+          const filter = [{"field": "class_code", "type": "text", "value": `${DetailClass.code}`}]
+          const response = await UserClassAPI.GetAllUserClassQuran(filter)
           if (response.status === Response.SUCCESS) {
             setState(response.data.message.data)
           } else {
@@ -49,7 +50,7 @@ const ClassDetailQuran = (props) => {
 
     const Header = () => {
         return (
-            <View style={styles.containerHeaderProfile}>
+            <View style={{...styles.containerHeaderProfile, backgroundColor: DetailClass.color_path}}>
                 <ImageBackground source={{uri : DetailClass.class_image_header}} style={styles.HeaderClass}>
                     <View style={styles.flexHeader}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -99,7 +100,7 @@ const ClassDetailQuran = (props) => {
                     </Tab.Navigator>
                     <View style={styles.ViewButton}>
                         <Buttons 
-                            title={state && state.length == 0 ? 'Berlangganan Sekarang' : 'Temukan Guru Ngaji'} 
+                            title={state && state.length == 0 ? 'Daftar Kelas Sekarang' : 'Temukan Guru Ngaji'} 
                             style={{...
                                 styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
                             textStyle={{...styles.StyleTxtBtn, marginTop : state && state.length == 0 ?  5 : null}}

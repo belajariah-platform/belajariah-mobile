@@ -1,5 +1,4 @@
-import _, { flatMap } from 'lodash'
-import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
@@ -7,17 +6,16 @@ import { useNavigation } from '@react-navigation/native'
 import { 
     View,
     Image,
-    Linking,
     FlatList,
-    ScrollView,
     RefreshControl,
     TouchableOpacity,
 } from 'react-native'
 
-import {LoadingView,Searchbox} from '../../../../components'
 import {MentorAPI} from '../../../../api'
 import {Response} from '../../../../utils'
-import { Images, Color } from '../../../../assets'
+import { Images } from '../../../../assets'
+import {LoadingView,Searchbox} from '../../../../components'
+
 import styles from './class-list-mentor.style'
 
 const ClassListMentorQuran = (props) => {
@@ -48,15 +46,15 @@ const ClassListMentorQuran = (props) => {
           setloadingMentor(true)
           const response = await MentorAPI.GetAllMentor(skip, take, filterString)
           if (response.status === Response.SUCCESS) {
-            setStateMentor(response.data.data)
-          } 
-          setloadingMentor(false)
+              setStateMentor(response.data.data)
+            } 
+            setloadingMentor(false)
         } catch (err) {
-          setloadingMentor(false)
-          return err
+            setloadingMentor(false)
+            return err
         }
     }
-
+    
     useEffect(() => {
         const delay = setTimeout(() => {
             fetchDataMentor(dataState)
@@ -176,7 +174,7 @@ const ClassListMentorQuran = (props) => {
             <View style={styles.LoadingStyle}>
                 <LoadingView color='#fff' />
             </View> : 
-            SortMentor == 0 ? (<NoList />) :
+                 stateMentor.length == 0 || SortMentor == 0 ? (<NoList />) :
             <FlatList
                 data={SortMentor}
                 style={{ width:'100%' }}

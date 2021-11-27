@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     fontFamily : FontType.bold,
   },
   containerClassProgress : {
+    height:40,
     marginTop: 20,
     paddingTop: 12,
     alignItems:'center',
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#6e248d',
   },
   ButtonClass : {
-    width: 90,
+    width: 120,
     height: 35,
     borderRadius: 20,
     backgroundColor: '#6e248d',

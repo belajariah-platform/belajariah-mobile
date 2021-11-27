@@ -120,13 +120,14 @@ const Profile = () => {
         </TouchableOpacity>
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
+        {console.log(userInfo)}
         <Avatar
           size='large'
           activeOpacity={0.5}
           onPress={toggleModalFoto}
           containerStyle={styles.avatar}
-          source={userInfo.Image_Filename == '' ?
-            Images.ImageProfileDefault : { uri : userInfo.Image_Filename }}
+          source={userInfo.Image_Profile == '' ?
+            Images.ImageProfileDefault : { uri : userInfo.Image_Profile }}
         />
       </ImageBackground>
       <View style={styles.containerProfileHeader}>

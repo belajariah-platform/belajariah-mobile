@@ -3,6 +3,7 @@ import { Color, FontSize, FontType } from '../../../../assets'
 
 const styles = StyleSheet.create({
     containerHeaderProfile : {
+      marginBottom : -1,
       backgroundColor: '#13A98B',
     },
     flexHeaderInProfile: {

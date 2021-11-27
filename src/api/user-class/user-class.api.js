@@ -49,7 +49,7 @@ const UpdateProgressUserClass = async (formData) => {
   }
 }
 
-const GetAllUserClassQuran = async (code) =>  {
+const GetAllUserClassQuran = async (filter) =>  {
   try {
     const headers = await Header()
     const response = await axios.post(
@@ -57,8 +57,8 @@ const GetAllUserClassQuran = async (code) =>  {
     {
       Action:"GET_ALL_USER_CLASS_QURAN",
       query: {
-            filters: [{"field": "class_code", "type": "text", "value": `${code}`}],
-            orders: [{"field": "id", "dir": "asc"}],
+            filters: filter,
+            orders: [{"field": "id", "dir": "desc"}],
             skip: 0,
             take: 100
         }

@@ -1,9 +1,10 @@
+import qs from 'qs';
 import PropTypes from 'prop-types'
+import React from 'react'
 import { useSelector} from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
-import React, { useState, useEffect } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import {
     View,
     Image,
@@ -19,6 +20,7 @@ import {
     Buttons,
 } from '../../../../components'
 import { Images } from '../../../../assets'
+import { FormatRupiah } from '../../../../utils'
 
 import styles from './class-profile-mentor.style'
 
@@ -26,10 +28,9 @@ const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
     const { userInfo } = useSelector((state) => state.UserReducer)
     const { DetailClass, instructor, UserClass } = props.route.params
-    const [state, setState] = useState([])
     const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F`
 
-    const DirectWA = async () => {
+    const _sendWhatsapp = async () => {
         try {
             const supported = await Linking.canOpenURL(url)
             // console.log(supported)
@@ -39,6 +40,33 @@ const ClassProfileMentorQuran = (props) => {
               alert('')
             }
         } catch (error) {
+          return error
+        }
+    }
+
+
+    const _sendEmail = async () => {
+        try {
+            
+            let url = `mailto:${'herryheryanto22@gmail.com'}`
+            
+            const query = qs.stringify({
+                subject: 'Hello',
+                body: 'Test',
+                cc: 'herryheryanto22@gmail.com',
+                bcc: 'herryheryanto22@gmail.com'
+            });
+            
+            if (query.length) {
+                url += `?${query}`;
+            }
+            
+            const canOpen = await Linking.openURL(url);
+             if (!canOpen) {
+                console.log('Provided URL can not be handled');
+             }
+        } catch (error) {
+            console.log(error)
           return error
         }
     }
@@ -121,7 +149,34 @@ const ClassProfileMentorQuran = (props) => {
                         <View style={{marginRight: 16}}><SVGIcon.IconStudyMentor ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>Pendidikan</Text>
-                            {instructor.Mentor_Experience && instructor.Mentor_Experience.map((item, index) => {
+                            {instructor.Mentor_Experience && instructor.Mentor_Experience
+                                .filter((e) => e.Experience_Type == 'education')
+                                .map((item, index) => {
+                                return (
+                                    <View key={index} style={{flexDirection: 'row'}}>
+                                        <Text>❐ </Text>
+                                        <Text style={styles.TxtDescStudy}>{item.Experience}</Text>
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    </View>
+                </Card>
+            </View>
+        )
+    }
+
+    const AchievementInstructor = () => {
+        return (
+            <View>
+                <Card containerStyle={styles.cardStyleInstructor}>
+                    <View style={styles.ViewCard}>
+                        <View style={{marginRight: 16}}><SVGIcon.IconStudyMentor ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
+                        <View style={styles.ViewTxt}>
+                            <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>Prestasi</Text>
+                            {instructor.Mentor_Experience && instructor.Mentor_Experience
+                                .filter((e) => e.Experience_Type == 'achievement')
+                                .map((item, index) => {
                                 return (
                                     <View key={index} style={{flexDirection: 'row'}}>
                                         <Text>❐ </Text>
@@ -152,6 +207,25 @@ const ClassProfileMentorQuran = (props) => {
         )
     }
 
+    const TarifInstructor = () => {
+        return (
+            <View style={{marginBottom: 10,}}>
+                <Card containerStyle={styles.cardStyleInstructor}>
+                    <View style={styles.ViewCard}>
+                    <View style={{marginRight: 10}}><SVGIcon.IconTarif ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
+                        <View style={styles.ViewTxt}>
+                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Tarif Kelas</Text>
+                            <Text style={styles.TxtDescSystem}>{
+                                instructor.Minimum_Rate == 0 
+                                ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(instructor.Minimum_Rate)
+                                }</Text>
+                        </View>
+                    </View>
+                </Card>
+            </View>
+        )
+    }
+
     const BtnInstructor = () => {
         return (
             <View style={styles.ViewBtn}>
@@ -164,7 +238,7 @@ const ClassProfileMentorQuran = (props) => {
                             userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
                             : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
                                 : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
-                                    : DirectWA()
+                                    : instructor.Allow_Contact_From == 'email' ? _sendWhatsapp() : _sendWhatsapp()
                         }}
                     />
             </View>
@@ -179,7 +253,11 @@ const ClassProfileMentorQuran = (props) => {
                 <TitleInstructor />
                 <DescInstructor />
                 <StudyInstructor />
+                { instructor.Mentor_Experience && instructor.Mentor_Experience
+                .filter((e) => e.Experience_Type == 'achievement').length > 0 && 
+                <AchievementInstructor />}
                 <SystemInstructor />
+                <TarifInstructor />
             </ScrollView>
           {UserClass && UserClass.length > 0 && <BtnInstructor />}
         </View> 
