@@ -317,7 +317,11 @@ export default {
   IllustrasiProfileUstadzah : require('./IllustrasiProfileUstadzah.png'),
 
   //Class Profile Mentor
-  BackgroundMentor : require('./BackgroundMentor.png'),
+  BackgroundMentor : require('./BackgroundMentorDirosa.png'),
+  BackgroundMentorIqra : require('./BackgroundMentorIqra.png'),
+  BackgroundMentorTahsin : require('./BackgroundMentorTahsin.png'),
+  BackgroundMentorTahfidz : require('./BackgroundMentorTahfidz.png'),
+  BackgroundMentorTilawah : require('./BackgroundMentorTilawah.png'),
 
   //Modal Package Dirosa
   IconDouple : require('./IconDouple.png'),

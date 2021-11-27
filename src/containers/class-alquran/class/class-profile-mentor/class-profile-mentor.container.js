@@ -52,7 +52,7 @@ const ClassProfileMentorQuran = (props) => {
                 <Text style={styles.textTitleHeader}>Profile Pengajar</Text>
               </View>
             </View>
-            <View style={styles.semiBoxProfile} />
+            <View style={{...styles.semiBoxProfile, backgroundColor: DetailClass.color_path}} />
           </View>
         )
     }
@@ -60,7 +60,18 @@ const ClassProfileMentorQuran = (props) => {
     const TitleInstructor = () => {
         return (
             <View style={styles.ViewTitle}>
-                <ImageBackground source={Images.BackgroundMentor} style={styles.BackgroundImg}>
+                <ImageBackground source={
+                    DetailClass.class_initial == 'Dirosa' 
+                        ? Images.BackgroundMentor 
+                        : DetailClass.class_initial == 'Iqra' 
+                        ? Images.BackgroundMentorIqra
+                        : DetailClass.class_initial == 'Tahsin' 
+                        ? Images.BackgroundMentorTahsin
+                        : DetailClass.class_initial == 'Tilawah'
+                        ? Images.BackgroundMentorTilawah
+                        : 
+                        Images.BackgroundMentorTahfidz  
+                      } style={styles.BackgroundImg}>
                     <Image source={instructor.Gender == 'Perempuan' ? 
                         Images.IllustrasiProfileUstadzah : instructor.ImageProfile == '' ?
                         Images.IllustrasiProfileUstadz : { uri : instructor.ImageProfile } } 
