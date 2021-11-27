@@ -81,8 +81,8 @@ const ProfileEdit = () => {
               .substring(2, 20))
         const response = await UserAPI.UpdateProfile(values)
         if (response.data.result) {
-          Alerts(true, 'Profil berhasil diubah')
           fetchDataUser(userInfo.Email)
+          navigation.navigate('Profile', Alerts(true, 'Profil berhasil diubah')) 
         }
       } catch (error) {
         NetInfo.fetch().then(res => {

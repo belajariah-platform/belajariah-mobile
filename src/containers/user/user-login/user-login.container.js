@@ -83,7 +83,7 @@ const Login = (props) => {
     GoogleSignin.configure({
       offlineAccess: true,
       forceCodeForRefreshToken: true,
-      scopes: [`${Config.GOOGLE_SCOPES}`],
+      // scopes: [`${Config.GOOGLE_SCOPES}`],
       webClientId: `${Config.GOOGLE_CLIENT}`,
     })
   }, [])
