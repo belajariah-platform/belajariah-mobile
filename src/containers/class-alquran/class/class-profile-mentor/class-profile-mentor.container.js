@@ -214,7 +214,7 @@ const ClassProfileMentorQuran = (props) => {
                     <View style={styles.ViewCard}>
                     <View style={{marginRight: 10}}><SVGIcon.IconTarif ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
-                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Tarif Kelas</Text>
+                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Infaq Belajar</Text>
                             <Text style={styles.TxtDescSystem}>{
                                 instructor.Minimum_Rate == 0 
                                 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(instructor.Minimum_Rate)
