@@ -171,7 +171,7 @@ const ClassProfileMentorQuran = (props) => {
             <View>
                 <Card containerStyle={styles.cardStyleInstructor}>
                     <View style={styles.ViewCard}>
-                        <View style={{marginRight: 16}}><SVGIcon.IconStudyMentor ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
+                        <View style={{marginRight: 16}}><SVGIcon.IconAchievement ColorBg={DetailClass.color_path}/></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>Prestasi</Text>
                             {instructor.Mentor_Experience && instructor.Mentor_Experience
