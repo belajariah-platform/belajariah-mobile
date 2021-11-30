@@ -14,23 +14,21 @@ import styles from './class-detail-acc.style'
 const ClassDetailACC = (props) => {
     const navigation = useNavigation()
     const { detailACC } = props.route.params
+    
     const DataReg = [
         { value: 'Peserta mendaftar di halaman Al-Fatihah Coaching Clinic melalui Aplikasi Belajariah.'},
         { value: 'Peserta diwajibkan mengisi formulir pendaftaran.'},
-        { value: 'Setelah peserta mengisi formulir pendaftaran maka peserta menunggu sampai dihubungi oleh admin Belajariah dan dihubungkan dengan ustadz/ustadzah mentor.'},
+        { value: 'Setelah peserta mengisi formulir pendaftaran maka peserta menunggu sampai dihubungi oleh admin Belajariah dan di invite ke dalam grup chat.'},
         { value: 'Peserta akan dihubungi melalui Whatsapp atau Email.'},
-        { value: 'Setelah peserta terhubung dengan ustadz/ustadzah mentor maka peserta menyepakati waktu dimulanya program.'},
-        { value: 'Program dilaksanakan dengan satu kali pertemuan yang diikuti 4 peserta dalam 1 kelompok dan dibimbing oleh 1 orang ustadz/ustadzah.'},
+        { value: 'Program Alfatihah Coacing Clinic diadakan setiap 1 bulan sekali .'},
     ]
 
     const DataBenefit = [
         { val: 'Bacaan Alfatihahnya menjadi lebih baik'},
         { val: 'Berkesempatan mendapatkan pembinaan keislaman'},
         { val: 'Terjalin silaturahmi dengan peserta dan ustadz/ustadzah yang berasal dari berbagai wilayah di Indonesia'},
-        { val: 'Pada saat peserta sudah mendapatkan kelompok, maka kelompok tersebut mendapatkan voucer 50.000 yang dapat di gunakan untuk mengakses kelas Dirosa paket Famili (4 Peserta).'},
+        { val: 'Berkesempatan mendapatkan Diskon pendaftaran belajar Al-Qur’an di Belajariah.'},
     ]
-
-    // console.log(detailACC)
 
     const Header = () => {
         return (
@@ -53,7 +51,7 @@ const ClassDetailACC = (props) => {
             <View>
                 <Card containerStyle={styles.cardStyle}>
                     <Text style={styles.TxtTitleDesc}>Deskripsi Progaram (ACC)</Text>
-                    <Text style={styles.TxtDesc}>Al-Fatihah Coaching Clinic (ACC) Merupakan Program Coaching bacaan Al-Fatihah secara privat yang langsung dibimbing oleh ustadz/ustadzah yang berkompeten secara Online | Merupakan Program Coaching  bacaan Al-Fatihah secara privat yang langsung dibimbing oleh ustadz/ustadzah yang berkompeten secara Online. Merupakan Program Coaching bacaan Al-Fatihah secara privat yang langsung dibimbing oleh  ustadz/ustadzah yang berkompeten secara Online. </Text>
+                    <Text style={styles.TxtDesc}>Membaca surah Alfatihah merupakan rukun dalam shalat dan tidaklah sah shalatnya jika tidak membaca surah Al-Fatihah. Sebagai rukun shalat membaca alfatihah dengan benar tentu sangat penting karena akan mempengaruhi nilai dari shalat tersebut. Program Alfatihah Coaching Clinic (ACC) merupakan pelatihan memperbaiki dan menyempurnakan bacaan Al-Fatihah baik dari segi pengucapan (makhroj) dan hukum bacaan (Tajwid) yang di bimbing oleh seorang ustadz yang berkompeten dan berpengalaman. Program ini sangat direkomendasikan untuk diikuti karena proses memperbaiki bacaan Al-Fatihahnya langsung dibimbing oleh ustadz mentor secara online melalui video call. Program Alfatihah Coaching Clinic (ACC) dapat diikuti oleh setiap orang dengan gratis tanpa biaya.</Text>
                 </Card>
             </View>
         )

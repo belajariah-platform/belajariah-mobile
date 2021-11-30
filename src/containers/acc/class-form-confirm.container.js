@@ -19,7 +19,7 @@ const ClassFormConfirmACC = (props) => {
     const [loading, setLoading] = useState(false)
     const [modalVisibleEnd, setModalVisibleEnd] = useState(true)
     const toggleModalEnd = () => setModalVisibleEnd(!modalVisibleEnd)
-    const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu%27alaikum%20Admin%20Belajariah.%0ASaya%20telah%20mendaftar%20pada%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)'
+    const url = 'https://api.whatsapp.com/send?phone=6281273206582&text=Assalamu%27alaikum%20Admin%20Belajariah.%0ASaya%20telah%20mendaftar%20pada%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)'
 
     const FormWA = useFormik({
         initialValues: {
