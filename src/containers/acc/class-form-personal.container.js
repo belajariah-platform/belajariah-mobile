@@ -19,12 +19,12 @@ const ClassFormPersonalACC = (props) => {
     const { detailACC } = props.route.params
     const { userInfo } = useSelector((state) => state.UserReducer)
 
-    const [selectedIndex, setSelectedIndex] = useState(1)
+    const [selectedIndex, setSelectedIndex] = useState()
     const FormPersonal = useFormik({
         initialValues: { 
             user_code: userInfo.Code,
             cp_code: detailACC.code,
-            fullname: '', gender: 'Laki-laki', email: '', 
+            fullname: '', gender: '', email: '', 
             wa_no: '', age: '', address: '', profession: ''},
         validationSchema: Yup.object({
             fullname: Yup.string()
@@ -89,15 +89,22 @@ const ClassFormPersonalACC = (props) => {
                             customStyle={styles.StyleInputB}
                         />
                         <Text style={styles.containerText}>Jenis Kelamin</Text>
-                        <RadioGroup
+                        {/* <RadioGroup
                             style={styles.containerRadio}
                             selectedIndex={FormPersonal
                             .values['gender'] != 'Laki-laki' ? 1 : 0}
                             onChange={(e) => FormPersonal
                             .setFieldValue('gender', e == 0 ?
                                 'Laki-laki' : 'Perempuan'
-                            )}
-                            >
+                        )}> */}
+                        <RadioGroup
+                            style={styles.containerRadio}
+                            selectedIndex={selectedIndex}
+                            onChange={index => {
+                                setSelectedIndex(index)
+                                FormPersonal.setFieldValue('gender', 
+                                    index == 0 ? 'Laki-laki' : 'Perempuan')
+                            }}>
                             <Radio style={styles.containerInputRadio}>Laki-laki</Radio>
                             <Radio style={styles.containerInputRadio}>Perempuan</Radio>
                         </RadioGroup>

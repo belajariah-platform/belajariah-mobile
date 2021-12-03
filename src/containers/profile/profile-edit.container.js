@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useFormik } from 'formik'
 import RNFetchBlob from 'rn-fetch-blob'
 import { RNCamera } from 'react-native-camera'
@@ -58,6 +59,8 @@ const ProfileEdit = () => {
     setconnectStatus(!connectStatus)
   }
 
+  // console.log(moment(new Date()).format('LL'))
+
   const FormPersonal = useFormik({
     initialValues: {
       User_Code : userInfo.Code,
@@ -66,7 +69,7 @@ const ProfileEdit = () => {
       Phone: userInfo.Phone == 0 ? '' :
         userInfo.Phone,
       Gender: userInfo.Gender,
-      Birth: userInfo.Birth || new Date(),
+      Birth: new Date(),
       Province: userInfo.Province,
       City: userInfo.City,
       Address: userInfo.Address,
@@ -391,7 +394,7 @@ const ProfileEdit = () => {
                       accessoryRight={CalendarIcon}
                       style={styles.datePickerInput}
                       controlStyle={styles.datePickerControl}
-                      date={new Date(FormPersonal.values['Birth'])}
+                      date={new Date()}
                     />
                   </TouchableOpacity>
                   <Text style={styles.containerText}>Provinsi</Text>
@@ -432,7 +435,7 @@ const ProfileEdit = () => {
         mode='date'
         titleBtn='Atur Tanggal'
         isVisible={modalDateVisible}
-        date={new Date(userInfo.Birth)}
+        date={new Date()}
         backdropPress={() => toggleModalDate()}
         dateChange={(e) => FormPersonal.setFieldValue('Birth', e)}
       />

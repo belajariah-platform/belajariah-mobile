@@ -23,8 +23,8 @@ const ClassFormOtherACC = (props) => {
     const [loading, setLoading] = useState(false)
     // const [question_6, setquestion_6] = useState('')
     const [selectedIndex, setSelectedIndex] = useState(0)
-    const [selectedIndexRadio, setSelectedIndexRadio] = useState(0)
-    const [selectedIndexRadioTW, setSelectedIndexRadioTW] = useState(0)
+    const [selectedIndexRadio, setSelectedIndexRadio] = useState()
+    const [selectedIndexRadioTW, setSelectedIndexRadioTW] = useState()
 
     const DataNgaji = [
         { value: 'Iqra 1 - 3'}, { value: 'Iqra 4 - 6'}, { value: 'Al-Qur’an'}, { value: 'Lainnya'},
@@ -236,7 +236,7 @@ const ClassFormOtherACC = (props) => {
         <View style={styles.flexFull}>
             <Header />
             <ScrollView>
-                <FormBody />
+                {FormBody()}
             </ScrollView>
         </View>
     )

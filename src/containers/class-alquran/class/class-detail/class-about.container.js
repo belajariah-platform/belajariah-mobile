@@ -154,7 +154,7 @@ const ClassAbout = ({ params }) => {
 
   const TermsCondition = () => {
     return (
-      <Card containerStyle={styles.containerDesc}>
+      <Card containerStyle={styles.containerTOS}>
         <Text style={styles.textBold}>Syarat dan Ketentuan</Text>
         {params.term_condition.length > 0 && params.term_condition.map((val, index) => {
           let icon = Images.IconPackageTahsin3
@@ -164,7 +164,7 @@ const ClassAbout = ({ params }) => {
                 <View style={{marginHorizontal: 8}}>
               <SVGIcon.IconTerms color={params.color_path} />
                 </View>
-                <Text style={{ ...styles.textRegular, top :2 }}>
+                <Text style={{ ...styles.textRegularTOS, top :2 }}>
                   {val.description.split('|')[0]}
                 </Text>
               </View>

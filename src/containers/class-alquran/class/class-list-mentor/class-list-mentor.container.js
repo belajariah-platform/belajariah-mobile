@@ -174,7 +174,7 @@ const ClassListMentorQuran = (props) => {
             <View style={styles.LoadingStyle}>
                 <LoadingView color='#fff' />
             </View> : 
-                 stateMentor.length == 0 || SortMentor == 0 ? (<NoList />) :
+                 SortMentor.length == 0 || SortMentor == 0 ? (<NoList />) :
             <FlatList
                 data={SortMentor}
                 style={{ width:'100%' }}

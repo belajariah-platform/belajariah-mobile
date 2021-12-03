@@ -16,7 +16,7 @@ import {
 
 import {LoadingView,Searchbox} from '../../../../components'
 import {MentorAPI} from '../../../../api'
-import {Response} from '../../../../utils'
+import {Response, FormatRupiah} from '../../../../utils'
 import { Images, Color } from '../../../../assets'
 import styles from './class-list-mentor.style'
 
@@ -144,6 +144,9 @@ const ClassListMentorQuran = ({params, userClass}) => {
                                 <Text style={{...styles.textStyleCity, color: params.color_path}}>
                                     Asal {item.City}
                                 </Text>
+                                <View style={styles.ViewTarif}>
+                                    <Text style={{...styles.textStylePrice, color: params.color_path}}>Infaq Belajar : {item.Minimum_Rate == 0 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(item.Minimum_Rate)}</Text>
+                                </View>
                                 {/* <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>
                                     <Images.Star.default />
