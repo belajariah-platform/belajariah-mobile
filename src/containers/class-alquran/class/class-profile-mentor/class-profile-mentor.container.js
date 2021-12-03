@@ -28,8 +28,7 @@ const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
     const { userInfo } = useSelector((state) => state.UserReducer)
     const { DetailClass, instructor, UserClass } = props.route.params
-    const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20admin%2C%20saya%20tidak%20menemukan%20guru%20ngaji%20yang%20cocok%20dengan%20jadwal%20saya%2C%20bisa%20dibantu%3F`
-
+    const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20Ustadz%2FUstadzah%2C%20Saya%20ingin%20Belajar`
     const _sendWhatsapp = async () => {
         try {
             const supported = await Linking.canOpenURL(url)
