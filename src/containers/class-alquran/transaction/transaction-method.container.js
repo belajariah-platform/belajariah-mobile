@@ -75,10 +75,15 @@ const TransactionMethodQuran = (props) => {
     const FormVoucher = useFormik({
         initialValues: {
           Promo_Code: '',
-          Class_Code : DetailClass.Code,
+          Class_Code : DetailClass.code,
         },
         onSubmit:  (values) => {
-            claimVoucherCode(values)
+            const data = {
+              code : "",
+              class_code : values.Class_Code,
+              promo_code : values.Promo_Code
+            }
+            claimVoucherCode(data)
         },
     })
 
@@ -86,14 +91,15 @@ const TransactionMethodQuran = (props) => {
         try {
           const response = await PromotionAPI.ClaimPromotion(values)
           if (response.status === Response.SUCCESS) {
-            if (response.data.data.Discount == 0) {
-              Alerts(false, response.data.message)
+            if (response.data.message.data.discount == 0) {
+              Alerts(false, response.data.message.message)
             } else {
               const value =  FormCheckout.values['Total_Transfer']
               setModalVisible(false)
-              FormCheckout.setFieldValue('Total_Transfer',
-                value - (value * response.data.data.Discount/100))
-                setIsClaim(true)
+              FormCheckout.setFieldValue('Total_Transfer', value - (value * response.data.message.data.discount/100))
+              FormCheckout.setFieldValue('Promo_Code', response.data.message.data.code)
+              setIsClaim(true)
+              ToastAndroid.show('Kode promo berhasil digunakan', ToastAndroid.SHORT)
             }
           } else {
             NetInfo.fetch().then(res => {

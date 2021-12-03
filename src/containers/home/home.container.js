@@ -162,11 +162,12 @@ const Home = (props) => {
       }
   }
 
-  const fetchDataPromotion = async ({ skip, take, filterString }) => {
+  const fetchDataPromotion = async ({ filterString }) => {
     try {
-      const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
+      filterString = []
+      const response = await PromotionAPI.GetAllPromotionHeader(filterString)
       if (response.status === Response.SUCCESS) {
-        setStatePromotion(response.data.data)
+        setStatePromotion(response.data.message.data)
       } else {
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
@@ -252,19 +253,19 @@ const Home = (props) => {
         {statePromotion.length > 0  ? (
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
+            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.promo_code })}>
             <Image
               style={styles.cardCustom}
-              source={item.Image_Banner == '' ? Images.ImgDefault5 : {
-                uri : item.Image_Banner  }}
+              source={item.image_banner == '' ? Images.ImgDefault5 : {
+                uri : item.image_banner  }}
               resizeMode='cover'
             />
           </TouchableOpacity>
         ) : (
           <Image
             style={styles.cardCustom}
-            source={{ uri: item.Image_Banner ?
-              item.Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
+            source={{ uri: item.image_banner ?
+              item.image_banner : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
           />
         )}
       </View>
