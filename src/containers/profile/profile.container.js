@@ -120,7 +120,7 @@ const Profile = () => {
         </TouchableOpacity>
       </View>
       <ImageBackground source={Images.AvatarBorder} style={styles.avatarBorder}>
-        {console.log(userInfo)}
+        {/* {console.log(userInfo)} */}
         <Avatar
           size='large'
           activeOpacity={0.5}

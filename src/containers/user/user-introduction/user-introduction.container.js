@@ -19,7 +19,7 @@ const Introduction = (props) => {
   const [animationSignup, setAnimation] = useState(null)
 
   const onIndexChanged = (index) => {
-    if (index == 3) {
+    if (index == 2) {
       setAnimation('flipInX')
       setShow(true)
     } else {
@@ -42,29 +42,29 @@ const Introduction = (props) => {
           Sebelumnya
         </Text>
       }>
-      <IntroPage
+      {/* <IntroPage
         imageType={Images.Intro1}
         titles='Pengajar yang Berkompeten'
         description='Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya'
-      />
+      /> */}
       <IntroPage
         imageType={Images.Intro2}
-        titles="Belajar Alqur'an Jadi Lebih Mudah"
-        description='Diajarkan oleh ustadz/ustadzah yang berpengalaman serta profesional dibidangnya'
+        titles="Pengajar Berkompeten"
+        description='Anda akan diajarkan oleh Ustadz/Ustadzah yang berpengalaman dan berkompeten'
       />
       <IntroPage
         imageType={Images.Intro3}
-        titles='Mendapatkan Pembinaan Berkelanjutan'
-        description='Memiliki media konsultasi secara langsung dengan ustadz/ustadzah pengajar (personal konsultasi, webinar dan grup chat)'
+        titles='Tersedia berbagai pilihan kelas Al-Qur’an'
+        description='Anda akan di ajar oleh Ustadz/Ustadzah di berbagai kelas Al-Qur’an seperti kelas Iqra’, Dirosa, Tahsin, Tilawah dan Tahfidz'
       />
       <View style={styles.slide}>
         <View style={styles.header}>
           <Image source={Images.Intro4} style={styles.image} />
         </View>
         <View style={styles.footer}>
-          <Text style={styles.title1}>Sertifikat Penilaian Hasil Belajarmu</Text>
+          <Text style={styles.title1}>Bonus Materi keislaman</Text>
           <Text style={styles.title2}>
-          Mendapatkan sertifikat nilai dan evaluasi hasil belajarmu untuk semua member
+          Selain belajar Al-Qur’an ustadz/ustadzah akan memberikan materi seputar keislaman lainnya disela-sela belajar
           </Text>
           <View>
             {show ? (

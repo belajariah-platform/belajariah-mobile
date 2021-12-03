@@ -188,6 +188,10 @@ const styles = StyleSheet.create({
   iconBackProfile: {
     marginTop: 0,
   },
+  ViewNoRegis: {
+    marginTop: '50%',
+    alignItems: 'center',
+  }
 })
 
 export default styles

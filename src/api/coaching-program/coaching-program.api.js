@@ -57,7 +57,33 @@ const ConfirmFormACC = async (formData) =>  {
   }
 }
 
+const GetACCUser = async (skip, take, filters) =>  {
+  try {
+    const response = await axios.post(`
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/coaching_program`,
+    {
+      "Action":"GET_ALL_COACHING_PROGRAM",
+        "query": {
+            "filters": [],
+            "skip": 0,
+            "orders": [
+                    {
+                        "field": "id",
+                        "dir": "asc"
+                    }
+                ],
+            "take": 100
+        }
+    },
+    Header())
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
 export default {
+    GetACCUser,
     GetACCDetail,
     InsertFormACC,
     ConfirmFormACC,

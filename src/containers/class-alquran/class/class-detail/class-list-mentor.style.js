@@ -105,8 +105,9 @@ const styles = StyleSheet.create({
       fontSize: FontSize.smallPoint,
     },
     textStylePrice: {
+      marginRight: 40,
       fontFamily: FontType.regular,
-      fontSize: FontSize.smallMedium,
+      fontSize: FontSize.smallPoint,
     },
     iconFilter: {
       marginRight : 16,
@@ -193,8 +194,6 @@ const styles = StyleSheet.create({
     },
     ViewTarif : {
       marginTop: 8,
-      alignItems: 'center',
-      flexDirection: 'row',
     }
   })
   

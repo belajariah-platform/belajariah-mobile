@@ -36,6 +36,13 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginVertical: 16,
   },
+  containerTOS: {
+    height:'auto',
+    // paddingRight: 20,
+    borderWidth: 0,
+    borderRadius: 12,
+    marginVertical: 16,
+  },
   containerTopics: {
     padding: 0,
     borderWidth: 0,
@@ -82,6 +89,14 @@ const styles = StyleSheet.create({
   },
   textRegular: {
     lineHeight : 15,
+    color: Color.black,
+    textAlign: 'justify',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  textRegularTOS: {
+    lineHeight : 15,
+    marginRight: 40,
     color: Color.black,
     textAlign: 'justify',
     fontFamily: FontType.regular,
