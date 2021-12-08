@@ -183,7 +183,15 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: FontSize.large,
       fontFamily: FontType.semiBold,
-    }
+    },
+    ViewTarif : {
+      marginTop: 8,
+    },
+    textStylePrice: {
+      marginRight: 40,
+      fontFamily: FontType.regular,
+      fontSize: FontSize.smallPoint,
+    },
   })
   
   export default styles

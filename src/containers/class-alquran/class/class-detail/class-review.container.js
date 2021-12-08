@@ -29,7 +29,7 @@ import {
 
 import styles from './class-review.style'
 
-const ClassReviewQuran = ({ params }) => {
+const ClassReviewQuran = ({ params, userClass }) => {
   const maxRating = [1, 2, 3, 4, 5]
   const [rate, setRate] = useState(0)
   const [count, setCount] = useState(0)
@@ -155,6 +155,7 @@ const ClassReviewQuran = ({ params }) => {
         {rating.map((val, index) => {
           return <View key={index}>{val}</View>
         })}
+        <Text style={styles.textRating}>{num.toFixed(1)}</Text>
       </View>
     )
   }
@@ -171,6 +172,8 @@ const ClassReviewQuran = ({ params }) => {
       </View>
     )
   }
+
+  const SUMRating = rate > 0 ? rate/state.length : 0
 
   return (
     <>
@@ -215,7 +218,7 @@ const ClassReviewQuran = ({ params }) => {
         <View style={styles.header}>
           <Text style={styles.textBold}>Ulasan</Text>
           <View style={styles.flexRow}>
-            <Text style={{...styles.rating, backgroundColor :  params.color_path}}>{rate > 0 ? rate/state.length : 0}</Text>
+            <Text style={{...styles.rating, backgroundColor :  params.color_path}}>{SUMRating.toFixed(1)}</Text>
             <Text style={styles.textBold}>{`Dari ${state.length} ulasan`}</Text>
           </View>
         </View>
@@ -242,7 +245,7 @@ const ClassReviewQuran = ({ params }) => {
           </View>
         </View>
       </Card>
-      <ViewFormRating />
+      {userClass && userClass.length > 0 ? <ViewFormRating /> : null}
     </ScrollView>
     </>
   )

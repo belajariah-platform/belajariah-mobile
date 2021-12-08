@@ -94,7 +94,7 @@ const ClassDetailQuran = (props) => {
                         <Tab.Screen
                             name='ClassReviewQuran'
                             options={{ title: 'Ulasan' }}>
-                            {() => <ClassReviewQuran params={DetailClass}/>}
+                            {() => <ClassReviewQuran params={DetailClass} userClass={state}/>}
                         </Tab.Screen>
 
                     </Tab.Navigator>

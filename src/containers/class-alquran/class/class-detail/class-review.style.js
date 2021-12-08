@@ -124,6 +124,13 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
     fontFamily: FontType.bold,
   },
+  textRating: {
+    bottom: 2,
+    marginLeft: 8,
+    color: Color.black,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.bold,
+  },
 })
 
 export default styles

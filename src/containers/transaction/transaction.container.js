@@ -178,7 +178,7 @@ const Transaction = () => {
     ) : null
   }
 
-  const NoTransaction = () => {
+  const NoTransaction = (item, index) => {
     return (
       <View style={styles.containerNoTransaction}>
         <Images.NoTransaction.default />
@@ -309,7 +309,13 @@ const Transaction = () => {
               loadingStyle={{ marginTop : -100 }}
             /> :
             state.length == 0 ?
-              <NoTransaction /> :
+              <FlatList
+                ListEmptyComponent={<NoTransaction />}
+                style={styles.containerScrollView}
+                contentContainerStyle={{ paddingBottom: 122 }}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+              /> 
+            :
               <FlatList
                 data={state}
                 onEndReachedThreshold={0.1}
