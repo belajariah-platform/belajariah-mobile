@@ -12,8 +12,8 @@ import {
 } from 'react-native'
 
 import {MentorAPI} from '../../../../api'
-import {Response} from '../../../../utils'
 import { Images } from '../../../../assets'
+import {Response, FormatRupiah} from '../../../../utils'
 import {LoadingView,Searchbox} from '../../../../components'
 
 import styles from './class-list-mentor.style'
@@ -142,6 +142,9 @@ const ClassListMentorQuran = (props) => {
                                 <Text style={{...styles.textStyleCity, color: DetailClass.color_path}}>
                                     Asal {item.City}
                                 </Text>
+                                <View style={styles.ViewTarif}>
+                                    <Text style={{...styles.textStylePrice, color: DetailClass.color_path}}>Infaq Belajar/jam : {item.Minimum_Rate == 0 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(item.Minimum_Rate)}</Text>
+                                </View>
                                 {/* <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>
                                     <Images.Star.default />

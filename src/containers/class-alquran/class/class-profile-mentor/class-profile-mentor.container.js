@@ -28,7 +28,9 @@ const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
     const { userInfo } = useSelector((state) => state.UserReducer)
     const { DetailClass, instructor, UserClass } = props.route.params
-    const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20Ustadz%2FUstadzah%2C%20Saya%20ingin%20Belajar`
+    
+    const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20warahmatullahi%20wabarakatuh..%0APerkenalkan%20Ustadz%2FUstadzah%2C%20saya%0ANama%20%3A%20${userInfo.Full_Name}%20%0ADomisili%20%3A%20${userInfo.City}%0AKelas%20%3A%20${DetailClass.class_initial}%0AMemilih%20ustadz%2Fustadzah%20dari%20aplikasi%20Belajariah%20sebagai%20pengajar%20saya%F0%9F%98%8A`
+    
     const _sendWhatsapp = async () => {
         try {
             const supported = await Linking.canOpenURL(url)
@@ -130,7 +132,7 @@ const ClassProfileMentorQuran = (props) => {
                         <View style={{marginRight: 6}}><SVGIcon.IconDescMentor ColorBg={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
                             <Text style={{...styles.TxttitleCard, color: DetailClass.color_path}}>
-                                Deskripsi dan Pengalaman Mengajar Dirosa
+                                Deskripsi dan Pengalaman Mengajar
                             </Text>
                             <Text style={styles.TxtDescCard}>{instructor.Description}</Text>
                         </View>
@@ -213,7 +215,7 @@ const ClassProfileMentorQuran = (props) => {
                     <View style={styles.ViewCard}>
                     <View style={{marginRight: 10}}><SVGIcon.IconTarif ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
-                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Infaq Belajar</Text>
+                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Infaq Belajar/jam</Text>
                             <Text style={styles.TxtDescSystem}>{
                                 instructor.Minimum_Rate == 0 
                                 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(instructor.Minimum_Rate)

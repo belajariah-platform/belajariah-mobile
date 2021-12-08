@@ -145,7 +145,7 @@ const ClassListMentorQuran = ({params, userClass}) => {
                                     Asal {item.City}
                                 </Text>
                                 <View style={styles.ViewTarif}>
-                                    <Text style={{...styles.textStylePrice, color: params.color_path}}>Infaq Belajar : {item.Minimum_Rate == 0 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(item.Minimum_Rate)}</Text>
+                                    <Text style={{...styles.textStylePrice, color: params.color_path}}>Infaq Belajar/jam : {item.Minimum_Rate == 0 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(item.Minimum_Rate)}</Text>
                                 </View>
                                 {/* <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>

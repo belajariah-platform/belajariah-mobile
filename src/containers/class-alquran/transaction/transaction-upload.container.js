@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
+import { useSelector} from 'react-redux'
 import { Text } from '@ui-kitten/components'
 import NetInfo from '@react-native-community/netinfo'
 import { useNavigation } from '@react-navigation/native'
@@ -36,7 +37,8 @@ const TransactionUploadQuran = (props) => {
     const [dataImage, setDataImage] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
     const [connectStatus, setconnectStatus] = useState(false)
-    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29`
+    const { userInfo } = useSelector((state) => state.UserReducer)
+    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu%27alaikum%20warahmatullahi%20wabarakatuh..%20%0A%0APerkenalkan%20Admin%20Belajariah%2C%20saya%0ANama%20%3A%20${userInfo.Full_Name}%0ADomisili%20%3A%20${userInfo.City}%0AKelas%20%3A%20${item.Class_Initial}%0AIngin%20mengirim%20bukti%20transfer%20biaya%20Pendaftaran%20kelas%20Belajariah%F0%9F%98%8A`
     const toggleModal = () => setModalVisible(!modalVisible)
     const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
     const retryConnection = () => {
