@@ -19,15 +19,16 @@ import {MentorAPI} from '../../../../api'
 import {Response, FormatRupiah} from '../../../../utils'
 import { Images, Color } from '../../../../assets'
 import styles from './class-list-mentor.style'
+import { take } from 'lodash-es'
 
 const ClassListMentorQuran = ({params, userClass}) => {
     const navigation = useNavigation()
     // const { DetailClass } = props.route.params
-
+    const [count, setCount] = useState(0)
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${params.code}"}]` })
+    const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${params.code}"}]` })
 
     const onDataStateChange = (event) => {
         setDataState({
@@ -43,12 +44,22 @@ const ClassListMentorQuran = ({params, userClass}) => {
         setRefreshing(false)
     }
 
+    const onLoadMore = (e) => {
+        if (dataState.take < count && e.distanceFromEnd >= 0) {
+          setDataState({
+            ...dataState,
+            take : dataState.take + 10
+          })
+        }
+    }
+
     const fetchDataMentor = async ({ skip, take, filterString }) => {
         try {
           setloadingMentor(true)
           const response = await MentorAPI.GetAllMentor(skip, take, filterString)
           if (response.status === Response.SUCCESS) {
             setStateMentor(response.data.data)
+            setCount(response.data.count)
           } 
           setloadingMentor(false)
         } catch (err) {
@@ -127,10 +138,10 @@ const ClassListMentorQuran = ({params, userClass}) => {
                         navigation.navigate('ClassProfileMentorQuran', { DetailClass : params, instructor : item, UserClass : userClass})
                     }}>
                         <View style={styles.viewStyle}>
-                            <Image source={item.Gender == 'Perempuan' ? 
-                                Images.IllustrasiProfileUstadzah : item.ImageProfile == '' ?
-                                Images.IllustrasiProfileUstadz : { uri : item.ImageProfile } }
-                                style={styles.imageStyle}
+                            <Image source={item.ImageProfile !== '' 
+                            ? { uri : item.ImageProfile } : item.Gender == 'Perempuan'
+                            ? Images.IllustrasiProfileUstadzah : Images.IllustrasiProfileUstadz}
+                            style={styles.imageStyle}
                             />
                             <View style={styles.containerDesc}>
                                 <View style={styles.ViewTop}>
@@ -185,7 +196,7 @@ const ClassListMentorQuran = ({params, userClass}) => {
                 style={{ width:'100%' }}
                 onEndReachedThreshold={0.1}
                 ListFooterComponent={renderFooter}
-                // onEndReached={(e) => onLoadMore(e)}
+                onEndReached={(e) => onLoadMore(e)}
                 showsVerticalScrollIndicator ={false}
                 contentContainerStyle={{ paddingBottom: 20 }}
                 keyExtractor={(item, index) =>  index.toString()}

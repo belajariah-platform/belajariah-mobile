@@ -103,9 +103,9 @@ const ClassProfileMentorQuran = (props) => {
                         : 
                         Images.BackgroundMentorTahfidz  
                       } style={styles.BackgroundImg}>
-                    <Image source={instructor.Gender == 'Perempuan' ? 
-                        Images.IllustrasiProfileUstadzah : instructor.ImageProfile == '' ?
-                        Images.IllustrasiProfileUstadz : { uri : instructor.ImageProfile } } 
+                    <Image source={item.ImageProfile !== '' 
+                        ? { uri : item.ImageProfile } : item.Gender == 'Perempuan'
+                        ? Images.IllustrasiProfileUstadzah : Images.IllustrasiProfileUstadz}
                         style={styles.imageStyleInstructor}
                     />
                 </ImageBackground>

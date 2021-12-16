@@ -82,8 +82,8 @@ const Login = (props) => {
     askPermission()
     GoogleSignin.configure({
       offlineAccess: true,
-      forceCodeForRefreshToken: true,
-      // scopes: [`${Config.GOOGLE_SCOPES}`],
+      // forceCodeForRefreshToken: true,
+      // scopes: [`${Config.GOOGLE_SCOPES}`], //Permission untuk akses google drive user
       webClientId: `${Config.GOOGLE_CLIENT}`,
     })
   }, [])
