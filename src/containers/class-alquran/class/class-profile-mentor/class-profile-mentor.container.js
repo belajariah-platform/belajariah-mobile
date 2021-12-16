@@ -28,8 +28,8 @@ const ClassProfileMentorQuran = (props) => {
     const navigation = useNavigation()
     const { userInfo } = useSelector((state) => state.UserReducer)
     const { DetailClass, instructor, UserClass } = props.route.params
-    
-    const url = `https://api.whatsapp.com/send?phone=62${instructor.Phone}&text=Assalamu%27alaikum%20warahmatullahi%20wabarakatuh..%0APerkenalkan%20Ustadz%2FUstadzah%2C%20saya%0ANama%20%3A%20${userInfo.Full_Name}%20%0ADomisili%20%3A%20${userInfo.City}%0AKelas%20%3A%20${DetailClass.class_initial}%0AMemilih%20ustadz%2Fustadzah%20dari%20aplikasi%20Belajariah%20sebagai%20pengajar%20saya%F0%9F%98%8A`
+
+    const url = `https://api.whatsapp.com/send?phone=${instructor.Country_Number_Code}${instructor.Phone}&text=Assalamu%27alaikum%20warahmatullahi%20wabarakatuh..%0APerkenalkan%20Ustadz%2FUstadzah%2C%20saya%0ANama%20%3A%20${userInfo.Full_Name}%20%0ADomisili%20%3A%20${userInfo.City}%0AKelas%20%3A%20${DetailClass.class_initial}%0AMemilih%20ustadz%2Fustadzah%20dari%20aplikasi%20Belajariah%20sebagai%20pengajar%20saya%F0%9F%98%8A`
     
     const _sendWhatsapp = async () => {
         try {

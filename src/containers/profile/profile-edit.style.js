@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     position: 'relative',
     marginHorizontal: 30,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     backgroundColor: '#fff',
   },
   containerViewBottom: {
@@ -195,8 +195,42 @@ const styles = StyleSheet.create({
     fontFamily : FontType.regular,
     fontSize : FontSize.smallMedium,
   },
+  inputCountry : {
+    height: 40,
+    width: '40%', 
+    borderWidth: 1, 
+    marginRight: 10,
+    borderRadius:20, 
+    alignItems: 'center',
+    justifyContent: 'center', 
+    borderColor: Color.greyInput, 
+  },
+  textCountry : {
+    color: Color.greyInput,
+    fontFamily : FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  containerCountry : {
+    width:'80%', 
+    alignItems:'center', 
+    alignSelf: 'center',
+    flexDirection:'row', 
+    justifyContent:'space-between', 
+  },
+  ImageFlag: {
+    width: 40,
+    height: 28,
+    resizeMode: 'stretch',
+  },
+  divider : {
+    height: 1, 
+    width: '80%', 
+    marginTop:10, 
+    alignSelf: 'center', 
+    backgroundColor: Color.greyMedium, 
+  },
   phoneOne : { width : '29%', marginRight : '2%' },
-  phoneTwo : { width : '100%' }
+  phoneTwo : { width : '60%' }
 })
 
 export { styles }

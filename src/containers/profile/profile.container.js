@@ -27,7 +27,7 @@ const Profile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
-
+console.log(userInfo)
   const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
@@ -139,7 +139,7 @@ const Profile = () => {
         {userInfo.Phone != 0 &&(
           <View style={styles.containerEmailPhone}>
             <Images.Phone.default width={18} style={styles.iconPhone} />
-            <Text style={styles.headerPhone}>+{userInfo.Phone}</Text>
+            <Text style={styles.headerPhone}>+{userInfo.Country_Number_Code}{userInfo.Phone}</Text>
           </View>
         )}
       </View>
