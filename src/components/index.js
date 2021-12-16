@@ -22,6 +22,7 @@ import TextView from './text-view'
 import Searchbox from './searchbox'
 import ImageView from './image-view'
 import Progressbar from './progressbar'
+import InputSelect from './Input-select'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
@@ -65,6 +66,7 @@ export {
   ChatAdmin,
   ChatMentor,
   ShimmerACC,
+  InputSelect,
   LoadingView,
   ModalRating,
   ModalRecord,

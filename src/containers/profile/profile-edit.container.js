@@ -17,6 +17,7 @@ import {
   View,
   Text,
   Image,
+  FlatList,
   ScrollView,
   BackHandler,
   ImageBackground,
@@ -25,9 +26,9 @@ import {
 
 import { Images } from '../../assets'
 import { Response } from '../../utils'
-import { USER_INFO } from  '../../action'
-import { UserAPI, UploaderAPI } from '../../api'
+import { USER_INFO } from  '../../action' 
 import { Alerts, ModalNoConnection } from '../../components'
+import { UserAPI, UploaderAPI, CountryCodeAPI } from '../../api'
 import { Buttons, TextBox, ModalInfo, ModalDate } from '../../components'
 
 import { styles } from './profile-edit.style'
@@ -40,6 +41,7 @@ const ProfileEdit = () => {
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
 
+  const [countryCode, setCountryCode] = useState([])
   const [dataCapture, setDataCapture] = useState({})
   const [openCamera, setOpenCamera] = useState(false)
   const [pictureTaken, setPictureTaken] = useState(false)
@@ -66,23 +68,35 @@ const ProfileEdit = () => {
       User_Code : userInfo.Code,
       Full_Name: userInfo.Full_Name,
       Profession: userInfo.Profession,
-      Phone: userInfo.Phone == 0 ? '' :
-        userInfo.Phone,
+      Phone: userInfo.Phone == 0 ? '' : userInfo.Phone,
       Gender: userInfo.Gender,
       Birth: new Date(),
       Province: userInfo.Province,
       City: userInfo.City,
       Address: userInfo.Address,
+      Country_Number_Code: userInfo.Country_Number_Code,
+      Number_Code: '',
     },
     onSubmit: async (values) => {
+      if (values.Phone.charAt(0) == '0') {
+        Alerts(false, 'Format nomor telepon tidak sesuai')
+      } else if (values.Phone.charAt(0) != '0' && values.Phone.length > 0 && values.Country_Number_Code == '') {
+        Alerts(false, 'Kode negara belum dipilih')
+      } else {
       try {
-        values.Phone = values.Phone == '' ? 0 :
-          userInfo.Phone == 0 ?
-            Number('62' + values.Phone) :
-            Number('62' + values.Phone
-              .toString()
-              .substring(2, 20))
-        const response = await UserAPI.UpdateProfile(values)
+        const data = {
+          User_Code : values.User_Code,
+          Full_Name : values.Full_Name,
+          Profession : values.Profession,
+          Phone: Number(values.Phone), 
+          Gender : values.Gender,
+          Birth: new Date(),
+          Province : values.Province,
+          City : values.City,
+          Address : values.Address,
+          Country_Number_Code: values.Country_Number_Code,
+        }
+        const response = await UserAPI.UpdateProfile(data)
         if (response.data.result) {
           fetchDataUser(userInfo.Email)
           navigation.navigate('Profile', Alerts(true, 'Profil berhasil diubah')) 
@@ -93,8 +107,21 @@ const ProfileEdit = () => {
         })
         return error
       }
-    },
+    }}
   })
+
+  const fetchDataCountryCode = async () => {
+    try {
+      const response = await CountryCodeAPI.GetAllCountryCode()
+      if (response.status === Response.SUCCESS) {
+        setCountryCode(response?.data?.message?.data ?? [])
+        response?.data?.message?.data 
+
+      } 
+    } catch (err) {
+      return err
+    }
+  }
 
   const fetchDataUser = async (email) => {
     try {
@@ -116,6 +143,7 @@ const ProfileEdit = () => {
 
   useEffect(() => {
     fetchDataUser(userInfo.Email)
+    fetchDataCountryCode()
   }, [])
 
   const filterText = (value) => {
@@ -294,6 +322,29 @@ const ProfileEdit = () => {
     )
   }
 
+  const dataCountryCode = props => {
+    return (
+     <TouchableOpacity 
+       style={{marginBottom: 20}} 
+       onPress={() => {
+          FormPersonal.setFieldValue('Number_Code', props.number_code)
+          FormPersonal.setFieldValue('Country_Number_Code', props.code)
+          setModalVisible(false)
+       }}
+       >
+       <View style={styles.containerCountry}>
+         <Image
+             source={{uri : props.flag}}
+             style={styles.ImageFlag}
+         />
+         <Text>{props.country}</Text>
+         <Text style={styles.textCountry}>+{props.number_code}</Text>
+       </View>
+         <View style={styles.divider}/>
+     </TouchableOpacity>
+   )
+ }
+
   useEffect(() => {
     const backAction = () => {
       if(openCamera && !pictureTaken) {
@@ -359,6 +410,20 @@ const ProfileEdit = () => {
                   />
                   <Text style={styles.containerText}>Nomor Telepon</Text>
                   <View style={{ flexDirection : 'row' }}>
+                      <TouchableOpacity 
+                        onPress={toggleModal} 
+                        style={styles.inputCountry}
+                      >
+                        <View>
+                          {FormPersonal.values['Number_Code'] == '' ? 
+                            <Text style={styles.textCountry}>Kode Negara</Text> 
+                            : 
+                            <View style={{flexDirection: 'row'}}>
+                             <Text style={styles.textCountry}>+{FormPersonal.values['Number_Code']}</Text> 
+                          </View>
+                          }
+                        </View>
+                    </TouchableOpacity>
                     <TextBox
                       name='Phone'
                       form={FormPersonal}
@@ -439,6 +504,25 @@ const ProfileEdit = () => {
         backdropPress={() => toggleModalDate()}
         dateChange={(e) => FormPersonal.setFieldValue('Birth', e)}
       />
+       <ModalInfo
+          isVisible={modalVisible}
+          containerStyle={{height:'70%'}}
+          backdropPress={() => toggleModal()}
+          backButtonPress={() => toggleModal()}
+          renderItem={
+            <View style={{paddingTop:40}}>
+               <FlatList
+                  data={countryCode}
+                  style={{ width:'100%' }}
+                  onEndReachedThreshold={0.1}
+                  showsVerticalScrollIndicator ={false}
+                  contentContainerStyle={{ paddingBottom: 20 }}
+                  keyExtractor={(item, index) =>  index.toString()}
+                  renderItem={({ item, index }) => dataCountryCode(item, index)}
+                />
+            </View>
+          }
+        />
     </>
   )
 }

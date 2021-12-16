@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
     fontFamily : FontType.regular,
     fontSize: FontSize.smallMedium,
   },
+  textCountry : {
+    color: Color.greyInput,
+    fontFamily : FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
   textCheckBox2: {
     color: Color.purpleText,
     fontFamily: FontType.regular,
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   phoneOne : { width : '24%', marginRight : '2%' },
-  phoneTwo : { width : '74%' },
+  phoneTwo : { width : '55%' },
   anotherLogin: {
     height: 50,
     padding: 9,
@@ -89,6 +94,11 @@ const styles = StyleSheet.create({
     height: 32,
     resizeMode: 'stretch',
   },
+  ImageFlag: {
+    width: 40,
+    height: 28,
+    resizeMode: 'stretch',
+  },
   TxtGoogleButton: {
     marginRight: 5,
     marginLeft: 15,
@@ -101,6 +111,30 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     color: Color.greyHintText,
   },
+  containerCountry : {
+    width:'80%', 
+    alignItems:'center', 
+    alignSelf: 'center',
+    flexDirection:'row', 
+    justifyContent:'space-between', 
+  },
+  divider : {
+    height: 1, 
+    width: '80%', 
+    marginTop:10, 
+    alignSelf: 'center', 
+    backgroundColor: Color.greyMedium, 
+  },
+  inputCountry : {
+    height: 40,
+    width: '40%', 
+    borderWidth: 1, 
+    marginRight: 10,
+    borderRadius:20, 
+    alignItems: 'center',
+    justifyContent: 'center', 
+    borderColor: Color.greyInput, 
+  }
 })
 
 export { styles }
