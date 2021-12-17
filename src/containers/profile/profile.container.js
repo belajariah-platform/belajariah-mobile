@@ -27,7 +27,6 @@ const Profile = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { userInfo } = useSelector((state) => state.UserReducer)
-console.log(userInfo)
   const [connectStatus, setconnectStatus] = useState(false)
   const [isModalFotoVisible, setModalFotoVisible] = useState(false)
 
