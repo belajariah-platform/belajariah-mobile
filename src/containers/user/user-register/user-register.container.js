@@ -212,7 +212,7 @@ const Register = (props) => {
     askPermission()
     GoogleSignin.configure({
       offlineAccess: true,
-      forceCodeForRefreshToken: true,
+      // forceCodeForRefreshToken: true,
       // scopes: [`${Config.GOOGLE_SCOPES}`],
       webClientId: `${Config.GOOGLE_CLIENT}`,
     })

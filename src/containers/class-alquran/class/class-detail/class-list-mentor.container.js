@@ -1,8 +1,9 @@
-import _, { flatMap } from 'lodash'
 import PropTypes from 'prop-types'
+import _, { flatMap } from 'lodash'
 import { Text } from '@ui-kitten/components'
 import { Card } from 'react-native-elements'
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { 
     View,
@@ -14,20 +15,29 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-import {LoadingView,Searchbox} from '../../../../components'
-import {MentorAPI} from '../../../../api'
-import {Response, FormatRupiah} from '../../../../utils'
+import {
+    MENTOR_SUCC,
+    MENTOR_FAIL,
+    MENTOR_LOAD_SCROLL
+} from '../../../../action'
+
+import { MentorAPI } from '../../../../api'
 import { Images, Color } from '../../../../assets'
+import { Response, FormatRupiah } from '../../../../utils'
+import { LoadingView, Searchbox } from '../../../../components'
+
 import styles from './class-list-mentor.style'
 
 const ClassListMentorQuran = ({params, userClass}) => {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
     // const { DetailClass } = props.route.params
-
+    const [count, setCount] = useState(0)
     const [stateMentor, setStateMentor] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [loadingMentor, setloadingMentor] = useState(true)
-    const [dataState, setDataState] = useState({ skip: 0, take: 1000, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${params.code}"}]` })
+    const { loadingScroll } = useSelector((state) => state.MentorReducer)
+    const [dataState, setDataState] = useState({ skip: 0, take: 10, filter: [], filterString: `[{"type": "text", "field" : "class_code", "value": "${params.code}"}]` })
 
     const onDataStateChange = (event) => {
         setDataState({
@@ -43,16 +53,29 @@ const ClassListMentorQuran = ({params, userClass}) => {
         setRefreshing(false)
     }
 
+    const onLoadMore = (e) => {
+        if (dataState.take < count && e.distanceFromEnd >= 0) {
+            dispatch({ type: MENTOR_LOAD_SCROLL})
+            setDataState({
+                ...dataState,
+                take : dataState.take + 10
+          })
+        }
+    }
+
     const fetchDataMentor = async ({ skip, take, filterString }) => {
         try {
           setloadingMentor(true)
           const response = await MentorAPI.GetAllMentor(skip, take, filterString)
           if (response.status === Response.SUCCESS) {
             setStateMentor(response.data.data)
+            setCount(response.data.count)
           } 
           setloadingMentor(false)
+          dispatch({ type: MENTOR_SUCC })
         } catch (err) {
           setloadingMentor(false)
+          dispatch({ type: MENTOR_FAIL })
           return err
         }
     }
@@ -65,11 +88,11 @@ const ClassListMentorQuran = ({params, userClass}) => {
     }, [dataState])
 
     const renderFooter = () => {
-        return loadingMentor ? (
+        return loadingScroll ? (
           <View style={styles.indicatorContainer}>
             <LoadingView
               size={30}
-              color='#fff'/>
+              color={params.color_path} />
           </View>
         ) : null
     }
@@ -127,10 +150,10 @@ const ClassListMentorQuran = ({params, userClass}) => {
                         navigation.navigate('ClassProfileMentorQuran', { DetailClass : params, instructor : item, UserClass : userClass})
                     }}>
                         <View style={styles.viewStyle}>
-                            <Image source={item.Gender == 'Perempuan' ? 
-                                Images.IllustrasiProfileUstadzah : item.ImageProfile == '' ?
-                                Images.IllustrasiProfileUstadz : { uri : item.ImageProfile } }
-                                style={styles.imageStyle}
+                            <Image source={item.ImageProfile !== '' 
+                            ? { uri : item.ImageProfile } : item.Gender == 'Perempuan'
+                            ? Images.IllustrasiProfileUstadzah : Images.IllustrasiProfileUstadz}
+                            style={styles.imageStyle}
                             />
                             <View style={styles.containerDesc}>
                                 <View style={styles.ViewTop}>
@@ -175,22 +198,23 @@ const ClassListMentorQuran = ({params, userClass}) => {
                     )}
                 />
             </View>
-            {loadingMentor ? 
-            <View style={styles.LoadingStyle}>
-                <LoadingView color='#fff' />
-            </View> : 
-            SortMentor == 0 ? (<NoList />) :
-            <FlatList
-                data={SortMentor}
-                style={{ width:'100%' }}
-                onEndReachedThreshold={0.1}
-                ListFooterComponent={renderFooter}
-                // onEndReached={(e) => onLoadMore(e)}
-                showsVerticalScrollIndicator ={false}
-                contentContainerStyle={{ paddingBottom: 20 }}
-                keyExtractor={(item, index) =>  index.toString()}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
-                renderItem={({ item, index }) => CardList(item, index)}/>
+            {loadingMentor && !loadingScroll ? 
+                <View style={styles.LoadingStyle}>
+                    <LoadingView color={params.color_path} />
+                </View> : 
+                SortMentor == 0 ? (<NoList />) :
+                <FlatList
+                    data={SortMentor}
+                    style={{ width:'100%' }}
+                    onEndReachedThreshold={0.1}
+                    ListFooterComponent={renderFooter}
+                    onEndReached={(e) => onLoadMore(e)}
+                    showsVerticalScrollIndicator ={false}
+                    contentContainerStyle={{ paddingBottom: 20 }}
+                    keyExtractor={(item, index) =>  index.toString()}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+                    renderItem={({ item, index }) => CardList(item, index)}
+                />
             }
         </View>
         </> 
