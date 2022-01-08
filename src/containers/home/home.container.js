@@ -11,6 +11,7 @@ import {
   EnumAPI,
   ClassAPI,
   StoryAPI,
+  EventAPI,
   PackageAPI,
   PromotionAPI,
   ClassQuranAPI,
@@ -68,6 +69,7 @@ const Home = (props) => {
   const [statePackage, setStatePackage] = useState([])
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
+  const [stateClassIntens, setStateClassIntens] = useState([])
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
   const [loadingACC, setloadingACC] = useState(true)
@@ -75,6 +77,7 @@ const Home = (props) => {
   const [loadingStory, setloadingStory] = useState(true)
   const [loadingPackage, setloadingPackage] = useState(true)
   const [loadingCategory, setloadingCategory] = useState(true)
+  const [loadingClassIntens, setloadingClassIntens] = useState(true)
 
   const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
@@ -123,25 +126,6 @@ const Home = (props) => {
       return err
     }
   }
-
-  // const fetchDataClass = async ({ skip, take, filterString }) => {
-  //   try {
-  //     setloadingClass(true)
-  //     filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
-  //     const response = await ClassAPI.GetAllClass(skip, take, filterString)
-  //     if (response.status === Response.SUCCESS) {
-  //       setStateClass(response.data.data)
-  //     } else {
-  //       NetInfo.fetch().then(res => {
-  //         setconnectStatus(!res.isConnected)
-  //       })
-  //     }
-  //     setloadingClass(false)
-  //   } catch (err) {
-  //     setloadingClass(false)
-  //     return err
-  //   }
-  // }
 
     const fetchDataClass = async ({ skip, take, filterString }) => {
       try {
@@ -196,6 +180,25 @@ const Home = (props) => {
     }
   }
 
+    // const fetchDataClass = async ({ skip, take, filterString }) => {
+  //   try {
+  //     setloadingClass(true)
+  //     filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
+  //     const response = await ClassAPI.GetAllClass(skip, take, filterString)
+  //     if (response.status === Response.SUCCESS) {
+  //       setStateClass(response.data.data)
+  //     } else {
+  //       NetInfo.fetch().then(res => {
+  //         setconnectStatus(!res.isConnected)
+  //       })
+  //     }
+  //     setloadingClass(false)
+  //   } catch (err) {
+  //     setloadingClass(false)
+  //     return err
+  //   }
+  // }
+
   const fetchDataCategory = async ({ skip, take, filterString }) => {
     try {
       setloadingCategory(true)
@@ -235,12 +238,28 @@ const Home = (props) => {
     }
   }
 
+  const fetchDataClassIntens = async ({ skip, take, filterString }) => {
+    try {
+      setloadingClassIntens(true)
+      filterString=[]
+      const response = await EventAPI.GetAllEvent(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+          setStateClassIntens(response.data.message.data[0])
+      } 
+      setloadingClassIntens(false)
+    } catch (err) {
+      setloadingClassIntens(false)
+      return err
+    }
+  }
+
   const _getData = async () => {
     await fetchDataPromotion(dataState)
     await fetchDataCategory(dataState)
     await fetchDataACC(dataState)
     await fetchDataClass(dataState)
     await fetchDataStory(dataState)
+    await fetchDataClassIntens(dataState)
   }
 
   useEffect(() => {
@@ -423,6 +442,22 @@ const Home = (props) => {
       </View>
     )
   }
+
+  
+  const ClassIntensHome = () => {
+    return (
+      <View>
+        <Text style={styles.textTitle}>Program TKMA</Text>
+        <Text style={styles.textSubtitle}>Pendaftaran Tes Kemampuan Membaca Al-Quran Siswa</Text>
+        <TouchableOpacity activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('EventClassIntens', {detailClassIntens : stateClassIntens})}>
+          <View style={styles.cardClassQuran}>
+          <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateClassIntens.event_image}} style={styles.ImgCustomACC} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
   
   const AlquranHome = () => {
     return (
@@ -560,6 +595,11 @@ const Home = (props) => {
                   }
                   
                   <ClassQuranHome />
+
+                  {loadingClassIntens ?
+                    ShimmerACC() :
+                    <ClassIntensHome /> 
+                  }
 
                   <AlquranHome />
 

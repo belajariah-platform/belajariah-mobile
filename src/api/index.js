@@ -1,6 +1,7 @@
 import TestAPI from './test'
 import EnumAPI from './enum'
 import UserAPI from './user'
+import EventAPI from './event'
 import StoryAPI from './story'
 import ClassAPI from './class'
 import QuranAPI from './alquran'
@@ -25,6 +26,7 @@ export {
   UserAPI,
   TestAPI,
   EnumAPI,
+  EventAPI,
   QuranAPI,
   StoryAPI,
   ClassAPI,

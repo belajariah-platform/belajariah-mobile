@@ -1,61 +1,27 @@
 import PropTypes from 'prop-types'
-import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { Text} from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
 import { View, TouchableOpacity, Linking} from 'react-native'
 
-import { Images } from '../../assets'
-import { Buttons, ModalInfo } from '../../components'
-import { CoachingProgramAPI, Config } from '../../api'
+import { Config } from '../../../api'
+import { Images } from '../../../assets'
+import { Buttons, ModalInfo } from '../../../components'
 
-import styles from './class-form-confirm.style'
+import styles from './event-class-intens.style'
 
-const ClassFormConfirmACC = (props) => {
+const EventClassIntensConfirm = (props) => {
     const navigation = useNavigation()
-    const { FormPerson, FormPersonalOther, modified } = props.route.params
-    const [loading, setLoading] = useState(false)
     const [modalVisibleEnd, setModalVisibleEnd] = useState(true)
     const toggleModalEnd = () => setModalVisibleEnd(!modalVisibleEnd)
-    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu%27alaikum%20Admin%20Belajariah.%0ASaya%20telah%20mendaftar%20pada%20program%20Al-Fatihah%20Coaching%20Clinic%20(ACC)`
-
-    const FormWA = useFormik({
-        initialValues: {
-            user_code : FormPerson.user_code,
-            email : FormPerson.email,
-            modified_date : modified
-        },
-        onSubmit: async  (values, form) => {
-            try {
-                setLoading(true)
-                const data = {
-                    "user_code" : FormWA.values['user_code'],
-                    "email" : FormWA.values['email'],
-                    "modified_date" : modified
-                }
-                // console.log(data)
-                const response = await CoachingProgramAPI.ConfirmFormACC(data)
-                if (response && response.data && response.data.message.result) {
-                    setLoading(false)
-                    DirectWA(values)
-                    navigation.navigate('UserMain')
-                } else {
-                    form.resetForm()
-                    setLoading(false)
-                }
-            }
-            catch (err) {
-                setLoading(false)
-                return err
-            }
-        },
-    })
+    const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu%27alaikum%20Admin%20Belajariah.%0ASaya%20telah%20mendaftar%20pada%20program%20Tes%20Kemampuan%20Membaca%20Al-Quran`
     
-    const DirectWA = async (values) => {
+    const DirectWA = async () => {
         try {
             const supported = await Linking.canOpenURL(url)
             if(supported) {
               await Linking.openURL(url)
+              await navigation.navigate('UserMain')
             } else {
               alert('')
             }
@@ -66,7 +32,7 @@ const ClassFormConfirmACC = (props) => {
     
     return (
         <>
-        <View style={styles.flexFull}>
+        <View style={styles.flexFullBg}>
             <View style={styles.ViewIcon}>
                 <Images.IconChecklist.default width={116} height={98} />
                 <Text style={styles.TxtIcon}>Berhasil</Text>
@@ -87,10 +53,10 @@ const ClassFormConfirmACC = (props) => {
                         </Text>
                         <View style={styles.ViewTxtTouch}>
                             <Text style={styles.TxtMod}>
-                                ACC. Data anda berhasil dikirim, klik 
+                                TKMA. Data anda berhasil dikirim, klik 
                             </Text>
                             <TouchableOpacity activeOpacity={0.5} style={styles.ViewTouch}
-                                onPress={FormWA.handleSubmit}
+                                onPress={DirectWA}
                             >
                                 <Text style={styles.TxtModBld}> disini</Text>
                             </TouchableOpacity>
@@ -101,7 +67,7 @@ const ClassFormConfirmACC = (props) => {
                         title='Konfirmasi' 
                         style={styles.StyleBtn} 
                         textStyle={styles.StyleTxtBtn}
-                        onPress={FormWA.handleSubmit}
+                        onPress={DirectWA}
                     />
                 </View>
             }
@@ -110,9 +76,9 @@ const ClassFormConfirmACC = (props) => {
     )
 }
 
-ClassFormConfirmACC.propTypes = {
+EventClassIntensConfirm.propTypes = {
     route: PropTypes.object,
     instructor: PropTypes.object,
 }
 
-export default ClassFormConfirmACC
+export default EventClassIntensConfirm

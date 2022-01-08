@@ -21,8 +21,8 @@ import {
     LoadingView,
 } from '../../../../components'
 
+import { Images } from '../../../../assets'
 import { Response } from '../../../../utils'
-import { Images, Color } from '../../../../assets'
 import { MentorAPI, Config } from '../../../../api'
 
 import styles from './class-list-mentor.style'

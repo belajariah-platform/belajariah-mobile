@@ -23,6 +23,7 @@ import {
   ClassUserDirect,
   InspiratifStory,
   TransactionInfo,
+  EventClassIntens,
   ClassDetailQuran,
   UserNotification,
   ClassTrialDirect, 
@@ -45,6 +46,7 @@ import {
   TransactionUploadQuran,
   TransactionConfirmQuran,
   ClassProfileMentorQuran,
+  EventClassIntensConfirm,
 } from '../../../containers'
 import UserMain from '../user-main'
 
@@ -81,6 +83,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='UserNotification' component={UserNotification} />
       <Stack.Screen name='ClassTrialDirect' component={ClassTrialDirect} />
       <Stack.Screen name='ClassDetailQuran' component={ClassDetailQuran} />
+      <Stack.Screen name='EventClassIntens' component={EventClassIntens} />
       <Stack.Screen name='ClassFormOtherACC' component={ClassFormOtherACC} />
       <Stack.Screen name='ClassReviewMentor' component={ClassReviewMentor} />
       <Stack.Screen name='ClassDetailDirect' component={ClassDetailDirect} />
@@ -100,6 +103,7 @@ const UserPrivateNavigation = () => {
       <Stack.Screen name='TransactionUploadQuran' component={TransactionUploadQuran} />
       <Stack.Screen name='TransactionConfirmQuran' component={TransactionConfirmQuran} />
       <Stack.Screen name='ClassProfileMentorQuran' component={ClassProfileMentorQuran} />
+      <Stack.Screen name='EventClassIntensConfirm' component={EventClassIntensConfirm} />
     </Stack.Navigator>
   )
 }

@@ -78,6 +78,10 @@ import {
   UserVerifyPassword, 
 } from './user'
 
+import { 
+  EventClassIntens,
+  EventClassIntensConfirm
+} from './event'
 
 export {
   Home,
@@ -120,6 +124,7 @@ export {
   AdminInstructor,
   ConfirmPassword,
   TransactionInfo,
+  EventClassIntens,
   ClassExamDirect, 
   ClassUserDirect,
   AdminTransaction,
@@ -150,5 +155,6 @@ export {
   AdminProfileInstructor,
   TransactionUploadQuran,
   TransactionConfirmQuran,
+  EventClassIntensConfirm,
   ClassProfileMentorQuran,
 }

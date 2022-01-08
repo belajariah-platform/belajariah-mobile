@@ -147,7 +147,7 @@ const ClassListMentorQuran = (props) => {
                     }}>
                         <View style={styles.viewStyle}>
                             <Image source={item.ImageProfile !== '' 
-                                ? { uri : item.ImageProfile } : item.Gender == 'Perempuan'
+                                ? { uri : item.ImageProfile } : item.Gender == 'Perempuan' && item.ImageProfile == ''
                                 ? Images.IllustrasiProfileUstadzah : Images.IllustrasiProfileUstadz}
                                 style={styles.imageStyle}
                             />
