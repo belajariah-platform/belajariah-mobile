@@ -451,8 +451,8 @@ const Home = (props) => {
         <Text style={styles.textSubtitle}>Pendaftaran Tes Kemampuan Membaca Al-Quran Siswa</Text>
         <TouchableOpacity activeOpacity={0.5}
           onPress={() => props.navigation.navigate('EventClassIntens', {detailClassIntens : stateClassIntens})}>
-          <View style={styles.cardClassQuran}>
-          <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateClassIntens.event_image}} style={styles.ImgCustomACC} />
+          <View style={styles.CardClassIntens}>
+          <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateClassIntens.event_image}} style={styles.ImgCardIntens} />
           </View>
         </TouchableOpacity>
       </View>

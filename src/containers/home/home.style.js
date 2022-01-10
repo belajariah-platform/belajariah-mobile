@@ -361,19 +361,29 @@ const styles = StyleSheet.create({
     // borderTopRightRadius: 20,
     // borderBottomLeftRadius: 20,
   },
-  CardClassQuran: {
-    height: 160,
-    elevation: 2,
+  CardClassIntens: {
     width: '100%',
+    height: 'auto',
+    elevation: 3,
     borderWidth: 0,
     borderRadius: 20,
     marginVertical: 8,
     shadowRadius: 2.22,
     shadowColor: '#000',
     shadowOpacity: 0.22,
-    backgroundColor : Color.greyMedium,
+    backgroundColor : Color.white,
     shadowOffset: { width: 0, height: 1 },
-  }
+  },
+  ImgCardIntens: {
+    height: 130,
+    width: '100%',
+    maxWidth: '100%',
+    borderRadius: 20,
+    resizeMode: 'cover',
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
+    // borderBottomLeftRadius: 20,
+  },
 })
 
 export { styles }
