@@ -38,7 +38,7 @@ import { Response, FormatRupiah } from '../../../utils'
 import styles from './transaction-method.style'
 
 const TransactionMethodQuran = (props) => {
-    const { DetailClass, instructor} = props.route.params
+    const { DetailClass, instructor, packages} = props.route.params
     const navigation = useNavigation()
     const toggleModal = () => setModalVisible(!modalVisible)
     const { userInfo } = useSelector((state) => state.UserReducer)
@@ -116,10 +116,10 @@ const TransactionMethodQuran = (props) => {
           User_Code: userInfo.Code,
           Class_Code: DetailClass.code,
           Promo_Code : '',
-          Package_Code : DetailClass.package_code,
+          Package_Code : packages.Code,
           Payment_Method_Code : '',
           Status_Payment_Code : 'ENC00000025',
-          Total_Transfer : parseInt(DetailClass.package_price),
+          Total_Transfer : parseInt(packages.Price_Discount),
           Schedule_Code_1 : DetailClass.Is_Direct == true ? (FormSchedule.Meet1) : (null),
           Schedule_Code_2 : DetailClass.Is_Direct == true ? (FormSchedule.Meet2) : (null),
         },
@@ -144,6 +144,7 @@ const TransactionMethodQuran = (props) => {
             "Payment_Method_Code" : FormCheckout.values['Payment_Method_Code'],
             "Total_Transfer" : FormCheckout.values['Total_Transfer']
           }
+          console.log(data)
           const response =   await ClassQuranAPI.InsertPaymentQuran(data)
           if (response && response.data && response.data.message.result) {
             navigation.navigate('TransactionInfoQuran', (data, response.data.message.data))
@@ -182,9 +183,9 @@ const TransactionMethodQuran = (props) => {
             <Text style={styles.textTitleBlack}>Detail Pembayaran</Text>
             <View style={styles.cardDetail}>
               <Text style={styles.textBold}>Judul Kelas:</Text>
-              <Text style={styles.textRegular}>{DetailClass.class_name}</Text>
-              {/* <Text style={styles.textBold}>Instruktur</Text>
-              <Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text> */}
+              <Text style={styles.textRegular}>{DetailClass.class_initial}</Text>
+              <Text style={styles.textBold}>Instruktur</Text>
+              <Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>
               {/* {DetailClass.Is_Direct == true ? 
               (<Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>)
               : <Text style={styles.textRegular}>{`${DetailClass.Instructor_Name}, ${DetailClass.Instructor_Biografi}`}</Text>} */}

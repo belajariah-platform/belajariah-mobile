@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   indicatorStyle: {
     width: 70,
     height: 4,
-    left: '14.6%',
+    left: '15.6%',
     borderRadius: 2,
     backgroundColor: Color.white,
   },

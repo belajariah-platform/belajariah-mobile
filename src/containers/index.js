@@ -54,6 +54,7 @@ import {
   ClassInstructorProfile, 
 } from './class'
 import {
+  ClassPackage,
   ClassListQuran,
   ClassDetailQuran,
   ClassListMentorQuran,
@@ -104,6 +105,7 @@ export {
   ProfileEdit,
   Transaction,
   Introduction,
+  ClassPackage,
   Consultation,
   ClassMeeting,
   EditPassword,

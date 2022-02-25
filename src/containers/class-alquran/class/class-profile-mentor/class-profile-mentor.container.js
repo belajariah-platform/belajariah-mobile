@@ -217,11 +217,16 @@ const ClassProfileMentorQuran = (props) => {
                     <View style={styles.ViewCard}>
                     <View style={{marginRight: 10}}><SVGIcon.IconTarif ColorBg={DetailClass.color_path} ColorStroke={DetailClass.color_path} /></View>
                         <View style={styles.ViewTxt}>
-                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Infaq Belajar/jam</Text>
-                            <Text style={styles.TxtDescSystem}>{
+                            <Text style={{...styles.TxttitleCardOther, color: DetailClass.color_path}}>Infaq Belajar Bulanan/orang</Text>
+                            {/* <Text style={styles.TxtDescSystem}>{
                                 instructor.Minimum_Rate == 0 
                                 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(instructor.Minimum_Rate)
-                                }</Text>
+                                }</Text> */}
+                                {instructor.Mentor_Package && instructor.Mentor_Package.map((item, index) => {
+                                    return (
+                                        <Text key={index}>❐ {item.Type} : Rp{FormatRupiah(item.Price_Discount)}</Text>
+                                    )
+                                })}
                         </View>
                     </View>
                 </Card>
@@ -234,15 +239,18 @@ const ClassProfileMentorQuran = (props) => {
             <View style={styles.ViewBtn}>
                     <Buttons 
                         style={{...styles.BtnPengajar, backgroundColor: DetailClass.color_path}}
-                        icon={<Images.IconConsultations.default/>}
-                        title={'Chat Pengajar'}
-                        textStyle={[styles.TxtButton, { marginLeft: 10, marginTop: 5 }]}
+                        // icon={<Images.IconConsultations.default/>}
+                        title={'Pilik Paket Belajar'}
+                        textStyle={styles.TxtButton}
+                        // onPress={() => {
+                        //     userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
+                        //     : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
+                        //         : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
+                        //             : instructor.Allow_Contact_From == 'email' ? _sendWhatsapp() : _sendWhatsapp()
+                        // }}
                         onPress={() => {
-                            userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
-                            : userInfo.Gender == 'Laki-laki' && instructor.Gender == 'Perempuan' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
-                                : userInfo.Gender == 'Perempuan' && instructor.Gender == 'Laki-laki' ? Alerts(false, 'Anda tidak bisa memilih pengajar ini')
-                                    : instructor.Allow_Contact_From == 'email' ? _sendWhatsapp() : _sendWhatsapp()
-                        }}
+                            navigation.navigate('ClassPackage', {instructor : instructor, DetailClass : DetailClass})
+                        }}  
                     />
             </View>
         )
@@ -262,7 +270,7 @@ const ClassProfileMentorQuran = (props) => {
                 <SystemInstructor />
                 <TarifInstructor />
             </ScrollView>
-          {UserClass && UserClass.length > 0 && <BtnInstructor />}
+            <BtnInstructor />
         </View> 
         </>
     )

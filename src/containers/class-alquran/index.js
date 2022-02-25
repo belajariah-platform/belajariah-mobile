@@ -1,4 +1,5 @@
 import {
+    ClassPackage,
     ClassListQuran,
     ClassDetailQuran,
     ClassListMentorQuran,
@@ -13,6 +14,7 @@ import {
 } from './transaction'
 
 export {
+    ClassPackage,
     ClassListQuran,
     ClassDetailQuran,
     ClassListMentorQuran,

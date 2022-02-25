@@ -384,6 +384,17 @@ const styles = StyleSheet.create({
     // borderTopRightRadius: 20,
     // borderBottomLeftRadius: 20,
   },
+  backdropStyle: {
+    flex:1,
+    marginHorizontal: 40,
+    alignItems:'stretch',
+    justifyContent: 'center',
+  },
+  whitemdl: {
+    borderRadius: 22,
+    height: height/2.5,
+    backgroundColor:Color.white,
+  }
 })
 
 export { styles }

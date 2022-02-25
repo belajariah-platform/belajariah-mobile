@@ -1,14 +1,31 @@
 import { StyleSheet } from 'react-native'
-import { FontType, FontSize, Color } from '../../../assets'
+import { FontType, FontSize, Color } from '../../../../assets'
 
 const styles = StyleSheet.create({
   modalStyle : {
-    // width: '100%',
+    width: '100%',
     borderRadius: 20,
     backgroundColor: Color.white,
   },
+  container : {
+    flex: 1,
+  },  
+  containerContent : {
+    borderRadius: 30,
+    marginTop: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingVertical: 20,
+    alignSelf: 'center',
+    marginHorizontal: 30,
+    marginBottom: 'auto',
+    alignContent: 'center',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  }, 
   modalContentSyle : {
     alignSelf: 'center',
+    paddingVertical : 20,
     justifyContent:'center',
   },
   viewTxtJudulModal : {
@@ -41,6 +58,11 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     fontSize: FontSize.medium,
   },
+  TxtTitlePackage : {
+    color: '#4D4D4D',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
   TxtHargaCoret : {
     marginTop: 2,
     marginRight: 5,
@@ -55,6 +77,13 @@ const styles = StyleSheet.create({
     color: Color.black,
     fontFamily: FontType.bold,
     fontSize: FontSize.smallMedium,
+  },
+  TxtPrice : {
+    marginRight: 5,
+    fontSize: FontSize.medium,
+    fontFamily: FontType.bold,
+    textDecorationStyle: 'solid',
+    // textDecorationLine: 'line-through',
   },
   TxtMeet : {
     color: '#13A98B',
@@ -101,47 +130,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  NewContainer : {
-    paddingHorizontal: '12%',
-  },
-  FlexNew: {
-    flexDirection: 'row',
-  },
-  TxtTitlePackage : {
-    color: Color.purpleButton,
-    fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
-  },
-  TxtDescTitle : {
-    marginBottom: 16,
+  TxtTitle: {
+    marginBottom: 20,
     color: Color.black,
-    fontSize: FontSize.small,
-    fontFamily: FontType.regular,
-  },
-  TxtDescPack : {
-    marginLeft: 6,
-    maxWidth: '90%',
-    color: Color.black,
-    fontSize: FontSize.small,
-    fontFamily: FontType.regular,
-  },
-  ViewPrice : {
-    marginTop: 18,
-  },
-  TxtPrice : {
-    color: Color.black,
-    fontSize: FontSize.small,
+    textAlign: 'center',
     fontFamily: FontType.bold,
-    textDecorationLine: 'line-through',
-  },
-  TxtPriceDiscount : {
-    color: '#FF4545',
-    fontFamily: FontType.bold,
-    fontSize: FontSize.medium,
-  },
-  StyleBtn : {
-    width: 'auto',
-    marginHorizontal: '5%',
+    fontSize: FontSize.large,
   }
 })
 

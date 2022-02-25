@@ -77,8 +77,7 @@ const ClassDetailQuran = (props) => {
                             inactiveTintColor: Color.white,
                             labelStyle: styles.labelStyle,
                             activeTintColor: Color.white,
-                            indicatorStyle: {...styles.indicatorStyle, 
-                                left : state && state.length == 0 ? '8.6%' : '14.6%'},
+                            indicatorStyle: styles.indicatorStyle,
                             style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
                     }}>
                         <Tab.Screen
@@ -86,11 +85,11 @@ const ClassDetailQuran = (props) => {
                             options={{ title: 'Tentang Kelas' }}>
                             {() => <ClassAbout params={DetailClass}/>}
                         </Tab.Screen>
-                        {state && state.length == 0 &&  <Tab.Screen
+                        {/* {state && state.length == 0 &&  <Tab.Screen
                             name='ClassListMentorQuran'
                             options={{ title: 'Pengajar' }}>
                             {() => <ClassListMentorQuran params={DetailClass} userClass={state}/>}
-                        </Tab.Screen>}
+                        </Tab.Screen>} */}
                         <Tab.Screen
                             name='ClassReviewQuran'
                             options={{ title: 'Ulasan' }}>
@@ -100,15 +99,13 @@ const ClassDetailQuran = (props) => {
                     </Tab.Navigator>
                     <View style={styles.ViewButton}>
                         <Buttons 
-                            title={state && state.length == 0 ? 'Daftar Kelas Sekarang' : 'Temukan Guru Ngaji'} 
+                            title={'Temukan Guru Ngaji'} 
                             style={{...
                                 styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
-                            textStyle={{...styles.StyleTxtBtn, marginTop : state && state.length == 0 ?  5 : null}}
-                            icon={ state && state.length == 0 ? <Images.IconCheckout.default/> : <Images.IconSearchWhite.default/>}
+                            textStyle={styles.StyleTxtBtn}
+                            icon={<Images.IconSearchWhite.default/>}
                             onPress={() => {
-                                state && state.length == 0 
-                                ? navigation.navigate('TransactionMethodQuran', {DetailClass : DetailClass})
-                                : navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
+                                navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
                             }}
                         />
                     </View>

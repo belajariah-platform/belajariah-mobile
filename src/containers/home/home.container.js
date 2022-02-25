@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
+  Config,
   EnumAPI,
   ClassAPI,
   StoryAPI,
@@ -22,6 +23,7 @@ import {
   View,
   Text,
   Image,
+  Linking,
   Dimensions,
   ScrollView,
   BackHandler,
@@ -34,6 +36,7 @@ import { Images } from '../../assets'
 
 import {
   Cards,
+  Buttons,
   Carousel,
   ModalInfo,
   ShimmerACC,
@@ -60,6 +63,7 @@ const Home = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
+  const [modalVisibleCheck, setModalVisibleCheck] = useState(false)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
   const [modalClassDirectVisible, setModalClassDirectVisible] = useState(false)
 
@@ -67,6 +71,7 @@ const Home = (props) => {
   const [stateStory, setStateStory] = useState([])
   const [stateClass, setStateClass] = useState([])
   const [statePackage, setStatePackage] = useState([])
+  const [stateCheckApp, setStateCheckApp] = useState([])
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
   const [stateClassIntens, setStateClassIntens] = useState([])
@@ -76,14 +81,17 @@ const Home = (props) => {
   const [loadingClass, setloadingClass] = useState(true)
   const [loadingStory, setloadingStory] = useState(true)
   const [loadingPackage, setloadingPackage] = useState(true)
+  const [loadingCheckApp, setloadingCheckApp] = useState(true)
   const [loadingCategory, setloadingCategory] = useState(true)
   const [loadingClassIntens, setloadingClassIntens] = useState(true)
 
   const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalCheck = () => setModalVisibleCheck(!modalVisibleCheck)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
   const toggleModalClassDirect = () => setModalClassDirectVisible(!modalClassDirectVisible)
 
+  const url = 'https://play.google.com/store/apps/details?id=com.belajariah'
 
   const handleCategoryChange = (category) => {
     setCategorySelected(category.ID)
@@ -218,6 +226,25 @@ const Home = (props) => {
     }
   }
 
+  const fetchDataVersionApp = async ({ skip, take, filterString }) => {
+    try {
+      setloadingCheckApp(true)
+      filterString='[{"type": "text", "field" : "type", "value": "app_version"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+        setStateCheckApp(response.data.data)
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingCheckApp(false)
+    } catch (err) {
+      setloadingCheckApp(false)
+      return err
+    }
+  }
+
   const fetchDataPackage = async (state, code) => {
     try {
       setloadingPackage(true)
@@ -259,12 +286,38 @@ const Home = (props) => {
     await fetchDataACC(dataState)
     await fetchDataClass(dataState)
     await fetchDataStory(dataState)
+
     await fetchDataClassIntens(dataState)
   }
 
   useEffect(() => {
     _getData()
   }, [])
+
+  useEffect(() => {
+    fetchDataVersionApp(dataState)
+    {stateCheckApp.map((item, index) => {
+      // console.log(item.Value)
+      if (item.Value !== Config.APP_VERSION) {
+        setModalVisibleCheck(true)
+      } else {
+        null
+      }
+    })} 
+  }, [])
+
+  const DirectToGP = async () => {
+    try {
+        const supported = await Linking.canOpenURL(url)
+        if(supported) {
+          await Linking.openURL(url)
+        } else {
+          alert('')
+        }
+    } catch (error) {
+      return error
+    }
+  }
 
   const PromotionHome = ({ index, item }) => {
     return (
@@ -585,10 +638,10 @@ const Home = (props) => {
                     ShimmerListCategory() :
                     CategoryClassHome()
                   }
-                  {loadingACC ?
+                  {/* {loadingACC ?
                     ShimmerACC() :
                     ACCHome() 
-                  }
+                  } */}
                   {loadingClass ?
                     ShimmerCardClassPopuler() :
                     <PopularClassHome />
@@ -665,6 +718,23 @@ const Home = (props) => {
                   source={Images.ImgModalComingSoon}
                   style={styles.BackroundImgModal}
                 />
+              </View>
+            </View>
+          }
+        />
+        <ModalInfo
+          hideButtonClose={true}
+          isVisible={modalVisibleCheck}
+          containerStyle={styles.whitemdl}
+          custombackdropStyle={styles.backdropStyle}
+          // backdropPress={() => toggleModalCheck()}
+          // backButtonPress={() => toggleModalCheck()}
+          renderItem={
+            <View>
+              <View>
+                <Text>Sorry lur, antum pakek versi jadul</Text>
+                <Text>So, kuy update di Playstore</Text>
+                <Buttons title='Update Now' onPress={DirectToGP()} />
               </View>
             </View>
           }

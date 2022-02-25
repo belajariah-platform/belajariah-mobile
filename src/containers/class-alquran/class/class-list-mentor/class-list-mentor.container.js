@@ -163,8 +163,13 @@ const ClassListMentorQuran = (props) => {
                                 <Text style={{...styles.textStyleCity, color: DetailClass.color_path}}>
                                     Asal {item.City}
                                 </Text>
+                                {item.Mentor_Package.map((listPack, index) => {
+                                    return (
+                                        <Text key={index} style={{...styles.textStylePrice, color: DetailClass.color_path}}>{listPack.Price_Discount[Array.length-1]}</Text>
+                                    )
+                                })}
                                 <View style={styles.ViewTarif}>
-                                    <Text style={{...styles.textStylePrice, color: DetailClass.color_path}}>Infaq Belajar/jam : {item.Minimum_Rate == 0 ? 'Diskusikan dengan pengajar' :  'Rp' + FormatRupiah(item.Minimum_Rate)}</Text>
+                                    <Text style={{...styles.textStylePrice, color: DetailClass.color_path}}>Infaq Belajar/orang : </Text>
                                 </View>
                                 {/* <View style={styles.ViewRating}>
                                     <Text style={styles.TxtRating}>{item.Rating}</Text>
