@@ -28,11 +28,61 @@ import {
   InstructorProfileEdit,
 } from './instructor'
 
-import { InspiratifStory, InspiratifStoryDetail } from './story'
-import { ClassUser, ClassLearning, ClassDetail, ClassExam, ClassTrial } from './class'
-import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
-import { Login, Register, Introduction, CheckEmail, Consultation, ConsultationDetail, UserVerify, UserVerifyPassword, ConfirmPassword, EditPassword } from './user'
+import {
+  ClassDetailACC,
+  ClassFormOtherACC, 
+  ClassFormConfirmACC,
+  ClassFormPersonalACC,
+} from './acc'
 
+import { InspiratifStory, InspiratifStoryDetail } from './story'
+import { 
+  ClassExam, 
+  ClassUser,
+  ClassTrial, 
+  ClassDetail, 
+  ClassMeeting,
+  ClassLearning, 
+  ClassPreference,
+  ClassListMentor,
+  ClassExamDirect, 
+  ClassUserDirect,
+  ClassTrialDirect, 
+  ClassReviewMentor,
+  ClassDetailDirect, 
+  ClassLearningDirect, 
+  ClassInstructorProfile, 
+} from './class'
+import {
+  ClassPackage,
+  ClassListQuran,
+  ClassDetailQuran,
+  ClassListMentorQuran,
+  TransactionInfoQuran,
+  TransactionMethodQuran,
+  TransactionUploadQuran,
+  ClassProfileMentorQuran,
+  TransactionConfirmQuran,
+} from './class-alquran'
+import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
+import { 
+  Login, 
+  Register, 
+  CheckEmail, 
+  UserVerify, 
+  Introduction, 
+  Consultation, 
+  EditPassword,
+  ConfirmPassword, 
+  UserNotification, 
+  ConsultationDetail, 
+  UserVerifyPassword, 
+} from './user'
+
+import { 
+  EventClassIntens,
+  EventClassIntensConfirm
+} from './event'
 
 export {
   Home,
@@ -55,32 +105,58 @@ export {
   ProfileEdit,
   Transaction,
   Introduction,
+  ClassPackage,
   Consultation,
+  ClassMeeting,
   EditPassword,
   InstructorJob,
   TermCondition,
   PrivacyPolice,
   AlquranDetail,
   ClassLearning,
+  ClassDetailACC,
+  ClassListQuran,
   AdminDashboard,
   InstructorTask,
+  ClassPreference,
   AdminProfileAll,
   PromotionDetail,
+  ClassListMentor,
   InspiratifStory,
   AdminInstructor,
   ConfirmPassword,
   TransactionInfo,
+  EventClassIntens,
+  ClassExamDirect, 
+  ClassUserDirect,
   AdminTransaction,
   AdminProfileEdit,
+  ClassDetailQuran,
+  UserNotification,
+  ClassTrialDirect, 
+  ClassDetailDirect, 
+  ClassFormOtherACC,
+  ClassReviewMentor,
   TransactionUpload,
   InstructorProfile,
   TransactionMethod,
   ConsultationDetail,
   UserVerifyPassword,
   TransactionConfirm,
+  ClassFormConfirmACC,
+  ClassLearningDirect,  
   InstructorDashboard,
+  TransactionInfoQuran,
+  ClassFormPersonalACC,
+  ClassListMentorQuran,
   InstructorTaskDetail,
   InspiratifStoryDetail,
   InstructorProfileEdit,
+  ClassInstructorProfile,
+  TransactionMethodQuran,
   AdminProfileInstructor,
+  TransactionUploadQuran,
+  TransactionConfirmQuran,
+  EventClassIntensConfirm,
+  ClassProfileMentorQuran,
 }

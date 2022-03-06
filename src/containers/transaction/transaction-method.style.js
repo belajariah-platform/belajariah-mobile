@@ -218,7 +218,20 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     backgroundColor: '#cbcbcb',
   },
-
+  ViewSchedule: {
+    marginTop: 10,
+  },
+  ViewSchedules : {
+    // flexDirection: 'row',
+  },
+  ViewScheduleR : {
+    flexDirection: 'row',
+  },
+  TxtSchedule : {
+    marginRight: 0,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.extraSmall,
+  }
 })
 
 export default styles

@@ -21,6 +21,19 @@ const Shimmer = (props) => {
   )
 }
 
+const ShimmerACC = () => {
+  return(
+    <SkeletonPlaceholder backgroundColor={'#ECF0F1'}>
+      <View style={{
+        height: 130,
+        width: '100%',
+        maxWidth: '100%',
+        borderRadius: 20,
+      }} />
+    </SkeletonPlaceholder>
+  )
+}
+
 const ShimmerInspiratifStory = () => {
   return(
     <Card
@@ -266,6 +279,7 @@ Shimmer.propTypes = {
 
 export {
   Shimmer,
+  ShimmerACC,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,

@@ -49,4 +49,26 @@ const UpdateProgressUserClass = async (formData) => {
   }
 }
 
-export default { GetAllUserClass, GetUserClass, UpdateProgressUserClass }
+const GetAllUserClassQuran = async (filter) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"GET_ALL_USER_CLASS_QURAN",
+      query: {
+            filters: filter,
+            orders: [{"field": "id", "dir": "desc"}],
+            skip: 0,
+            take: 100
+        }
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default { GetAllUserClass, GetUserClass, UpdateProgressUserClass, GetAllUserClassQuran }

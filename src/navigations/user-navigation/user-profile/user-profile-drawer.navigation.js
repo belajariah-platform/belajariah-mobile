@@ -61,21 +61,21 @@ const CustomDrawer = ({ navigation }, props) => {
             }}
             labelStyle={styles.label}
           />
-          <View>
+          {/* <View>
             <DrawerItem
               label='Konsultasi bacaan'
               onPress={() => {
                 navigation.navigate('Consultation')
               }}
               labelStyle={styles.label}
-            />
+            /> */}
             {/* {count > 0 && (
               <Images.IconNotifInfo.default
                 width={12}
                 height={12}
                 style={styles.info}/>
             )} */}
-          </View>
+          {/* </View> */}
 
           <DrawerItem
             label='Ubah Kata Sandi'
@@ -130,7 +130,7 @@ const CustomDrawer = ({ navigation }, props) => {
 
           <View style={styles.versionContainer}>
             <Images.LogoBelajariahProfile.default width={24} height={24} />
-            <Text style={styles.version}>Version: v1.2.5-21</Text>
+            <Text style={styles.version}>Version: v1.4.11-22</Text>
           </View>
         </ImageBackground>
       </DrawerContentScrollView>

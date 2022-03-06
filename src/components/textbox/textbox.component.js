@@ -16,6 +16,7 @@ const Textbox = (props) => {
             props.form.errors[props.name]}
         </Text>
       }
+      autoCapitalize='none'
       onChangeText={
         props.form && props.name && props.form.handleChange(props.name)
       }

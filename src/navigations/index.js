@@ -15,7 +15,7 @@ const Render = () => {
     switch (userInfo.Role) {
     case 'Admin':
       return  <AdminNavigation/>
-    case 'Users':
+    case 'User':
       return  <UserNavigation/>
     case 'Mentor':
       return  <InstructorNavigation/>
@@ -54,6 +54,7 @@ const config = {
             storyIndex : (storyIndex) => `${storyIndex}`
           }
         },
+        Register: 'regis',
         UserVerify: 'verif',
         PromotionDetail: {
           path : 'promo/:promo_code',

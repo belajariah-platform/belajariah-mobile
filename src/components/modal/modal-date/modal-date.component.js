@@ -46,8 +46,8 @@ const ModalDate = (props) => {
               maximumDate={new Date()}
             />
             <Buttons
-              style={styles.buttonSave}
-              title='Atur Tanggal'
+              style={[styles.buttonSave, props.styleBtn]}
+              title={props.titleBtn}
               onPress={() => {
                 props.dateChange(date)
                 props.backdropPress(!props.isVisible)
@@ -64,6 +64,8 @@ ModalDate.propTypes = {
   mode : PropTypes.string,
   date : PropTypes.object,
   isVisible : PropTypes.bool,
+  styleBtn : PropTypes.object,
+  titleBtn : PropTypes.string,
   dateChange : PropTypes.func,
   backdropPress : PropTypes.func,
 }

@@ -24,6 +24,7 @@ export default {
   BtnArrowUp: require('./BtnArrowUp.svg'),
   IconPlay: require('./IconPlayVideo.svg'),
   BotClassHint: require('./ClassHint.svg'),
+  IconFreeACC: require('./IconFreeACC.svg'),
   BgClassUser: require('./BgClassUser.png'),
   BtnReadMore: require('./BtnReadMore.svg'),
   LoginDirect: require('./LoginDirect.svg'),
@@ -44,8 +45,10 @@ export default {
   JudulTilawah: require('./CardJudulTilawah.svg'),
   StarEmptyBlack: require('./StarEmptyBlack.svg'),
   StarEmptyClass: require('./StarEmptyClass.svg'),
+  IconVideoTahsin: require('./IconVideoTahsin.svg'),
   ImgLupaPassword: require('./ImgLupaPassword.png'),
   IconRecordVoice : require('./IconRecordVoice.svg'),
+  IconNotification: require('./IconNotification.svg'),
   IconStepProgress: require('./IconStepProgress.svg'),
   IconStepStartHide: require('./IconStepStartHide.svg'),
   IconDocumentVideo: require('./IconDocumentVideo.svg'),
@@ -54,6 +57,7 @@ export default {
   LogoBelajariahHome: require('./LogoBelajariahHome.svg'),
   IconStepFinishHide: require('./IconStepFinishHide.svg'),
   ImageProfileDefault: require('./IconProfileDefault.png'),
+  IconPertemuanDirosa: require('./IconPertemuanDirosa.svg'),
   IconStepProgressHide: require('./IconStepProgressHide.svg'),
 
   //Camera
@@ -107,13 +111,13 @@ export default {
   BtnBuyClass: require('./BtnBuyClass.svg'),
   BtnCheckout: require('./BtnCheckout.svg'),
   TahsinImage: require('./TahsinImage.png'),
+  BintangFull: require('./BintangFull.png'),
   TilawahImage: require('./TilawahImage.png'),
   AccessGroupChat: require('./IconGroup.svg'),
   AccessVideo: require('./IconVideoAccess.svg'),
   Certificate: require('./IconCertificate.svg'),
-  IconUserReview: require('./IconUserReview.svg'),
   BintangBorder: require('./BintangBorder.png'),
-  BintangFull: require('./BintangFull.png'),
+  IconUserReview: require('./IconUserReview.svg'),
   Consultation: require('./IconConsultation.svg'),
   IconConsultations: require('./IconConsultations.svg'),
   DetailClassHeaderBG: require('./BgDetailClassHeader.png'),
@@ -124,14 +128,14 @@ export default {
   SidenavUser : require('./SidenavUser.svg'),
   SidenavDashboard : require('./SidenavAdmin.png'),
   AdminBackground: require('./AdminBackground.png'),
-  IconTransactProgress: require('./IconMiniProgress.svg'),
-  IconTransactComplete: require('./IconMiniComplete.svg'),
   GrafisVoiceWhite: require('./GrafisVoiceWhite.svg'),
   IconRejectStatus: require('./IconRejectStatus.svg'),
   IconUnduhanAdmin: require('./IconUnduhanAdmin.svg'),
   IconAcceptStatus: require('./IconAcceptStatus.svg'),
   SidenavInstrcutor: require('./SidenavInstructor.svg'),
   IconDownloadVoice: require('./IconDownloadVoice.svg'),
+  IconTransactProgress: require('./IconMiniProgress.svg'),
+  IconTransactComplete: require('./IconMiniComplete.svg'),
   IconTransactionAdmin: require('./IconTransactionAdmin.svg'),
   WelcomeBackgroundAdmin: require('./WelcomeBackgroundAdmin.png'),
   IllustrationNoConsulAll : require('./IllustrationNoConsulAll.svg'),
@@ -231,6 +235,14 @@ export default {
   IconBenefit2Darussalam : require('./IconBenefit2Darussalam.svg'),
   IconBenefit3Darussalam : require('./IconBenefit3Darussalam.svg'),
 
+  //New Icon Modal Paket Tahsin
+  IconPackageTahsin1 : require('./IconPackageTahsin1.svg'),
+  IconPackageTahsin2 : require('./IconPackageTahsin2.svg'),
+  IconPackageTahsin3 : require('./IconPackageTahsin3.svg'),
+  IconPackageTahsin4 : require('./IconPackageTahsin4.svg'),
+  IconPackageTahsin5 : require('./IconPackageTahsin5.svg'),
+  IllustrationPackageTahsin : require('./IllustrationPackageTahsin.svg'),
+
   //Modal Record
   ModalRecordBG : require('./BgModalRecord.png'),
   IconRecordNext : require('./IconRecordNext.svg'),
@@ -269,6 +281,7 @@ export default {
   IconComingSoon: require('./IconComingSoon.svg'),
   IconPendingWhite: require('./IconPendingWhite.svg'),
   IconCompleteWhite: require('./IconCompleteWhite.svg'),
+  FloatingBtnDirosa : require('./FloatingBtnDirosa.svg'),
 
   //New Category Icon
   IconCategoryFiqh : require('./IconCategoryFiqh.svg'),
@@ -277,5 +290,76 @@ export default {
   IconCategoryAlquran : require('./IconCategoryAlquran.svg'),
   IconCategoryLanguage : require('./IconCategoryLanguage.svg'),
   IconCategoryKemasyarakatan : require('./IconCategoryKemasyarakatan.svg'),
+
+  //Class Detail Direct
+  IconSearchWhite : require('./IconSearchWhite.svg'),
+  HeaderClassDirect : require('./HeaderClassDirect.png'),
+  IconDownloadDirosa : require('./IconDownloadDirosa.svg'),
+
+  //Class About Dirosa
+  IconBookGreen : require('./IconBookGreen.svg'),
+  IconUnionGreen : require('./IconUnionGreen.svg'),
+  IconTimesGreen : require('./IconTimesGreen.svg'),
+  IconRangeGreen : require('./IconRangeGreen.svg'),
+  IconVideoGreen : require('./IconVideoGreen.svg'),
+  IconMethodGreen : require('./IconMethodGreen.svg'),
+  IconUstadzGreen : require('./IconUstadzGreen.svg'),
+  IconLearningGreen : require('./IconLearningGreen.svg'),
+
+  //List Mentor
+  IconTimeGreen : require('./IconTimeGreen.svg'),
+  IconDescGreen : require('./IconDescGreen.svg'),
+  IconStudyGreen : require('./IconStudyGreen.svg'),
+  IconReviewGreen : require('./IconReviewGreen.svg'),
+  IconSystemGreen : require('./IconSystemGreen.svg'),
+  IconScheduleBlack : require('./IconScheduleBlack.svg'),
+  IllustrasiProfileUstadz : require('./IllustrasiProfileUstadz.png'),
+  IllustrasiProfileUstadzah : require('./IllustrasiProfileUstadzah.png'),
+
+  //Class Profile Mentor
+  BackgroundMentor : require('./BackgroundMentorDirosa.png'),
+  BackgroundMentorIqra : require('./BackgroundMentorIqra.png'),
+  BackgroundMentorTahsin : require('./BackgroundMentorTahsin.png'),
+  BackgroundMentorTahfidz : require('./BackgroundMentorTahfidz.png'),
+  BackgroundMentorTilawah : require('./BackgroundMentorTilawah.png'),
+
+  //Modal Package Dirosa
+  IconDouple : require('./IconDouple.png'),
+  IconFamily : require('./IconFamily.png'),
+  IconPrivate : require('./IconPrivate.png'),
+
+  //Class Preference
+  IconPreference : require('./IconPreference.png'),
+  IconSelectSchedule : require('./IconSelectSchedule.png'),
+
+  //Class Meet
+  IllustrationMeet : require('./IllustrationMeet.png'),
+  IconChecklistMeet : require('./IconChecklistMeet.svg'),
+  // IconCompleteDirect : require('./IconCompleteDirect.svg'),
+
+  //Modal Rating Direct
+  IconCheckLisDirect : require('./IconCheckLisDirect.svg'),
+
+  //Notification User
+  IconValSantri : require('./IconValSantri.svg'),
+  IconNotificationEmpty : require('./IconNotificationEmpty.svg'),
+
+  //Emoji Icon 
+  IconEmotOne : require('./EmotOne.svg'),
+  IconEmotTwo : require('./EmotTwo.svg'),
+  IconEmotThree : require('./EmotThree.svg'),
+  IconEmotFour : require('./EmotFour.svg'),
+  IconEmotFive : require('./EmotFive.svg'),
+
+  //Card Class User Dirosa
+  IconClassDirosa : require('./IconClassDirosa.png'),
+
+  //Class Detail ACC
+  HeaderClassACC : require('./HeaderClassACC.png'),
+
+  //
+  IconCheckout : require('./IconShop.svg'),
+  BannerClassQuran : require('./BannerKelasAlquran.png')
+
 }
 

@@ -8,7 +8,7 @@ import {
   ContactUs,
   EditPassword,
   ProfileEdit,
-  Consultation,
+  // Consultation,
   PrivacyPolice,
   TermCondition,
 } from '../../../containers'
@@ -27,7 +27,7 @@ const ProfileNavigation = () => {
       <Drawer.Screen name='ContactUs' component={ContactUs} />
       <Drawer.Screen name='Edit Profile' component={ProfileEdit} />
       <Drawer.Screen name='UserEditPassword' component={EditPassword} />
-      <Drawer.Screen name='Consultation' component={Consultation} />
+      {/* <Drawer.Screen name='Consultation' component={Consultation} /> */}
       <Drawer.Screen name='PrivacyPolicy' component={PrivacyPolice} />
       <Drawer.Screen name='TermsandConditions' component={TermCondition} />
     </Drawer.Navigator>

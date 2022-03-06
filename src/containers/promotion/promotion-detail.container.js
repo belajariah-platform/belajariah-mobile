@@ -40,9 +40,10 @@ const PromotionDetail = () => {
 
   const fetchDataPromotionDetail = async (code) => {
     try {
-      const response = await PromotionAPI.GetPromotion(code)
+      const filter = [{ "field": "promo_code", "type": "text", "value": `${code}`}]
+      const response = await PromotionAPI.GetAllPromotionHeader(filter)
       if (response.status === Response.SUCCESS) {
-        setState(response.data.result)
+        setState(response?.data?.message?.data.length > 0 ? response.data.message.data[0] : {})
         setLoading(false)
       } else {
         setLoading(false)
@@ -74,8 +75,8 @@ const PromotionDetail = () => {
           </TouchableOpacity>
           <Text
             style={styles.textTitleWhite}>
-            { state.ID == 0 || Object.keys(state).length == 0 ?
-              'Halaman Promo' : state.Title}</Text>
+            { state.id == 0 || Object.keys(state).length == 0 ?
+              'Halaman Promo' : state.title}</Text>
         </View>
         <View style={styles.semiBox} />
       </View>
@@ -98,18 +99,18 @@ const PromotionDetail = () => {
       <View style={styles.containerMethod}>
         <View style={styles.cardMethods}>
           <View>
-            <Text style={styles.TitlePromo}>{state.Title}</Text>
-            <Text style={styles.DescPromo}>{handleSplitString(state.Description)}</Text>
+            <Text style={styles.TitlePromo}>{state.title}</Text>
+            <Text style={styles.DescPromo}>{handleSplitString(state.description)}</Text>
           </View>
           <View>
-            <Text style={styles.TitlePromo}>Kode Voucher Disc. {state.Discount}%</Text>
+            <Text style={styles.TitlePromo}>Kode Voucher Disc. {state.discount}%</Text>
           </View>
           <View style={styles.containerCodePromo}>
             <View>
               <Image
                 source={Images.VoucherCode}
                 style={{ width : 151, height:37 }}/>
-              <Text style={styles.textCode}>{state.Promo_Code}</Text>
+              <Text style={styles.textCode}>{state.promo_code}</Text>
             </View>
           </View>
         </View>
@@ -124,7 +125,7 @@ const PromotionDetail = () => {
           title='Gunakan Sekarang'
           styles={styles.btnBuyClass}
           textStyle={styles.textBuyClass}
-          onPress={() => copyToClipboard(state.Promo_Code)}
+          onPress={() => copyToClipboard(state.promo_code)}
         />
       </View>
     )
@@ -135,9 +136,9 @@ const PromotionDetail = () => {
       <View style={styles.containerBanner}>
         <Image
           style={styles.ImgBanner}
-          source={state.Header_Image == '' ?
+          source={state.image_header == '' ?
             Images.ImgDefault1 :
-            { uri :state.Header_Image }}
+            { uri :state.image_header }}
         />
       </View>
     )
@@ -148,7 +149,7 @@ const PromotionDetail = () => {
       <Header />
       {loading ?
         <LoadingView/> :
-        state.ID == 0 || Object.keys(state).length == 0 ?
+        state.id == 0 || Object.keys(state).length == 0 ?
           (
             <ScrollView
               style={styles.containerScrollView }

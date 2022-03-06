@@ -18,7 +18,7 @@ const LoadingView = (props) => {
 
 LoadingView.propTypes = {
   size : PropTypes.number,
-  color : PropTypes.string,
+  color : PropTypes.string || PropTypes.object,
   loadingStyle : PropTypes.object
 }
 

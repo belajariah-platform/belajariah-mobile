@@ -1,23 +1,29 @@
 import PropTypes from 'prop-types'
-import { Avatar } from 'react-native-elements'
 import BottomSheet from 'reanimated-bottom-sheet'
+import { Avatar, Card } from 'react-native-elements'
 import NetInfo from '@react-native-community/netinfo'
 import { useIsFocused } from '@react-navigation/core'
+import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 import React, { useEffect, useRef, useState } from 'react'
 
 import {
+  Config,
   EnumAPI,
   ClassAPI,
   StoryAPI,
+  EventAPI,
   PackageAPI,
   PromotionAPI,
+  ClassQuranAPI,
+  CoachingProgramAPI,
 } from '../../api'
 
 import {
   View,
   Text,
   Image,
+  Linking,
   Dimensions,
   ScrollView,
   BackHandler,
@@ -26,26 +32,28 @@ import {
   TouchableOpacity,
 } from 'react-native'
 
-import {
-  Color,
-  Images,
-} from '../../assets'
+import { Images } from '../../assets'
 
 import {
   Cards,
+  Buttons,
   Carousel,
   ModalInfo,
+  ShimmerACC,
   ModalInfoClass,
+  ModalClassDirect,
   ModalNoConnection,
   ShimmerListCategory,
   ShimmerCardClassPopuler,
   ShimmerCardInspiratifStory,
 } from '../../components'
+
 import { styles } from './home.style'
 import { Response } from '../../utils'
 
 const Home = (props) => {
   const isFocused = useIsFocused()
+  const navigation = useNavigation()
   const mainScrollViewRef = useRef()
   const horizontalScrollRef = useRef()
   const { height } = Dimensions.get('window')
@@ -55,30 +63,41 @@ const Home = (props) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [categorySelected, setCategorySelected] = useState(0)
+  const [modalVisibleCheck, setModalVisibleCheck] = useState(false)
   const [modalInfoClassVisible, setModalInfoClassVisible] = useState(false)
+  const [modalClassDirectVisible, setModalClassDirectVisible] = useState(false)
 
+  const [stateACC, setStateACC] = useState([])
   const [stateStory, setStateStory] = useState([])
   const [stateClass, setStateClass] = useState([])
   const [statePackage, setStatePackage] = useState([])
+  const [stateCheckApp, setStateCheckApp] = useState([])
   const [stateCategory, setStateCategory] = useState([])
   const [statePromotion, setStatePromotion] = useState([])
+  const [stateClassIntens, setStateClassIntens] = useState([])
   const [dataState] = useState({ skip: 0, take: 10, filter: [], filterString: '[]' })
 
+  const [loadingACC, setloadingACC] = useState(true)
   const [loadingClass, setloadingClass] = useState(true)
   const [loadingStory, setloadingStory] = useState(true)
   const [loadingPackage, setloadingPackage] = useState(true)
+  const [loadingCheckApp, setloadingCheckApp] = useState(true)
   const [loadingCategory, setloadingCategory] = useState(true)
+  const [loadingClassIntens, setloadingClassIntens] = useState(true)
 
   const toggleModal = () => setModalVisible(!modalVisible)
+  const toggleModalCheck = () => setModalVisibleCheck(!modalVisibleCheck)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const toggleModalInfoClass = () => setModalInfoClassVisible(!modalInfoClassVisible)
+  const toggleModalClassDirect = () => setModalClassDirectVisible(!modalClassDirectVisible)
 
+  const url = 'https://play.google.com/store/apps/details?id=com.belajariah'
 
   const handleCategoryChange = (category) => {
     setCategorySelected(category.ID)
     stateClass.forEach((val) => {
-      val.Class_Category == category.Value ?
-        fetchDataClass(dataState) : toggleModal()
+      val.class_category == category.Value ?
+      props.navigation.navigate('ClassListQuran') : toggleModal()
     })
   }
 
@@ -96,29 +115,51 @@ const Home = (props) => {
     await fetchDataPackage(dataState, item.Code)
   }
 
-  const fetchDataClass = async ({ skip, take, filterString }) => {
+  const openModalClassDirect = async (item) => {
+    await setClassObj(item)
+    await setModalClassDirectVisible(!modalClassDirectVisible)
+    await fetchDataPackage(dataState, item.Code)
+  }
+
+  const fetchDataACC = async ({ skip, take, filterString }) => {
     try {
-      setloadingClass(true)
-      const response = await ClassAPI.GetAllClass(skip, take, filterString)
+      setloadingACC(true)
+      const response = await CoachingProgramAPI.GetACCDetail(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
-        setStateClass(response.data.data)
-      } else {
-        NetInfo.fetch().then(res => {
-          setconnectStatus(!res.isConnected)
-        })
-      }
-      setloadingClass(false)
+          setStateACC(response.data.message.data[0])
+      } 
+      setloadingACC(false)
     } catch (err) {
-      setloadingClass(false)
+      setloadingACC(false)
       return err
     }
   }
 
-  const fetchDataPromotion = async ({ skip, take, filterString }) => {
+    const fetchDataClass = async ({ skip, take, filterString }) => {
+      try {
+        setloadingClass(true)
+        filterString=[{"type": "text", "field" : "class_initial", "value": "Dirosa"}]
+        const response = await ClassQuranAPI.GetAllClass(skip, take, filterString)
+        if (response.status === Response.SUCCESS) {
+          setStateClass(response.data.message.data)
+        } else {
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
+        }
+        setloadingClass(false)
+      } catch (err) {
+        setloadingClass(false)
+        return err
+      }
+  }
+
+  const fetchDataPromotion = async ({ filterString }) => {
     try {
-      const response = await PromotionAPI.GetAllPromotion(skip, take, filterString)
+      filterString = []
+      const response = await PromotionAPI.GetAllPromotionHeader(filterString)
       if (response.status === Response.SUCCESS) {
-        setStatePromotion(response.data.data)
+        setStatePromotion(response.data.message.data)
       } else {
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
@@ -147,6 +188,25 @@ const Home = (props) => {
     }
   }
 
+    // const fetchDataClass = async ({ skip, take, filterString }) => {
+  //   try {
+  //     setloadingClass(true)
+  //     filterString='[{"type": "boolean", "field" : "Is_Direct", "value": "true"}]'
+  //     const response = await ClassAPI.GetAllClass(skip, take, filterString)
+  //     if (response.status === Response.SUCCESS) {
+  //       setStateClass(response.data.data)
+  //     } else {
+  //       NetInfo.fetch().then(res => {
+  //         setconnectStatus(!res.isConnected)
+  //       })
+  //     }
+  //     setloadingClass(false)
+  //   } catch (err) {
+  //     setloadingClass(false)
+  //     return err
+  //   }
+  // }
+
   const fetchDataCategory = async ({ skip, take, filterString }) => {
     try {
       setloadingCategory(true)
@@ -162,6 +222,28 @@ const Home = (props) => {
       setloadingCategory(false)
     } catch (err) {
       setloadingCategory(false)
+      return err
+    }
+  }
+
+  const fetchDataVersionApp = async ({ skip, take, filterString }) => {
+    try {
+      setloadingCheckApp(true)
+      filterString='[{"type": "text", "field" : "type", "value": "app_version"}]'
+      const response = await EnumAPI.GetAllEnum(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+          const version = response?.data?.data?.[0] 
+          if (version.Value !== Config.APP_VERSION) {
+            setModalVisibleCheck(true)
+          }
+      } else {
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+      }
+      setloadingCheckApp(false)
+    } catch (err) {
+      setloadingCheckApp(false)
       return err
     }
   }
@@ -186,12 +268,57 @@ const Home = (props) => {
     }
   }
 
+  const fetchDataClassIntens = async ({ skip, take, filterString }) => {
+    try {
+      setloadingClassIntens(true)
+      filterString=[]
+      const response = await EventAPI.GetAllEvent(skip, take, filterString)
+      if (response.status === Response.SUCCESS) {
+          setStateClassIntens(response.data.message.data[0])
+      } 
+      setloadingClassIntens(false)
+    } catch (err) {
+      setloadingClassIntens(false)
+      return err
+    }
+  }
+
+  const _getData = async () => {
+    await fetchDataVersionApp(dataState)
+    await fetchDataPromotion(dataState)
+    await fetchDataCategory(dataState)
+    await fetchDataACC(dataState)
+    await fetchDataClass(dataState)
+    await fetchDataStory(dataState)
+    await fetchDataClassIntens(dataState)
+  }
+
   useEffect(() => {
-    fetchDataStory(dataState)
-    fetchDataClass(dataState)
-    fetchDataCategory(dataState)
-    fetchDataPromotion(dataState)
+    _getData()
   }, [])
+
+  // useEffect(() => {
+  //   {stateCheckApp.map((item, index) => {
+  //     if (item.Value !== Config.APP_VERSION) {
+  //       setModalVisibleCheck(true)
+  //     } else {
+  //       null
+  //     }
+  //   })} 
+  // }, [])
+
+  const DirectToGP = async () => {
+    try {
+        const supported = await Linking.canOpenURL(url)
+        if(supported) {
+          await Linking.openURL(url)
+        } else {
+          alert('')
+        }
+    } catch (error) {
+      return error
+    }
+  }
 
   const PromotionHome = ({ index, item }) => {
     return (
@@ -199,19 +326,19 @@ const Home = (props) => {
         {statePromotion.length > 0  ? (
           <TouchableOpacity
             activeOpacity={0.5}
-            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.Promo_Code })}>
+            onPress={() => props.navigation.navigate('PromotionDetail', { promo_code : item.promo_code })}>
             <Image
               style={styles.cardCustom}
-              source={item.Banner_Image == '' ? Images.ImgDefault5 : {
-                uri : item.Banner_Image  }}
+              source={item.image_banner == '' ? Images.ImgDefault5 : {
+                uri : item.image_banner  }}
               resizeMode='cover'
             />
           </TouchableOpacity>
         ) : (
           <Image
             style={styles.cardCustom}
-            source={{ uri: item.Banner_Image ?
-              item.Banner_Image : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
+            source={{ uri: item.image_banner ?
+              item.image_banner : 'https://www.belajariah.com/img-assets/BannerPromoDefault.png' }}
           />
         )}
       </View>
@@ -267,6 +394,25 @@ const Home = (props) => {
     )
   }
 
+  const ACCHome = () => {
+    return (
+      <View>
+        <View style={styles.ViewTitleAcc}>
+          <Text style={styles.textTitle}>Program ACC</Text>
+          <Images.IconFreeACC.default style={styles.StyleIconFreeAcc} />
+        </View>
+        <Text style={styles.textSubtitle}>Al-Fatihah Coaching Clinic</Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('ClassDetailACC', {detailACC : stateACC})}>
+          <View style={styles.cardAC}>
+            <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateACC.image_banner}} style={styles.ImgCustomACC} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
   const PopularClassHome = () => {
     const handleRating = (num) => {
       let rating = []
@@ -318,21 +464,58 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          // console.log(item)
           return (
             <TouchableOpacity
               key={index}
               activeOpacity={0.5}
-              onPress={() => openModalInfoClass(item)}>
+              onPress={() => navigation.navigate('ClassDetailQuran', {DetailClass : item})}>
+              {/* // onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}> */}
               <Cards
                 item={item}
-                filepath={item.Class_Image}
-                rating={handleRating(item.Class_Rating)}
+                filepath={item.class_image}
+                // rating={handleRating(item.Class_Rating)}
               />
             </TouchableOpacity>
           )
         })}
-        <View>
+      </View>
+    )
+  }
+
+  const ClassQuranHome = () => {
+    return (
+      <View>
+        <Text style={styles.textTitle}>Kelas Al-Qur'an</Text>
+        <Text style={styles.textSubtitle}>Kelas Al-Qur'an saat ini</Text>
+        <TouchableOpacity activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('ClassListQuran')}>
+          <View style={styles.cardClassQuran}>
+            <Image source={Images.BannerClassQuran} style={styles.ImgCustomQuran} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  
+  const ClassIntensHome = () => {
+    return (
+      <View>
+        <Text style={styles.textTitle}>Program TKMA</Text>
+        <Text style={styles.textSubtitle}>Pendaftaran Tes Kemampuan Membaca Al-Quran Siswa</Text>
+        <TouchableOpacity activeOpacity={0.5}
+          onPress={() => props.navigation.navigate('EventClassIntens', {detailClassIntens : stateClassIntens})}>
+          <View style={styles.CardClassIntens}>
+          <Image source={stateACC.image_banner == '' ? Images.ImageDefault2 : {uri : stateClassIntens.event_image}} style={styles.ImgCardIntens} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+  
+  const AlquranHome = () => {
+    return (
+      <View>
           <TouchableOpacity
             activeOpacity={0.5}
             style={styles.bannerAlquranContainer}
@@ -340,7 +523,6 @@ const Home = (props) => {
             <Image source={Images.BannerAlquran} style={styles.cardCustom} />
           </TouchableOpacity>
         </View>
-      </View>
     )
   }
 
@@ -376,8 +558,8 @@ const Home = (props) => {
           {stateStory.map((item, index) => {
             return (
               <View style={styles.cardArticle} key={index}>
-                <Image source={item.Banner_Image == '' ?
-                  Images.ImgDefault5 : { uri : item.Banner_Image }}
+                <Image source={item.Image_Banner_Story == '' ?
+                  Images.ImgDefault5 : { uri : item.Image_Banner_Story }}
                 style={styles.storyImage}/>
                 <View style={styles.storyView}>
                   <Text style={styles.textArticleDescription}>
@@ -412,7 +594,7 @@ const Home = (props) => {
               <View style={styles.headerFlex}>
                 <Images.LogoBelajariahHome.default height={40} width={40} />
               </View>
-              <View>
+              <View style={styles.ViewHeaderProf}>
                 <TouchableOpacity
                   activeOpacity={0.5}
                   style={{ ...styles.headerAvatar, marginRight: 15 }}
@@ -446,21 +628,34 @@ const Home = (props) => {
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
 
-                  <View style={styles.carousel}>
+                  {/* <View style={styles.carousel}>
                     <Carousel
                       data={statePromotion}
                       pagination={false}
                       renderItem={PromotionHome}
                     />
-                  </View>
+                  </View> */}
                   {loadingCategory ?
                     ShimmerListCategory() :
                     CategoryClassHome()
                   }
+                  {/* {loadingACC ?
+                    ShimmerACC() :
+                    ACCHome() 
+                  } */}
                   {loadingClass ?
                     ShimmerCardClassPopuler() :
                     <PopularClassHome />
                   }
+                  
+                  <ClassQuranHome />
+
+                  {loadingClassIntens ?
+                    ShimmerACC() :
+                    <ClassIntensHome /> 
+                  }
+
+                  <AlquranHome />
 
                   {loadingStory ?
                     ShimmerCardInspiratifStory() :
@@ -504,6 +699,14 @@ const Home = (props) => {
           backdropPress={() => toggleModalInfoClass()}
           backButtonPress={() => toggleModalInfoClass()}
         />
+        <ModalClassDirect
+          class={classObj}
+          state={statePackage}
+          loading={loadingPackage}
+          isVisible={modalClassDirectVisible}
+          backdropPress={() => toggleModalClassDirect()}
+          backButtonPress={() => toggleModalClassDirect()}
+        />
         <ModalInfo
           isVisible={modalVisible}
           backdropPress={() => toggleModal()}
@@ -517,6 +720,20 @@ const Home = (props) => {
                   style={styles.BackroundImgModal}
                 />
               </View>
+            </View>
+          }
+        />
+        <ModalInfo
+          hideButtonClose={true}
+          isVisible={modalVisibleCheck}
+          containerStyle={styles.whitemdl}
+          custombackdropStyle={styles.backdropStyle}
+          // backdropPress={() => toggleModalCheck()}
+          // backButtonPress={() => toggleModalCheck()}
+          renderItem={
+            <View style={{alignItems:'center', paddingHorizontal: 25, paddingTop:30}}>
+                <Text style={styles.textVersion}>Silahkan update aplikasi belajariahmu dengan yang terbaru</Text>
+                <Buttons title='Update Sekarang' onPress={DirectToGP} />
             </View>
           }
         />

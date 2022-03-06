@@ -1,5 +1,6 @@
 import Cards from './card'
 import Alerts from './alert'
+import SVGIcon from './svg'
 import Topbar from './topbar'
 import Loader from './loader'
 import Buttons from './button'
@@ -7,6 +8,7 @@ import LoadingView from './loading-view'
 import { Chat, ChatAdmin, ChatMentor } from './chat'
 import {
   Shimmer,
+  ShimmerACC,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,
@@ -20,6 +22,7 @@ import TextView from './text-view'
 import Searchbox from './searchbox'
 import ImageView from './image-view'
 import Progressbar from './progressbar'
+import InputSelect from './Input-select'
 import ButtonGradient from './button-gradient'
 
 import VideoPlayer from './video'
@@ -30,9 +33,12 @@ import {
   ModalRecord,
   ModalRepair,
   ModalConfirm,
+  ModalEmoticon,
   ModalInfoClass,
   ModalFilterUser,
+  ModalClassDirect,
   ModalFilterAdmin,
+  ModalRatingDirect,
   ModalFilterUstadz,
   ModalNoConnection,
   ModalFilterAdminPageUser,
@@ -41,6 +47,7 @@ import {
 } from './modal'
 
 export {
+  SVGIcon,
   Chat,
   Cards,
   Alerts,
@@ -58,6 +65,8 @@ export {
   ModalInfo,
   ChatAdmin,
   ChatMentor,
+  ShimmerACC,
+  InputSelect,
   LoadingView,
   ModalRating,
   ModalRecord,
@@ -65,12 +74,15 @@ export {
   Progressbar,
   VideoPlayer,
   ModalConfirm,
+  ModalEmoticon,
   ModalInfoClass,
   ButtonGradient,
   ModalFilterUser,
+  ModalClassDirect,
   ModalFilterAdmin,
   ModalNoConnection,
   ModalFilterUstadz,
+  ModalRatingDirect,
   ShimmerListCategory,
   ShimmerCardPromotion,
   ShimmerInspiratifStory,

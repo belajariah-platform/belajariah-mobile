@@ -3,13 +3,12 @@ import { FontType, FontSize, Color } from '../../../assets'
 
 const styles = StyleSheet.create({
   modalStyle : {
-    width: '100%',
+    // width: '100%',
     borderRadius: 20,
     backgroundColor: Color.white,
   },
   modalContentSyle : {
     alignSelf: 'center',
-    paddingVertical : 20,
     justifyContent:'center',
   },
   viewTxtJudulModal : {
@@ -28,11 +27,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   viewTitlePaket : {
+    width: '70%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   viewTxtTitlePaket : {
-    marginLeft: 10,
+    width: '100%',
+    marginLeft: 2,
+    marginRight: 2,
   },
   TxtTitlePaket : {
     color: Color.purpleText,
@@ -53,6 +55,11 @@ const styles = StyleSheet.create({
     color: Color.black,
     fontFamily: FontType.bold,
     fontSize: FontSize.smallMedium,
+  },
+  TxtMeet : {
+    color: '#13A98B',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallPoint,
   },
   viewDescPaket : {
     marginBottom: 5,
@@ -77,6 +84,14 @@ const styles = StyleSheet.create({
   textRegular: {
     marginBottom: 7,
     color: Color.black,
+    textAlign: 'justify',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallPoint,
+  },
+  textDescPackage: {
+    marginVertical: 4,
+    color: Color.black,
+    textAlign: 'justify',
     fontFamily: FontType.regular,
     fontSize: FontSize.smallPoint,
   },
@@ -86,6 +101,48 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  NewContainer : {
+    paddingHorizontal: '12%',
+  },
+  FlexNew: {
+    flexDirection: 'row',
+  },
+  TxtTitlePackage : {
+    color: Color.purpleButton,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  TxtDescTitle : {
+    marginBottom: 16,
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
+  TxtDescPack : {
+    marginLeft: 6,
+    maxWidth: '90%',
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
+  },
+  ViewPrice : {
+    marginTop: 18,
+  },
+  TxtPrice : {
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.bold,
+    textDecorationLine: 'line-through',
+  },
+  TxtPriceDiscount : {
+    color: '#FF4545',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.medium,
+  },
+  StyleBtn : {
+    width: 'auto',
+    marginHorizontal: '5%',
+  }
 })
 
 export { styles }

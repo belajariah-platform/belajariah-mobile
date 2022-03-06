@@ -33,9 +33,9 @@ import {
 
 import { Images } from '../../../assets'
 import { Response } from '../../../utils'
-import { PaymentAPI } from '../../../api'
 import { FormatRupiah } from '../../../utils'
 import { styles } from './admin-transaction.style'
+import { PaymentAPI, ClassQuranAPI } from '../../../api'
 
 const AdminTransactionAll = () => {
   const dispatch = useDispatch()
@@ -108,35 +108,63 @@ const AdminTransactionAll = () => {
     const values = {
       Remarks : '',
       ID : item.ID,
+      Code : item.Code,
       Action : action,
       User_Code : item.User_Code,
       Class_Code : item.Class_Code,
       Package_Code : item.Package_Code,
+      Total_Transfer : item.Total_Transfer,
       Status_Payment_Code : item.Status_Payment_Code,
+      Payment_Method_Code : item.Payment_Method_Code,
     }
-    try {
-      setLoadingBtn(true)
-      const response = await PaymentAPI.ConfirmPayment(values)
-      if (!response.data.result) {
-        ToastAndroid.show(`Errror ${response.data.error}`,
-          ToastAndroid.SHORT)
-      } else {
-        setModalVisible(!modalVisible)
-        fetchDataTransaction(dataState)
+    console.log(values)
+
+    if (item.Payment_Reference == 'General Payment') {
+      try {
+        setLoadingBtn(true)
+        const response = await PaymentAPI.ConfirmPayment(values)
+        if (!response.data.result) {
+          ToastAndroid.show(`Errror ${response.data.error}`,
+            ToastAndroid.SHORT)
+        } else {
+          setModalVisible(!modalVisible)
+          fetchDataTransaction(dataState)
+        }
+        setLoadingBtn(false)
+      } catch (error) {
+        setLoadingBtn(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+        return error
       }
-      setLoadingBtn(false)
-    } catch (error) {
-      setLoadingBtn(false)
-      NetInfo.fetch().then(res => {
-        setconnectStatus(!res.isConnected)
-      })
-      return error
-    }
+    } else {
+        try {
+          setLoadingBtn(true)
+          const response = await ClassQuranAPI.ConfirmPaymentQuran(values)
+          console.log(response.data.message)
+          if (response && response.data && response.data.message.result) {
+            setModalVisible(!modalVisible)
+            fetchDataTransaction(dataState)
+          } else {
+            ToastAndroid.show(`Gagal ${'mesubmit pembayaran'}`,
+              ToastAndroid.SHORT)
+          }
+          setLoadingBtn(false)
+        } catch (error) {
+          setLoadingBtn(false)
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
+          return error
+        } 
+      }
   }
 
   const handleRevised = async (item) => {
     const values = {
       ID : item.ID,
+      Code : item.Code,
       Remarks : remarks,
       Action : 'Revised',
       User_Code : item.User_Code,
@@ -144,25 +172,47 @@ const AdminTransactionAll = () => {
       Package_Code : item.Package_Code,
       Status_Payment_Code : item.Status_Payment_Code,
     }
-    try {
-      console.log(values)
-      setLoadingBtn(true)
-      const response = await PaymentAPI.ConfirmPayment(values)
-      if (!response.data.result) {
-        ToastAndroid.show(`Errror ${response.data.error}`,
-          ToastAndroid.SHORT)
-      } else {
-        setmodalRepairVisible(!modalRepairVisible)
-        fetchDataTransaction(dataState)
+    console.log(values)
+   if (item.Payment_Reference == 'General Payment') {
+      try {
+        setLoadingBtn(true)
+        const response = await PaymentAPI.ConfirmPayment(values)
+        if (!response.data.result) {
+          ToastAndroid.show(`Errror ${response.data.error}`,
+            ToastAndroid.SHORT)
+        } else {
+          setModalVisible(!modalVisible)
+          fetchDataTransaction(dataState)
+        }
+        setLoadingBtn(false)
+      } catch (error) {
+        setLoadingBtn(false)
+        NetInfo.fetch().then(res => {
+          setconnectStatus(!res.isConnected)
+        })
+        return error
       }
-      setLoadingBtn(false)
-    } catch (error) {
-      setLoadingBtn(false)
-      NetInfo.fetch().then(res => {
-        setconnectStatus(!res.isConnected)
-      })
-      return error
-    }
+    } else {
+        try {
+          setLoadingBtn(true)
+          const response = await ClassQuranAPI.ConfirmPaymentQuran(values)
+          console.log(response)
+          if (response && response.data && response.data.message.result) {
+            setModalVisible(!modalVisible)
+            fetchDataTransaction(dataState)
+          } else {
+            ToastAndroid.show(`Gagal ${'mesubmit pembayaran'}`,
+              ToastAndroid.SHORT)
+          }
+          setLoadingBtn(false)
+        } catch (error) {
+          setLoadingBtn(false)
+          NetInfo.fetch().then(res => {
+            setconnectStatus(!res.isConnected)
+          })
+          return error
+        } 
+      }
   }
 
   const onRefreshing = () => {

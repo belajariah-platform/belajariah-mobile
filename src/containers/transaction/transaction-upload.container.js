@@ -23,8 +23,8 @@ import {
 } from '../../components'
 
 import { Images } from '../../assets'
-import { PaymentAPI } from '../../api'
 import { FormatRupiah } from '../../utils'
+import { PaymentAPI, Config } from '../../api'
 
 import styles from './transaction-upload.style'
 import { Linking } from 'react-native'
@@ -36,7 +36,7 @@ const TransactionUpload = (props) => {
   const [dataImage, setDataImage] = useState({})
   const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
-  const url = 'https://api.whatsapp.com/send?phone=6285266643607&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29'
+  const url = `https://api.whatsapp.com/send?phone=62${parseInt(Config.ADMIN_CONTACT)}&text=Assalamu\'alaikum%20Admin%20Belajariah,%20saya%20mau%20kirim%20foto%20bukti%20bayar%20kelas%20Belajariah%20%3A%29`
 
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
   const retryConnection = () => {

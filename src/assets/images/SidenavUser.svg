@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Creator: CorelDRAW X7 -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="4.1486mm" height="4.4026mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 415 440"
- xmlns:xlink="http://www.w3.org/1999/xlink">
- <defs>
-  <style type="text/css">
-   <![CDATA[
-    .fil0 {fill:white;fill-rule:nonzero}
-   ]]>
-  </style>
- </defs>
- <g id="Layer_x0020_1">
-  <metadata id="CorelCorpID_0Corel-Layer"/>
-  <path class="fil0" d="M292 257c-4,-2 -6,-8 -4,-12 2,-4 8,-6 12,-4 18,8 60,34 88,67 18,22 30,47 26,74 -3,20 -29,34 -67,44 -33,7 -74,12 -117,13 -42,1 -86,-1 -124,-6 -56,-8 -98,-25 -104,-50 -7,-26 5,-51 23,-73 28,-34 73,-61 91,-69 4,-2 9,0 11,4 2,4 1,10 -4,12 -16,8 -58,33 -85,64 -14,18 -24,38 -19,58 4,17 41,29 89,36 37,6 80,8 122,6 41,-1 82,-5 113,-13 31,-7 52,-17 54,-28 3,-21 -7,-42 -23,-60 -25,-32 -65,-55 -82,-63zm-84 -256c35,0 67,14 90,37 23,23 37,55 37,90 0,35 -14,67 -37,90 -23,23 -55,37 -90,37 -35,0 -67,-14 -90,-37 -23,-23 -37,-55 -37,-90 0,-35 14,-67 37,-90 23,-23 55,-37 90,-37zm77 50c-20,-20 -47,-33 -77,-33 -30,0 -58,13 -78,33 -19,19 -32,47 -32,77 0,30 13,58 32,77 20,20 48,32 78,32 30,0 57,-12 77,-32 20,-19 32,-47 32,-77 0,-30 -12,-58 -32,-77z"/>
- </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="15.68" height="16.64" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd" viewBox="0 0 415 440"><path d="M292 257c-4-2-6-8-4-12s8-6 12-4c18 8 60 34 88 67 18 22 30 47 26 74-3 20-29 34-67 44-33 7-74 12-117 13-42 1-86-1-124-6-56-8-98-25-104-50-7-26 5-51 23-73 28-34 73-61 91-69 4-2 9 0 11 4s1 10-4 12c-16 8-58 33-85 64-14 18-24 38-19 58 4 17 41 29 89 36 37 6 80 8 122 6 41-1 82-5 113-13 31-7 52-17 54-28 3-21-7-42-23-60-25-32-65-55-82-63zM208 1c35 0 67 14 90 37s37 55 37 90-14 67-37 90-55 37-90 37-67-14-90-37-37-55-37-90 14-67 37-90 55-37 90-37zm77 50c-20-20-47-33-77-33s-58 13-78 33c-19 19-32 47-32 77s13 58 32 77c20 20 48 32 78 32s57-12 77-32c20-19 32-47 32-77s-12-58-32-77z" style="fill:#fff;fill-rule:nonzero"/></svg>

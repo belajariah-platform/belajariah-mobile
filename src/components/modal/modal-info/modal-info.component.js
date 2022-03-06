@@ -12,7 +12,7 @@ const ModalInfo = (props) => {
       <Modal
         backdropOpacity={0.25}
         isVisible={props.isVisible}
-        style={styles.backdropStyle}
+        style={[styles.backdropStyle, props.custombackdropStyle]}
         onBackdropPress={props.backdropPress}
         onBackButtonPress={props.backButtonPress}
       >
@@ -24,7 +24,7 @@ const ModalInfo = (props) => {
               <Images.ButtonClose.default/>
             </TouchableOpacity>
           )}
-          <View style={styles.modalContentSyle}>
+          <View style={[styles.modalContentSyle, props.ModalContent]}>
             {props.renderItem}
           </View>
         </View>
@@ -37,9 +37,11 @@ ModalInfo.propTypes = {
   isVisible : PropTypes.bool,
   renderItem : PropTypes.object,
   backdropPress : PropTypes.func,
+  ModalContent : PropTypes.object,
   backButtonPress : PropTypes.func,
   hideButtonClose : PropTypes.bool,
   containerStyle : PropTypes.object,
+  custombackdropStyle : PropTypes.object,
 }
 
 

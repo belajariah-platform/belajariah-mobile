@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         height: 12, 
         marginTop: 6, 
         borderRadius: 4,
-    }
+    },
 })
 
 export {styles}

@@ -1,0 +1,118 @@
+import PropTypes from 'prop-types'
+import { Text } from '@ui-kitten/components'
+import { Card } from 'react-native-elements'
+import React, { useState, useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ImageBackground, View, ScrollView} from 'react-native'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
+import {Response} from '../../../../utils'
+import {UserClassAPI} from '../../../../api'
+import { Images, Color } from '../../../../assets'
+import { Buttons, LoadingView } from '../../../../components'
+
+import ClassListMentorQuran from './class-list-mentor.container'
+import ClassAbout from './class-about.container'
+import ClassReviewQuran from './class-review.container'
+import styles from './class-detail.style'
+
+const Tab = createMaterialTopTabNavigator()
+
+const ClassDetailQuran = (props) => {
+    const navigation = useNavigation()
+    const [state, setState] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    const { DetailClass } = props.route.params
+    
+    const fetchDataUserClass = async () => {
+        try {
+          setLoading(true)
+          const filter = [{"field": "class_code", "type": "text", "value": `${DetailClass.code}`}]
+          const response = await UserClassAPI.GetAllUserClassQuran(filter)
+          if (response.status === Response.SUCCESS) {
+            setState(response.data.message.data)
+          } else {
+            NetInfo.fetch().then(res => {
+              setconnectStatus(!res.isConnected)
+            })
+          }
+        } catch (err) {
+          return err
+        }
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        fetchDataUserClass()
+    }, [])
+
+    const Header = () => {
+        return (
+            <View style={{...styles.containerHeaderProfile, backgroundColor: DetailClass.color_path}}>
+                <ImageBackground source={{uri : DetailClass.class_image_header}} style={styles.HeaderClass}>
+                    <View style={styles.flexHeader}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Images.ButtonBack.default style={styles.iconBack} />
+                    </TouchableOpacity>
+                    <Text style={styles.textTitleWhite}>Kelas {DetailClass.class_initial}</Text>
+                    </View>
+                </ImageBackground>
+                <View style={styles.semiBox}/>   
+            </View>
+        )
+    }
+
+    return (
+        <View style={styles.flexFull}>
+            <Header />
+
+            {loading ? <LoadingView color={DetailClass.color_path} /> 
+            : (
+                <>
+                    <Tab.Navigator
+                        style={styles.tabContainerStyle}
+                        tabBarOptions={{
+                            inactiveTintColor: Color.white,
+                            labelStyle: styles.labelStyle,
+                            activeTintColor: Color.white,
+                            indicatorStyle: styles.indicatorStyle,
+                            style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
+                    }}>
+                        <Tab.Screen
+                            name='ClassAbout'
+                            options={{ title: 'Tentang Kelas' }}>
+                            {() => <ClassAbout params={DetailClass}/>}
+                        </Tab.Screen>
+                        {/* {state && state.length == 0 &&  <Tab.Screen
+                            name='ClassListMentorQuran'
+                            options={{ title: 'Pengajar' }}>
+                            {() => <ClassListMentorQuran params={DetailClass} userClass={state}/>}
+                        </Tab.Screen>} */}
+                        <Tab.Screen
+                            name='ClassReviewQuran'
+                            options={{ title: 'Ulasan' }}>
+                            {() => <ClassReviewQuran params={DetailClass} userClass={state}/>}
+                        </Tab.Screen>
+
+                    </Tab.Navigator>
+                    <View style={styles.ViewButton}>
+                        <Buttons 
+                            title={'Temukan Guru Ngaji'} 
+                            style={{...
+                                styles.StyleBtn, backgroundColor: DetailClass.color_path}} 
+                            textStyle={styles.StyleTxtBtn}
+                            icon={<Images.IconSearchWhite.default/>}
+                            onPress={() => {
+                                navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
+                            }}
+                        />
+                    </View>
+                </>
+            )}
+        </View>
+    )
+}
+
+export default ClassDetailQuran

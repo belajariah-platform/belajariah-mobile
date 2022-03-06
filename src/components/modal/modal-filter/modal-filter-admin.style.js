@@ -21,9 +21,6 @@ const styles = StyleSheet.create({
     fontFamily: FontType.bold,
     fontSize: FontSize.largeMiddle,
   },
-  closeStyle : {
-
-  },
   modalContentSyle : {
     justifyContent:'center',
     marginHorizontal: '5%',
@@ -44,8 +41,8 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
   },
   viewKategoriKelas : {
-    flexDirection: 'row',
     marginBottom: '5%',
+    flexDirection: 'row',
   },
   textCategories: {
     marginTop: 3,

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
@@ -37,7 +38,7 @@ import { Images, Color } from '../../assets'
 import styles from './transaction-method.style'
 
 const TransactionMethod = (props) => {
-  const { classes, packages } = props.route.params
+  const { classes, packages, instructor, FormSchedule } = props.route.params
 
   const navigation = useNavigation()
   const toggleModal = () => setModalVisible(!modalVisible)
@@ -78,7 +79,12 @@ const TransactionMethod = (props) => {
       Class_Code : classes.Code,
     },
     onSubmit:  (values) => {
-      claimVoucherCode(values)
+      if (classes.Is_Direct == true) {
+        ToastAndroid.show('Mohon Maaf, Voucher Tidak Bisa digunakan untuk Pembelian Kelas ini',
+          ToastAndroid.SHORT)
+      } else {
+        claimVoucherCode(values)
+      }
     },
   })
 
@@ -107,13 +113,15 @@ const TransactionMethod = (props) => {
 
   const FormCheckout = useFormik({
     initialValues: {
-      User_Code: userInfo.ID,
+      User_Code: userInfo.Code,
       Class_Code: classes.Code,
       Promo_Code : '',
       Package_Code : packages.Code,
       Payment_Method_Code : '',
       Status_Payment_Code : 'ENC00000025',
       Total_Transfer : parseInt(packages.Price_Discount),
+      Schedule_Code_1 : classes.Is_Direct == true ? (FormSchedule.Meet1) : (null),
+      Schedule_Code_2 : classes.Is_Direct == true ? (FormSchedule.Meet2) : (null),
     },
     onSubmit:  (values) => {
       if (values.Payment_Method_Code != '') {
@@ -170,6 +178,16 @@ const TransactionMethod = (props) => {
     )
   }
 
+  const FormattingSchedule = (code) => {
+    // console.log(code)
+    if (code > 0) {
+        const formatObj = instructor.Mentor_Schedule.filter((e) => e.ID == code)
+        return formatObj[0].Shift_Name + ' (' + moment(formatObj[0].Start_Date).format('LT') + ' - ' +   moment(formatObj[0].End_Date).format('LT') + formatObj[0].Time_Zone + ')'
+    } else { 
+        return ''
+    }
+  } 
+
   const Header = () => {
     return (
       <View style={styles.containerHeader}>
@@ -192,7 +210,9 @@ const TransactionMethod = (props) => {
           <Text style={styles.textBold}>Judul Kelas:</Text>
           <Text style={styles.textRegular}>{classes.Class_Name}</Text>
           <Text style={styles.textBold}>Instruktur</Text>
-          <Text style={styles.textRegular}>{`${classes.Instructor_Name}, ${classes.Instructor_Biografi}`}</Text>
+          {classes.Is_Direct == true ? 
+          (<Text style={styles.textRegular}>{`${instructor.Full_Name}`}</Text>)
+          : <Text style={styles.textRegular}>{`${classes.Instructor_Name}, ${classes.Instructor_Biografi}`}</Text>}
           {classes.Class_Rating != 0 && (
             <>
               <Text style={styles.textBold}>Rating</Text>
@@ -201,6 +221,15 @@ const TransactionMethod = (props) => {
               </View>
             </>
           )}
+          {classes.Is_Direct == true ? (
+            <View style={styles.ViewSchedule}>
+              <Text style={styles.textBold}>Jadwal Ngaji</Text>
+              <View style={styles.ViewSchedules}>
+                <Text style={styles.TxtSchedule}>Pertemuan 1 : {FormattingSchedule(FormSchedule['Meet1'])}</Text>
+                <Text style={styles.TxtSchedule}>Pertemuan 2 : {FormattingSchedule(FormSchedule['Meet2'])}</Text>
+              </View>
+            </View>
+          ) : null}
           {isClaim ? (null) : (
             <View>
               <Card.Divider style={styles.divider} />
@@ -215,7 +244,6 @@ const TransactionMethod = (props) => {
             </View>
             ) 
           }
-          
         </View>
       </View>
     )
@@ -226,7 +254,7 @@ const TransactionMethod = (props) => {
       <RadioButton.Group onValueChange={(newGateway) => {
         FormCheckout.setFieldValue('Payment_Method_Code', newGateway)
         setGateway(newGateway)}}
-      value={gateway}>
+        value={gateway}>
         <View style={styles.containerMethod}>
           <Text style={styles.textTitleBlack}>Metode Pembayaran</Text>
 

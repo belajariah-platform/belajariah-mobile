@@ -5,7 +5,7 @@ const GetAllPayment = async (skip, take, filters, sort, search) =>  {
   try {
     const headers = await Header()
     const response = await axios.get(`
-    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}&search=${search}`,
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments?skip=${skip}&take=${take}&filter=${filters}&order=modified_date|${sort}&search=${search}`,
     headers
     )
     return response
@@ -18,7 +18,7 @@ const GetAllPaymentReject = async (skip, take, filters, sort, search) =>  {
   try {
     const headers = await Header()
     const response = await axios.get(`
-    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments_reject?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}&search=${search}`,
+    ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payments_reject?skip=${skip}&take=${take}&filter=${filters}&order=modified_date|${sort}&search=${search}`,
     headers
     )
     return response
@@ -31,7 +31,7 @@ const GetAllPaymentByUserID = async (skip, take, filters, sort) =>  {
   try {
     const headers = await Header()
     const response = await axios.get(`
-      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment?skip=${skip}&take=${take}&filter=${filters}&order=id|${sort}`,
+      ${Config.BELAJARIAH_SERVICE_ENDPOINT}/payment?skip=${skip}&take=${take}&filter=${filters}&order=modified_date|${sort}`,
     headers
     )
     return response

@@ -1,103 +1,64 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { Text } from '@ui-kitten/components'
-import { View, TouchableOpacity } from 'react-native'
+import { Icon, Text } from '@ui-kitten/components'
 import { useNavigation } from '@react-navigation/native'
+import { View, TouchableOpacity, Image} from 'react-native'
 
-import { LoadingView } from '../../../components'
 import { FormatRupiah } from '../../../utils'
 import { Images, Color } from '../../../assets'
+import { LoadingView, Buttons } from '../../../components'
 import { styles } from './modal-info-class.style'
 
 const ModalInfoClass = (props) => {
   const navigation = useNavigation()
+  const BenefitTahsin = [
+    { IconModal : Images.IconPackageTahsin1, TxtVal : 'Akses video selamanya'},
+    { IconModal : Images.IconPackageTahsin2, TxtVal : 'Akses grub diskusi'},
+    { IconModal : Images.IconPackageTahsin3, TxtVal : 'Resume materi'},
+    { IconModal : Images.IconPackageTahsin4, TxtVal : 'Mendapatkan pembinaan lanjutan'},
+    { IconModal : Images.IconPackageTahsin5, TxtVal : 'Free sertifikat'},
+  ]
 
-  const ViewClass = () => {
+  const InDirectPackage = () => {
     return(
-      <View>
+      <View style={styles.NewContainer}>
         {props.state && props.state.map((value, index) => {
-          let icon, colors, fontColor, iconBell, iconConsul, iconWebinar
-          value.Type == 'Darussalam' ?
-            (
-              colors = Color.softPink,
-              fontColor = Color.purpleText,
-              icon = Images.IconPaketDarussalam,
-              iconBell = Images.IconBenefit1Darussalam,
-              iconConsul = Images.IconBenefit2Darussalam,
-              iconWebinar = Images.IconBenefit3Darussalam
-            ) :
-            value.Type == 'Naim' ?
-              (
-                colors = Color.mediumPink,
-                fontColor = Color.textPink,
-                icon = Images.IconPaketNaim,
-                iconBell = Images.IconBenefit1Naim,
-                iconConsul = Images.IconBenefit2Naim,
-                iconWebinar = Images.IconBenefit3Naim
-              ) :
-              (
-                colors = Color.softGreen,
-                fontColor = Color.textGreen,
-                icon = Images.IconPaketFirdaus,
-                iconBell = Images.IconBenefit1Firdaus,
-                iconConsul = Images.IconBenefit2Firdaus,
-                iconWebinar = Images.IconBenefit3Firdaus
-              )
           return (
-            <TouchableOpacity
-              key={index}
-              onPress={() => {
-                props.backdropPress()
-                navigation.navigate('ClassDetail', { packages : value, classes : props.class })
-              }}>
-              <View style={[styles.containerPaket, { backgroundColor: colors }]}>
-                <View style={styles.viewTitlePaket}>
-                  <icon.default
-                    width={36}
-                    height={36}
-                  />
-                  <View style={styles.viewTxtTitlePaket}>
-                    <Text style={[styles.TxtTitlePaket, { color : fontColor }]}>Paket {value.Type}</Text>
-                    <Text style={styles.textRegular}>Keuntungan yang kamu dapatkan</Text>
-                  </View>
-                </View>
-                <View style={styles.flexBenefits}>
-                  <iconBell.default
-                    width={20}
-                    height={20}
-                    style={styles.IconBenefit}
-                  />
-                  <Text style={styles.TxtDescPaket}>Akses video selamanya</Text>
-                </View>
-                {/* <View style={styles.flexBenefits}>
-                  <iconConsul.default
-                    width={20}
-                    height={20}
-                    style={styles.IconBenefit}
-                  />
-                  <Text style={styles.TxtDescPaket}>
-                    Akses Konsultasi {value.Consultation}x ({value.Duration} bulan)
-                  </Text>
-                </View> */}
-                <View style={styles.flexBenefits}>
-                  <iconWebinar.default
-                    width={20}
-                    height={20}
-                    style={styles.IconBenefit}
-                  />
-                  <Text style={styles.TxtDescPaket}>Webinar {value.Webinar}x</Text>
-                </View>
-                <View style={styles.flexBenefits}>
-                  <Text style={styles.TxtHargaCoret}>
-                    Rp{FormatRupiah(value.Price_Package)}
-                  </Text>
-                  <Text style={styles.TxtHarga}>
-                    Rp{FormatRupiah(value.Price_Discount)}
-                  </Text>
+            <View key={index}>
+              <View style={styles.FlexNew}>
+                <Images.IllustrationPackageTahsin.default />
+                <View style={{marginLeft: 10}}>
+                  <Text style={styles.TxtTitlePackage}>Paket Darussalam</Text>
+                  <Text style={styles.TxtDescTitle}>Benefit yang kamu dapatkan</Text>
+                  {BenefitTahsin.map((item, index) => {
+                    return (
+                      <View key={index} style={styles.FlexNew}>
+                        <item.IconModal.default 
+                          width={16}
+                          height={16}
+                        />
+                        <Text style={styles.TxtDescPack}>{item.TxtVal}</Text>
+                      </View>
+                    )
+                  })}
+                   <View style={styles.ViewPrice}>
+                     <Text style={styles.TxtPrice}>Rp{FormatRupiah(value.Price_Package)}</Text>
+                     <Text style={styles.TxtPriceDiscount}>Rp{FormatRupiah(value.Price_Discount)}</Text>
+                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
+              <View>
+                <Buttons 
+                  title='Pilih Paket'
+                  style={styles.StyleBtn}
+                  onPress={() => {
+                    props.backdropPress()
+                    navigation.navigate('ClassDetail', { packages : value, classes : props.class })
+                  }}
+                />
+              </View>              
+            </View>
           )
         })}
       </View>
@@ -123,7 +84,7 @@ const ModalInfoClass = (props) => {
               <LoadingView
                 loadingStyle={{ flex : 0 }}
               /> :
-              <ViewClass />
+              <InDirectPackage />
             }
           </View>
         </View>

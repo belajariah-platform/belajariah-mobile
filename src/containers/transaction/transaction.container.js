@@ -178,7 +178,7 @@ const Transaction = () => {
     ) : null
   }
 
-  const NoTransaction = () => {
+  const NoTransaction = (item, index) => {
     return (
       <View style={styles.containerNoTransaction}>
         <Images.NoTransaction.default />
@@ -224,7 +224,9 @@ const Transaction = () => {
       <View key={index}>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => navigation.navigate('TransactionInfo', item)}
+          onPress={() => item.Payment_Reference == 'General Payment' 
+          ? navigation.navigate('TransactionInfo', item)
+          : navigation.navigate('TransactionInfoQuran', item)}
           disabled={item.Status_Payment == 'Waiting for Payment' ? false : true}
           // onPress={() => {
           //   console.log(item)
@@ -288,14 +290,14 @@ const Transaction = () => {
       <View style={styles.bgHeader}>
         <View style={styles.containerHeader}>
           <Text style={styles.titleHeader}>Transaksi</Text>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.containerFilter}
             onPress = {toggleModal}>
             <Images.Filter.default
               width={20}
               height={20}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <ImageBackground
           source={Images.TransactionBGPNG}
@@ -307,7 +309,13 @@ const Transaction = () => {
               loadingStyle={{ marginTop : -100 }}
             /> :
             state.length == 0 ?
-              <NoTransaction /> :
+              <FlatList
+                ListEmptyComponent={<NoTransaction />}
+                style={styles.containerScrollView}
+                contentContainerStyle={{ paddingBottom: 122 }}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshing}/>}
+              /> 
+            :
               <FlatList
                 data={state}
                 onEndReachedThreshold={0.1}

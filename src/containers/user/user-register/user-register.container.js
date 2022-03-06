@@ -1,12 +1,15 @@
 import * as Yup from 'yup'
-import { useFormik } from 'formik'
+import { Form, useFormik } from 'formik'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 import NetInfo from '@react-native-community/netinfo'
+import { GoogleSignin } from '@react-native-community/google-signin'
 
 import {
   View,
   Image,
+  FlatList,
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -24,29 +27,87 @@ import {
   Topbar,
   TextBox,
   Buttons,
+  ModalInfo,
   ModalNoConnection
 } from '../../../components'
 
-import { UserAPI } from '../../../api'
-import { Images } from '../../../assets'
-import { styles } from './user-register.style'
-import { Config } from '../../../api/config'
 import { Linking } from 'react-native'
+import { SIGN_IN } from '../../../action'
+import { Config } from '../../../api/config'
+import { styles } from './user-register.style'
+import { Images } from '../../../assets'
+
+import { UserAPI, CountryCodeAPI } from '../../../api'
+import { Response, askPermission } from '../../../utils'
 
 const Register = (props) => {
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [checked, setChecked] = useState(false)
+  const [countryCode, setCountryCode] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
   const [connectStatus, setconnectStatus] = useState(false)
   const [secureTextEntry, setSecureTextEntry] = useState(true)
+
+  const toggleModal = () => setModalVisible(!modalVisible)
   const togglemodalNoConnection = () => setconnectStatus(!connectStatus)
+
+  const googleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices()
+      const userInfo = await GoogleSignin.signIn()
+      if (Object.keys(userInfo).length != 0 ) {
+        const values = {
+          Email : userInfo.user.email,
+          Password : userInfo.user.id,
+          Full_Name : userInfo.user.name,
+        }
+        setLoading(true)
+        const response = await UserAPI.GoogleSignIn(values)
+        if (response.data.result) {
+          await dispatch({
+            type: SIGN_IN,
+            token : response.data.token,
+            user: response.data.data,
+            loginType : 'google'
+          })
+        } else {
+          UserAPI.GoogeSignOut()
+        }
+      }
+      setLoading(false)
+    } catch (error) {
+      NetInfo.fetch().then(res => {
+        setconnectStatus(!res.isConnected)
+      })
+      setLoading(false)
+      return error
+    }
+  }
+
+  const fetchDataCountryCode = async () => {
+    try {
+      const response = await CountryCodeAPI.GetAllCountryCode()
+      if (response.status === Response.SUCCESS) {
+        setCountryCode(response?.data?.message?.data ?? [])
+      } 
+    } catch (err) {
+      return err
+    }
+  }
 
   const FormSubmit = useFormik({
     initialValues: {
-      Email: '', Password: '',
-      Full_Name: '', Phone: '' },
+      Email: '', 
+      Password: '',
+      Full_Name: '', 
+      Phone: '', 
+      Country_Number_Code: '',
+      Flag: '',
+    },
     validationSchema: Yup.object({
       Full_Name: Yup.string().required('nama harus diisi'),
-      Phone: Yup.string().required('nomor telepon harus diisi'),
+      Phone: Yup.number().required('nomor telepon harus diisi'),
       Email: Yup.string()
         .email('Masukan email yang valid')
         .required('Email harus diisi'),
@@ -55,14 +116,23 @@ const Register = (props) => {
         .required('Password harus diisi'),
     }),
     onSubmit: async (values, form) => {
+      console.log(values.Phone)
       if (checked === true) {
         if (values.Phone.charAt(0) == '0') {
           Alerts(false, 'Format nomor telepon tidak sesuai')
+        } else if (values.Country_Number_Code == '') {
+          Alerts(false, 'Kode negara belum dipilih')
         } else {
           try {
             setLoading(true)
-            values.Phone = Number('62' + values.Phone)
-            const response = await UserAPI.SignUp(values)
+            data = {
+              Email: values.Email, 
+              Password: values.Password,
+              Full_Name: values.Full_Name, 
+              Phone: Number(values.Phone), 
+              Country_Number_Code: values.Country_Number_Code,
+            }
+            const response = await UserAPI.SignUp(data)
             if (!response.data.result) {
               setLoading(false)
               Alerts(false, response.data.message)
@@ -115,6 +185,39 @@ const Register = (props) => {
     </TouchableWithoutFeedback>
   )
 
+  const dataCountryCode = props => {
+       return (
+        <TouchableOpacity 
+          style={{marginBottom: 20}} 
+          onPress={() => {
+             FormSubmit.setFieldValue('Flag', props.flag)
+             FormSubmit.setFieldValue('Country_Number_Code', props.code)
+             setModalVisible(false)
+          }}
+          >
+          <View style={styles.containerCountry}>
+            <Image
+                source={{uri : props.flag}}
+                style={styles.ImageFlag}
+            />
+            <Text>{props.country}</Text>
+            <Text style={styles.textCountry}>+{props.number_code}</Text>
+          </View>
+            <View style={styles.divider}/>
+        </TouchableOpacity>
+      )
+    }
+
+  useEffect(() => {
+    askPermission()
+    GoogleSignin.configure({
+      offlineAccess: true,
+      // forceCodeForRefreshToken: true,
+      // scopes: [`${Config.GOOGLE_SCOPES}`],
+      webClientId: `${Config.GOOGLE_CLIENT}`,
+    })
+    fetchDataCountryCode()
+  }, [])
 
   return (
     <>
@@ -128,8 +231,26 @@ const Register = (props) => {
       <Topbar title='Daftar' backIcon={true} />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator ={false}>
-          <Image source={Images.Register} style={styles.image}/>
-          <View style={{ marginTop: 30 }}>
+          <Image source={Images.Register} style={styles.image} resizeMode={'contain'}/>
+          <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              <TouchableOpacity
+                style={styles.anotherLogin}
+                activeOpacity={0.6}
+                onPress={googleSignIn}
+              >
+                <Image
+                  source={Images.Google}
+                  style={styles.ImageIconStyle}
+                />
+                <View>
+                  <Text style={styles.TxtGoogleButton}>Sign up with Google</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={styles.anotherText}>Atau</Text>
+            </View>
+          <View>
             <Text style={styles.text}>Nama Lengkap</Text>
             <TextBox
               error
@@ -146,17 +267,27 @@ const Register = (props) => {
             />
             <Text style={styles.text}>Nomor Telepon</Text>
             <View style={{ flexDirection : 'row' }}>
-              <TextBox
-                disabled
-                placeholder='+62'
-                customStyle={styles.phoneOne}
-                keyboardType={'numeric'}
+              <TouchableOpacity 
+                  onPress={toggleModal} 
+                  style={styles.inputCountry}
+                >
+              <View>
+                {FormSubmit.values['Flag'] == '' ? 
+                <Text style={styles.textCountry}>Kode Negara</Text> 
+                : 
+                <View style={{flexDirection: 'row'}}>
+                <Image
+                  source={{uri : FormSubmit.values['Flag']}}
+                  style={{width:38, height:22}}  
               />
+              </View>}
+              </View>
+              </TouchableOpacity>
               <TextBox
                 form={FormSubmit}
                 name='Phone'
                 customStyle={styles.phoneTwo}
-                placeholder='Masukan Nomor Telepon'
+                placeholder='Nomor Telepon'
                 keyboardType={'numeric'}
               />
             </View>
@@ -198,6 +329,25 @@ const Register = (props) => {
             </View>
           </View>
         </ScrollView>
+        <ModalInfo
+          isVisible={modalVisible}
+          containerStyle={{height:'70%'}}
+          backdropPress={() => toggleModal()}
+          backButtonPress={() => toggleModal()}
+          renderItem={
+            <View style={{paddingTop:40}}>
+               <FlatList
+                  data={countryCode}
+                  style={{ width:'100%' }}
+                  onEndReachedThreshold={0.1}
+                  showsVerticalScrollIndicator ={false}
+                  contentContainerStyle={{ paddingBottom: 20 }}
+                  keyExtractor={(item, index) =>  index.toString()}
+                  renderItem={({ item, index }) => dataCountryCode(item, index)}
+                />
+            </View>
+          }
+        />
       </View>
     </>
   )

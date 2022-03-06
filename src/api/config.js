@@ -2,6 +2,8 @@ import { Base64 } from 'js-base64'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import {
+  APP_VERSION,
+  ADMIN_CONTACT,
   GOOGLE_SCOPES,
   GOOGLE_CLIENT,
   PRIVACY_POLICY_URL,
@@ -15,6 +17,8 @@ import {
 } from '@env'
 
 const Config = {
+  APP_VERSION,
+  ADMIN_CONTACT,
   GOOGLE_SCOPES,
   GOOGLE_CLIENT,
   PRIVACY_POLICY_URL,
