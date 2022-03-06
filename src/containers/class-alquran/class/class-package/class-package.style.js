@@ -9,18 +9,12 @@ const styles = StyleSheet.create({
   },
   container : {
     flex: 1,
+    backgroundColor: Color.softPink
   },  
   containerContent : {
+    paddingTop: 20,
     borderRadius: 30,
-    marginTop: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingVertical: 20,
-    alignSelf: 'center',
-    marginHorizontal: 30,
-    marginBottom: 'auto',
     alignContent: 'center',
-    backgroundColor: '#fff',
     justifyContent: 'center',
   }, 
   modalContentSyle : {
@@ -136,7 +130,54 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: FontType.bold,
     fontSize: FontSize.large,
-  }
+  },
+  containerHeaderProfile : {
+    marginBottom : -1,
+    backgroundColor: Color.transactionBgColor,
+  },
+  flexHeaderInProfile: {
+    paddingBottom: 16,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexHeaderProfile: {
+    paddingBottom: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  semiBoxProfile: {
+    height: 12,
+    width: '100%',
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    backgroundColor: Color.softPink,
+  },
+  textTitleHeader: {
+    color: Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  iconBackProfile: {
+    marginTop: 0,
+  },
+  whitemdl: {
+    borderRadius: 22,
+    height: 150,
+    backgroundColor:Color.white,
+  },
+  textVersion : {
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: FontSize.smallMedium,
+    fontFamily: FontType.regular,
+  },
+  backdropStyle: {
+    flex:1,
+    marginHorizontal: 40,
+    alignItems:'stretch',
+    justifyContent: 'center',
+  },
 })
 
 export { styles }

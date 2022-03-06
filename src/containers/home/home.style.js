@@ -392,8 +392,14 @@ const styles = StyleSheet.create({
   },
   whitemdl: {
     borderRadius: 22,
-    height: height/2.5,
+    height: height/4,
     backgroundColor:Color.white,
+  },
+  textVersion : {
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontSize: FontSize.smallMedium,
+    fontFamily: FontType.regular,
   }
 })
 

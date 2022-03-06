@@ -232,7 +232,10 @@ const Home = (props) => {
       filterString='[{"type": "text", "field" : "type", "value": "app_version"}]'
       const response = await EnumAPI.GetAllEnum(skip, take, filterString)
       if (response.status === Response.SUCCESS) {
-        setStateCheckApp(response.data.data)
+          const version = response?.data?.data?.[0] 
+          if (version.Value !== Config.APP_VERSION) {
+            setModalVisibleCheck(true)
+          }
       } else {
         NetInfo.fetch().then(res => {
           setconnectStatus(!res.isConnected)
@@ -281,12 +284,12 @@ const Home = (props) => {
   }
 
   const _getData = async () => {
+    await fetchDataVersionApp(dataState)
     await fetchDataPromotion(dataState)
     await fetchDataCategory(dataState)
     await fetchDataACC(dataState)
     await fetchDataClass(dataState)
     await fetchDataStory(dataState)
-
     await fetchDataClassIntens(dataState)
   }
 
@@ -294,17 +297,15 @@ const Home = (props) => {
     _getData()
   }, [])
 
-  useEffect(() => {
-    fetchDataVersionApp(dataState)
-    {stateCheckApp.map((item, index) => {
-      // console.log(item.Value)
-      if (item.Value !== Config.APP_VERSION) {
-        setModalVisibleCheck(true)
-      } else {
-        null
-      }
-    })} 
-  }, [])
+  // useEffect(() => {
+  //   {stateCheckApp.map((item, index) => {
+  //     if (item.Value !== Config.APP_VERSION) {
+  //       setModalVisibleCheck(true)
+  //     } else {
+  //       null
+  //     }
+  //   })} 
+  // }, [])
 
   const DirectToGP = async () => {
     try {
@@ -627,13 +628,13 @@ const Home = (props) => {
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.contentContainer}>
 
-                  <View style={styles.carousel}>
+                  {/* <View style={styles.carousel}>
                     <Carousel
                       data={statePromotion}
                       pagination={false}
                       renderItem={PromotionHome}
                     />
-                  </View>
+                  </View> */}
                   {loadingCategory ?
                     ShimmerListCategory() :
                     CategoryClassHome()
@@ -730,12 +731,9 @@ const Home = (props) => {
           // backdropPress={() => toggleModalCheck()}
           // backButtonPress={() => toggleModalCheck()}
           renderItem={
-            <View>
-              <View>
-                <Text>Sorry lur, antum pakek versi jadul</Text>
-                <Text>So, kuy update di Playstore</Text>
-                <Buttons title='Update Now' onPress={DirectToGP()} />
-              </View>
+            <View style={{alignItems:'center', paddingHorizontal: 25, paddingTop:30}}>
+                <Text style={styles.textVersion}>Silahkan update aplikasi belajariahmu dengan yang terbaru</Text>
+                <Buttons title='Update Sekarang' onPress={DirectToGP} />
             </View>
           }
         />
