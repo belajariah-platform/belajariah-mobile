@@ -10,8 +10,8 @@ import DocumentPicker from 'react-native-document-picker'
 import {
   Icon,
   Radio,
-  Datepicker,
   RadioGroup,
+  Datepicker,
 } from '@ui-kitten/components'
 import {
   View,
