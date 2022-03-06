@@ -61,8 +61,6 @@ const ProfileEdit = () => {
     setconnectStatus(!connectStatus)
   }
 
-  // console.log(moment(new Date()).format('LL'))
-
   const FormPersonal = useFormik({
     initialValues: {
       User_Code : userInfo.Code,
@@ -74,13 +72,13 @@ const ProfileEdit = () => {
       Province: userInfo.Province,
       City: userInfo.City,
       Address: userInfo.Address,
-      Country_Number_Code: userInfo.Country_Number_Code,
+      Country_Number_Code: '',
       Number_Code: '',
     },
     onSubmit: async (values) => {
       if (values.Phone.charAt(0) == '0') {
         Alerts(false, 'Format nomor telepon tidak sesuai')
-      } else if (values.Phone.charAt(0) != '0' && values.Phone.length > 0 && values.Country_Number_Code == '') {
+      } else if (values.Phone.charAt(0) != '0' && values.Phone.length > 0 && !values.Country_Number_Code) {
         Alerts(false, 'Kode negara belum dipilih')
       } else {
       try {
@@ -114,9 +112,11 @@ const ProfileEdit = () => {
     try {
       const response = await CountryCodeAPI.GetAllCountryCode()
       if (response.status === Response.SUCCESS) {
-        setCountryCode(response?.data?.message?.data ?? [])
-        response?.data?.message?.data 
-
+        setCountryCode(response?.data?.message?.data ?? []) 
+        FormPersonal.setFieldValue('Number_Code', userInfo.Country_Number_Code ? 
+        response?.data?.message?.data.filter((e) => e.number_code == userInfo.Country_Number_Code)[0].number_code : '')
+        FormPersonal.setFieldValue('Country_Number_Code', userInfo.Country_Number_Code ? 
+        response?.data?.message?.data.filter((e) => e.number_code == userInfo.Country_Number_Code)[0].code : '')
       } 
     } catch (err) {
       return err
@@ -205,7 +205,6 @@ const ProfileEdit = () => {
             })
           })
       } catch (error) {
-        console.log('error', error)
       }
     }
   }
@@ -251,7 +250,6 @@ const ProfileEdit = () => {
       formData.append('file', '')
       formData.append('action', 'SINGLE_UPLOADER')
       const response = UploaderAPI.UploaderFile(formData)
-      console.log('HELLO', response)
       // .then(async (res) => {
       //   // const { Company, UserName, AgentName } = usersProfileReducer
       //   const data = res.data.data
