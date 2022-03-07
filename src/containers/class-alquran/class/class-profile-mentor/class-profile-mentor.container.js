@@ -224,7 +224,7 @@ const ClassProfileMentorQuran = (props) => {
                                 }</Text> */}
                                 {instructor.Mentor_Package && instructor.Mentor_Package.map((item, index) => {
                                     return (
-                                        <Text key={index}>❐ {item.Type} : Rp{FormatRupiah(item.Price_Discount)}</Text>
+                                        <Text key={index} style={styles.TxtPricePack}>❐ {item.Type} : Rp{FormatRupiah(item.Price_Discount)}</Text>
                                     )
                                 })}
                         </View>
