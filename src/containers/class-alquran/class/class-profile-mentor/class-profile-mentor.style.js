@@ -101,6 +101,9 @@ const styles = StyleSheet.create({
       textAlign: 'justify',
       fontSize: FontSize.smallPoint,
     },
+    TxtPricePack : {
+      fontSize: FontSize.smallPoint,
+    },
     TxtDescStudy : {
       lineHeight: 18,
       maxWidth: '90%',

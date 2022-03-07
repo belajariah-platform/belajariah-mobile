@@ -23,6 +23,8 @@ const ClassPackage = (props) => {
       await navigation.navigate('ProfileEdit')
     } 
 
+    const ListItem =  _.orderBy(instructor.Mentor_Package, ['Price_Discount'],['desc'])
+
     const ContentPackage = () => {
       const choosePackage = (item) => {
         if (!userInfo.Address 
@@ -42,7 +44,7 @@ const ClassPackage = (props) => {
       return (
         <View style={styles.containerContent}>
            <ScrollView contentContainerStyle={{paddingBottom:100}}>
-          {instructor.Mentor_Package && instructor.Mentor_Package.map((item, index) => {
+          {ListItem && ListItem.map((item, index) => {
             let IconPackages 
             item.Type == 'Paket Belajar Private' ?
               (IconPackages = Images.IconPrivate) :
@@ -101,7 +103,7 @@ const ClassPackage = (props) => {
             containerStyle={styles.whitemdl}
             custombackdropStyle={styles.backdropStyle}
             backdropPress={() => setModalVisibleCheck(false)}
-          backButtonPress={() => setModalVisibleCheck(false)}
+            backButtonPress={() => setModalVisibleCheck(false)}
             renderItem={
               <View style={{alignItems:'center', paddingHorizontal: 25, paddingTop:30}}>
                   <Text style={styles.textVersion}>Data profilmu belum lengkap, silahkan lengkapi terlebih dahulu</Text>
