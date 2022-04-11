@@ -8,10 +8,12 @@ import UserNavigation from './user-navigation'
 import AdminNavigation from './admin-navigation'
 import PublicNavigation from './public-navigation'
 import InstructorNavigation from './instructor-navigation'
+import { flatMap } from 'lodash'
 
 const Render = () => {
   const { isLogin, userInfo } = useSelector(state => state.UserReducer)
   if (isLogin) {
+    console.log(userInfo.Role, isLogin)
     switch (userInfo.Role) {
     case 'Admin':
       return  <AdminNavigation/>

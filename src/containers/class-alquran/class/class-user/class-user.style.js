@@ -238,6 +238,8 @@ const styles = StyleSheet.create({
   imageBackgroundCard : { height: 'auto', marginBottom:-15 },
   containerTextArea : { marginTop: 20 },
   iconTop : { top:-4 },
+
+  //New
   containerIconDirect : {
     paddingTop: '4%',
     flexDirection: 'row',
@@ -248,6 +250,175 @@ const styles = StyleSheet.create({
   ViewBtn : {
     marginRight: '7%',
     alignItems: 'flex-end',
+  },
+  container : {
+    flex: 1,
+    backgroundColor: Color.softPink
+  },  
+  containerHeaderProfile : {
+    flex: 1,
+    marginBottom : -1,
+    backgroundColor: '#6E248D',
+  },
+  containerHeaderDetail : {
+    backgroundColor: '#6E248D',
+  },
+  flexHeaderInProfile: {
+    paddingBottom: 16,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  flexHeaderProfile: {
+    paddingBottom: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  semiBoxDetail: {
+    height: 16,
+    width: '100%',
+    marginTop: -16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: Color.softPink,
+  },
+  semiBoxProfile: {
+    height: 12,
+    width: '100%',
+    marginTop:-50,
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    backgroundColor: Color.softPink,
+  },
+  iconBackProfile: {
+    marginTop: 0,
+  },
+  textTitleHeader: {
+    color: Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  imageStyle: {
+    width: 76,
+    height: 76,
+    marginRight: 8,
+    borderRadius : 100,
+  },
+  cardStyle: {
+    padding: 15,
+    elevation: 0.5,
+    width: 'auto',
+    height: 'auto',
+    borderWidth : 0,
+    marginBottom: 10,
+    borderRadius: 16,
+    backgroundColor: Color.white
+  },
+  containerDesc : {
+    width: '74%',
+    marginLeft : 5,
+    marginRight: 10,
+  },
+  ViewTop : {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  ViewTxtMentor : {
+    maxWidth: '95%',
+  },
+  textStyle: {
+    maxWidth: '100%',
+    color: '#4D4D4D',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.small,
+  },
+  viewStyle: {
+    flexDirection: 'row',
+  },
+  textStyleCity: {
+    marginTop : 5,
+    maxWidth: '100%',
+    color: '#BDBDBD',
+    fontFamily: FontType.regular,
+    fontSize: FontSize.smallest,
+  },
+  TxtDesc: {
+    marginTop : 2,
+    marginBottom: 30,
+    maxWidth: '96%',
+    color: '#BDBDBD',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.overSmall,
+  },
+  TxtSchedule: {
+    maxWidth: '96%',
+    color: '#6E248D',
+    textAlign: 'right',
+    fontFamily: FontType.bold,
+    fontSize: FontSize.smallest,
+  },
+  containerSchedule: {
+    right: 10, 
+    width: 110, 
+    height: 25, 
+    bottom: -10, 
+    position: 'absolute', 
+    justifyContent: 'center',
+  },
+  ViewHeader : {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  TxtHeader: {
+    maxWidth: '56%',
+    marginLeft: -30,
+    marginRight: 100,
+    marginBottom: 100,
+    color: Color.white,
+    fontFamily: FontType.regular,
+    fontSize: FontSize.mediumLarge,
+  },
+  TxtHeaderBold : {
+    color: Color.white,
+    fontFamily: FontType.bold,
+    fontSize: FontSize.mediumLarge,
+  },
+  StyleIllust : {
+    top: -40,
+    zIndex: 1,
+    width: 150,
+    height: 120,
+  },
+  containerMainProfile: {
+    flex: 3,
+    backgroundColor: Color.softPink,
+  },
+  cardStyleInstructor: {
+    padding: 25,
+    elevation: 0,
+    width: 'auto',
+    height: 'auto',
+    borderWidth : 0,
+    borderRadius: 0,
+    paddingBottom: 30,
+    paddingHorizontal: 25,
+    backgroundColor: Color.softPink,
+  },
+  StyleTxt : {
+    color: Color.white,
+    fontSize: FontSize.smallMedium,
+    fontFamily: FontType.bold,
+  },
+  StyleBtn : {
+    width: '90%',
+    alignSelf: 'center',
+  },
+  containerText: {
+    marginTop: 4,
+    marginBottom: 5,
+    color: Color.black,
+    fontSize: FontSize.small,
+    fontFamily: FontType.regular,
   },
 })
 

@@ -95,10 +95,12 @@ const Home = (props) => {
 
   const handleCategoryChange = (category) => {
     setCategorySelected(category.ID)
-    stateClass.forEach((val) => {
-      val.class_category == category.Value ?
-      props.navigation.navigate('ClassListQuran') : toggleModal()
-    })
+    let values = stateClass.filter((e) => e.class_initial == category.Value)
+    if (values.length > 0) {
+      props.navigation.navigate('ClassDetailQuran', { DetailClass : values[0] })
+    } else {
+      toggleModal()
+    }
   }
 
   const retryConnection = () => {
@@ -138,10 +140,10 @@ const Home = (props) => {
     const fetchDataClass = async ({ skip, take, filterString }) => {
       try {
         setloadingClass(true)
-        filterString=[{"type": "text", "field" : "class_initial", "value": "Dirosa"}]
+        filterString=[]
         const response = await ClassQuranAPI.GetAllClass(skip, take, filterString)
         if (response.status === Response.SUCCESS) {
-          setStateClass(response.data.message.data)
+          setStateClass(response?.data?.message?.data ?? [])
         } else {
           NetInfo.fetch().then(res => {
             setconnectStatus(!res.isConnected)
@@ -355,11 +357,11 @@ const Home = (props) => {
             {stateCategory.map((category, index) => {
               let icon, size
               const ValueIcon = category.Value
-              ValueIcon == 'Al-Quran' ? (icon = Images.IconCategoryAlquran, size = 30) :
+              ValueIcon == 'Iqra' ? (icon = Images.IconCategoryAlquran, size = 30) :
                 ValueIcon == 'Ibadah Kemasyarakatan' ? (icon = Images.IconCategoryKemasyarakatan, size = 30) :
-                  ValueIcon == 'Bahasa' ? (icon = Images.IconCategoryLanguage, size = 30) :
-                    ValueIcon == 'Ekonomi Islam' ? (icon = Images.IconCategorySyaria, size = 30) :
-                      ValueIcon == 'Dakwah' ? (icon = Images.IconCategoryDakwah, size = 30) :
+                  ValueIcon == 'Dirosa' ? (icon = Images.IconCategoryLanguage, size = 30) :
+                    ValueIcon == 'Tahsin' ? (icon = Images.IconCategorySyaria, size = 30) :
+                      ValueIcon == 'Tilawah' ? (icon = Images.IconCategoryDakwah, size = 30) :
                       (icon = Images.IconCategoryFiqh, size = 30)
               return (
                 <TouchableOpacity
@@ -464,19 +466,21 @@ const Home = (props) => {
         <Text style={styles.textTitle}>Kelas Populer</Text>
         <Text style={styles.textSubtitle}>Kelas Populer saat ini</Text>
         {stateClass.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.5}
-              onPress={() => navigation.navigate('ClassDetailQuran', {DetailClass : item})}>
-              {/* // onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}> */}
-              <Cards
-                item={item}
-                filepath={item.class_image}
-                // rating={handleRating(item.Class_Rating)}
-              />
-            </TouchableOpacity>
-          )
+          if (item.class_initial == 'Dirosa') {
+            return (
+              <TouchableOpacity
+                key={index}
+                activeOpacity={0.5}
+                onPress={() => navigation.navigate('ClassDetailQuran', {DetailClass : item})}>
+                {/* // onPress={() => item.Is_Direct == true ? openModalClassDirect(item) : openModalInfoClass(item)}> */}
+                <Cards
+                  item={item}
+                  filepath={item.class_image}
+                  // rating={handleRating(item.Class_Rating)}
+                />
+              </TouchableOpacity>
+            )
+          }
         })}
       </View>
     )
