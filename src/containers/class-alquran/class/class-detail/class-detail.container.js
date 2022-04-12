@@ -21,32 +21,7 @@ const Tab = createMaterialTopTabNavigator()
 
 const ClassDetailQuran = (props) => {
     const navigation = useNavigation()
-    const [state, setState] = useState([])
-    const [loading, setLoading] = useState(true)
-
     const { DetailClass } = props.route.params
-    
-    const fetchDataUserClass = async () => {
-        try {
-          setLoading(true)
-          const filter = [{"field": "class_code", "type": "text", "value": `${DetailClass.code}`}]
-          const response = await UserClassAPI.GetAllUserClassQuran(filter)
-          if (response.status === Response.SUCCESS) {
-            setState(response.data.message.data)
-          } else {
-            NetInfo.fetch().then(res => {
-              setconnectStatus(!res.isConnected)
-            })
-          }
-        } catch (err) {
-          return err
-        }
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        fetchDataUserClass()
-    }, [])
 
     const Header = () => {
         return (
@@ -67,36 +42,27 @@ const ClassDetailQuran = (props) => {
     return (
         <View style={styles.flexFull}>
             <Header />
-
-            {loading ? <LoadingView color={DetailClass.color_path} /> 
-            : (
-                <>
-                    <Tab.Navigator
-                        style={styles.tabContainerStyle}
-                        tabBarOptions={{
-                            inactiveTintColor: Color.white,
-                            labelStyle: styles.labelStyle,
-                            activeTintColor: Color.white,
-                            indicatorStyle: styles.indicatorStyle,
-                            style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
-                    }}>
-                        <Tab.Screen
-                            name='ClassAbout'
-                            options={{ title: 'Tentang Kelas' }}>
-                            {() => <ClassAbout params={DetailClass}/>}
-                        </Tab.Screen>
-                        {/* {state && state.length == 0 &&  <Tab.Screen
-                            name='ClassListMentorQuran'
-                            options={{ title: 'Pengajar' }}>
-                            {() => <ClassListMentorQuran params={DetailClass} userClass={state}/>}
-                        </Tab.Screen>} */}
-                        <Tab.Screen
-                            name='ClassReviewQuran'
-                            options={{ title: 'Ulasan' }}>
-                            {() => <ClassReviewQuran params={DetailClass} userClass={state}/>}
-                        </Tab.Screen>
-
-                    </Tab.Navigator>
+                <Tab.Navigator
+                    style={styles.tabContainerStyle}
+                    tabBarOptions={{
+                        inactiveTintColor: Color.white,
+                        labelStyle: styles.labelStyle,
+                        activeTintColor: Color.white,
+                        indicatorStyle: styles.indicatorStyle,
+                        style: {...styles.tabBarStyle, backgroundColor: DetailClass.color_path},
+                }}>
+                    <Tab.Screen
+                        name='ClassAbout'
+                        options={{ title: 'Tentang Kelas' }}>
+                       {() => <ClassAbout params={DetailClass}/>}
+                    </Tab.Screen>
+                    <Tab.Screen
+                        name='ClassReviewQuran'
+                        options={{ title: 'Ulasan' }}>
+                        {() => <ClassReviewQuran params={DetailClass} userClass={[]}/>}
+                    </Tab.Screen>
+                
+                </Tab.Navigator>
                     <View style={styles.ViewButton}>
                         <Buttons 
                             title={'Temukan Guru Ngaji'} 
@@ -105,12 +71,10 @@ const ClassDetailQuran = (props) => {
                             textStyle={styles.StyleTxtBtn}
                             icon={<Images.IconSearchWhite.default/>}
                             onPress={() => {
-                                navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : state})
+                                navigation.navigate('ClassListMentorQuran', {DetailClass : DetailClass, UserClass : []})
                             }}
-                        />
+                />
                     </View>
-                </>
-            )}
         </View>
     )
 }

@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { Color, Images } from '../../../assets'
 import ProfileNavigation from '../user-profile'
-import { Home, ClassUser, Transaction } from '../../../containers'
+import { Home, ClassUserQuran, Transaction } from '../../../containers'
 
 import { styles } from './user-main.style'
 
@@ -52,7 +52,7 @@ const UserMainNavigation = () => {
         <>
           <Screen
             name='Kelas'
-            component={ClassUser}
+            component={ClassUserQuran}
           />
           <Screen
             name='Pembayaran'

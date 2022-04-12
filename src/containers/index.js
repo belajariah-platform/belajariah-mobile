@@ -55,14 +55,18 @@ import {
 } from './class'
 import {
   ClassPackage,
+  ClassUserQuran, 
   ClassListQuran,
   ClassDetailQuran,
+  ClassUserQuranDetail, 
   ClassListMentorQuran,
   TransactionInfoQuran,
+  ClassUserQuranSchedule,
   TransactionMethodQuran,
   TransactionUploadQuran,
   ClassProfileMentorQuran,
   TransactionConfirmQuran,
+  ClassUserQuranScheduleEdit,
 } from './class-alquran'
 import { Helps, AboutUs, ContactUs, TermCondition, PrivacyPolice } from './setting'
 import { 
@@ -113,6 +117,7 @@ export {
   TermCondition,
   PrivacyPolice,
   AlquranDetail,
+  ClassUserQuran, 
   ClassLearning,
   ClassDetailACC,
   ClassListQuran,
@@ -146,6 +151,7 @@ export {
   ClassFormConfirmACC,
   ClassLearningDirect,  
   InstructorDashboard,
+  ClassUserQuranDetail, 
   TransactionInfoQuran,
   ClassFormPersonalACC,
   ClassListMentorQuran,
@@ -153,10 +159,12 @@ export {
   InspiratifStoryDetail,
   InstructorProfileEdit,
   ClassInstructorProfile,
+  ClassUserQuranSchedule,
   TransactionMethodQuran,
   AdminProfileInstructor,
   TransactionUploadQuran,
   TransactionConfirmQuran,
   EventClassIntensConfirm,
   ClassProfileMentorQuran,
+  ClassUserQuranScheduleEdit,
 }

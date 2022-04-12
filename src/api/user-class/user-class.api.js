@@ -35,20 +35,6 @@ const GetUserClass = (code) => async dispatch => {
   }
 }
 
-const UpdateProgressUserClass = async (formData) => {
-  try {
-    const headers = await Header()
-    const response = await axios.put(
-      `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class/progress`,
-      formData,
-      headers
-    )
-    return response
-  } catch (error) {
-    return error
-  }
-}
-
 const GetAllUserClassQuran = async (filter) =>  {
   try {
     const headers = await Header()
@@ -71,4 +57,108 @@ const GetAllUserClassQuran = async (filter) =>  {
   }
 }
 
-export default { GetAllUserClass, GetUserClass, UpdateProgressUserClass, GetAllUserClassQuran }
+const GetAllUserClassQuranDetail = async (skip, take, filter) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"GET_ALL_USER_CLASS_DETAIL_QURAN",
+      query: {
+            filters: filter,
+            orders: [{"field": "id", "dir": "desc"}],
+            skip: skip,
+            take: take
+        }
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const GetAllUserClassQuranSchedule = async (filter) =>  {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"GET_ALL_USER_CLASS_SCHEDULE_QURAN",
+      query: {
+            filters: filter,
+            orders: [{"field": "sequence", "dir": "asc"}],
+            skip: 0,
+            take: 100
+        }
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const InsertUserClassQuranSchedule = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"INSERT_USER_CLASS_QURAN_SCHEDULE",
+      data: formData
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const UpdateUserClassQuranSchedule = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"UPDATE_USER_CLASS_QURAN_SCHEDULE",
+      data: formData
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+const UpdateProgressUserClassQuran = async (formData) => {
+  try {
+    const headers = await Header()
+    const response = await axios.post(
+    `${Config.BELAJARIAH_SERVICE_ENDPOINT}/user_class`,
+    {
+      Action:"UPDATE_USER_CLASS_QURAN_PROGRESS",
+      data: formData
+    },
+    headers
+    )
+    return response
+  } catch (error) {
+    return error
+  }
+}
+
+export default { 
+  GetUserClass, 
+  GetAllUserClass, 
+  GetAllUserClassQuran,
+  GetAllUserClassQuranDetail,
+  GetAllUserClassQuranSchedule,
+  InsertUserClassQuranSchedule,
+  UpdateUserClassQuranSchedule,
+  UpdateProgressUserClassQuran, 
+ }
