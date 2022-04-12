@@ -240,7 +240,7 @@ const ClassProfileMentorQuran = (props) => {
                     <Buttons 
                         style={{...styles.BtnPengajar, backgroundColor: DetailClass.color_path}}
                         // icon={<Images.IconConsultations.default/>}
-                        title={'Pilik Paket Belajar'}
+                        title={'Pilih Paket Belajar'}
                         textStyle={styles.TxtButton}
                         // onPress={() => {
                         //     userInfo.Gender == '' ? navigation.navigate('ProfileEdit', Alerts(false, 'Silahkan Ubah Jenis Kelaminmu dahulu')) 
